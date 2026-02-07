@@ -107,7 +107,7 @@ def apply_nexus_style():
 def add_watermark(ax):
     """Add NEXUS branding watermark to bottom-right of axes."""
     ax.text(
-        0.98, 0.02, "NEXUS \u00b7 ENAHO/INEI",
+        0.98, 0.02, "Qhawarina \u00b7 ENAHO/INEI",
         transform=ax.transAxes,
         fontsize=WATERMARK_SIZE,
         color=NEXUS_COLORS["watermark"],
@@ -117,7 +117,7 @@ def add_watermark(ax):
     )
 
 
-def add_source_line(fig, text="Fuente: ENAHO/INEI. Elaboraci\u00f3n: NEXUS."):
+def add_source_line(fig, text="Fuente: ENAHO/INEI. Elaboraci\u00f3n: Qhawarina."):
     """Add source attribution at the bottom of a figure."""
     fig.text(
         0.5, 0.01, text,

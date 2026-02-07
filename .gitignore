@@ -2,6 +2,7 @@
 data/raw/
 data/processed/
 data/targets/
+data/validation/
 
 # Python
 __pycache__/

@@ -152,7 +152,7 @@ def plot_national_trends(output_dir: Path = MAPS_DIR) -> Path:
         color=NEXUS_COLORS["text_primary"],
         y=0.98,
     )
-    add_source_line(fig, "Fuente: ENAHO/INEI. Promedios departamentales. Elaboraci\u00f3n: NEXUS.")
+    add_source_line(fig, "Fuente: ENAHO/INEI. Promedios departamentales. Elaboraci\u00f3n: Qhawarina.")
     plt.tight_layout(rect=[0, 0.03, 1, 0.95])
 
     out = output_dir / "national_trends.png"
