@@ -1,0 +1,96 @@
+# NEXUS — ENAHO Module Definitions
+# Source: INEI Microdatos — https://proyectos.inei.gob.pe/microdatos/
+
+coverage:
+  years: [2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013,
+          2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023]
+  departments: 25  # 24 departments + Callao
+  notes:
+    - "2020 had reduced sample due to COVID — treat with caution"
+    - "Variable names may change across years"
+    - "All estimates MUST use sampling weights (FACTOR07)"
+
+modules:
+  sumaria:
+    module_number: 34
+    description: "Household summary — income, expenditure, poverty"
+    key_variables:
+      - name: GASHOG2D
+        description: "Total household expenditure"
+      - name: INGHOG1D
+        description: "Household income (definition 1)"
+      - name: INGHOG2D
+        description: "Household income (definition 2)"
+      - name: POESSION
+        description: "Asset index"
+      - name: MIEPERHO
+        description: "Household size"
+      - name: LINEA
+        description: "Poverty line"
+      - name: LINPE
+        description: "Extreme poverty line"
+      - name: FACTOR07
+        description: "Sampling expansion factor (weight)"
+
+  household:
+    module_number: 1
+    description: "Household characteristics"
+    key_variables:
+      - name: housing_quality
+        description: "Housing materials and conditions"
+      - name: water
+        description: "Water access"
+      - name: sanitation
+        description: "Sanitation access"
+      - name: electricity
+        description: "Electricity access"
+      - name: cooking_fuel
+        description: "Type of cooking fuel"
+
+  members:
+    module_number: 2
+    description: "Household members"
+    key_variables:
+      - name: demographics
+        description: "Age, sex"
+      - name: education
+        description: "Education level"
+      - name: ethnicity
+        description: "Ethnic self-identification"
+      - name: language
+        description: "Mother tongue"
+
+  education:
+    module_number: 3
+    description: "Education"
+    key_variables:
+      - name: enrollment
+        description: "School enrollment"
+      - name: attainment
+        description: "Education attainment"
+      - name: literacy
+        description: "Literacy status"
+
+  employment:
+    module_number: 5
+    description: "Employment and labor"
+    key_variables:
+      - name: occupation
+        description: "Occupation code"
+      - name: hours
+        description: "Hours worked"
+      - name: sector
+        description: "Economic sector"
+      - name: informality
+        description: "Informality status (no social security)"
+
+  health:
+    module_number: 7
+    description: "Health"
+    key_variables:
+      - name: insurance
+        description: "Health insurance"
+      - name: illness
+        description: "Recent illness"
+      - name: chronic
+        description: "Chronic conditions"

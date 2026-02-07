@@ -1,0 +1,91 @@
+# NEXUS — Poverty Proxy Configuration
+#
+# Documents which BCRP monthly series serve as high-frequency proxies for
+# poverty indicators (measured annually by ENAHO). These relationships
+# will be exploited in Sprint 4 for poverty nowcasting.
+#
+# Each proxy has:
+#   code: BCRP series code (must exist in series_catalog.yaml)
+#   rationale: economic reasoning for the relationship
+#   expected_sign: direction of association with poverty headcount
+#     positive  = higher values → higher poverty
+#     negative  = higher values → lower poverty
+
+poverty_proxies:
+
+  direct_proxies:
+    - code: PN01383PM
+      name: "IPC alimentos y bebidas (var%)"
+      rationale: >
+        Food inflation is the primary driver of poverty headcount changes in Peru.
+        The basic food basket constitutes ~50% of expenditure for poor households.
+        Higher food price growth directly erodes purchasing power of the poor.
+      expected_sign: positive
+
+    - code: PN39445PM
+      name: "IPC alimentos y bebidas (índice)"
+      rationale: >
+        Food price level tracks the cost of the basic food basket over time.
+        Sustained high food prices compress real consumption of the poorest deciles.
+      expected_sign: positive
+
+    - code: PN01246PM
+      name: "Tipo de cambio S/ por USD"
+      rationale: >
+        Exchange rate depreciation raises imported food prices (Peru imports ~40%
+        of wheat and other staples). Pass-through to food CPI is rapid.
+      expected_sign: positive
+
+    - code: PN31879GM
+      name: "Puestos de trabajo sector formal (miles)"
+      rationale: >
+        Formal employment growth is the main channel through which economic growth
+        reduces poverty. More formal jobs mean higher labor income and social
+        protection coverage for low-income households.
+      expected_sign: negative
+
+    - code: PN00518MM
+      name: "Crédito al sector privado (millones S/, real)"
+      rationale: >
+        Credit expansion, particularly microfinance, reaches low-income segments.
+        Credit access enables small business investment and consumption smoothing.
+        Note: this series is deflated to real terms in the processing pipeline.
+      expected_sign: negative
+
+  indirect_proxies:
+    - code: PN01770AM
+      name: "PBI global (índice 2007=100)"
+      rationale: >
+        Aggregate GDP growth is the single strongest predictor of poverty reduction
+        (elasticity ~-1.5 to -2.0 for Peru). Growth creates employment and raises
+        wages across all income levels.
+      expected_sign: negative
+
+    - code: PD37966AM
+      name: "Producción de electricidad (GWh)"
+      rationale: >
+        Electricity production proxies for industrial and household economic
+        activity. Residential electricity consumption correlates with household
+        economic wellbeing.
+      expected_sign: negative
+
+    - code: PN02204FM
+      name: "Ingresos corrientes del gobierno (millones S/, real)"
+      rationale: >
+        Fiscal revenue reflects government capacity for social spending (Juntos,
+        Pensión 65, Qali Warma). Tax revenue growth enables expansion of
+        anti-poverty programs.
+      expected_sign: negative
+
+    - code: PD37981AM
+      name: "Expectativas empresariales a 12 meses"
+      rationale: >
+        Business confidence is a leading indicator of employment growth.
+        Optimistic firms expand hiring, benefiting low-income job seekers.
+      expected_sign: negative
+
+  # Potential additional proxies (for Sprint 4 feature selection):
+  #   - Remittances (not yet in BCRP catalog, but available)
+  #   - Agricultural production index (seasonal, may need detrending)
+  #   - Minimum wage (policy variable, annual frequency)
+  #   - Google Trends: "trabajo", "empleo", "bono" (to be added Sprint 5)

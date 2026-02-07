@@ -1,0 +1,587 @@
+{
+  "regional_exports": [],
+  "regional_imports": [
+    {
+      "code": "RD38112BM",
+      "name": "Importaciones por Aduana (Valores FOB en millones US$) - Tumbes",
+      "sample_count": 6
+    },
+    {
+      "code": "RD38113BM",
+      "name": "Importaciones por Aduana (Valores FOB en millones US$) - Talara",
+      "sample_count": 6
+    },
+    {
+      "code": "RD38114BM",
+      "name": "Importaciones por Aduana (Valores FOB en millones US$) - Paita",
+      "sample_count": 6
+    },
+    {
+      "code": "RD38115BM",
+      "name": "Importaciones por Aduana (Valores FOB en millones US$) - Chiclayo",
+      "sample_count": 6
+    },
+    {
+      "code": "RD38116BM",
+      "name": "Importaciones por Aduana (Valores FOB en millones US$) - Salaverry",
+      "sample_count": 6
+    },
+    {
+      "code": "RD38117BM",
+      "name": "Importaciones por Aduana (Valores FOB en millones US$) - Chimbote",
+      "sample_count": 6
+    },
+    {
+      "code": "RD38118BM",
+      "name": "Importaciones por Aduana (Valores FOB en millones US$) - Marítima Del Callao",
+      "sample_count": 6
+    },
+    {
+      "code": "RD38119BM",
+      "name": "Importaciones por Aduana (Valores FOB en millones US$) - Pisco",
+      "sample_count": 6
+    },
+    {
+      "code": "RD38120BM",
+      "name": "Importaciones por Aduana (Valores FOB en millones US$) - Mollendo Matarani",
+      "sample_count": 6
+    },
+    {
+      "code": "RD38121BM",
+      "name": "Importaciones por Aduana (Valores FOB en millones US$) - Arequipa",
+      "sample_count": 6
+    },
+    {
+      "code": "RD38122BM",
+      "name": "Importaciones por Aduana (Valores FOB en millones US$) - Ilo",
+      "sample_count": 6
+    },
+    {
+      "code": "RD38123BM",
+      "name": "Importaciones por Aduana (Valores FOB en millones US$) - Tacna",
+      "sample_count": 6
+    },
+    {
+      "code": "RD38124BM",
+      "name": "Importaciones por Aduana (Valores FOB en millones US$) - Puno",
+      "sample_count": 6
+    },
+    {
+      "code": "RD38125BM",
+      "name": "Importaciones por Aduana (Valores FOB en millones US$) - Cuzco",
+      "sample_count": 6
+    },
+    {
+      "code": "RD38126BM",
+      "name": "Importaciones por Aduana (Valores FOB en millones US$) - Pucallpa",
+      "sample_count": 6
+    },
+    {
+      "code": "RD38127BM",
+      "name": "Importaciones por Aduana (Valores FOB en millones US$) - Iquitos",
+      "sample_count": 6
+    },
+    {
+      "code": "RD38128BM",
+      "name": "Importaciones por Aduana (Valores FOB en millones US$) - Aérea Del Callao",
+      "sample_count": 6
+    },
+    {
+      "code": "RD38129BM",
+      "name": "Importaciones por Aduana (Valores FOB en millones US$) - Postal De Lima",
+      "sample_count": 6
+    },
+    {
+      "code": "RD38130BM",
+      "name": "Importaciones por Aduana (Valores FOB en millones US$) - Desaguadero",
+      "sample_count": 6
+    },
+    {
+      "code": "RD38131BM",
+      "name": "Importaciones por Aduana (Valores FOB en millones US$) - Tarapoto",
+      "sample_count": 6
+    },
+    {
+      "code": "RD38132BM",
+      "name": "Importaciones por Aduana (Valores FOB en millones US$) - Puerto Maldonado",
+      "sample_count": 6
+    },
+    {
+      "code": "RD38133BM",
+      "name": "Importaciones por Aduana (Valores FOB en millones US$) - La Tina",
+      "sample_count": 6
+    },
+    {
+      "code": "RD38134BM",
+      "name": "Importaciones por Aduana (Valores FOB en millones US$) - Dependencia Postal Arequipa",
+      "sample_count": 6
+    },
+    {
+      "code": "RD38135BM",
+      "name": "Importaciones por Aduana (Valores FOB en millones US$) - Otros",
+      "sample_count": 6
+    },
+    {
+      "code": "RD38136BM",
+      "name": "Importaciones por Aduana (Valores FOB en millones US$) - Total",
+      "sample_count": 6
+    }
+  ],
+  "ipc_components": [
+    {
+      "code": "PN01260PM",
+      "name": "Índice del tipo de cambio real (var% mensual) - Multilateral",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01261PM",
+      "name": "Índice del tipo de cambio real (var% 12 meses) - Multilateral",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01262PM",
+      "name": "Tipo de cambio real bilateral del Perú respecto a países latinoamericanos (promedio del período) - Argentina",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01263PM",
+      "name": "Tipo de cambio real bilateral del Perú respecto a países latinoamericanos (promedio del período) - Brasil",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01264PM",
+      "name": "Tipo de cambio real bilateral del Perú respecto a países latinoamericanos (promedio del período) - Chile",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01265PM",
+      "name": "Tipo de cambio real bilateral del Perú respecto a países latinoamericanos (promedio del período) - Colombia",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01266PM",
+      "name": "Tipo de cambio real bilateral del Perú respecto a países latinoamericanos (promedio del período) - Ecuador",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01267PM",
+      "name": "Tipo de cambio real bilateral del Perú respecto a países latinoamericanos (promedio del período) - México",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01268PM",
+      "name": "Tipo de cambio real bilateral del Perú respecto a países latinoamericanos (promedio del período) - Uruguay",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01272PM",
+      "name": "Índice de precios Lima Metropolitana (var% acumulada) - IPC",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01274PM",
+      "name": "Índice de precios Lima Metropolitana (var% mensual) - IPC Sin Alimentos",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01275PM",
+      "name": "Índice de precios Lima Metropolitana (var% 12 meses) - IPC Sin Alimentos",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01276PM",
+      "name": "Índice de precios Lima Metropolitana (var% mensual) - IPC Sin Alimentos y Energía",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01277PM",
+      "name": "Índice de precios Lima Metropolitana (var% 12 meses) - IPC Sin Alimentos y Energía",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01278PM",
+      "name": "Índice de precios Lima Metropolitana (var% mensual) - IPC Subyacente",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01279PM",
+      "name": "Índice de precios Lima Metropolitana (var% 12 meses) - IPC Subyacente",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01280PM",
+      "name": "Índice de precios Lima Metropolitana (var% mensual) - IPC Transables",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01281PM",
+      "name": "Índice de precios Lima Metropolitana (var% 12 meses) - IPC Transables",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01282PM",
+      "name": "Índice de precios Lima Metropolitana (var% mensual) - IPC No Transables",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01283PM",
+      "name": "Índice de precios Lima Metropolitana (var% 12 meses) - IPC No Transables",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01284PM",
+      "name": "Índice de precios Lima Metropolitana (var% mensual) - IPC No Transables Sin Alimentos y Bebidas",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01285PM",
+      "name": "Índice de precios Lima Metropolitana (var% 12 meses) - IPC No Transables Sin Alimentos y Bebidas",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01286PM",
+      "name": "Índice de precios Lima Metropolitana (var% mensual) - Índice de Precios al por Mayor",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01287PM",
+      "name": "Índice de precios Lima Metropolitana (var% 12 meses) - Índice de Precios al por Mayor",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01295PM",
+      "name": "Índice de precios al consumidor Lima Metropolitana: clasificación sectorial (variación porcentual) - Inflación Subyacente",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01296PM",
+      "name": "Índice de precios al consumidor Lima Metropolitana: clasificación sectorial (variación porcentual) - Inflación Subyacente - Bienes",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01297PM",
+      "name": "Índice de precios al consumidor Lima Metropolitana: clasificación sectorial (variación porcentual) - Inflación Subyacente - Bienes - Alimentos y Bebidas",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01298PM",
+      "name": "Índice de precios al consumidor Lima Metropolitana: clasificación sectorial (variación porcentual) - Inflación Subyacente - Bienes - Textiles y Calzado",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01299PM",
+      "name": "Índice de precios al consumidor Lima Metropolitana: clasificación sectorial (variación porcentual) - Inflación Subyacente - Bienes - Aparatos Electrodomésticos",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01300PM",
+      "name": "Índice de precios al consumidor Lima Metropolitana: clasificación sectorial (variación porcentual) - Inflación Subyacente - Bienes - Resto de Productos Industriales",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01301PM",
+      "name": "Índice de precios al consumidor Lima Metropolitana: clasificación sectorial (variación porcentual) - Inflación Subyacente - Servicios",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01302PM",
+      "name": "Índice de precios al consumidor Lima Metropolitana: clasificación sectorial (variación porcentual) - Inflación Subyacente - Servicios - Comidas Fuera del Hogar",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01303PM",
+      "name": "Índice de precios al consumidor Lima Metropolitana: clasificación sectorial (variación porcentual) - Inflación Subyacente - Servicios - Educación",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01304PM",
+      "name": "Índice de precios al consumidor Lima Metropolitana: clasificación sectorial (variación porcentual) - Inflación Subyacente - Servicios - Salud",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01305PM",
+      "name": "Índice de precios al consumidor Lima Metropolitana: clasificación sectorial (variación porcentual) - Inflación Subyacente - Servicios - Alquileres",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01306PM",
+      "name": "Índice de precios al consumidor Lima Metropolitana: clasificación sectorial (variación porcentual) - Inflación Subyacente - Servicios - Resto de Servicios",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01307PM",
+      "name": "Índice de precios al consumidor Lima Metropolitana: clasificación sectorial (variación porcentual) - Inflación No Subyacente",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01308PM",
+      "name": "Índice de precios al consumidor Lima Metropolitana: clasificación sectorial (variación porcentual) - Inflación No Subyacente - Alimentos",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01309PM",
+      "name": "Índice de precios al consumidor Lima Metropolitana: clasificación sectorial (variación porcentual) - Inflación No Subyacente - Combustibles",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01310PM",
+      "name": "Índice de precios al consumidor Lima Metropolitana: clasificación sectorial (variación porcentual) - Inflación No Subyacente - Transportes",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01311PM",
+      "name": "Índice de precios al consumidor Lima Metropolitana: clasificación sectorial (variación porcentual) - Inflación No Subyacente - Servicios Públicos",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01312PM",
+      "name": "Índice de precios al consumidor Lima Metropolitana: clasificación sectorial (variación porcentual) - Inflación",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01313PM",
+      "name": "Índice de precios Lima Metropolitana (var% mensual) - IPC Alimentos y Bebidas",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01314PM",
+      "name": "Índice de precios Lima Metropolitana (var% mensual) - IPC sin Alimentos y Bebidas",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01315PM",
+      "name": "Índice de precios Lima Metropolitana (var% mensual) - IPC Subyacente Sin Alimentos y Bebidas",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01316PM",
+      "name": "Índice de precios Lima Metropolitana (var% mensual) - IPC Sin Alimentos, Bebidas y Energía",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01317PM",
+      "name": "Índice de precios Lima Metropolitana (var% mensual) - IPC Importado",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01335PM",
+      "name": "Índice de precios al consumidor Lima Metropolitana: clasificación sectorial (variación porcentual) - Inflación (índice 2009 = 100)",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01364PM",
+      "name": "Índice de precios al consumidor Lima Metropolitana: clasificación transables - no transables (variación porcentual) - Índice de Precios al Consumidor",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01365PM",
+      "name": "Índice de precios al consumidor Lima Metropolitana: clasificación transables - no transables (variación porcentual) - Productos Transables",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01366PM",
+      "name": "Índice de precios al consumidor Lima Metropolitana: clasificación transables - no transables (variación porcentual) - Productos Transables - Alimentos",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01367PM",
+      "name": "Índice de precios al consumidor Lima Metropolitana: clasificación transables - no transables (variación porcentual) - Productos Transables - Textil y Calzado",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01368PM",
+      "name": "Índice de precios al consumidor Lima Metropolitana: clasificación transables - no transables (variación porcentual) - Productos Transables - Combustibles",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01369PM",
+      "name": "Índice de precios al consumidor Lima Metropolitana: clasificación transables - no transables (variación porcentual) - Productos Transables - Aparatos Electrodomésticos",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01370PM",
+      "name": "Índice de precios al consumidor Lima Metropolitana: clasificación transables - no transables (variación porcentual) - Productos Transables - Otros Transables",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01371PM",
+      "name": "Índice de precios al consumidor Lima Metropolitana: clasificación transables - no transables (variación porcentual) - Productos No Transables",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01372PM",
+      "name": "Índice de precios al consumidor Lima Metropolitana: clasificación transables - no transables (variación porcentual) - Productos No Transables - Alimentos",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01373PM",
+      "name": "Índice de precios al consumidor Lima Metropolitana: clasificación transables - no transables (variación porcentual) - Productos No Transables - Servicios",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01374PM",
+      "name": "Índice de precios al consumidor Lima Metropolitana: clasificación transables - no transables (variación porcentual) - Productos No Transables - Servicios - Servicios Públicos",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01375PM",
+      "name": "Índice de precios al consumidor Lima Metropolitana: clasificación transables - no transables (variación porcentual) - Productos No Transables - Servicios - Otros Servicios Personales",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01376PM",
+      "name": "Índice de precios al consumidor Lima Metropolitana: clasificación transables - no transables (variación porcentual) - Productos No Transables - Servicios - Servicios de Salud",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01377PM",
+      "name": "Índice de precios al consumidor Lima Metropolitana: clasificación transables - no transables (variación porcentual) - Productos No Transables - Servicios - Servicios de Transporte",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01378PM",
+      "name": "Índice de precios al consumidor Lima Metropolitana: clasificación transables - no transables (variación porcentual) - Productos No Transables - Servicios - Servicios de Educación",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01379PM",
+      "name": "Índice de precios al consumidor Lima Metropolitana: clasificación transables - no transables (variación porcentual) - Productos No Transables - Servicios - Comida Fuera del Hogar",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01380PM",
+      "name": "Índice de precios al consumidor Lima Metropolitana: clasificación transables - no transables (variación porcentual) - Productos No Transables - Servicios - Alquileres",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01381PM",
+      "name": "Índice de precios al consumidor Lima Metropolitana: clasificación transables - no transables (variación porcentual) - Productos No Transables - Servicios - Otros Servicios",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01382PM",
+      "name": "Índice de precios al consumidor Lima Metropolitana: clasificación transables - no transables (variación porcentual) - Productos No Transables - Otros No Transables",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01384PM",
+      "name": "Índice de precios al consumidor Lima Metropolitana: clasificación transables - no transables (variación porcentual) - IPC Sin Alimentos y Bebidas",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01385PM",
+      "name": "Índice de precios al consumidor Lima Metropolitana: clasificación transables - no transables (variación porcentual) - IPC Subyacente Sin Alimentos y Bebidas",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01386PM",
+      "name": "Índice de precios al consumidor Lima Metropolitana: clasificación transables - no transables (variación porcentual) - IPC Sin Alimentos y Energía",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01387PM",
+      "name": "Índice de precios al consumidor Lima Metropolitana: clasificación transables - no transables (variación porcentual) - IPC Importado",
+      "sample_count": 6
+    },
+    {
+      "code": "PN38705PM",
+      "name": "Índice de precios Lima Metropolitana (índice Dic.2021 = 100) - Índice de Precios al Consumidor (IPC)",
+      "sample_count": 6
+    },
+    {
+      "code": "PN38707PM",
+      "name": "Índice de precios Lima Metropolitana (índice Dic.2021 = 100) - IPC Sin Alimentos y Energía",
+      "sample_count": 6
+    },
+    {
+      "code": "PN38708PM",
+      "name": "Índice de precios Lima Metropolitana (índice Dic.2021 = 100) - IPC Subyacente",
+      "sample_count": 6
+    },
+    {
+      "code": "PN38709PM",
+      "name": "Índice de precios Lima Metropolitana (índice Dic.2021 = 100) - IPC Transables",
+      "sample_count": 6
+    },
+    {
+      "code": "PN38710PM",
+      "name": "Índice de precios Lima Metropolitana (índice Dic.2021 = 100) - IPC No Transables",
+      "sample_count": 6
+    },
+    {
+      "code": "PN38711PM",
+      "name": "Índice de precios Lima Metropolitana (índice Dic.2021 = 100) - IPC No Transables Sin Alimentos y Bebidas",
+      "sample_count": 6
+    },
+    {
+      "code": "PN39444PM",
+      "name": "Índice de precios al consumidor Lima Metropolitana: clasificación sectorial (variación porcentual) - Inflación (índice 2009 = 100)",
+      "sample_count": 6
+    },
+    {
+      "code": "PN39447PM",
+      "name": "Índice de precios Lima Metropolitana (índice Dic.2021 = 100) - IPC Subyacente Sin Alimentos y Bebidas",
+      "sample_count": 6
+    }
+  ],
+  "sectoral_production": [
+    {
+      "code": "PN02079AM",
+      "name": "Producción manufacturera (índice 2007 = 100) - Total",
+      "sample_count": 6
+    },
+    {
+      "code": "PN02028AM",
+      "name": "Producción manufacturera (índice 2007 = 100) - Manufactura no Primaria",
+      "sample_count": 6
+    },
+    {
+      "code": "PN02068AM",
+      "name": "Producción manufacturera (índice 2007 = 100) - Manufactura No Primaria - Minerales no Metálicos - Cemento",
+      "sample_count": 6
+    },
+    {
+      "code": "PN02024AM",
+      "name": "Producción manufacturera (índice 2007 = 100) - Procesadores de Recursos Primarios - Harina y Aceite de Pescado",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01958AM",
+      "name": "Producción manufacturera (variación porcentual interanual) - Manufactura No Primaria - Servicios Industriales",
+      "sample_count": 6
+    },
+    {
+      "code": "PN37618AM",
+      "name": "Indicadores indirectos de la tasa de utilización de la capacidad instalada del sector manufacturero - Procesadores de recursos primarios",
+      "sample_count": 6
+    },
+    {
+      "code": "PD39768AM",
+      "name": "Expectativas empresariales sectoriales - Índice de producción respecto al mes anterior - Manufactura",
+      "sample_count": 6
+    },
+    {
+      "code": "PN38083AM",
+      "name": "Producción pesquera (miles de toneladas) - Pesca Continental - Congelado",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01846AM",
+      "name": "Producción pesquera (variación porcentual interanual) - Pesca Marítima",
+      "sample_count": 6
+    },
+    {
+      "code": "PN01847AM",
+      "name": "Producción pesquera (variación porcentual interanual) - Pesca Marítima - Consumo Industrial",
+      "sample_count": 6
+    },
+    {
+      "code": "PD37965AM",
+      "name": "Indicadores de coyuntura - Electricidad (var% 12 meses)",
+      "sample_count": 6
+    }
+  ],
+  "regional_credit": [],
+  "regional_deposits": [],
+  "ipc_cities": []
+}

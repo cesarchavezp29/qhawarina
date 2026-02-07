@@ -1,0 +1,427 @@
+# NEXUS — BCRP Series Catalog
+# All series codes verified against the live BCRP API (2026-02-06).
+#
+# API endpoint pattern:
+#   https://estadisticas.bcrp.gob.pe/estadisticas/series/api/{codes}/json/{start}/{end}/esp
+#
+# Processing metadata (Sprint 3):
+#   unit_type: index | var_pct | var_pct_yoy | nominal_soles | nominal_usd | rate_pct | level | price_usd
+#   seasonal_adjust: x13 | stl | none | already_sa
+#   transform: all (log + dlog + yoy) | limited (dlog + yoy) | none
+#   publication_lag_days: approximate days after reference month
+
+national:
+  gdp_indicators:
+    description: "PBI por sectores — variación porcentual interanual"
+    frequency: monthly
+    series:
+      - code: PN01770AM
+        name: "PBI global (índice 2007=100)"
+        status: verified
+        processing:
+          unit_type: index
+          seasonal_adjust: stl
+          transform: all
+          publication_lag_days: 45
+      - code: PN01728AM
+        name: "PBI total (var% interanual)"
+        status: verified
+        processing:
+          unit_type: var_pct_yoy
+          seasonal_adjust: none
+          transform: limited
+          publication_lag_days: 45
+      - code: PN01731AM
+        name: "PBI desestacionalizado (var% mensual)"
+        status: verified
+        processing:
+          unit_type: var_pct
+          seasonal_adjust: already_sa
+          transform: none
+          publication_lag_days: 45
+      - code: PN01713AM
+        name: "PBI agropecuario (var% interanual)"
+        status: verified
+        processing:
+          unit_type: var_pct_yoy
+          seasonal_adjust: none
+          transform: limited
+          publication_lag_days: 45
+      - code: PN01716AM
+        name: "PBI pesca (var% interanual)"
+        status: verified
+        processing:
+          unit_type: var_pct_yoy
+          seasonal_adjust: none
+          transform: limited
+          publication_lag_days: 45
+      - code: PN01717AM
+        name: "PBI minería e hidrocarburos (var% interanual)"
+        status: verified
+        processing:
+          unit_type: var_pct_yoy
+          seasonal_adjust: none
+          transform: limited
+          publication_lag_days: 45
+      - code: PN01720AM
+        name: "PBI manufactura (var% interanual)"
+        status: verified
+        processing:
+          unit_type: var_pct_yoy
+          seasonal_adjust: none
+          transform: limited
+          publication_lag_days: 45
+      - code: PN01723AM
+        name: "PBI electricidad y agua (var% interanual)"
+        status: verified
+        processing:
+          unit_type: var_pct_yoy
+          seasonal_adjust: none
+          transform: limited
+          publication_lag_days: 45
+      - code: PN01724AM
+        name: "PBI construcción (var% interanual)"
+        status: verified
+        processing:
+          unit_type: var_pct_yoy
+          seasonal_adjust: none
+          transform: limited
+          publication_lag_days: 45
+      - code: PN01725AM
+        name: "PBI comercio (var% interanual)"
+        status: verified
+        processing:
+          unit_type: var_pct_yoy
+          seasonal_adjust: none
+          transform: limited
+          publication_lag_days: 45
+      - code: PN01726AM
+        name: "PBI otros servicios (var% interanual)"
+        status: verified
+        processing:
+          unit_type: var_pct_yoy
+          seasonal_adjust: none
+          transform: limited
+          publication_lag_days: 45
+
+  leading_indicators:
+    description: "Indicadores líderes de actividad económica"
+    frequency: monthly
+    series:
+      - code: PD37966AM
+        name: "Producción de electricidad (GWh)"
+        status: verified
+        processing:
+          unit_type: level
+          seasonal_adjust: stl
+          transform: all
+          publication_lag_days: 30
+      - code: PD37967GM
+        name: "Consumo interno de cemento (var% 12 meses)"
+        status: verified
+        processing:
+          unit_type: var_pct_yoy
+          seasonal_adjust: none
+          transform: limited
+          publication_lag_days: 30
+      - code: PD04722MM
+        name: "Tasa de referencia de política monetaria (%)"
+        status: verified
+        processing:
+          unit_type: rate_pct
+          seasonal_adjust: none
+          transform: none
+          publication_lag_days: 1
+      - code: PN01246PM
+        name: "Tipo de cambio promedio S/ por USD"
+        status: verified
+        processing:
+          unit_type: level
+          seasonal_adjust: none
+          transform: all
+          publication_lag_days: 5
+      - code: PN38714BM
+        name: "Exportaciones (millones USD FOB)"
+        status: verified
+        processing:
+          unit_type: nominal_usd
+          seasonal_adjust: stl
+          transform: all
+          publication_lag_days: 45
+      - code: PN38718BM
+        name: "Importaciones (millones USD FOB)"
+        status: verified
+        processing:
+          unit_type: nominal_usd
+          seasonal_adjust: stl
+          transform: all
+          publication_lag_days: 45
+
+  credit_financial:
+    description: "Indicadores crediticios y financieros"
+    frequency: monthly
+    series:
+      - code: PN00518MM
+        name: "Crédito del sistema financiero al sector privado (millones S/)"
+        status: verified
+        processing:
+          unit_type: nominal_soles
+          seasonal_adjust: stl
+          transform: all
+          publication_lag_days: 30
+      - code: PN00027MM
+        name: "Reservas internacionales netas (millones USD)"
+        status: verified
+        processing:
+          unit_type: nominal_usd
+          seasonal_adjust: none
+          transform: all
+          publication_lag_days: 7
+      - code: PN07807NM
+        name: "TAMN — tasa activa promedio MN (%)"
+        status: verified
+        processing:
+          unit_type: rate_pct
+          seasonal_adjust: none
+          transform: none
+          publication_lag_days: 7
+      - code: PN07816NM
+        name: "TIPMN — tasa pasiva promedio MN (%)"
+        status: verified
+        processing:
+          unit_type: rate_pct
+          seasonal_adjust: none
+          transform: none
+          publication_lag_days: 7
+
+  inflation:
+    description: "Indicadores de inflación — IPC Lima Metropolitana"
+    frequency: monthly
+    series:
+      - code: PN01271PM
+        name: "IPC Lima Metropolitana (var% mensual)"
+        status: verified
+        processing:
+          unit_type: var_pct
+          seasonal_adjust: none
+          transform: none
+          publication_lag_days: 1
+      - code: PN01273PM
+        name: "IPC Lima Metropolitana (var% 12 meses)"
+        status: verified
+        processing:
+          unit_type: var_pct_yoy
+          seasonal_adjust: none
+          transform: none
+          publication_lag_days: 1
+      - code: PN38706PM
+        name: "IPC sin alimentos y energía (índice Dic.2021=100)"
+        status: verified
+        processing:
+          unit_type: index
+          seasonal_adjust: none
+          transform: all
+          publication_lag_days: 1
+
+  commodity_prices:
+    description: "Cotizaciones de commodities - principales exportaciones peruanas"
+    frequency: monthly
+    series:
+      - code: PN01652XM
+        name: "Cobre LME (ctv USD/lb)"
+        status: verified
+        processing:
+          unit_type: price_usd
+          seasonal_adjust: none
+          transform: all
+          publication_lag_days: 5
+      - code: PN01654XM
+        name: "Oro LME (USD/oz.tr.)"
+        status: verified
+        processing:
+          unit_type: price_usd
+          seasonal_adjust: none
+          transform: all
+          publication_lag_days: 5
+      - code: PN01660XM
+        name: "Petroleo WTI (USD/barril)"
+        status: verified
+        processing:
+          unit_type: price_usd
+          seasonal_adjust: none
+          transform: all
+          publication_lag_days: 5
+      - code: PN01655XM
+        name: "Plata H.Harman (USD/oz.tr.)"
+        status: verified
+        processing:
+          unit_type: price_usd
+          seasonal_adjust: none
+          transform: all
+          publication_lag_days: 5
+      - code: PN01657XM
+        name: "Zinc LME (ctv USD/lb)"
+        status: verified
+        processing:
+          unit_type: price_usd
+          seasonal_adjust: none
+          transform: all
+          publication_lag_days: 5
+
+  food_prices:
+    description: "Precios de alimentos"
+    frequency: monthly
+    series:
+      - code: PN39445PM
+        name: "IPC alimentos y bebidas (indice Dic.2021=100)"
+        status: verified
+        processing:
+          unit_type: index
+          seasonal_adjust: none
+          transform: all
+          publication_lag_days: 1
+      - code: PN01383PM
+        name: "IPC alimentos y bebidas (var%)"
+        status: verified
+        processing:
+          unit_type: var_pct
+          seasonal_adjust: none
+          transform: none
+          publication_lag_days: 1
+
+  trade:
+    description: "Terminos de intercambio"
+    frequency: monthly
+    series:
+      - code: PN38923BM
+        name: "Terminos de intercambio (indice 2007=100)"
+        status: verified
+        processing:
+          unit_type: index
+          seasonal_adjust: stl
+          transform: all
+          publication_lag_days: 45
+
+  monetary:
+    description: "Agregados monetarios"
+    frequency: monthly
+    series:
+      - code: PN01013MM
+        name: "Emision primaria - saldos (millones S/)"
+        status: verified
+        processing:
+          unit_type: nominal_soles
+          seasonal_adjust: stl
+          transform: all
+          publication_lag_days: 15
+      - code: PN00178MM
+        name: "Circulante (millones S/)"
+        status: verified
+        processing:
+          unit_type: nominal_soles
+          seasonal_adjust: stl
+          transform: all
+          publication_lag_days: 15
+
+  employment:
+    description: "Indicadores de empleo"
+    frequency: monthly
+    series:
+      - code: PN38063GM
+        name: "Tasa de desempleo Lima Metropolitana (%)"
+        status: verified
+        processing:
+          unit_type: rate_pct
+          seasonal_adjust: stl
+          transform: none
+          publication_lag_days: 30
+      - code: PN31879GM
+        name: "Puestos de trabajo sector formal total (miles)"
+        status: verified
+        processing:
+          unit_type: level
+          seasonal_adjust: stl
+          transform: all
+          publication_lag_days: 60
+
+  confidence:
+    description: "Indicadores de expectativas y confianza"
+    frequency: monthly
+    series:
+      - code: PD37981AM
+        name: "Expectativas empresariales - economia a 12 meses"
+        status: verified
+        processing:
+          unit_type: index
+          seasonal_adjust: none
+          transform: limited
+          publication_lag_days: 15
+      - code: PD12912AM
+        name: "Expectativa de inflacion a 12 meses"
+        status: verified
+        processing:
+          unit_type: rate_pct
+          seasonal_adjust: none
+          transform: none
+          publication_lag_days: 15
+
+  fiscal:
+    description: "Indicadores fiscales del gobierno general"
+    frequency: monthly
+    series:
+      - code: PN02204FM
+        name: "Ingresos corrientes del gobierno general (millones S/)"
+        status: verified
+        processing:
+          unit_type: nominal_soles
+          seasonal_adjust: stl
+          transform: all
+          publication_lag_days: 30
+      - code: PN02409FM
+        name: "Gastos no financieros del gobierno general (millones S/)"
+        status: verified
+        processing:
+          unit_type: nominal_soles
+          seasonal_adjust: stl
+          transform: all
+          publication_lag_days: 30
+
+quarterly:
+  gdp_quarterly:
+    description: "PBI trimestral — variación porcentual interanual"
+    frequency: quarterly
+    series:
+      - code: PN02507AQ
+        name: "PBI global (var% interanual, trimestral)"
+        status: pending
+      - code: PN02499AQ
+        name: "PBI agropecuario (var% interanual, trimestral)"
+        status: pending
+      - code: PN02500AQ
+        name: "PBI pesca (var% interanual, trimestral)"
+        status: pending
+      - code: PN02501AQ
+        name: "PBI minería e hidrocarburos (var% interanual, trimestral)"
+        status: pending
+      - code: PN02502AQ
+        name: "PBI manufactura (var% interanual, trimestral)"
+        status: pending
+      - code: PN02503AQ
+        name: "PBI electricidad y agua (var% interanual, trimestral)"
+        status: pending
+      - code: PN02504AQ
+        name: "PBI construcción (var% interanual, trimestral)"
+        status: pending
+      - code: PN02505AQ
+        name: "PBI comercio (var% interanual, trimestral)"
+        status: pending
+      - code: PN02506AQ
+        name: "PBI otros servicios (var% interanual, trimestral)"
+        status: pending
+      - code: PN02516AQ
+        name: "PBI índice (2007=100, trimestral)"
+        status: pending
+
+departmental:
+  # Departmental series to be populated after scraping BCRP regional section.
+  # See: https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/region-produccion

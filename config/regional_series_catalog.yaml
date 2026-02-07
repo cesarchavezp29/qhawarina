@@ -1,0 +1,527 @@
+# NEXUS Regional/Departmental BCRP Series Catalog
+# Source: https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales
+# Section: Información Estadística Regional (4,764 series total)
+# Verified: 2026-02-07
+
+regional:
+  # ──────────────────────────────────────────────────────────────────
+  # FINANCIAL SYSTEM (642 series)
+  # Source: SBS / BCRP
+  # ──────────────────────────────────────────────────────────────────
+
+  credit_by_department:
+    description: "Crédito directo del sistema financiero al sector privado por departamento — fin de periodo (millones S/)"
+    frequency: monthly
+    source: BCRP/SBS
+    unit: millones_soles
+    note: "3 variants per department: MN (moneda nacional), ME (moneda extranjera), Total"
+    series:
+    # Amazonas
+    - {code: RD13560DM, name: "Crédito - Amazonas (MN)", department: Amazonas, ubigeo: '01', currency: MN}
+    - {code: RD13561DM, name: "Crédito - Amazonas (ME)", department: Amazonas, ubigeo: '01', currency: ME}
+    - {code: RD13562DM, name: "Crédito - Amazonas (Total)", department: Amazonas, ubigeo: '01', currency: Total}
+    # Ancash
+    - {code: RD13563DM, name: "Crédito - Ancash (MN)", department: Ancash, ubigeo: '02', currency: MN}
+    - {code: RD13564DM, name: "Crédito - Ancash (ME)", department: Ancash, ubigeo: '02', currency: ME}
+    - {code: RD13565DM, name: "Crédito - Ancash (Total)", department: Ancash, ubigeo: '02', currency: Total}
+    # Apurímac
+    - {code: RD13566DM, name: "Crédito - Apurímac (MN)", department: Apurímac, ubigeo: '03', currency: MN}
+    - {code: RD13567DM, name: "Crédito - Apurímac (ME)", department: Apurímac, ubigeo: '03', currency: ME}
+    - {code: RD13568DM, name: "Crédito - Apurímac (Total)", department: Apurímac, ubigeo: '03', currency: Total}
+    # Arequipa
+    - {code: RD13569DM, name: "Crédito - Arequipa (MN)", department: Arequipa, ubigeo: '04', currency: MN}
+    - {code: RD13570DM, name: "Crédito - Arequipa (ME)", department: Arequipa, ubigeo: '04', currency: ME}
+    - {code: RD13571DM, name: "Crédito - Arequipa (Total)", department: Arequipa, ubigeo: '04', currency: Total}
+    # Ayacucho
+    - {code: RD13572DM, name: "Crédito - Ayacucho (MN)", department: Ayacucho, ubigeo: '05', currency: MN}
+    - {code: RD13573DM, name: "Crédito - Ayacucho (ME)", department: Ayacucho, ubigeo: '05', currency: ME}
+    - {code: RD13574DM, name: "Crédito - Ayacucho (Total)", department: Ayacucho, ubigeo: '05', currency: Total}
+    # Cajamarca
+    - {code: RD13575DM, name: "Crédito - Cajamarca (MN)", department: Cajamarca, ubigeo: '06', currency: MN}
+    - {code: RD13576DM, name: "Crédito - Cajamarca (ME)", department: Cajamarca, ubigeo: '06', currency: ME}
+    - {code: RD13577DM, name: "Crédito - Cajamarca (Total)", department: Cajamarca, ubigeo: '06', currency: Total}
+    # Callao
+    - {code: RD13578DM, name: "Crédito - Callao (MN)", department: Callao, ubigeo: '07', currency: MN}
+    - {code: RD13579DM, name: "Crédito - Callao (ME)", department: Callao, ubigeo: '07', currency: ME}
+    - {code: RD13580DM, name: "Crédito - Callao (Total)", department: Callao, ubigeo: '07', currency: Total}
+    # Cusco
+    - {code: RD13581DM, name: "Crédito - Cusco (MN)", department: Cusco, ubigeo: '08', currency: MN}
+    - {code: RD13582DM, name: "Crédito - Cusco (ME)", department: Cusco, ubigeo: '08', currency: ME}
+    - {code: RD13583DM, name: "Crédito - Cusco (Total)", department: Cusco, ubigeo: '08', currency: Total}
+    # Huancavelica
+    - {code: RD13584DM, name: "Crédito - Huancavelica (MN)", department: Huancavelica, ubigeo: '09', currency: MN}
+    - {code: RD13585DM, name: "Crédito - Huancavelica (ME)", department: Huancavelica, ubigeo: '09', currency: ME}
+    - {code: RD13586DM, name: "Crédito - Huancavelica (Total)", department: Huancavelica, ubigeo: '09', currency: Total}
+    # Huánuco
+    - {code: RD13587DM, name: "Crédito - Huánuco (MN)", department: Huánuco, ubigeo: '10', currency: MN}
+    - {code: RD13588DM, name: "Crédito - Huánuco (ME)", department: Huánuco, ubigeo: '10', currency: ME}
+    - {code: RD13589DM, name: "Crédito - Huánuco (Total)", department: Huánuco, ubigeo: '10', currency: Total}
+    # Ica
+    - {code: RD13590DM, name: "Crédito - Ica (MN)", department: Ica, ubigeo: '11', currency: MN}
+    - {code: RD13591DM, name: "Crédito - Ica (ME)", department: Ica, ubigeo: '11', currency: ME}
+    - {code: RD13592DM, name: "Crédito - Ica (Total)", department: Ica, ubigeo: '11', currency: Total}
+    # Junín
+    - {code: RD13593DM, name: "Crédito - Junín (MN)", department: Junín, ubigeo: '12', currency: MN}
+    - {code: RD13594DM, name: "Crédito - Junín (ME)", department: Junín, ubigeo: '12', currency: ME}
+    - {code: RD13595DM, name: "Crédito - Junín (Total)", department: Junín, ubigeo: '12', currency: Total}
+    # La Libertad
+    - {code: RD13596DM, name: "Crédito - La Libertad (MN)", department: La Libertad, ubigeo: '13', currency: MN}
+    - {code: RD13597DM, name: "Crédito - La Libertad (ME)", department: La Libertad, ubigeo: '13', currency: ME}
+    - {code: RD13598DM, name: "Crédito - La Libertad (Total)", department: La Libertad, ubigeo: '13', currency: Total}
+    # Lambayeque
+    - {code: RD13599DM, name: "Crédito - Lambayeque (MN)", department: Lambayeque, ubigeo: '14', currency: MN}
+    - {code: RD13600DM, name: "Crédito - Lambayeque (ME)", department: Lambayeque, ubigeo: '14', currency: ME}
+    - {code: RD13601DM, name: "Crédito - Lambayeque (Total)", department: Lambayeque, ubigeo: '14', currency: Total}
+    # Lima
+    - {code: RD13602DM, name: "Crédito - Lima (MN)", department: Lima, ubigeo: '15', currency: MN}
+    - {code: RD13603DM, name: "Crédito - Lima (ME)", department: Lima, ubigeo: '15', currency: ME}
+    - {code: RD13604DM, name: "Crédito - Lima (Total)", department: Lima, ubigeo: '15', currency: Total}
+    # Loreto
+    - {code: RD13605DM, name: "Crédito - Loreto (MN)", department: Loreto, ubigeo: '16', currency: MN}
+    - {code: RD13606DM, name: "Crédito - Loreto (ME)", department: Loreto, ubigeo: '16', currency: ME}
+    - {code: RD13607DM, name: "Crédito - Loreto (Total)", department: Loreto, ubigeo: '16', currency: Total}
+    # Madre de Dios
+    - {code: RD13608DM, name: "Crédito - Madre de Dios (MN)", department: Madre de Dios, ubigeo: '17', currency: MN}
+    - {code: RD13609DM, name: "Crédito - Madre de Dios (ME)", department: Madre de Dios, ubigeo: '17', currency: ME}
+    - {code: RD13610DM, name: "Crédito - Madre de Dios (Total)", department: Madre de Dios, ubigeo: '17', currency: Total}
+    # Moquegua
+    - {code: RD13611DM, name: "Crédito - Moquegua (MN)", department: Moquegua, ubigeo: '18', currency: MN}
+    - {code: RD13612DM, name: "Crédito - Moquegua (ME)", department: Moquegua, ubigeo: '18', currency: ME}
+    - {code: RD13613DM, name: "Crédito - Moquegua (Total)", department: Moquegua, ubigeo: '18', currency: Total}
+    # Pasco
+    - {code: RD13614DM, name: "Crédito - Pasco (MN)", department: Pasco, ubigeo: '19', currency: MN}
+    - {code: RD13615DM, name: "Crédito - Pasco (ME)", department: Pasco, ubigeo: '19', currency: ME}
+    - {code: RD13616DM, name: "Crédito - Pasco (Total)", department: Pasco, ubigeo: '19', currency: Total}
+    # Piura
+    - {code: RD13617DM, name: "Crédito - Piura (MN)", department: Piura, ubigeo: '20', currency: MN}
+    - {code: RD13618DM, name: "Crédito - Piura (ME)", department: Piura, ubigeo: '20', currency: ME}
+    - {code: RD13619DM, name: "Crédito - Piura (Total)", department: Piura, ubigeo: '20', currency: Total}
+    # Puno
+    - {code: RD13620DM, name: "Crédito - Puno (MN)", department: Puno, ubigeo: '21', currency: MN}
+    - {code: RD13621DM, name: "Crédito - Puno (ME)", department: Puno, ubigeo: '21', currency: ME}
+    - {code: RD13622DM, name: "Crédito - Puno (Total)", department: Puno, ubigeo: '21', currency: Total}
+    # San Martín
+    - {code: RD13623DM, name: "Crédito - San Martín (MN)", department: San Martín, ubigeo: '22', currency: MN}
+    - {code: RD13624DM, name: "Crédito - San Martín (ME)", department: San Martín, ubigeo: '22', currency: ME}
+    - {code: RD13625DM, name: "Crédito - San Martín (Total)", department: San Martín, ubigeo: '22', currency: Total}
+    # Tacna
+    - {code: RD13626DM, name: "Crédito - Tacna (MN)", department: Tacna, ubigeo: '23', currency: MN}
+    - {code: RD13627DM, name: "Crédito - Tacna (ME)", department: Tacna, ubigeo: '23', currency: ME}
+    - {code: RD13628DM, name: "Crédito - Tacna (Total)", department: Tacna, ubigeo: '23', currency: Total}
+    # Tumbes
+    - {code: RD13629DM, name: "Crédito - Tumbes (MN)", department: Tumbes, ubigeo: '24', currency: MN}
+    - {code: RD13630DM, name: "Crédito - Tumbes (ME)", department: Tumbes, ubigeo: '24', currency: ME}
+    - {code: RD13631DM, name: "Crédito - Tumbes (Total)", department: Tumbes, ubigeo: '24', currency: Total}
+    # Ucayali
+    - {code: RD13632DM, name: "Crédito - Ucayali (MN)", department: Ucayali, ubigeo: '25', currency: MN}
+    - {code: RD13633DM, name: "Crédito - Ucayali (ME)", department: Ucayali, ubigeo: '25', currency: ME}
+    - {code: RD13634DM, name: "Crédito - Ucayali (Total)", department: Ucayali, ubigeo: '25', currency: Total}
+    # Nacional
+    - {code: RD13635DM, name: "Crédito - Total Nacional (MN)", currency: MN}
+    - {code: RD13636DM, name: "Crédito - Total Nacional (ME)", currency: ME}
+    - {code: RD13637DM, name: "Crédito - Total Nacional (Total)", currency: Total}
+
+  deposits_by_department:
+    description: "Depósitos del sistema financiero por departamento — fin de periodo (millones S/)"
+    frequency: monthly
+    source: BCRP/SBS
+    unit: millones_soles
+    note: "3 variants per department: MN (moneda nacional), ME (moneda extranjera), Total"
+    series:
+    # Amazonas
+    - {code: RD13638DM, name: "Depósitos - Amazonas (MN)", department: Amazonas, ubigeo: '01', currency: MN}
+    - {code: RD13639DM, name: "Depósitos - Amazonas (ME)", department: Amazonas, ubigeo: '01', currency: ME}
+    - {code: RD13640DM, name: "Depósitos - Amazonas (Total)", department: Amazonas, ubigeo: '01', currency: Total}
+    # Ancash
+    - {code: RD13641DM, name: "Depósitos - Ancash (MN)", department: Ancash, ubigeo: '02', currency: MN}
+    - {code: RD13642DM, name: "Depósitos - Ancash (ME)", department: Ancash, ubigeo: '02', currency: ME}
+    - {code: RD13643DM, name: "Depósitos - Ancash (Total)", department: Ancash, ubigeo: '02', currency: Total}
+    # Apurímac
+    - {code: RD13644DM, name: "Depósitos - Apurímac (MN)", department: Apurímac, ubigeo: '03', currency: MN}
+    - {code: RD13645DM, name: "Depósitos - Apurímac (ME)", department: Apurímac, ubigeo: '03', currency: ME}
+    - {code: RD13646DM, name: "Depósitos - Apurímac (Total)", department: Apurímac, ubigeo: '03', currency: Total}
+    # Arequipa
+    - {code: RD13647DM, name: "Depósitos - Arequipa (MN)", department: Arequipa, ubigeo: '04', currency: MN}
+    - {code: RD13648DM, name: "Depósitos - Arequipa (ME)", department: Arequipa, ubigeo: '04', currency: ME}
+    - {code: RD13649DM, name: "Depósitos - Arequipa (Total)", department: Arequipa, ubigeo: '04', currency: Total}
+    # Ayacucho
+    - {code: RD13650DM, name: "Depósitos - Ayacucho (MN)", department: Ayacucho, ubigeo: '05', currency: MN}
+    - {code: RD13651DM, name: "Depósitos - Ayacucho (ME)", department: Ayacucho, ubigeo: '05', currency: ME}
+    - {code: RD13652DM, name: "Depósitos - Ayacucho (Total)", department: Ayacucho, ubigeo: '05', currency: Total}
+    # Cajamarca
+    - {code: RD13653DM, name: "Depósitos - Cajamarca (MN)", department: Cajamarca, ubigeo: '06', currency: MN}
+    - {code: RD13654DM, name: "Depósitos - Cajamarca (ME)", department: Cajamarca, ubigeo: '06', currency: ME}
+    - {code: RD13655DM, name: "Depósitos - Cajamarca (Total)", department: Cajamarca, ubigeo: '06', currency: Total}
+    # Callao
+    - {code: RD13656DM, name: "Depósitos - Callao (MN)", department: Callao, ubigeo: '07', currency: MN}
+    - {code: RD13657DM, name: "Depósitos - Callao (ME)", department: Callao, ubigeo: '07', currency: ME}
+    - {code: RD13658DM, name: "Depósitos - Callao (Total)", department: Callao, ubigeo: '07', currency: Total}
+    # Cusco
+    - {code: RD13659DM, name: "Depósitos - Cusco (MN)", department: Cusco, ubigeo: '08', currency: MN}
+    - {code: RD13660DM, name: "Depósitos - Cusco (ME)", department: Cusco, ubigeo: '08', currency: ME}
+    - {code: RD13661DM, name: "Depósitos - Cusco (Total)", department: Cusco, ubigeo: '08', currency: Total}
+    # Huancavelica
+    - {code: RD13662DM, name: "Depósitos - Huancavelica (MN)", department: Huancavelica, ubigeo: '09', currency: MN}
+    - {code: RD13663DM, name: "Depósitos - Huancavelica (ME)", department: Huancavelica, ubigeo: '09', currency: ME}
+    - {code: RD13664DM, name: "Depósitos - Huancavelica (Total)", department: Huancavelica, ubigeo: '09', currency: Total}
+    # Huánuco
+    - {code: RD13665DM, name: "Depósitos - Huánuco (MN)", department: Huánuco, ubigeo: '10', currency: MN}
+    - {code: RD13666DM, name: "Depósitos - Huánuco (ME)", department: Huánuco, ubigeo: '10', currency: ME}
+    - {code: RD13667DM, name: "Depósitos - Huánuco (Total)", department: Huánuco, ubigeo: '10', currency: Total}
+    # Ica
+    - {code: RD13668DM, name: "Depósitos - Ica (MN)", department: Ica, ubigeo: '11', currency: MN}
+    - {code: RD13669DM, name: "Depósitos - Ica (ME)", department: Ica, ubigeo: '11', currency: ME}
+    - {code: RD13670DM, name: "Depósitos - Ica (Total)", department: Ica, ubigeo: '11', currency: Total}
+    # Junín
+    - {code: RD13671DM, name: "Depósitos - Junín (MN)", department: Junín, ubigeo: '12', currency: MN}
+    - {code: RD13672DM, name: "Depósitos - Junín (ME)", department: Junín, ubigeo: '12', currency: ME}
+    - {code: RD13673DM, name: "Depósitos - Junín (Total)", department: Junín, ubigeo: '12', currency: Total}
+    # La Libertad
+    - {code: RD13674DM, name: "Depósitos - La Libertad (MN)", department: La Libertad, ubigeo: '13', currency: MN}
+    - {code: RD13675DM, name: "Depósitos - La Libertad (ME)", department: La Libertad, ubigeo: '13', currency: ME}
+    - {code: RD13676DM, name: "Depósitos - La Libertad (Total)", department: La Libertad, ubigeo: '13', currency: Total}
+    # Lambayeque
+    - {code: RD13677DM, name: "Depósitos - Lambayeque (MN)", department: Lambayeque, ubigeo: '14', currency: MN}
+    - {code: RD13678DM, name: "Depósitos - Lambayeque (ME)", department: Lambayeque, ubigeo: '14', currency: ME}
+    - {code: RD13679DM, name: "Depósitos - Lambayeque (Total)", department: Lambayeque, ubigeo: '14', currency: Total}
+    # Lima
+    - {code: RD13680DM, name: "Depósitos - Lima (MN)", department: Lima, ubigeo: '15', currency: MN}
+    - {code: RD13681DM, name: "Depósitos - Lima (ME)", department: Lima, ubigeo: '15', currency: ME}
+    - {code: RD13682DM, name: "Depósitos - Lima (Total)", department: Lima, ubigeo: '15', currency: Total}
+    # Loreto
+    - {code: RD13683DM, name: "Depósitos - Loreto (MN)", department: Loreto, ubigeo: '16', currency: MN}
+    - {code: RD13684DM, name: "Depósitos - Loreto (ME)", department: Loreto, ubigeo: '16', currency: ME}
+    - {code: RD13685DM, name: "Depósitos - Loreto (Total)", department: Loreto, ubigeo: '16', currency: Total}
+    # Madre de Dios
+    - {code: RD13686DM, name: "Depósitos - Madre de Dios (MN)", department: Madre de Dios, ubigeo: '17', currency: MN}
+    - {code: RD13687DM, name: "Depósitos - Madre de Dios (ME)", department: Madre de Dios, ubigeo: '17', currency: ME}
+    - {code: RD13688DM, name: "Depósitos - Madre de Dios (Total)", department: Madre de Dios, ubigeo: '17', currency: Total}
+    # Moquegua
+    - {code: RD13689DM, name: "Depósitos - Moquegua (MN)", department: Moquegua, ubigeo: '18', currency: MN}
+    - {code: RD13690DM, name: "Depósitos - Moquegua (ME)", department: Moquegua, ubigeo: '18', currency: ME}
+    - {code: RD13691DM, name: "Depósitos - Moquegua (Total)", department: Moquegua, ubigeo: '18', currency: Total}
+    # Pasco
+    - {code: RD13692DM, name: "Depósitos - Pasco (MN)", department: Pasco, ubigeo: '19', currency: MN}
+    - {code: RD13693DM, name: "Depósitos - Pasco (ME)", department: Pasco, ubigeo: '19', currency: ME}
+    - {code: RD13694DM, name: "Depósitos - Pasco (Total)", department: Pasco, ubigeo: '19', currency: Total}
+    # Piura
+    - {code: RD13695DM, name: "Depósitos - Piura (MN)", department: Piura, ubigeo: '20', currency: MN}
+    - {code: RD13696DM, name: "Depósitos - Piura (ME)", department: Piura, ubigeo: '20', currency: ME}
+    - {code: RD13697DM, name: "Depósitos - Piura (Total)", department: Piura, ubigeo: '20', currency: Total}
+    # Puno
+    - {code: RD13698DM, name: "Depósitos - Puno (MN)", department: Puno, ubigeo: '21', currency: MN}
+    - {code: RD13699DM, name: "Depósitos - Puno (ME)", department: Puno, ubigeo: '21', currency: ME}
+    - {code: RD13700DM, name: "Depósitos - Puno (Total)", department: Puno, ubigeo: '21', currency: Total}
+    # San Martín
+    - {code: RD13701DM, name: "Depósitos - San Martín (MN)", department: San Martín, ubigeo: '22', currency: MN}
+    - {code: RD13702DM, name: "Depósitos - San Martín (ME)", department: San Martín, ubigeo: '22', currency: ME}
+    - {code: RD13703DM, name: "Depósitos - San Martín (Total)", department: San Martín, ubigeo: '22', currency: Total}
+    # Tacna
+    - {code: RD13704DM, name: "Depósitos - Tacna (MN)", department: Tacna, ubigeo: '23', currency: MN}
+    - {code: RD13705DM, name: "Depósitos - Tacna (ME)", department: Tacna, ubigeo: '23', currency: ME}
+    - {code: RD13706DM, name: "Depósitos - Tacna (Total)", department: Tacna, ubigeo: '23', currency: Total}
+    # Tumbes
+    - {code: RD13707DM, name: "Depósitos - Tumbes (MN)", department: Tumbes, ubigeo: '24', currency: MN}
+    - {code: RD13708DM, name: "Depósitos - Tumbes (ME)", department: Tumbes, ubigeo: '24', currency: ME}
+    - {code: RD13709DM, name: "Depósitos - Tumbes (Total)", department: Tumbes, ubigeo: '24', currency: Total}
+    # Ucayali
+    - {code: RD13710DM, name: "Depósitos - Ucayali (MN)", department: Ucayali, ubigeo: '25', currency: MN}
+    - {code: RD13711DM, name: "Depósitos - Ucayali (ME)", department: Ucayali, ubigeo: '25', currency: ME}
+    - {code: RD13712DM, name: "Depósitos - Ucayali (Total)", department: Ucayali, ubigeo: '25', currency: Total}
+    # Nacional
+    - {code: RD13713DM, name: "Depósitos - Total Nacional (MN)", currency: MN}
+    - {code: RD13714DM, name: "Depósitos - Total Nacional (ME)", currency: ME}
+    - {code: RD13715DM, name: "Depósitos - Total Nacional (Total)", currency: Total}
+
+  pension_affiliates_by_department:
+    description: "Afiliados activos al sistema privado de pensiones por departamento (miles de personas)"
+    frequency: monthly
+    source: BCRP/SBS
+    unit: miles_personas
+    series:
+    - {code: RD13716DM, name: "AFP Afiliados - Amazonas", department: Amazonas, ubigeo: '01'}
+    - {code: RD13717DM, name: "AFP Afiliados - Ancash", department: Ancash, ubigeo: '02'}
+    - {code: RD13718DM, name: "AFP Afiliados - Apurímac", department: Apurímac, ubigeo: '03'}
+    - {code: RD13719DM, name: "AFP Afiliados - Arequipa", department: Arequipa, ubigeo: '04'}
+    - {code: RD13720DM, name: "AFP Afiliados - Ayacucho", department: Ayacucho, ubigeo: '05'}
+    - {code: RD13721DM, name: "AFP Afiliados - Cajamarca", department: Cajamarca, ubigeo: '06'}
+    - {code: RD13722DM, name: "AFP Afiliados - Callao", department: Callao, ubigeo: '07'}
+    - {code: RD13723DM, name: "AFP Afiliados - Cusco", department: Cusco, ubigeo: '08'}
+    - {code: RD13724DM, name: "AFP Afiliados - Huancavelica", department: Huancavelica, ubigeo: '09'}
+    - {code: RD13725DM, name: "AFP Afiliados - Huánuco", department: Huánuco, ubigeo: '10'}
+    - {code: RD13726DM, name: "AFP Afiliados - Ica", department: Ica, ubigeo: '11'}
+    - {code: RD13727DM, name: "AFP Afiliados - Junín", department: Junín, ubigeo: '12'}
+    - {code: RD13728DM, name: "AFP Afiliados - La Libertad", department: La Libertad, ubigeo: '13'}
+    - {code: RD13729DM, name: "AFP Afiliados - Lambayeque", department: Lambayeque, ubigeo: '14'}
+    - {code: RD13730DM, name: "AFP Afiliados - Lima", department: Lima, ubigeo: '15'}
+    - {code: RD13731DM, name: "AFP Afiliados - Loreto", department: Loreto, ubigeo: '16'}
+    - {code: RD13732DM, name: "AFP Afiliados - Madre de Dios", department: Madre de Dios, ubigeo: '17'}
+    - {code: RD13733DM, name: "AFP Afiliados - Moquegua", department: Moquegua, ubigeo: '18'}
+    - {code: RD13734DM, name: "AFP Afiliados - Pasco", department: Pasco, ubigeo: '19'}
+    - {code: RD13735DM, name: "AFP Afiliados - Piura", department: Piura, ubigeo: '20'}
+    - {code: RD13736DM, name: "AFP Afiliados - Puno", department: Puno, ubigeo: '21'}
+    - {code: RD13737DM, name: "AFP Afiliados - San Martín", department: San Martín, ubigeo: '22'}
+    - {code: RD13738DM, name: "AFP Afiliados - Tacna", department: Tacna, ubigeo: '23'}
+    - {code: RD13739DM, name: "AFP Afiliados - Tumbes", department: Tumbes, ubigeo: '24'}
+    - {code: RD13740DM, name: "AFP Afiliados - Ucayali", department: Ucayali, ubigeo: '25'}
+    - {code: RD13744DM, name: "AFP Afiliados - Total Nacional"}
+
+  # ──────────────────────────────────────────────────────────────────
+  # PRODUCTION (1,449 series)
+  # ──────────────────────────────────────────────────────────────────
+
+  electricity_by_department:
+    description: "Producción de electricidad por departamento (GWh)"
+    frequency: monthly
+    source: BCRP
+    unit: gwh
+    series:
+    - {code: RD13043DM, name: "Electricidad - Amazonas", department: Amazonas, ubigeo: '01'}
+    - {code: RD13044DM, name: "Electricidad - Ancash", department: Ancash, ubigeo: '02'}
+    - {code: RD13045DM, name: "Electricidad - Apurímac", department: Apurímac, ubigeo: '03'}
+    - {code: RD13046DM, name: "Electricidad - Arequipa", department: Arequipa, ubigeo: '04'}
+    - {code: RD13047DM, name: "Electricidad - Ayacucho", department: Ayacucho, ubigeo: '05'}
+    - {code: RD13048DM, name: "Electricidad - Cajamarca", department: Cajamarca, ubigeo: '06'}
+    - {code: RD13049DM, name: "Electricidad - Cusco", department: Cusco, ubigeo: '08'}
+    - {code: RD13050DM, name: "Electricidad - Huancavelica", department: Huancavelica, ubigeo: '09'}
+    - {code: RD13051DM, name: "Electricidad - Huánuco", department: Huánuco, ubigeo: '10'}
+    - {code: RD13052DM, name: "Electricidad - Ica", department: Ica, ubigeo: '11'}
+    - {code: RD13053DM, name: "Electricidad - Junín", department: Junín, ubigeo: '12'}
+    - {code: RD13054DM, name: "Electricidad - La Libertad", department: La Libertad, ubigeo: '13'}
+    - {code: RD13055DM, name: "Electricidad - Lambayeque", department: Lambayeque, ubigeo: '14'}
+    - {code: RD13056DM, name: "Electricidad - Lima", department: Lima, ubigeo: '15'}
+    - {code: RD13057DM, name: "Electricidad - Loreto", department: Loreto, ubigeo: '16'}
+    - {code: RD13058DM, name: "Electricidad - Madre de Dios", department: Madre de Dios, ubigeo: '17'}
+    - {code: RD13059DM, name: "Electricidad - Moquegua", department: Moquegua, ubigeo: '18'}
+    - {code: RD13060DM, name: "Electricidad - Pasco", department: Pasco, ubigeo: '19'}
+    - {code: RD13061DM, name: "Electricidad - Piura", department: Piura, ubigeo: '20'}
+    - {code: RD13062DM, name: "Electricidad - Puno", department: Puno, ubigeo: '21'}
+    - {code: RD13063DM, name: "Electricidad - San Martín", department: San Martín, ubigeo: '22'}
+    - {code: RD13064DM, name: "Electricidad - Tacna", department: Tacna, ubigeo: '23'}
+    - {code: RD13065DM, name: "Electricidad - Tumbes", department: Tumbes, ubigeo: '24'}
+    - {code: RD13066DM, name: "Electricidad - Ucayali", department: Ucayali, ubigeo: '25'}
+    - {code: RD13067DM, name: "Electricidad - Total Nacional"}
+
+  mining_copper_by_department:
+    description: "Producción minera de cobre por departamento (TMF)"
+    frequency: monthly
+    source: BCRP
+    unit: tmf
+    series:
+    - {code: RD12951DM, name: "Cobre - Total Nacional"}
+    - {code: RD12952DM, name: "Cobre - Ancash", department: Ancash, ubigeo: '02'}
+    - {code: RD12953DM, name: "Cobre - Apurímac", department: Apurímac, ubigeo: '03'}
+    - {code: RD12954DM, name: "Cobre - Arequipa", department: Arequipa, ubigeo: '04'}
+    - {code: RD12955DM, name: "Cobre - Ayacucho", department: Ayacucho, ubigeo: '05'}
+    - {code: RD12956DM, name: "Cobre - Cajamarca", department: Cajamarca, ubigeo: '06'}
+    - {code: RD12957DM, name: "Cobre - Cusco", department: Cusco, ubigeo: '08'}
+    - {code: RD12958DM, name: "Cobre - Huancavelica", department: Huancavelica, ubigeo: '09'}
+    - {code: RD12959DM, name: "Cobre - Huánuco", department: Huánuco, ubigeo: '10'}
+    - {code: RD12960DM, name: "Cobre - Ica", department: Ica, ubigeo: '11'}
+    - {code: RD12961DM, name: "Cobre - Junín", department: Junín, ubigeo: '12'}
+    - {code: RD12962DM, name: "Cobre - La Libertad", department: La Libertad, ubigeo: '13'}
+    - {code: RD12963DM, name: "Cobre - Lima", department: Lima, ubigeo: '15'}
+    - {code: RD12964DM, name: "Cobre - Moquegua", department: Moquegua, ubigeo: '18'}
+    - {code: RD12965DM, name: "Cobre - Pasco", department: Pasco, ubigeo: '19'}
+    - {code: RD12966DM, name: "Cobre - Puno", department: Puno, ubigeo: '21'}
+    - {code: RD12967DM, name: "Cobre - Tacna", department: Tacna, ubigeo: '23'}
+
+  mining_gold_by_department:
+    description: "Producción minera de oro por departamento (miles de onzas troy)"
+    frequency: monthly
+    source: BCRP
+    unit: miles_oz_troy
+    series:
+    - {code: RD12978DM, name: "Oro - Total Nacional"}
+    - {code: RD12979DM, name: "Oro - Ancash", department: Ancash, ubigeo: '02'}
+    - {code: RD12980DM, name: "Oro - Apurímac", department: Apurímac, ubigeo: '03'}
+    - {code: RD12981DM, name: "Oro - Arequipa", department: Arequipa, ubigeo: '04'}
+    - {code: RD12982DM, name: "Oro - Ayacucho", department: Ayacucho, ubigeo: '05'}
+    - {code: RD12983DM, name: "Oro - Cajamarca", department: Cajamarca, ubigeo: '06'}
+    - {code: RD12984DM, name: "Oro - Cusco", department: Cusco, ubigeo: '08'}
+    - {code: RD12985DM, name: "Oro - Huancavelica", department: Huancavelica, ubigeo: '09'}
+    - {code: RD12986DM, name: "Oro - Ica", department: Ica, ubigeo: '11'}
+    - {code: RD12987DM, name: "Oro - Junín", department: Junín, ubigeo: '12'}
+    - {code: RD12988DM, name: "Oro - La Libertad", department: La Libertad, ubigeo: '13'}
+    - {code: RD12989DM, name: "Oro - Lima", department: Lima, ubigeo: '15'}
+    - {code: RD12990DM, name: "Oro - Madre de Dios", department: Madre de Dios, ubigeo: '17'}
+    - {code: RD12991DM, name: "Oro - Moquegua", department: Moquegua, ubigeo: '18'}
+    - {code: RD12992DM, name: "Oro - Pasco", department: Pasco, ubigeo: '19'}
+    - {code: RD12993DM, name: "Oro - Piura", department: Piura, ubigeo: '20'}
+    - {code: RD12994DM, name: "Oro - Puno", department: Puno, ubigeo: '21'}
+    - {code: RD12995DM, name: "Oro - Tacna", department: Tacna, ubigeo: '23'}
+
+  # ──────────────────────────────────────────────────────────────────
+  # PUBLIC SECTOR (1,191 series)
+  # ──────────────────────────────────────────────────────────────────
+
+  tax_revenue_by_department:
+    description: "Ingresos tributarios recaudados por SUNAT — tributos internos por departamento (millones S/)"
+    frequency: monthly
+    source: BCRP/SUNAT
+    unit: millones_soles
+    series:
+    - {code: RD13774DM, name: "Tributos Internos - Amazonas", department: Amazonas, ubigeo: '01'}
+    - {code: RD13775DM, name: "Tributos Internos - Ancash", department: Ancash, ubigeo: '02'}
+    - {code: RD13776DM, name: "Tributos Internos - Apurímac", department: Apurímac, ubigeo: '03'}
+    - {code: RD13777DM, name: "Tributos Internos - Arequipa", department: Arequipa, ubigeo: '04'}
+    - {code: RD13778DM, name: "Tributos Internos - Ayacucho", department: Ayacucho, ubigeo: '05'}
+    - {code: RD13779DM, name: "Tributos Internos - Cajamarca", department: Cajamarca, ubigeo: '06'}
+    - {code: RD13780DM, name: "Tributos Internos - Callao", department: Callao, ubigeo: '07'}
+    - {code: RD13781DM, name: "Tributos Internos - Cusco", department: Cusco, ubigeo: '08'}
+    - {code: RD13782DM, name: "Tributos Internos - Huancavelica", department: Huancavelica, ubigeo: '09'}
+    - {code: RD13783DM, name: "Tributos Internos - Huánuco", department: Huánuco, ubigeo: '10'}
+    - {code: RD13784DM, name: "Tributos Internos - Ica", department: Ica, ubigeo: '11'}
+    - {code: RD13785DM, name: "Tributos Internos - Junín", department: Junín, ubigeo: '12'}
+    - {code: RD13786DM, name: "Tributos Internos - La Libertad", department: La Libertad, ubigeo: '13'}
+    - {code: RD13787DM, name: "Tributos Internos - Lambayeque", department: Lambayeque, ubigeo: '14'}
+    - {code: RD13788DM, name: "Tributos Internos - Lima Metropolitana", department: Lima, ubigeo: '15'}
+    - {code: RD13789DM, name: "Tributos Internos - Lima Provincias", department: Lima Provincias, ubigeo: '15'}
+    - {code: RD13790DM, name: "Tributos Internos - Loreto", department: Loreto, ubigeo: '16'}
+    - {code: RD13791DM, name: "Tributos Internos - Madre de Dios", department: Madre de Dios, ubigeo: '17'}
+    - {code: RD13792DM, name: "Tributos Internos - Moquegua", department: Moquegua, ubigeo: '18'}
+    - {code: RD13793DM, name: "Tributos Internos - Pasco", department: Pasco, ubigeo: '19'}
+    - {code: RD13794DM, name: "Tributos Internos - Piura", department: Piura, ubigeo: '20'}
+    - {code: RD13795DM, name: "Tributos Internos - Puno", department: Puno, ubigeo: '21'}
+    - {code: RD13796DM, name: "Tributos Internos - San Martín", department: San Martín, ubigeo: '22'}
+    - {code: RD13797DM, name: "Tributos Internos - Tacna", department: Tacna, ubigeo: '23'}
+    - {code: RD13798DM, name: "Tributos Internos - Tumbes", department: Tumbes, ubigeo: '24'}
+    - {code: RD13799DM, name: "Tributos Internos - Ucayali", department: Ucayali, ubigeo: '25'}
+    - {code: RD13800DM, name: "Tributos Internos - Total Nacional"}
+
+  government_spending_local:
+    description: "Gasto no financiero de gobiernos locales por departamento (millones S/)"
+    frequency: monthly
+    source: BCRP/MEF
+    unit: millones_soles
+    series:
+    - {code: RD13986DM, name: "Gasto GL - Amazonas", department: Amazonas, ubigeo: '01'}
+    - {code: RD13987DM, name: "Gasto GL - Ancash", department: Ancash, ubigeo: '02'}
+    - {code: RD13988DM, name: "Gasto GL - Apurímac", department: Apurímac, ubigeo: '03'}
+    - {code: RD13989DM, name: "Gasto GL - Arequipa", department: Arequipa, ubigeo: '04'}
+    - {code: RD13990DM, name: "Gasto GL - Ayacucho", department: Ayacucho, ubigeo: '05'}
+    - {code: RD13991DM, name: "Gasto GL - Cajamarca", department: Cajamarca, ubigeo: '06'}
+    - {code: RD13992DM, name: "Gasto GL - Callao", department: Callao, ubigeo: '07'}
+    - {code: RD13993DM, name: "Gasto GL - Cusco", department: Cusco, ubigeo: '08'}
+    - {code: RD13994DM, name: "Gasto GL - Huancavelica", department: Huancavelica, ubigeo: '09'}
+    - {code: RD13995DM, name: "Gasto GL - Huánuco", department: Huánuco, ubigeo: '10'}
+    - {code: RD13996DM, name: "Gasto GL - Ica", department: Ica, ubigeo: '11'}
+    - {code: RD13997DM, name: "Gasto GL - Junín", department: Junín, ubigeo: '12'}
+    - {code: RD13998DM, name: "Gasto GL - La Libertad", department: La Libertad, ubigeo: '13'}
+    - {code: RD13999DM, name: "Gasto GL - Lambayeque", department: Lambayeque, ubigeo: '14'}
+    - {code: RD14000DM, name: "Gasto GL - Lima", department: Lima, ubigeo: '15'}
+    - {code: RD14001DM, name: "Gasto GL - Loreto", department: Loreto, ubigeo: '16'}
+    - {code: RD14002DM, name: "Gasto GL - Madre de Dios", department: Madre de Dios, ubigeo: '17'}
+    - {code: RD14003DM, name: "Gasto GL - Moquegua", department: Moquegua, ubigeo: '18'}
+    - {code: RD14004DM, name: "Gasto GL - Pasco", department: Pasco, ubigeo: '19'}
+    - {code: RD14005DM, name: "Gasto GL - Piura", department: Piura, ubigeo: '20'}
+    - {code: RD14006DM, name: "Gasto GL - Puno", department: Puno, ubigeo: '21'}
+    - {code: RD14007DM, name: "Gasto GL - San Martín", department: San Martín, ubigeo: '22'}
+    - {code: RD14008DM, name: "Gasto GL - Tacna", department: Tacna, ubigeo: '23'}
+    - {code: RD14009DM, name: "Gasto GL - Tumbes", department: Tumbes, ubigeo: '24'}
+    - {code: RD14010DM, name: "Gasto GL - Ucayali", department: Ucayali, ubigeo: '25'}
+    - {code: RD14011DM, name: "Gasto GL - Total Nacional"}
+
+  government_spending_regional:
+    description: "Gasto no financiero de gobiernos regionales por departamento (millones S/)"
+    frequency: monthly
+    source: BCRP/MEF
+    unit: millones_soles
+    series:
+    - {code: RD14038DM, name: "Gasto GR - Amazonas", department: Amazonas, ubigeo: '01'}
+    - {code: RD14039DM, name: "Gasto GR - Ancash", department: Ancash, ubigeo: '02'}
+    - {code: RD14040DM, name: "Gasto GR - Apurímac", department: Apurímac, ubigeo: '03'}
+    - {code: RD14041DM, name: "Gasto GR - Arequipa", department: Arequipa, ubigeo: '04'}
+    - {code: RD14042DM, name: "Gasto GR - Ayacucho", department: Ayacucho, ubigeo: '05'}
+    - {code: RD14043DM, name: "Gasto GR - Cajamarca", department: Cajamarca, ubigeo: '06'}
+    - {code: RD14044DM, name: "Gasto GR - Cusco", department: Cusco, ubigeo: '08'}
+    - {code: RD14045DM, name: "Gasto GR - Huancavelica", department: Huancavelica, ubigeo: '09'}
+    - {code: RD14046DM, name: "Gasto GR - Huánuco", department: Huánuco, ubigeo: '10'}
+    - {code: RD14047DM, name: "Gasto GR - Ica", department: Ica, ubigeo: '11'}
+    - {code: RD14048DM, name: "Gasto GR - Junín", department: Junín, ubigeo: '12'}
+    - {code: RD14049DM, name: "Gasto GR - La Libertad", department: La Libertad, ubigeo: '13'}
+    - {code: RD14050DM, name: "Gasto GR - Lambayeque", department: Lambayeque, ubigeo: '14'}
+    - {code: RD14051DM, name: "Gasto GR - Loreto", department: Loreto, ubigeo: '16'}
+    - {code: RD14052DM, name: "Gasto GR - Madre de Dios", department: Madre de Dios, ubigeo: '17'}
+    - {code: RD14053DM, name: "Gasto GR - Moquegua", department: Moquegua, ubigeo: '18'}
+    - {code: RD14054DM, name: "Gasto GR - Pasco", department: Pasco, ubigeo: '19'}
+    - {code: RD14055DM, name: "Gasto GR - Piura", department: Piura, ubigeo: '20'}
+    - {code: RD14056DM, name: "Gasto GR - Puno", department: Puno, ubigeo: '21'}
+    - {code: RD14057DM, name: "Gasto GR - San Martín", department: San Martín, ubigeo: '22'}
+    - {code: RD14058DM, name: "Gasto GR - Tacna", department: Tacna, ubigeo: '23'}
+    - {code: RD14059DM, name: "Gasto GR - Tumbes", department: Tumbes, ubigeo: '24'}
+    - {code: RD14060DM, name: "Gasto GR - Ucayali", department: Ucayali, ubigeo: '25'}
+    - {code: RD14061DM, name: "Gasto GR - Lima", department: Lima, ubigeo: '15'}
+    - {code: RD14062DM, name: "Gasto GR - Callao", department: Callao, ubigeo: '07'}
+    - {code: RD14064DM, name: "Gasto GR - Total Nacional"}
+
+  # ──────────────────────────────────────────────────────────────────
+  # TRADE (1,482 series)
+  # ──────────────────────────────────────────────────────────────────
+
+  exports_by_department:
+    description: "Exportaciones FOB por departamento (millones USD)"
+    frequency: monthly
+    source: BCRP
+    unit: millones_usd
+    note: "Data available through Dec 2022 only"
+    series:
+    - {code: RD38085BM, name: "Exportaciones - Amazonas", department: Amazonas, ubigeo: '01'}
+    - {code: RD38086BM, name: "Exportaciones - Ancash", department: Ancash, ubigeo: '02'}
+    - {code: RD38087BM, name: "Exportaciones - Apurímac", department: Apurímac, ubigeo: '03'}
+    - {code: RD38088BM, name: "Exportaciones - Arequipa", department: Arequipa, ubigeo: '04'}
+    - {code: RD38089BM, name: "Exportaciones - Ayacucho", department: Ayacucho, ubigeo: '05'}
+    - {code: RD38090BM, name: "Exportaciones - Cajamarca", department: Cajamarca, ubigeo: '06'}
+    - {code: RD38091BM, name: "Exportaciones - Callao", department: Callao, ubigeo: '07'}
+    - {code: RD38092BM, name: "Exportaciones - Cusco", department: Cusco, ubigeo: '08'}
+    - {code: RD38093BM, name: "Exportaciones - Huancavelica", department: Huancavelica, ubigeo: '09'}
+    - {code: RD38094BM, name: "Exportaciones - Huánuco", department: Huánuco, ubigeo: '10'}
+    - {code: RD38095BM, name: "Exportaciones - Ica", department: Ica, ubigeo: '11'}
+    - {code: RD38096BM, name: "Exportaciones - Junín", department: Junín, ubigeo: '12'}
+    - {code: RD38097BM, name: "Exportaciones - La Libertad", department: La Libertad, ubigeo: '13'}
+    - {code: RD38098BM, name: "Exportaciones - Lambayeque", department: Lambayeque, ubigeo: '14'}
+    - {code: RD38099BM, name: "Exportaciones - Lima", department: Lima, ubigeo: '15'}
+    - {code: RD38100BM, name: "Exportaciones - Loreto", department: Loreto, ubigeo: '16'}
+    - {code: RD38101BM, name: "Exportaciones - Madre de Dios", department: Madre de Dios, ubigeo: '17'}
+    - {code: RD38102BM, name: "Exportaciones - Moquegua", department: Moquegua, ubigeo: '18'}
+    - {code: RD38103BM, name: "Exportaciones - Pasco", department: Pasco, ubigeo: '19'}
+    - {code: RD38104BM, name: "Exportaciones - Piura", department: Piura, ubigeo: '20'}
+    - {code: RD38105BM, name: "Exportaciones - Puno", department: Puno, ubigeo: '21'}
+    - {code: RD38106BM, name: "Exportaciones - San Martín", department: San Martín, ubigeo: '22'}
+    - {code: RD38107BM, name: "Exportaciones - Tacna", department: Tacna, ubigeo: '23'}
+    - {code: RD38108BM, name: "Exportaciones - Tumbes", department: Tumbes, ubigeo: '24'}
+    - {code: RD38109BM, name: "Exportaciones - Ucayali", department: Ucayali, ubigeo: '25'}
+    - {code: RD38110BM, name: "Exportaciones - No registrado"}
+    - {code: RD38111BM, name: "Exportaciones - Total Nacional"}
+
+  imports_by_customs:
+    description: "Importaciones por aduana (millones USD FOB)"
+    frequency: monthly
+    source: BCRP
+    unit: millones_usd
+    series:
+    - {code: RD38112BM, name: "Importaciones - Tumbes"}
+    - {code: RD38113BM, name: "Importaciones - Talara"}
+    - {code: RD38114BM, name: "Importaciones - Paita"}
+    - {code: RD38115BM, name: "Importaciones - Chiclayo"}
+    - {code: RD38116BM, name: "Importaciones - Salaverry"}
+    - {code: RD38117BM, name: "Importaciones - Chimbote"}
+    - {code: RD38118BM, name: "Importaciones - Marítima Del Callao"}
+    - {code: RD38119BM, name: "Importaciones - Pisco"}
+    - {code: RD38120BM, name: "Importaciones - Mollendo Matarani"}
+    - {code: RD38121BM, name: "Importaciones - Arequipa"}
+    - {code: RD38122BM, name: "Importaciones - Ilo"}
+    - {code: RD38123BM, name: "Importaciones - Tacna"}
+    - {code: RD38124BM, name: "Importaciones - Puno"}
+    - {code: RD38125BM, name: "Importaciones - Cuzco"}
+    - {code: RD38126BM, name: "Importaciones - Pucallpa"}
+    - {code: RD38127BM, name: "Importaciones - Iquitos"}
+    - {code: RD38128BM, name: "Importaciones - Aérea Del Callao"}
+    - {code: RD38129BM, name: "Importaciones - Postal De Lima"}
+    - {code: RD38130BM, name: "Importaciones - Desaguadero"}
+    - {code: RD38131BM, name: "Importaciones - Tarapoto"}
+    - {code: RD38132BM, name: "Importaciones - Puerto Maldonado"}
+    - {code: RD38133BM, name: "Importaciones - La Tina"}
+    - {code: RD38134BM, name: "Importaciones - Dep. Postal Arequipa"}
+    - {code: RD38135BM, name: "Importaciones - Otros"}
+    - {code: RD38136BM, name: "Importaciones - Total"}

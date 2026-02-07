@@ -1,0 +1,324 @@
+inflation_components:
+  ipc_groups_var_mensual:
+    description: IPC Lima por grupo — variación porcentual mensual
+    frequency: monthly
+    source: BCRP
+    series:
+    - code: PN01262PM
+      name: Tipo de cambio real bilateral del Perú respecto a países latinoamericanos
+        (promedio del período) - Argentina
+      status: verified
+    - code: PN01263PM
+      name: Tipo de cambio real bilateral del Perú respecto a países latinoamericanos
+        (promedio del período) - Brasil
+      status: verified
+    - code: PN01264PM
+      name: Tipo de cambio real bilateral del Perú respecto a países latinoamericanos
+        (promedio del período) - Chile
+      status: verified
+    - code: PN01265PM
+      name: Tipo de cambio real bilateral del Perú respecto a países latinoamericanos
+        (promedio del período) - Colombia
+      status: verified
+    - code: PN01266PM
+      name: Tipo de cambio real bilateral del Perú respecto a países latinoamericanos
+        (promedio del período) - Ecuador
+      status: verified
+    - code: PN01267PM
+      name: Tipo de cambio real bilateral del Perú respecto a países latinoamericanos
+        (promedio del período) - México
+      status: verified
+    - code: PN01268PM
+      name: Tipo de cambio real bilateral del Perú respecto a países latinoamericanos
+        (promedio del período) - Uruguay
+      status: verified
+  ipc_indices:
+    description: IPC índices de nivel (base 2009=100 o Dic.2021=100)
+    frequency: monthly
+    source: BCRP
+    series:
+    - code: PN01260PM
+      name: Índice del tipo de cambio real (var% mensual) - Multilateral
+      status: verified
+    - code: PN01261PM
+      name: Índice del tipo de cambio real (var% 12 meses) - Multilateral
+      status: verified
+    - code: PN01272PM
+      name: Índice de precios Lima Metropolitana (var% acumulada) - IPC
+      status: verified
+    - code: PN01274PM
+      name: Índice de precios Lima Metropolitana (var% mensual) - IPC Sin Alimentos
+      status: verified
+    - code: PN01275PM
+      name: Índice de precios Lima Metropolitana (var% 12 meses) - IPC Sin Alimentos
+      status: verified
+    - code: PN01276PM
+      name: Índice de precios Lima Metropolitana (var% mensual) - IPC Sin Alimentos
+        y Energía
+      status: verified
+    - code: PN01277PM
+      name: Índice de precios Lima Metropolitana (var% 12 meses) - IPC Sin Alimentos
+        y Energía
+      status: verified
+    - code: PN01278PM
+      name: Índice de precios Lima Metropolitana (var% mensual) - IPC Subyacente
+      status: verified
+    - code: PN01279PM
+      name: Índice de precios Lima Metropolitana (var% 12 meses) - IPC Subyacente
+      status: verified
+    - code: PN01280PM
+      name: Índice de precios Lima Metropolitana (var% mensual) - IPC Transables
+      status: verified
+    - code: PN01281PM
+      name: Índice de precios Lima Metropolitana (var% 12 meses) - IPC Transables
+      status: verified
+    - code: PN01282PM
+      name: Índice de precios Lima Metropolitana (var% mensual) - IPC No Transables
+      status: verified
+    - code: PN01283PM
+      name: Índice de precios Lima Metropolitana (var% 12 meses) - IPC No Transables
+      status: verified
+    - code: PN01284PM
+      name: Índice de precios Lima Metropolitana (var% mensual) - IPC No Transables
+        Sin Alimentos y Bebidas
+      status: verified
+    - code: PN01285PM
+      name: Índice de precios Lima Metropolitana (var% 12 meses) - IPC No Transables
+        Sin Alimentos y Bebidas
+      status: verified
+    - code: PN01286PM
+      name: Índice de precios Lima Metropolitana (var% mensual) - Índice de Precios
+        al por Mayor
+      status: verified
+    - code: PN01287PM
+      name: Índice de precios Lima Metropolitana (var% 12 meses) - Índice de Precios
+        al por Mayor
+      status: verified
+    - code: PN01295PM
+      name: 'Índice de precios al consumidor Lima Metropolitana: clasificación sectorial
+        (variación porcentual) - Inflación Subyacente'
+      status: verified
+    - code: PN01296PM
+      name: 'Índice de precios al consumidor Lima Metropolitana: clasificación sectorial
+        (variación porcentual) - Inflación Subyacente - Bienes'
+      status: verified
+    - code: PN01297PM
+      name: 'Índice de precios al consumidor Lima Metropolitana: clasificación sectorial
+        (variación porcentual) - Inflación Subyacente - Bienes - Alimentos y Bebidas'
+      status: verified
+    - code: PN01298PM
+      name: 'Índice de precios al consumidor Lima Metropolitana: clasificación sectorial
+        (variación porcentual) - Inflación Subyacente - Bienes - Textiles y Calzado'
+      status: verified
+    - code: PN01299PM
+      name: 'Índice de precios al consumidor Lima Metropolitana: clasificación sectorial
+        (variación porcentual) - Inflación Subyacente - Bienes - Aparatos Electrodomésticos'
+      status: verified
+    - code: PN01300PM
+      name: 'Índice de precios al consumidor Lima Metropolitana: clasificación sectorial
+        (variación porcentual) - Inflación Subyacente - Bienes - Resto de Productos
+        Industriales'
+      status: verified
+    - code: PN01301PM
+      name: 'Índice de precios al consumidor Lima Metropolitana: clasificación sectorial
+        (variación porcentual) - Inflación Subyacente - Servicios'
+      status: verified
+    - code: PN01302PM
+      name: 'Índice de precios al consumidor Lima Metropolitana: clasificación sectorial
+        (variación porcentual) - Inflación Subyacente - Servicios - Comidas Fuera
+        del Hogar'
+      status: verified
+    - code: PN01303PM
+      name: 'Índice de precios al consumidor Lima Metropolitana: clasificación sectorial
+        (variación porcentual) - Inflación Subyacente - Servicios - Educación'
+      status: verified
+    - code: PN01304PM
+      name: 'Índice de precios al consumidor Lima Metropolitana: clasificación sectorial
+        (variación porcentual) - Inflación Subyacente - Servicios - Salud'
+      status: verified
+    - code: PN01305PM
+      name: 'Índice de precios al consumidor Lima Metropolitana: clasificación sectorial
+        (variación porcentual) - Inflación Subyacente - Servicios - Alquileres'
+      status: verified
+    - code: PN01306PM
+      name: 'Índice de precios al consumidor Lima Metropolitana: clasificación sectorial
+        (variación porcentual) - Inflación Subyacente - Servicios - Resto de Servicios'
+      status: verified
+    - code: PN01307PM
+      name: 'Índice de precios al consumidor Lima Metropolitana: clasificación sectorial
+        (variación porcentual) - Inflación No Subyacente'
+      status: verified
+    - code: PN01308PM
+      name: 'Índice de precios al consumidor Lima Metropolitana: clasificación sectorial
+        (variación porcentual) - Inflación No Subyacente - Alimentos'
+      status: verified
+    - code: PN01309PM
+      name: 'Índice de precios al consumidor Lima Metropolitana: clasificación sectorial
+        (variación porcentual) - Inflación No Subyacente - Combustibles'
+      status: verified
+    - code: PN01310PM
+      name: 'Índice de precios al consumidor Lima Metropolitana: clasificación sectorial
+        (variación porcentual) - Inflación No Subyacente - Transportes'
+      status: verified
+    - code: PN01311PM
+      name: 'Índice de precios al consumidor Lima Metropolitana: clasificación sectorial
+        (variación porcentual) - Inflación No Subyacente - Servicios Públicos'
+      status: verified
+    - code: PN01312PM
+      name: 'Índice de precios al consumidor Lima Metropolitana: clasificación sectorial
+        (variación porcentual) - Inflación'
+      status: verified
+    - code: PN01313PM
+      name: Índice de precios Lima Metropolitana (var% mensual) - IPC Alimentos y
+        Bebidas
+      status: verified
+    - code: PN01314PM
+      name: Índice de precios Lima Metropolitana (var% mensual) - IPC sin Alimentos
+        y Bebidas
+      status: verified
+    - code: PN01315PM
+      name: Índice de precios Lima Metropolitana (var% mensual) - IPC Subyacente Sin
+        Alimentos y Bebidas
+      status: verified
+    - code: PN01316PM
+      name: Índice de precios Lima Metropolitana (var% mensual) - IPC Sin Alimentos,
+        Bebidas y Energía
+      status: verified
+    - code: PN01317PM
+      name: Índice de precios Lima Metropolitana (var% mensual) - IPC Importado
+      status: verified
+    - code: PN01335PM
+      name: 'Índice de precios al consumidor Lima Metropolitana: clasificación sectorial
+        (variación porcentual) - Inflación (índice 2009 = 100)'
+      status: verified
+    - code: PN01364PM
+      name: 'Índice de precios al consumidor Lima Metropolitana: clasificación transables
+        - no transables (variación porcentual) - Índice de Precios al Consumidor'
+      status: verified
+    - code: PN01365PM
+      name: 'Índice de precios al consumidor Lima Metropolitana: clasificación transables
+        - no transables (variación porcentual) - Productos Transables'
+      status: verified
+    - code: PN01366PM
+      name: 'Índice de precios al consumidor Lima Metropolitana: clasificación transables
+        - no transables (variación porcentual) - Productos Transables - Alimentos'
+      status: verified
+    - code: PN01367PM
+      name: 'Índice de precios al consumidor Lima Metropolitana: clasificación transables
+        - no transables (variación porcentual) - Productos Transables - Textil y Calzado'
+      status: verified
+    - code: PN01368PM
+      name: 'Índice de precios al consumidor Lima Metropolitana: clasificación transables
+        - no transables (variación porcentual) - Productos Transables - Combustibles'
+      status: verified
+    - code: PN01369PM
+      name: 'Índice de precios al consumidor Lima Metropolitana: clasificación transables
+        - no transables (variación porcentual) - Productos Transables - Aparatos Electrodomésticos'
+      status: verified
+    - code: PN01370PM
+      name: 'Índice de precios al consumidor Lima Metropolitana: clasificación transables
+        - no transables (variación porcentual) - Productos Transables - Otros Transables'
+      status: verified
+    - code: PN01371PM
+      name: 'Índice de precios al consumidor Lima Metropolitana: clasificación transables
+        - no transables (variación porcentual) - Productos No Transables'
+      status: verified
+    - code: PN01372PM
+      name: 'Índice de precios al consumidor Lima Metropolitana: clasificación transables
+        - no transables (variación porcentual) - Productos No Transables - Alimentos'
+      status: verified
+    - code: PN01373PM
+      name: 'Índice de precios al consumidor Lima Metropolitana: clasificación transables
+        - no transables (variación porcentual) - Productos No Transables - Servicios'
+      status: verified
+    - code: PN01374PM
+      name: 'Índice de precios al consumidor Lima Metropolitana: clasificación transables
+        - no transables (variación porcentual) - Productos No Transables - Servicios
+        - Servicios Públicos'
+      status: verified
+    - code: PN01375PM
+      name: 'Índice de precios al consumidor Lima Metropolitana: clasificación transables
+        - no transables (variación porcentual) - Productos No Transables - Servicios
+        - Otros Servicios Personales'
+      status: verified
+    - code: PN01376PM
+      name: 'Índice de precios al consumidor Lima Metropolitana: clasificación transables
+        - no transables (variación porcentual) - Productos No Transables - Servicios
+        - Servicios de Salud'
+      status: verified
+    - code: PN01377PM
+      name: 'Índice de precios al consumidor Lima Metropolitana: clasificación transables
+        - no transables (variación porcentual) - Productos No Transables - Servicios
+        - Servicios de Transporte'
+      status: verified
+    - code: PN01378PM
+      name: 'Índice de precios al consumidor Lima Metropolitana: clasificación transables
+        - no transables (variación porcentual) - Productos No Transables - Servicios
+        - Servicios de Educación'
+      status: verified
+    - code: PN01379PM
+      name: 'Índice de precios al consumidor Lima Metropolitana: clasificación transables
+        - no transables (variación porcentual) - Productos No Transables - Servicios
+        - Comida Fuera del Hogar'
+      status: verified
+    - code: PN01380PM
+      name: 'Índice de precios al consumidor Lima Metropolitana: clasificación transables
+        - no transables (variación porcentual) - Productos No Transables - Servicios
+        - Alquileres'
+      status: verified
+    - code: PN01381PM
+      name: 'Índice de precios al consumidor Lima Metropolitana: clasificación transables
+        - no transables (variación porcentual) - Productos No Transables - Servicios
+        - Otros Servicios'
+      status: verified
+    - code: PN01382PM
+      name: 'Índice de precios al consumidor Lima Metropolitana: clasificación transables
+        - no transables (variación porcentual) - Productos No Transables - Otros No
+        Transables'
+      status: verified
+    - code: PN01384PM
+      name: 'Índice de precios al consumidor Lima Metropolitana: clasificación transables
+        - no transables (variación porcentual) - IPC Sin Alimentos y Bebidas'
+      status: verified
+    - code: PN01385PM
+      name: 'Índice de precios al consumidor Lima Metropolitana: clasificación transables
+        - no transables (variación porcentual) - IPC Subyacente Sin Alimentos y Bebidas'
+      status: verified
+    - code: PN01386PM
+      name: 'Índice de precios al consumidor Lima Metropolitana: clasificación transables
+        - no transables (variación porcentual) - IPC Sin Alimentos y Energía'
+      status: verified
+    - code: PN01387PM
+      name: 'Índice de precios al consumidor Lima Metropolitana: clasificación transables
+        - no transables (variación porcentual) - IPC Importado'
+      status: verified
+    - code: PN38705PM
+      name: Índice de precios Lima Metropolitana (índice Dic.2021 = 100) - Índice
+        de Precios al Consumidor (IPC)
+      status: verified
+    - code: PN38707PM
+      name: Índice de precios Lima Metropolitana (índice Dic.2021 = 100) - IPC Sin
+        Alimentos y Energía
+      status: verified
+    - code: PN38708PM
+      name: Índice de precios Lima Metropolitana (índice Dic.2021 = 100) - IPC Subyacente
+      status: verified
+    - code: PN38709PM
+      name: Índice de precios Lima Metropolitana (índice Dic.2021 = 100) - IPC Transables
+      status: verified
+    - code: PN38710PM
+      name: Índice de precios Lima Metropolitana (índice Dic.2021 = 100) - IPC No
+        Transables
+      status: verified
+    - code: PN38711PM
+      name: Índice de precios Lima Metropolitana (índice Dic.2021 = 100) - IPC No
+        Transables Sin Alimentos y Bebidas
+      status: verified
+    - code: PN39444PM
+      name: 'Índice de precios al consumidor Lima Metropolitana: clasificación sectorial
+        (variación porcentual) - Inflación (índice 2009 = 100)'
+      status: verified
+    - code: PN39447PM
+      name: Índice de precios Lima Metropolitana (índice Dic.2021 = 100) - IPC Subyacente
+        Sin Alimentos y Bebidas
+      status: verified

@@ -1,0 +1,129 @@
+# Political Instability Index — Wikipedia pages and source configuration
+# Used by src/ingestion/political.py
+
+wikipedia:
+  # Pages from ground truth Sources sheet (English)
+  en:
+    - title: "Alberto_Fujimori"
+      content: "Vladivideos, flight, trial"
+    - title: "Valentín_Paniagua"
+      content: "Transition 2000-2001"
+    - title: "Alejandro_Toledo"
+      content: "Government 2001-2006, Ecoteva"
+    - title: "Alan_García"
+      content: "Second government, Petroaudios, suicide"
+    - title: "Ollanta_Humala"
+      content: "Government 2011-2016, Odebrecht"
+    - title: "Pedro_Pablo_Kuczynski"
+      content: "Government, crisis, resignation"
+    - title: "Martín_Vizcarra"
+      content: "Dissolution, removal"
+    - title: "Francisco_Sagasti"
+      content: "Transition 2020-2021"
+    - title: "Pedro_Castillo"
+      content: "Self-coup, arrest"
+    - title: "Dina_Boluarte"
+      content: "Massacres, Rolexgate, removal"
+    - title: "2019_Peruvian_constitutional_crisis"
+      content: "Congress dissolution"
+    - title: "Peruvian_political_crisis_(2016–present)"
+      content: "Crisis 2016-present"
+    - title: "2022_Peruvian_self-coup_attempt"
+      content: "Castillo self-coup"
+    - title: "Pardon_of_Alberto_Fujimori"
+      content: "Pardon, revocation"
+    - title: "Arrest_and_trial_of_Alberto_Fujimori"
+      content: "Trial and conviction"
+    - title: "Impeachment_of_Dina_Boluarte"
+      content: "Removal 2025"
+    - title: "Presidency_of_Dina_Boluarte"
+      content: "Boluarte government"
+
+  # Additional pages for 2001-2016 gaps (Spanish)
+  es:
+    - title: "Presidente_del_Consejo_de_Ministros_del_Perú"
+      content: "Complete premier list — PRIMARY SOURCE for cabinet_timeline"
+      priority: cabinet_timeline
+    - title: "Masacre_de_Bagua"
+      content: "Baguazo massacre Jun 2009, 33 dead"
+    - title: "Andahuaylazo"
+      content: "Insurrection Jan 2005"
+    - title: "Conflicto_de_Bagua"
+      content: "Bagua conflict 2009"
+    - title: "Proyecto_Conga"
+      content: "Conga anti-mining 2011-2012"
+    - title: "Proyecto Tía María"
+      content: "Tia Maria anti-mining 2015"
+    - title: "Gobierno_de_Alejandro_Toledo"
+      content: "Toledo government events"
+    - title: "Segundo_gobierno_de_Alan_García"
+      content: "Garcia II events"
+    - title: "Gobierno_de_Ollanta_Humala"
+      content: "Humala events"
+    - title: "Gobierno_de_Pedro_Pablo_Kuczynski"
+      content: "PPK events"
+    - title: "Gobierno_de_Martín_Vizcarra"
+      content: "Vizcarra events"
+    - title: "Gobierno_de_Pedro_Castillo"
+      content: "Castillo events"
+    - title: "Gobierno_de_Dina_Boluarte"
+      content: "Boluarte events"
+    - title: "Petroaudios"
+      content: "Corruption recordings Garcia"
+    - title: "Protestas en Perú de diciembre de 2022"
+      content: "Post-Castillo protests Dec 2022"
+    - title: "Crisis política en Perú de 2016-2020"
+      content: "Political crisis 2016-2020"
+    - title: "Consejo de Ministros del Perú"
+      content: "Council of Ministers, cabinet changes"
+
+# Non-Wikipedia sources
+other_sources:
+  - name: "AS/COA"
+    url: "https://www.as-coa.org/articles/perus-presidential-crisis-timeline"
+  - name: "Baker Institute"
+    url: "https://www.bakerinstitute.org/research/political-crisis-peru"
+
+# Index configuration
+index:
+  weights:
+    institutional_events: 0.35
+    financial: 0.25
+    cabinet_stability: 0.20
+    business_confidence: 0.20
+  weekly_weights:
+    # Renormalized without business confidence (monthly only)
+    institutional_events: 0.4375  # 35/80
+    financial: 0.3125              # 25/80
+    cabinet_stability: 0.25        # 20/80
+  zscore_window_months: 60
+  business_confidence_code: "PD12912AM"
+
+# NLP configuration
+nlp:
+  model: "joeddav/xlm-roberta-large-xnli"
+  candidate_labels:
+    - "rutina politica"
+    - "tension politica moderada"
+    - "conflicto institucional"
+    - "crisis constitucional"
+    - "quiebre institucional"
+  bin3_mapping:
+    # NLP score -> bin3
+    1: 1
+    2: 1
+    3: 2
+    4: 3
+    5: 3
+
+# Ground truth
+ground_truth:
+  path: "data/raw/political/peru_political_events.xlsx"
+  sheets:
+    events: "Political Events"
+    event_types: "Event Type Codes"
+    severity_codes: "Severity Codes"
+    presidents: "Presidents Summary"
+    high_impact: "High Impact Events"
+    sources: "Sources"
+  severity_scale: "ordinal_1_3"  # DO NOT rescale

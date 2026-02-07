@@ -1,0 +1,45 @@
+sectoral:
+  production_indices:
+    description: Producción sectorial — índices y volúmenes mensuales
+    frequency: monthly
+    source: BCRP
+    series:
+    - code: PN02079AM
+      name: Producción manufacturera (índice 2007 = 100) - Total
+      status: verified
+    - code: PN02028AM
+      name: Producción manufacturera (índice 2007 = 100) - Manufactura no Primaria
+      status: verified
+    - code: PN02068AM
+      name: Producción manufacturera (índice 2007 = 100) - Manufactura No Primaria
+        - Minerales no Metálicos - Cemento
+      status: verified
+    - code: PN02024AM
+      name: Producción manufacturera (índice 2007 = 100) - Procesadores de Recursos
+        Primarios - Harina y Aceite de Pescado
+      status: verified
+    - code: PN01958AM
+      name: Producción manufacturera (variación porcentual interanual) - Manufactura
+        No Primaria - Servicios Industriales
+      status: verified
+    - code: PN37618AM
+      name: Indicadores indirectos de la tasa de utilización de la capacidad instalada
+        del sector manufacturero - Procesadores de recursos primarios
+      status: verified
+    - code: PD39768AM
+      name: Expectativas empresariales sectoriales - Índice de producción respecto
+        al mes anterior - Manufactura
+      status: verified
+    - code: PN38083AM
+      name: Producción pesquera (miles de toneladas) - Pesca Continental - Congelado
+      status: verified
+    - code: PN01846AM
+      name: Producción pesquera (variación porcentual interanual) - Pesca Marítima
+      status: verified
+    - code: PN01847AM
+      name: Producción pesquera (variación porcentual interanual) - Pesca Marítima
+        - Consumo Industrial
+      status: verified
+    - code: PD37965AM
+      name: Indicadores de coyuntura - Electricidad (var% 12 meses)
+      status: verified
