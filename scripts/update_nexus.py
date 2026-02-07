@@ -49,7 +49,7 @@ logging.basicConfig(
 logger = logging.getLogger("nexus.update")
 
 
-VALID_STEPS = {"bcrp", "gdp", "inflation", "enaho", "panel", "viz"}
+VALID_STEPS = {"bcrp", "gdp", "inflation", "enaho", "panel", "regional", "viz"}
 
 
 def step_bcrp(dry_run: bool = False, force: bool = False) -> dict:
@@ -122,6 +122,42 @@ def step_panel(dry_run: bool = False, force: bool = False) -> dict:
     }
 
 
+def step_regional(dry_run: bool = False, force: bool = False) -> dict:
+    """Step 6: Build departmental panel from regional BCRP data."""
+    from config.settings import PROCESSED_DEPARTMENTAL_DIR, RAW_BCRP_DIR
+
+    regional_catalog = PROJECT_ROOT / "config" / "regional_series_catalog.yaml"
+    national_raw = RAW_BCRP_DIR / "bcrp_national_all.parquet"
+    output_path = PROCESSED_DEPARTMENTAL_DIR / "panel_departmental_monthly.parquet"
+
+    if dry_run:
+        import yaml
+        with open(regional_catalog, encoding="utf-8") as f:
+            catalog = yaml.safe_load(f)
+        regional = catalog.get("regional", {})
+        n_cats = sum(1 for v in regional.values() if isinstance(v, dict) and v.get("series"))
+        logger.info("DRY RUN: Would build departmental panel from %d categories", n_cats)
+        return {"status": "dry_run", "categories": n_cats}
+
+    from src.processing.panel_builder import (
+        build_departmental_panel,
+        validate_departmental_panel,
+    )
+    panel = build_departmental_panel(
+        regional_data_dir=RAW_BCRP_DIR,
+        regional_catalog_path=regional_catalog,
+        national_raw_path=national_raw,
+        output_path=output_path,
+    )
+    result = validate_departmental_panel(panel)
+    return {
+        "status": "ok" if result["passed"] else "validation_failed",
+        "n_rows": result["n_rows"],
+        "n_series": result["n_series"],
+        "n_departments": result["n_departments"],
+    }
+
+
 def step_viz(dry_run: bool = False, force: bool = False) -> dict:
     """Step 6: Regenerate maps and charts."""
     if dry_run:
@@ -155,6 +191,7 @@ STEPS = {
     "inflation": ("Inflation targets", step_inflation),
     "enaho": ("ENAHO poverty targets", step_enaho),
     "panel": ("National monthly panel", step_panel),
+    "regional": ("Departmental monthly panel", step_regional),
     "viz": ("Maps and charts", step_viz),
 }
 

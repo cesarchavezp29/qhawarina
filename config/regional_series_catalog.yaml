@@ -15,6 +15,11 @@ regional:
     source: BCRP/SBS
     unit: millones_soles
     note: "3 variants per department: MN (moneda nacional), ME (moneda extranjera), Total"
+    processing:
+      unit_type: nominal_soles
+      seasonal_adjust: stl
+      transform: all
+      panel_filter: Total  # Only include Total currency in panel (exclude MN/ME)
     series:
     # Amazonas
     - {code: RD13560DM, name: "Crédito - Amazonas (MN)", department: Amazonas, ubigeo: '01', currency: MN}
@@ -127,6 +132,11 @@ regional:
     source: BCRP/SBS
     unit: millones_soles
     note: "3 variants per department: MN (moneda nacional), ME (moneda extranjera), Total"
+    processing:
+      unit_type: nominal_soles
+      seasonal_adjust: stl
+      transform: all
+      panel_filter: Total  # Only include Total currency in panel (exclude MN/ME)
     series:
     # Amazonas
     - {code: RD13638DM, name: "Depósitos - Amazonas (MN)", department: Amazonas, ubigeo: '01', currency: MN}
@@ -238,6 +248,10 @@ regional:
     frequency: monthly
     source: BCRP/SBS
     unit: miles_personas
+    processing:
+      unit_type: level
+      seasonal_adjust: stl
+      transform: all
     series:
     - {code: RD13716DM, name: "AFP Afiliados - Amazonas", department: Amazonas, ubigeo: '01'}
     - {code: RD13717DM, name: "AFP Afiliados - Ancash", department: Ancash, ubigeo: '02'}
@@ -275,6 +289,10 @@ regional:
     frequency: monthly
     source: BCRP
     unit: gwh
+    processing:
+      unit_type: level
+      seasonal_adjust: stl
+      transform: all
     series:
     - {code: RD13043DM, name: "Electricidad - Amazonas", department: Amazonas, ubigeo: '01'}
     - {code: RD13044DM, name: "Electricidad - Ancash", department: Ancash, ubigeo: '02'}
@@ -307,6 +325,10 @@ regional:
     frequency: monthly
     source: BCRP
     unit: tmf
+    processing:
+      unit_type: level
+      seasonal_adjust: stl
+      transform: all
     series:
     - {code: RD12951DM, name: "Cobre - Total Nacional"}
     - {code: RD12952DM, name: "Cobre - Ancash", department: Ancash, ubigeo: '02'}
@@ -331,6 +353,10 @@ regional:
     frequency: monthly
     source: BCRP
     unit: miles_oz_troy
+    processing:
+      unit_type: level
+      seasonal_adjust: stl
+      transform: all
     series:
     - {code: RD12978DM, name: "Oro - Total Nacional"}
     - {code: RD12979DM, name: "Oro - Ancash", department: Ancash, ubigeo: '02'}
@@ -360,6 +386,10 @@ regional:
     frequency: monthly
     source: BCRP/SUNAT
     unit: millones_soles
+    processing:
+      unit_type: nominal_soles
+      seasonal_adjust: stl
+      transform: all
     series:
     - {code: RD13774DM, name: "Tributos Internos - Amazonas", department: Amazonas, ubigeo: '01'}
     - {code: RD13775DM, name: "Tributos Internos - Ancash", department: Ancash, ubigeo: '02'}
@@ -394,6 +424,10 @@ regional:
     frequency: monthly
     source: BCRP/MEF
     unit: millones_soles
+    processing:
+      unit_type: nominal_soles
+      seasonal_adjust: stl
+      transform: all
     series:
     - {code: RD13986DM, name: "Gasto GL - Amazonas", department: Amazonas, ubigeo: '01'}
     - {code: RD13987DM, name: "Gasto GL - Ancash", department: Ancash, ubigeo: '02'}
@@ -427,6 +461,10 @@ regional:
     frequency: monthly
     source: BCRP/MEF
     unit: millones_soles
+    processing:
+      unit_type: nominal_soles
+      seasonal_adjust: stl
+      transform: all
     series:
     - {code: RD14038DM, name: "Gasto GR - Amazonas", department: Amazonas, ubigeo: '01'}
     - {code: RD14039DM, name: "Gasto GR - Ancash", department: Ancash, ubigeo: '02'}
@@ -465,6 +503,10 @@ regional:
     source: BCRP
     unit: millones_usd
     note: "Data available through Dec 2022 only"
+    processing:
+      unit_type: nominal_usd
+      seasonal_adjust: stl
+      transform: all
     series:
     - {code: RD38085BM, name: "Exportaciones - Amazonas", department: Amazonas, ubigeo: '01'}
     - {code: RD38086BM, name: "Exportaciones - Ancash", department: Ancash, ubigeo: '02'}
@@ -499,6 +541,10 @@ regional:
     frequency: monthly
     source: BCRP
     unit: millones_usd
+    processing:
+      unit_type: nominal_usd
+      seasonal_adjust: stl
+      transform: all
     series:
     - {code: RD38112BM, name: "Importaciones - Tumbes"}
     - {code: RD38113BM, name: "Importaciones - Talara"}
@@ -525,3 +571,123 @@ regional:
     - {code: RD38134BM, name: "Importaciones - Dep. Postal Arequipa"}
     - {code: RD38135BM, name: "Importaciones - Otros"}
     - {code: RD38136BM, name: "Importaciones - Total"}
+
+  # ──────────────────────────────────────────────────────────────────
+  # NEW MINING CATEGORIES (to be populated after API probing)
+  # ──────────────────────────────────────────────────────────────────
+
+  mining_tin_by_department:
+    description: "Producción minera de estaño por departamento (TMF)"
+    frequency: monthly
+    source: BCRP
+    unit: tmf
+    note: "Hypothesized range RD12968DM-RD12977DM — run explore script to verify"
+    processing:
+      unit_type: level
+      seasonal_adjust: stl
+      transform: all
+    series: []  # Populate after running explore_regional_series.py --only mining_tin
+
+  mining_silver_by_department:
+    description: "Producción minera de plata por departamento (miles de onzas troy)"
+    frequency: monthly
+    source: BCRP
+    unit: miles_oz_troy
+    note: "Hypothesized range RD12996DM-RD13012DM — run explore script to verify"
+    processing:
+      unit_type: level
+      seasonal_adjust: stl
+      transform: all
+    series: []  # Populate after running explore_regional_series.py --only mining_silver
+
+  mining_zinc_by_department:
+    description: "Producción minera de zinc por departamento (TMF)"
+    frequency: monthly
+    source: BCRP
+    unit: tmf
+    note: "Hypothesized range RD13013DM-RD13029DM — run explore script to verify"
+    processing:
+      unit_type: level
+      seasonal_adjust: stl
+      transform: all
+    series: []  # Populate after running explore_regional_series.py --only mining_zinc
+
+  mining_lead_by_department:
+    description: "Producción minera de plomo por departamento (TMF)"
+    frequency: monthly
+    source: BCRP
+    unit: tmf
+    note: "Hypothesized range RD13030DM-RD13042DM — run explore script to verify"
+    processing:
+      unit_type: level
+      seasonal_adjust: stl
+      transform: all
+    series: []  # Populate after running explore_regional_series.py --only mining_lead
+
+  # ──────────────────────────────────────────────────────────────────
+  # NEW ENERGY / FISHING / TOURISM CATEGORIES
+  # ──────────────────────────────────────────────────────────────────
+
+  electricity_sales_by_department:
+    description: "Venta de energía eléctrica por departamento (GWh)"
+    frequency: monthly
+    source: BCRP
+    unit: gwh
+    note: "Hypothesized range RD13093DM-RD13142DM — run explore script to verify"
+    processing:
+      unit_type: level
+      seasonal_adjust: stl
+      transform: all
+    series: []  # Populate after running explore_regional_series.py --only electricity_sales
+
+  tourism_arrivals_by_department:
+    description: "Arribos a establecimientos de hospedaje por departamento (miles de personas)"
+    frequency: monthly
+    source: BCRP/MINCETUR
+    unit: miles_personas
+    note: "Hypothesized range RD13335DM-RD13409DM — run explore script to verify"
+    processing:
+      unit_type: level
+      seasonal_adjust: stl
+      transform: all
+    series: []  # Populate after running explore_regional_series.py --only tourism_arrivals
+
+  tourism_nights_by_department:
+    description: "Pernoctaciones en establecimientos de hospedaje por departamento (miles)"
+    frequency: monthly
+    source: BCRP/MINCETUR
+    unit: miles
+    note: "Hypothesized range RD13410DM-RD13484DM — run explore script to verify"
+    processing:
+      unit_type: level
+      seasonal_adjust: stl
+      transform: all
+    series: []  # Populate after running explore_regional_series.py --only tourism_nights
+
+  # ──────────────────────────────────────────────────────────────────
+  # NEW PUBLIC SECTOR CATEGORIES
+  # ──────────────────────────────────────────────────────────────────
+
+  government_capex_local:
+    description: "Gasto de capital de gobiernos locales por departamento (millones S/)"
+    frequency: monthly
+    source: BCRP/MEF
+    unit: millones_soles
+    note: "Hypothesized range RD14012DM-RD14037DM — run explore script to verify"
+    processing:
+      unit_type: nominal_soles
+      seasonal_adjust: stl
+      transform: all
+    series: []  # Populate after running explore_regional_series.py --only gov_capex_local
+
+  government_capex_regional:
+    description: "Gasto de capital de gobiernos regionales por departamento (millones S/)"
+    frequency: monthly
+    source: BCRP/MEF
+    unit: millones_soles
+    note: "Hypothesized range RD14065DM-RD14090DM — run explore script to verify"
+    processing:
+      unit_type: nominal_soles
+      seasonal_adjust: stl
+      transform: all
+    series: []  # Populate after running explore_regional_series.py --only gov_capex_regional
