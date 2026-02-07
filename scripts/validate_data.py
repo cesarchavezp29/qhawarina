@@ -1,4 +1,4 @@
-"""Comprehensive data validation and visualization for Sprint 1 BCRP data."""
+"""Comprehensive data validation and visualization for BCRP data."""
 
 import sys
 from pathlib import Path
@@ -15,6 +15,15 @@ import numpy as np
 import yaml
 
 from config.settings import RAW_BCRP_DIR, SERIES_CATALOG_PATH
+from src.visualization.style import (
+    NEXUS_COLORS as C,
+    apply_nexus_style,
+    add_watermark,
+    add_source_line,
+    MAP_DPI,
+)
+
+BRAND = "Qhawarina"
 
 
 def load_data():
@@ -41,7 +50,7 @@ def load_catalog():
 def print_validation_report(df, code_to_name):
     """Print detailed validation report to console."""
     print("=" * 80)
-    print("NEXUS — BCRP Data Validation Report")
+    print(f"{BRAND} — BCRP Data Validation Report")
     print("=" * 80)
 
     # Overall stats
@@ -206,7 +215,7 @@ def plot_all_series(df, code_to_name, output_dir):
             fig, axes = plt.subplots(rows, 2, figsize=(16, 3.5 * rows), sharex=True)
             axes = axes.flatten()
 
-        fig.suptitle(f"NEXUS — {title}", fontsize=14, fontweight="bold", y=1.02)
+        fig.suptitle(f"{BRAND} — {title}", fontsize=14, fontweight="bold", y=1.02)
 
         for i, code in enumerate(codes):
             ax = axes[i]
@@ -218,51 +227,53 @@ def plot_all_series(df, code_to_name, output_dir):
                 ax.set_title(code)
                 continue
 
-            ax.plot(vals["date"], vals["value"], linewidth=0.8, color="#1f77b4")
-            ax.fill_between(vals["date"], vals["value"], alpha=0.1, color="#1f77b4")
+            ax.plot(vals["date"], vals["value"], linewidth=0.8, color=C["accent"])
+            ax.fill_between(vals["date"], vals["value"], alpha=0.1, color=C["accent"])
 
             # Add zero line for growth rates
             if any(k in code for k in ["AM", "PM", "GM"]):
                 if vals["value"].min() < 0:
-                    ax.axhline(y=0, color="gray", linewidth=0.5, linestyle="--")
+                    ax.axhline(y=0, color=C["text_secondary"], linewidth=0.5, linestyle="--")
 
             name = code_to_name.get(code, code)[:50]
             nonnull = vals["value"].notna().sum()
             ax.set_title(f"{code}: {name}", fontsize=9)
             ax.text(0.98, 0.95, f"n={nonnull}", transform=ax.transAxes,
-                    fontsize=7, ha="right", va="top", color="gray")
+                    fontsize=7, ha="right", va="top", color=C["text_secondary"])
 
             ax.xaxis.set_major_locator(mdates.YearLocator(4))
             ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
             ax.tick_params(axis="both", labelsize=8)
-            ax.grid(True, alpha=0.3)
+            watermark(ax)
 
         # Hide unused subplots
         for j in range(len(codes), len(axes)):
             axes[j].set_visible(False)
 
         plt.tight_layout()
+        add_source_line(fig, f"Fuente: BCRP. Elaboracion: {BRAND}.")
         out_path = output_dir / f"validation_{cat_key}.png"
-        fig.savefig(out_path, dpi=150, bbox_inches="tight")
+        fig.savefig(out_path, dpi=MAP_DPI, bbox_inches="tight")
         plt.close(fig)
         print(f"Saved: {out_path}")
 
     # ── Summary overview plot ──────────────────────────────────────────────
     fig, axes = plt.subplots(2, 2, figsize=(16, 10))
-    fig.suptitle("NEXUS — Data Overview", fontsize=14, fontweight="bold")
+    fig.suptitle(f"{BRAND} — Data Overview", fontsize=14, fontweight="bold")
 
     # Panel 1: Observation counts per series
     ax = axes[0, 0]
     counts = df.groupby("series_code")["value"].apply(lambda x: x.notna().sum())
     counts = counts.sort_values()
-    colors = ["#d62728" if c < 200 else "#2ca02c" for c in counts]
+    colors = ["#C0392B" if c < 200 else "#27AE60" for c in counts]
     ax.barh(range(len(counts)), counts.values, color=colors, height=0.7)
     ax.set_yticks(range(len(counts)))
     ax.set_yticklabels(counts.index, fontsize=7)
     ax.set_xlabel("Non-null observations")
     ax.set_title("Observations per Series")
-    ax.axvline(x=240, color="orange", linestyle="--", linewidth=0.8, label="20yr monthly")
+    ax.axvline(x=240, color=C["accent"], linestyle="--", linewidth=0.8, label="20yr monthly")
     ax.legend(fontsize=7)
+    watermark(ax)
 
     # Panel 2: Missing data heatmap
     ax = axes[0, 1]
@@ -277,43 +288,51 @@ def plot_all_series(df, code_to_name, output_dir):
     ax.set_xticklabels(years[::4], fontsize=8)
     ax.set_title("Missing Data by Year (red=missing)")
     plt.colorbar(im, ax=ax, shrink=0.8)
+    watermark(ax)
 
     # Panel 3: GDP sectoral growth rates
     ax = axes[1, 0]
     gdp_codes = ["PN01728AM", "PN01713AM", "PN01720AM", "PN01724AM"]
-    for code in gdp_codes:
+    gdp_colors = [C["accent"], "#2980B9", "#8E44AD", "#27AE60"]
+    for code, clr in zip(gdp_codes, gdp_colors):
         s = df[df["series_code"] == code].sort_values("date").dropna(subset=["value"])
         name_short = code_to_name.get(code, code)[:25]
-        ax.plot(s["date"], s["value"], linewidth=0.7, label=name_short, alpha=0.8)
-    ax.axhline(y=0, color="black", linewidth=0.5)
+        ax.plot(s["date"], s["value"], linewidth=0.7, label=name_short, alpha=0.8, color=clr)
+    ax.axhline(y=0, color=C["border"], linewidth=0.5)
     ax.set_title("GDP Sectoral Growth (var% interanual)")
     ax.legend(fontsize=7, loc="lower left")
-    ax.grid(True, alpha=0.3)
     ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
+    watermark(ax)
 
     # Panel 4: Key macro indicators (normalized)
     ax = axes[1, 1]
     macro_codes = [
-        ("PN01246PM", "Tipo de cambio"),
-        ("PD04722MM", "Tasa referencia"),
-        ("PN01273PM", "Inflación 12m"),
+        ("PN01246PM", "Tipo de cambio", C["accent"]),
+        ("PD04722MM", "Tasa referencia", "#2980B9"),
+        ("PN01273PM", "Inflacion 12m", "#C0392B"),
     ]
-    for code, label in macro_codes:
+    for code, label, clr in macro_codes:
         s = df[df["series_code"] == code].sort_values("date").dropna(subset=["value"])
-        ax.plot(s["date"], s["value"], linewidth=0.8, label=label)
+        ax.plot(s["date"], s["value"], linewidth=0.8, label=label, color=clr)
     ax.set_title("Key Macro Indicators")
     ax.legend(fontsize=8)
-    ax.grid(True, alpha=0.3)
     ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
+    watermark(ax)
 
     plt.tight_layout()
+    add_source_line(fig, f"Fuente: BCRP. Elaboracion: {BRAND}.")
     out_path = output_dir / "validation_overview.png"
-    fig.savefig(out_path, dpi=150, bbox_inches="tight")
+    fig.savefig(out_path, dpi=MAP_DPI, bbox_inches="tight")
     plt.close(fig)
     print(f"Saved: {out_path}")
 
 
+def watermark(ax):
+    add_watermark(ax)
+
+
 def main():
+    apply_nexus_style()
     df = load_data()
     code_to_name = load_catalog()
 
@@ -326,9 +345,9 @@ def main():
 
     print(f"\nAll plots saved to: {output_dir}")
     if all_pass:
-        print("\nVALIDATION PASSED — Data is ready for Sprint 2.")
+        print(f"\nVALIDATION PASSED — Data is ready.")
     else:
-        print("\nWARNING: Some sanity checks failed. Review before proceeding.")
+        print(f"\nWARNING: Some sanity checks failed. Review before proceeding.")
 
 
 if __name__ == "__main__":

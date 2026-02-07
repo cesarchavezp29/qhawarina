@@ -14,6 +14,15 @@ import pandas as pd
 import yaml
 
 from config.settings import RAW_BCRP_DIR, SERIES_CATALOG_PATH
+from src.visualization.style import (
+    NEXUS_COLORS as C,
+    apply_nexus_style,
+    add_watermark,
+    add_source_line,
+    MAP_DPI,
+)
+
+BRAND = "Qhawarina"
 
 
 def load_data():
@@ -47,12 +56,12 @@ def plot_series(df, code, info, output_dir):
 
     fig, ax = plt.subplots(figsize=(14, 5))
 
-    ax.plot(vals["date"], vals["value"], linewidth=1.0, color="#1f77b4")
-    ax.fill_between(vals["date"], vals["value"], alpha=0.08, color="#1f77b4")
+    ax.plot(vals["date"], vals["value"], linewidth=1.0, color=C["accent"])
+    ax.fill_between(vals["date"], vals["value"], alpha=0.08, color=C["accent"])
 
     # Zero line for growth rates / percentages
     if vals["value"].min() < 0:
-        ax.axhline(y=0, color="gray", linewidth=0.6, linestyle="--")
+        ax.axhline(y=0, color=C["text_secondary"], linewidth=0.6, linestyle="--")
 
     # Stats
     v = vals["value"]
@@ -68,33 +77,35 @@ def plot_series(df, code, info, output_dir):
 
     ax.set_title(f"{code}: {name}", fontsize=13, fontweight="bold", pad=12)
     ax.text(0.5, 1.02, f"[{category}]  {date_range}", transform=ax.transAxes,
-            fontsize=9, ha="center", va="bottom", color="gray")
+            fontsize=9, ha="center", va="bottom", color=C["text_secondary"])
     ax.text(0.5, -0.10, stats_text, transform=ax.transAxes,
-            fontsize=9, ha="center", va="top", color="#555555",
+            fontsize=9, ha="center", va="top", color=C["text_secondary"],
             fontfamily="monospace")
 
     ax.xaxis.set_major_locator(mdates.YearLocator(2))
     ax.xaxis.set_minor_locator(mdates.YearLocator(1))
     ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
     ax.tick_params(axis="both", labelsize=9)
-    ax.grid(True, alpha=0.3, which="major")
-    ax.grid(True, alpha=0.1, which="minor")
 
     # Highlight COVID period
     covid_start = pd.Timestamp("2020-03-01")
     covid_end = pd.Timestamp("2020-12-01")
     if vals["date"].min() < covid_start < vals["date"].max():
-        ax.axvspan(covid_start, covid_end, alpha=0.06, color="red", label="COVID-19")
+        ax.axvspan(covid_start, covid_end, alpha=0.06, color="#C0392B", label="COVID-19")
+
+    add_watermark(ax)
+    add_source_line(fig, f"Fuente: BCRP. Elaboracion: {BRAND}.")
 
     plt.tight_layout()
     safe_code = code.replace("/", "_")
     out_path = output_dir / f"{safe_code}.png"
-    fig.savefig(out_path, dpi=150, bbox_inches="tight")
+    fig.savefig(out_path, dpi=MAP_DPI, bbox_inches="tight")
     plt.close(fig)
     return out_path
 
 
 def main():
+    apply_nexus_style()
     df = load_data()
     code_info = load_catalog()
 
