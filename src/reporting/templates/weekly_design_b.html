@@ -60,7 +60,7 @@ body {
   background: #1B2A4A;
   color: white;
   padding: 6px 14px;
-  margin: 0 -1.2cm 12px -1.2cm;
+  margin: 0 0 12px 0;
   font-size: 11pt;
   font-weight: bold;
   text-transform: uppercase;
@@ -100,7 +100,7 @@ body {
 
 /* ── Narrative ── */
 .executive-box {
-  background: linear-gradient(90deg, #FEF9E7 0%, #FAFBFC 100%);
+  background: #FEF9E7;
   border-left: 4px solid #D4A03C;
   padding: 12px 16px;
   margin: 12px 0;
@@ -219,18 +219,12 @@ tr:nth-child(even) td { background: #FAFBFC; }
 .sev-media { background: #E67E22; }
 .sev-baja { background: #27AE60; }
 
-/* ── Scale indicators ── */
-.scale-wrapper {
-  position: relative;
-  margin-top: 20px;
-}
-.scale-indicator {
-  position: absolute;
-  top: -16px;
-  transform: translateX(-50%);
-  font-size: 7pt;
+/* ── Scale markers ── */
+.scale-markers {
+  text-align: center;
+  font-size: 8pt;
   font-weight: bold;
-  white-space: nowrap;
+  margin: 12px 0 4px 0;
 }
 </style>
 </head>
@@ -285,29 +279,20 @@ tr:nth-child(even) td { background: #FAFBFC; }
   </tr></table>
 </div>
 
-<!-- Risk scale with indicators -->
-<div class="scale-wrapper">
-  {% set pol_raw = data.pol_index / 250 * 100 %}
-  {% set pol_pct = [pol_raw, 2]|max %}
-  {% set pol_pct = [pol_pct, 98]|min %}
-  {% set econ_raw = data.econ_index / 250 * 100 %}
-  {% set econ_pct = [econ_raw, 2]|max %}
-  {% set econ_pct = [econ_pct, 98]|min %}
-  <div class="scale-indicator" style="left:{{ "%.1f"|format(pol_pct) }}%; color:#E74C3C; top:-28px;">
-    {{ "%.0f"|format(data.pol_index) }} ▼
-  </div>
-  <div class="scale-indicator" style="left:{{ "%.1f"|format(econ_pct) }}%; color:#5DADE2; top:-14px;">
-    {{ "%.0f"|format(data.econ_index) }} ▼
-  </div>
-  <div class="risk-scale">
-    <table><tr>
-      <td style="background:#2E7D32"></td>
-      <td style="background:#66BB6A"></td>
-      <td style="background:#FDD835"></td>
-      <td style="background:#FF8F00"></td>
-      <td style="background:#C62828"></td>
-    </tr></table>
-  </div>
+<!-- Risk scale with markers -->
+<div class="scale-markers">
+  <span style="color:#E74C3C;">&#9679; Político: {{ "%.0f"|format(data.pol_index) }}</span>
+  &nbsp;&nbsp;&nbsp;
+  <span style="color:#5DADE2;">&#9679; Económico: {{ "%.0f"|format(data.econ_index) }}</span>
+</div>
+<div class="risk-scale">
+  <table><tr>
+    <td style="background:#2E7D32"></td>
+    <td style="background:#66BB6A"></td>
+    <td style="background:#FDD835"></td>
+    <td style="background:#FF8F00"></td>
+    <td style="background:#C62828"></td>
+  </tr></table>
 </div>
 <div class="risk-labels">
   <table><tr>

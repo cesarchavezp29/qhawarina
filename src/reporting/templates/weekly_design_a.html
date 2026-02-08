@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   DESIGN A: "Institucional"
+   Clean, formal, BCRP-inspired. Navy/gold, structured tables.
+   ═══════════════════════════════════════════════════════════════ */
+@page {
+  size: letter;
+  margin: 1.8cm 1.5cm 2.2cm 1.5cm;
+}
+body {
+  font-family: "Segoe UI", "Calibri", sans-serif;
+  color: #1B2A4A;
+  font-size: 9.5pt;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ── Cover ── */
+.cover {
+  text-align: center;
+  padding-top: 3cm;
+  page-break-after: always;
+}
+.cover .logo { width: 280px; display: block; margin: 0 auto 1.5cm auto; }
+.cover h1 {
+  font-size: 22pt;
+  color: #1B2A4A;
+  margin: 0 0 0.3cm 0;
+  letter-spacing: 1px;
+}
+.cover .subtitle {
+  font-size: 14pt;
+  color: #5A6B8A;
+  margin-bottom: 0.5cm;
+}
+.cover .brand {
+  font-size: 10pt;
+  color: #D4A03C;
+  font-style: italic;
+  margin-top: 1cm;
+}
+.cover .gold-line {
+  width: 60%;
+  border: none;
+  border-top: 2px solid #D4A03C;
+  margin: 0.8cm auto;
+}
+.cover .date-label {
+  font-size: 12pt;
+  color: #1B2A4A;
+  font-weight: bold;
+}
+
+/* ── Page header ── */
+.page-header {
+  border-bottom: 2px solid #D4A03C;
+  padding-bottom: 4px;
+  margin-bottom: 12px;
+}
+.page-header h2 {
+  font-size: 14pt;
+  color: #1B2A4A;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ── Dashboard cards ── */
+.dashboard { margin-bottom: 14px; }
+.dashboard table { width: 100%; border: none; }
+.dashboard td { border: none; vertical-align: top; padding: 0 4px; }
+.card {
+  border: 1px solid #E2E6EC;
+  border-radius: 4px;
+  padding: 10px 12px;
+  background: #FAFBFC;
+}
+.card-label {
+  font-size: 7.5pt;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #5A6B8A;
+  margin-bottom: 4px;
+}
+.card-value {
+  font-size: 22pt;
+  font-weight: bold;
+  line-height: 1.1;
+}
+.card-detail {
+  font-size: 7.5pt;
+  color: #5A6B8A;
+  margin-top: 2px;
+}
+.pol-value { color: #C0392B; }
+.econ-value { color: #2E5090; }
+.change-up { color: #C0392B; }
+.change-down { color: #2E7D32; }
+
+/* ── Risk badge ── */
+.risk-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 3px;
+  font-size: 8pt;
+  font-weight: bold;
+  color: white;
+}
+
+/* ── Narrative box ── */
+.narrative-box {
+  background: #F5F6F8;
+  border-left: 3px solid #D4A03C;
+  padding: 10px 14px;
+  margin: 12px 0;
+  font-size: 9pt;
+  line-height: 1.6;
+}
+.narrative-box.summary {
+  max-height: 4.5cm;
+  overflow: hidden;
+}
+
+/* ── Tables ── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 8px 0;
+  font-size: 8.5pt;
+}
+th {
+  background: #1B2A4A;
+  color: white;
+  padding: 5px 8px;
+  text-align: center;
+  font-size: 7.5pt;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+td {
+  padding: 4px 8px;
+  border-bottom: 1px solid #E2E6EC;
+  text-align: center;
+}
+tr:nth-child(even) td { background: #FAFBFC; }
+
+/* ── Charts ── */
+.chart-container {
+  text-align: center;
+  margin: 10px 0;
+}
+.chart-container img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ── Events list ── */
+.event-item {
+  margin-bottom: 6px;
+  font-size: 8.5pt;
+  line-height: 1.4;
+}
+.sev-high {
+  display: inline-block; padding: 1px 6px; border-radius: 3px;
+  font-size: 7pt; font-weight: bold; color: white; background: #C0392B;
+}
+.sev-med {
+  display: inline-block; padding: 1px 6px; border-radius: 3px;
+  font-size: 7pt; font-weight: bold; color: white; background: #E67E22;
+}
+.sev-low {
+  display: inline-block; padding: 1px 6px; border-radius: 3px;
+  font-size: 7pt; font-weight: bold; color: white; background: #27AE60;
+}
+.event-source { color: #5A6B8A; font-size: 7.5pt; }
+
+/* ── Section titles ── */
+.section-title {
+  font-size: 10pt;
+  font-weight: bold;
+  color: #1B2A4A;
+  margin: 12px 0 6px 0;
+  border-bottom: 1px solid #E2E6EC;
+  padding-bottom: 3px;
+}
+
+/* ── Outlook ── */
+.outlook-item {
+  margin-bottom: 8px;
+  font-size: 9pt;
+  line-height: 1.5;
+  padding-left: 12px;
+  text-indent: -12px;
+}
+
+/* ── Page breaks ── */
+.page-break { page-break-before: always; }
+
+/* ── Footer ── */
+.report-footer {
+  margin-top: 20px;
+  padding-top: 8px;
+  border-top: 1px solid #E2E6EC;
+  font-size: 7pt;
+  color: #5A6B8A;
+  text-align: center;
+  font-style: italic;
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ PAGE 1: COVER ═══════════════ -->
+<div class="cover">
+  {% if logo_b64 %}
+  <div style="text-align:center">
+    <img class="logo" src="data:image/png;base64,{{ logo_b64 }}" alt="Qhawarina">
+  </div>
+  {% endif %}
+  <div style="text-align:center">
+    <h1>REPORTE SEMANAL<br>DE INCERTIDUMBRE</h1>
+  </div>
+  <div class="subtitle">Monitoreo Político-Económico del Perú</div>
+  <hr class="gold-line">
+  <div class="date-label">Semana {{ data.week_number }}<br>{{ data.start_date }} al {{ data.end_date }}</div>
+  <div class="brand">Qhawarina — Observatorio de Incertidumbre del Perú</div>
+</div>
+
+<!-- ═══════════════ PAGE 2: EXECUTIVE DASHBOARD ═══════════════ -->
+<div class="page-header">
+  <h2>Resumen Ejecutivo</h2>
+</div>
+
+<!-- Dashboard cards -->
+<div class="dashboard">
+  <table><tr>
+    <td><div class="card">
+      <div class="card-label">Índice Político</div>
+      <div class="card-value pol-value">{{ "%.0f"|format(data.pol_index) }}</div>
+      <div class="card-detail">
+        <span class="risk-badge" style="background:{{ data.pol_risk_color }}">{{ data.pol_risk }}</span>
+        <span class="{% if data.pol_change > 0 %}change-up{% else %}change-down{% endif %}">
+          {{ "%+.0f"|format(data.pol_change) }} vs sem. anterior
+        </span>
+      </div>
+    </div></td>
+    <td><div class="card">
+      <div class="card-label">Índice Económico</div>
+      <div class="card-value econ-value">{{ "%.0f"|format(data.econ_index) }}</div>
+      <div class="card-detail">
+        <span class="risk-badge" style="background:{{ data.econ_risk_color }}">{{ data.econ_risk }}</span>
+        <span class="{% if data.econ_change > 0 %}change-up{% else %}change-down{% endif %}">
+          {{ "%+.0f"|format(data.econ_change) }} vs sem. anterior
+        </span>
+      </div>
+    </div></td>
+    <td><div class="card">
+      <div class="card-label">Artículos Analizados</div>
+      <div class="card-value" style="color:#D4A03C">{{ data.n_total }}</div>
+      <div class="card-detail">{{ data.n_pol }} políticos · {{ data.n_econ }} económicos</div>
+    </div></td>
+  </tr></table>
+</div>
+
+<!-- Scale reference (compact, inline with KPIs) -->
+<div class="section-title" style="margin-top:8px">Escala de Referencia</div>
+<table style="font-size:7.5pt; margin-bottom:8px">
+  <thead>
+    <tr><th>Nivel</th><th>Rango</th><th>Interpretación</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><span class="risk-badge" style="background:#2E7D32">MUY BAJO</span></td>
+        <td>&lt; 50</td><td style="text-align:left">Baja cobertura de eventos de inestabilidad.</td></tr>
+    <tr><td><span class="risk-badge" style="background:#66BB6A">BAJO</span></td>
+        <td>50–99</td><td style="text-align:left">Entorno favorable para decisiones de inversión.</td></tr>
+    <tr><td><span class="risk-badge" style="background:#FDD835;color:#1B2A4A">MODERADO</span></td>
+        <td>100–149</td><td style="text-align:left">Monitoreo rutinario recomendado.</td></tr>
+    <tr><td><span class="risk-badge" style="background:#FF8F00">ALTO</span></td>
+        <td>150–199</td><td style="text-align:left">Considerar ajustes en exposición a riesgo país.</td></tr>
+    <tr><td><span class="risk-badge" style="background:#C62828">MUY ALTO</span></td>
+        <td>&ge; 200</td><td style="text-align:left">Revisar posiciones y contingencias inmediatamente.</td></tr>
+  </tbody>
+</table>
+
+<!-- Executive narrative (height-limited — full text in Semana en Revisión) -->
+<div class="narrative-box summary">
+  <strong>Línea de fondo:</strong> {{ narrative.executive_summary }}
+</div>
+
+<!-- ═══════════════ CHARTS PAGE: 60-DAY TREND ═══════════════ -->
+<div class="page-break"></div>
+<div class="page-header">
+  <h2>Evolución — Últimos 60 Días</h2>
+</div>
+
+<div class="chart-container">
+  {% if charts.trend %}
+  <img src="data:image/png;base64,{{ charts.trend }}" alt="Tendencia 60 días"
+       style="max-height: 16cm;">
+  {% endif %}
+</div>
+
+<!-- Daily breakdown table -->
+<div class="section-title">Detalle Diario</div>
+<table>
+  <thead>
+    <tr>
+      <th>Día</th>
+      <th>Pol. Índice</th>
+      <th>Econ. Índice</th>
+      <th>Art. Pol.</th>
+      <th>Art. Econ.</th>
+      <th>Total</th>
+      <th>Fuentes</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for _, row in data.week_daily.iterrows() %}
+    <tr{% if row.political_index > 100 or row.economic_index > 100 %} style="background:#FFF8E1"{% endif %}>
+      <td>{{ row.date.strftime('%a %d') }}</td>
+      <td style="color:#C0392B; font-weight:{% if row.political_index > 100 %}bold{% else %}normal{% endif %}">
+        {{ "%.0f"|format(row.political_index) }}</td>
+      <td style="color:#2E5090; font-weight:{% if row.economic_index > 100 %}bold{% else %}normal{% endif %}">
+        {{ "%.0f"|format(row.economic_index) }}</td>
+      <td>{{ row.n_articles_political }}</td>
+      <td>{{ row.n_articles_economic }}</td>
+      <td>{{ row.n_articles_total }}</td>
+      <td>{{ row.n_sources }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<!-- ═══════════════ PAGE 3: WEEK IN REVIEW + EVENTS ═══════════════ -->
+<div class="page-break"></div>
+<div class="page-header">
+  <h2>Semana en Revisión</h2>
+</div>
+
+<!-- Week review narrative -->
+<div class="narrative-box">
+  {{ narrative.week_review | replace('\n', '<br>') }}
+</div>
+
+<!-- Daily bar chart -->
+<div class="chart-container">
+  {% if charts.daily_bars %}
+  <img src="data:image/png;base64,{{ charts.daily_bars }}" alt="Índice diario">
+  {% endif %}
+</div>
+
+<!-- Key events -->
+<div class="section-title">Eventos Clave — Políticos ({{ data.n_pol }} artículos)</div>
+{% for _, art in data.pol_articles.head(8).iterrows() %}
+<div class="event-item">
+  <span class="sev-{{ 'high' if art.article_severity == 3 else ('med' if art.article_severity == 2 else 'low') }}">
+    [{{ {'3':'ALTA','2':'MEDIA','1':'BAJA'}.get(art.article_severity|string, '?') }}]
+  </span>
+  <span class="event-source">({{ art.source }})</span>
+  {{ art.title[:95] }}{% if art.title|length > 95 %}...{% endif %}
+</div>
+{% endfor %}
+
+<div class="section-title">Eventos Clave — Económicos ({{ data.n_econ }} artículos)</div>
+{% for _, art in data.econ_articles.head(6).iterrows() %}
+<div class="event-item">
+  <span class="sev-{{ 'high' if art.article_severity == 3 else ('med' if art.article_severity == 2 else 'low') }}">
+    [{{ {'3':'ALTA','2':'MEDIA','1':'BAJA'}.get(art.article_severity|string, '?') }}]
+  </span>
+  <span class="event-source">({{ art.source }})</span>
+  {{ art.title[:95] }}{% if art.title|length > 95 %}...{% endif %}
+</div>
+{% endfor %}
+
+<!-- Article count chart -->
+<div class="chart-container" style="margin-top:12px">
+  {% if charts.article_counts %}
+  <img src="data:image/png;base64,{{ charts.article_counts }}" alt="Artículos">
+  {% endif %}
+</div>
+
+<!-- ═══════════════ PAGE 4: OUTLOOK ═══════════════ -->
+<div class="page-break"></div>
+<div class="page-header">
+  <h2>Qué Vigilar</h2>
+</div>
+
+<div class="narrative-box">
+  {{ narrative.outlook | replace('\n', '<br>') }}
+</div>
+
+<div class="section-title">Interpretación del Índice</div>
+<table>
+  <thead>
+    <tr><th>Nivel</th><th>Rango</th><th>Interpretación</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><span class="risk-badge" style="background:#2E7D32">MUY BAJO</span></td>
+        <td>&lt; 50</td><td style="text-align:left">Período de calma inusual. Baja cobertura de eventos de inestabilidad.</td></tr>
+    <tr><td><span class="risk-badge" style="background:#66BB6A">BAJO</span></td>
+        <td>50–99</td><td style="text-align:left">Actividad por debajo del promedio. Entorno favorable para decisiones de inversión.</td></tr>
+    <tr><td><span class="risk-badge" style="background:#FDD835;color:#1B2A4A">MODERADO</span></td>
+        <td>100–149</td><td style="text-align:left">Nivel promedio de incertidumbre. Monitoreo rutinario recomendado.</td></tr>
+    <tr><td><span class="risk-badge" style="background:#FF8F00">ALTO</span></td>
+        <td>150–199</td><td style="text-align:left">Incertidumbre elevada. Considerar ajustes en exposición a riesgo país.</td></tr>
+    <tr><td><span class="risk-badge" style="background:#C62828">MUY ALTO</span></td>
+        <td>&ge; 200</td><td style="text-align:left">Crisis o evento mayor. Revisar posiciones y contingencias inmediatamente.</td></tr>
+  </tbody>
+</table>
+
+<div class="section-title">Metodología</div>
+<p style="font-size:8pt; color:#5A6B8A; line-height:1.5">
+  El Índice de Incertidumbre Qhawarina sigue la metodología EPU de Baker, Bloom y Davis (2016, QJE).
+  Mide la proporción de cobertura mediática dedicada a eventos de inestabilidad política y económica,
+  ponderada por severidad (1-3), estandarizada por fuente y normalizada a media=100.
+  Fuentes: El Comercio, Gestión, La República. Clasificación automatizada vía Claude AI (Anthropic).
+  Para más información: qhawarina.pe
+</p>
+
+<div class="report-footer">
+  Qhawarina · Observatorio de Incertidumbre del Perú · {{ data.year }}<br>
+  Este reporte es generado automáticamente con datos hasta {{ data.end_date }}.
+</div>
+
+</body>
+</html>

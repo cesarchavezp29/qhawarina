@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   DESIGN C: "Ejecutivo"
+   Minimal, data-focused. Lots of whitespace, monochrome with
+   gold accent. Inspired by Goldman Sachs / McKinsey briefs.
+   ═══════════════════════════════════════════════════════════════ */
+@page {
+  size: letter;
+  margin: 2cm 2cm 2.2cm 2cm;
+}
+body {
+  font-family: "Segoe UI", "Calibri", sans-serif;
+  color: #222;
+  font-size: 9pt;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── Cover ── */
+.cover {
+  background: #1B2A4A;
+  color: white;
+  text-align: center;
+  padding: 2.5cm 1.5cm 2cm 1.5cm;
+  page-break-after: always;
+}
+.cover .logo { width: 200px; display: block; margin: 0 auto 1cm auto; }
+.cover h1 {
+  font-size: 22pt;
+  font-weight: 300;
+  color: white;
+  margin: 0 0 0.3cm 0;
+  letter-spacing: 1px;
+}
+.cover h1 strong {
+  font-weight: 700;
+}
+.top-rule {
+  width: 40px;
+  border: none;
+  border-top: 2px solid #D4A03C;
+  margin: 0 auto 0.8cm auto;
+}
+.meta {
+  font-size: 10pt;
+  color: #D4A03C;
+  margin-bottom: 0.5cm;
+  line-height: 1.6;
+}
+.bottom-brand {
+  font-size: 7pt;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.5);
+  margin-top: 1.5cm;
+}
+
+/* ── Header bar (inner pages) ── */
+.header-bar {
+  background: #1B2A4A;
+  color: white;
+  padding: 14px 20px;
+  margin: 0 0 16px 0;
+}
+.header-bar .hb-title {
+  font-weight: 700;
+  font-size: 11pt;
+  letter-spacing: 0.5px;
+}
+.header-bar .hb-meta {
+  font-size: 8pt;
+  color: rgba(255,255,255,0.8);
+}
+
+/* ── Typography ── */
+h2 {
+  font-size: 11pt;
+  font-weight: 700;
+  color: #222;
+  margin: 16px 0 8px 0;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #E0E0E0;
+}
+h3 {
+  font-size: 9pt;
+  font-weight: 600;
+  color: #444;
+  margin: 10px 0 4px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ── Key figures ── */
+.key-figures {
+  margin: 12px 0 16px 0;
+  padding: 14px 0;
+  border-top: 1px solid #E0E0E0;
+  border-bottom: 1px solid #E0E0E0;
+}
+.key-figures table { border: none; }
+.key-figures td { border: none; text-align: center; vertical-align: top; padding: 0 10px; }
+.kf {
+}
+.kf .num {
+  font-size: 30pt;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -1px;
+}
+.kf .sub {
+  font-size: 7.5pt;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 3px;
+}
+.kf .change {
+  font-size: 8pt;
+  font-weight: 600;
+  margin-top: 2px;
+}
+.num-pol { color: #B71C1C; }
+.num-econ { color: #1565C0; }
+.num-gold { color: #B8860B; }
+.up { color: #B71C1C; }
+.down { color: #2E7D32; }
+
+/* ── Narrative ── */
+.summary-text {
+  font-size: 10pt;
+  line-height: 1.8;
+  color: #333;
+  margin: 12px 0;
+  padding: 0;
+}
+
+/* ── Signal box ── */
+.signal-box {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 2px;
+  font-size: 7.5pt;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: white;
+}
+
+/* ── Charts ── */
+.chart { text-align: center; margin: 10px 0; }
+.chart img { max-width: 100%; }
+.chart-note {
+  font-size: 6.5pt;
+  color: #999;
+  font-style: italic;
+  text-align: right;
+  margin-top: 2px;
+}
+
+/* ── Events ── */
+.event-list {
+  margin: 6px 0;
+}
+.ev {
+  font-size: 8pt;
+  line-height: 1.5;
+  padding: 3px 0 3px 10px;
+  border-left: 2px solid #E0E0E0;
+  margin-bottom: 4px;
+}
+.ev.high { border-left-color: #B71C1C; }
+.ev.medium { border-left-color: #E65100; }
+.ev.low { border-left-color: #9E9E9E; }
+.ev .tag {
+  font-size: 6.5pt;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.ev .tag.pol { color: #B71C1C; }
+.ev .tag.econ { color: #1565C0; }
+
+/* ── Table ── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 8pt;
+  margin: 6px 0;
+}
+th {
+  text-align: center;
+  font-size: 7pt;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #888;
+  border-bottom: 2px solid #222;
+  padding: 4px 6px;
+  font-weight: 600;
+}
+td {
+  text-align: center;
+  padding: 3px 6px;
+  border-bottom: 1px solid #F0F0F0;
+}
+
+/* ── Outlook ── */
+.outlook-text {
+  font-size: 9pt;
+  line-height: 1.7;
+  color: #333;
+}
+
+/* ── Methodology ── */
+.method-note {
+  margin-top: 20px;
+  padding-top: 8px;
+  border-top: 1px solid #E0E0E0;
+  font-size: 7pt;
+  color: #999;
+  line-height: 1.5;
+}
+
+/* ── Utils ── */
+.page-break { page-break-before: always; }
+.gold-rule {
+  width: 30px;
+  border: none;
+  border-top: 2px solid #D4A03C;
+  margin: 0 0 6px 0;
+}
+.two-col-table { width: 100%; border: none; }
+.two-col-table td { width: 50%; vertical-align: top; border: none; padding: 0 8px; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ PAGE 1: COVER ═══════════════ -->
+<div class="cover">
+  {% if logo_b64 %}
+  <div style="text-align:center">
+    <img class="logo" src="data:image/png;base64,{{ logo_b64 }}" alt="Q">
+  </div>
+  {% endif %}
+  <hr class="top-rule">
+  <h1>Reporte Semanal de<br><strong>Incertidumbre</strong></h1>
+  <div class="meta">
+    <strong>Semana {{ data.week_number }}</strong> · {{ data.start_date }} al {{ data.end_date }}<br>
+    {{ data.n_total }} artículos analizados · {{ data.n_pol }} políticos · {{ data.n_econ }} económicos
+  </div>
+  <div class="bottom-brand">QHAWARINA · OBSERVATORIO DE INCERTIDUMBRE DEL PERÚ</div>
+</div>
+
+<!-- ═══════════════ PAGE 2: KEY FINDINGS ═══════════════ -->
+<h2>Hallazgos Principales</h2>
+
+<div class="key-figures">
+  <table><tr>
+    <td>
+      <div class="num num-pol">{{ "%.0f"|format(data.pol_index) }}</div>
+      <div class="sub">Índice Político</div>
+      <div class="change {% if data.pol_change > 0 %}up{% else %}down{% endif %}">
+        {{ "%+.0f"|format(data.pol_change) }} pts vs sem. anterior
+      </div>
+      <div style="margin-top:4px">
+        <span class="signal-box" style="background:{{ data.pol_risk_color }}">{{ data.pol_risk }}</span>
+      </div>
+    </td>
+    <td>
+      <div class="num num-econ">{{ "%.0f"|format(data.econ_index) }}</div>
+      <div class="sub">Índice Económico</div>
+      <div class="change {% if data.econ_change > 0 %}up{% else %}down{% endif %}">
+        {{ "%+.0f"|format(data.econ_change) }} pts vs sem. anterior
+      </div>
+      <div style="margin-top:4px">
+        <span class="signal-box" style="background:{{ data.econ_risk_color }}">{{ data.econ_risk }}</span>
+      </div>
+    </td>
+    <td>
+      <div class="num num-gold">{{ data.n_total }}</div>
+      <div class="sub">Artículos</div>
+      <div class="change" style="color:#888">
+        {{ "%.1f"|format(data.n_sources) }} fuentes/día
+      </div>
+    </td>
+  </tr></table>
+</div>
+
+<div class="summary-text">
+  {{ narrative.executive_summary }}
+</div>
+
+<!-- Trend chart -->
+<div class="chart">
+  {% if charts.trend %}
+  <img src="data:image/png;base64,{{ charts.trend }}">
+  {% endif %}
+  <div class="chart-note">Últimos 60 días. Área sombreada = semana actual. Línea discontinua = media (100).</div>
+</div>
+
+<!-- Daily table -->
+<h3>Detalle Diario</h3>
+<table>
+  <tr>
+    <th>Día</th><th>Pol.</th><th>Econ.</th><th>Art.</th><th>Fuentes</th>
+  </tr>
+  {% for _, row in data.week_daily.iterrows() %}
+  <tr>
+    <td style="text-align:left; font-weight:600">{{ row.date.strftime('%a %d') }}</td>
+    <td style="color:#B71C1C; font-weight:{% if row.political_index > 150 %}700{% else %}400{% endif %}">
+      {{ "%.0f"|format(row.political_index) }}</td>
+    <td style="color:#1565C0; font-weight:{% if row.economic_index > 150 %}700{% else %}400{% endif %}">
+      {{ "%.0f"|format(row.economic_index) }}</td>
+    <td>{{ row.n_articles_total }}</td>
+    <td>{{ row.n_sources }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+<!-- ═══════════════ PAGE 3: EVENTS ═══════════════ -->
+<div class="page-break"></div>
+
+<h2>Semana en Revisión</h2>
+
+<div class="outlook-text" style="margin-bottom: 12px">
+  {{ narrative.week_review | replace('\n', '<br>') }}
+</div>
+
+<div class="chart">
+  {% if charts.daily_bars %}
+  <img src="data:image/png;base64,{{ charts.daily_bars }}">
+  {% endif %}
+</div>
+
+<table class="two-col-table"><tr>
+  <td>
+    <h3>Eventos Políticos</h3>
+    <hr class="gold-rule">
+    <div class="event-list">
+      {% for _, art in data.pol_articles.head(7).iterrows() %}
+      <div class="ev {{ 'high' if art.article_severity == 3 else ('medium' if art.article_severity == 2 else 'low') }}">
+        <span class="tag pol">{{ art.source }}</span>
+        {{ art.title[:85] }}{% if art.title|length > 85 %}...{% endif %}
+      </div>
+      {% endfor %}
+      {% if data.n_pol > 7 %}
+      <div style="font-size:7pt; color:#999; margin-top:4px">+{{ data.n_pol - 7 }} artículos más</div>
+      {% endif %}
+    </div>
+  </td>
+  <td>
+    <h3>Eventos Económicos</h3>
+    <hr class="gold-rule">
+    <div class="event-list">
+      {% for _, art in data.econ_articles.head(7).iterrows() %}
+      <div class="ev {{ 'high' if art.article_severity == 3 else ('medium' if art.article_severity == 2 else 'low') }}">
+        <span class="tag econ">{{ art.source }}</span>
+        {{ art.title[:85] }}{% if art.title|length > 85 %}...{% endif %}
+      </div>
+      {% endfor %}
+      {% if data.n_econ > 7 %}
+      <div style="font-size:7pt; color:#999; margin-top:4px">+{{ data.n_econ - 7 }} artículos más</div>
+      {% endif %}
+    </div>
+  </td>
+</tr></table>
+
+<!-- ═══════════════ PAGE 4: OUTLOOK ═══════════════ -->
+<div class="page-break"></div>
+
+<h2>Perspectiva</h2>
+
+<div class="outlook-text">
+  {{ narrative.outlook | replace('\n', '<br>') }}
+</div>
+
+<!-- Article analysis chart -->
+<div class="chart" style="margin-top: 16px">
+  {% if charts.article_counts %}
+  <img src="data:image/png;base64,{{ charts.article_counts }}">
+  {% endif %}
+  <div class="chart-note">Distribución de artículos analizados por categoría y día.</div>
+</div>
+
+<h3>Escala de Referencia</h3>
+<table>
+  <tr><th>Nivel</th><th>Rango</th><th style="text-align:left">Significado</th></tr>
+  <tr>
+    <td><span class="signal-box" style="background:#2E7D32">Muy Bajo</span></td>
+    <td>&lt; 50</td>
+    <td style="text-align:left">Calma inusual. Baja cobertura de inestabilidad.</td>
+  </tr>
+  <tr>
+    <td><span class="signal-box" style="background:#66BB6A">Bajo</span></td>
+    <td>50–99</td>
+    <td style="text-align:left">Por debajo del promedio. Entorno favorable.</td>
+  </tr>
+  <tr>
+    <td><span class="signal-box" style="background:#FDD835;color:#222">Moderado</span></td>
+    <td>100–149</td>
+    <td style="text-align:left">Nivel promedio. Monitoreo rutinario.</td>
+  </tr>
+  <tr>
+    <td><span class="signal-box" style="background:#FF8F00">Alto</span></td>
+    <td>150–199</td>
+    <td style="text-align:left">Elevado. Considerar ajustes en exposición.</td>
+  </tr>
+  <tr>
+    <td><span class="signal-box" style="background:#C62828">Muy Alto</span></td>
+    <td>&ge; 200</td>
+    <td style="text-align:left">Crisis. Revisar posiciones inmediatamente.</td>
+  </tr>
+</table>
+
+<div class="method-note">
+  <strong style="color:#666">Metodología</strong> ·
+  Índice construido siguiendo Baker, Bloom & Davis (2016, QJE). Proporción de cobertura mediática ponderada
+  por severidad (1-3), estandarizada por fuente, normalizada a media=100.
+  Clasificación automatizada vía Claude AI (Anthropic). Fuentes: El Comercio, Gestión, La República.
+  <br><br>
+  <strong style="color:#666">QHAWARINA</strong> · Observatorio de Incertidumbre del Perú · {{ data.year }}
+  · Reporte generado automáticamente · Datos hasta {{ data.end_date }}
+</div>
+
+</body>
+</html>
