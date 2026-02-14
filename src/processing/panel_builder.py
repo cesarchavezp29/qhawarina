@@ -58,6 +58,212 @@ from src.utils.io import save_parquet
 
 logger = logging.getLogger("nexus.panel_builder")
 
+PROCESSED_NATIONAL_DIR = Path(__file__).resolve().parents[2] / "data" / "processed" / "national"
+
+
+def _build_midagri_panel(midagri_path: Path) -> list[pd.DataFrame]:
+    """Build panel-format frames from MIDAGRI monthly wholesale prices.
+
+    Reads the 8 MIDAGRI series (ALL/VEG/FRUIT/TUBER × AVG/VAR%) and computes
+    the standard panel transforms. AVG series get full SA + log transforms;
+    VAR% series are already stationary rates and only carry value_raw.
+
+    Parameters
+    ----------
+    midagri_path : Path
+        Path to midagri_monthly_prices.parquet.
+
+    Returns
+    -------
+    list[pd.DataFrame]
+        One DataFrame per series, each with the 12-column panel schema.
+    """
+    df = pd.read_parquet(midagri_path)
+    df["date"] = pd.to_datetime(df["date"])
+
+    frames = []
+    for sid in df["series_id"].unique():
+        sub = df[df["series_id"] == sid].sort_values("date").copy()
+        ts = sub.set_index("date")["value_raw"]
+        is_avg = sid.endswith("_AVG")
+
+        if is_avg:
+            # Seasonal adjustment (STL) — need >=24 obs
+            if len(ts.dropna()) >= 24:
+                sa_result = seasonal_adjust(ts, method="stl")
+                value_sa = sa_result["value_sa"]
+            else:
+                value_sa = ts.copy()
+
+            value_log = np.log(value_sa)
+            value_dlog = np.log(value_sa).diff()
+            value_yoy = (ts / ts.shift(12) - 1) * 100
+        else:
+            # VAR% series — already stationary rates
+            value_sa = ts.copy()
+            value_log = pd.Series(np.nan, index=ts.index)
+            value_dlog = pd.Series(np.nan, index=ts.index)
+            value_yoy = pd.Series(np.nan, index=ts.index)
+
+        frame = pd.DataFrame({
+            "date": ts.index,
+            "series_id": sid,
+            "series_name": sub["series_name"].iloc[0],
+            "category": sub["category"].iloc[0],
+            "value_raw": ts.values,
+            "value_sa": value_sa.values,
+            "value_log": value_log.values,
+            "value_dlog": value_dlog.values,
+            "value_yoy": value_yoy.values,
+            "source": "MIDAGRI",
+            "frequency_original": "D",
+            "publication_lag_days": int(sub["publication_lag_days"].iloc[0]),
+        })
+        frames.append(frame)
+
+    return frames
+
+
+def _build_ntl_panel_departmental(ntl_path: Path) -> list[pd.DataFrame]:
+    """Build panel-format frames from NTL monthly department data.
+
+    For each of 25 departments, creates a series from ntl_sum with
+    STL seasonal adjustment and standard transforms.
+
+    Parameters
+    ----------
+    ntl_path : Path
+        Path to ntl_monthly_department.parquet.
+
+    Returns
+    -------
+    list[pd.DataFrame]
+        One DataFrame per department, each with the 13-column departmental schema.
+    """
+    df = pd.read_parquet(ntl_path)
+    df["date"] = pd.to_datetime(df["date"])
+
+    frames = []
+    for dept_code in sorted(df["DEPT_CODE"].unique()):
+        sub = df[df["DEPT_CODE"] == dept_code].sort_values("date").copy()
+        ts = sub.set_index("date")["ntl_sum"]
+        sid = f"NTL_SUM_{dept_code}"
+
+        # STL seasonal adjustment (NTL has ~157 months >> 24 minimum)
+        if len(ts.dropna()) >= 24:
+            sa_result = seasonal_adjust(ts, method="stl")
+            value_sa = sa_result["value_sa"]
+        else:
+            value_sa = ts.copy()
+
+        value_log = np.log1p(value_sa)
+        value_dlog = np.log1p(value_sa).diff()
+        value_yoy = (ts / ts.shift(12) - 1) * 100
+
+        dept_name = sub["department"].iloc[0] if "department" in sub.columns else ""
+
+        frame = pd.DataFrame({
+            "date": ts.index,
+            "series_id": sid,
+            "series_name": f"NTL sum {dept_name}".strip(),
+            "category": "nighttime_lights",
+            "department": dept_name,
+            "ubigeo": dept_code,
+            "value_raw": ts.values,
+            "value_sa": value_sa.values,
+            "value_log": value_log.values,
+            "value_dlog": value_dlog.values,
+            "value_yoy": value_yoy.values,
+            "source": "NASA/VIIRS",
+            "frequency_original": "M",
+        })
+        frames.append(frame)
+
+    return frames
+
+
+def _build_ntl_panel_national(ntl_path: Path) -> list[pd.DataFrame]:
+    """Build a single national aggregate NTL series from department data.
+
+    Sums ntl_sum across all departments per month, then applies
+    STL seasonal adjustment and standard transforms.
+
+    Parameters
+    ----------
+    ntl_path : Path
+        Path to ntl_monthly_department.parquet.
+
+    Returns
+    -------
+    list[pd.DataFrame]
+        Single-element list with the 12-column national schema.
+    """
+    df = pd.read_parquet(ntl_path)
+    df["date"] = pd.to_datetime(df["date"])
+
+    agg = df.groupby("date")["ntl_sum"].sum().sort_index()
+    ts = agg
+
+    # STL seasonal adjustment
+    if len(ts.dropna()) >= 24:
+        sa_result = seasonal_adjust(ts, method="stl")
+        value_sa = sa_result["value_sa"]
+    else:
+        value_sa = ts.copy()
+
+    value_log = np.log1p(value_sa)
+    value_dlog = np.log1p(value_sa).diff()
+    value_yoy = (ts / ts.shift(12) - 1) * 100
+
+    frame = pd.DataFrame({
+        "date": ts.index,
+        "series_id": "NTL_SUM_NATIONAL",
+        "series_name": "NTL sum national aggregate",
+        "category": "nighttime_lights",
+        "value_raw": ts.values,
+        "value_sa": value_sa.values,
+        "value_log": value_log.values,
+        "value_dlog": value_dlog.values,
+        "value_yoy": value_yoy.values,
+        "source": "NASA/VIIRS",
+        "frequency_original": "M",
+        "publication_lag_days": 30,
+    })
+
+    return [frame]
+
+
+def _build_supermarket_panel(supermarket_path: Path) -> list[pd.DataFrame]:
+    """Build panel-format frames from supermarket monthly price indices.
+
+    Reads the monthly supermarket index data and converts to panel format.
+    Index series get log transforms; variation series are treated as rates.
+
+    Parameters
+    ----------
+    supermarket_path : Path
+        Path to supermarket_monthly_prices.parquet.
+
+    Returns
+    -------
+    list[pd.DataFrame]
+        One DataFrame per series, each with the 12-column panel schema.
+    """
+    from src.ingestion.supermarket import SupermarketAggregator
+
+    aggregator = SupermarketAggregator()
+    monthly_df = pd.read_parquet(supermarket_path)
+    panel = aggregator.build_panel_series(monthly_df)
+
+    if panel.empty:
+        return []
+
+    # Split into per-series frames (matching the pattern of other _build_* functions)
+    frames = []
+    for sid in panel["series_id"].unique():
+        frames.append(panel[panel["series_id"] == sid].copy())
+    return frames
+
 
 def build_national_panel(
     raw_path: Path,
@@ -120,10 +326,10 @@ def build_national_panel(
             if meta["seasonal_adjust"] in ("stl", "x13"):
                 sa_total += 1
                 # Check if SA was actually applied (not just raw passthrough)
-                if not np.allclose(
-                    processed["value_raw"].dropna().values,
-                    processed["value_sa"].dropna().values,
-                    equal_nan=True,
+                mask = processed["value_raw"].notna() & processed["value_sa"].notna()
+                if mask.any() and not np.allclose(
+                    processed.loc[mask, "value_raw"].values,
+                    processed.loc[mask, "value_sa"].values,
                 ):
                     sa_success += 1
 
@@ -154,6 +360,46 @@ def build_national_panel(
             logger.info("Chow-Lin monthly GDP added: %d observations", len(gdp_frame))
         except Exception as e:
             logger.warning("Chow-Lin GDP disaggregation failed: %s", e)
+
+    # Optionally add MIDAGRI wholesale food prices
+    try:
+        midagri_path = PROCESSED_NATIONAL_DIR / "midagri_monthly_prices.parquet"
+        if midagri_path.exists():
+            midagri_frames = _build_midagri_panel(midagri_path)
+            all_frames.extend(midagri_frames)
+            logger.info("MIDAGRI wholesale prices added: %d series", len(midagri_frames))
+    except Exception as e:
+        logger.warning("MIDAGRI integration failed: %s", e)
+
+    # Optionally add MIDAGRI poultry (chicken/egg) prices
+    try:
+        poultry_path = PROCESSED_NATIONAL_DIR / "midagri_poultry_monthly.parquet"
+        if poultry_path.exists():
+            poultry_frames = _build_midagri_panel(poultry_path)
+            all_frames.extend(poultry_frames)
+            logger.info("MIDAGRI poultry prices added: %d series", len(poultry_frames))
+    except Exception as e:
+        logger.warning("MIDAGRI poultry integration failed: %s", e)
+
+    # Optionally add NTL national aggregate
+    try:
+        ntl_path = PROCESSED_NATIONAL_DIR.parent / "ntl_monthly_department.parquet"
+        if ntl_path.exists():
+            ntl_frames = _build_ntl_panel_national(ntl_path)
+            all_frames.extend(ntl_frames)
+            logger.info("NTL national aggregate added: %d series", len(ntl_frames))
+    except Exception as e:
+        logger.warning("NTL national integration failed: %s", e)
+
+    # Optionally add supermarket price indices
+    try:
+        supermarket_path = PROCESSED_NATIONAL_DIR / "supermarket_monthly_prices.parquet"
+        if supermarket_path.exists():
+            supermarket_frames = _build_supermarket_panel(supermarket_path)
+            all_frames.extend(supermarket_frames)
+            logger.info("Supermarket price indices added: %d series", len(supermarket_frames))
+    except Exception as e:
+        logger.warning("Supermarket integration failed: %s", e)
 
     if not all_frames:
         raise ValueError("No series were successfully processed")
@@ -470,17 +716,19 @@ def build_departmental_panel(
         # Build lookup for series metadata
         code_meta = {s["code"]: s for s in series_list}
 
-        # Filter: credit/deposits use Total currency only (from catalog metadata)
+        # Filter: apply panel_filter to select subset of series
+        # Works for currency (credit/deposits) and visitor_type (tourism)
         if panel_filter:
             before = raw_df["series_code"].nunique()
-            total_codes = {
-                s["code"] for s in series_list
-                if s.get("currency") == panel_filter
-            }
-            if total_codes:
-                raw_df = raw_df[raw_df["series_code"].isin(total_codes)]
+            filter_codes = set()
+            for s in series_list:
+                if (s.get("currency") == panel_filter
+                        or s.get("visitor_type") == panel_filter):
+                    filter_codes.add(s["code"])
+            if filter_codes:
+                raw_df = raw_df[raw_df["series_code"].isin(filter_codes)]
                 after = raw_df["series_code"].nunique()
-                logger.info("  Filtered %s currency: %d → %d series",
+                logger.info("  Filtered %s: %d → %d series",
                             panel_filter, before, after)
 
         # Exclude 'Total Nacional' aggregates (no department)
@@ -541,6 +789,16 @@ def build_departmental_panel(
 
     if skipped_categories:
         logger.info("Skipped categories (no data): %s", skipped_categories)
+
+    # Optionally add NTL departmental series
+    try:
+        ntl_path = regional_data_dir.parent / "ntl_monthly_department.parquet"
+        if ntl_path.exists():
+            ntl_frames = _build_ntl_panel_departmental(ntl_path)
+            all_frames.extend(ntl_frames)
+            logger.info("NTL departmental series added: %d series", len(ntl_frames))
+    except Exception as e:
+        logger.warning("NTL departmental integration failed: %s", e)
 
     if not all_frames:
         raise ValueError("No regional series were successfully processed")

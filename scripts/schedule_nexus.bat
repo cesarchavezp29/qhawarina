@@ -28,8 +28,9 @@ goto usage
 echo Installing NEXUS scheduled tasks...
 echo.
 
-echo [1/4] Daily task (8:00 AM): BCRP data + panel rebuild
-schtasks /create /tn "NEXUS_Daily" /tr "\"%PYTHON_EXE%\" \"%UPDATE_SCRIPT%\" --only bcrp" /sc daily /st 08:00 /f
+set DAILY_SCRIPT=%SCRIPT_DIR%daily_update.bat
+echo [1/4] Daily task (8:00 AM): supermarket + RSS + MIDAGRI + BCRP + panel + reports
+schtasks /create /tn "NEXUS_Daily" /tr "\"%DAILY_SCRIPT%\"" /sc daily /st 08:00 /f
 if %errorlevel% neq 0 echo   WARNING: Failed to create daily task
 
 echo [2/4] Weekly task (Mon 6:00 AM): Full update + visualizations

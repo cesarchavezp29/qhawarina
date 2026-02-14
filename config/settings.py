@@ -11,14 +11,26 @@ DATA_DIR = PROJECT_ROOT / "data"
 RAW_DIR = DATA_DIR / "raw"
 PROCESSED_DIR = DATA_DIR / "processed"
 TARGETS_DIR = DATA_DIR / "targets"
+RESULTS_DIR = DATA_DIR / "results"
 
 RAW_BCRP_DIR = RAW_DIR / "bcrp"
 RAW_INEI_DIR = RAW_DIR / "inei"
 RAW_SUNAT_DIR = RAW_DIR / "sunat"
 RAW_VIIRS_DIR = RAW_DIR / "viirs"
+RAW_GEO_DIR = RAW_DIR / "geo"
 
 PROCESSED_NATIONAL_DIR = PROCESSED_DIR / "national"
 PROCESSED_DEPARTMENTAL_DIR = PROCESSED_DIR / "departmental"
+PROCESSED_DAILY_DIR = PROCESSED_DIR / "daily_instability"
+RAW_RSS_DIR = RAW_DIR / "rss"
+RAW_MIDAGRI_DIR = RAW_DIR / "midagri"
+MIDAGRI_BULLETINS_DIR = RAW_MIDAGRI_DIR / "bulletins"
+MIDAGRI_EXTRACTED_DIR = RAW_MIDAGRI_DIR / "extracted"
+MIDAGRI_POULTRY_BULLETINS_DIR = RAW_MIDAGRI_DIR / "poultry_bulletins"
+MIDAGRI_POULTRY_EXTRACTED_DIR = RAW_MIDAGRI_DIR / "poultry_extracted"
+
+RAW_SUPERMARKET_DIR = RAW_DIR / "supermarket"
+SUPERMARKET_SNAPSHOTS_DIR = RAW_SUPERMARKET_DIR / "snapshots"
 
 # ── BCRP API ──────────────────────────────────────────────────────────────────
 BCRP_API_BASE = "https://estadisticas.bcrp.gob.pe/estadisticas/series/api"
@@ -52,6 +64,7 @@ ENAHO_MODULES_PATH = CONFIG_DIR / "enaho_modules.yaml"
 RAW_POLITICAL_DIR = RAW_DIR / "political"
 PROCESSED_POLITICAL_DIR = PROCESSED_DIR / "political_instability"
 POLITICAL_SOURCES_PATH = CONFIG_DIR / "political_sources.yaml"
+RSS_FEEDS_PATH = CONFIG_DIR / "rss_feeds.yaml"
 
 # ── Output formats ────────────────────────────────────────────────────────────
 DEFAULT_OUTPUT_FORMAT = "parquet"
