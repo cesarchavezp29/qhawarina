@@ -596,13 +596,13 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
     last_7d = political_df.tail(7)["score_smooth"].mean()
     last_30d = political_df.tail(30)["score_smooth"].mean()
     last_365d = political_df.tail(365)
-    valid_90d = last_365d.tail(90)[last_365d.tail(90)["instability_index"] > 0]
-    if valid_90d.empty:
-        max_90d = 0.0
-        max_90d_date = last_365d["date"].iloc[-1]
+    valid_365d = last_365d[last_365d["score_smooth"] > 0]
+    if valid_365d.empty:
+        max_year = 0.0
+        max_year_date = last_365d["date"].iloc[-1]
     else:
-        max_90d = valid_90d["instability_index"].max()
-        max_90d_date = valid_90d.loc[valid_90d["instability_index"] == max_90d, "date"].iloc[0]
+        max_year = valid_365d["score_smooth"].max()
+        max_year_date = valid_365d.loc[valid_365d["score_smooth"] == max_year, "date"].iloc[0]
 
     # Classification level
     def classify_level(score: float) -> str:
@@ -662,8 +662,8 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
         "aggregates": {
             "7d_avg": round(last_7d, 3),
             "30d_avg": round(last_30d, 3),
-            "90d_max": round(max_90d, 3),
-            "90d_max_date": max_90d_date.strftime("%Y-%m-%d"),
+            "year_max": round(max_year, 3),
+            "year_max_date": max_year_date.strftime("%Y-%m-%d"),
         },
         "major_events": major_events[:10],  # Top 10
         "daily_series": daily_series,
