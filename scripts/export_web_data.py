@@ -595,11 +595,11 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
     # Calculate aggregates using smoothed score
     last_7d = political_df.tail(7)["score_smooth"].mean()
     last_30d = political_df.tail(30)["score_smooth"].mean()
-    last_90d = political_df.tail(90)
-    valid_90d = last_90d[last_90d["instability_index"] > 0]
+    last_365d = political_df.tail(365)
+    valid_90d = last_365d.tail(90)[last_365d.tail(90)["instability_index"] > 0]
     if valid_90d.empty:
         max_90d = 0.0
-        max_90d_date = last_90d["date"].iloc[-1]
+        max_90d_date = last_365d["date"].iloc[-1]
     else:
         max_90d = valid_90d["instability_index"].max()
         max_90d_date = valid_90d.loc[valid_90d["instability_index"] == max_90d, "date"].iloc[0]
@@ -613,7 +613,7 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
         else:
             return "ALTO"
 
-    # Daily series (last 90 days) — smoothed score as main signal, raw for reference
+    # Daily series (last 365 days) — smoothed score as main signal, raw for reference
     daily_series = [
         {
             "date": row["date"].strftime("%Y-%m-%d"),
@@ -623,16 +623,21 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
             "low_coverage": bool(row["low_coverage"]),
             "provisional": bool(row["provisional"]),
         }
-        for _, row in last_90d.iterrows()
+        for _, row in last_365d.iterrows()
     ]
 
-    # Major events (score > 0.75)
+    # Major events: smoothed score >= 0.65 AND at least 5 articles (avoids noise spikes)
     major_events = []
-    for _, row in political_df[political_df["instability_index"] > 0.75].iterrows():
+    reliable = political_df[
+        (political_df["score_smooth"] >= 0.65) &
+        (political_df["n_articles_total"] >= 5)
+    ]
+    for _, row in reliable.iterrows():
         major_events.append({
             "date": row["date"].strftime("%Y-%m-%d"),
-            "score": round(row["instability_index"], 3),
-            "level": "MUY ALTO" if row["instability_index"] > 0.9 else "ALTO",
+            "score": round(row["score_smooth"], 3),
+            "level": "MUY ALTO" if row["score_smooth"] > 0.85 else "ALTO",
+            "n_articles": int(row["n_articles_total"]),
             "summary": "Event summary (load from reports)",  # Placeholder
             "report_url": f"/political/daily-reports/{row['date'].strftime('%Y-%m-%d')}.html",
         })
