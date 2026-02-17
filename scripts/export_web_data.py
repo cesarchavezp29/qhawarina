@@ -142,14 +142,21 @@ def export_gdp_nowcast(gdp_df: pd.DataFrame, latest: pd.Series, fresh_nowcast: D
     )
 
     # Full historical series (all quarters)
+    # Null out nowcast for COVID period (2020-Q1 to 2021-Q4): model excluded that period
+    # from training so predictions are meaningless (stuck at ~2.77)
+    COVID_START = pd.Timestamp("2020-01-01")
+    COVID_END   = pd.Timestamp("2021-10-01")
+
     all_quarters = []
     for _, row in merged.iterrows():
         quarter_str = f"{row['date'].year}-Q{(row['date'].month - 1) // 3 + 1}"
+        in_covid = COVID_START <= row["date"] <= COVID_END
+        nowcast_val = None if in_covid or pd.isna(row["dfm_nowcast"]) else round(float(row["dfm_nowcast"]), 2)
         all_quarters.append({
             "quarter": quarter_str,
             "official": round(float(row["gdp_yoy"]), 2) if pd.notna(row["gdp_yoy"]) else None,
-            "nowcast": round(float(row["dfm_nowcast"]), 2) if pd.notna(row["dfm_nowcast"]) else None,
-            "error": round(float(row["dfm_nowcast"] - row["gdp_yoy"]), 2) if pd.notna(row["dfm_nowcast"]) and pd.notna(row["gdp_yoy"]) else None,
+            "nowcast": nowcast_val,
+            "error": round(float(row["dfm_nowcast"] - row["gdp_yoy"]), 2) if nowcast_val is not None and pd.notna(row["gdp_yoy"]) else None,
         })
 
     # Recent quarters (post-2021 for compact display)
@@ -168,19 +175,23 @@ def export_gdp_nowcast(gdp_df: pd.DataFrame, latest: pd.Series, fresh_nowcast: D
         })
 
     # Annual aggregation (average of 4 quarters per year)
+    # Exclude COVID years from nowcast average (model abstains 2020-2021)
+    merged_non_covid = merged[~merged["date"].between(COVID_START, COVID_END)].copy()
     merged["year"] = merged["date"].dt.year
-    annual_agg = merged.groupby("year").agg({
-        "gdp_yoy": "mean",
-        "dfm_nowcast": "mean"
-    }).reset_index()
+    merged_non_covid["year"] = merged_non_covid["date"].dt.year
+
+    official_annual = merged.groupby("year")["gdp_yoy"].mean()
+    nowcast_annual = merged_non_covid.groupby("year")["dfm_nowcast"].mean()
 
     annual_series = []
-    for _, row in annual_agg.iterrows():
+    for year in sorted(merged["year"].unique()):
+        off = official_annual.get(year)
+        now = nowcast_annual.get(year)
         annual_series.append({
-            "year": int(row["year"]),
-            "official": round(float(row["gdp_yoy"]), 2) if pd.notna(row["gdp_yoy"]) else None,
-            "nowcast": round(float(row["dfm_nowcast"]), 2) if pd.notna(row["dfm_nowcast"]) else None,
-            "error": round(float(row["dfm_nowcast"] - row["gdp_yoy"]), 2) if pd.notna(row["dfm_nowcast"]) and pd.notna(row["gdp_yoy"]) else None,
+            "year": int(year),
+            "official": round(float(off), 2) if pd.notna(off) else None,
+            "nowcast": round(float(now), 2) if pd.notna(now) else None,
+            "error": round(float(now - off), 2) if pd.notna(now) and pd.notna(off) else None,
         })
 
     # Extract fresh nowcast data if available
