@@ -151,11 +151,15 @@ def export_gdp_nowcast(gdp_df: pd.DataFrame, latest: pd.Series, fresh_nowcast: D
     for _, row in merged.iterrows():
         quarter_str = f"{row['date'].year}-Q{(row['date'].month - 1) // 3 + 1}"
         in_covid = COVID_START <= row["date"] <= COVID_END
+        # nowcast: null during COVID (clean break — model excluded that period)
         nowcast_val = None if in_covid or pd.isna(row["dfm_nowcast"]) else round(float(row["dfm_nowcast"]), 2)
+        # nowcast_full: keeps raw model output even during COVID (flat ~2.77 — extrapolation)
+        nowcast_full_val = None if pd.isna(row["dfm_nowcast"]) else round(float(row["dfm_nowcast"]), 2)
         all_quarters.append({
             "quarter": quarter_str,
             "official": round(float(row["gdp_yoy"]), 2) if pd.notna(row["gdp_yoy"]) else None,
             "nowcast": nowcast_val,
+            "nowcast_full": nowcast_full_val,
             "error": round(float(row["dfm_nowcast"] - row["gdp_yoy"]), 2) if nowcast_val is not None and pd.notna(row["gdp_yoy"]) else None,
         })
 
@@ -182,15 +186,19 @@ def export_gdp_nowcast(gdp_df: pd.DataFrame, latest: pd.Series, fresh_nowcast: D
 
     official_annual = merged.groupby("year")["gdp_yoy"].mean()
     nowcast_annual = merged_non_covid.groupby("year")["dfm_nowcast"].mean()
+    # nowcast_full_annual: includes COVID-period extrapolations (flat ~2.77 for 2020-2021)
+    nowcast_full_annual = merged.groupby("year")["dfm_nowcast"].mean()
 
     annual_series = []
     for year in sorted(merged["year"].unique()):
         off = official_annual.get(year)
         now = nowcast_annual.get(year)
+        now_full = nowcast_full_annual.get(year)
         annual_series.append({
             "year": int(year),
             "official": round(float(off), 2) if pd.notna(off) else None,
             "nowcast": round(float(now), 2) if pd.notna(now) else None,
+            "nowcast_full": round(float(now_full), 2) if pd.notna(now_full) else None,
             "error": round(float(now - off), 2) if pd.notna(now) and pd.notna(off) else None,
         })
 
