@@ -722,7 +722,6 @@ def export_gdp_regional_nowcast():
     logger.info("Generating regional GDP nowcast...")
     script_path = PROJECT_ROOT / "scripts" / "generate_gdp_regional_nowcast.py"
 
-    # Run the regional nowcast script
     result = subprocess.run(
         [sys.executable, str(script_path)],
         capture_output=True,
@@ -733,6 +732,25 @@ def export_gdp_regional_nowcast():
         logger.info("Regional GDP nowcast generated successfully")
     else:
         logger.error(f"Failed to generate regional GDP nowcast: {result.stderr}")
+
+
+def export_inflation_regional_nowcast():
+    """Export regional inflation nowcast using food/core basket decomposition."""
+    import subprocess
+
+    logger.info("Generating regional inflation nowcast...")
+    script_path = PROJECT_ROOT / "scripts" / "generate_inflation_regional_nowcast.py"
+
+    result = subprocess.run(
+        [sys.executable, str(script_path)],
+        capture_output=True,
+        text=True,
+    )
+
+    if result.returncode == 0:
+        logger.info("Regional inflation nowcast generated successfully")
+    else:
+        logger.error(f"Failed to generate regional inflation nowcast: {result.stderr}")
 
 
 def export_backtest_results():
@@ -776,6 +794,7 @@ def main():
     logger.info("\nExporting nowcast JSON files...")
     export_gdp_nowcast(data["gdp"], data["gdp_latest"], fresh_nowcast=fresh["gdp"])
     export_gdp_regional_nowcast()  # Add regional GDP disaggregation
+    export_inflation_regional_nowcast()  # Add regional inflation disaggregation
     export_inflation_nowcast(data["inflation"], data["inflation_latest"], fresh_nowcast=fresh["inflation"])
     export_poverty_nowcast(data["poverty"], data["poverty_national"])
 
