@@ -449,9 +449,15 @@ def export_poverty_nowcast(poverty_df: pd.DataFrame, national_rate: float):
         "year": "first",
     }).reset_index()
 
-    # Mock 2024 observed rates (would need real data)
-    # poverty_rate_nowcast is in fraction (0-1), so add 0.025 for 2.5pp
-    dept_agg["poverty_rate_2024"] = dept_agg["poverty_rate_nowcast"] + 0.025  # Assume 2.5pp increase from 2024
+    # Use real 2024 official poverty rates from INEI (via poverty_departmental.parquet)
+    official_2024 = pd.read_parquet(TARGETS_DIR / "poverty_departmental.parquet")
+    official_2024 = official_2024[official_2024["year"] == 2024][["department_code", "poverty_rate"]]
+    official_2024 = official_2024.rename(columns={"poverty_rate": "poverty_rate_2024"})
+    dept_agg = dept_agg.merge(official_2024, on="department_code", how="left")
+    # Fallback: where 2024 data is missing, approximate from nowcast (e.g. Callao=Lima)
+    dept_agg["poverty_rate_2024"] = dept_agg["poverty_rate_2024"].fillna(
+        dept_agg["poverty_rate_nowcast"] + 0.02
+    )
     dept_agg["change_pp"] = (dept_agg["poverty_rate_nowcast"] - dept_agg["poverty_rate_2024"]) * 100
 
     # Department names (hardcoded for now)
