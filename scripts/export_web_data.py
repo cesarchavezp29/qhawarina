@@ -484,9 +484,9 @@ def export_poverty_nowcast(poverty_df: pd.DataFrame, national_rate: float):
     # Sort by poverty rate descending
     departments = sorted(departments, key=lambda x: x["poverty_rate_2025_nowcast"], reverse=True)
 
-    # District-level (first 100 for JSON size)
+    # District-level (all districts for choropleth)
     districts = []
-    for _, row in poverty_df.head(100).iterrows():
+    for _, row in poverty_df.iterrows():
         districts.append({
             "ubigeo": row["district_ubigeo"],
             "department_code": row["department_code"],
@@ -537,7 +537,7 @@ def export_poverty_nowcast(poverty_df: pd.DataFrame, national_rate: float):
             "unit": "percent",
         },
         "departments": departments,
-        "districts": districts[:100],  # Truncate for JSON size
+        "districts": districts,
         "historical_series": poverty_timeseries,
         "backtest_metrics": {
             "rmse": 2.54,
@@ -670,6 +670,83 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
     # Sort by date descending
     major_events = sorted(major_events, key=lambda x: x["date"], reverse=True)
 
+    # ── Daily FX series (same period as political index) ─────────────────────
+    import httpx, re as _re
+
+    _MONTH_MAP = {
+        "Ene": "01", "Feb": "02", "Mar": "03", "Abr": "04",
+        "May": "05", "Jun": "06", "Jul": "07", "Ago": "08",
+        "Sep": "09", "Oct": "10", "Nov": "11", "Dic": "12",
+    }
+
+    def _parse_bcrp_daily_date(name: str) -> str | None:
+        """Parse '02.Ene.25' → '2025-01-02'."""
+        m = _re.match(r"(\d{2})\.([A-Za-z]{3})\.(\d{2})$", name)
+        if not m:
+            return None
+        day, mon, yr = m.group(1), m.group(2).capitalize(), m.group(3)
+        mon_num = _MONTH_MAP.get(mon)
+        if not mon_num:
+            return None
+        year = f"20{yr}"
+        return f"{year}-{mon_num}-{day}"
+
+    daily_fx_series = []
+    try:
+        pol_start = political_df["date"].min().strftime("%Y-%m-%d")
+        pol_end   = political_df["date"].max().strftime("%Y-%m-%d")
+        url = (
+            f"https://estadisticas.bcrp.gob.pe/estadisticas/series/api/"
+            f"PD04638PD/json/{pol_start}/{pol_end}/esp"
+        )
+        resp = httpx.get(url, timeout=20, follow_redirects=True)
+        if resp.status_code == 200:
+            for period in resp.json().get("periods", []):
+                iso = _parse_bcrp_daily_date(period["name"])
+                vals = period.get("values", [])
+                if iso and vals and vals[0] not in ("", "n.d."):
+                    daily_fx_series.append({
+                        "date": iso,
+                        "fx": round(float(vals[0]), 4),
+                    })
+    except Exception as _e:
+        logger.warning("Could not fetch daily FX from BCRP: %s", _e)
+    # ─────────────────────────────────────────────────────────────────────────
+
+    # ── Monthly series: political avg + FX yoy from panel (for scatter) ─────
+    political_df["month"] = political_df["date"].dt.to_period("M")
+    monthly_pol = (
+        political_df.groupby("month")["score_smooth"]
+        .mean()
+        .reset_index()
+    )
+    monthly_pol["month_str"] = monthly_pol["month"].dt.strftime("%Y-%m")
+
+    # Load FX yoy from panel (has full history → real YoY for all months)
+    panel_path = PROCESSED_NATIONAL_DIR / "panel_national_monthly.parquet"
+    try:
+        panel_df = pd.read_parquet(panel_path, columns=["date", "series_id", "value_raw", "value_yoy"])
+        fx_df = panel_df[panel_df["series_id"] == "PN01246PM"][["date", "value_raw", "value_yoy"]].copy()
+        fx_df["month_str"] = pd.to_datetime(fx_df["date"]).dt.strftime("%Y-%m")
+        fx_df = fx_df.rename(columns={"value_raw": "fx_level", "value_yoy": "fx_yoy"})
+        merged_monthly = monthly_pol.merge(fx_df[["month_str", "fx_level", "fx_yoy"]], on="month_str", how="left")
+    except Exception:
+        merged_monthly = monthly_pol.copy()
+        merged_monthly["fx_level"] = None
+        merged_monthly["fx_yoy"] = None
+
+    monthly_series = []
+    for _, row in merged_monthly.iterrows():
+        fx_lv = float(row["fx_level"]) if pd.notna(row.get("fx_level")) else None
+        fx_yy = float(row["fx_yoy"]) if pd.notna(row.get("fx_yoy")) else None
+        monthly_series.append({
+            "month": row["month_str"],
+            "political_avg": round(float(row["score_smooth"]), 3),
+            "fx_level": round(fx_lv, 4) if fx_lv is not None else None,
+            "fx_yoy": round(fx_yy, 2) if fx_yy is not None else None,
+        })
+    # ─────────────────────────────────────────────────────────────────────────
+
     output = {
         "metadata": {
             "generated_at": datetime.now().isoformat(),
@@ -692,6 +769,8 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
         },
         "major_events": major_events[:10],  # Top 10
         "daily_series": daily_series,
+        "daily_fx_series": daily_fx_series,
+        "monthly_series": monthly_series,
     }
 
     with open(DATA_DIR / "political_index_daily.json", "w", encoding="utf-8") as f:
@@ -719,6 +798,25 @@ def export_panel_data():
         supermarket_df = pd.read_parquet(supermarket_path)
         supermarket_df.to_csv(DATA_DIR / "supermarket_monthly_prices.csv", index=False)
         logger.info(f"Exported supermarket prices: {len(supermarket_df)} rows")
+
+
+def export_supermarket_daily_index():
+    """Build and export the supermarket daily price index JSON."""
+    import subprocess
+
+    logger.info("Building supermarket daily price index...")
+    script_path = PROJECT_ROOT / "scripts" / "build_price_index.py"
+
+    result = subprocess.run(
+        [sys.executable, str(script_path)],
+        capture_output=True,
+        text=True,
+    )
+
+    if result.returncode == 0:
+        logger.info("Supermarket daily price index built and exported")
+    else:
+        logger.error(f"Failed to build supermarket price index: {result.stderr[-500:]}")
 
 
 def export_gdp_regional_nowcast():
@@ -820,6 +918,10 @@ def main():
     # Export panel data
     logger.info("\nExporting historical panel data...")
     export_panel_data()
+
+    # Build + export supermarket daily price index
+    logger.info("\nBuilding supermarket price index...")
+    export_supermarket_daily_index()
 
     # Export backtest results
     logger.info("\nExporting backtest results...")
