@@ -259,6 +259,7 @@ def export_json(df: pd.DataFrame, output_path: Path) -> None:
             "var_all": None if (v := row.get("var_all")) is None or (isinstance(v, float) and math.isnan(v)) else round(v, 4),
             "var_food": None if (v := row.get("var_food")) is None or (isinstance(v, float) and math.isnan(v)) else round(v, 4),
             "cum_pct": round(row.get("cum_all_pct", 0) or 0, 4),
+            "interpolated": bool(row.get("interpolated", False)),
         }
         # Add per-category indexes
         for cat in CATEGORY_MAP:
@@ -334,6 +335,31 @@ def main():
 
     # Add variation columns
     df = compute_variations(df)
+
+    # ── Fill missing business days with linear interpolation ─────────────────
+    df["date"] = pd.to_datetime(df["date"])
+    all_bdays = pd.bdate_range(df["date"].min(), df["date"].max())
+    df_full = df.set_index("date").reindex(all_bdays)
+    n_missing = df_full["index_all"].isna().sum()
+    if n_missing > 0:
+        index_cols = [c for c in df_full.columns if c.startswith("index_") or c in ("n_matched", "jevons_ratio_all")]
+        df_full[index_cols] = df_full[index_cols].interpolate(method="linear")
+        df_full["interpolated"] = False
+        # Mark as interpolated: missing n_matched OR zero BUT not the base date (first row has n_matched=0 by design)
+        base_date = df_full.index[0]
+        df_full.loc[
+            (df_full.index != base_date) & (df_full["n_matched"].isna() | (df_full["n_matched"] == 0)),
+            "interpolated"
+        ] = True
+        df_full = df_full.reset_index().rename(columns={"index": "date"})
+        df_full = compute_variations(df_full)
+        print(f"[OK] Interpolated {n_missing} missing business day(s): "
+              f"{[d.strftime('%Y-%m-%d') for d in all_bdays if d not in df['date'].values]}")
+    else:
+        df_full["interpolated"] = False
+        df_full = df_full.reset_index().rename(columns={"index": "date"})
+    df = df_full
+    # ─────────────────────────────────────────────────────────────────────────
 
     print(f"\n[OK] Index computed for {len(df)} days")
     print(df[["date", "index_all", "index_food", "index_nonfood", "var_all"]].to_string())
