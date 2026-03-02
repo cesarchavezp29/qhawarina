@@ -70,10 +70,24 @@ def step_gdp(dry_run: bool = False, force: bool = False) -> dict:
 def step_inflation(dry_run: bool = False, force: bool = False) -> dict:
     """Step 3: Compile inflation targets from existing data."""
     from src.ingestion.targets import compile_inflation_targets
+    import pandas as pd
+
     if dry_run:
         logger.info("DRY RUN: Would reshape inflation data into target schema")
         return {"status": "dry_run"}
-    return compile_inflation_targets()
+
+    result = compile_inflation_targets()
+
+    # compile_inflation_targets() drops derived columns — rebuild ipc_3m_ma
+    target_path = PROJECT_ROOT / "data" / "targets" / "inflation_monthly.parquet"
+    if target_path.exists():
+        df = pd.read_parquet(target_path).sort_values("date")
+        if "ipc_3m_ma" not in df.columns:
+            df["ipc_3m_ma"] = df["ipc_monthly_var"].rolling(3, min_periods=1).mean()
+            df.to_parquet(target_path, index=False)
+            logger.info("Rebuilt ipc_3m_ma in inflation_monthly.parquet")
+
+    return result
 
 
 def step_enaho(dry_run: bool = False, force: bool = False) -> dict:
