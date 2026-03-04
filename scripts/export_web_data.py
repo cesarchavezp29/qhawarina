@@ -676,7 +676,7 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
     _MONTH_MAP = {
         "Ene": "01", "Feb": "02", "Mar": "03", "Abr": "04",
         "May": "05", "Jun": "06", "Jul": "07", "Ago": "08",
-        "Sep": "09", "Oct": "10", "Nov": "11", "Dic": "12",
+        "Set": "09", "Sep": "09", "Oct": "10", "Nov": "11", "Dic": "12",
     }
 
     def _parse_bcrp_daily_date(name: str) -> str | None:
@@ -777,6 +777,219 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
         json.dump(output, f, indent=2, ensure_ascii=False)
 
     logger.info(f"Exported political index: {output['current']['date']} = {output['current']['score']} ({output['current']['level']})")
+
+
+def export_bcrp_financial_markets():
+    """Export BCRP FX interventions and financial market data to JSON.
+
+    Fetches daily BCRP series (Jan 2020 → today):
+      PD04659MD — Compras netas spot (Mill. USD)
+      PD04660MD — Swaps netos (Mill. USD)
+      PD04638PD — TC PEN/USD interbancario
+      PD31893DD — Bono soberano 10a S/ (yield %)
+      PD31894DD — Bono soberano 10a USD (yield %)
+      PD38026MD — BVL Índice General
+      PD12301MD — Tasa referencia BCRP (%)
+    """
+    import httpx
+    import re as _re
+
+    # IMPORTANT: BCRP API returns series sorted alphabetically by code,
+    # NOT in the order specified in the URL. SERIES_KEYS must match
+    # the alphabetically sorted order of SERIES_CODES.
+    # Sorted: PD04638PD, PD04659MD, PD04660MD, PD12301MD, PD31893DD, PD31894DD, PD38026MD
+    SERIES_CODES = [
+        "PD04638PD",  # TC PEN/USD          → vals[0]
+        "PD04659MD",  # spot net purchases   → vals[1]
+        "PD04660MD",  # swaps net            → vals[2]
+        "PD12301MD",  # Tasa referencia      → vals[3]
+        "PD31893DD",  # Bono 10a S/          → vals[4]
+        "PD31894DD",  # Bono 10a USD         → vals[5]
+        "PD38026MD",  # BVL                  → vals[6]
+    ]
+    SERIES_KEYS = [
+        "fx",
+        "spot_net_purchases",
+        "swaps_net",
+        "reference_rate",
+        "bond_sol_10y",
+        "bond_usd_10y",
+        "bvl",
+    ]
+
+    BCRP_START = "2020-01-01"
+    BCRP_END = datetime.now().strftime("%Y-%m-%d")
+
+    _MONTH_MAP = {
+        "Ene": "01", "Feb": "02", "Mar": "03", "Abr": "04",
+        "May": "05", "Jun": "06", "Jul": "07", "Ago": "08",
+        "Set": "09", "Sep": "09", "Oct": "10", "Nov": "11", "Dic": "12",
+    }
+
+    def _parse_date(name: str):
+        m = _re.match(r"(\d{2})\.([A-Za-z]{3})\.(\d{2})$", name)
+        if not m:
+            return None
+        day, mon, yr = m.group(1), m.group(2).capitalize(), m.group(3)
+        mon_num = _MONTH_MAP.get(mon)
+        if not mon_num:
+            return None
+        return f"20{yr}-{mon_num}-{day}"
+
+    series_str = "-".join(SERIES_CODES)
+    url = (
+        f"https://estadisticas.bcrp.gob.pe/estadisticas/series/api/"
+        f"{series_str}/json/{BCRP_START}/{BCRP_END}/esp"
+    )
+
+    try:
+        resp = httpx.get(url, timeout=40, follow_redirects=True)
+        resp.raise_for_status()
+        raw = resp.json()
+    except Exception as e:
+        logger.error(f"Failed to fetch BCRP financial markets data: {e}")
+        return
+
+    records = []
+    for period in raw.get("periods", []):
+        iso = _parse_date(period["name"])
+        if not iso:
+            continue
+        vals = period.get("values", [])
+        row = {"date": iso}
+        for i, key in enumerate(SERIES_KEYS):
+            v = vals[i] if i < len(vals) else ""
+            row[key] = float(v) if v not in ("", "n.d.", None) else None
+        records.append(row)
+
+    if not records:
+        logger.warning("No BCRP financial market data fetched")
+        return
+
+    df = pd.DataFrame(records)
+    df["date"] = pd.to_datetime(df["date"])
+    df = df.sort_values("date").reset_index(drop=True)
+
+    # Forward-fill reference rate (changes infrequently, BCRP only posts on change dates)
+    df["reference_rate"] = df["reference_rate"].ffill()
+
+    # Total daily intervention = spot + swaps (null → 0 for summation)
+    df["total_intervention"] = df["spot_net_purchases"].fillna(0) + df["swaps_net"].fillna(0)
+
+    # Monthly aggregation (full history since 2020)
+    df["month"] = df["date"].dt.to_period("M")
+    monthly = (
+        df.groupby("month")
+        .agg(
+            spot_monthly=("spot_net_purchases", "sum"),
+            swaps_monthly=("swaps_net", "sum"),
+            fx_avg=("fx", "mean"),
+            bond_sol_avg=("bond_sol_10y", "mean"),
+            bond_usd_avg=("bond_usd_10y", "mean"),
+            bvl_end=("bvl", "last"),
+            reference_rate_end=("reference_rate", "last"),
+            n_days=("date", "count"),
+        )
+        .reset_index()
+    )
+    monthly["total_monthly"] = monthly["spot_monthly"] + monthly["swaps_monthly"]
+    monthly["month_str"] = monthly["month"].dt.strftime("%Y-%m")
+
+    # Latest available values
+    latest_row = df.dropna(subset=["fx"]).iloc[-1]
+    latest = {
+        "date": latest_row["date"].strftime("%Y-%m-%d"),
+        "fx": round(float(latest_row["fx"]), 4) if pd.notna(latest_row["fx"]) else None,
+        "spot_net_purchases": round(float(latest_row["spot_net_purchases"]), 1) if pd.notna(latest_row["spot_net_purchases"]) else None,
+        "swaps_net": round(float(latest_row["swaps_net"]), 1) if pd.notna(latest_row["swaps_net"]) else None,
+        "reference_rate": round(float(latest_row["reference_rate"]), 2) if pd.notna(latest_row["reference_rate"]) else None,
+        "bond_sol_10y": round(float(latest_row["bond_sol_10y"]), 3) if pd.notna(latest_row["bond_sol_10y"]) else None,
+        "bond_usd_10y": round(float(latest_row["bond_usd_10y"]), 3) if pd.notna(latest_row["bond_usd_10y"]) else None,
+        "bvl": round(float(latest_row["bvl"]), 0) if pd.notna(latest_row["bvl"]) else None,
+    }
+
+    # Daily series (last 2 years to keep JSON manageable)
+    TWO_YEARS_AGO = pd.Timestamp.now() - pd.DateOffset(years=2)
+    df_recent = df[df["date"] >= TWO_YEARS_AGO].copy()
+
+    # Forward-fill market prices to handle BCRP publication lag (TC/bonds/BVL
+    # are published 1-2 days late, leaving trailing nulls that break charts)
+    for col in ["fx", "reference_rate", "bond_sol_10y", "bond_usd_10y", "bvl"]:
+        if col in df_recent.columns:
+            df_recent[col] = df_recent[col].ffill()
+
+    daily_series = []
+    for _, row in df_recent.iterrows():
+        daily_series.append({
+            "date": row["date"].strftime("%Y-%m-%d"),
+            "spot_net_purchases": round(float(row["spot_net_purchases"]), 1) if pd.notna(row["spot_net_purchases"]) else None,
+            "swaps_net": round(float(row["swaps_net"]), 1) if pd.notna(row["swaps_net"]) else None,
+            "total_intervention": round(float(row["total_intervention"]), 1),
+            "fx": round(float(row["fx"]), 4) if pd.notna(row["fx"]) else None,
+            "reference_rate": round(float(row["reference_rate"]), 2) if pd.notna(row["reference_rate"]) else None,
+            "bond_sol_10y": round(float(row["bond_sol_10y"]), 3) if pd.notna(row["bond_sol_10y"]) else None,
+            "bond_usd_10y": round(float(row["bond_usd_10y"]), 3) if pd.notna(row["bond_usd_10y"]) else None,
+            "bvl": round(float(row["bvl"]), 0) if pd.notna(row["bvl"]) else None,
+        })
+
+    monthly_series = []
+    for _, row in monthly.iterrows():
+        monthly_series.append({
+            "month": row["month_str"],
+            "spot_net_purchases": round(float(row["spot_monthly"]), 1) if pd.notna(row["spot_monthly"]) else 0.0,
+            "swaps_net": round(float(row["swaps_monthly"]), 1) if pd.notna(row["swaps_monthly"]) else 0.0,
+            "total_intervention": round(float(row["total_monthly"]), 1),
+            "fx_avg": round(float(row["fx_avg"]), 4) if pd.notna(row["fx_avg"]) else None,
+            "bond_sol_avg": round(float(row["bond_sol_avg"]), 3) if pd.notna(row["bond_sol_avg"]) else None,
+            "bond_usd_avg": round(float(row["bond_usd_avg"]), 3) if pd.notna(row["bond_usd_avg"]) else None,
+            "bvl_end": round(float(row["bvl_end"]), 0) if pd.notna(row["bvl_end"]) else None,
+            "reference_rate": round(float(row["reference_rate_end"]), 2) if pd.notna(row["reference_rate_end"]) else None,
+            "n_days": int(row["n_days"]),
+        })
+
+    output = {
+        "metadata": {
+            "generated_at": datetime.now().isoformat(),
+            "sources": {
+                "spot": "PD04659MD — Compras netas spot BCRP (Mill. USD)",
+                "swaps": "PD04660MD — Swaps cambiarios netos BCRP (Mill. USD)",
+                "fx": "PD04638PD — TC Interbancario Venta (PEN/USD)",
+                "bond_sol": "PD31893DD — Bono Soberano 10 años en Soles (rendimiento %)",
+                "bond_usd": "PD31894DD — Bono Soberano 10 años en USD (rendimiento %)",
+                "bvl": "PD38026MD — BVL Índice General",
+                "reference_rate": "PD12301MD — Tasa de Referencia BCRP (%)",
+            },
+            "methodology": (
+                "Flotación sucia (managed float): el BCRP interviene en el mercado spot "
+                "y via swaps cambiarios para suavizar la volatilidad del tipo de cambio, "
+                "sin defender un nivel específico de TC."
+            ),
+            "units": {
+                "spot_net_purchases": "Mill. USD (positivo = compra neta de USD por el BCRP)",
+                "swaps_net": "Mill. USD netos (swaps compra - swaps venta)",
+                "fx": "Soles por dólar (venta interbancaria)",
+                "bond_sol_10y": "Rendimiento anual (%)",
+                "bond_usd_10y": "Rendimiento anual (%)",
+                "bvl": "Puntos del índice",
+                "reference_rate": "Tasa de política monetaria anual (%)",
+            },
+            "coverage": f"{BCRP_START} a {BCRP_END}",
+            "n_days_daily": len(daily_series),
+            "n_months_monthly": len(monthly_series),
+        },
+        "latest": latest,
+        "daily_series": daily_series,
+        "monthly_series": monthly_series,
+    }
+
+    output_path = DATA_DIR / "fx_interventions.json"
+    with open(output_path, "w", encoding="utf-8") as f:
+        json.dump(output, f, indent=2, ensure_ascii=False)
+
+    logger.info(
+        f"Exported BCRP financial markets: {len(daily_series)} days, {len(monthly_series)} months. "
+        f"Latest TC={latest.get('fx')} | Spot={latest.get('spot_net_purchases')} Mill.USD"
+    )
 
 
 def export_panel_data():
@@ -923,6 +1136,10 @@ def main():
     logger.info("\nBuilding supermarket price index...")
     export_supermarket_daily_index()
 
+    # Export BCRP financial market data (interventions, FX, bonds, BVL)
+    logger.info("\nExporting BCRP financial markets data...")
+    export_bcrp_financial_markets()
+
     # Export backtest results
     logger.info("\nExporting backtest results...")
     export_backtest_results()
@@ -934,5 +1151,39 @@ def main():
     logger.info("=" * 60)
 
 
+def main_daily():
+    """Lightweight daily-only export: political index + FX interventions + price index.
+    Skips DFM nowcast regeneration (GDP/inflation/poverty models).
+    Runs in ~1-2 minutes vs ~10-15 for full main().
+    """
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--daily", action="store_true", help="Run daily-only fast export")
+    args, _ = parser.parse_known_args()
+
+    if args.daily:
+        logger.info("=" * 60)
+        logger.info("QHAWARINA DAILY EXPORT (fast mode)")
+        logger.info("=" * 60)
+
+        # Load existing political data (no model rerun)
+        data = load_latest_nowcasts()
+
+        logger.info("Exporting political index...")
+        export_political_index(data["political"], data["political_latest"])
+
+        logger.info("Exporting BCRP financial markets (FX + bonds + BVL)...")
+        export_bcrp_financial_markets()
+
+        logger.info("Building supermarket price index...")
+        export_supermarket_daily_index()
+
+        logger.info("=" * 60)
+        logger.info("DAILY EXPORT COMPLETE")
+        logger.info("=" * 60)
+    else:
+        main()
+
+
 if __name__ == "__main__":
-    main()
+    main_daily()
