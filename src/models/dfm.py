@@ -70,6 +70,8 @@ GDP_SERIES = [
     "NTL_SUM_NATIONAL",  # VIIRS nighttime lights national aggregate
     # poultry — MIDAGRI Lima wholesale chicken price level (r=0.83 vs GDP)
     "MIDAGRI_CHICKEN_AVG",  # wholesale chicken price S/kg - Lima
+    # financial_stress — composite stress index (FX vol + credit spread + reserves)
+    "FINANCIAL_STRESS_INDEX",  # Financial stress z-score
 ]
 
 INFLATION_SERIES = [
@@ -110,6 +112,8 @@ INFLATION_SERIES = [
     # supermarket — BPP-style high-frequency price indices (daily source)
     "SUPERMARKET_FOOD_VAR",  # supermarket food price variation MoM%
     "SUPERMARKET_ALL_VAR",   # supermarket all-products price variation MoM%
+    # financial_stress — composite stress index (FX vol + credit spread + reserves)
+    "FINANCIAL_STRESS_INDEX",  # Financial stress z-score
 ]
 
 
@@ -147,6 +151,7 @@ class NowcastDFM:
                  inflation_col: str = "ipc_monthly_var",
                  bridge_method: str = "ols", bridge_alpha: float = 1.0,
                  rolling_window_years: int | None = None,
+                 exclude_covid: bool = False,
                  include_factor_lags: int = 0,
                  include_target_ar: bool = False):
         self.k_factors = k_factors
@@ -156,6 +161,7 @@ class NowcastDFM:
         self.bridge_method = bridge_method
         self.bridge_alpha = bridge_alpha
         self.rolling_window_years = rolling_window_years
+        self.exclude_covid = exclude_covid
         self.include_factor_lags = include_factor_lags
         self.include_target_ar = include_target_ar
         self.series_list = GDP_SERIES if target == "gdp" else INFLATION_SERIES
@@ -211,6 +217,40 @@ class NowcastDFM:
 
         standardized = (data - col_means) / col_stds
         return standardized
+
+    def _filter_covid_periods(
+        self, panel_wide: pd.DataFrame, target_period: pd.Timestamp
+    ) -> pd.DataFrame:
+        """Exclude 2020-2021 from training data in post-COVID evaluations.
+
+        Adaptive strategy:
+        - Pre-2020: No filtering (expanding window)
+        - 2020-2021: Use only pre-COVID data
+        - Post-2021: Exclude 2020-2021 to avoid structural break
+        """
+        if not self.exclude_covid:
+            return panel_wide
+
+        # Pre-COVID: no filtering
+        if target_period < pd.Timestamp("2020-01-01"):
+            return panel_wide
+
+        # During COVID (2020-2021): use only pre-COVID data
+        if target_period <= pd.Timestamp("2021-12-31"):
+            return panel_wide[panel_wide.index < pd.Timestamp("2020-01-01")]
+
+        # Post-COVID (2022+): exclude 2020-2021
+        covid_start = pd.Timestamp("2020-01-01")
+        covid_end = pd.Timestamp("2021-12-31")
+        mask = (panel_wide.index < covid_start) | (panel_wide.index > covid_end)
+        filtered = panel_wide[mask]
+        logger.info(
+            "COVID filter: excluding 2020-2021, using %d months (%s to %s)",
+            len(filtered),
+            filtered.index.min().strftime("%Y-%m"),
+            filtered.index.max().strftime("%Y-%m"),
+        )
+        return filtered
 
     def fit(self, panel_wide: pd.DataFrame):
         """Fit the Dynamic Factor Model.
@@ -346,9 +386,11 @@ class NowcastDFM:
             ss_res = np.sum((y.values - y_pred) ** 2)
             ss_tot = np.sum((y.values - y.values.mean()) ** 2)
             r2 = 1 - ss_res / ss_tot if ss_tot > 0 else 0.0
+            rmse = np.sqrt(ss_res / len(y)) if len(y) > 0 else 1.0
             self._bridge_model = ridge
             self._bridge_index = X_df.columns.tolist()
             self._bridge_r2 = r2
+            self._bridge_rmse = rmse
             logger.info(
                 "Ridge bridge (alpha=%.1f) R² = %.3f, n = %d",
                 self.bridge_alpha, r2, len(y),
@@ -359,6 +401,7 @@ class NowcastDFM:
             model = sm.OLS(y, X_ols, missing="drop").fit()
             self._bridge_model = model
             self._bridge_r2 = model.rsquared
+            self._bridge_rmse = np.sqrt(model.mse_resid) if hasattr(model, "mse_resid") else 1.0
             logger.info("OLS bridge R² = %.3f, n = %d", model.rsquared, len(y))
             return model
 
@@ -398,6 +441,7 @@ class NowcastDFM:
         model = sm.OLS(y, X, missing="drop").fit()
         self._bridge_model = model
         self._bridge_r2 = model.rsquared
+        self._bridge_rmse = np.sqrt(model.mse_resid) if hasattr(model, "mse_resid") else 0.5
         self._direct_reg_cols = X.columns.tolist()
         logger.info("Direct regression R² = %.3f, n = %d", model.rsquared, len(y))
         return model
@@ -476,6 +520,160 @@ class NowcastDFM:
                 "nowcast_value": nowcast_val,
                 "bridge_r2": self._bridge_r2,
             }
+
+    def forecast(
+        self, panel_wide: pd.DataFrame, target_df: pd.DataFrame, horizons: int = 6
+    ) -> pd.DataFrame:
+        """Generate h-step-ahead forecasts using DFM factor dynamics.
+
+        Parameters
+        ----------
+        panel_wide : pd.DataFrame
+            Wide-format panel (used for context).
+        target_df : pd.DataFrame
+            Target DataFrame (GDP quarterly or inflation monthly).
+        horizons : int
+            Number of periods to forecast ahead (default 6).
+            For GDP: 6 quarters = 1.5 years
+            For inflation: 6 months
+
+        Returns
+        -------
+        pd.DataFrame
+            Columns: date, forecast_value, forecast_lower, forecast_upper
+            - forecast_value: point forecast
+            - forecast_lower/upper: 95% confidence interval (±1.96 SE)
+        """
+        logger.info("Forecast called: target=%s, horizons=%d", self.target, horizons)
+
+        if self._factors is None:
+            raise RuntimeError("Model not fitted. Call fit() first.")
+
+        # Forecast factors forward using DFM dynamics or VAR fallback
+        if self._dfm_result is not None:
+            # DFM: forecast the factor state, not the series
+            # We need to use the state space model to forecast factors
+            # Simple approach: fit VAR on extracted factors
+            from statsmodels.tsa.api import VAR
+            var_model = VAR(self._factors)
+            var_result = var_model.fit(maxlags=self.factor_order)
+            factor_forecast = var_result.forecast(self._factors.values[-var_result.k_ar:], steps=horizons)
+        else:
+            # PCA fallback: fit simple VAR(1) on factors
+            from statsmodels.tsa.api import VAR
+            var_model = VAR(self._factors)
+            var_result = var_model.fit(maxlags=1)
+            factor_forecast = var_result.forecast(self._factors.values[-1:], steps=horizons)
+        factor_dates = pd.date_range(
+            start=self._factors.index[-1] + pd.DateOffset(months=1),
+            periods=horizons,
+            freq="MS"
+        )
+
+        # Extract forecasted factor values (shape: horizons × k_factors)
+        if hasattr(factor_forecast, "predicted_mean"):
+            # Newer statsmodels versions
+            factor_vals = factor_forecast.predicted_mean
+        else:
+            # Older versions or direct array
+            factor_vals = factor_forecast
+
+        # Convert to DataFrame
+        factor_df = pd.DataFrame(
+            factor_vals,
+            index=factor_dates,
+            columns=[f"factor_{i+1}" for i in range(self.k_factors)]
+        )
+
+        forecasts = []
+
+        if self.target == "gdp":
+            # Aggregate forecasted factors to quarterly (allow incomplete quarters)
+            factors_q = factor_df.resample("QS").mean()
+            # Only keep quarters with at least 1 month of data
+            factors_q = factors_q[factors_q.notna().any(axis=1)]
+            logger.info("GDP forecast: %d monthly → %d quarterly periods", len(factor_df), len(factors_q))
+
+            for i, (q_date, row) in enumerate(factors_q.iterrows()):
+                X_forecast = row.values.reshape(1, -1)
+
+                if self.bridge_method == "ridge":
+                    pred = float(self._bridge_model.predict(X_forecast)[0])
+                else:
+                    X_const = sm.add_constant(
+                        pd.DataFrame(X_forecast, columns=factor_df.columns),
+                        has_constant="add"
+                    )
+                    pred = float(self._bridge_model.predict(X_const).iloc[0])
+
+                # Simple uncertainty: use bridge RMSE as SE
+                se = getattr(self, "_bridge_rmse", 1.0)
+                forecasts.append({
+                    "date": q_date,
+                    "forecast_value": pred,
+                    "forecast_lower": pred - 1.96 * se,
+                    "forecast_upper": pred + 1.96 * se,
+                })
+
+        else:  # inflation
+            # Monthly forecasts
+            for i, (m_date, row) in enumerate(factor_df.iterrows()):
+                # Build features matching training structure
+                X_parts = [pd.DataFrame([row.values], columns=factor_df.columns)]
+
+                # Add lagged factors (use previously forecasted values)
+                for lag in range(1, self.include_factor_lags + 1):
+                    if i >= lag:
+                        lagged_row = factor_df.iloc[i - lag]
+                        lagged_df = pd.DataFrame(
+                            [lagged_row.values],
+                            columns=[f"{c}_lag{lag}" for c in factor_df.columns]
+                        )
+                        X_parts.append(lagged_df)
+                    else:
+                        # Use historical factors for early lags
+                        hist_factor = self._factors.iloc[-(lag - i)]
+                        lagged_df = pd.DataFrame(
+                            [hist_factor.values],
+                            columns=[f"{c}_lag{lag}" for c in self._factors.columns]
+                        )
+                        X_parts.append(lagged_df)
+
+                # Add AR term (use previously forecasted inflation)
+                if self.include_target_ar:
+                    if i > 0:
+                        # Use previous forecast
+                        last_inf = forecasts[-1]["forecast_value"]
+                    else:
+                        # Use last observed inflation
+                        inf_target = target_df.set_index("date")[self.inflation_col]
+                        last_inf = inf_target.dropna().iloc[-1] if len(inf_target.dropna()) > 0 else 0.0
+
+                    ar_df = pd.DataFrame({"target_ar1": [last_inf]})
+                    X_parts.append(ar_df)
+
+                X_forecast = pd.concat(X_parts, axis=1)
+                X_forecast = sm.add_constant(X_forecast, has_constant="add")
+
+                # Align columns with training
+                if hasattr(self, "_direct_reg_cols"):
+                    for col in self._direct_reg_cols:
+                        if col not in X_forecast.columns:
+                            X_forecast[col] = 0.0
+                    X_forecast = X_forecast[self._direct_reg_cols]
+
+                pred = float(self._bridge_model.predict(X_forecast).iloc[0])
+
+                # Simple uncertainty: use regression RMSE as SE
+                se = getattr(self, "_bridge_rmse", 0.5)
+                forecasts.append({
+                    "date": m_date,
+                    "forecast_value": pred,
+                    "forecast_lower": pred - 1.96 * se,
+                    "forecast_upper": pred + 1.96 * se,
+                })
+
+        return pd.DataFrame(forecasts)
 
 
 # ── Utility functions ────────────────────────────────────────────────────────
@@ -793,6 +991,9 @@ class MLNowcaster:
             raise ValueError(
                 f"Only {selected.shape[1]} series with enough data (need >= 3)"
             )
+
+        # Replace inf/-inf with NaN so fillna handles them
+        selected = selected.replace([np.inf, -np.inf], np.nan)
 
         # Forward-fill, then fill remaining NaN with column median
         selected = selected.ffill()
