@@ -13,6 +13,8 @@ on:
 jobs:
   process-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write   # needed to git push exports/ back to this repo
 
     steps:
       # ── 1. Checkout ────────────────────────────────────────────────────────
