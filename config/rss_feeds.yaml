@@ -1,0 +1,53 @@
+rss:
+  feeds:
+    - name: "El Comercio - Politica"
+      url: "https://elcomercio.pe/arc/outboundfeeds/rss/category/politica/?outputType=xml"
+      source: "elcomercio"
+    - name: "El Comercio - Economia"
+      url: "https://elcomercio.pe/arc/outboundfeeds/rss/category/economia/?outputType=xml"
+      source: "elcomercio"
+    - name: "Gestion - Peru"
+      url: "https://gestion.pe/arc/outboundfeeds/rss/category/peru/?outputType=xml"
+      source: "gestion"
+    - name: "Gestion - Economia"
+      url: "https://gestion.pe/arc/outboundfeeds/rss/category/economia/?outputType=xml"
+      source: "gestion"
+    - name: "La Republica - Politica"
+      url: "https://larepublica.pe/rss/politica.xml"
+      source: "larepublica"
+    - name: "La Republica - Economia"
+      url: "https://larepublica.pe/rss/economia.xml"
+      source: "larepublica"
+    - name: "Andina - Politica"
+      url: "https://andina.pe/agencia/rss.aspx?id=2"
+      source: "andina"
+    - name: "Andina - Economia"
+      url: "https://andina.pe/agencia/rss.aspx?id=3"
+      source: "andina"
+    - name: "RPP Noticias"
+      url: "https://rpp.pe/feed/"
+      source: "rpp"
+    - name: "Correo - Politica"
+      url: "https://diariocorreo.pe/arc/outboundfeeds/rss/category/politica/?outputType=xml"
+      source: "correo"
+    - name: "Correo - Economia"
+      url: "https://diariocorreo.pe/arc/outboundfeeds/rss/category/economia/?outputType=xml"
+      source: "correo"
+  classification:
+    model: "claude-haiku-4-5-20251001"
+    batch_size: 20
+    delay: 0.3
+  archives:
+    arc_domains:
+      - domain: "elcomercio.pe"
+        source: "elcomercio"
+        sections: ["politica", "economia", "peru"]
+      - domain: "gestion.pe"
+        source: "gestion"
+        sections: ["economia", "peru"]
+    delay: 0.3
+    batch_size: 100
+  index:
+    start_date: "2025-01-01"
+    zscore_window: 90
+    min_periods: 7
