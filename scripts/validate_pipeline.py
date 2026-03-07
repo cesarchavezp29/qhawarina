@@ -48,7 +48,7 @@ logger = logging.getLogger("nexus.validate")
 STATUS_PATH = PROJECT_ROOT / "data" / "pipeline_status.json"
 RAW_SUPERMARKET_DIR = PROJECT_ROOT / "data" / "raw" / "supermarket"
 RAW_RSS_DIR = PROJECT_ROOT / "data" / "raw" / "rss"
-WEBSITE_DATA = Path("D:/qhawarina/public/assets/data")
+WEBSITE_DATA = Path(os.environ.get("QHAWARINA_WEB_DATA", "D:/qhawarina/public/assets/data"))
 
 
 # ---------------------------------------------------------------------------

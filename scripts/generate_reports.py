@@ -36,6 +36,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 EXPORTS_DATA = REPO_ROOT / "exports" / "data"
 EXPORTS_REPORTS = REPO_ROOT / "exports" / "reports"
 TEMPLATES_DIR = REPO_ROOT / "templates"
+PIPELINE_STATUS_PATH = REPO_ROOT / "data" / "pipeline_status.json"
 
 # ---------------------------------------------------------------------------
 # Design system colours
@@ -146,7 +147,7 @@ def load_all_data() -> dict:
         "fx": load_json("fx_interventions.json"),
         "gdp": load_json("gdp_nowcast.json"),
         "poverty": load_json("poverty_nowcast.json"),
-        "pipeline": load_json("pipeline_status.json"),
+        "pipeline": (json.load(open(PIPELINE_STATUS_PATH, encoding="utf-8")) if PIPELINE_STATUS_PATH.exists() else {}),
     }
 
 

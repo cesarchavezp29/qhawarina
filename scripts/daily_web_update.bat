@@ -83,7 +83,7 @@ if %errorlevel% neq 0 (
 )
 
 REM On Mondays only, generate weekly report
-powershell -Command "if ((Get-Date).DayOfWeek -eq 'Monday') { python %PROJECT%\scripts\generate_reports.py --type weekly }" >> %LOGFILE% 2>&1
+powershell -Command "if ((Get-Date).DayOfWeek -eq 'Monday') { & '%PYTHON%' '%PROJECT%\scripts\generate_reports.py' --type weekly }" >> %LOGFILE% 2>&1
 if %errorlevel% neq 0 (
     echo [%TIME%] WARNING: Weekly report generation failed >> %LOGFILE%
 ) else (
