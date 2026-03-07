@@ -1309,6 +1309,19 @@ def main():
     logger.info(f"Files generated: {len(list(DATA_DIR.glob('*')))}")
     logger.info("=" * 60)
 
+    # ── Auto-sync to web repo (local runs) ───────────────────────────────────
+    import shutil
+    WEB_DATA_DIR = Path("D:/qhawarina/public/assets/data")
+    if WEB_DATA_DIR.exists():
+        copied = []
+        for src in DATA_DIR.glob("*.json"):
+            dst = WEB_DATA_DIR / src.name
+            shutil.copy2(src, dst)
+            copied.append(src.name)
+        logger.info(f"[sync] Copied {len(copied)} JSON files → {WEB_DATA_DIR}")
+    else:
+        logger.info(f"[sync] Web repo not found at {WEB_DATA_DIR} — skipping auto-copy")
+
 
 def main_daily():
     """Lightweight daily-only export: political index + FX interventions + price index.
@@ -1342,6 +1355,17 @@ def main_daily():
         logger.info("=" * 60)
         logger.info("DAILY EXPORT COMPLETE")
         logger.info("=" * 60)
+
+        # Auto-sync to web repo
+        import shutil
+        WEB_DATA_DIR = Path("D:/qhawarina/public/assets/data")
+        if WEB_DATA_DIR.exists():
+            copied = []
+            for src in DATA_DIR.glob("*.json"):
+                dst = WEB_DATA_DIR / src.name
+                shutil.copy2(src, dst)
+                copied.append(src.name)
+            logger.info(f"[sync] Copied {len(copied)} JSON files → {WEB_DATA_DIR}")
     else:
         main()
 
