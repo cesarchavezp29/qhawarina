@@ -72,8 +72,10 @@ jobs:
           fi
 
       # ── 9. Export all JSON files ────────────────────────────────────────────
+      # --daily: exports only political_index_daily.json + fx_interventions.json
+      # + daily_price_index.json. Skips GDP/inflation/poverty (need gitignored panel data).
       - name: Export all data
-        run: python scripts/export_web_data.py
+        run: python scripts/export_web_data.py --daily
 
       # ── 10. Commit exports back to qhawarina repo ───────────────────────────
       - name: Commit exports to qhawarina

@@ -44,7 +44,7 @@ logging.basicConfig(
 logger = logging.getLogger("nexus.export_web")
 
 # Export directory
-EXPORT_DIR = Path("D:/Nexus/nexus/exports")
+EXPORT_DIR = PROJECT_ROOT / "exports"
 EXPORT_DIR.mkdir(exist_ok=True)
 
 DATA_DIR = EXPORT_DIR / "data"
@@ -1288,11 +1288,13 @@ def main_daily():
         logger.info("QHAWARINA DAILY EXPORT (fast mode)")
         logger.info("=" * 60)
 
-        # Load existing political data (no model rerun)
-        data = load_latest_nowcasts()
+        # Load only political index — GDP/inflation/poverty need gitignored panel data
+        political_path = PROCESSED_DAILY_DIR / "daily_index.parquet"
+        political_df = pd.read_parquet(political_path).sort_values("date")
+        latest_political = political_df.iloc[-1]
 
         logger.info("Exporting political index...")
-        export_political_index(data["political"], data["political_latest"])
+        export_political_index(political_df, latest_political)
 
         logger.info("Exporting BCRP financial markets (FX + bonds + BVL)...")
         export_bcrp_financial_markets()
