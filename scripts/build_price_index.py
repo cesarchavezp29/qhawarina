@@ -245,6 +245,30 @@ def compute_variations(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
+def _compute_top_movers(records: list, n: int = 4) -> list:
+    """Return top N CPI categories by absolute daily price change."""
+    if len(records) < 2:
+        return []
+    prev, curr = records[-2], records[-1]
+    movers = []
+    for cat, meta in CATEGORY_MAP.items():
+        if cat == "other":
+            continue
+        v0 = prev.get(f"index_{cat}")
+        v1 = curr.get(f"index_{cat}")
+        if not v0 or not v1 or v0 == 0:
+            continue
+        var = round((v1 / v0 - 1) * 100, 2)
+        movers.append({
+            "category": cat,
+            "label_es": meta["label_es"],
+            "label_en": meta["label_en"],
+            "var": var,
+        })
+    movers.sort(key=lambda x: abs(x["var"]), reverse=True)
+    return movers[:n]
+
+
 def export_json(df: pd.DataFrame, output_path: Path) -> None:
     """Export index to JSON for website consumption."""
     output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -260,6 +284,7 @@ def export_json(df: pd.DataFrame, output_path: Path) -> None:
             "var_food": None if (v := row.get("var_food")) is None or (isinstance(v, float) and math.isnan(v)) else round(v, 4),
             "cum_pct": round(row.get("cum_all_pct", 0) or 0, 4),
             "interpolated": bool(row.get("interpolated", False)),
+            "n_matched": int(row.get("n_matched", 0) or 0),
         }
         # Add per-category indexes
         for cat in CATEGORY_MAP:
@@ -300,6 +325,8 @@ def export_json(df: pd.DataFrame, output_path: Path) -> None:
             "index_food": latest.get("index_food"),
             "cum_pct": latest.get("cum_pct"),
             "var_all": latest.get("var_all"),
+            "n_products_today": latest.get("n_matched", 0),
+            "top_movers": _compute_top_movers(records),
         },
     }
 
@@ -336,10 +363,11 @@ def main():
     # Add variation columns
     df = compute_variations(df)
 
-    # ── Fill missing business days with linear interpolation ─────────────────
+    # ── Fill missing days with linear interpolation ───────────────────────────
+    # Note: Supermarkets operate 7 days/week, so use date_range (not bdate_range)
     df["date"] = pd.to_datetime(df["date"])
-    all_bdays = pd.bdate_range(df["date"].min(), df["date"].max())
-    df_full = df.set_index("date").reindex(all_bdays)
+    all_days = pd.date_range(df["date"].min(), df["date"].max(), freq='D')
+    df_full = df.set_index("date").reindex(all_days)
     n_missing = df_full["index_all"].isna().sum()
     if n_missing > 0:
         index_cols = [c for c in df_full.columns if c.startswith("index_") or c in ("n_matched", "jevons_ratio_all")]
@@ -353,8 +381,8 @@ def main():
         ] = True
         df_full = df_full.reset_index().rename(columns={"index": "date"})
         df_full = compute_variations(df_full)
-        print(f"[OK] Interpolated {n_missing} missing business day(s): "
-              f"{[d.strftime('%Y-%m-%d') for d in all_bdays if d not in df['date'].values]}")
+        print(f"[OK] Interpolated {n_missing} missing day(s): "
+              f"{[d.strftime('%Y-%m-%d') for d in all_days if d not in df['date'].values]}")
     else:
         df_full["interpolated"] = False
         df_full = df_full.reset_index().rename(columns={"index": "date"})
