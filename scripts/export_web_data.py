@@ -682,7 +682,22 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
         daily_sum_s = pol_sum.add(eco_sum, fill_value=0).rename("daily_sum").reset_index()
         daily_sum_s.columns = ["date", "daily_sum"]
 
-        s_bar = daily_sum_s["daily_sum"].mean() or 1.0
+        # ── Freeze S_bar to 2025 calendar-year reference period ──────────────
+        # Recalculating S_bar from all data causes PRR to collapse whenever a
+        # high-volume political period (2026) inflates the mean denominator.
+        # Reference: Iacoviello & Tong (2026) — S_bar is a fixed historical mean.
+        S_BAR_FROZEN = 2.4614   # 2025 mean daily_sum (346 days). Recalibrate annually.
+        ref_2025 = daily_sum_s[pd.to_datetime(daily_sum_s["date"]).dt.year == 2025]
+        s_bar_dynamic = ref_2025["daily_sum"].mean() if len(ref_2025) >= 30 else daily_sum_s["daily_sum"].mean()
+        s_bar = s_bar_dynamic if abs(s_bar_dynamic - S_BAR_FROZEN) / S_BAR_FROZEN < 0.20 else S_BAR_FROZEN
+        s_bar = s_bar or 1.0
+
+        # Diagnostics
+        today_daily_sum = daily_sum_s.iloc[-1]["daily_sum"] if not daily_sum_s.empty else 0.0
+        print(f"[AI-GPR] S_bar = {s_bar:.4f}  (2025-frozen={S_BAR_FROZEN}, 2025-dynamic={s_bar_dynamic:.4f})")
+        print(f"[AI-GPR] Today's daily_sum = {today_daily_sum:.4f}")
+        print(f"[AI-GPR] Today's PRR = {today_daily_sum / s_bar * 100:.1f}")
+
         daily_sum_s["prr"] = (daily_sum_s["daily_sum"] / s_bar) * 100.0
 
         political_df = political_df.merge(daily_sum_s[["date", "prr"]], on="date", how="left")
