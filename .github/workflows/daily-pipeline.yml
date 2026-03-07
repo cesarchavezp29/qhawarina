@@ -79,6 +79,12 @@ jobs:
       - name: Export all data
         run: python scripts/export_web_data.py --daily
 
+      # ── 9.5. Generate CSV exports ────────────────────────────────────────────
+      # Converts JSON exports to CSV (UTF-8 with BOM) for Excel-friendly downloads.
+      - name: Generate CSV exports
+        run: python scripts/generate_csv_exports.py
+        continue-on-error: true
+
       # ── 10. Commit exports back to qhawarina repo ───────────────────────────
       - name: Commit exports to qhawarina
         run: |
@@ -96,6 +102,8 @@ jobs:
           git clone https://x-access-token:${{ secrets.GH_PAT }}@github.com/cesarchavezp29/qhawarina-web.git /tmp/qhawarina-web
           cp exports/data/*.json /tmp/qhawarina-web/public/assets/data/
           cp data/pipeline_status.json /tmp/qhawarina-web/public/assets/data/
+          mkdir -p /tmp/qhawarina-web/public/assets/data/csv
+          cp exports/data/csv/*.csv /tmp/qhawarina-web/public/assets/data/csv/ 2>/dev/null || true
           cd /tmp/qhawarina-web
           git config user.name "Qhawarina Pipeline"
           git config user.email "pipeline@qhawarina.pe"

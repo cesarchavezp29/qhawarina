@@ -90,6 +90,21 @@ if %errorlevel% neq 0 (
     echo [%TIME%] [C] Weekly report check done >> %LOGFILE%
 )
 
+:: ------------------------------------------------------------------
+:: BLOCK D: Generate CSV exports (reads from exports/data/*.json)
+:: ------------------------------------------------------------------
+
+echo [%TIME%] [D] Generating CSV exports...
+echo [%TIME%] [D] Generating CSV exports... >> %LOGFILE%
+%PYTHON% %PROJECT%\scripts\generate_csv_exports.py >> %LOGFILE% 2>&1
+if %errorlevel% neq 0 (
+    echo [%TIME%] NOTE: CSV generation skipped — JSON exports may not exist locally >> %LOGFILE%
+    echo [%TIME%] NOTE: CSV generation skipped (run after export_web_data.py to generate)
+) else (
+    echo [%TIME%] [D] CSV exports DONE >> %LOGFILE%
+    echo [%TIME%] [D] CSV exports generated
+)
+
 :done
 echo ============================================================ >> %LOGFILE%
 echo [%DATE% %TIME%] LOCAL SCRAPER COMPLETE >> %LOGFILE%
