@@ -565,6 +565,46 @@ quarterly:
         name: "PBI índice (2007=100, trimestral)"
         status: pending
 
+  gdp_quarterly_levels:
+    description: "PBI trimestral por sectores — niveles en millones de soles constantes 2007"
+    frequency: quarterly
+    output_file: "bcrp_quarterly_gdp_levels.parquet"
+    note: "Used for contribution decomposition: contribution_i = (GDP_i,t - GDP_i,t-4) / GDP_total,t-4 * 100"
+    series:
+      - code: PN37684AQ
+        name: "PBI agropecuario (millones S/ constantes 2007)"
+        status: verified
+      - code: PN37685AQ
+        name: "PBI pesca (millones S/ constantes 2007)"
+        status: verified
+      - code: PN37686AQ
+        name: "PBI minería e hidrocarburos (millones S/ constantes 2007)"
+        status: verified
+      - code: PN37687AQ
+        name: "PBI manufactura (millones S/ constantes 2007)"
+        status: verified
+      - code: PN37688AQ
+        name: "PBI electricidad y agua (millones S/ constantes 2007)"
+        status: verified
+      - code: PN37689AQ
+        name: "PBI construcción (millones S/ constantes 2007)"
+        status: verified
+      - code: PN37690AQ
+        name: "PBI comercio (millones S/ constantes 2007)"
+        status: verified
+      - code: PN37691AQ
+        name: "PBI servicios (millones S/ constantes 2007)"
+        status: verified
+      - code: PN37692AQ
+        name: "PBI global total (millones S/ constantes 2007)"
+        status: verified
+      - code: PN37693AQ
+        name: "PBI sectores primarios (millones S/ constantes 2007)"
+        status: verified
+      - code: PN37694AQ
+        name: "PBI sectores no primarios (millones S/ constantes 2007)"
+        status: verified
+
 departmental:
   # Departmental series to be populated after scraping BCRP regional section.
   # See: https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/region-produccion

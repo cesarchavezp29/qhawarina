@@ -194,6 +194,93 @@ def update_bcrp(dry_run: bool = False, force_months: int = 0) -> dict:
     }
 
 
+def update_gdp_levels() -> dict:
+    """Incrementally update quarterly GDP level series and recompute contributions.
+
+    Fetches only the last 2 quarters from BCRP, merges with existing levels,
+    then recomputes bcrp_quarterly_gdp_contributions.parquet.
+    Run quarterly (after BCRP publishes new GDP data, ~45 days after quarter end).
+    """
+    from datetime import date as _date
+    import importlib.util, sys as _sys
+
+    levels_path = RAW_BCRP_DIR / "bcrp_quarterly_gdp_levels.parquet"
+    contrib_path = RAW_BCRP_DIR / "bcrp_quarterly_gdp_contributions.parquet"
+
+    GDP_LEVEL_CODES = [
+        "PN37684AQ", "PN37685AQ", "PN37686AQ", "PN37687AQ",
+        "PN37688AQ", "PN37689AQ", "PN37690AQ", "PN37691AQ",
+        "PN37692AQ", "PN37693AQ", "PN37694AQ",
+    ]
+    SECTOR_NAMES = {
+        "PN37684AQ": "Agropecuario",     "PN37685AQ": "Pesca",
+        "PN37686AQ": "Minería e Hidrocarburos", "PN37687AQ": "Manufactura",
+        "PN37688AQ": "Electricidad y Agua",     "PN37689AQ": "Construcción",
+        "PN37690AQ": "Comercio",         "PN37691AQ": "Servicios",
+        "PN37692AQ": "PBI Global",       "PN37693AQ": "Sectores Primarios",
+        "PN37694AQ": "Sectores No Primarios",
+    }
+    CONTRIB_CODES = GDP_LEVEL_CODES[:8]  # exclude total + memo items
+    TOTAL_CODE    = "PN37692AQ"
+
+    if not levels_path.exists():
+        logger.warning("GDP levels file not found — run download_gdp_levels.py first")
+        return {"status": "no_levels_file"}
+
+    existing = pd.read_parquet(levels_path)
+    existing["date"] = pd.to_datetime(existing["date"])
+    latest_q = existing["date"].max()
+
+    today = _date.today()
+    # Fetch last 2 quarters to catch any new releases
+    start_year  = latest_q.year
+    start_month = max(1, latest_q.month - 3)
+
+    client = BCRPClient(request_delay=1.5)
+    new_df = client.fetch_series(
+        GDP_LEVEL_CODES,
+        start_year=start_year, start_month=start_month,
+        end_year=today.year,   end_month=today.month,
+    )
+
+    if new_df.empty:
+        logger.info("No new GDP level data from BCRP.")
+        return {"status": "up_to_date"}
+
+    new_df["date"]   = pd.to_datetime(new_df["date"])
+    new_df["sector"] = new_df["series_code"].map(SECTOR_NAMES)
+
+    # Merge: new data overwrites existing for the same (date, code)
+    existing_keys = set(zip(existing["date"].dt.date, existing["series_code"]))
+    new_keys      = set(zip(new_df["date"].dt.date,   new_df["series_code"]))
+    overlap = existing_keys & new_keys
+    if overlap:
+        mask = existing.apply(
+            lambda r: (r["date"].date(), r["series_code"]) not in overlap, axis=1
+        )
+        existing = existing[mask]
+
+    combined = pd.concat([existing, new_df], ignore_index=True).sort_values(["series_code", "date"])
+    save_parquet(combined, levels_path)
+    new_latest = combined["date"].max().date()
+    logger.info("GDP levels updated: %d new rows, latest %s", len(new_keys - existing_keys), new_latest)
+
+    # Recompute contributions
+    wide = combined.pivot_table(index="date", columns="series_code", values="value").sort_index()
+    gdp_total_lag4 = wide[TOTAL_CODE].shift(4)
+    contrib_series = []
+    for code in CONTRIB_CODES:
+        if code not in wide.columns:
+            continue
+        s = ((wide[code] - wide[code].shift(4)) / gdp_total_lag4 * 100).rename(SECTOR_NAMES[code])
+        contrib_series.append(s)
+    contrib_df = pd.concat(contrib_series, axis=1).reset_index()
+    contrib_df.to_parquet(contrib_path, index=False)
+    logger.info("GDP contributions recomputed → %s", contrib_path)
+
+    return {"status": "updated", "new_rows": len(new_keys - existing_keys), "latest": str(new_latest)}
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Incremental BCRP data updater"

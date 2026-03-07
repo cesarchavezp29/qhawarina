@@ -54,7 +54,15 @@ def step_bcrp(dry_run: bool = False, force: bool = False) -> dict:
     """Step 1: Update BCRP monthly series."""
     from scripts.update_bcrp import update_bcrp
     force_months = 3 if force else 0
-    return update_bcrp(dry_run=dry_run, force_months=force_months)
+    result = update_bcrp(dry_run=dry_run, force_months=force_months)
+
+    # Also update quarterly GDP levels (run every time — fast, quarterly series)
+    if not dry_run:
+        from scripts.update_bcrp import update_gdp_levels
+        levels_result = update_gdp_levels()
+        result["gdp_levels"] = levels_result
+
+    return result
 
 
 def step_gdp(dry_run: bool = False, force: bool = False) -> dict:
