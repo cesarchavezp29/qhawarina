@@ -2,7 +2,7 @@
 
 Creates a dated folder: exports/charts/YYYY-MM-DD/ with 4 PNG charts:
   1. political_risk.png   — 30-day political risk index
-  2. financial_stress.png — 30-day financial stress + TC
+  2. financial_stress.png — 60-day TC PEN/USD + BVL stock index
   3. daily_prices.png     — 30-day supermarket price index
   4. summary.png          — 2x2 combined summary card
 
@@ -12,7 +12,7 @@ Run after export_web_data.py in the daily pipeline.
 import json
 import logging
 import sys
-from datetime import datetime, timedelta
+from datetime import datetime
 from pathlib import Path
 
 import matplotlib
@@ -39,6 +39,7 @@ COLORS = {
     "political": "#DC2626",   # red
     "financial": "#2563EB",   # blue
     "tc":        "#059669",   # green
+    "bvl":       "#7C3AED",   # purple
     "prices":    "#7C3AED",   # purple
     "food":      "#D97706",   # amber
     "grid":      "#F3F4F6",
@@ -54,6 +55,8 @@ SEVERITY_COLORS = {
     "BAJO":     "#16A34A",
     "MINIMO":   "#6B7280",
 }
+
+WATERMARK = "qhawarina.pe"
 
 
 def setup_ax(ax, title: str, ylabel: str = ""):
@@ -71,9 +74,15 @@ def setup_ax(ax, title: str, ylabel: str = ""):
     plt.setp(ax.xaxis.get_majorticklabels(), rotation=30, ha="right")
 
 
+def add_watermark(fig):
+    """Place qhawarina.pe outside the chart area, at figure bottom-right."""
+    fig.text(0.99, 0.005, WATERMARK, ha="right", va="bottom",
+             fontsize=7, color=COLORS["subtext"], alpha=0.8)
+
+
 def chart_political(out_path: Path, days: int = 30):
     data = json.loads(POLITICAL_PATH.read_text(encoding="utf-8"))
-    series = data.get("daily_series", [])[-days:]
+    series  = data.get("daily_series", [])[-days:]
     current = data.get("current", {})
 
     dates  = [pd.Timestamp(r["date"]) for r in series]
@@ -84,64 +93,67 @@ def chart_political(out_path: Path, days: int = 30):
     articles = current.get("articles_total", 0)
     color    = SEVERITY_COLORS.get(level, COLORS["political"])
 
-    fig, ax = plt.subplots(figsize=(7, 3.5), facecolor=COLORS["bg"])
+    fig, ax = plt.subplots(figsize=(7, 3.8), facecolor=COLORS["bg"])
+    fig.subplots_adjust(bottom=0.18)
+
     ax.fill_between(dates, scores, alpha=0.15, color=color)
     ax.plot(dates, scores, color=color, linewidth=2)
     ax.axhline(0.5, color="#9CA3AF", linewidth=0.8, linestyle="--")
 
-    setup_ax(ax, f"Índice de Riesgo Político | {current.get('date','')}", "Score (0–1)")
+    setup_ax(ax, f"Índice de Riesgo Político | {current.get('date', '')}", "Score (0–1)")
 
-    # Annotation
     ax.annotate(
         f"{level}  {score:.2f}  |  {articles} artículos",
         xy=(0.02, 0.92), xycoords="axes fraction",
         fontsize=9, color=color, fontweight="bold",
     )
-    ax.annotate("qhawarina.pe", xy=(0.98, 0.02), xycoords="axes fraction",
-                fontsize=7, color=COLORS["subtext"], ha="right")
 
-    fig.tight_layout()
+    add_watermark(fig)
     fig.savefig(out_path, dpi=150, bbox_inches="tight")
     plt.close(fig)
     logger.info("Saved %s", out_path)
 
 
 def chart_financial(out_path: Path, days: int = 60):
-    data = json.loads(FX_PATH.read_text(encoding="utf-8"))
-    daily = data.get("daily", [])[-days:]
+    """TC PEN/USD + bond spread (sol_10y minus usd_10y) as financial stress proxy."""
+    data  = json.loads(FX_PATH.read_text(encoding="utf-8"))
+    daily = data.get("daily_series", [])[-days:]
 
-    dates = [pd.Timestamp(r["date"]) for r in daily]
-    tc    = [r.get("fx") for r in daily]
-    spot  = [r.get("spot_net_purchases", 0) or 0 for r in daily]
+    dates  = [pd.Timestamp(r["date"]) for r in daily]
+    tc     = [r.get("fx") for r in daily]
+    sol10  = [r.get("bond_sol_10y") for r in daily]
+    usd10  = [r.get("bond_usd_10y") for r in daily]
+    spread = [
+        (s - u) if (s is not None and u is not None) else None
+        for s, u in zip(sol10, usd10)
+    ]
 
-    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(7, 4.5), facecolor=COLORS["bg"],
-                                    sharex=True, gridspec_kw={"height_ratios": [2, 1]})
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(7, 5), facecolor=COLORS["bg"],
+                                    sharex=True, gridspec_kw={"height_ratios": [1, 1]})
+    fig.subplots_adjust(bottom=0.14, hspace=0.35)
 
-    # TC
-    tc_clean = [v for v in tc if v is not None]
+    # ── Panel 1: TC PEN/USD ──
     ax1.plot(dates, tc, color=COLORS["tc"], linewidth=2)
     setup_ax(ax1, f"Tipo de Cambio PEN/USD | Últimos {days} días", "S/ por USD")
-    latest_tc = next((v for v in reversed(tc) if v), None)
-    if latest_tc:
-        ax1.annotate(f"S/ {latest_tc:.4f}", xy=(0.98, 0.92), xycoords="axes fraction",
-                     fontsize=10, color=COLORS["tc"], fontweight="bold", ha="right")
 
-    # Interventions
-    colors_bar = [COLORS["financial"] if v >= 0 else COLORS["political"] for v in spot]
-    ax2.bar(dates, spot, color=colors_bar, alpha=0.7, width=0.8)
-    setup_ax(ax2, "Intervención BCRP (Mill. USD)", "Mill. USD")
+    # ── Panel 2: Bond spread (spread sol-USD = prima de riesgo PEN) ──
+    spread_color = "#DC2626"  # red — higher spread = more stress
+    ax2.fill_between(dates, [v if v is not None else 0 for v in spread],
+                     alpha=0.15, color=spread_color)
+    ax2.plot(dates, spread, color=spread_color, linewidth=2)
+    setup_ax(ax2, "Diferencial Bonos Soberanos Sol−USD (10a)", "pp")
+    ax2.annotate("↑ mayor diferencial = mayor estrés cambiario",
+                 xy=(0.02, 0.88), xycoords="axes fraction",
+                 fontsize=7, color=COLORS["subtext"])
 
-    ax2.annotate("qhawarina.pe", xy=(0.98, 0.02), xycoords="axes fraction",
-                 fontsize=7, color=COLORS["subtext"], ha="right")
-
-    fig.tight_layout()
+    add_watermark(fig)
     fig.savefig(out_path, dpi=150, bbox_inches="tight")
     plt.close(fig)
     logger.info("Saved %s", out_path)
 
 
 def chart_prices(out_path: Path, days: int = 30):
-    data = json.loads(PRICES_PATH.read_text(encoding="utf-8"))
+    data   = json.loads(PRICES_PATH.read_text(encoding="utf-8"))
     series = data.get("series", [])[-days:]
     latest = data.get("latest", {})
 
@@ -149,7 +161,9 @@ def chart_prices(out_path: Path, days: int = 30):
     index_all  = [r.get("index_all") for r in series]
     index_food = [r.get("index_food") for r in series]
 
-    fig, ax = plt.subplots(figsize=(7, 3.5), facecolor=COLORS["bg"])
+    fig, ax = plt.subplots(figsize=(7, 3.8), facecolor=COLORS["bg"])
+    fig.subplots_adjust(bottom=0.18)
+
     ax.plot(dates, index_all,  color=COLORS["prices"], linewidth=2, label="General")
     ax.plot(dates, index_food, color=COLORS["food"],   linewidth=2, label="Alimentos", linestyle="--")
     ax.axhline(100, color="#9CA3AF", linewidth=0.8, linestyle=":")
@@ -164,11 +178,10 @@ def chart_prices(out_path: Path, days: int = 30):
         xy=(0.02, 0.92), xycoords="axes fraction",
         fontsize=9, color=COLORS["prices"], fontweight="bold",
     )
-    ax.annotate("qhawarina.pe  |  Plaza Vea · Metro · Wong",
-                xy=(0.98, 0.02), xycoords="axes fraction",
-                fontsize=7, color=COLORS["subtext"], ha="right")
 
-    fig.tight_layout()
+    fig.text(0.99, 0.005, f"{WATERMARK}  |  Plaza Vea · Metro · Wong",
+             ha="right", va="bottom", fontsize=7, color=COLORS["subtext"], alpha=0.8)
+
     fig.savefig(out_path, dpi=150, bbox_inches="tight")
     plt.close(fig)
     logger.info("Saved %s", out_path)
@@ -182,35 +195,37 @@ def chart_summary(out_path: Path):
 
     today = datetime.today().strftime("%d %b %Y")
 
-    fig = plt.figure(figsize=(10, 6), facecolor=COLORS["bg"])
-    fig.suptitle(f"Economía Peruana — {today} | qhawarina.pe",
+    fig = plt.figure(figsize=(10, 6.5), facecolor=COLORS["bg"])
+    fig.suptitle(f"Economía Peruana — {today}",
                  fontsize=13, fontweight="bold", color=COLORS["text"], y=0.98)
+    fig.subplots_adjust(bottom=0.06)
 
-    gs = gridspec.GridSpec(2, 2, hspace=0.45, wspace=0.35)
+    gs = gridspec.GridSpec(2, 2, hspace=0.50, wspace=0.35,
+                           top=0.90, bottom=0.10, left=0.08, right=0.97)
     days = 30
 
     # ── Panel 1: Political ──
     ax1 = fig.add_subplot(gs[0, 0])
-    series = political_data.get("daily_series", [])[-days:]
-    dates  = [pd.Timestamp(r["date"]) for r in series]
-    scores = [r["score"] for r in series]
+    series  = political_data.get("daily_series", [])[-days:]
+    dates   = [pd.Timestamp(r["date"]) for r in series]
+    scores  = [r["score"] for r in series]
     current = political_data.get("current", {})
-    level = current.get("level", "BAJO")
-    color = SEVERITY_COLORS.get(level, COLORS["political"])
+    level   = current.get("level", "BAJO")
+    color   = SEVERITY_COLORS.get(level, COLORS["political"])
     ax1.fill_between(dates, scores, alpha=0.15, color=color)
     ax1.plot(dates, scores, color=color, linewidth=1.5)
     setup_ax(ax1, "Riesgo Político", "Score")
-    ax1.annotate(f"{level} {current.get('score',0):.2f}", xy=(0.05, 0.88),
+    ax1.annotate(f"{level}  {current.get('score', 0):.2f}", xy=(0.05, 0.88),
                  xycoords="axes fraction", fontsize=8, color=color, fontweight="bold")
 
     # ── Panel 2: TC ──
     ax2 = fig.add_subplot(gs[0, 1])
-    daily_fx = fx_data.get("daily", [])[-days:]
+    daily_fx = fx_data.get("daily_series", [])[-days:]
     d2 = [pd.Timestamp(r["date"]) for r in daily_fx]
     tc = [r.get("fx") for r in daily_fx]
     ax2.plot(d2, tc, color=COLORS["tc"], linewidth=1.5)
-    setup_ax(ax2, "Tipo de Cambio", "S/ por USD")
-    latest_tc = next((v for v in reversed(tc) if v), None)
+    setup_ax(ax2, "Tipo de Cambio PEN/USD", "S/ por USD")
+    latest_tc = next((v for v in reversed(tc) if v is not None), None)
     if latest_tc:
         ax2.annotate(f"S/ {latest_tc:.4f}", xy=(0.05, 0.88),
                      xycoords="axes fraction", fontsize=8, color=COLORS["tc"], fontweight="bold")
@@ -222,15 +237,24 @@ def chart_summary(out_path: Path):
     ax3.plot(d3, [r.get("index_all") for r in pseries],  color=COLORS["prices"], linewidth=1.5, label="General")
     ax3.plot(d3, [r.get("index_food") for r in pseries], color=COLORS["food"],   linewidth=1.5, linestyle="--", label="Alimentos")
     ax3.axhline(100, color="#9CA3AF", linewidth=0.6, linestyle=":")
-    setup_ax(ax3, "Índice Precios Supermercados", "Índice")
+    setup_ax(ax3, "Precios Supermercados", "Índice")
     ax3.legend(fontsize=7, framealpha=0.4)
 
-    # ── Panel 4: BCRP Interventions ──
+    # ── Panel 4: BVL ──
     ax4 = fig.add_subplot(gs[1, 1])
-    spot = [r.get("spot_net_purchases", 0) or 0 for r in daily_fx]
-    bar_colors = [COLORS["financial"] if v >= 0 else COLORS["political"] for v in spot]
-    ax4.bar(d2, spot, color=bar_colors, alpha=0.7, width=0.8)
-    setup_ax(ax4, "Intervención BCRP", "Mill. USD")
+    bvl = [r.get("bvl") for r in daily_fx]
+    bvl_k = [v / 1000 if v is not None else None for v in bvl]
+    ax4.fill_between(d2, [v if v is not None else 0 for v in bvl_k],
+                     alpha=0.12, color=COLORS["bvl"])
+    ax4.plot(d2, bvl_k, color=COLORS["bvl"], linewidth=1.5)
+    setup_ax(ax4, "BVL", "Miles puntos")
+    latest_bvl = next((v for v in reversed(bvl) if v is not None), None)
+    if latest_bvl:
+        ax4.annotate(f"{latest_bvl:,.0f}", xy=(0.05, 0.88),
+                     xycoords="axes fraction", fontsize=8, color=COLORS["bvl"], fontweight="bold")
+
+    fig.text(0.99, 0.005, WATERMARK, ha="right", va="bottom",
+             fontsize=8, color=COLORS["subtext"], alpha=0.8)
 
     fig.savefig(out_path, dpi=150, bbox_inches="tight")
     plt.close(fig)
@@ -238,17 +262,17 @@ def chart_summary(out_path: Path):
 
 
 def main() -> int:
-    today = datetime.today().strftime("%Y-%m-%d")
+    today   = datetime.today().strftime("%Y-%m-%d")
     out_dir = CHARTS_BASE / today
     out_dir.mkdir(parents=True, exist_ok=True)
     logger.info("Output folder: %s", out_dir)
 
     errors = 0
     for name, fn, path in [
-        ("political_risk",   chart_political,  out_dir / "political_risk.png"),
-        ("financial_stress", chart_financial,  out_dir / "financial_stress.png"),
-        ("daily_prices",     chart_prices,     out_dir / "daily_prices.png"),
-        ("summary",          chart_summary,    out_dir / "summary.png"),
+        ("political_risk",   chart_political, out_dir / "political_risk.png"),
+        ("financial_stress", chart_financial, out_dir / "financial_stress.png"),
+        ("daily_prices",     chart_prices,    out_dir / "daily_prices.png"),
+        ("summary",          chart_summary,   out_dir / "summary.png"),
     ]:
         try:
             fn(path)
