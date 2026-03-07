@@ -4,6 +4,11 @@ data/processed/
 data/targets/
 data/validation/
 
+# Allow raw supermarket snapshots (needed by GitHub Actions)
+!data/raw/supermarket/
+!data/raw/supermarket/snapshots/
+!data/raw/supermarket/snapshots/*.parquet
+
 # Python
 __pycache__/
 *.pyc

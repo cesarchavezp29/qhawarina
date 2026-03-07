@@ -1,0 +1,110 @@
+name: Daily Pipeline
+
+# Triggered by local scraper pushing a fresh supermarket snapshot,
+# or on schedule at 22:30 PET (03:30 UTC) as fallback if laptop is off.
+on:
+  push:
+    paths:
+      - 'data/raw/supermarket/snapshots/**'
+  schedule:
+    - cron: '30 3 * * *'   # 22:30 PET = 03:30 UTC (fallback)
+  workflow_dispatch:        # manual trigger from GitHub UI
+
+jobs:
+  process-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # ── 1. Checkout ────────────────────────────────────────────────────────
+      - name: Checkout qhawarina repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # full history so git push doesn't fail on diverged branches
+
+      # ── 2. Python ──────────────────────────────────────────────────────────
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # ── 3. Dependencies ────────────────────────────────────────────────────
+      - name: Install dependencies
+        run: pip install -e .
+
+      # ── 4. Validate supermarket snapshot ───────────────────────────────────
+      # Checks: product count ≥70% of yesterday, ≥2/3 stores, no negatives,
+      # median daily change <10%, timestamp is today.
+      # continue-on-error: yesterday's price data will be reused if this fails.
+      - name: Validate supermarket scrape
+        id: validate_supermarket
+        run: python scripts/validate_pipeline.py --check supermarket
+        continue-on-error: true
+
+      # ── 5. Build Jevons price index ─────────────────────────────────────────
+      # Runs even if validation failed — will reuse last valid snapshot.
+      - name: Build price index
+        run: python scripts/build_price_index.py
+
+      # ── 6. Build political index ────────────────────────────────────────────
+      # Fetches RSS from 11 feeds + classifies with Claude Haiku (EPU v2).
+      # Captures the full news cycle: articles published 07:00–22:00 PET.
+      - name: Build political index (RSS + Haiku)
+        run: python scripts/build_daily_index.py
+
+      # ── 7. Validate RSS ─────────────────────────────────────────────────────
+      - name: Validate RSS
+        run: python scripts/validate_pipeline.py --check rss
+        continue-on-error: true
+
+      # ── 8. GDP + inflation nowcast (Sundays only) ───────────────────────────
+      # NOTE: generate_nowcast.py reads data/processed/national/panel_national_monthly.parquet
+      # which is gitignored. This step will fail unless the panel parquet is committed
+      # to the repo (add !data/processed/ exception to .gitignore) or you keep
+      # generate_nowcast.py local and commit the output JSONs from exports/.
+      - name: Generate GDP + inflation nowcast (Sundays only)
+        run: |
+          if [ "$(date +%u)" = "7" ]; then
+            echo "Sunday — running GDP + inflation nowcast"
+            python scripts/generate_nowcast.py
+          else
+            echo "Not Sunday — skipping nowcast ($(date +%A))"
+          fi
+
+      # ── 9. Export all JSON files ────────────────────────────────────────────
+      - name: Export all data
+        run: python scripts/export_web_data.py
+
+      # ── 10. Commit exports back to qhawarina repo ───────────────────────────
+      - name: Commit exports to qhawarina
+        run: |
+          git config user.name "Qhawarina Pipeline"
+          git config user.email "pipeline@qhawarina.pe"
+          git add exports/ data/pipeline_status.json
+          git diff --staged --quiet || git commit -m "pipeline: $(date +%Y-%m-%d) daily update"
+          git push
+
+      # ── 11. Deploy JSON data to qhawarina-web ──────────────────────────────
+      # Copies exports/*.json to the Next.js public/assets/data/ directory.
+      # The push triggers a Vercel redeploy automatically.
+      - name: Deploy to qhawarina-web
+        run: |
+          git clone https://x-access-token:${{ secrets.GH_PAT }}@github.com/cesarchavezp29/qhawarina-web.git /tmp/qhawarina-web
+          cp exports/data/*.json /tmp/qhawarina-web/public/assets/data/
+          cp data/pipeline_status.json /tmp/qhawarina-web/public/assets/data/
+          cd /tmp/qhawarina-web
+          git config user.name "Qhawarina Pipeline"
+          git config user.email "pipeline@qhawarina.pe"
+          git add public/assets/data/
+          git diff --staged --quiet || git commit -m "data: $(date +%Y-%m-%d) daily update"
+          git push
+
+      # ── 12. Email alert ────────────────────────────────────────────────────
+      # Runs even if earlier steps failed (if: always()) so you always get notified.
+      - name: Send email alert
+        if: always()
+        run: python scripts/validate_pipeline.py --alert email
+
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
+      GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
