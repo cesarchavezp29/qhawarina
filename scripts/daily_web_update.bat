@@ -126,18 +126,33 @@ if %errorlevel% neq 0 (
 )
 
 :: ------------------------------------------------------------------
-:: BLOCK E: Post tweet
+:: BLOCK E: Generate daily social media charts
 :: ------------------------------------------------------------------
 
 cd /d %PROJECT%
-echo [%TIME%] [E1/1] Posting daily tweet...
-echo [%TIME%] [E1/1] Posting tweet... >> %LOGFILE%
+echo [%TIME%] [E1/1] Generating daily charts...
+echo [%TIME%] [E1/1] Generating charts... >> %LOGFILE%
+%PYTHON% %PROJECT%\scripts\generate_daily_charts.py >> %LOGFILE% 2>&1
+if %errorlevel% neq 0 (
+    echo [%TIME%] WARNING: Chart generation failed >> %LOGFILE%
+    echo [%TIME%] WARNING: Chart generation failed
+) else (
+    echo [%TIME%] [E1/1] Charts saved >> %LOGFILE%
+)
+
+:: ------------------------------------------------------------------
+:: BLOCK F: Post tweet
+:: ------------------------------------------------------------------
+
+cd /d %PROJECT%
+echo [%TIME%] [F1/1] Posting daily tweet...
+echo [%TIME%] [F1/1] Posting tweet... >> %LOGFILE%
 %PYTHON% %PROJECT%\scripts\post_daily_tweet.py >> %LOGFILE% 2>&1
 if %errorlevel% neq 0 (
     echo [%TIME%] WARNING: Tweet failed — check log >> %LOGFILE%
     echo [%TIME%] WARNING: Tweet failed
 ) else (
-    echo [%TIME%] [E1/1] Tweet posted >> %LOGFILE%
+    echo [%TIME%] [F1/1] Tweet posted >> %LOGFILE%
 )
 
 :done

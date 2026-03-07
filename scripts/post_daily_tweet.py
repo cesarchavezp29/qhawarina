@@ -24,6 +24,7 @@ logger = logging.getLogger("post_daily_tweet")
 # ── Paths ──────────────────────────────────────────────────────────────────────
 POLITICAL_PATH  = project_root / "exports/data/political_index_daily.json"
 FX_PATH         = project_root / "exports/data/fx_interventions.json"
+PRICES_PATH     = project_root / "exports/data/daily_price_index.json"
 
 # ── Twitter credentials (loaded from .env) ────────────────────────────────────
 from dotenv import load_dotenv
@@ -43,6 +44,11 @@ def load_political() -> dict:
 
 def load_fx() -> dict:
     with open(FX_PATH, encoding="utf-8") as f:
+        return json.load(f)
+
+
+def load_prices() -> dict:
+    with open(PRICES_PATH, encoding="utf-8") as f:
         return json.load(f)
 
 
@@ -114,46 +120,101 @@ def build_tweet(political: dict, fx: dict) -> str:
     return "\n".join(lines)
 
 
-def post_tweet(text: str) -> str:
-    client = tweepy.Client(
+def build_prices_tweet(prices: dict, date_label: str) -> str:
+    latest = prices.get("latest", {})
+    index_all  = latest.get("index_all", None)
+    index_food = latest.get("index_food", None)
+    var_all    = latest.get("var_all", None)
+    cum_pct    = latest.get("cum_pct", None)
+
+    arrow = "📈" if (var_all or 0) > 0 else "📉" if (var_all or 0) < 0 else "➡️"
+
+    lines = [
+        f"🛒 Precios Supermercados | {date_label}",
+        "",
+        f"{arrow} Índice general: {index_all:.1f} (base 100)",
+    ]
+    if index_food is not None:
+        lines.append(f"🥦 Índice alimentos: {index_food:.1f}")
+    if var_all is not None:
+        lines.append(f"📊 Var. diaria: {var_all:+.2f}%")
+    if cum_pct is not None:
+        lines.append(f"📅 Var. acumulada mes: {cum_pct:+.2f}%")
+    lines += [
+        "",
+        "Plaza Vea · Metro · Wong | qhawarina.pe",
+        "#PreciosPerú #Inflación",
+    ]
+    return "\n".join(lines)
+
+
+def get_tweepy_client() -> tweepy.Client:
+    return tweepy.Client(
         consumer_key=API_KEY,
         consumer_secret=API_SECRET,
         access_token=ACCESS_TOKEN,
         access_token_secret=ACCESS_TOKEN_SECRET,
     )
-    response = client.create_tweet(text=text)
+
+
+def post_tweet(text: str, reply_to: str | None = None) -> str:
+    client = get_tweepy_client()
+    kwargs = {"text": text}
+    if reply_to:
+        kwargs["in_reply_to_tweet_id"] = reply_to
+    response = client.create_tweet(**kwargs)
     tweet_id = response.data["id"]
     logger.info("Tweet posted: https://x.com/qhawarinape/status/%s", tweet_id)
     return tweet_id
 
 
 def main() -> int:
-    logger.info("Loading political index data...")
+    logger.info("Loading data...")
     try:
         political = load_political()
     except FileNotFoundError:
         logger.error("political_index.json not found at %s", POLITICAL_PATH)
         return 1
 
-    logger.info("Loading FX data...")
     try:
         fx = load_fx()
     except FileNotFoundError:
         logger.warning("fx_interventions.json not found — TC will be omitted")
         fx = {"daily": []}
 
-    tweet = build_tweet(political, fx)
-    logger.info("Tweet text:\n%s", tweet)
+    try:
+        prices = load_prices()
+    except FileNotFoundError:
+        logger.warning("daily_price_index.json not found — prices tweet skipped")
+        prices = None
 
-    if len(tweet) > 280:
-        logger.error("Tweet too long (%d chars) — truncate or shorten", len(tweet))
-        return 1
+    # Build tweet 1: political risk + TC
+    tweet1 = build_tweet(political, fx)
+    logger.info("Tweet 1:\n%s", tweet1)
+
+    # Get date label for tweet 2
+    daily = political.get("daily_index", [])
+    date_str = daily[-1].get("date", datetime.today().strftime("%Y-%m-%d")) if daily else datetime.today().strftime("%Y-%m-%d")
+    try:
+        dt = datetime.strptime(date_str, "%Y-%m-%d")
+        date_label = dt.strftime("%d %b %Y").lstrip("0")
+    except Exception:
+        date_label = date_str
 
     try:
-        post_tweet(tweet)
+        tweet1_id = post_tweet(tweet1)
     except tweepy.TweepyException as e:
-        logger.error("Twitter API error: %s", e)
+        logger.error("Twitter API error on tweet 1: %s", e)
         return 1
+
+    # Tweet 2: daily prices (reply to tweet 1 — thread)
+    if prices:
+        tweet2 = build_prices_tweet(prices, date_label)
+        logger.info("Tweet 2:\n%s", tweet2)
+        try:
+            post_tweet(tweet2, reply_to=tweet1_id)
+        except tweepy.TweepyException as e:
+            logger.warning("Tweet 2 (prices) failed: %s", e)
 
     return 0
 
