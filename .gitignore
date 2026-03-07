@@ -1,13 +1,15 @@
 # Data (too large for git)
-data/raw/
+# data/raw/ excluded per-subdir so snapshots can be tracked
+data/raw/rss/
+data/raw/bcrp/
+data/raw/midagri/
+data/raw/poultry/
+data/raw/ntl/
+data/raw/geo/
 data/processed/
 data/targets/
 data/validation/
-
-# Allow raw supermarket snapshots (needed by GitHub Actions)
-!data/raw/supermarket/
-!data/raw/supermarket/snapshots/
-!data/raw/supermarket/snapshots/*.parquet
+# Supermarket snapshots ARE tracked (needed by GitHub Actions)
 
 # Python
 __pycache__/

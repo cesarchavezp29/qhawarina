@@ -44,6 +44,7 @@ jobs:
       # Runs even if validation failed — will reuse last valid snapshot.
       - name: Build price index
         run: python scripts/build_price_index.py
+        continue-on-error: true
 
       # ── 6. Build political index ────────────────────────────────────────────
       # Fetches RSS from 11 feeds + classifies with Claude Haiku (EPU v2).
