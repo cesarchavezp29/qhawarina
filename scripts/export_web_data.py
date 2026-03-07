@@ -648,26 +648,59 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
 
     political_df = political_df.copy()
 
-    # ── Schema detection: v2 has political_swp, v1 has political_score ──────
-    is_v2 = "political_swp" in political_df.columns
+    # ── Load articles cache (AI-GPR computation + Haiku summaries) ───────────
+    from config.settings import RAW_RSS_DIR
+    articles_cache_path = RAW_RSS_DIR / "articles_classified.parquet"
+    articles_cache = None
+    if articles_cache_path.exists():
+        try:
+            articles_cache = pd.read_parquet(articles_cache_path)
+            articles_cache["published"] = pd.to_datetime(articles_cache["published"], utc=True)
+            articles_cache["date"] = articles_cache["published"].dt.date
+        except Exception as e:
+            logger.warning("Could not load articles cache: %s", e)
 
-    if is_v2:
-        # V2 (EPU-style): use raw SWP (0-1) for gauge/score, smooth EPU index for charts
-        political_df["instability_index"] = (
-            0.6 * political_df["political_swp"] +
-            0.4 * political_df["economic_swp"]
+    # ── AI-GPR index (Iacoviello & Tong 2026): PRR_t = 100 × Σs_it / S̄ ────
+    # Map legacy integer severity (0-3) to float scale (0.0-1.0)
+    _INT_TO_FLOAT = {0: 0.0, 1: 0.2, 2: 0.5, 3: 0.9}
+
+    if articles_cache is not None and len(articles_cache) > 0:
+        art = articles_cache.copy()
+        art["sev_float"] = art["article_severity"].map(_INT_TO_FLOAT).fillna(0.0)
+        art["day"] = pd.to_datetime(art["date"]).dt.normalize()
+
+        # Political contribution: 0.6 × Σ(severity for political/both articles)
+        pol_sum = (
+            art[art["article_category"].isin(["political", "both"])]
+            .groupby("day")["sev_float"].sum() * 0.6
         )
-        # Also keep EPU composite index (mean=100) for advanced charts
-        political_df["composite_index"] = (
-            0.6 * political_df["political_smooth"] +
-            0.4 * political_df["economic_smooth"]
+        # Economic contribution: 0.4 × Σ(severity for economic/both articles)
+        eco_sum = (
+            art[art["article_category"].isin(["economic", "both"])]
+            .groupby("day")["sev_float"].sum() * 0.4
         )
+        daily_sum_s = pol_sum.add(eco_sum, fill_value=0).rename("daily_sum").reset_index()
+        daily_sum_s.columns = ["date", "daily_sum"]
+
+        s_bar = daily_sum_s["daily_sum"].mean() or 1.0
+        daily_sum_s["prr"] = (daily_sum_s["daily_sum"] / s_bar) * 100.0
+
+        political_df = political_df.merge(daily_sum_s[["date", "prr"]], on="date", how="left")
+        political_df["prr"] = political_df["prr"].fillna(0.0)
+        political_df["instability_index"] = political_df["prr"]
     else:
-        # V1 (legacy)
-        political_df["instability_index"] = (
-            0.6 * political_df["political_score"] +
-            0.4 * political_df["economic_score"]
-        )
+        # Fallback: legacy SWP-based composite (not PRR-calibrated)
+        is_v2 = "political_swp" in political_df.columns
+        if is_v2:
+            political_df["instability_index"] = (
+                0.6 * political_df["political_swp"] +
+                0.4 * political_df["economic_swp"]
+            ) * 1000
+        else:
+            political_df["instability_index"] = (
+                0.6 * political_df["political_score"] +
+                0.4 * political_df["economic_score"]
+            ) * 100
 
     # ── Smoothing + quality flags ─────────────────────────────────────────────
     MIN_ARTICLES = 5
@@ -679,18 +712,11 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
         political_df["instability_index"]
         .rolling(window=SMOOTH_WINDOW, center=True, min_periods=2)
         .mean()
-        .round(3)
+        .round(1)
     )
     political_df["score_smooth"] = political_df["score_smooth"].fillna(
         political_df["instability_index"]
     )
-
-    # ── Percentile normalisation for v2 ──────────────────────────────────────
-    # v1 score was already a percentile rank (0–1). v2 uses raw SWP proportions
-    # (~0.05–0.15) which are on a completely different scale. Convert to
-    # percentile so the score is comparable to v1 and thresholds stay valid.
-    if is_v2:
-        political_df["score_smooth"] = political_df["score_smooth"].rank(pct=True).round(3)
 
     PROVISIONAL_DAYS = 5
     cutoff = political_df["date"].max() - pd.Timedelta(days=PROVISIONAL_DAYS)
@@ -698,19 +724,6 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
 
     latest_idx = political_df.index[-1]
     latest = political_df.loc[latest_idx].copy()
-    # ─────────────────────────────────────────────────────────────────────────
-
-    # ── Load articles cache for Haiku summaries ───────────────────────────────
-    from config.settings import RAW_RSS_DIR
-    articles_cache_path = RAW_RSS_DIR / "articles_classified.parquet"
-    articles_cache = None
-    if articles_cache_path.exists():
-        try:
-            articles_cache = pd.read_parquet(articles_cache_path)
-            articles_cache["published"] = pd.to_datetime(articles_cache["published"], utc=True)
-            articles_cache["date"] = articles_cache["published"].dt.date
-        except Exception as e:
-            logger.warning("Could not load articles cache: %s", e)
     # ─────────────────────────────────────────────────────────────────────────
 
     # Calculate aggregates using smoothed score
@@ -726,24 +739,26 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
         max_year_date = valid_365d.loc[valid_365d["score_smooth"] == max_year, "date"].iloc[0]
 
     # Classification level
-    def classify_level(score: float) -> str:
-        if score < 0.15:
+    def classify_level(prr: float) -> str:
+        if prr < 50:
             return "MINIMO"
-        elif score < 0.35:
+        elif prr < 80:
             return "BAJO"
-        elif score < 0.60:
-            return "MEDIO"
-        elif score < 0.80:
+        elif prr < 120:
+            return "MODERADO"
+        elif prr < 160:
+            return "ELEVADO"
+        elif prr < 200:
             return "ALTO"
         else:
-            return "CRITICAL"
+            return "CRITICO"
 
-    # Daily series (last 365 days) — smoothed score as main signal, raw for reference
+    # Daily series (last 365 days) — smoothed PRR as main signal, raw for reference
     daily_series = [
         {
             "date": row["date"].strftime("%Y-%m-%d"),
-            "score": round(row["score_smooth"], 3),
-            "score_raw": round(row["instability_index"], 3),
+            "score": round(row["score_smooth"], 1),
+            "score_raw": round(row["instability_index"], 1),
             "n_articles": int(row["n_articles_total"]),
             "low_coverage": bool(row["low_coverage"]),
             "provisional": bool(row["provisional"]),
@@ -751,10 +766,10 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
         for _, row in last_365d.iterrows()
     ]
 
-    # Major events: smoothed score >= 0.65 AND at least 5 articles (avoids noise spikes)
+    # Major events: PRR >= 120 (ELEVADO+) AND at least 5 articles (avoids noise spikes)
     major_events = []
     reliable = political_df[
-        (political_df["score_smooth"] >= 0.65) &
+        (political_df["score_smooth"] >= 120) &
         (political_df["n_articles_total"] >= 5)
     ]
     for _, row in reliable.iterrows():
@@ -772,8 +787,8 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
                 event_summary = _haiku_driver_phrase(arts_text, str(event_date))
         major_events.append({
             "date": row["date"].strftime("%Y-%m-%d"),
-            "score": round(row["score_smooth"], 3),
-            "level": "MUY ALTO" if row["score_smooth"] > 0.85 else "ALTO",
+            "score": round(row["score_smooth"], 1),
+            "level": classify_level(row["score_smooth"]),
             "n_articles": int(row["n_articles_total"]),
             "summary": event_summary or "Alta inestabilidad política registrada.",
             "report_url": f"/political/daily-reports/{row['date'].strftime('%Y-%m-%d')}.html",
@@ -853,16 +868,16 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
         fx_yy = float(row["fx_yoy"]) if pd.notna(row.get("fx_yoy")) else None
         monthly_series.append({
             "month": row["month_str"],
-            "political_avg": round(float(row["score_smooth"]), 3),
+            "political_avg": round(float(row["score_smooth"]), 1),
             "fx_level": round(fx_lv, 4) if fx_lv is not None else None,
             "fx_yoy": round(fx_yy, 2) if fx_yy is not None else None,
         })
     # ─────────────────────────────────────────────────────────────────────────
 
     # ── Driver phrase for today if score is high ─────────────────────────────
-    today_score = float(latest["instability_index"])
+    today_score = float(latest["score_smooth"])
     driver_phrase = None
-    if today_score > 0.6 and articles_cache is not None:
+    if today_score > 120 and articles_cache is not None:
         today_date = latest["date"].date() if hasattr(latest["date"], "date") else latest["date"]
         today_arts = articles_cache[
             (articles_cache["date"] == today_date) &
@@ -879,7 +894,7 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
             "coverage_days": len(political_df),
             "rss_feeds": 11,
             "rss_sources": 6,
-            "methodology": "EPU-style severity-weighted proportion index (Baker/Bloom/Davis 2016), normalized mean=100",
+            "methodology": "AI-GPR: PRR_t = 100 x sum(s_it) / S_bar (Iacoviello & Tong 2026), mean=100",
         },
         "current": {
             "date": latest["date"].strftime("%Y-%m-%d"),
@@ -891,9 +906,9 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
             "driver_phrase": driver_phrase,
         },
         "aggregates": {
-            "7d_avg": round(last_7d, 3),
-            "30d_avg": round(last_30d, 3),
-            "year_max": round(max_year, 3),
+            "7d_avg": round(last_7d, 1),
+            "30d_avg": round(last_30d, 1),
+            "year_max": round(max_year, 1),
             "year_max_date": max_year_date.strftime("%Y-%m-%d"),
         },
         "major_events": major_events[:10],  # Top 10
