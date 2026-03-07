@@ -67,6 +67,29 @@ if %errorlevel% neq 0 (
     echo [%TIME%] [B] Nothing to push
 )
 
+:: ------------------------------------------------------------------
+:: BLOCK C: Generate PDF reports
+:: ------------------------------------------------------------------
+
+echo [%TIME%] [C] Generating daily PDF report...
+echo [%TIME%] [C] Generating daily report... >> %LOGFILE%
+%PYTHON% %PROJECT%\scripts\generate_reports.py --type daily >> %LOGFILE% 2>&1
+if %errorlevel% neq 0 (
+    echo [%TIME%] WARNING: Daily report generation failed — check logs >> %LOGFILE%
+    echo [%TIME%] WARNING: Daily report generation failed
+) else (
+    echo [%TIME%] [C] Daily report DONE >> %LOGFILE%
+    echo [%TIME%] [C] Daily report generated
+)
+
+REM On Mondays only, generate weekly report
+powershell -Command "if ((Get-Date).DayOfWeek -eq 'Monday') { python %PROJECT%\scripts\generate_reports.py --type weekly }" >> %LOGFILE% 2>&1
+if %errorlevel% neq 0 (
+    echo [%TIME%] WARNING: Weekly report generation failed >> %LOGFILE%
+) else (
+    echo [%TIME%] [C] Weekly report check done >> %LOGFILE%
+)
+
 :done
 echo ============================================================ >> %LOGFILE%
 echo [%DATE% %TIME%] LOCAL SCRAPER COMPLETE >> %LOGFILE%

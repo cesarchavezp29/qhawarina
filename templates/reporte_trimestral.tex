@@ -1,0 +1,571 @@
+% ============================================================
+% QHAWARINA — Reporte Trimestral
+% Template: reporte_trimestral.tex
+% Placeholders: PLACEHOLDER replaced by generate_reports.py
+% ============================================================
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[margin=2cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{mathpazo}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{tcolorbox}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[spanish]{babel}
+\usepackage{ragged2e}
+\usepackage{microtype}
+\usepackage{array}
+\usepackage{colortbl}
+\usepackage{longtable}
+\usepackage{multicol}
+\usepackage{enumitem}
+
+% ------------------------------------------------------------------
+% Colour definitions
+% ------------------------------------------------------------------
+\definecolor{terra}{HTML}{C65D3E}
+\definecolor{ink}{HTML}{2D3142}
+\definecolor{ink3}{HTML}{8D99AE}
+\definecolor{teal}{HTML}{2A9D8F}
+\definecolor{amber}{HTML}{E0A458}
+\definecolor{red}{HTML}{9B2226}
+\definecolor{bg}{HTML}{FAF8F4}
+\definecolor{border}{HTML}{E8E4DF}
+
+\pagecolor{bg}
+\color{ink}
+
+% ------------------------------------------------------------------
+% Hyperref setup
+% ------------------------------------------------------------------
+\hypersetup{
+    colorlinks=true,
+    linkcolor=terra,
+    urlcolor=teal,
+    pdfauthor={Qhawarina},
+    pdftitle={Reporte Trimestral Qhawarina <<QUARTER>>},
+    pdfsubject={Análisis Económico del Perú},
+}
+
+% ------------------------------------------------------------------
+% Header / footer (standard pages)
+% ------------------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{border}\leaders\hrule height \headrulewidth\hfill}}
+\fancyhead[L]{\small\color{ink3}QHAWARINA — Reporte Trimestral <<QUARTER>>}
+\fancyhead[R]{\small\color{ink3}Análisis Económico del Perú}
+\fancyfoot[L]{\footnotesize\color{ink3}Qhawarina}
+\fancyfoot[C]{\footnotesize\color{ink3}\thepage}
+\fancyfoot[R]{\footnotesize\color{ink3}Generado el <<DATE>>}
+
+% ------------------------------------------------------------------
+% Section styling
+% ------------------------------------------------------------------
+\titleformat{\section}[block]
+  {\normalfont\large\bfseries\color{terra}}
+  {\thesection.}{0.5em}{}[\vspace{-0.3em}\textcolor{border}{\hrule height 0.5pt}]
+
+\titleformat{\subsection}[block]
+  {\normalfont\normalsize\bfseries\color{ink}}
+  {\thesubsection.}{0.4em}{}
+
+\titlespacing*{\section}{0pt}{1.4em}{0.7em}
+\titlespacing*{\subsection}{0pt}{0.9em}{0.4em}
+
+% ------------------------------------------------------------------
+% tcolorbox styles
+% ------------------------------------------------------------------
+\tcbuselibrary{skins, breakable}
+
+\newtcolorbox{notabox}[1]{
+  enhanced,
+  colback=bg,
+  colframe=terra,
+  boxrule=0pt,
+  leftrule=3pt,
+  arc=0pt,
+  left=8pt, right=8pt, top=6pt, bottom=6pt,
+  fonttitle=\bfseries\color{terra},
+  title=#1,
+}
+
+\newtcolorbox{kpibox}[1]{
+  enhanced,
+  colback=white,
+  colframe=border,
+  boxrule=0.5pt,
+  arc=2pt,
+  left=8pt, right=8pt, top=6pt, bottom=6pt,
+  fonttitle=\small\bfseries\color{ink3},
+  title=#1,
+  attach boxed title to top left={yshift=-2mm, xshift=6pt},
+  boxed title style={
+    colback=bg,
+    colframe=border,
+    boxrule=0.5pt,
+    arc=1pt,
+  },
+}
+
+\newtcolorbox{sectionbox}[1]{
+  enhanced,
+  colback=white,
+  colframe=border,
+  boxrule=0.5pt,
+  arc=3pt,
+  left=10pt, right=10pt, top=8pt, bottom=8pt,
+  fonttitle=\bfseries\color{terra},
+  title=#1,
+}
+
+% ------------------------------------------------------------------
+% Custom commands
+% ------------------------------------------------------------------
+\newcommand{\kpivalue}[1]{%
+  {\fontsize{16}{18}\selectfont\bfseries\color{ink}#1}%
+}
+\newcommand{\kpilabel}[1]{%
+  {\small\color{ink3}#1}%
+}
+\newcommand{\quarter}{<<QUARTER>>}
+
+% ============================================================
+\begin{document}
+
+% ============================================================
+% COVER PAGE
+% ============================================================
+\thispagestyle{empty}
+\begin{center}
+
+\vspace*{2cm}
+
+\begin{tcolorbox}[
+  enhanced,
+  colback=terra,
+  colframe=terra,
+  boxrule=0pt,
+  arc=4pt,
+  left=20pt, right=20pt, top=20pt, bottom=20pt,
+  width=0.85\textwidth,
+  halign=center,
+]
+  {\fontsize{32}{36}\selectfont\bfseries\color{white}QHAWARINA}\\[6pt]
+  {\large\color{white!80!terra}Análisis Económico del Perú}
+\end{tcolorbox}
+
+\vspace{1.5cm}
+
+{\fontsize{24}{28}\selectfont\bfseries\color{ink}Reporte Trimestral}\\[0.5em]
+{\fontsize{20}{24}\selectfont\color{terra}\textbf{<<QUARTER>>}}
+
+\vspace{0.8em}
+
+{\large\color{ink3}<<QUARTER_START>> — <<QUARTER_END>>}
+
+\vspace{2cm}
+
+\begin{tcolorbox}[
+  enhanced,
+  colback=white,
+  colframe=border,
+  boxrule=0.5pt,
+  arc=3pt,
+  left=15pt, right=15pt, top=10pt, bottom=10pt,
+  width=0.75\textwidth,
+]
+  \centering
+  \small\color{ink3}
+  Este reporte ha sido generado automáticamente por el pipeline\\
+  Qhawarina a partir de datos públicos del BCRP, INEI, MIDAGRI\\
+  y fuentes de supermercados peruanos.\\[6pt]
+  \textbf{Fecha de generación:} <<DATE>>
+\end{tcolorbox}
+
+\vspace{1.5cm}
+
+% KPI snapshot on cover
+\noindent
+\begin{minipage}[t]{0.22\textwidth}
+  \begin{kpibox}{BPP}
+    \centering
+    \kpivalue{<<BPP_YOY>>}\\[2pt]
+    \kpilabel{Var. acum.}
+  \end{kpibox}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.22\textwidth}
+  \begin{kpibox}{Riesgo Pol.}
+    \centering
+    \kpivalue{<<RISK_SCORE>>}\\[2pt]
+    \kpilabel{/100}
+  \end{kpibox}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.22\textwidth}
+  \begin{kpibox}{PBI}
+    \centering
+    \kpivalue{<<GDP_NOWCAST>>}\\[2pt]
+    \kpilabel{nowcast i.a.}
+  \end{kpibox}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.22\textwidth}
+  \begin{kpibox}{Pobreza}
+    \centering
+    \kpivalue{<<POVERTY_RATE>>}\\[2pt]
+    \kpilabel{nacional}
+  \end{kpibox}
+\end{minipage}
+
+\end{center}
+
+% ============================================================
+\newpage
+% ============================================================
+% TABLE OF CONTENTS
+% ============================================================
+\thispagestyle{plain}
+\tableofcontents
+\vspace{1em}
+
+\begin{tcolorbox}[
+  enhanced,
+  colback=bg,
+  colframe=border,
+  boxrule=0.5pt,
+  arc=2pt,
+  left=6pt, right=6pt, top=4pt, bottom=4pt,
+]
+  {\footnotesize\color{ink3}
+    Reporte generado automáticamente. Todos los nowcasts son estimaciones estadísticas.
+    Los datos de supermercados cubren Plaza Vea, Metro y Wong (Lima Metropolitana).
+  }
+\end{tcolorbox}
+
+% ============================================================
+\newpage
+% ============================================================
+% SECTION 1 — RESUMEN EJECUTIVO
+% ============================================================
+\pagestyle{fancy}
+
+\section{Resumen Ejecutivo}
+
+\begin{notabox}{PERSPECTIVA TRIMESTRAL}
+  \small\color{ink}
+  <<QUARTERLY_PERSPECTIVA>>
+\end{notabox}
+
+\vspace{0.8em}
+
+\subsection{Cuadro Resumen de Indicadores}
+
+\begin{center}
+\begin{tabular}{lrrl}
+  \toprule
+  \textbf{Indicador} & \textbf{Inicio trimestre} & \textbf{Fin trimestre} & \textbf{Variación} \\
+  \midrule
+<<ALL_KPI_TABLE>>  \bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{0.8em}
+
+\subsection{Eventos Relevantes del Trimestre}
+
+\begin{description}[leftmargin=3.5cm, labelindent=0pt, style=sameline]
+<<EVENTS_LIST>>
+\end{description}
+
+% ============================================================
+\newpage
+% ============================================================
+% SECTION 2 — PRECIOS Y CANASTA BPP
+% ============================================================
+
+\section{Precios y Canasta BPP}
+
+\subsection{Evolución del Índice BPP}
+
+\begin{center}
+  \includegraphics[width=0.90\textwidth]{<<CHART_BPP_QUARTER>>}
+\end{center}
+
+\vspace{0.6em}
+
+\subsection{Variación por Categoría}
+
+\begin{center}
+\begin{tabular}{lrrll}
+  \toprule
+  \textbf{Categoría} & \textbf{Var. trimestral} & \textbf{Var. interanual} & \textbf{Trim. anterior} & \textbf{Aceleración} \\
+  \midrule
+<<CATEGORY_QUARTER_TABLE>>  \bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{0.6em}
+
+\begin{tcolorbox}[
+  enhanced,
+  colback=bg,
+  colframe=border,
+  boxrule=0.5pt,
+  arc=2pt,
+  left=6pt, right=6pt, top=4pt, bottom=4pt,
+]
+  {\footnotesize\color{ink3}
+    \textbf{Metodología BPP:} Índice Jevons bilateral, cadena diaria.
+    Fuentes: Plaza Vea, Metro, Wong. Filtro de ratio extremo: $0.5 < r < 2.0$.
+    Base 100 = inicio del período de muestra. Peso IPC: estructura INEI Lima dic. 2021.
+  }
+\end{tcolorbox}
+
+% ============================================================
+\newpage
+% ============================================================
+% SECTION 3 — PBI Y MACROECONOMÍA
+% ============================================================
+
+\section{PBI y Macroeconomía}
+
+\subsection{Track Record del Nowcast}
+
+\begin{center}
+\begin{tabular}{lrrl}
+  \toprule
+  \textbf{Trimestre} & \textbf{Nowcast} & \textbf{Dato oficial} & \textbf{Error} \\
+  \midrule
+<<GDP_TRACK_RECORD_TABLE>>  \bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{0.6em}
+
+\begin{tcolorbox}[
+  enhanced,
+  colback=bg,
+  colframe=border,
+  boxrule=0.5pt,
+  arc=2pt,
+  left=6pt, right=6pt, top=4pt, bottom=4pt,
+]
+  {\footnotesize\color{ink3}
+    Nowcast generado con DFM ($k=3$ factores) y bridge equation Ridge ($\alpha=1$).
+    Ventana rodante 7 años. Series: 33--37 del panel nacional BCRP/INEI.
+    RMSE histórico: $\sim$5.4pp (backtest 2004--2024, excluyendo COVID).
+    Pre-COVID RMSE: $\sim$1.4pp.
+  }
+\end{tcolorbox}
+
+\vspace{0.8em}
+
+\subsection{Mercado Cambiario}
+
+\begin{center}
+  \includegraphics[width=0.85\textwidth]{<<CHART_FX_QUARTER>>}
+\end{center}
+
+\vspace{0.4em}
+
+\noindent
+\begin{minipage}[t]{0.49\textwidth}
+  \begin{kpibox}{Tipo de Cambio}
+    \kpivalue{S/ <<FX_RATE>>}\\[2pt]
+    \kpilabel{PEN/USD — cierre del trimestre}\\[4pt]
+    \kpilabel{Cambio reciente: <<FX_DAILY_CHANGE>>}
+  \end{kpibox}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.49\textwidth}
+  \begin{kpibox}{Política Monetaria}
+    \kpivalue{<<BCRP_RATE>>}\\[2pt]
+    \kpilabel{Tasa de referencia BCRP}\\[4pt]
+    \kpilabel{<<FX_QUARTER_SUMMARY>>}
+  \end{kpibox}
+\end{minipage}
+
+% ============================================================
+\newpage
+% ============================================================
+% SECTION 4 — RIESGO POLÍTICO
+% ============================================================
+
+\section{Riesgo Político}
+
+\subsection{Evolución del Índice de Inestabilidad}
+
+\begin{center}
+  \includegraphics[width=0.90\textwidth]{<<CHART_RISK_QUARTER>>}
+\end{center}
+
+\vspace{0.6em}
+
+\noindent
+\begin{minipage}[t]{0.49\textwidth}
+  \begin{kpibox}{Nivel Actual}
+    \kpivalue{<<RISK_SCORE>>/100}\\[2pt]
+    \kpilabel{Nivel: \textbf{<<RISK_LEVEL>>}}\\[4pt]
+    \kpilabel{Artículos monitoreados: <<RISK_ARTICLES>>}
+  \end{kpibox}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.49\textwidth}
+  \begin{tcolorbox}[
+    enhanced,
+    colback=white,
+    colframe=border,
+    boxrule=0.5pt,
+    arc=2pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+  ]
+    {\small\color{ink3}
+      Zonas de referencia:\\
+      \textcolor{teal}{$\bullet$} Bajo: 0--30\\
+      \textcolor{amber}{$\bullet$} Moderado: 30--60\\
+      \textcolor{red}{$\bullet$} Alto: 60--100\\[4pt]
+      Fuente: Clasificación NLP sobre 6+ fuentes RSS.
+    }
+  \end{tcolorbox}
+\end{minipage}
+
+% ============================================================
+\newpage
+% ============================================================
+% SECTION 5 — POBREZA DEPARTAMENTAL
+% ============================================================
+
+\section{Pobreza Departamental}
+
+\subsection{Nowcast Departamental 2025}
+
+\begin{center}
+  \includegraphics[width=0.85\textwidth]{<<CHART_POVERTY_DEPT>>}
+\end{center}
+
+\vspace{0.6em}
+
+\subsection{Tabla: Departamentos por Tasa de Pobreza}
+
+\begin{center}
+\begin{tabular}{lrrr}
+  \toprule
+  \textbf{Departamento} & \textbf{Nowcast 2025} & \textbf{Dato 2024} & \textbf{Cambio} \\
+  \midrule
+<<DEPT_POVERTY_TABLE>>  \bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{0.4em}
+
+\begin{tcolorbox}[
+  enhanced,
+  colback=bg,
+  colframe=border,
+  boxrule=0.5pt,
+  arc=2pt,
+  left=6pt, right=6pt, top=4pt, bottom=4pt,
+]
+  {\footnotesize\color{ink3}
+    \textbf{Metodología:} Gradient Boosting Regressor con features rodantes (rolling 12 meses).
+    Panel: 26 departamentos, 2004--2024. Lag de publicación ENAHO: 18 meses.
+    RMSE: $\sim$2.5pp; Rel.RMSE vs AR1: 0.95. IC 95\% basado en errores históricos.
+    Callao incluido en Lima para compatibilidad con ENAHO histórico.
+  }
+\end{tcolorbox}
+
+% ============================================================
+\newpage
+% ============================================================
+% SECTION 6 — NOTAS METODOLÓGICAS
+% ============================================================
+
+\section{Notas Metodológicas}
+
+\subsection{Cambios Metodológicos este Trimestre}
+
+\begin{notabox}{CAMBIOS METODOLÓGICOS}
+  \small\color{ink}
+  <<METHODOLOGY_CHANGES>>
+\end{notabox}
+
+\vspace{0.8em}
+
+\subsection{Modelos y Fuentes de Datos}
+
+\begin{sectionbox}{Panel de Datos Nacional}
+  \small\color{ink}
+  El panel nacional mensual contiene 58 series en formato largo con las siguientes variables:
+  \texttt{date}, \texttt{series\_id}, \texttt{series\_name}, \texttt{category},
+  \texttt{value\_raw}, \texttt{value\_sa}, \texttt{value\_log}, \texttt{value\_dlog},
+  \texttt{value\_yoy}, \texttt{source}, \texttt{frequency\_original}, \texttt{publication\_lag\_days}.
+
+  \vspace{4pt}
+  \textbf{Fuentes principales:} BCRP (API pública), INEI (publicaciones mensuales),
+  MIDAGRI (boletines mayoristas y avícolas), Supermercados (scraper propio),
+  NASA VIIRS (Night-Time Lights departamental).
+\end{sectionbox}
+
+\vspace{0.6em}
+
+\begin{tcolorbox}[
+  enhanced,
+  colback=white,
+  colframe=border,
+  boxrule=0.5pt,
+  arc=3pt,
+  left=10pt, right=10pt, top=8pt, bottom=8pt,
+]
+  \small\color{ink}
+  \textbf{Nowcast PBI (DFM + Ridge Bridge)}\\
+  Modelo de Factores Dinámicos con $k=3$ factores no observados, ventana rodante de 7 años.
+  Bridge equation Ridge ($\alpha=1.0$) mapea factores a variación trimestral del PBI.
+  Exclusión de COVID (2020--2021) en entrenamiento. RMSE pre-COVID: $\approx 1.4$pp.\\[8pt]
+
+  \textbf{Nowcast Inflación (DFM)}\\
+  Objetivo: variación mensual del IPC (media móvil 3 meses). 19--23 series candidatas.
+  Rel.RMSE vs AR(1): $\approx 0.99$. Incluye precios mayoristas, pollos, supermercados.\\[8pt]
+
+  \textbf{Nowcast Pobreza (GBR)}\\
+  Gradient Boosting con features: PBI departamental, inflación regional, NTL, rezagos de pobreza.
+  Entrenamiento: panel 2004--2024 (excl. COVID). RMSE $\approx 2.5$pp, mejor que AR(1).\\[8pt]
+
+  \textbf{Riesgo Político (NLP)}\\
+  Clasificación bayesiana sobre 81+ feeds RSS. Score normalizado con componente financiero
+  (FX, spread crédito, reservas). Índice diario desde 2020.\\[8pt]
+
+  \textbf{Índice BPP}\\
+  Jevons bilateral, cadena diaria, $\sim$37,000--42,000 productos observados.
+  Cobertura: arroz, pan, carnes, pescados, lácteos, frutas, verduras, aceites,
+  azúcar, bebidas, limpieza, cuidado personal.
+\end{tcolorbox}
+
+\vspace{1em}
+
+\begin{tcolorbox}[
+  enhanced,
+  colback=bg,
+  colframe=border,
+  boxrule=0.5pt,
+  arc=2pt,
+  left=6pt, right=6pt, top=4pt, bottom=4pt,
+]
+  {\footnotesize\color{ink3}
+    \textbf{Qhawarina} (\textit{quechua}: "el que observa") es una plataforma de análisis
+    económico en tiempo real para el Perú, desarrollada con metodologías de punta en
+    nowcasting macroeconómico. Los resultados son de carácter informativo y no constituyen
+    pronóstico oficial del Banco Central de Reserva del Perú (BCRP), el Ministerio de
+    Economía y Finanzas (MEF) ni el Instituto Nacional de Estadística e Informática (INEI).\\[4pt]
+    Código fuente y documentación: repositorio privado Nexus.
+    Contacto: pipeline@qhawarina.pe
+  }
+\end{tcolorbox}
+
+\end{document}

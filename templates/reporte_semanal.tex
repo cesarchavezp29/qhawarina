@@ -1,0 +1,459 @@
+% ============================================================
+% QHAWARINA — Reporte Semanal
+% Template: reporte_semanal.tex
+% Placeholders: PLACEHOLDER replaced by generate_reports.py
+% ============================================================
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[margin=2cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{mathpazo}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{tcolorbox}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[spanish]{babel}
+\usepackage{ragged2e}
+\usepackage{microtype}
+\usepackage{array}
+\usepackage{colortbl}
+\usepackage{longtable}
+\usepackage{multicol}
+
+% ------------------------------------------------------------------
+% Colour definitions
+% ------------------------------------------------------------------
+\definecolor{terra}{HTML}{C65D3E}
+\definecolor{ink}{HTML}{2D3142}
+\definecolor{ink3}{HTML}{8D99AE}
+\definecolor{teal}{HTML}{2A9D8F}
+\definecolor{amber}{HTML}{E0A458}
+\definecolor{red}{HTML}{9B2226}
+\definecolor{bg}{HTML}{FAF8F4}
+\definecolor{border}{HTML}{E8E4DF}
+
+\pagecolor{bg}
+\color{ink}
+
+% ------------------------------------------------------------------
+% Hyperref setup
+% ------------------------------------------------------------------
+\hypersetup{
+    colorlinks=true,
+    linkcolor=terra,
+    urlcolor=teal,
+    pdfauthor={Qhawarina},
+    pdftitle={Reporte Semanal Qhawarina},
+}
+
+% ------------------------------------------------------------------
+% Header / footer
+% ------------------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{border}\leaders\hrule height \headrulewidth\hfill}}
+\fancyhead[L]{\small\color{ink3}QHAWARINA — Reporte Semanal}
+\fancyhead[R]{\small\color{ink3}Semana <<WEEK_NUMBER>> / <<WEEK_YEAR>>}
+\fancyfoot[L]{\footnotesize\color{ink3}Análisis Económico del Perú}
+\fancyfoot[C]{\footnotesize\color{ink3}\thepage}
+\fancyfoot[R]{\footnotesize\color{ink3}<<DATE>>}
+
+% ------------------------------------------------------------------
+% Section styling
+% ------------------------------------------------------------------
+\titleformat{\section}[block]
+  {\normalfont\large\bfseries\color{terra}}
+  {}{0em}{}[\vspace{-0.3em}\textcolor{border}{\hrule height 0.5pt}]
+
+\titleformat{\subsection}[block]
+  {\normalfont\normalsize\bfseries\color{ink}}
+  {}{0em}{}
+
+\titlespacing*{\section}{0pt}{1.2em}{0.6em}
+\titlespacing*{\subsection}{0pt}{0.8em}{0.3em}
+
+% ------------------------------------------------------------------
+% tcolorbox styles
+% ------------------------------------------------------------------
+\tcbuselibrary{skins, breakable}
+
+\newtcolorbox{notabox}{
+  enhanced,
+  colback=bg,
+  colframe=terra,
+  boxrule=0pt,
+  leftrule=3pt,
+  arc=0pt,
+  left=8pt, right=8pt, top=6pt, bottom=6pt,
+  fonttitle=\bfseries\color{terra},
+  title=RESUMEN DE LA SEMANA,
+}
+
+\newtcolorbox{kpibox}[1]{
+  enhanced,
+  colback=white,
+  colframe=border,
+  boxrule=0.5pt,
+  arc=2pt,
+  left=8pt, right=8pt, top=6pt, bottom=6pt,
+  fonttitle=\small\bfseries\color{ink3},
+  title=#1,
+  attach boxed title to top left={yshift=-2mm, xshift=6pt},
+  boxed title style={
+    colback=bg,
+    colframe=border,
+    boxrule=0.5pt,
+    arc=1pt,
+  },
+}
+
+\newtcolorbox{sectionbox}[1]{
+  enhanced,
+  colback=white,
+  colframe=border,
+  boxrule=0.5pt,
+  arc=3pt,
+  left=10pt, right=10pt, top=8pt, bottom=8pt,
+  fonttitle=\bfseries\color{terra},
+  title=#1,
+}
+
+% ------------------------------------------------------------------
+% Custom commands
+% ------------------------------------------------------------------
+\newcommand{\kpivalue}[1]{%
+  {\fontsize{16}{18}\selectfont\bfseries\color{ink}#1}%
+}
+\newcommand{\kpilabel}[1]{%
+  {\small\color{ink3}#1}%
+}
+
+% ============================================================
+\begin{document}
+
+% ============================================================
+% PAGE 1 — PORTADA Y RESUMEN
+% ============================================================
+\thispagestyle{empty}
+
+% Full-width header bar
+\begin{tcolorbox}[
+  enhanced,
+  colback=terra,
+  colframe=terra,
+  boxrule=0pt,
+  arc=0pt,
+  left=10pt, right=10pt, top=10pt, bottom=10pt,
+  width=\textwidth,
+]
+  \begin{minipage}[c]{0.6\textwidth}
+    {\fontsize{22}{24}\selectfont\bfseries\color{white}QHAWARINA}\\[3pt]
+    {\normalsize\color{white!80!terra}Análisis Económico del Perú}\\[2pt]
+    {\small\color{white!70!terra}Reporte Semanal — Semana <<WEEK_NUMBER>> de <<WEEK_YEAR>>}
+  \end{minipage}%
+  \begin{minipage}[c]{0.39\textwidth}
+    \raggedleft
+    {\large\color{white}<<DATE>>}\\[4pt]
+    {\small\color{white!70!terra}Actualización automática\\cada lunes}
+  \end{minipage}
+\end{tcolorbox}
+
+\vspace{1em}
+
+% Resumen de la semana
+\begin{notabox}
+  \small\color{ink}<<NOTA_DIA>>
+\end{notabox}
+
+\vspace{0.8em}
+
+% KPI row
+\noindent
+\begin{minipage}[t]{0.23\textwidth}
+  \begin{kpibox}{BPP}
+    \kpivalue{<<BPP_YOY>>}\\[2pt]
+    \kpilabel{i.a.}\\[3pt]
+    \kpilabel{Mensual: <<BPP_MOM>>}
+  \end{kpibox}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.23\textwidth}
+  \begin{kpibox}{Riesgo Pol.}
+    \kpivalue{<<RISK_SCORE>>}\\[2pt]
+    \kpilabel{/100}\\[3pt]
+    \kpilabel{Nivel: <<RISK_LEVEL>>}
+  \end{kpibox}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.23\textwidth}
+  \begin{kpibox}{TC PEN/USD}
+    \kpivalue{<<FX_RATE>>}\\[2pt]
+    \kpilabel{PEN/USD}\\[3pt]
+    \kpilabel{<<FX_DAILY_CHANGE>>}
+  \end{kpibox}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.23\textwidth}
+  \begin{kpibox}{PBI Nowcast}
+    \kpivalue{<<GDP_NOWCAST>>}\\[2pt]
+    \kpilabel{i.a.}\\[3pt]
+    \kpilabel{<<GDP_QUARTER>>}
+  \end{kpibox}
+\end{minipage}
+
+\vspace{0.8em}
+
+% KPI summary table
+\section{Cuadro Resumen de Indicadores}
+
+\begin{center}
+\begin{tabular}{lrrl}
+  \toprule
+  \textbf{Indicador} & \textbf{Valor actual} & \textbf{Cambio semanal} & \textbf{Tendencia} \\
+  \midrule
+<<KPI_SUMMARY_TABLE>>  \bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{0.6em}
+
+% Charts row
+\noindent
+\begin{minipage}[t]{0.49\textwidth}
+  \includegraphics[width=\textwidth]{<<CHART_BPP_90D>>}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.49\textwidth}
+  \includegraphics[width=\textwidth]{<<CHART_RISK_30D>>}
+\end{minipage}
+
+% ============================================================
+\newpage
+% ============================================================
+% PAGE 2 — PRECIOS Y CATEGORÍAS
+% ============================================================
+\pagestyle{fancy}
+\section{Análisis de Precios por Categoría}
+
+\subsection{Variación Semanal de Categorías}
+
+\begin{center}
+\begin{tabular}{lrrl}
+  \toprule
+  \textbf{Categoría} & \textbf{Var. semanal} & \textbf{Var. interanual} & \textbf{Peso IPC} \\
+  \midrule
+<<CATEGORY_TABLE>>  \bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{0.8em}
+
+\subsection{Gráfico de Variación por Categoría}
+
+\begin{center}
+  \includegraphics[width=0.85\textwidth]{<<CHART_CATEGORY_BARS>>}
+\end{center}
+
+\vspace{0.6em}
+
+\subsection{Evolución del Índice BPP — Últimas 12 semanas}
+
+\begin{center}
+  \includegraphics[width=0.85\textwidth]{<<CHART_BPP_12W>>}
+\end{center}
+
+\vspace{0.8em}
+
+\subsection{Top 5 Productos con Mayor Variación}
+
+\begin{center}
+\begin{tabular}{llr}
+  \toprule
+  \textbf{Producto/Categoría} & \textbf{Tienda} & \textbf{Variación semanal} \\
+  \midrule
+<<TOP5_PRODUCTS_TABLE>>  \bottomrule
+\end{tabular}
+\end{center}
+
+\begin{tcolorbox}[
+  enhanced,
+  colback=bg,
+  colframe=border,
+  boxrule=0.5pt,
+  arc=2pt,
+  left=6pt, right=6pt, top=4pt, bottom=4pt,
+]
+  {\footnotesize\color{ink3}
+    \textbf{Fuente:} Scraper propio (Plaza Vea, Metro, Wong). Metodología Jevons bilateral,
+    base 100 al inicio del período de muestra. Filtro de ratio: 0.5 $<$ r $<$ 2.0.
+    Frecuencia de actualización: diaria (22:00 PET).
+  }
+\end{tcolorbox}
+
+% ============================================================
+\newpage
+% ============================================================
+% PAGE 3 — RIESGO POLÍTICO Y MACROECONOMÍA
+% ============================================================
+
+\section{Riesgo Político}
+
+\subsection{Evolución diaria — últimos 7 días}
+
+\begin{center}
+  \includegraphics[width=0.85\textwidth]{<<CHART_RISK_WEEK>>}
+\end{center}
+
+\vspace{0.6em}
+
+\begin{center}
+\begin{tabular}{lrrl}
+  \toprule
+  \textbf{Fecha} & \textbf{Score} & \textbf{Artículos} & \textbf{Contexto} \\
+  \midrule
+<<RISK_DAILY_TABLE>>  \bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{0.8em}
+
+\section{Macroeconomía}
+
+\subsection{PBI — Nowcast y Datos Oficiales}
+
+\noindent
+\begin{minipage}[t]{0.49\textwidth}
+  \begin{sectionbox}{Nowcast actual}
+    \kpivalue{<<GDP_NOWCAST>>}\\[4pt]
+    \kpilabel{Variación i.a. — <<GDP_QUARTER>>}\\[8pt]
+    \kpilabel{Modelo: DFM + Ridge bridge}\\
+    \kpilabel{Tasa ref. BCRP: <<BCRP_RATE>>}
+  \end{sectionbox}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.49\textwidth}
+  \begin{sectionbox}{Último dato oficial INEI}
+    \kpivalue{<<GDP_OFFICIAL>>}\\[4pt]
+    \kpilabel{PBI real (variación i.a.)}\\[8pt]
+    \kpilabel{Fuente: INEI — Nota de Prensa Mensual}
+  \end{sectionbox}
+\end{minipage}
+
+\vspace{0.8em}
+
+\subsection{Mercado Cambiario}
+
+\noindent
+\begin{minipage}[t]{0.49\textwidth}
+  \begin{kpibox}{Tipo de Cambio}
+    \kpivalue{S/ <<FX_RATE>>}\\[2pt]
+    \kpilabel{Cambio diario: <<FX_DAILY_CHANGE>>}\\[4pt]
+    \kpilabel{BCRP: tasa ref. <<BCRP_RATE>>}
+  \end{kpibox}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.49\textwidth}
+  \begin{kpibox}{Resumen Cambiario}
+    \small\color{ink}<<FX_QUARTER_SUMMARY>>
+  \end{kpibox}
+\end{minipage}
+
+\vspace{0.8em}
+
+\subsection{Pobreza — Nowcast}
+
+\noindent
+\begin{minipage}[t]{0.49\textwidth}
+  \begin{kpibox}{Nacional}
+    \kpivalue{<<POVERTY_RATE>>}\\[2pt]
+    \kpilabel{Tasa de pobreza monetaria}\\[4pt]
+    \kpilabel{IC 95\%: <<POVERTY_CI>>}
+  \end{kpibox}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.49\textwidth}
+  \begin{tcolorbox}[
+    enhanced,
+    colback=white,
+    colframe=border,
+    boxrule=0.5pt,
+    arc=2pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+  ]
+    {\footnotesize\color{ink3}
+      Nowcast departamental disponible en la plataforma web Qhawarina.
+      Modelo: Gradient Boosting Regressor con panel mensual de 26 departamentos.
+    }
+  \end{tcolorbox}
+\end{minipage}
+
+% ============================================================
+\newpage
+% ============================================================
+% PAGE 4 — PERSPECTIVA Y NOTAS METODOLÓGICAS
+% ============================================================
+
+\section{Perspectiva Económica}
+
+\begin{sectionbox}{Análisis de la Semana}
+  \small\color{ink}
+  <<PERSPECTIVA_TEXT>>
+\end{sectionbox}
+
+\vspace{1em}
+
+\section{Notas Metodológicas}
+
+\begin{tcolorbox}[
+  enhanced,
+  colback=white,
+  colframe=border,
+  boxrule=0.5pt,
+  arc=3pt,
+  left=10pt, right=10pt, top=8pt, bottom=8pt,
+]
+  \small\color{ink}
+  \textbf{Índice de Precios BPP}\\
+  Metodología Jevons bilateral con datos de supermercados (Plaza Vea, Metro, Wong).
+  Filtro de ratio extremo: $0.5 < r < 2.0$. Frecuencia: diaria. Base = 100 al inicio del período.\\[6pt]
+
+  \textbf{Nowcast PBI}\\
+  Modelo de Factores Dinámicos (DFM) con $k=3$ factores, 33--37 series del panel nacional.
+  Bridge equation con regularización Ridge ($\alpha = 1.0$). Ventana rodante de 7 años.\\[6pt]
+
+  \textbf{Índice de Riesgo Político}\\
+  Clasificación NLP sobre 6+ fuentes RSS. Score normalizado 0--1 (componente financiero +
+  componente textual). Índice de inestabilidad con ajuste estacional.\\[6pt]
+
+  \textbf{Nowcast Pobreza}\\
+  Gradient Boosting Regressor con variables rezagadas de PBI, inflación y serie NTL (NASA VIIRS).
+  Panel departamental 2004--2024. RMSE: $\sim$2.5pp; Rel.RMSE vs AR1: 0.95.\\[6pt]
+
+  \textbf{Mercado Cambiario}\\
+  Datos de BCRP API (PD04638PD). Intervenciones spot (PD04659MD) y swaps (PD04660MD).
+  Tasa de referencia BCRP (PD12301MD).
+\end{tcolorbox}
+
+\vspace{1em}
+
+\begin{tcolorbox}[
+  enhanced,
+  colback=bg,
+  colframe=border,
+  boxrule=0.5pt,
+  arc=2pt,
+  left=6pt, right=6pt, top=4pt, bottom=4pt,
+]
+  {\footnotesize\color{ink3}
+    \textbf{Qhawarina} (\textit{quechua}: "el que observa") es una plataforma de análisis
+    económico en tiempo real para el Perú. Los nowcasts son estimaciones estadísticas
+    y no constituyen pronóstico oficial del BCRP, MEF o INEI.
+    Última actualización del pipeline: <<DATE>>.
+  }
+\end{tcolorbox}
+
+\end{document}
