@@ -685,6 +685,13 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
         political_df["instability_index"]
     )
 
+    # ── Percentile normalisation for v2 ──────────────────────────────────────
+    # v1 score was already a percentile rank (0–1). v2 uses raw SWP proportions
+    # (~0.05–0.15) which are on a completely different scale. Convert to
+    # percentile so the score is comparable to v1 and thresholds stay valid.
+    if is_v2:
+        political_df["score_smooth"] = political_df["score_smooth"].rank(pct=True).round(3)
+
     PROVISIONAL_DAYS = 5
     cutoff = political_df["date"].max() - pd.Timedelta(days=PROVISIONAL_DAYS)
     political_df["provisional"] = political_df["date"] > cutoff
