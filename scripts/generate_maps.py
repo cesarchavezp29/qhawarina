@@ -15,16 +15,14 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
-import numpy as np
-import pandas as pd
-
-from config.settings import TARGETS_DIR, RAW_ENAHO_DIR
-from src.visualization.style import apply_nexus_style, fmt_pct, fmt_soles
+from config.settings import TARGETS_DIR
+from src.visualization.style import apply_nexus_style
 
 apply_nexus_style()
 
 from src.visualization.maps import (
     MAPS_DIR,
+    compute_province_poverty,
     plot_department_maps,
     plot_extreme_poverty_maps,
     plot_evolution_maps,
@@ -43,81 +41,6 @@ logging.basicConfig(
     datefmt="%H:%M:%S",
 )
 logger = logging.getLogger(__name__)
-
-
-# ── Province-level poverty computation ───────────────────────────────────────
-
-def compute_province_poverty(year: int = 2024, min_obs: int = 30) -> pd.DataFrame:
-    """Compute province-level poverty from ENAHO microdata.
-
-    Parameters
-    ----------
-    year : int
-        Year to compute.
-    min_obs : int
-        Minimum number of household observations per province.
-        Provinces with fewer are excluded as unreliable.
-
-    Returns
-    -------
-    DataFrame with columns: province_code, province_name, poverty_rate,
-    extreme_poverty_rate, n_obs.
-    """
-    from src.ingestion.inei import ENAHOClient
-
-    client = ENAHOClient()
-    df = client.read_sumaria(year)
-    if df is None:
-        raise FileNotFoundError(f"ENAHO data not found for {year}")
-
-    # Normalize columns
-    df.columns = [c.lower() for c in df.columns]
-
-    # Province code = first 4 digits of ubigeo
-    df["province_code"] = df["ubigeo"].astype(str).str[:4]
-
-    # Person-level weight
-    mie = df["mieperho"].astype(float).clip(lower=1)
-    df["weight"] = (df["factor07"] * mie).round(0)
-
-    # Poverty flags from official variable
-    pob = df["pobreza"]
-    if pob.dtype in ("int8", "int16", "int32", "int64", "float64"):
-        df["is_poor"] = pob.isin([1, 2]).astype(float)
-        df["is_extreme_poor"] = (pob == 1).astype(float)
-    else:
-        pobreza = pob.astype(str).str.lower().str.strip()
-        df["is_poor"] = (
-            pobreza.str.contains("pobre", na=False)
-            & ~pobreza.str.contains("no pobre", na=False)
-        ).astype(float)
-        df["is_extreme_poor"] = (pobreza == "pobre extremo").astype(float)
-
-    # Aggregate by province
-    rows = []
-    for prov_code, grp in df.groupby("province_code"):
-        n = len(grp)
-        if n < min_obs:
-            continue
-        w = grp["weight"].values
-        mask = np.isfinite(w) & (w > 0)
-        if not mask.any():
-            continue
-        poverty_rate = float(np.average(grp["is_poor"].values[mask], weights=w[mask]))
-        extreme_rate = float(np.average(grp["is_extreme_poor"].values[mask], weights=w[mask]))
-        rows.append({
-            "province_code": prov_code,
-            "poverty_rate": poverty_rate,
-            "extreme_poverty_rate": extreme_rate,
-            "n_obs": n,
-        })
-
-    result = pd.DataFrame(rows)
-    logger.info(
-        "Province poverty %d: %d provinces (>=%d obs), mean poverty %.1f%%",
-        year, len(result), min_obs, result["poverty_rate"].mean() * 100,
-    )
-    return result
 
 
 # ── Map generators ───────────────────────────────────────────────────────────

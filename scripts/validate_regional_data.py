@@ -108,6 +108,54 @@ CATEGORY_INFO = {
         "sanity_range": (0, 20_000),
         "description": "Imports FOB (millones USD)",
     },
+    "mining_silver_by_department": {
+        "file": "bcrp_regional_mining_silver.parquet",
+        "sanity_col": "value",
+        "sanity_range": (0, 500_000),
+        "description": "Silver (kg.f)",
+    },
+    "mining_lead_by_department": {
+        "file": "bcrp_regional_mining_lead.parquet",
+        "sanity_col": "value",
+        "sanity_range": (0, 200_000),
+        "description": "Lead (TMF)",
+    },
+    "mining_zinc_by_department": {
+        "file": "bcrp_regional_mining_zinc.parquet",
+        "sanity_col": "value",
+        "sanity_range": (0, 500_000),
+        "description": "Zinc (TMF)",
+    },
+    "government_capex_local": {
+        "file": "bcrp_regional_capex_local.parquet",
+        "sanity_col": "value",
+        "sanity_range": (-100, 1_000),
+        "description": "Local Gov Capex (var% anual)",
+    },
+    "government_capex_regional": {
+        "file": "bcrp_regional_capex_regional.parquet",
+        "sanity_col": "value",
+        "sanity_range": (-100, 1_000),
+        "description": "Regional Gov Capex (var% anual)",
+    },
+    "electricity_sales_by_department": {
+        "file": "bcrp_regional_electricity_sales.parquet",
+        "sanity_col": "value",
+        "sanity_range": (0, 10_000),
+        "description": "Electricity Sales (GWh) [disc. 2018]",
+    },
+    "tourism_arrivals_by_department": {
+        "file": "bcrp_regional_tourism_arrivals.parquet",
+        "sanity_col": "value",
+        "sanity_range": (0, 5_000_000),
+        "description": "Tourism Arrivals [disc. 2019]",
+    },
+    "tourism_nights_by_department": {
+        "file": "bcrp_regional_tourism_nights.parquet",
+        "sanity_col": "value",
+        "sanity_range": (0, 10_000_000),
+        "description": "Tourism Nights [disc. 2019]",
+    },
 }
 
 
@@ -157,11 +205,13 @@ def validate_category(cat_key: str, info: dict) -> dict:
     result["sanity_passed"] = out_of_range == 0
     result["out_of_range"] = int(out_of_range)
 
-    # Negative value check (all regional series should be non-negative)
+    # Negative value check (level series should be non-negative; var_pct can be negative)
+    allow_negative = "capex" in cat_key or info.get("sanity_range", (0,))[0] < 0
     n_negative = (vals < 0).sum()
     result["negative_values"] = int(n_negative)
 
-    result["status"] = "OK" if result["sanity_passed"] and n_negative == 0 else "WARN"
+    neg_ok = allow_negative or n_negative == 0
+    result["status"] = "OK" if result["sanity_passed"] and neg_ok else "WARN"
     result["df"] = df  # Keep for plotting
     return result
 

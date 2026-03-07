@@ -1,8 +1,8 @@
-"""Claude API validation for political event severity classification.
+"""Claude Sonnet validation for political event severity classification.
 
-Validates a subset of ~200 events against Claude's judgment using
-a structured prompt with the same severity rubric as XLM-RoBERTa.
-All comparison with ground truth is done on the 3-bin ordinal scale.
+Validates a subset of ~200 events against Claude Sonnet's judgment,
+cross-checking the Haiku classifier. All comparison with ground truth
+is done on the 3-bin ordinal scale.
 """
 
 import json
@@ -50,7 +50,7 @@ def validate_single_event(
 
     Returns
     -------
-    dict with severity_claude, severity_claude_bin3, severity_claude_reasoning
+    dict with severity_sonnet, severity_sonnet_bin3, severity_sonnet_reasoning
     """
     if client is None:
         import anthropic
@@ -81,16 +81,16 @@ def validate_single_event(
         result = json.loads(text)
         score = int(result["score"])
         return {
-            "severity_claude": score,
-            "severity_claude_bin3": SCORE_TO_BIN3.get(score, 2),
-            "severity_claude_reasoning": result.get("reasoning", ""),
+            "severity_sonnet": score,
+            "severity_sonnet_bin3": SCORE_TO_BIN3.get(score, 2),
+            "severity_sonnet_reasoning": result.get("reasoning", ""),
         }
     except Exception as e:
         logger.warning("Claude validation failed for event: %s", e)
         return {
-            "severity_claude": pd.NA,
-            "severity_claude_bin3": pd.NA,
-            "severity_claude_reasoning": f"ERROR: {e}",
+            "severity_sonnet": pd.NA,
+            "severity_sonnet_bin3": pd.NA,
+            "severity_sonnet_reasoning": f"ERROR: {e}",
         }
 
 
@@ -104,7 +104,7 @@ def validate_batch(
     """Validate a stratified sample of events with Claude API.
 
     Selects: all GT-matched events + random sample to reach sample_size.
-    Adds columns: severity_claude, severity_claude_bin3, severity_claude_reasoning.
+    Adds columns: severity_sonnet, severity_sonnet_bin3, severity_sonnet_reasoning.
     """
     if client is None:
         import anthropic
@@ -128,23 +128,23 @@ def validate_batch(
                 len(sample_idx), len(gt_matched), len(sample_idx) - len(gt_matched))
 
     # Initialize columns
-    df["severity_claude"] = pd.NA
-    df["severity_claude_bin3"] = pd.NA
-    df["severity_claude_reasoning"] = ""
+    df["severity_sonnet"] = pd.NA
+    df["severity_sonnet_bin3"] = pd.NA
+    df["severity_sonnet_reasoning"] = ""
 
     for i, idx in enumerate(sample_idx):
         row = df.loc[idx]
         result = validate_single_event(row.to_dict(), client=client, model=model)
-        df.loc[idx, "severity_claude"] = result["severity_claude"]
-        df.loc[idx, "severity_claude_bin3"] = result["severity_claude_bin3"]
-        df.loc[idx, "severity_claude_reasoning"] = result["severity_claude_reasoning"]
+        df.loc[idx, "severity_sonnet"] = result["severity_sonnet"]
+        df.loc[idx, "severity_sonnet_bin3"] = result["severity_sonnet_bin3"]
+        df.loc[idx, "severity_sonnet_reasoning"] = result["severity_sonnet_reasoning"]
 
         if (i + 1) % 20 == 0:
             logger.info("  Validated %d/%d events", i + 1, len(sample_idx))
         time.sleep(delay)
 
     logger.info("Claude validation complete: %d events processed",
-                df["severity_claude"].notna().sum())
+                df["severity_sonnet"].notna().sum())
     return df
 
 
@@ -153,75 +153,74 @@ def validate_batch(
 def compute_validation_metrics(
     events_df: pd.DataFrame,
 ) -> dict:
-    """Compute validation metrics between NLP, Claude, and GT (all on 1-3 scale).
+    """Compute validation metrics between Claude Haiku, Sonnet, and GT (all on 1-3 scale).
 
     Returns dict with accuracy, kappa, confusion matrices, severe errors.
     """
     metrics = {}
 
-    # NLP bin3 vs GT (1-3)
+    # Claude Haiku (main classifier) vs GT
     gt_matched = events_df[events_df["severity_gt"].notna()].copy()
     if len(gt_matched) > 0:
         gt_matched["severity_gt"] = gt_matched["severity_gt"].astype(int)
-        gt_matched["severity_nlp_bin3"] = gt_matched["severity_nlp_bin3"].astype(int)
+        gt_matched["severity_claude_bin3"] = gt_matched["severity_claude_bin3"].astype(int)
 
-        correct = (gt_matched["severity_nlp_bin3"] == gt_matched["severity_gt"]).sum()
-        metrics["nlp_vs_gt_accuracy"] = round(correct / len(gt_matched), 3)
+        correct = (gt_matched["severity_claude_bin3"] == gt_matched["severity_gt"]).sum()
+        metrics["claude_vs_gt_accuracy"] = round(correct / len(gt_matched), 3)
 
         # Severe errors: GT=3 classified as bin3=1, or GT=1 classified as bin3=3
         severe = (
-            ((gt_matched["severity_gt"] == 3) & (gt_matched["severity_nlp_bin3"] == 1)) |
-            ((gt_matched["severity_gt"] == 1) & (gt_matched["severity_nlp_bin3"] == 3))
+            ((gt_matched["severity_gt"] == 3) & (gt_matched["severity_claude_bin3"] == 1)) |
+            ((gt_matched["severity_gt"] == 1) & (gt_matched["severity_claude_bin3"] == 3))
         ).sum()
-        metrics["nlp_vs_gt_severe_errors"] = int(severe)
+        metrics["claude_vs_gt_severe_errors"] = int(severe)
 
-        # Confusion matrix
         from sklearn.metrics import confusion_matrix, cohen_kappa_score
         cm = confusion_matrix(
             gt_matched["severity_gt"],
-            gt_matched["severity_nlp_bin3"],
-            labels=[1, 2, 3],
-        )
-        metrics["nlp_vs_gt_confusion"] = cm.tolist()
-        metrics["nlp_vs_gt_kappa"] = round(
-            cohen_kappa_score(gt_matched["severity_gt"], gt_matched["severity_nlp_bin3"]),
-            3,
-        )
-
-    # Claude bin3 vs GT
-    claude_gt = events_df[
-        events_df["severity_gt"].notna() & events_df["severity_claude_bin3"].notna()
-    ].copy()
-    if len(claude_gt) > 0:
-        claude_gt["severity_gt"] = claude_gt["severity_gt"].astype(int)
-        claude_gt["severity_claude_bin3"] = claude_gt["severity_claude_bin3"].astype(int)
-
-        correct = (claude_gt["severity_claude_bin3"] == claude_gt["severity_gt"]).sum()
-        metrics["claude_vs_gt_accuracy"] = round(correct / len(claude_gt), 3)
-
-        from sklearn.metrics import confusion_matrix, cohen_kappa_score
-        cm = confusion_matrix(
-            claude_gt["severity_gt"],
-            claude_gt["severity_claude_bin3"],
+            gt_matched["severity_claude_bin3"],
             labels=[1, 2, 3],
         )
         metrics["claude_vs_gt_confusion"] = cm.tolist()
         metrics["claude_vs_gt_kappa"] = round(
-            cohen_kappa_score(claude_gt["severity_gt"], claude_gt["severity_claude_bin3"]),
+            cohen_kappa_score(gt_matched["severity_gt"], gt_matched["severity_claude_bin3"]),
             3,
         )
 
-    # NLP vs Claude (inter-rater)
+    # Sonnet (cross-validation) vs GT
+    sonnet_gt = events_df[
+        events_df["severity_gt"].notna() & events_df["severity_sonnet_bin3"].notna()
+    ].copy()
+    if len(sonnet_gt) > 0:
+        sonnet_gt["severity_gt"] = sonnet_gt["severity_gt"].astype(int)
+        sonnet_gt["severity_sonnet_bin3"] = sonnet_gt["severity_sonnet_bin3"].astype(int)
+
+        correct = (sonnet_gt["severity_sonnet_bin3"] == sonnet_gt["severity_gt"]).sum()
+        metrics["sonnet_vs_gt_accuracy"] = round(correct / len(sonnet_gt), 3)
+
+        from sklearn.metrics import confusion_matrix, cohen_kappa_score
+        cm = confusion_matrix(
+            sonnet_gt["severity_gt"],
+            sonnet_gt["severity_sonnet_bin3"],
+            labels=[1, 2, 3],
+        )
+        metrics["sonnet_vs_gt_confusion"] = cm.tolist()
+        metrics["sonnet_vs_gt_kappa"] = round(
+            cohen_kappa_score(sonnet_gt["severity_gt"], sonnet_gt["severity_sonnet_bin3"]),
+            3,
+        )
+
+    # Claude Haiku vs Sonnet (inter-rater)
     both = events_df[
-        events_df["severity_nlp_bin3"].notna() & events_df["severity_claude_bin3"].notna()
+        events_df["severity_claude_bin3"].notna() & events_df["severity_sonnet_bin3"].notna()
     ].copy()
     if len(both) > 0:
-        both["severity_nlp_bin3"] = both["severity_nlp_bin3"].astype(int)
         both["severity_claude_bin3"] = both["severity_claude_bin3"].astype(int)
+        both["severity_sonnet_bin3"] = both["severity_sonnet_bin3"].astype(int)
 
         from sklearn.metrics import cohen_kappa_score
-        metrics["nlp_vs_claude_kappa"] = round(
-            cohen_kappa_score(both["severity_nlp_bin3"], both["severity_claude_bin3"]),
+        metrics["claude_vs_sonnet_kappa"] = round(
+            cohen_kappa_score(both["severity_claude_bin3"], both["severity_sonnet_bin3"]),
             3,
         )
 

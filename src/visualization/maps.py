@@ -14,7 +14,7 @@ import pandas as pd
 from matplotlib.colors import Normalize, BoundaryNorm
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 
-from config.settings import TARGETS_DIR, DATA_DIR, DEPARTMENTS
+from config.settings import TARGETS_DIR, DATA_DIR, RAW_ENAHO_DIR, DEPARTMENTS
 from src.visualization.style import (
     apply_nexus_style,
     NEXUS_COLORS,
@@ -491,3 +491,128 @@ def plot_district_map(
     plt.close(fig)
     logger.info("Saved %s", out)
     return out
+
+
+def compute_province_poverty(year: int = 2024, min_obs: int = 30) -> pd.DataFrame:
+    """Compute province-level poverty from ENAHO microdata.
+
+    Parameters
+    ----------
+    year : int
+        Year to compute.
+    min_obs : int
+        Minimum number of household observations per province.
+        Provinces with fewer are excluded as unreliable.
+
+    Returns
+    -------
+    DataFrame with columns: province_code, poverty_rate, extreme_poverty_rate, n_obs.
+    """
+    from src.ingestion.inei import ENAHOClient
+
+    client = ENAHOClient()
+    df = client.read_sumaria(year)
+    if df is None:
+        raise FileNotFoundError(f"ENAHO data not found for {year}")
+
+    df.columns = [c.lower() for c in df.columns]
+    df["province_code"] = df["ubigeo"].astype(str).str[:4]
+
+    mie = df["mieperho"].astype(float).clip(lower=1)
+    df["weight"] = (df["factor07"] * mie).round(0)
+
+    pob = df["pobreza"]
+    if pob.dtype in ("int8", "int16", "int32", "int64", "float64"):
+        df["is_poor"] = pob.isin([1, 2]).astype(float)
+        df["is_extreme_poor"] = (pob == 1).astype(float)
+    else:
+        pobreza = pob.astype(str).str.lower().str.strip()
+        df["is_poor"] = (
+            pobreza.str.contains("pobre", na=False)
+            & ~pobreza.str.contains("no pobre", na=False)
+        ).astype(float)
+        df["is_extreme_poor"] = (pobreza == "pobre extremo").astype(float)
+
+    rows = []
+    for prov_code, grp in df.groupby("province_code"):
+        n = len(grp)
+        if n < min_obs:
+            continue
+        w = grp["weight"].values
+        mask = np.isfinite(w) & (w > 0)
+        if not mask.any():
+            continue
+        poverty_rate = float(np.average(grp["is_poor"].values[mask], weights=w[mask]))
+        extreme_rate = float(np.average(grp["is_extreme_poor"].values[mask], weights=w[mask]))
+        rows.append({
+            "province_code": prov_code,
+            "poverty_rate": poverty_rate,
+            "extreme_poverty_rate": extreme_rate,
+            "n_obs": n,
+        })
+
+    result = pd.DataFrame(rows)
+    logger.info(
+        "Province poverty %d: %d provinces (>=%d obs), mean poverty %.1f%%",
+        year, len(result), min_obs, result["poverty_rate"].mean() * 100,
+    )
+    return result
+
+
+def generate_all_maps(year: int = 2024) -> list[Path]:
+    """Generate all NEXUS maps — wrapper for orchestrator.
+
+    Calls each map generator with try/except so one failure
+    doesn't block the rest.
+
+    Returns
+    -------
+    list[Path]
+        Paths to all successfully generated PNG files.
+    """
+    from src.visualization.style import apply_nexus_style
+    apply_nexus_style()
+
+    generated: list[Path] = []
+
+    generators = [
+        ("dept_poverty", lambda: plot_department_maps(year)),
+        ("dept_extreme_poverty", lambda: plot_extreme_poverty_maps(year)),
+        ("dept_evolution", lambda: plot_evolution_maps([2004, 2015, year])),
+        ("dist_poverty", lambda: plot_district_map(year)),
+    ]
+
+    for name, func in generators:
+        try:
+            path = func()
+            generated.append(path)
+            logger.info("Generated %s", name)
+        except Exception as e:
+            logger.error("Failed to generate %s: %s", name, e)
+
+    # Province maps (require ENAHO microdata)
+    try:
+        prov_data = compute_province_poverty(year)
+        p1 = plot_province_map(
+            prov_data, column="poverty_rate", year=year,
+            cmap_name="poverty",
+            title=f"Per\u00fa: Pobreza Provincial, {year}",
+            filename=f"prov_poverty_{year}.png",
+            legend_label="Pobreza (%)",
+        )
+        generated.append(p1)
+
+        p2 = plot_province_map(
+            prov_data, column="extreme_poverty_rate", year=year,
+            cmap_name="extreme_poverty",
+            title=f"Per\u00fa: Pobreza Extrema Provincial, {year}",
+            filename=f"prov_extreme_poverty_{year}.png",
+            legend_label="Pobreza extrema (%)",
+        )
+        generated.append(p2)
+        logger.info("Generated province maps")
+    except Exception as e:
+        logger.error("Failed to generate province maps: %s", e)
+
+    logger.info("Map generation complete: %d files", len(generated))
+    return generated

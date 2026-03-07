@@ -261,3 +261,110 @@ def poverty_quarterly_disagg(
         }))
 
     return pd.concat(results, ignore_index=True)
+
+
+def poverty_monthly_disagg(
+    annual_poverty: pd.DataFrame,
+    ntl_monthly: pd.DataFrame,
+    cpi_monthly: pd.DataFrame,
+    method: str = "chow-lin",
+    smoothing: int = 3
+) -> pd.DataFrame:
+    """Disaggregate annual poverty to monthly using NTL + CPI indicators.
+
+    Parameters
+    ----------
+    annual_poverty : DataFrame
+        Annual poverty with columns: year, poverty_rate.
+    ntl_monthly : DataFrame
+        Monthly NTL with columns: date, value (log NTL sum).
+    cpi_monthly : DataFrame
+        Monthly CPI with columns: date, ipc_monthly_var.
+    method : str
+        'chow-lin' or 'denton'.
+    smoothing : int
+        Window for moving average smoothing (default 3 months).
+
+    Returns
+    -------
+    DataFrame
+        Monthly poverty estimates with columns: date, poverty_rate_monthly, poverty_rate_smooth.
+    """
+    # Prepare NTL monthly indicator
+    ntl_monthly = ntl_monthly.copy()
+    ntl_monthly["date"] = pd.to_datetime(ntl_monthly["date"])
+    ntl_monthly = ntl_monthly.set_index("date")
+
+    # Prepare CPI monthly
+    cpi_monthly = cpi_monthly.copy()
+    cpi_monthly["date"] = pd.to_datetime(cpi_monthly["date"])
+    cpi_monthly = cpi_monthly.set_index("date")
+
+    # Create composite monthly indicator
+    # Poverty inversely related to NTL (economic activity), directly to inflation
+    indicator = pd.DataFrame(index=ntl_monthly.index)
+    indicator["composite"] = (
+        -0.6 * ntl_monthly["value"].fillna(0)
+        + 0.4 * cpi_monthly["ipc_monthly_var"].reindex(indicator.index).fillna(0)
+    )
+
+    # Normalize to be positive
+    indicator["composite"] = indicator["composite"] - indicator["composite"].min() + 1.0
+
+    # Prepare annual poverty as series
+    annual_poverty = annual_poverty.copy()
+    annual_poverty = annual_poverty.set_index(
+        pd.to_datetime(annual_poverty["year"].astype(str) + "-01-01")
+    )
+    annual_series = annual_poverty["poverty_rate"]
+
+    # Disaggregate to monthly using proportional method
+    years = sorted(annual_series.index.year.unique())
+    all_months = indicator.index
+
+    # Filter months to years in annual data
+    start_year = min(years)
+    end_year = max(years)
+    months = all_months[(all_months.year >= start_year) & (all_months.year <= end_year)]
+
+    # Get indicator values
+    indicator_m = indicator["composite"].reindex(months).ffill().bfill()
+
+    # Proportional distribution with annual constraint
+    result_values = []
+    result_dates = []
+
+    for year in years:
+        year_months = months[months.year == year]
+        year_indicator = indicator_m.loc[year_months]
+
+        # Annual value
+        annual_date = pd.Timestamp(f"{year}-01-01")
+        if annual_date in annual_series.index:
+            annual_val = annual_series[annual_date]
+        else:
+            annual_val = annual_series.iloc[(annual_series.index.year == year).argmax()]
+
+        # Proportional distribution
+        if year_indicator.sum() > 0:
+            monthly_vals = (year_indicator / year_indicator.sum()) * annual_val * len(year_months)
+        else:
+            monthly_vals = pd.Series([annual_val] * len(year_months), index=year_months)
+
+        result_values.extend(monthly_vals.values)
+        result_dates.extend(year_months)
+
+    # Create result DataFrame
+    result = pd.DataFrame({
+        "date": result_dates,
+        "poverty_rate_monthly": result_values
+    })
+
+    # Apply 3-month moving average smoothing
+    result["poverty_rate_smooth"] = (
+        result["poverty_rate_monthly"]
+        .rolling(window=smoothing, center=True, min_periods=1)
+        .mean()
+    )
+
+    return result

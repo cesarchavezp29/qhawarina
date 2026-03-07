@@ -330,3 +330,34 @@ def plot_department_sparklines(output_dir: Path = MAPS_DIR) -> Path:
     plt.close(fig)
     logger.info("Saved %s", out)
     return out
+
+
+def generate_all_charts(year: int = 2024) -> list[Path]:
+    """Generate all NEXUS charts — wrapper for orchestrator.
+
+    Returns
+    -------
+    list[Path]
+        Paths to all successfully generated PNG files.
+    """
+    from src.visualization.style import apply_nexus_style
+    apply_nexus_style()
+
+    generated: list[Path] = []
+
+    generators = [
+        ("national_trends", lambda: plot_national_trends()),
+        ("dept_ranking", lambda: plot_ranking_bars(year)),
+        ("dept_sparklines", lambda: plot_department_sparklines()),
+    ]
+
+    for name, func in generators:
+        try:
+            path = func()
+            generated.append(path)
+            logger.info("Generated %s", name)
+        except Exception as e:
+            logger.error("Failed to generate %s: %s", name, e)
+
+    logger.info("Chart generation complete: %d files", len(generated))
+    return generated

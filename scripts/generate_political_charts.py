@@ -187,7 +187,7 @@ def chart_components(monthly):
 def chart_severity(events):
     fig, axes = plt.subplots(1, 2, figsize=(12, 5))
 
-    dist = events["severity_nlp_bin3"].value_counts().sort_index()
+    dist = events["severity_claude_bin3"].value_counts().sort_index()
     labels = ["LOW (1)", "MEDIUM (2)", "HIGH (3)"]
     colors_pie = [COLORS["crisis_low"], COLORS["crisis_med"], COLORS["crisis_high"]]
     values = [dist.get(i, 0) for i in [1, 2, 3]]

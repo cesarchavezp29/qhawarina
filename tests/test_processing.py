@@ -67,7 +67,7 @@ class TestCatalogLoading:
         from src.processing.harmonize import load_series_metadata
         metadata = load_series_metadata(SERIES_CATALOG_PATH)
         assert isinstance(metadata, dict)
-        assert len(metadata) == 40  # 40 national series
+        assert len(metadata) == 57  # 40 original + 15 payment systems + 2 wholesale price
 
     def test_metadata_has_required_fields(self):
         from src.processing.harmonize import load_series_metadata
@@ -84,7 +84,7 @@ class TestCatalogLoading:
         from src.processing.harmonize import load_series_metadata
         metadata = load_series_metadata(SERIES_CATALOG_PATH)
         nominal = [c for c, m in metadata.items() if m["unit_type"] == "nominal_soles"]
-        assert len(nominal) == 5  # credit, fiscal rev, fiscal spend, emission, circulante
+        assert len(nominal) == 18  # 5 original + 13 payment systems (nominal soles)
 
     def test_seasonal_adjust_values_valid(self):
         from src.processing.harmonize import load_series_metadata
@@ -609,3 +609,72 @@ class TestPovertyProxies:
                 assert proxy["expected_sign"] in ("positive", "negative"), (
                     f"Invalid sign for {proxy['code']}: {proxy['expected_sign']}"
                 )
+
+
+# ── Test: NTL Panel Integration ──────────────────────────────────────────────
+
+
+class TestNTLPanelIntegration:
+    """Tests for NTL integration into national and departmental panels."""
+
+    @pytest.fixture
+    def ntl_dept_data(self):
+        """Load NTL departmental data if available."""
+        path = PROJECT_ROOT / "data" / "processed" / "ntl_monthly_department.parquet"
+        if not path.exists():
+            pytest.skip("NTL departmental data not available")
+        return pd.read_parquet(path)
+
+    def test_ntl_departmental_helper_produces_25_series(self, ntl_dept_data):
+        from src.processing.panel_builder import _build_ntl_panel_departmental
+        ntl_path = PROJECT_ROOT / "data" / "processed" / "ntl_monthly_department.parquet"
+        frames = _build_ntl_panel_departmental(ntl_path)
+        assert len(frames) == 25
+        # Check series IDs
+        sids = {f["series_id"].iloc[0] for f in frames}
+        assert "NTL_SUM_01" in sids
+        assert "NTL_SUM_15" in sids
+
+    def test_ntl_departmental_schema(self, ntl_dept_data):
+        from src.processing.panel_builder import _build_ntl_panel_departmental
+        ntl_path = PROJECT_ROOT / "data" / "processed" / "ntl_monthly_department.parquet"
+        frames = _build_ntl_panel_departmental(ntl_path)
+        frame = frames[0]
+        required = [
+            "date", "series_id", "series_name", "category", "department",
+            "ubigeo", "value_raw", "value_sa", "value_log", "value_dlog",
+            "value_yoy", "source", "frequency_original",
+        ]
+        for col in required:
+            assert col in frame.columns, f"Missing column: {col}"
+        assert frame["category"].iloc[0] == "nighttime_lights"
+        assert frame["source"].iloc[0] == "NASA/VIIRS"
+
+    def test_ntl_national_helper_produces_1_series(self, ntl_dept_data):
+        from src.processing.panel_builder import _build_ntl_panel_national
+        ntl_path = PROJECT_ROOT / "data" / "processed" / "ntl_monthly_department.parquet"
+        frames = _build_ntl_panel_national(ntl_path)
+        assert len(frames) == 1
+        frame = frames[0]
+        assert frame["series_id"].iloc[0] == "NTL_SUM_NATIONAL"
+
+    def test_ntl_national_schema(self, ntl_dept_data):
+        from src.processing.panel_builder import _build_ntl_panel_national
+        ntl_path = PROJECT_ROOT / "data" / "processed" / "ntl_monthly_department.parquet"
+        frames = _build_ntl_panel_national(ntl_path)
+        frame = frames[0]
+        required = [
+            "date", "series_id", "series_name", "category",
+            "value_raw", "value_sa", "value_log", "value_dlog", "value_yoy",
+            "source", "frequency_original", "publication_lag_days",
+        ]
+        for col in required:
+            assert col in frame.columns, f"Missing column: {col}"
+        assert frame["publication_lag_days"].iloc[0] == 30
+
+    def test_ntl_graceful_skip_when_missing(self):
+        """NTL helpers should not be called when data is missing."""
+        from src.processing.panel_builder import _build_ntl_panel_national
+        # Passing a non-existent path should raise FileNotFoundError
+        with pytest.raises(Exception):
+            _build_ntl_panel_national(Path("/nonexistent/ntl.parquet"))

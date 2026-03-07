@@ -319,12 +319,10 @@ def main():
     logger.info("=" * 60)
     logger.info("STEP 4: Building daily index")
 
-    from src.processing.daily_index import build_daily_index
-    daily_index = build_daily_index(
+    from src.processing.daily_index import build_daily_index_v2
+    daily_index = build_daily_index_v2(
         articles,
         start_date=rss_config["index"]["start_date"],
-        zscore_window=rss_config["index"]["zscore_window"],
-        min_periods=rss_config["index"]["min_periods"],
     )
 
     save_parquet(daily_index, index_path)
@@ -344,6 +342,9 @@ def main():
         logger.info("  Economic articles:     %d", n_econ)
         logger.info("  Irrelevant articles:   %d", n_irr)
     logger.info("  Daily index days:      %d", len(daily_index))
+    if "political_index" in daily_index.columns:
+        logger.info("  Political index mean:  %.1f", daily_index["political_index"].mean())
+        logger.info("  Political index max:   %.1f", daily_index["political_index"].max())
     logger.info("  Output:                %s", index_path)
     logger.info("=" * 60)
 

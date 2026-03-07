@@ -288,6 +288,22 @@ national:
           seasonal_adjust: none
           transform: none
           publication_lag_days: 1
+      - code: PN01286PM
+        name: "Índice de Precios al por Mayor (var% mensual)"
+        status: verified
+        processing:
+          unit_type: var_pct
+          seasonal_adjust: none
+          transform: none
+          publication_lag_days: 1
+      - code: PN01287PM
+        name: "Índice de Precios al por Mayor (var% 12 meses)"
+        status: verified
+        processing:
+          unit_type: var_pct_yoy
+          seasonal_adjust: none
+          transform: none
+          publication_lag_days: 1
 
   trade:
     description: "Terminos de intercambio"
@@ -379,6 +395,133 @@ national:
           publication_lag_days: 30
       - code: PN02409FM
         name: "Gastos no financieros del gobierno general (millones S/)"
+        status: verified
+        processing:
+          unit_type: nominal_soles
+          seasonal_adjust: stl
+          transform: all
+          publication_lag_days: 30
+
+  payment_systems:
+    description: "Sistemas de pago — indicadores de pagos digitales y transacciones"
+    frequency: monthly
+    series:
+      # ── Aggregate indicators (from Jan 2013, ~150 months) ──
+      - code: PN39951SM
+        name: "IPD - Indicador de Pagos Digitales (millones S/)"
+        status: verified
+        processing:
+          unit_type: nominal_soles
+          seasonal_adjust: stl
+          transform: all
+          publication_lag_days: 60
+      - code: PN39971SM
+        name: "IPD - Indicador de Pagos Digitales (millones operaciones)"
+        status: verified
+        processing:
+          unit_type: level
+          seasonal_adjust: stl
+          transform: all
+          publication_lag_days: 60
+      - code: PN39936SM
+        name: "Pagos bajo valor total (millones S/)"
+        status: verified
+        processing:
+          unit_type: nominal_soles
+          seasonal_adjust: stl
+          transform: all
+          publication_lag_days: 60
+      - code: PN39945SM
+        name: "Tarjetas de pago total (millones S/)"
+        status: verified
+        processing:
+          unit_type: nominal_soles
+          seasonal_adjust: stl
+          transform: all
+          publication_lag_days: 60
+      - code: PN39946SM
+        name: "Tarjetas de débito (millones S/)"
+        status: verified
+        processing:
+          unit_type: nominal_soles
+          seasonal_adjust: stl
+          transform: all
+          publication_lag_days: 60
+      - code: PN39947SM
+        name: "Tarjetas de crédito (millones S/)"
+        status: verified
+        processing:
+          unit_type: nominal_soles
+          seasonal_adjust: stl
+          transform: all
+          publication_lag_days: 60
+      - code: PN39937SM
+        name: "Transferencias intrabancarias (millones S/)"
+        status: verified
+        processing:
+          unit_type: nominal_soles
+          seasonal_adjust: stl
+          transform: all
+          publication_lag_days: 60
+      - code: PN39938SM
+        name: "Billeteras digitales - Yape/Plin (millones S/)"
+        status: verified
+        processing:
+          unit_type: nominal_soles
+          seasonal_adjust: stl
+          transform: all
+          publication_lag_days: 60
+      - code: PN39958SM
+        name: "Billeteras digitales - Yape/Plin (millones operaciones)"
+        status: verified
+        processing:
+          unit_type: level
+          seasonal_adjust: stl
+          transform: all
+          publication_lag_days: 60
+      - code: PN39941SM
+        name: "Sistema CCE total (millones S/)"
+        status: verified
+        processing:
+          unit_type: nominal_soles
+          seasonal_adjust: stl
+          transform: all
+          publication_lag_days: 60
+      - code: PN39943SM
+        name: "CCE - Transferencias inmediatas (millones S/)"
+        status: verified
+        processing:
+          unit_type: nominal_soles
+          seasonal_adjust: stl
+          transform: all
+          publication_lag_days: 60
+      # ── Legacy series (from Jan 2003, ~277 months) ──
+      - code: PN08515EM
+        name: "LBTR monto MN (millones S/)"
+        status: verified
+        processing:
+          unit_type: nominal_soles
+          seasonal_adjust: stl
+          transform: all
+          publication_lag_days: 30
+      - code: PN08521EM
+        name: "CCE Transferencias de crédito MN (millones S/)"
+        status: verified
+        processing:
+          unit_type: nominal_soles
+          seasonal_adjust: stl
+          transform: all
+          publication_lag_days: 30
+      - code: PN08519EM
+        name: "CCE Cheques MN (millones S/)"
+        status: verified
+        processing:
+          unit_type: nominal_soles
+          seasonal_adjust: stl
+          transform: all
+          publication_lag_days: 30
+      - code: PN41610EM
+        name: "CCE Transferencias inmediatas MN (millones S/)"
         status: verified
         processing:
           unit_type: nominal_soles

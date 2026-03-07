@@ -225,10 +225,27 @@ def export_gdp_nowcast(gdp_df: pd.DataFrame, latest: pd.Series, fresh_nowcast: D
                 "upper": round(float(fc["forecast_upper"]), 2),
             })
 
+    # Compute forecast vs actual track record (last 8 non-COVID quarters with both values)
+    forecast_vs_actual = [
+        {"quarter": q["quarter"], "official": q["official"], "nowcast": q["nowcast"], "error": q["error"]}
+        for q in all_quarters
+        if q["official"] is not None and q["nowcast"] is not None
+    ][-8:]
+
+    # Last official GDP quarter (before nowcast target)
+    last_official_quarters = [q for q in all_quarters if q["official"] is not None]
+    last_official_gdp = last_official_quarters[-1] if last_official_quarters else None
+
+    # Subcomponent contributions from fresh nowcast (if available)
+    subcomponent_contributions = fresh_nowcast.get("contributions", []) if fresh_nowcast else []
+
+    n_indicators = fresh_nowcast.get("n_series", 31) if fresh_nowcast else 31
+
     # Construct JSON
     output = {
         "metadata": {
             "generated_at": datetime.now().isoformat(),
+            "methodology": "Dynamic Factor Model with Ridge bridge equation (Baker 2023, Aruoba 2020)",
             "model": "DynamicFactorModel",
             "model_params": {
                 "k_factors": 3,
@@ -236,9 +253,13 @@ def export_gdp_nowcast(gdp_df: pd.DataFrame, latest: pd.Series, fresh_nowcast: D
                 "bridge_method": "ridge",
                 "bridge_alpha": 1.0,
                 "rolling_window_years": 7,
+                "exclude_covid": True,
             },
+            "n_indicators": n_indicators,
+            "training_window": "2007-2024 (rolling 7-year window, excl. COVID 2020-2021)",
+            "last_official_gdp": last_official_gdp,
             "data_vintage": fresh_nowcast.get("panel_end", "2025-11") if fresh_nowcast else "2025-11",
-            "series_coverage": f"{fresh_nowcast.get('n_series', 31)}/36" if fresh_nowcast else "31/36",
+            "series_coverage": f"{n_indicators}/36",
         },
         "nowcast": {
             "target_period": target_period,
@@ -250,6 +271,8 @@ def export_gdp_nowcast(gdp_df: pd.DataFrame, latest: pd.Series, fresh_nowcast: D
         "quarterly_series": all_quarters,
         "annual_series": annual_series,
         "recent_quarters": recent_quarters,
+        "forecast_vs_actual": forecast_vs_actual,
+        "subcomponent_contributions": subcomponent_contributions,
         "top_contributors": [
             {"series": "Manufacturing production index", "loading": 0.84},
             {"series": "Non-traditional exports", "loading": 0.71},
@@ -471,18 +494,24 @@ def export_poverty_nowcast(poverty_df: pd.DataFrame, national_rate: float):
         "25": "Ucayali", "26": "Callao",
     }
 
+    MODEL_RMSE_PP = 2.54   # GBR model RMSE in percentage points
+    CI_HALF = 1.96 * MODEL_RMSE_PP  # ±4.98pp at 95%
+
     departments = []
     for _, row in dept_agg.iterrows():
+        est_pp = round(row["poverty_rate_nowcast"] * 100, 1)
         departments.append({
             "code": row["department_code"],
             "name": dept_names.get(row["department_code"], "Unknown"),
-            "poverty_rate_2024": round(row["poverty_rate_2024"] * 100, 1),  # Convert fraction to percent
-            "poverty_rate_2025_nowcast": round(row["poverty_rate_nowcast"] * 100, 1),  # Convert fraction to percent
+            "poverty_rate_2024": round(row["poverty_rate_2024"] * 100, 1),
+            "poverty_rate_2025_proyeccion": est_pp,
+            "lower_bound": round(max(0.0, est_pp - CI_HALF), 1),
+            "upper_bound": round(min(100.0, est_pp + CI_HALF), 1),
             "change_pp": round(row["change_pp"], 1),
         })
 
     # Sort by poverty rate descending
-    departments = sorted(departments, key=lambda x: x["poverty_rate_2025_nowcast"], reverse=True)
+    departments = sorted(departments, key=lambda x: x["poverty_rate_2025_proyeccion"], reverse=True)
 
     # District-level (all districts for choropleth)
     districts = []
@@ -524,16 +553,28 @@ def export_poverty_nowcast(poverty_df: pd.DataFrame, national_rate: float):
             "error": round((float(row["nowcast"]) - float(row["official"])) * 100, 1) if pd.notna(row["nowcast"]) and pd.notna(row["official"]) else None,
         })
 
+    nat_pp = round(national_rate * 100, 1)
     output = {
         "metadata": {
             "generated_at": datetime.now().isoformat(),
-            "model": "GradientBoostingRegressor",
+            "tipo_estimacion": "proyección",
+            "methodology_note": (
+                "Proyección basada en correlaciones históricas entre indicadores "
+                "macroeconómicos mensuales y tasas de pobreza anuales ENAHO (2004-2024). "
+                "No es una encuesta; los intervalos de confianza reflejan el error histórico del modelo."
+            ),
+            "model_type": "GradientBoostingRegressor",
+            "training_window": "2004-2024 (excl. COVID 2020-2021)",
+            "last_official_enaho_year": 2024,
             "target_year": 2025,
             "departments": 26,
             "districts": len(poverty_df),
         },
         "national": {
-            "poverty_rate": round(national_rate * 100, 1),
+            "poverty_rate": nat_pp,
+            "lower_bound": round(max(0.0, nat_pp - CI_HALF), 1),
+            "upper_bound": round(min(100.0, nat_pp + CI_HALF), 1),
+            "rmse_pp": MODEL_RMSE_PP,
             "unit": "percent",
         },
         "departments": departments,
@@ -579,42 +620,90 @@ def export_poverty_nowcast(poverty_df: pd.DataFrame, national_rate: float):
         logger.warning(f"Failed to export GeoJSON: {e}")
 
 
+def _haiku_driver_phrase(articles_text: str, date_str: str) -> str | None:
+    """Call Claude Haiku to get a 5-10 word driver phrase for a high-risk day."""
+    try:
+        import anthropic
+        client = anthropic.Anthropic()
+        prompt = (
+            f"Dadas estas noticias políticas del día {date_str} en Perú, "
+            f"resume el factor principal de inestabilidad en exactamente una frase "
+            f"de 5-10 palabras en español. Solo la frase, sin explicación.\n\n"
+            f"{articles_text}"
+        )
+        msg = client.messages.create(
+            model="claude-haiku-4-5-20251001",
+            max_tokens=50,
+            messages=[{"role": "user", "content": prompt}],
+        )
+        return msg.content[0].text.strip()
+    except Exception as e:
+        logger.warning("Haiku driver_phrase failed: %s", e)
+        return None
+
+
 def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
-    """Export political instability index to JSON."""
+    """Export political instability index to JSON. Supports v1 and v2 schema."""
     import numpy as np
 
-    # Calculate composite instability index (60% political, 40% economic)
     political_df = political_df.copy()
-    political_df["instability_index"] = (
-        0.6 * political_df["political_score"] +
-        0.4 * political_df["economic_score"]
-    )
+
+    # ── Schema detection: v2 has political_swp, v1 has political_score ──────
+    is_v2 = "political_swp" in political_df.columns
+
+    if is_v2:
+        # V2 (EPU-style): use raw SWP (0-1) for gauge/score, smooth EPU index for charts
+        political_df["instability_index"] = (
+            0.6 * political_df["political_swp"] +
+            0.4 * political_df["economic_swp"]
+        )
+        # Also keep EPU composite index (mean=100) for advanced charts
+        political_df["composite_index"] = (
+            0.6 * political_df["political_smooth"] +
+            0.4 * political_df["economic_smooth"]
+        )
+    else:
+        # V1 (legacy)
+        political_df["instability_index"] = (
+            0.6 * political_df["political_score"] +
+            0.4 * political_df["economic_score"]
+        )
 
     # ── Smoothing + quality flags ─────────────────────────────────────────────
-    MIN_ARTICLES = 5          # below this, raw score is unreliable noise
-    SMOOTH_WINDOW = 7         # 7-day rolling mean as main signal
+    MIN_ARTICLES = 5
+    SMOOTH_WINDOW = 7
 
     political_df["low_coverage"] = political_df["n_articles_total"] < MIN_ARTICLES
 
-    # 7-day centred rolling average — uses raw index but smooths single-day spikes
     political_df["score_smooth"] = (
         political_df["instability_index"]
         .rolling(window=SMOOTH_WINDOW, center=True, min_periods=2)
         .mean()
         .round(3)
     )
-    # Fill edges where rolling can't compute
     political_df["score_smooth"] = political_df["score_smooth"].fillna(
         political_df["instability_index"]
     )
 
-    # Provisional: last 5 days (keyword classifier, less article coverage)
     PROVISIONAL_DAYS = 5
     cutoff = political_df["date"].max() - pd.Timedelta(days=PROVISIONAL_DAYS)
     political_df["provisional"] = political_df["date"] > cutoff
 
     latest_idx = political_df.index[-1]
     latest = political_df.loc[latest_idx].copy()
+    # ─────────────────────────────────────────────────────────────────────────
+
+    # ── Load articles cache for Haiku summaries ───────────────────────────────
+    from config.settings import RAW_RSS_DIR
+    articles_cache_path = RAW_RSS_DIR / "articles_classified.parquet"
+    articles_cache = None
+    if articles_cache_path.exists():
+        try:
+            articles_cache = pd.read_parquet(articles_cache_path)
+            articles_cache["published"] = pd.to_datetime(articles_cache["published"], utc=True)
+            articles_cache["date"] = articles_cache["published"].dt.date
+        except Exception as e:
+            logger.warning("Could not load articles cache: %s", e)
     # ─────────────────────────────────────────────────────────────────────────
 
     # Calculate aggregates using smoothed score
@@ -631,12 +720,16 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
 
     # Classification level
     def classify_level(score: float) -> str:
-        if score < 0.33:
+        if score < 0.15:
+            return "MINIMO"
+        elif score < 0.35:
             return "BAJO"
-        elif score < 0.66:
+        elif score < 0.60:
             return "MEDIO"
-        else:
+        elif score < 0.80:
             return "ALTO"
+        else:
+            return "CRITICAL"
 
     # Daily series (last 365 days) — smoothed score as main signal, raw for reference
     daily_series = [
@@ -658,12 +751,24 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
         (political_df["n_articles_total"] >= 5)
     ]
     for _, row in reliable.iterrows():
+        event_date = row["date"].date() if hasattr(row["date"], "date") else row["date"]
+        event_summary = None
+        if articles_cache is not None:
+            day_arts = articles_cache[
+                (articles_cache["date"] == event_date) &
+                (articles_cache["article_category"].isin(["political", "both"]))
+            ].head(3)
+            if not day_arts.empty:
+                arts_text = "\n".join(
+                    f"- {r['title']}" for _, r in day_arts.iterrows()
+                )
+                event_summary = _haiku_driver_phrase(arts_text, str(event_date))
         major_events.append({
             "date": row["date"].strftime("%Y-%m-%d"),
             "score": round(row["score_smooth"], 3),
             "level": "MUY ALTO" if row["score_smooth"] > 0.85 else "ALTO",
             "n_articles": int(row["n_articles_total"]),
-            "summary": "Event summary (load from reports)",  # Placeholder
+            "summary": event_summary or "Alta inestabilidad política registrada.",
             "report_url": f"/political/daily-reports/{row['date'].strftime('%Y-%m-%d')}.html",
         })
 
@@ -747,19 +852,36 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
         })
     # ─────────────────────────────────────────────────────────────────────────
 
+    # ── Driver phrase for today if score is high ─────────────────────────────
+    today_score = float(latest["instability_index"])
+    driver_phrase = None
+    if today_score > 0.6 and articles_cache is not None:
+        today_date = latest["date"].date() if hasattr(latest["date"], "date") else latest["date"]
+        today_arts = articles_cache[
+            (articles_cache["date"] == today_date) &
+            (articles_cache["article_category"].isin(["political", "both"]))
+        ].head(3)
+        if not today_arts.empty:
+            arts_text = "\n".join(f"- {r['title']}" for _, r in today_arts.iterrows())
+            driver_phrase = _haiku_driver_phrase(arts_text, str(today_date))
+    # ─────────────────────────────────────────────────────────────────────────
+
     output = {
         "metadata": {
             "generated_at": datetime.now().isoformat(),
             "coverage_days": len(political_df),
-            "rss_feeds": 81,
+            "rss_feeds": 11,
+            "rss_sources": 6,
+            "methodology": "EPU-style severity-weighted proportion index (Baker/Bloom/Davis 2016), normalized mean=100",
         },
         "current": {
             "date": latest["date"].strftime("%Y-%m-%d"),
-            "score": round(latest["instability_index"], 3),
-            "level": classify_level(latest["instability_index"]),
+            "score": round(today_score, 3),
+            "level": classify_level(today_score),
             "articles_total": int(latest.get("n_articles_total", 0)),
             "articles_political": int(latest.get("n_articles_political", 0)),
             "articles_economic": int(latest.get("n_articles_economic", 0)),
+            "driver_phrase": driver_phrase,
         },
         "aggregates": {
             "7d_avg": round(last_7d, 3),

@@ -245,7 +245,7 @@ def build_weekly_index(
 
 def prepare_events_monthly(
     events_df: pd.DataFrame,
-    score_col: str = "severity_nlp",
+    score_col: str = "severity_claude",
     date_range: pd.DatetimeIndex | None = None,
     warmup_months: int = 0,
 ) -> pd.DataFrame:
@@ -281,7 +281,7 @@ def prepare_events_monthly(
 
 def prepare_events_weekly(
     events_df: pd.DataFrame,
-    score_col: str = "severity_nlp",
+    score_col: str = "severity_claude",
 ) -> pd.DataFrame:
     """Aggregate events to weekly (Friday) weighted severity sum."""
     df = events_df.copy()

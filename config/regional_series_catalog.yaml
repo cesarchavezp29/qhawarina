@@ -573,121 +573,392 @@ regional:
     - {code: RD38136BM, name: "Importaciones - Total"}
 
   # ──────────────────────────────────────────────────────────────────
-  # NEW MINING CATEGORIES (to be populated after API probing)
+  # MINING: SILVER, LEAD, ZINC (verified 2026-02-07)
+  # Tin (only 2 series), Iron (2), Molybdenum (6), Tungsten (2) — too sparse for panel
+  # Electricity sales, Tourism arrivals/nights — NOT available via API (empty responses)
   # ──────────────────────────────────────────────────────────────────
 
-  mining_tin_by_department:
-    description: "Producción minera de estaño por departamento (TMF)"
-    frequency: monthly
-    source: BCRP
-    unit: tmf
-    note: "Hypothesized range RD12968DM-RD12977DM — run explore script to verify"
-    processing:
-      unit_type: level
-      seasonal_adjust: stl
-      transform: all
-    series: []  # Populate after running explore_regional_series.py --only mining_tin
-
   mining_silver_by_department:
-    description: "Producción minera de plata por departamento (miles de onzas troy)"
+    description: "Producción minera de plata por departamento (kg.f)"
     frequency: monthly
     source: BCRP
-    unit: miles_oz_troy
-    note: "Hypothesized range RD12996DM-RD13012DM — run explore script to verify"
+    unit: kgf
+    note: "RD12996DM-RD13012DM, 17 series verified 2026-02-07"
     processing:
       unit_type: level
       seasonal_adjust: stl
       transform: all
-    series: []  # Populate after running explore_regional_series.py --only mining_silver
-
-  mining_zinc_by_department:
-    description: "Producción minera de zinc por departamento (TMF)"
-    frequency: monthly
-    source: BCRP
-    unit: tmf
-    note: "Hypothesized range RD13013DM-RD13029DM — run explore script to verify"
-    processing:
-      unit_type: level
-      seasonal_adjust: stl
-      transform: all
-    series: []  # Populate after running explore_regional_series.py --only mining_zinc
+    series:
+    - {code: RD12996DM, name: "Plata - Total", department: Total, ubigeo: '00'}
+    - {code: RD12997DM, name: "Plata - Ancash", department: Ancash, ubigeo: '02'}
+    - {code: RD12998DM, name: "Plata - Apurímac", department: Apurímac, ubigeo: '03'}
+    - {code: RD12999DM, name: "Plata - Arequipa", department: Arequipa, ubigeo: '04'}
+    - {code: RD13000DM, name: "Plata - Ayacucho", department: Ayacucho, ubigeo: '05'}
+    - {code: RD13001DM, name: "Plata - Cajamarca", department: Cajamarca, ubigeo: '06'}
+    - {code: RD13002DM, name: "Plata - Cusco", department: Cusco, ubigeo: '08'}
+    - {code: RD13003DM, name: "Plata - Huancavelica", department: Huancavelica, ubigeo: '09'}
+    - {code: RD13004DM, name: "Plata - Huánuco", department: Huánuco, ubigeo: '10'}
+    - {code: RD13005DM, name: "Plata - Ica", department: Ica, ubigeo: '11'}
+    - {code: RD13006DM, name: "Plata - Junín", department: Junín, ubigeo: '12'}
+    - {code: RD13007DM, name: "Plata - La Libertad", department: La Libertad, ubigeo: '13'}
+    - {code: RD13008DM, name: "Plata - Lima", department: Lima, ubigeo: '15'}
+    - {code: RD13009DM, name: "Plata - Moquegua", department: Moquegua, ubigeo: '18'}
+    - {code: RD13010DM, name: "Plata - Pasco", department: Pasco, ubigeo: '19'}
+    - {code: RD13011DM, name: "Plata - Puno", department: Puno, ubigeo: '21'}
+    - {code: RD13012DM, name: "Plata - Tacna", department: Tacna, ubigeo: '23'}
 
   mining_lead_by_department:
     description: "Producción minera de plomo por departamento (TMF)"
     frequency: monthly
     source: BCRP
     unit: tmf
-    note: "Hypothesized range RD13030DM-RD13042DM — run explore script to verify"
+    note: "RD13013DM-RD13026DM, 14 series verified 2026-02-07"
     processing:
       unit_type: level
       seasonal_adjust: stl
       transform: all
-    series: []  # Populate after running explore_regional_series.py --only mining_lead
+    series:
+    - {code: RD13013DM, name: "Plomo - Total", department: Total, ubigeo: '00'}
+    - {code: RD13014DM, name: "Plomo - Ancash", department: Ancash, ubigeo: '02'}
+    - {code: RD13015DM, name: "Plomo - Arequipa", department: Arequipa, ubigeo: '04'}
+    - {code: RD13016DM, name: "Plomo - Ayacucho", department: Ayacucho, ubigeo: '05'}
+    - {code: RD13017DM, name: "Plomo - Cajamarca", department: Cajamarca, ubigeo: '06'}
+    - {code: RD13018DM, name: "Plomo - Cusco", department: Cusco, ubigeo: '08'}
+    - {code: RD13019DM, name: "Plomo - Huancavelica", department: Huancavelica, ubigeo: '09'}
+    - {code: RD13020DM, name: "Plomo - Huánuco", department: Huánuco, ubigeo: '10'}
+    - {code: RD13021DM, name: "Plomo - Ica", department: Ica, ubigeo: '11'}
+    - {code: RD13022DM, name: "Plomo - Junín", department: Junín, ubigeo: '12'}
+    - {code: RD13023DM, name: "Plomo - La Libertad", department: La Libertad, ubigeo: '13'}
+    - {code: RD13024DM, name: "Plomo - Lima", department: Lima, ubigeo: '15'}
+    - {code: RD13025DM, name: "Plomo - Pasco", department: Pasco, ubigeo: '19'}
+    - {code: RD13026DM, name: "Plomo - Puno", department: Puno, ubigeo: '21'}
 
-  # ──────────────────────────────────────────────────────────────────
-  # NEW ENERGY / FISHING / TOURISM CATEGORIES
-  # ──────────────────────────────────────────────────────────────────
-
-  electricity_sales_by_department:
-    description: "Venta de energía eléctrica por departamento (GWh)"
+  mining_zinc_by_department:
+    description: "Producción minera de zinc por departamento (TMF)"
     frequency: monthly
     source: BCRP
-    unit: gwh
-    note: "Hypothesized range RD13093DM-RD13142DM — run explore script to verify"
+    unit: tmf
+    note: "RD13029DM-RD13042DM, 14 series verified 2026-02-07"
     processing:
       unit_type: level
       seasonal_adjust: stl
       transform: all
-    series: []  # Populate after running explore_regional_series.py --only electricity_sales
-
-  tourism_arrivals_by_department:
-    description: "Arribos a establecimientos de hospedaje por departamento (miles de personas)"
-    frequency: monthly
-    source: BCRP/MINCETUR
-    unit: miles_personas
-    note: "Hypothesized range RD13335DM-RD13409DM — run explore script to verify"
-    processing:
-      unit_type: level
-      seasonal_adjust: stl
-      transform: all
-    series: []  # Populate after running explore_regional_series.py --only tourism_arrivals
-
-  tourism_nights_by_department:
-    description: "Pernoctaciones en establecimientos de hospedaje por departamento (miles)"
-    frequency: monthly
-    source: BCRP/MINCETUR
-    unit: miles
-    note: "Hypothesized range RD13410DM-RD13484DM — run explore script to verify"
-    processing:
-      unit_type: level
-      seasonal_adjust: stl
-      transform: all
-    series: []  # Populate after running explore_regional_series.py --only tourism_nights
+    series:
+    - {code: RD13029DM, name: "Zinc - Total", department: Total, ubigeo: '00'}
+    - {code: RD13030DM, name: "Zinc - Ancash", department: Ancash, ubigeo: '02'}
+    - {code: RD13031DM, name: "Zinc - Arequipa", department: Arequipa, ubigeo: '04'}
+    - {code: RD13032DM, name: "Zinc - Ayacucho", department: Ayacucho, ubigeo: '05'}
+    - {code: RD13033DM, name: "Zinc - Cajamarca", department: Cajamarca, ubigeo: '06'}
+    - {code: RD13034DM, name: "Zinc - Cusco", department: Cusco, ubigeo: '08'}
+    - {code: RD13035DM, name: "Zinc - Huancavelica", department: Huancavelica, ubigeo: '09'}
+    - {code: RD13036DM, name: "Zinc - Huánuco", department: Huánuco, ubigeo: '10'}
+    - {code: RD13037DM, name: "Zinc - Ica", department: Ica, ubigeo: '11'}
+    - {code: RD13038DM, name: "Zinc - Junín", department: Junín, ubigeo: '12'}
+    - {code: RD13039DM, name: "Zinc - La Libertad", department: La Libertad, ubigeo: '13'}
+    - {code: RD13040DM, name: "Zinc - Lima", department: Lima, ubigeo: '15'}
+    - {code: RD13041DM, name: "Zinc - Pasco", department: Pasco, ubigeo: '19'}
+    - {code: RD13042DM, name: "Zinc - Puno", department: Puno, ubigeo: '21'}
 
   # ──────────────────────────────────────────────────────────────────
-  # NEW PUBLIC SECTOR CATEGORIES
+  # PUBLIC SECTOR: GOV SPENDING GROWTH RATES (verified 2026-02-07)
+  # NOTE: These are var% anual (YoY growth), NOT levels in soles
   # ──────────────────────────────────────────────────────────────────
 
   government_capex_local:
-    description: "Gasto de capital de gobiernos locales por departamento (millones S/)"
+    description: "Gastos no financieros de gobiernos locales por departamento (var% anual)"
     frequency: monthly
     source: BCRP/MEF
-    unit: millones_soles
-    note: "Hypothesized range RD14012DM-RD14037DM — run explore script to verify"
+    unit: var_pct_anual
+    note: "RD14012DM-RD14037DM, 26 series verified 2026-02-07. Growth rates, not levels."
     processing:
-      unit_type: nominal_soles
-      seasonal_adjust: stl
-      transform: all
-    series: []  # Populate after running explore_regional_series.py --only gov_capex_local
+      unit_type: var_pct
+      seasonal_adjust: none
+      transform: none
+    series:
+    - {code: RD14012DM, name: "Gasto local - Amazonas (var%)", department: Amazonas, ubigeo: '01'}
+    - {code: RD14013DM, name: "Gasto local - Ancash (var%)", department: Ancash, ubigeo: '02'}
+    - {code: RD14014DM, name: "Gasto local - Apurímac (var%)", department: Apurímac, ubigeo: '03'}
+    - {code: RD14015DM, name: "Gasto local - Arequipa (var%)", department: Arequipa, ubigeo: '04'}
+    - {code: RD14016DM, name: "Gasto local - Ayacucho (var%)", department: Ayacucho, ubigeo: '05'}
+    - {code: RD14017DM, name: "Gasto local - Cajamarca (var%)", department: Cajamarca, ubigeo: '06'}
+    - {code: RD14018DM, name: "Gasto local - Callao (var%)", department: Callao, ubigeo: '07'}
+    - {code: RD14019DM, name: "Gasto local - Cusco (var%)", department: Cusco, ubigeo: '08'}
+    - {code: RD14020DM, name: "Gasto local - Huancavelica (var%)", department: Huancavelica, ubigeo: '09'}
+    - {code: RD14021DM, name: "Gasto local - Huánuco (var%)", department: Huánuco, ubigeo: '10'}
+    - {code: RD14022DM, name: "Gasto local - Ica (var%)", department: Ica, ubigeo: '11'}
+    - {code: RD14023DM, name: "Gasto local - Junín (var%)", department: Junín, ubigeo: '12'}
+    - {code: RD14024DM, name: "Gasto local - La Libertad (var%)", department: La Libertad, ubigeo: '13'}
+    - {code: RD14025DM, name: "Gasto local - Lambayeque (var%)", department: Lambayeque, ubigeo: '14'}
+    - {code: RD14026DM, name: "Gasto local - Lima (var%)", department: Lima, ubigeo: '15'}
+    - {code: RD14027DM, name: "Gasto local - Loreto (var%)", department: Loreto, ubigeo: '16'}
+    - {code: RD14028DM, name: "Gasto local - Madre de Dios (var%)", department: Madre de Dios, ubigeo: '17'}
+    - {code: RD14029DM, name: "Gasto local - Moquegua (var%)", department: Moquegua, ubigeo: '18'}
+    - {code: RD14030DM, name: "Gasto local - Pasco (var%)", department: Pasco, ubigeo: '19'}
+    - {code: RD14031DM, name: "Gasto local - Piura (var%)", department: Piura, ubigeo: '20'}
+    - {code: RD14032DM, name: "Gasto local - Puno (var%)", department: Puno, ubigeo: '21'}
+    - {code: RD14033DM, name: "Gasto local - San Martín (var%)", department: San Martín, ubigeo: '22'}
+    - {code: RD14034DM, name: "Gasto local - Tacna (var%)", department: Tacna, ubigeo: '23'}
+    - {code: RD14035DM, name: "Gasto local - Tumbes (var%)", department: Tumbes, ubigeo: '24'}
+    - {code: RD14036DM, name: "Gasto local - Ucayali (var%)", department: Ucayali, ubigeo: '25'}
+    - {code: RD14037DM, name: "Gasto local - Total (var%)", department: Total, ubigeo: '00'}
 
   government_capex_regional:
-    description: "Gasto de capital de gobiernos regionales por departamento (millones S/)"
+    description: "Gastos no financieros de gobiernos regionales por departamento (var% anual)"
     frequency: monthly
     source: BCRP/MEF
-    unit: millones_soles
-    note: "Hypothesized range RD14065DM-RD14090DM — run explore script to verify"
+    unit: var_pct_anual
+    note: "RD14065DM-RD14090DM, 26 series verified 2026-02-07. Growth rates, not levels."
     processing:
-      unit_type: nominal_soles
+      unit_type: var_pct
+      seasonal_adjust: none
+      transform: none
+    series:
+    - {code: RD14065DM, name: "Gasto regional - Amazonas (var%)", department: Amazonas, ubigeo: '01'}
+    - {code: RD14066DM, name: "Gasto regional - Ancash (var%)", department: Ancash, ubigeo: '02'}
+    - {code: RD14067DM, name: "Gasto regional - Apurímac (var%)", department: Apurímac, ubigeo: '03'}
+    - {code: RD14068DM, name: "Gasto regional - Arequipa (var%)", department: Arequipa, ubigeo: '04'}
+    - {code: RD14069DM, name: "Gasto regional - Ayacucho (var%)", department: Ayacucho, ubigeo: '05'}
+    - {code: RD14070DM, name: "Gasto regional - Cajamarca (var%)", department: Cajamarca, ubigeo: '06'}
+    - {code: RD14071DM, name: "Gasto regional - Cusco (var%)", department: Cusco, ubigeo: '08'}
+    - {code: RD14072DM, name: "Gasto regional - Huancavelica (var%)", department: Huancavelica, ubigeo: '09'}
+    - {code: RD14073DM, name: "Gasto regional - Huánuco (var%)", department: Huánuco, ubigeo: '10'}
+    - {code: RD14074DM, name: "Gasto regional - Ica (var%)", department: Ica, ubigeo: '11'}
+    - {code: RD14075DM, name: "Gasto regional - Junín (var%)", department: Junín, ubigeo: '12'}
+    - {code: RD14076DM, name: "Gasto regional - La Libertad (var%)", department: La Libertad, ubigeo: '13'}
+    - {code: RD14077DM, name: "Gasto regional - Lambayeque (var%)", department: Lambayeque, ubigeo: '14'}
+    - {code: RD14078DM, name: "Gasto regional - Loreto (var%)", department: Loreto, ubigeo: '16'}
+    - {code: RD14079DM, name: "Gasto regional - Madre de Dios (var%)", department: Madre de Dios, ubigeo: '17'}
+    - {code: RD14080DM, name: "Gasto regional - Moquegua (var%)", department: Moquegua, ubigeo: '18'}
+    - {code: RD14081DM, name: "Gasto regional - Pasco (var%)", department: Pasco, ubigeo: '19'}
+    - {code: RD14082DM, name: "Gasto regional - Piura (var%)", department: Piura, ubigeo: '20'}
+    - {code: RD14083DM, name: "Gasto regional - Puno (var%)", department: Puno, ubigeo: '21'}
+    - {code: RD14084DM, name: "Gasto regional - San Martín (var%)", department: San Martín, ubigeo: '22'}
+    - {code: RD14085DM, name: "Gasto regional - Tacna (var%)", department: Tacna, ubigeo: '23'}
+    - {code: RD14086DM, name: "Gasto regional - Tumbes (var%)", department: Tumbes, ubigeo: '24'}
+    - {code: RD14087DM, name: "Gasto regional - Ucayali (var%)", department: Ucayali, ubigeo: '25'}
+    - {code: RD14088DM, name: "Gasto regional - Lima (var%)", department: Lima, ubigeo: '15'}
+    - {code: RD14089DM, name: "Gasto regional - Callao (var%)", department: Callao, ubigeo: '07'}
+    - {code: RD14090DM, name: "Gasto regional - Lima Metrop. (var%)", department: Lima Metropolitana, ubigeo: '15'}
+
+  # ──────────────────────────────────────────────────────────────────
+  # ENERGY SALES (discontinued Mar 2018)
+  # ──────────────────────────────────────────────────────────────────
+
+  electricity_sales_by_department:
+    description: "Venta de energia electrica por departamento (GWh)"
+    frequency: monthly
+    source: BCRP/MINEM
+    unit: gwh
+    note: "RD13093DM-RD13117DM, 25 series verified 2026-02-07. Data ends Mar 2018."
+    processing:
+      unit_type: level
       seasonal_adjust: stl
       transform: all
-    series: []  # Populate after running explore_regional_series.py --only gov_capex_regional
+    series:
+    - {code: RD13093DM, name: "Venta electricidad - Amazonas", department: Amazonas, ubigeo: '01'}
+    - {code: RD13094DM, name: "Venta electricidad - Ancash", department: Ancash, ubigeo: '02'}
+    - {code: RD13095DM, name: "Venta electricidad - Apurimac", department: Apurimac, ubigeo: '03'}
+    - {code: RD13096DM, name: "Venta electricidad - Arequipa", department: Arequipa, ubigeo: '04'}
+    - {code: RD13097DM, name: "Venta electricidad - Ayacucho", department: Ayacucho, ubigeo: '05'}
+    - {code: RD13098DM, name: "Venta electricidad - Cajamarca", department: Cajamarca, ubigeo: '06'}
+    - {code: RD13099DM, name: "Venta electricidad - Callao", department: Callao, ubigeo: '07'}
+    - {code: RD13100DM, name: "Venta electricidad - Cusco", department: Cusco, ubigeo: '08'}
+    - {code: RD13101DM, name: "Venta electricidad - Huancavelica", department: Huancavelica, ubigeo: '09'}
+    - {code: RD13102DM, name: "Venta electricidad - Huanuco", department: Huanuco, ubigeo: '10'}
+    - {code: RD13103DM, name: "Venta electricidad - Ica", department: Ica, ubigeo: '11'}
+    - {code: RD13104DM, name: "Venta electricidad - Junin", department: Junin, ubigeo: '12'}
+    - {code: RD13105DM, name: "Venta electricidad - La Libertad", department: La Libertad, ubigeo: '13'}
+    - {code: RD13106DM, name: "Venta electricidad - Lambayeque", department: Lambayeque, ubigeo: '14'}
+    - {code: RD13107DM, name: "Venta electricidad - Lima", department: Lima, ubigeo: '15'}
+    - {code: RD13108DM, name: "Venta electricidad - Loreto", department: Loreto, ubigeo: '16'}
+    - {code: RD13109DM, name: "Venta electricidad - Madre de Dios", department: Madre de Dios, ubigeo: '17'}
+    - {code: RD13110DM, name: "Venta electricidad - Moquegua", department: Moquegua, ubigeo: '18'}
+    - {code: RD13111DM, name: "Venta electricidad - Pasco", department: Pasco, ubigeo: '19'}
+    - {code: RD13112DM, name: "Venta electricidad - Piura", department: Piura, ubigeo: '20'}
+    - {code: RD13113DM, name: "Venta electricidad - Puno", department: Puno, ubigeo: '21'}
+    - {code: RD13114DM, name: "Venta electricidad - San Martin", department: San Martin, ubigeo: '22'}
+    - {code: RD13115DM, name: "Venta electricidad - Tacna", department: Tacna, ubigeo: '23'}
+    - {code: RD13116DM, name: "Venta electricidad - Tumbes", department: Tumbes, ubigeo: '24'}
+    - {code: RD13117DM, name: "Venta electricidad - Ucayali", department: Ucayali, ubigeo: '25'}
+    - {code: RD13118DM, name: "Venta electricidad - Total", department: Total, ubigeo: '00'}
+
+  # ──────────────────────────────────────────────────────────────────
+  # TOURISM (discontinued Dec 2019)
+  # Source: MINCETUR / BCRP
+  # ──────────────────────────────────────────────────────────────────
+
+  tourism_arrivals_by_department:
+    description: "Arribos a establecimientos de hospedaje por departamento (numero)"
+    frequency: monthly
+    source: BCRP/MINCETUR
+    unit: personas
+    note: "RD13335DM-RD13409DM, 75 series (25 depts x 3 types). Data ends Jun 2019."
+    processing:
+      unit_type: level
+      seasonal_adjust: stl
+      transform: all
+      panel_filter: Total  # Only include Total in panel (exclude Nacionales/Extranjeros)
+    series:
+    - {code: RD13335DM, name: "Arribos - Amazonas", department: Amazonas, ubigeo: '01', visitor_type: Total}
+    - {code: RD13336DM, name: "Arribos - Amazonas (Nacionales)", department: Amazonas, ubigeo: '01', visitor_type: Nacionales}
+    - {code: RD13337DM, name: "Arribos - Amazonas (Extranjeros)", department: Amazonas, ubigeo: '01', visitor_type: Extranjeros}
+    - {code: RD13338DM, name: "Arribos - Ancash", department: Ancash, ubigeo: '02', visitor_type: Total}
+    - {code: RD13339DM, name: "Arribos - Ancash (Nacionales)", department: Ancash, ubigeo: '02', visitor_type: Nacionales}
+    - {code: RD13340DM, name: "Arribos - Ancash (Extranjeros)", department: Ancash, ubigeo: '02', visitor_type: Extranjeros}
+    - {code: RD13341DM, name: "Arribos - Apurimac", department: Apurimac, ubigeo: '03', visitor_type: Total}
+    - {code: RD13342DM, name: "Arribos - Apurimac (Nacionales)", department: Apurimac, ubigeo: '03', visitor_type: Nacionales}
+    - {code: RD13343DM, name: "Arribos - Apurimac (Extranjeros)", department: Apurimac, ubigeo: '03', visitor_type: Extranjeros}
+    - {code: RD13344DM, name: "Arribos - Arequipa", department: Arequipa, ubigeo: '04', visitor_type: Total}
+    - {code: RD13345DM, name: "Arribos - Arequipa (Nacionales)", department: Arequipa, ubigeo: '04', visitor_type: Nacionales}
+    - {code: RD13346DM, name: "Arribos - Arequipa (Extranjeros)", department: Arequipa, ubigeo: '04', visitor_type: Extranjeros}
+    - {code: RD13347DM, name: "Arribos - Ayacucho", department: Ayacucho, ubigeo: '05', visitor_type: Total}
+    - {code: RD13348DM, name: "Arribos - Ayacucho (Nacionales)", department: Ayacucho, ubigeo: '05', visitor_type: Nacionales}
+    - {code: RD13349DM, name: "Arribos - Ayacucho (Extranjeros)", department: Ayacucho, ubigeo: '05', visitor_type: Extranjeros}
+    - {code: RD13350DM, name: "Arribos - Cajamarca", department: Cajamarca, ubigeo: '06', visitor_type: Total}
+    - {code: RD13351DM, name: "Arribos - Cajamarca (Nacionales)", department: Cajamarca, ubigeo: '06', visitor_type: Nacionales}
+    - {code: RD13352DM, name: "Arribos - Cajamarca (Extranjeros)", department: Cajamarca, ubigeo: '06', visitor_type: Extranjeros}
+    - {code: RD13353DM, name: "Arribos - Callao", department: Callao, ubigeo: '07', visitor_type: Total}
+    - {code: RD13354DM, name: "Arribos - Callao (Nacionales)", department: Callao, ubigeo: '07', visitor_type: Nacionales}
+    - {code: RD13355DM, name: "Arribos - Callao (Extranjeros)", department: Callao, ubigeo: '07', visitor_type: Extranjeros}
+    - {code: RD13356DM, name: "Arribos - Cusco", department: Cusco, ubigeo: '08', visitor_type: Total}
+    - {code: RD13357DM, name: "Arribos - Cusco (Nacionales)", department: Cusco, ubigeo: '08', visitor_type: Nacionales}
+    - {code: RD13358DM, name: "Arribos - Cusco (Extranjeros)", department: Cusco, ubigeo: '08', visitor_type: Extranjeros}
+    - {code: RD13359DM, name: "Arribos - Huancavelica", department: Huancavelica, ubigeo: '09', visitor_type: Total}
+    - {code: RD13360DM, name: "Arribos - Huancavelica (Nacionales)", department: Huancavelica, ubigeo: '09', visitor_type: Nacionales}
+    - {code: RD13361DM, name: "Arribos - Huancavelica (Extranjeros)", department: Huancavelica, ubigeo: '09', visitor_type: Extranjeros}
+    - {code: RD13362DM, name: "Arribos - Huanuco", department: Huanuco, ubigeo: '10', visitor_type: Total}
+    - {code: RD13363DM, name: "Arribos - Huanuco (Nacionales)", department: Huanuco, ubigeo: '10', visitor_type: Nacionales}
+    - {code: RD13364DM, name: "Arribos - Huanuco (Extranjeros)", department: Huanuco, ubigeo: '10', visitor_type: Extranjeros}
+    - {code: RD13365DM, name: "Arribos - Ica", department: Ica, ubigeo: '11', visitor_type: Total}
+    - {code: RD13366DM, name: "Arribos - Ica (Nacionales)", department: Ica, ubigeo: '11', visitor_type: Nacionales}
+    - {code: RD13367DM, name: "Arribos - Ica (Extranjeros)", department: Ica, ubigeo: '11', visitor_type: Extranjeros}
+    - {code: RD13368DM, name: "Arribos - Junin", department: Junin, ubigeo: '12', visitor_type: Total}
+    - {code: RD13369DM, name: "Arribos - Junin (Nacionales)", department: Junin, ubigeo: '12', visitor_type: Nacionales}
+    - {code: RD13370DM, name: "Arribos - Junin (Extranjeros)", department: Junin, ubigeo: '12', visitor_type: Extranjeros}
+    - {code: RD13371DM, name: "Arribos - La Libertad", department: La Libertad, ubigeo: '13', visitor_type: Total}
+    - {code: RD13372DM, name: "Arribos - La Libertad (Nacionales)", department: La Libertad, ubigeo: '13', visitor_type: Nacionales}
+    - {code: RD13373DM, name: "Arribos - La Libertad (Extranjeros)", department: La Libertad, ubigeo: '13', visitor_type: Extranjeros}
+    - {code: RD13374DM, name: "Arribos - Lambayeque", department: Lambayeque, ubigeo: '14', visitor_type: Total}
+    - {code: RD13375DM, name: "Arribos - Lambayeque (Nacionales)", department: Lambayeque, ubigeo: '14', visitor_type: Nacionales}
+    - {code: RD13376DM, name: "Arribos - Lambayeque (Extranjeros)", department: Lambayeque, ubigeo: '14', visitor_type: Extranjeros}
+    - {code: RD13377DM, name: "Arribos - Lima", department: Lima, ubigeo: '15', visitor_type: Total}
+    - {code: RD13378DM, name: "Arribos - Lima (Nacionales)", department: Lima, ubigeo: '15', visitor_type: Nacionales}
+    - {code: RD13379DM, name: "Arribos - Lima (Extranjeros)", department: Lima, ubigeo: '15', visitor_type: Extranjeros}
+    - {code: RD13380DM, name: "Arribos - Loreto", department: Loreto, ubigeo: '16', visitor_type: Total}
+    - {code: RD13381DM, name: "Arribos - Loreto (Nacionales)", department: Loreto, ubigeo: '16', visitor_type: Nacionales}
+    - {code: RD13382DM, name: "Arribos - Loreto (Extranjeros)", department: Loreto, ubigeo: '16', visitor_type: Extranjeros}
+    - {code: RD13383DM, name: "Arribos - Madre de Dios", department: Madre de Dios, ubigeo: '17', visitor_type: Total}
+    - {code: RD13384DM, name: "Arribos - Madre de Dios (Nacionales)", department: Madre de Dios, ubigeo: '17', visitor_type: Nacionales}
+    - {code: RD13385DM, name: "Arribos - Madre de Dios (Extranjeros)", department: Madre de Dios, ubigeo: '17', visitor_type: Extranjeros}
+    - {code: RD13386DM, name: "Arribos - Moquegua", department: Moquegua, ubigeo: '18', visitor_type: Total}
+    - {code: RD13387DM, name: "Arribos - Moquegua (Nacionales)", department: Moquegua, ubigeo: '18', visitor_type: Nacionales}
+    - {code: RD13388DM, name: "Arribos - Moquegua (Extranjeros)", department: Moquegua, ubigeo: '18', visitor_type: Extranjeros}
+    - {code: RD13389DM, name: "Arribos - Pasco", department: Pasco, ubigeo: '19', visitor_type: Total}
+    - {code: RD13390DM, name: "Arribos - Pasco (Nacionales)", department: Pasco, ubigeo: '19', visitor_type: Nacionales}
+    - {code: RD13391DM, name: "Arribos - Pasco (Extranjeros)", department: Pasco, ubigeo: '19', visitor_type: Extranjeros}
+    - {code: RD13392DM, name: "Arribos - Piura", department: Piura, ubigeo: '20', visitor_type: Total}
+    - {code: RD13393DM, name: "Arribos - Piura (Nacionales)", department: Piura, ubigeo: '20', visitor_type: Nacionales}
+    - {code: RD13394DM, name: "Arribos - Piura (Extranjeros)", department: Piura, ubigeo: '20', visitor_type: Extranjeros}
+    - {code: RD13395DM, name: "Arribos - Puno", department: Puno, ubigeo: '21', visitor_type: Total}
+    - {code: RD13396DM, name: "Arribos - Puno (Nacionales)", department: Puno, ubigeo: '21', visitor_type: Nacionales}
+    - {code: RD13397DM, name: "Arribos - Puno (Extranjeros)", department: Puno, ubigeo: '21', visitor_type: Extranjeros}
+    - {code: RD13398DM, name: "Arribos - San Martin", department: San Martin, ubigeo: '22', visitor_type: Total}
+    - {code: RD13399DM, name: "Arribos - San Martin (Nacionales)", department: San Martin, ubigeo: '22', visitor_type: Nacionales}
+    - {code: RD13400DM, name: "Arribos - San Martin (Extranjeros)", department: San Martin, ubigeo: '22', visitor_type: Extranjeros}
+    - {code: RD13401DM, name: "Arribos - Tacna", department: Tacna, ubigeo: '23', visitor_type: Total}
+    - {code: RD13402DM, name: "Arribos - Tacna (Nacionales)", department: Tacna, ubigeo: '23', visitor_type: Nacionales}
+    - {code: RD13403DM, name: "Arribos - Tacna (Extranjeros)", department: Tacna, ubigeo: '23', visitor_type: Extranjeros}
+    - {code: RD13404DM, name: "Arribos - Tumbes", department: Tumbes, ubigeo: '24', visitor_type: Total}
+    - {code: RD13405DM, name: "Arribos - Tumbes (Nacionales)", department: Tumbes, ubigeo: '24', visitor_type: Nacionales}
+    - {code: RD13406DM, name: "Arribos - Tumbes (Extranjeros)", department: Tumbes, ubigeo: '24', visitor_type: Extranjeros}
+    - {code: RD13407DM, name: "Arribos - Ucayali", department: Ucayali, ubigeo: '25', visitor_type: Total}
+    - {code: RD13408DM, name: "Arribos - Ucayali (Nacionales)", department: Ucayali, ubigeo: '25', visitor_type: Nacionales}
+    - {code: RD13409DM, name: "Arribos - Ucayali (Extranjeros)", department: Ucayali, ubigeo: '25', visitor_type: Extranjeros}
+
+  tourism_nights_by_department:
+    description: "Pernoctaciones en establecimientos de hospedaje por departamento (numero)"
+    frequency: monthly
+    source: BCRP/MINCETUR
+    unit: personas
+    note: "RD13410DM-RD13484DM, 75 series (25 depts x 3 types). Data ends Jun 2019."
+    processing:
+      unit_type: level
+      seasonal_adjust: stl
+      transform: all
+      panel_filter: Total  # Only include Total in panel (exclude Nacionales/Extranjeros)
+    series:
+    - {code: RD13410DM, name: "Pernoctaciones - Amazonas", department: Amazonas, ubigeo: '01', visitor_type: Total}
+    - {code: RD13411DM, name: "Pernoctaciones - Amazonas (Nacionales)", department: Amazonas, ubigeo: '01', visitor_type: Nacionales}
+    - {code: RD13412DM, name: "Pernoctaciones - Amazonas (Extranjeros)", department: Amazonas, ubigeo: '01', visitor_type: Extranjeros}
+    - {code: RD13413DM, name: "Pernoctaciones - Ancash", department: Ancash, ubigeo: '02', visitor_type: Total}
+    - {code: RD13414DM, name: "Pernoctaciones - Ancash (Nacionales)", department: Ancash, ubigeo: '02', visitor_type: Nacionales}
+    - {code: RD13415DM, name: "Pernoctaciones - Ancash (Extranjeros)", department: Ancash, ubigeo: '02', visitor_type: Extranjeros}
+    - {code: RD13416DM, name: "Pernoctaciones - Apurimac", department: Apurimac, ubigeo: '03', visitor_type: Total}
+    - {code: RD13417DM, name: "Pernoctaciones - Apurimac (Nacionales)", department: Apurimac, ubigeo: '03', visitor_type: Nacionales}
+    - {code: RD13418DM, name: "Pernoctaciones - Apurimac (Extranjeros)", department: Apurimac, ubigeo: '03', visitor_type: Extranjeros}
+    - {code: RD13419DM, name: "Pernoctaciones - Arequipa", department: Arequipa, ubigeo: '04', visitor_type: Total}
+    - {code: RD13420DM, name: "Pernoctaciones - Arequipa (Nacionales)", department: Arequipa, ubigeo: '04', visitor_type: Nacionales}
+    - {code: RD13421DM, name: "Pernoctaciones - Arequipa (Extranjeros)", department: Arequipa, ubigeo: '04', visitor_type: Extranjeros}
+    - {code: RD13422DM, name: "Pernoctaciones - Ayacucho", department: Ayacucho, ubigeo: '05', visitor_type: Total}
+    - {code: RD13423DM, name: "Pernoctaciones - Ayacucho (Nacionales)", department: Ayacucho, ubigeo: '05', visitor_type: Nacionales}
+    - {code: RD13424DM, name: "Pernoctaciones - Ayacucho (Extranjeros)", department: Ayacucho, ubigeo: '05', visitor_type: Extranjeros}
+    - {code: RD13425DM, name: "Pernoctaciones - Cajamarca", department: Cajamarca, ubigeo: '06', visitor_type: Total}
+    - {code: RD13426DM, name: "Pernoctaciones - Cajamarca (Nacionales)", department: Cajamarca, ubigeo: '06', visitor_type: Nacionales}
+    - {code: RD13427DM, name: "Pernoctaciones - Cajamarca (Extranjeros)", department: Cajamarca, ubigeo: '06', visitor_type: Extranjeros}
+    - {code: RD13428DM, name: "Pernoctaciones - Callao", department: Callao, ubigeo: '07', visitor_type: Total}
+    - {code: RD13429DM, name: "Pernoctaciones - Callao (Nacionales)", department: Callao, ubigeo: '07', visitor_type: Nacionales}
+    - {code: RD13430DM, name: "Pernoctaciones - Callao (Extranjeros)", department: Callao, ubigeo: '07', visitor_type: Extranjeros}
+    - {code: RD13431DM, name: "Pernoctaciones - Cusco", department: Cusco, ubigeo: '08', visitor_type: Total}
+    - {code: RD13432DM, name: "Pernoctaciones - Cusco (Nacionales)", department: Cusco, ubigeo: '08', visitor_type: Nacionales}
+    - {code: RD13433DM, name: "Pernoctaciones - Cusco (Extranjeros)", department: Cusco, ubigeo: '08', visitor_type: Extranjeros}
+    - {code: RD13434DM, name: "Pernoctaciones - Huancavelica", department: Huancavelica, ubigeo: '09', visitor_type: Total}
+    - {code: RD13435DM, name: "Pernoctaciones - Huancavelica (Nacionales)", department: Huancavelica, ubigeo: '09', visitor_type: Nacionales}
+    - {code: RD13436DM, name: "Pernoctaciones - Huancavelica (Extranjeros)", department: Huancavelica, ubigeo: '09', visitor_type: Extranjeros}
+    - {code: RD13437DM, name: "Pernoctaciones - Huanuco", department: Huanuco, ubigeo: '10', visitor_type: Total}
+    - {code: RD13438DM, name: "Pernoctaciones - Huanuco (Nacionales)", department: Huanuco, ubigeo: '10', visitor_type: Nacionales}
+    - {code: RD13439DM, name: "Pernoctaciones - Huanuco (Extranjeros)", department: Huanuco, ubigeo: '10', visitor_type: Extranjeros}
+    - {code: RD13440DM, name: "Pernoctaciones - Ica", department: Ica, ubigeo: '11', visitor_type: Total}
+    - {code: RD13441DM, name: "Pernoctaciones - Ica (Nacionales)", department: Ica, ubigeo: '11', visitor_type: Nacionales}
+    - {code: RD13442DM, name: "Pernoctaciones - Ica (Extranjeros)", department: Ica, ubigeo: '11', visitor_type: Extranjeros}
+    - {code: RD13443DM, name: "Pernoctaciones - Junin", department: Junin, ubigeo: '12', visitor_type: Total}
+    - {code: RD13444DM, name: "Pernoctaciones - Junin (Nacionales)", department: Junin, ubigeo: '12', visitor_type: Nacionales}
+    - {code: RD13445DM, name: "Pernoctaciones - Junin (Extranjeros)", department: Junin, ubigeo: '12', visitor_type: Extranjeros}
+    - {code: RD13446DM, name: "Pernoctaciones - La Libertad", department: La Libertad, ubigeo: '13', visitor_type: Total}
+    - {code: RD13447DM, name: "Pernoctaciones - La Libertad (Nacionales)", department: La Libertad, ubigeo: '13', visitor_type: Nacionales}
+    - {code: RD13448DM, name: "Pernoctaciones - La Libertad (Extranjeros)", department: La Libertad, ubigeo: '13', visitor_type: Extranjeros}
+    - {code: RD13449DM, name: "Pernoctaciones - Lambayeque", department: Lambayeque, ubigeo: '14', visitor_type: Total}
+    - {code: RD13450DM, name: "Pernoctaciones - Lambayeque (Nacionales)", department: Lambayeque, ubigeo: '14', visitor_type: Nacionales}
+    - {code: RD13451DM, name: "Pernoctaciones - Lambayeque (Extranjeros)", department: Lambayeque, ubigeo: '14', visitor_type: Extranjeros}
+    - {code: RD13452DM, name: "Pernoctaciones - Lima", department: Lima, ubigeo: '15', visitor_type: Total}
+    - {code: RD13453DM, name: "Pernoctaciones - Lima (Nacionales)", department: Lima, ubigeo: '15', visitor_type: Nacionales}
+    - {code: RD13454DM, name: "Pernoctaciones - Lima (Extranjeros)", department: Lima, ubigeo: '15', visitor_type: Extranjeros}
+    - {code: RD13455DM, name: "Pernoctaciones - Loreto", department: Loreto, ubigeo: '16', visitor_type: Total}
+    - {code: RD13456DM, name: "Pernoctaciones - Loreto (Nacionales)", department: Loreto, ubigeo: '16', visitor_type: Nacionales}
+    - {code: RD13457DM, name: "Pernoctaciones - Loreto (Extranjeros)", department: Loreto, ubigeo: '16', visitor_type: Extranjeros}
+    - {code: RD13458DM, name: "Pernoctaciones - Madre de Dios", department: Madre de Dios, ubigeo: '17', visitor_type: Total}
+    - {code: RD13459DM, name: "Pernoctaciones - Madre de Dios (Nacionales)", department: Madre de Dios, ubigeo: '17', visitor_type: Nacionales}
+    - {code: RD13460DM, name: "Pernoctaciones - Madre de Dios (Extranjeros)", department: Madre de Dios, ubigeo: '17', visitor_type: Extranjeros}
+    - {code: RD13461DM, name: "Pernoctaciones - Moquegua", department: Moquegua, ubigeo: '18', visitor_type: Total}
+    - {code: RD13462DM, name: "Pernoctaciones - Moquegua (Nacionales)", department: Moquegua, ubigeo: '18', visitor_type: Nacionales}
+    - {code: RD13463DM, name: "Pernoctaciones - Moquegua (Extranjeros)", department: Moquegua, ubigeo: '18', visitor_type: Extranjeros}
+    - {code: RD13464DM, name: "Pernoctaciones - Pasco", department: Pasco, ubigeo: '19', visitor_type: Total}
+    - {code: RD13465DM, name: "Pernoctaciones - Pasco (Nacionales)", department: Pasco, ubigeo: '19', visitor_type: Nacionales}
+    - {code: RD13466DM, name: "Pernoctaciones - Pasco (Extranjeros)", department: Pasco, ubigeo: '19', visitor_type: Extranjeros}
+    - {code: RD13467DM, name: "Pernoctaciones - Piura", department: Piura, ubigeo: '20', visitor_type: Total}
+    - {code: RD13468DM, name: "Pernoctaciones - Piura (Nacionales)", department: Piura, ubigeo: '20', visitor_type: Nacionales}
+    - {code: RD13469DM, name: "Pernoctaciones - Piura (Extranjeros)", department: Piura, ubigeo: '20', visitor_type: Extranjeros}
+    - {code: RD13470DM, name: "Pernoctaciones - Puno", department: Puno, ubigeo: '21', visitor_type: Total}
+    - {code: RD13471DM, name: "Pernoctaciones - Puno (Nacionales)", department: Puno, ubigeo: '21', visitor_type: Nacionales}
+    - {code: RD13472DM, name: "Pernoctaciones - Puno (Extranjeros)", department: Puno, ubigeo: '21', visitor_type: Extranjeros}
+    - {code: RD13473DM, name: "Pernoctaciones - San Martin", department: San Martin, ubigeo: '22', visitor_type: Total}
+    - {code: RD13474DM, name: "Pernoctaciones - San Martin (Nacionales)", department: San Martin, ubigeo: '22', visitor_type: Nacionales}
+    - {code: RD13475DM, name: "Pernoctaciones - San Martin (Extranjeros)", department: San Martin, ubigeo: '22', visitor_type: Extranjeros}
+    - {code: RD13476DM, name: "Pernoctaciones - Tacna", department: Tacna, ubigeo: '23', visitor_type: Total}
+    - {code: RD13477DM, name: "Pernoctaciones - Tacna (Nacionales)", department: Tacna, ubigeo: '23', visitor_type: Nacionales}
+    - {code: RD13478DM, name: "Pernoctaciones - Tacna (Extranjeros)", department: Tacna, ubigeo: '23', visitor_type: Extranjeros}
+    - {code: RD13479DM, name: "Pernoctaciones - Tumbes", department: Tumbes, ubigeo: '24', visitor_type: Total}
+    - {code: RD13480DM, name: "Pernoctaciones - Tumbes (Nacionales)", department: Tumbes, ubigeo: '24', visitor_type: Nacionales}
+    - {code: RD13481DM, name: "Pernoctaciones - Tumbes (Extranjeros)", department: Tumbes, ubigeo: '24', visitor_type: Extranjeros}
+    - {code: RD13482DM, name: "Pernoctaciones - Ucayali", department: Ucayali, ubigeo: '25', visitor_type: Total}
+    - {code: RD13483DM, name: "Pernoctaciones - Ucayali (Nacionales)", department: Ucayali, ubigeo: '25', visitor_type: Nacionales}
+    - {code: RD13484DM, name: "Pernoctaciones - Ucayali (Extranjeros)", department: Ucayali, ubigeo: '25', visitor_type: Extranjeros}

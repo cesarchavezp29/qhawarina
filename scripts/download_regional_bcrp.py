@@ -53,13 +53,9 @@ CATEGORY_FILES = {
     "electricity_by_department": "bcrp_regional_electricity.parquet",
     "mining_copper_by_department": "bcrp_regional_mining_copper.parquet",
     "mining_gold_by_department": "bcrp_regional_mining_gold.parquet",
-    "mining_tin_by_department": "bcrp_regional_mining_tin.parquet",
     "mining_silver_by_department": "bcrp_regional_mining_silver.parquet",
-    "mining_zinc_by_department": "bcrp_regional_mining_zinc.parquet",
     "mining_lead_by_department": "bcrp_regional_mining_lead.parquet",
-    "electricity_sales_by_department": "bcrp_regional_electricity_sales.parquet",
-    "tourism_arrivals_by_department": "bcrp_regional_tourism_arrivals.parquet",
-    "tourism_nights_by_department": "bcrp_regional_tourism_nights.parquet",
+    "mining_zinc_by_department": "bcrp_regional_mining_zinc.parquet",
     "tax_revenue_by_department": "bcrp_regional_tax.parquet",
     "government_spending_local": "bcrp_regional_spending_local.parquet",
     "government_spending_regional": "bcrp_regional_spending_regional.parquet",
@@ -67,6 +63,9 @@ CATEGORY_FILES = {
     "government_capex_regional": "bcrp_regional_capex_regional.parquet",
     "exports_by_department": "bcrp_regional_exports.parquet",
     "imports_by_customs": "bcrp_regional_imports.parquet",
+    "electricity_sales_by_department": "bcrp_regional_electricity_sales.parquet",
+    "tourism_arrivals_by_department": "bcrp_regional_tourism_arrivals.parquet",
+    "tourism_nights_by_department": "bcrp_regional_tourism_nights.parquet",
 }
 
 # Short aliases for --only flag
@@ -78,13 +77,9 @@ ALIASES = {
     "electricity_sales": "electricity_sales_by_department",
     "copper": "mining_copper_by_department",
     "gold": "mining_gold_by_department",
-    "tin": "mining_tin_by_department",
     "silver": "mining_silver_by_department",
-    "zinc": "mining_zinc_by_department",
     "lead": "mining_lead_by_department",
-    "tourism": "tourism_arrivals_by_department",
-    "tourism_arrivals": "tourism_arrivals_by_department",
-    "tourism_nights": "tourism_nights_by_department",
+    "zinc": "mining_zinc_by_department",
     "tax": "tax_revenue_by_department",
     "spending_local": "government_spending_local",
     "spending_regional": "government_spending_regional",
@@ -92,6 +87,10 @@ ALIASES = {
     "capex_regional": "government_capex_regional",
     "exports": "exports_by_department",
     "imports": "imports_by_customs",
+    "electricity_sales": "electricity_sales_by_department",
+    "tourism_arrivals": "tourism_arrivals_by_department",
+    "tourism_nights": "tourism_nights_by_department",
+    "tourism": "tourism_arrivals_by_department",
 }
 
 
@@ -122,11 +121,17 @@ def download_category(
         len(codes), category_key,
     )
 
-    # Exports only go to 2022
+    # Discontinued series: set end date to avoid querying empty ranges
     end_year = 2026
     end_month = 2
     if "exports" in category_key:
         end_year = 2022
+        end_month = 12
+    elif "electricity_sales" in category_key:
+        end_year = 2018
+        end_month = 6
+    elif "tourism" in category_key:
+        end_year = 2019
         end_month = 12
 
     df = client.fetch_series(

@@ -6,7 +6,8 @@ Methodology (Billion Prices Project / Cavallo & Rigobon):
      filtered to 0.5 < ratio < 2.0 to exclude promotions/errors
   3. Chain-link daily indices: Index_t = Index_{t-1} * Jevons_t
   4. Disaggregate by CPI category (food, non-food, etc.)
-  5. Export JSON for website consumption
+  5. Aggregate with CPI expenditure weights (weighted Jevons)
+  6. Export JSON for website consumption
 
 Output: exports/data/daily_price_index.json
          data/processed/national/daily_price_index.parquet
@@ -139,13 +140,32 @@ def jevons_ratio(df_t0: pd.DataFrame, df_t1: pd.DataFrame,
     return float(np.exp(np.log(merged["ratio"]).mean()))
 
 
+def _weighted_index(cat_indexes: dict) -> float:
+    """
+    Compute CPI-weighted geometric mean of category-level indexes.
+
+    Uses expenditure weights from CATEGORY_MAP (INEI IPC basket).
+    Returns 100.0 if no valid categories available.
+    """
+    valid = [
+        (meta["cpi_weight"], cat_indexes[cat])
+        for cat, meta in CATEGORY_MAP.items()
+        if cat != "other" and meta["cpi_weight"] > 0 and cat_indexes.get(cat, 0) > 0
+    ]
+    if not valid:
+        return 100.0
+    total_w = sum(w for w, _ in valid)
+    log_sum = sum(w * math.log(v) for w, v in valid)
+    return math.exp(log_sum / total_w)
+
+
 def build_chain_index(snapshots: dict[str, pd.DataFrame]) -> pd.DataFrame:
     """
     Build chain-linked daily price index from all snapshots.
 
     Returns DataFrame with columns:
-        date, index_all, index_food, index_nonfood,
-        <per-category indexes>, n_matched, jevons_ratio
+        date, index_all (CPI-weighted), index_all_unweighted, index_food,
+        index_nonfood, <per-category indexes>, n_matched, jevons_ratio_all
     """
     dates = sorted(snapshots.keys())
     if len(dates) < 2:
@@ -161,14 +181,15 @@ def build_chain_index(snapshots: dict[str, pd.DataFrame]) -> pd.DataFrame:
 
     # Initialize index at 100 on first date
     rows = []
-    index_all = 100.0
+    index_all_unweighted = 100.0
     index_food = 100.0
     index_nonfood = 100.0
     cat_indexes = {cat: 100.0 for cat in CATEGORY_MAP}
 
     rows.append({
         "date": dates[0],
-        "index_all": index_all,
+        "index_all": 100.0,
+        "index_all_unweighted": 100.0,
         "index_food": index_food,
         "index_nonfood": index_nonfood,
         **{f"index_{cat}": 100.0 for cat in CATEGORY_MAP},
@@ -183,10 +204,10 @@ def build_chain_index(snapshots: dict[str, pd.DataFrame]) -> pd.DataFrame:
 
         print(f"  {d0} -> {d1}: computing Jevons...")
 
-        # Overall index
+        # Unweighted overall index (reference / backward compat)
         r_all = jevons_ratio(df0, df1)
         if r_all:
-            index_all = index_all * r_all
+            index_all_unweighted = index_all_unweighted * r_all
 
         # Food vs non-food
         food_cats = list(FOOD_CATEGORIES)
@@ -210,17 +231,21 @@ def build_chain_index(snapshots: dict[str, pd.DataFrame]) -> pd.DataFrame:
                 cat_indexes[cat] = cat_indexes[cat] * r
             cat_ratios[f"index_{cat}"] = round(cat_indexes[cat], 4)
 
+        # Weighted aggregate: CPI expenditure-weighted geometric mean of category indexes
+        index_all_weighted = _weighted_index(cat_indexes)
+
         # Count matched products
         merged = df0[["store", "sku_id"]].merge(
             df1[["store", "sku_id"]], on=["store", "sku_id"]
         )
         n_matched = len(merged)
-        print(f"    Matched: {n_matched}, All ratio: {r_all:.5f}" if r_all else
-              f"    Matched: {n_matched}, All ratio: None")
+        print(f"    Matched: {n_matched}, Weighted idx: {index_all_weighted:.4f}, "
+              f"Unweighted: {index_all_unweighted:.4f}")
 
         rows.append({
             "date": d1,
-            "index_all": round(index_all, 4),
+            "index_all": round(index_all_weighted, 4),
+            "index_all_unweighted": round(index_all_unweighted, 4),
             "index_food": round(index_food, 4),
             "index_nonfood": round(index_nonfood, 4),
             **cat_ratios,
@@ -232,7 +257,7 @@ def build_chain_index(snapshots: dict[str, pd.DataFrame]) -> pd.DataFrame:
 
 
 def compute_variations(df: pd.DataFrame) -> pd.DataFrame:
-    """Add daily and cumulative variation columns."""
+    """Add daily, cumulative, and rolling inflation variation columns."""
     df = df.copy()
     df["date"] = pd.to_datetime(df["date"])
     df = df.sort_values("date")
@@ -241,6 +266,14 @@ def compute_variations(df: pd.DataFrame) -> pd.DataFrame:
         base_col = col.replace("index_", "")
         df[f"var_{base_col}"] = (df[col] / df[col].shift(1) - 1) * 100
         df[f"cum_{base_col}_pct"] = (df[col] / 100 - 1) * 100  # vs day 1
+
+    # 30-day rolling average for smoother inflation estimates (Cavallo & Rigobon 2016)
+    df["rolling30_all"] = df["index_all"].rolling(30, min_periods=5).mean()
+
+    # YoY: (30d rolling avg today) / (30d rolling avg 365 days ago) - 1
+    df["yoy_inflation"] = (df["rolling30_all"] / df["rolling30_all"].shift(365) - 1) * 100
+    # MoM: (30d rolling avg today) / (30d rolling avg 30 days ago) - 1
+    df["mom_inflation"] = (df["rolling30_all"] / df["rolling30_all"].shift(30) - 1) * 100
 
     return df
 
@@ -269,35 +302,108 @@ def _compute_top_movers(records: list, n: int = 4) -> list:
     return movers[:n]
 
 
-def export_json(df: pd.DataFrame, output_path: Path) -> None:
+def _compute_product_movers(df_t0: pd.DataFrame | None,
+                            df_t1: pd.DataFrame | None, n: int = 4) -> list:
+    """Return top N individual products by absolute daily price change."""
+    if df_t0 is None or df_t1 is None:
+        return []
+
+    for df in [df_t0, df_t1]:
+        if "cpi_cat" not in df.columns:
+            df["cpi_cat"] = df.apply(map_category, axis=1)
+
+    keep_t0 = [c for c in ["store", "sku_id", "price", "product_name", "cpi_cat"] if c in df_t0.columns]
+    keep_t1 = [c for c in ["store", "sku_id", "price", "product_name"] if c in df_t1.columns]
+
+    merged = df_t0[keep_t0].merge(
+        df_t1[keep_t1], on=["store", "sku_id"], suffixes=("_t0", "_t1"),
+    )
+    if merged.empty:
+        return []
+
+    merged["ratio"] = merged["price_t1"] / merged["price_t0"]
+    merged = merged[(merged["ratio"] >= 0.5) & (merged["ratio"] <= 2.0)]
+    merged["var_pct"] = (merged["ratio"] - 1) * 100
+    merged = merged.reindex(merged["var_pct"].abs().sort_values(ascending=False).index).head(n)
+
+    result = []
+    for _, row in merged.iterrows():
+        name = str(row.get("product_name_t0", row.get("product_name", "")))
+        if len(name) > 40:
+            name = name[:37] + "..."
+        result.append({
+            "name": name,
+            "store": str(row.get("store", "")),
+            "category": str(row.get("cpi_cat", "")),
+            "var": round(float(row["var_pct"]), 2),
+        })
+    return result
+
+
+def _compute_coverage(df_latest: pd.DataFrame | None) -> tuple[dict, dict]:
+    """
+    Compute stores_coverage and categories_coverage from latest snapshot.
+    Returns (stores_coverage, categories_coverage).
+    """
+    if df_latest is None or df_latest.empty:
+        return {}, {}
+
+    df = df_latest.copy()
+    if "cpi_cat" not in df.columns:
+        df["cpi_cat"] = df.apply(map_category, axis=1)
+
+    stores_coverage = {}
+    if "store" in df.columns:
+        for store, grp in df.groupby("store"):
+            stores_coverage[str(store)] = int(len(grp))
+
+    categories_coverage = {}
+    for cat, grp in df.groupby("cpi_cat"):
+        if cat != "other":
+            categories_coverage[str(cat)] = int(len(grp))
+
+    return stores_coverage, categories_coverage
+
+
+def export_json(df: pd.DataFrame, output_path: Path,
+                df_prev: pd.DataFrame | None = None,
+                df_latest: pd.DataFrame | None = None) -> None:
     """Export index to JSON for website consumption."""
     output_path.parent.mkdir(parents=True, exist_ok=True)
+
+    def safe(v):
+        return None if v is None or (isinstance(v, float) and math.isnan(v)) else round(v, 4)
 
     records = []
     for _, row in df.iterrows():
         record = {
             "date": row["date"].strftime("%Y-%m-%d"),
             "index_all": row["index_all"],
+            "index_all_unweighted": row.get("index_all_unweighted"),
             "index_food": row["index_food"],
             "index_nonfood": row["index_nonfood"],
-            "var_all": None if (v := row.get("var_all")) is None or (isinstance(v, float) and math.isnan(v)) else round(v, 4),
-            "var_food": None if (v := row.get("var_food")) is None or (isinstance(v, float) and math.isnan(v)) else round(v, 4),
+            "var_all": safe(row.get("var_all")),
+            "var_food": safe(row.get("var_food")),
             "cum_pct": round(row.get("cum_all_pct", 0) or 0, 4),
+            "yoy_inflation": safe(row.get("yoy_inflation")),
+            "mom_inflation": safe(row.get("mom_inflation")),
             "interpolated": bool(row.get("interpolated", False)),
             "n_matched": int(row.get("n_matched", 0) or 0),
         }
-        # Add per-category indexes
         for cat in CATEGORY_MAP:
             record[f"index_{cat}"] = row.get(f"index_{cat}", 100.0)
         records.append(record)
 
-    # Compute summary stats
     latest = records[-1] if records else {}
     first = records[0] if records else {}
 
+    stores_coverage, categories_coverage = _compute_coverage(df_latest)
+    product_movers = _compute_product_movers(df_prev, df_latest)
+
     output = {
         "metadata": {
-            "methodology": "Jevons bilateral price index, chain-linked daily",
+            "methodology": "Weighted Jevons bilateral price index (CPI expenditure weights), chain-linked daily",
+            "methodology_note": "index_all uses INEI IPC expenditure weights via weighted geometric mean of category-level Jevons ratios. index_all_unweighted is the simple geometric mean across all matched products.",
             "base_date": first.get("date", ""),
             "base_value": 100,
             "last_date": latest.get("date", ""),
@@ -305,6 +411,7 @@ def export_json(df: pd.DataFrame, output_path: Path) -> None:
             "stores": ["Plaza Vea", "Metro", "Wong"],
             "n_products_approx": 42000,
             "ratio_filter": "0.5 < ratio < 2.0",
+            "inflation_window": "30-day rolling average (yoy_inflation, mom_inflation)",
             "reference": "Cavallo & Rigobon (2016), Billion Prices Project, MIT",
             "updated": date.today().isoformat(),
         },
@@ -325,8 +432,13 @@ def export_json(df: pd.DataFrame, output_path: Path) -> None:
             "index_food": latest.get("index_food"),
             "cum_pct": latest.get("cum_pct"),
             "var_all": latest.get("var_all"),
+            "yoy_inflation": latest.get("yoy_inflation"),
+            "mom_inflation": latest.get("mom_inflation"),
             "n_products_today": latest.get("n_matched", 0),
             "top_movers": _compute_top_movers(records),
+            "product_movers": product_movers,
+            "stores_coverage": stores_coverage,
+            "categories_coverage": categories_coverage,
         },
     }
 
@@ -360,7 +472,7 @@ def main():
         print("[ERROR] Index computation failed")
         return 1
 
-    # Add variation columns
+    # Add variation columns (daily, cumulative, YoY, MoM)
     df = compute_variations(df)
 
     # ── Fill missing days with linear interpolation ───────────────────────────
@@ -373,7 +485,6 @@ def main():
         index_cols = [c for c in df_full.columns if c.startswith("index_") or c in ("n_matched", "jevons_ratio_all")]
         df_full[index_cols] = df_full[index_cols].interpolate(method="linear")
         df_full["interpolated"] = False
-        # Mark as interpolated: missing n_matched OR zero BUT not the base date (first row has n_matched=0 by design)
         base_date = df_full.index[0]
         df_full.loc[
             (df_full.index != base_date) & (df_full["n_matched"].isna() | (df_full["n_matched"] == 0)),
@@ -390,16 +501,22 @@ def main():
     # ─────────────────────────────────────────────────────────────────────────
 
     print(f"\n[OK] Index computed for {len(df)} days")
-    print(df[["date", "index_all", "index_food", "index_nonfood", "var_all"]].to_string())
+    print(df[["date", "index_all", "index_food", "index_nonfood",
+               "var_all", "yoy_inflation", "mom_inflation"]].to_string())
 
     # Save parquet
     OUTPUT_PARQUET.parent.mkdir(parents=True, exist_ok=True)
     df.to_parquet(OUTPUT_PARQUET, index=False)
     print(f"\n[OK] Saved parquet: {OUTPUT_PARQUET}")
 
+    # Get latest two raw snapshots for product movers + coverage
+    sorted_dates = sorted(snapshots.keys())
+    df_latest_snap = snapshots[sorted_dates[-1]] if sorted_dates else None
+    df_prev_snap = snapshots[sorted_dates[-2]] if len(sorted_dates) >= 2 else None
+
     # Export JSON for website
     OUTPUT_JSON.parent.mkdir(parents=True, exist_ok=True)
-    export_json(df, OUTPUT_JSON)
+    export_json(df, OUTPUT_JSON, df_prev=df_prev_snap, df_latest=df_latest_snap)
 
     print("\n" + "=" * 60)
     print("DONE")

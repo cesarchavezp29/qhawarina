@@ -269,15 +269,15 @@ class TestNLPClassifier:
             president="Vizcarra",
             client=mock_client,
         )
-        assert result["severity_nlp"] == 5  # bin3=3 maps to 5
-        assert result["severity_nlp_bin3"] == 3
-        assert result["severity_nlp_confidence"] == 1.0
+        assert result["severity_claude"] == 5  # bin3=3 maps to 5
+        assert result["severity_claude_bin3"] == 3
+        assert result["severity_claude_confidence"] == 1.0
 
     def test_monthly_event_score(self):
         from src.nlp.classifier import compute_monthly_event_score
         df = pd.DataFrame({
             "date": pd.to_datetime(["2020-01-05", "2020-01-15", "2020-02-10"]),
-            "severity_nlp": [3, 5, 2],
+            "severity_claude": [3, 5, 2],
         })
         monthly = compute_monthly_event_score(df)
         assert monthly.iloc[0] == 5  # max of Jan
@@ -437,7 +437,7 @@ class TestIndexAggregation:
         from src.processing.political_index import prepare_events_monthly
         df = pd.DataFrame({
             "date": pd.to_datetime(["2020-01-05", "2020-01-15", "2020-02-10"]),
-            "severity_nlp": [3, 5, 2],
+            "severity_claude": [3, 5, 2],
         })
         monthly = prepare_events_monthly(df, warmup_months=0)
         assert len(monthly) == 2
@@ -489,25 +489,25 @@ class TestValidationMetrics:
         from src.nlp.validator import compute_validation_metrics
         df = pd.DataFrame({
             "severity_gt": [1, 2, 3, 1, 2, 3],
-            "severity_nlp_bin3": [1, 2, 3, 1, 2, 3],
-            "severity_claude": [pd.NA] * 6,
-            "severity_claude_bin3": [pd.NA] * 6,
+            "severity_claude_bin3": [1, 2, 3, 1, 2, 3],
+            "severity_sonnet": [pd.NA] * 6,
+            "severity_sonnet_bin3": [pd.NA] * 6,
         })
         metrics = compute_validation_metrics(df)
-        assert metrics["nlp_vs_gt_accuracy"] == 1.0
-        assert metrics["nlp_vs_gt_severe_errors"] == 0
-        assert metrics["nlp_vs_gt_kappa"] == 1.0
+        assert metrics["claude_vs_gt_accuracy"] == 1.0
+        assert metrics["claude_vs_gt_severe_errors"] == 0
+        assert metrics["claude_vs_gt_kappa"] == 1.0
 
     def test_severe_errors_detected(self):
         from src.nlp.validator import compute_validation_metrics
         df = pd.DataFrame({
             "severity_gt": [3, 1],
-            "severity_nlp_bin3": [1, 3],  # both are severe errors
-            "severity_claude": [pd.NA, pd.NA],
-            "severity_claude_bin3": [pd.NA, pd.NA],
+            "severity_claude_bin3": [1, 3],  # both are severe errors
+            "severity_sonnet": [pd.NA, pd.NA],
+            "severity_sonnet_bin3": [pd.NA, pd.NA],
         })
         metrics = compute_validation_metrics(df)
-        assert metrics["nlp_vs_gt_severe_errors"] == 2
+        assert metrics["claude_vs_gt_severe_errors"] == 2
 
 
 # ── Integration test (no network, no model) ─────────────────────────────────
@@ -542,7 +542,7 @@ class TestPipelineIntegration:
 
         # Prepare events (use GT as events)
         events = gt["events"].copy()
-        events["severity_nlp"] = events["severity"].map({1: 1, 2: 3, 3: 5})
+        events["severity_claude"] = events["severity"].map({1: 1, 2: 3, 3: 5})
         events_monthly = prepare_events_monthly(events)
 
         # Build index

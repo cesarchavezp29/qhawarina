@@ -6,17 +6,15 @@ Steps:
 3. Deduplicate events
 4. Build cabinet timeline (PCM premiers)
 5. Match scraped events against ground truth
-6. Classify events with XLM-RoBERTa (severity 1-5 + bin3)
-7. (Optional) Validate with Claude API
-8. Compute cabinet stability component
-9. Build monthly + weekly composite index
-10. Save all outputs
+6. Classify events with Claude API (severity 1-3)
+7. Compute cabinet stability component
+8. Build monthly + weekly composite index
+9. Save all outputs
 
 Usage:
     python scripts/build_political_index.py                    # full pipeline
     python scripts/build_political_index.py --skip-fetch       # use cached pages
-    python scripts/build_political_index.py --skip-nlp         # skip XLM-RoBERTa
-    python scripts/build_political_index.py --skip-claude      # skip Claude validation
+    python scripts/build_political_index.py --skip-claude      # skip Claude classification
     python scripts/build_political_index.py --validate-only    # just metrics
 """
 
@@ -32,6 +30,7 @@ sys.path.insert(0, str(PROJECT_ROOT))
 import pandas as pd
 
 from config.settings import (
+    PROCESSED_NATIONAL_DIR,
     PROCESSED_POLITICAL_DIR,
     RAW_POLITICAL_DIR,
 )
@@ -45,6 +44,10 @@ from src.ingestion.political import (
 )
 from src.processing.cabinet_stability import (
     compute_cabinet_instability,
+)
+from src.processing.financial_component import (
+    build_confidence_score,
+    build_financial_score,
 )
 from src.processing.political_index import (
     build_monthly_index,
@@ -72,7 +75,7 @@ def main():
     parser = argparse.ArgumentParser(description="Build Political Instability Index")
     parser.add_argument("--skip-fetch", action="store_true",
                         help="Use cached Wikipedia pages from previous run")
-    parser.add_argument("--skip-nlp", action="store_true",
+    parser.add_argument("--skip-claude", action="store_true",
                         help="Skip Claude API classification (use GT fallback)")
     parser.add_argument("--validate-only", action="store_true",
                         help="Just compute validation metrics from existing data")
@@ -149,7 +152,7 @@ def main():
                 n_matched, len(gt["events"]), recall)
 
     # ── Step 7: Claude API Classification ─────────────────────────────────
-    if not args.skip_nlp and not args.validate_only:
+    if not args.skip_claude and not args.validate_only:
         logger.info("=" * 60)
         logger.info("STEP 7: Classifying events with Claude API")
         try:
@@ -157,29 +160,29 @@ def main():
             events = classify_events_batch(events)
         except ImportError:
             logger.warning("  anthropic not installed — falling back to GT severity")
-            args.skip_nlp = True
+            args.skip_claude = True
 
-    if args.skip_nlp or args.validate_only:
+    if args.skip_claude or args.validate_only:
         logger.info("STEP 7: Skipping classification (using GT fallback)")
-        if "severity_nlp" not in events.columns:
-            events["severity_nlp"] = 3  # default medium
-            events["severity_nlp_bin3"] = 2
-            events["severity_nlp_confidence"] = 0.0
-            events["severity_nlp_label"] = ""
+        if "severity_claude" not in events.columns:
+            events["severity_claude"] = 3  # default medium
+            events["severity_claude_bin3"] = 2
+            events["severity_claude_confidence"] = 0.0
+            events["severity_claude_label"] = ""
             # Override with GT where available
             mask = events["severity_gt"].notna()
-            gt_to_nlp = {1: 1, 2: 3, 3: 5}
+            gt_to_score5 = {1: 1, 2: 3, 3: 5}
             for idx in events[mask].index:
                 gt_val = int(events.loc[idx, "severity_gt"])
-                events.loc[idx, "severity_nlp"] = gt_to_nlp.get(gt_val, 3)
-                events.loc[idx, "severity_nlp_bin3"] = gt_val
+                events.loc[idx, "severity_claude"] = gt_to_score5.get(gt_val, 3)
+                events.loc[idx, "severity_claude_bin3"] = gt_val
 
     # ── Step 8: Assign final scores ──────────────────────────────────────
     logger.info("=" * 60)
     logger.info("STEP 8: Computing final severity scores")
 
-    events["severity_final"] = events["severity_nlp"]
-    events["severity_final_bin3"] = events["severity_nlp_bin3"]
+    events["severity_final"] = events["severity_claude"]
+    events["severity_final_bin3"] = events["severity_claude_bin3"]
 
     # Event weight in index: severity / 5
     events["weight_in_index"] = events["severity_final"] / 5.0
@@ -203,9 +206,9 @@ def main():
     # ── Step 8b: Validation metrics (if GT available) ─────────────────────
     gt_matched = events[events["severity_gt"].notna()]
     if len(gt_matched) > 0:
-        correct = (gt_matched["severity_nlp_bin3"].astype(int) == gt_matched["severity_gt"].astype(int)).sum()
+        correct = (gt_matched["severity_claude_bin3"].astype(int) == gt_matched["severity_gt"].astype(int)).sum()
         accuracy = correct / len(gt_matched) * 100
-        diff = abs(gt_matched["severity_nlp_bin3"].astype(int) - gt_matched["severity_gt"].astype(int))
+        diff = abs(gt_matched["severity_claude_bin3"].astype(int) - gt_matched["severity_gt"].astype(int))
         severe = (diff >= 2).sum()
         logger.info("  Claude vs GT: %d/%d correct (%.1f%%), %d severe errors",
                     correct, len(gt_matched), accuracy, severe)
@@ -231,25 +234,49 @@ def main():
     events_monthly = prepare_events_monthly(events)
     events_weekly = prepare_events_weekly(events)
 
-    # ── Step 12: Financial component (placeholder) ───────────────────────
-    # TODO: Download EMBI and FX daily from BCRP, compute monthly/weekly aggregates
-    logger.info("STEP 12: Financial component (placeholder — needs BCRP daily data)")
-    financial_monthly = pd.DataFrame({
-        "date": events_monthly["date"],
-        "financial_score": 0.0,
-    })
-    financial_weekly = pd.DataFrame({
-        "date": events_weekly["date"],
-        "financial_score": 0.0,
-    })
+    # ── Step 12: Financial component ──────────────────────────────────────
+    logger.info("=" * 60)
+    logger.info("STEP 12: Building financial stress component")
+
+    panel_path = PROCESSED_NATIONAL_DIR / "panel_national_monthly.parquet"
+    if panel_path.exists():
+        panel_df = pd.read_parquet(panel_path)
+        financial_monthly = build_financial_score(panel_df, freq="M")
+        logger.info("  Financial score: %d months", len(financial_monthly))
+    else:
+        logger.warning("  Panel not found at %s — using neutral financial scores", panel_path)
+        financial_monthly = pd.DataFrame({
+            "date": events_monthly["date"],
+            "financial_score": 0.0,
+        })
+
+    # Align financial to weekly dates (forward-fill monthly values)
+    if not financial_monthly.empty:
+        fin_ts = financial_monthly.set_index("date")["financial_score"]
+        fin_weekly = fin_ts.reindex(events_weekly["date"], method="ffill").fillna(0.0)
+        financial_weekly = pd.DataFrame({
+            "date": events_weekly["date"],
+            "financial_score": fin_weekly.values,
+        })
+    else:
+        financial_weekly = pd.DataFrame({
+            "date": events_weekly["date"],
+            "financial_score": 0.0,
+        })
 
     # ── Step 13: Business confidence component ───────────────────────────
-    # TODO: Load PD12912AM from panel
-    logger.info("STEP 13: Business confidence component (placeholder)")
-    confidence_monthly = pd.DataFrame({
-        "date": events_monthly["date"],
-        "confidence_score": 50.0,  # neutral default
-    })
+    logger.info("=" * 60)
+    logger.info("STEP 13: Building business confidence component")
+
+    if panel_path.exists():
+        confidence_monthly = build_confidence_score(panel_df, series_id="PD37981AM")
+        logger.info("  Confidence score: %d months", len(confidence_monthly))
+    else:
+        logger.warning("  Panel not found — using neutral confidence scores")
+        confidence_monthly = pd.DataFrame({
+            "date": events_monthly["date"],
+            "confidence_score": 50.0,
+        })
 
     # ── Step 14: Build composite indices ─────────────────────────────────
     logger.info("=" * 60)

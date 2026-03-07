@@ -1,10 +1,7 @@
 """Claude API classifier for political event severity.
 
-Replaces XLM-RoBERTa zero-shot (38.6% accuracy) with Claude API
-for direct severity classification on the ordinal 1-3 scale matching
-ground truth.
-
-Uses batched prompts to classify events efficiently.
+Uses Claude Haiku for direct severity classification on the ordinal
+1-3 scale matching ground truth. Batched prompts for efficiency.
 """
 
 import json
@@ -15,7 +12,7 @@ import pandas as pd
 
 logger = logging.getLogger("nexus.nlp.classifier")
 
-# Binning: NLP 1-5 → ordinal 1-3 (kept for backward compatibility)
+# Binning: 1-5 → ordinal 1-3
 SCORE_TO_BIN3 = {1: 1, 2: 1, 3: 2, 4: 3, 5: 3}
 
 # Labels (kept for reference/compatibility)
@@ -87,8 +84,8 @@ def classify_event(
 ) -> dict:
     """Classify a single event with Claude API.
 
-    Returns dict with: severity_nlp (1-5 mapped), severity_nlp_confidence,
-    severity_nlp_label, severity_nlp_bin3 (1-3).
+    Returns dict with: severity_claude (1-5 mapped), severity_claude_confidence,
+    severity_claude_label, severity_claude_bin3 (1-3).
     """
     if client is None:
         client = _get_client()
@@ -118,18 +115,18 @@ def classify_event(
         label = result.get("label", "")
 
         return {
-            "severity_nlp": score5,
-            "severity_nlp_confidence": 1.0,
-            "severity_nlp_label": label,
-            "severity_nlp_bin3": score3,
+            "severity_claude": score5,
+            "severity_claude_confidence": 1.0,
+            "severity_claude_label": label,
+            "severity_claude_bin3": score3,
         }
     except Exception as e:
         logger.warning("Classification failed: %s", e)
         return {
-            "severity_nlp": 3,
-            "severity_nlp_confidence": 0.0,
-            "severity_nlp_label": f"ERROR: {e}",
-            "severity_nlp_bin3": 2,
+            "severity_claude": 3,
+            "severity_claude_confidence": 0.0,
+            "severity_claude_label": f"ERROR: {e}",
+            "severity_claude_bin3": 2,
         }
 
 
@@ -228,8 +225,8 @@ def classify_events_batch(
     """Classify all events in a DataFrame using Claude API.
 
     Sends events in batches of batch_size per API call for efficiency.
-    Adds columns: severity_nlp, severity_nlp_confidence, severity_nlp_label,
-    severity_nlp_bin3.
+    Adds columns: severity_claude, severity_claude_confidence, severity_claude_label,
+    severity_claude_bin3.
     """
     if client is None:
         client = _get_client()
@@ -254,10 +251,10 @@ def classify_events_batch(
         })
 
     # Initialize result columns
-    df["severity_nlp"] = 3
-    df["severity_nlp_confidence"] = 0.0
-    df["severity_nlp_label"] = ""
-    df["severity_nlp_bin3"] = 2
+    df["severity_claude"] = 3
+    df["severity_claude_confidence"] = 0.0
+    df["severity_claude_label"] = ""
+    df["severity_claude_bin3"] = 2
 
     # Build month contexts for enriched classification
     month_contexts = _build_month_contexts(all_events)
@@ -287,10 +284,10 @@ def classify_events_batch(
             score3 = max(1, min(3, int(r["score"])))
             label = r.get("label", "")
 
-            df.loc[idx, "severity_nlp_bin3"] = score3
-            df.loc[idx, "severity_nlp"] = bin3_to_5[score3]
-            df.loc[idx, "severity_nlp_confidence"] = 1.0
-            df.loc[idx, "severity_nlp_label"] = label
+            df.loc[idx, "severity_claude_bin3"] = score3
+            df.loc[idx, "severity_claude"] = bin3_to_5[score3]
+            df.loc[idx, "severity_claude_confidence"] = 1.0
+            df.loc[idx, "severity_claude_label"] = label
 
         processed += len(batch)
         if processed % 100 == 0 or processed == n:
@@ -299,17 +296,200 @@ def classify_events_batch(
         time.sleep(delay)
 
     # Summary
-    dist3 = df["severity_nlp_bin3"].value_counts().sort_index()
+    dist3 = df["severity_claude_bin3"].value_counts().sort_index()
     logger.info("Bin3 distribution: %s", dict(dist3))
-    dist5 = df["severity_nlp"].value_counts().sort_index()
+    dist5 = df["severity_claude"].value_counts().sort_index()
     logger.info("Score distribution (mapped 1-5): %s", dict(dist5))
+
+    return df
+
+
+ARTICLE_CLASSIFICATION_PROMPT = """Eres un analista de riesgo para Peru. Clasifica cada articulo segun su impacto en la ESTABILIDAD politica o economica del pais.
+
+REGLAS CRITICAS:
+- Solo clasifica como "political" o "economic" si el evento AMENAZA la estabilidad institucional o economica de Peru.
+- Noticias internacionales son "irrelevant" EXCEPTO si afectan directamente a Peru (aranceles a exportaciones peruanas, precio del cobre, decisiones del FMI sobre Peru).
+- Noticias empresariales rutinarias (ventas, proyectos, nombramientos, multas regulatorias) = "irrelevant".
+- Reportes meteorologicos, deportes, cultura, farándula, tecnología = "irrelevant".
+- Tipo de cambio diario, variaciones bursatiles normales (<2%) = "irrelevant".
+
+CATEGORIA: "political", "economic", "both", "irrelevant"
+- political: vacancia, censura, corrupcion gubernamental, crisis de gobernabilidad, protestas masivas, conflictos sociales graves
+- economic: crisis financiera, colapso sectorial, huelgas que paralizan sectores, suspension de operaciones mineras, arbitrajes grandes contra el Estado, caidas bursatiles severas (>3%), devaluacion fuerte
+- both: eventos con impacto politico Y economico simultaneo
+- irrelevant: todo lo demas (noticias rutinarias, internacionales sin impacto Peru, empresariales, deportes, etc.)
+
+SEVERIDAD (solo para political/economic/both):
+1 = BAJO: conflicto menor localizado, queja sectorial, critica aislada, indicador ligeramente negativo
+2 = MEDIO: protesta que escala, investigacion fiscal activa, suspension de operaciones, caida significativa de indicadores, arbitraje internacional
+3 = ALTO: vacancia/censura presidencial, colapso de mercado, emergencia nacional, crisis institucional grave, conflicto social con muertos
+
+EJEMPLOS de "irrelevant":
+- "Tipo de cambio hoy" → irrelevant
+- "V&V cerro 2025 con 20% de avance en ventas" → irrelevant
+- "Indecopi multa a Santillana por errores en libro" → irrelevant
+- "JPMorgan opina sobre liquidacion del mercado" → irrelevant (opinion internacional)
+- "Foro de Davos reune a lideres" → irrelevant (internacional)
+- "Estuardo Ortiz: 2026 puede ser nuestro año record" → irrelevant (empresarial)
+- "Proinversión: se adjudicaron 69 proyectos APP" → irrelevant (estadistica rutinaria)
+
+EJEMPLOS de clasificacion correcta:
+- "6 mociones de censura contra el presidente" → political, severity 3
+- "Nexa suspende operacion de Atacocha por bloqueo" → economic, severity 2
+- "Aenza anuncia arbitraje contra el Estado por US$67M" → economic, severity 2
+- "Aranceles de Trump afectan exportaciones peruanas" → economic, severity 2
+- "Fiscalia investiga reuniones del presidente" → political, severity 3
+
+SE ESTRICTO. En caso de duda, clasifica como "irrelevant". Prefiere severidad baja.
+
+ARTICULOS:
+{articles_block}
+
+Responde SOLO con un JSON array:
+[{{"id": 1, "category": "political", "severity": 2}}, ...]"""
+
+SEVERITY_LABEL_MAP = {1: "low", 2: "medium", 3: "high"}
+
+
+def _classify_articles_chunk(
+    articles: list[dict],
+    client,
+    model: str = "claude-haiku-4-5-20251001",
+) -> list[dict]:
+    """Classify a batch of articles in a single API call.
+
+    articles: list of dicts with id, date, title, summary.
+    Returns list of dicts with id, category, severity.
+    """
+    lines = []
+    for a in articles:
+        lines.append(f"[{a['id']}] Fecha: {a['date']} | {a['title']}. {a['summary'][:200]}")
+    articles_block = "\n".join(lines)
+
+    prompt = ARTICLE_CLASSIFICATION_PROMPT.format(articles_block=articles_block)
+
+    try:
+        response = client.messages.create(
+            model=model,
+            max_tokens=len(articles) * 60 + 100,
+            messages=[{"role": "user", "content": prompt}],
+        )
+        raw = response.content[0].text.strip()
+        if raw.startswith("```"):
+            raw = raw.split("```")[1]
+            if raw.startswith("json"):
+                raw = raw[4:]
+            raw = raw.strip()
+        results = json.loads(raw)
+        return results
+    except Exception as e:
+        logger.warning("Article batch classification failed: %s", e)
+        return [{"id": a["id"], "category": "irrelevant", "severity": 1} for a in articles]
+
+
+def classify_articles_batch(
+    articles_df: pd.DataFrame,
+    batch_size: int = 20,
+    client=None,
+    model: str = "claude-haiku-4-5-20251001",
+    delay: float = 0.3,
+) -> pd.DataFrame:
+    """Classify news articles for political/economic instability.
+
+    Adds columns: article_category, article_severity, article_severity_label.
+
+    Parameters
+    ----------
+    articles_df : DataFrame with columns: title, summary, published
+    batch_size : number of articles per API call
+    client : optional Anthropic client
+    model : Claude model to use
+    delay : seconds between API calls
+
+    Returns
+    -------
+    DataFrame with classification columns added.
+    """
+    if client is None:
+        client = _get_client()
+
+    df = articles_df.copy()
+    n = len(df)
+
+    logger.info("Classifying %d articles with Claude API (batch_size=%d)...", n, batch_size)
+
+    # Prepare article dicts
+    all_articles = []
+    for i, (idx, row) in enumerate(df.iterrows()):
+        date_str = ""
+        if pd.notna(row.get("published")):
+            pub = row["published"]
+            if hasattr(pub, "strftime"):
+                date_str = pub.strftime("%Y-%m-%d")
+            else:
+                date_str = str(pub)[:10]
+
+        all_articles.append({
+            "id": i + 1,
+            "idx": idx,
+            "date": date_str,
+            "title": str(row.get("title", "")),
+            "summary": str(row.get("summary", "")),
+        })
+
+    # Initialize result columns
+    df["article_category"] = "irrelevant"
+    df["article_severity"] = 0
+    df["article_severity_label"] = ""
+
+    processed = 0
+    for batch_start in range(0, n, batch_size):
+        batch = all_articles[batch_start:batch_start + batch_size]
+        results = _classify_articles_chunk(batch, client=client, model=model)
+
+        # Map results back
+        result_map = {}
+        for r in results:
+            rid = int(r["id"])
+            result_map[rid] = r
+
+        for a in batch:
+            aid = a["id"]
+            idx = a["idx"]
+            r = result_map.get(aid, {"category": "irrelevant", "severity": 1})
+
+            category = r.get("category", "irrelevant")
+            if category not in ("political", "economic", "both", "irrelevant"):
+                category = "irrelevant"
+
+            raw_sev = r.get("severity")
+            severity = max(0, min(3, int(raw_sev))) if raw_sev is not None else 1
+            if category == "irrelevant":
+                severity = 0
+
+            df.loc[idx, "article_category"] = category
+            df.loc[idx, "article_severity"] = severity
+            df.loc[idx, "article_severity_label"] = SEVERITY_LABEL_MAP.get(severity, "")
+
+        processed += len(batch)
+        if processed % 100 == 0 or processed == n:
+            logger.info("  Classified %d/%d articles", processed, n)
+
+        if batch_start + batch_size < n:
+            time.sleep(delay)
+
+    # Summary
+    cat_dist = df["article_category"].value_counts()
+    logger.info("Category distribution: %s", dict(cat_dist))
+    sev_dist = df.loc[df["article_category"] != "irrelevant", "article_severity"].value_counts().sort_index()
+    logger.info("Severity distribution (non-irrelevant): %s", dict(sev_dist))
 
     return df
 
 
 def compute_monthly_event_score(
     events_df: pd.DataFrame,
-    score_column: str = "severity_nlp",
+    score_column: str = "severity_claude",
 ) -> pd.Series:
     """Aggregate event severity to monthly frequency.
 
@@ -324,7 +504,7 @@ def compute_monthly_event_score(
 
 def compute_weekly_event_score(
     events_df: pd.DataFrame,
-    score_column: str = "severity_nlp",
+    score_column: str = "severity_claude",
 ) -> pd.Series:
     """Aggregate event severity to weekly frequency (Friday).
 
