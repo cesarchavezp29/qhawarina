@@ -6,10 +6,24 @@ data/raw/midagri/
 data/raw/poultry/
 data/raw/ntl/
 data/raw/geo/
+data/raw/viirs/
+data/raw/satellite/
+data/raw/inei/
+data/raw/political/
 data/processed/
 data/targets/
 data/validation/
+data/results/
 # Supermarket snapshots ARE tracked (needed by GitHub Actions)
+
+# Generated outputs (too large/ephemeral for git)
+plots/
+assets/
+web/
+*.pdf
+nul
+Screenshot_*.jpg
+Screenshot_*.png
 
 # Python
 __pycache__/

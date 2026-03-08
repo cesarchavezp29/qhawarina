@@ -1,0 +1,795 @@
+{
+  "metadata": {
+    "generated_at": "2026-03-07T18:59:26.905435",
+    "method": "Temporal disaggregation (NTL + CPI)",
+    "smoothing": "3-month moving average",
+    "frequency": "monthly"
+  },
+  "national_monthly": [
+    {
+      "month": "2012-01",
+      "poverty_rate_raw": 28.0,
+      "poverty_rate": 29.3
+    },
+    {
+      "month": "2012-02",
+      "poverty_rate_raw": 30.6,
+      "poverty_rate": 30.4
+    },
+    {
+      "month": "2012-03",
+      "poverty_rate_raw": 32.7,
+      "poverty_rate": 31.7
+    },
+    {
+      "month": "2012-04",
+      "poverty_rate_raw": 31.8,
+      "poverty_rate": 30.3
+    },
+    {
+      "month": "2012-05",
+      "poverty_rate_raw": 26.4,
+      "poverty_rate": 28.7
+    },
+    {
+      "month": "2012-06",
+      "poverty_rate_raw": 27.8,
+      "poverty_rate": 27.5
+    },
+    {
+      "month": "2012-07",
+      "poverty_rate_raw": 28.2,
+      "poverty_rate": 28.9
+    },
+    {
+      "month": "2012-08",
+      "poverty_rate_raw": 30.8,
+      "poverty_rate": 30.3
+    },
+    {
+      "month": "2012-09",
+      "poverty_rate_raw": 31.9,
+      "poverty_rate": 29.4
+    },
+    {
+      "month": "2012-10",
+      "poverty_rate_raw": 25.4,
+      "poverty_rate": 27.7
+    },
+    {
+      "month": "2012-11",
+      "poverty_rate_raw": 25.9,
+      "poverty_rate": 26.8
+    },
+    {
+      "month": "2012-12",
+      "poverty_rate_raw": 29.1,
+      "poverty_rate": 26.5
+    },
+    {
+      "month": "2013-01",
+      "poverty_rate_raw": 24.5,
+      "poverty_rate": 26.5
+    },
+    {
+      "month": "2013-02",
+      "poverty_rate_raw": 26.0,
+      "poverty_rate": 28.6
+    },
+    {
+      "month": "2013-03",
+      "poverty_rate_raw": 35.4,
+      "poverty_rate": 29.7
+    },
+    {
+      "month": "2013-04",
+      "poverty_rate_raw": 27.8,
+      "poverty_rate": 30.7
+    },
+    {
+      "month": "2013-05",
+      "poverty_rate_raw": 28.8,
+      "poverty_rate": 28.1
+    },
+    {
+      "month": "2013-06",
+      "poverty_rate_raw": 27.6,
+      "poverty_rate": 28.7
+    },
+    {
+      "month": "2013-07",
+      "poverty_rate_raw": 29.8,
+      "poverty_rate": 28.9
+    },
+    {
+      "month": "2013-08",
+      "poverty_rate_raw": 29.3,
+      "poverty_rate": 28.4
+    },
+    {
+      "month": "2013-09",
+      "poverty_rate_raw": 25.9,
+      "poverty_rate": 27.1
+    },
+    {
+      "month": "2013-10",
+      "poverty_rate_raw": 26.1,
+      "poverty_rate": 24.3
+    },
+    {
+      "month": "2013-11",
+      "poverty_rate_raw": 20.8,
+      "poverty_rate": 24.3
+    },
+    {
+      "month": "2013-12",
+      "poverty_rate_raw": 26.1,
+      "poverty_rate": 24.6
+    },
+    {
+      "month": "2014-01",
+      "poverty_rate_raw": 26.8,
+      "poverty_rate": 27.4
+    },
+    {
+      "month": "2014-02",
+      "poverty_rate_raw": 29.4,
+      "poverty_rate": 28.5
+    },
+    {
+      "month": "2014-03",
+      "poverty_rate_raw": 29.4,
+      "poverty_rate": 28.9
+    },
+    {
+      "month": "2014-04",
+      "poverty_rate_raw": 28.0,
+      "poverty_rate": 28.1
+    },
+    {
+      "month": "2014-05",
+      "poverty_rate_raw": 26.8,
+      "poverty_rate": 26.8
+    },
+    {
+      "month": "2014-06",
+      "poverty_rate_raw": 25.7,
+      "poverty_rate": 26.8
+    },
+    {
+      "month": "2014-07",
+      "poverty_rate_raw": 27.9,
+      "poverty_rate": 26.3
+    },
+    {
+      "month": "2014-08",
+      "poverty_rate_raw": 25.2,
+      "poverty_rate": 26.2
+    },
+    {
+      "month": "2014-09",
+      "poverty_rate_raw": 25.4,
+      "poverty_rate": 26.3
+    },
+    {
+      "month": "2014-10",
+      "poverty_rate_raw": 28.2,
+      "poverty_rate": 25.8
+    },
+    {
+      "month": "2014-11",
+      "poverty_rate_raw": 23.8,
+      "poverty_rate": 26.2
+    },
+    {
+      "month": "2014-12",
+      "poverty_rate_raw": 26.5,
+      "poverty_rate": 24.6
+    },
+    {
+      "month": "2015-01",
+      "poverty_rate_raw": 23.3,
+      "poverty_rate": 24.6
+    },
+    {
+      "month": "2015-02",
+      "poverty_rate_raw": 24.1,
+      "poverty_rate": 25.0
+    },
+    {
+      "month": "2015-03",
+      "poverty_rate_raw": 27.6,
+      "poverty_rate": 25.7
+    },
+    {
+      "month": "2015-04",
+      "poverty_rate_raw": 25.4,
+      "poverty_rate": 26.6
+    },
+    {
+      "month": "2015-05",
+      "poverty_rate_raw": 26.7,
+      "poverty_rate": 26.3
+    },
+    {
+      "month": "2015-06",
+      "poverty_rate_raw": 26.8,
+      "poverty_rate": 26.3
+    },
+    {
+      "month": "2015-07",
+      "poverty_rate_raw": 25.5,
+      "poverty_rate": 26.0
+    },
+    {
+      "month": "2015-08",
+      "poverty_rate_raw": 25.8,
+      "poverty_rate": 25.3
+    },
+    {
+      "month": "2015-09",
+      "poverty_rate_raw": 24.7,
+      "poverty_rate": 24.5
+    },
+    {
+      "month": "2015-10",
+      "poverty_rate_raw": 23.0,
+      "poverty_rate": 24.0
+    },
+    {
+      "month": "2015-11",
+      "poverty_rate_raw": 24.4,
+      "poverty_rate": 24.2
+    },
+    {
+      "month": "2015-12",
+      "poverty_rate_raw": 25.0,
+      "poverty_rate": 24.9
+    },
+    {
+      "month": "2016-01",
+      "poverty_rate_raw": 25.1,
+      "poverty_rate": 24.8
+    },
+    {
+      "month": "2016-02",
+      "poverty_rate_raw": 24.3,
+      "poverty_rate": 24.9
+    },
+    {
+      "month": "2016-03",
+      "poverty_rate_raw": 25.4,
+      "poverty_rate": 24.0
+    },
+    {
+      "month": "2016-04",
+      "poverty_rate_raw": 22.3,
+      "poverty_rate": 23.8
+    },
+    {
+      "month": "2016-05",
+      "poverty_rate_raw": 23.7,
+      "poverty_rate": 23.1
+    },
+    {
+      "month": "2016-06",
+      "poverty_rate_raw": 23.3,
+      "poverty_rate": 23.3
+    },
+    {
+      "month": "2016-07",
+      "poverty_rate_raw": 22.8,
+      "poverty_rate": 23.0
+    },
+    {
+      "month": "2016-08",
+      "poverty_rate_raw": 23.0,
+      "poverty_rate": 23.0
+    },
+    {
+      "month": "2016-09",
+      "poverty_rate_raw": 23.3,
+      "poverty_rate": 24.0
+    },
+    {
+      "month": "2016-10",
+      "poverty_rate_raw": 25.6,
+      "poverty_rate": 24.6
+    },
+    {
+      "month": "2016-11",
+      "poverty_rate_raw": 24.8,
+      "poverty_rate": 25.2
+    },
+    {
+      "month": "2016-12",
+      "poverty_rate_raw": 25.2,
+      "poverty_rate": 25.2
+    },
+    {
+      "month": "2017-01",
+      "poverty_rate_raw": 25.6,
+      "poverty_rate": 24.8
+    },
+    {
+      "month": "2017-02",
+      "poverty_rate_raw": 23.7,
+      "poverty_rate": 28.3
+    },
+    {
+      "month": "2017-03",
+      "poverty_rate_raw": 35.6,
+      "poverty_rate": 26.8
+    },
+    {
+      "month": "2017-04",
+      "poverty_rate_raw": 21.0,
+      "poverty_rate": 25.8
+    },
+    {
+      "month": "2017-05",
+      "poverty_rate_raw": 20.7,
+      "poverty_rate": 21.3
+    },
+    {
+      "month": "2017-06",
+      "poverty_rate_raw": 22.1,
+      "poverty_rate": 22.8
+    },
+    {
+      "month": "2017-07",
+      "poverty_rate_raw": 25.5,
+      "poverty_rate": 25.1
+    },
+    {
+      "month": "2017-08",
+      "poverty_rate_raw": 27.8,
+      "poverty_rate": 25.6
+    },
+    {
+      "month": "2017-09",
+      "poverty_rate_raw": 23.5,
+      "poverty_rate": 22.9
+    },
+    {
+      "month": "2017-10",
+      "poverty_rate_raw": 17.3,
+      "poverty_rate": 20.7
+    },
+    {
+      "month": "2017-11",
+      "poverty_rate_raw": 21.3,
+      "poverty_rate": 21.1
+    },
+    {
+      "month": "2017-12",
+      "poverty_rate_raw": 24.5,
+      "poverty_rate": 22.7
+    },
+    {
+      "month": "2018-01",
+      "poverty_rate_raw": 22.1,
+      "poverty_rate": 23.1
+    },
+    {
+      "month": "2018-02",
+      "poverty_rate_raw": 22.8,
+      "poverty_rate": 23.2
+    },
+    {
+      "month": "2018-03",
+      "poverty_rate_raw": 24.6,
+      "poverty_rate": 22.8
+    },
+    {
+      "month": "2018-04",
+      "poverty_rate_raw": 21.0,
+      "poverty_rate": 22.0
+    },
+    {
+      "month": "2018-05",
+      "poverty_rate_raw": 20.3,
+      "poverty_rate": 21.1
+    },
+    {
+      "month": "2018-06",
+      "poverty_rate_raw": 22.0,
+      "poverty_rate": 21.8
+    },
+    {
+      "month": "2018-07",
+      "poverty_rate_raw": 23.1,
+      "poverty_rate": 22.6
+    },
+    {
+      "month": "2018-08",
+      "poverty_rate_raw": 22.6,
+      "poverty_rate": 22.7
+    },
+    {
+      "month": "2018-09",
+      "poverty_rate_raw": 22.4,
+      "poverty_rate": 22.5
+    },
+    {
+      "month": "2018-10",
+      "poverty_rate_raw": 22.6,
+      "poverty_rate": 23.2
+    },
+    {
+      "month": "2018-11",
+      "poverty_rate_raw": 24.5,
+      "poverty_rate": 23.0
+    },
+    {
+      "month": "2018-12",
+      "poverty_rate_raw": 21.8,
+      "poverty_rate": 22.6
+    },
+    {
+      "month": "2019-01",
+      "poverty_rate_raw": 21.6,
+      "poverty_rate": 21.9
+    },
+    {
+      "month": "2019-02",
+      "poverty_rate_raw": 22.4,
+      "poverty_rate": 23.3
+    },
+    {
+      "month": "2019-03",
+      "poverty_rate_raw": 26.0,
+      "poverty_rate": 23.6
+    },
+    {
+      "month": "2019-04",
+      "poverty_rate_raw": 22.4,
+      "poverty_rate": 23.5
+    },
+    {
+      "month": "2019-05",
+      "poverty_rate_raw": 22.0,
+      "poverty_rate": 21.9
+    },
+    {
+      "month": "2019-06",
+      "poverty_rate_raw": 21.4,
+      "poverty_rate": 22.1
+    },
+    {
+      "month": "2019-07",
+      "poverty_rate_raw": 22.8,
+      "poverty_rate": 21.7
+    },
+    {
+      "month": "2019-08",
+      "poverty_rate_raw": 21.0,
+      "poverty_rate": 20.6
+    },
+    {
+      "month": "2019-09",
+      "poverty_rate_raw": 18.1,
+      "poverty_rate": 19.9
+    },
+    {
+      "month": "2019-10",
+      "poverty_rate_raw": 20.7,
+      "poverty_rate": 20.2
+    },
+    {
+      "month": "2019-11",
+      "poverty_rate_raw": 21.9,
+      "poverty_rate": 21.9
+    },
+    {
+      "month": "2019-12",
+      "poverty_rate_raw": 23.0,
+      "poverty_rate": 24.7
+    },
+    {
+      "month": "2020-01",
+      "poverty_rate_raw": 29.1,
+      "poverty_rate": 27.8
+    },
+    {
+      "month": "2020-02",
+      "poverty_rate_raw": 31.1,
+      "poverty_rate": 31.5
+    },
+    {
+      "month": "2020-03",
+      "poverty_rate_raw": 34.3,
+      "poverty_rate": 31.7
+    },
+    {
+      "month": "2020-04",
+      "poverty_rate_raw": 29.5,
+      "poverty_rate": 31.6
+    },
+    {
+      "month": "2020-05",
+      "poverty_rate_raw": 30.9,
+      "poverty_rate": 29.0
+    },
+    {
+      "month": "2020-06",
+      "poverty_rate_raw": 26.6,
+      "poverty_rate": 30.1
+    },
+    {
+      "month": "2020-07",
+      "poverty_rate_raw": 33.0,
+      "poverty_rate": 30.1
+    },
+    {
+      "month": "2020-08",
+      "poverty_rate_raw": 30.6,
+      "poverty_rate": 30.3
+    },
+    {
+      "month": "2020-09",
+      "poverty_rate_raw": 27.1,
+      "poverty_rate": 30.4
+    },
+    {
+      "month": "2020-10",
+      "poverty_rate_raw": 33.3,
+      "poverty_rate": 31.2
+    },
+    {
+      "month": "2020-11",
+      "poverty_rate_raw": 33.0,
+      "poverty_rate": 31.6
+    },
+    {
+      "month": "2020-12",
+      "poverty_rate_raw": 28.5,
+      "poverty_rate": 28.9
+    },
+    {
+      "month": "2021-01",
+      "poverty_rate_raw": 25.2,
+      "poverty_rate": 24.8
+    },
+    {
+      "month": "2021-02",
+      "poverty_rate_raw": 20.7,
+      "poverty_rate": 24.9
+    },
+    {
+      "month": "2021-03",
+      "poverty_rate_raw": 28.8,
+      "poverty_rate": 23.7
+    },
+    {
+      "month": "2021-04",
+      "poverty_rate_raw": 21.6,
+      "poverty_rate": 24.9
+    },
+    {
+      "month": "2021-05",
+      "poverty_rate_raw": 24.3,
+      "poverty_rate": 23.5
+    },
+    {
+      "month": "2021-06",
+      "poverty_rate_raw": 24.7,
+      "poverty_rate": 25.9
+    },
+    {
+      "month": "2021-07",
+      "poverty_rate_raw": 28.8,
+      "poverty_rate": 27.2
+    },
+    {
+      "month": "2021-08",
+      "poverty_rate_raw": 28.1,
+      "poverty_rate": 27.1
+    },
+    {
+      "month": "2021-09",
+      "poverty_rate_raw": 24.5,
+      "poverty_rate": 26.0
+    },
+    {
+      "month": "2021-10",
+      "poverty_rate_raw": 25.4,
+      "poverty_rate": 24.9
+    },
+    {
+      "month": "2021-11",
+      "poverty_rate_raw": 24.6,
+      "poverty_rate": 25.5
+    },
+    {
+      "month": "2021-12",
+      "poverty_rate_raw": 26.5,
+      "poverty_rate": 24.6
+    },
+    {
+      "month": "2022-01",
+      "poverty_rate_raw": 22.6,
+      "poverty_rate": 25.3
+    },
+    {
+      "month": "2022-02",
+      "poverty_rate_raw": 26.9,
+      "poverty_rate": 27.4
+    },
+    {
+      "month": "2022-03",
+      "poverty_rate_raw": 32.7,
+      "poverty_rate": 29.9
+    },
+    {
+      "month": "2022-04",
+      "poverty_rate_raw": 30.0,
+      "poverty_rate": 28.8
+    },
+    {
+      "month": "2022-05",
+      "poverty_rate_raw": 23.6,
+      "poverty_rate": 28.1
+    },
+    {
+      "month": "2022-06",
+      "poverty_rate_raw": 30.8,
+      "poverty_rate": 27.6
+    },
+    {
+      "month": "2022-07",
+      "poverty_rate_raw": 28.3,
+      "poverty_rate": 28.8
+    },
+    {
+      "month": "2022-08",
+      "poverty_rate_raw": 27.2,
+      "poverty_rate": 25.9
+    },
+    {
+      "month": "2022-09",
+      "poverty_rate_raw": 22.2,
+      "poverty_rate": 24.6
+    },
+    {
+      "month": "2022-10",
+      "poverty_rate_raw": 24.3,
+      "poverty_rate": 23.9
+    },
+    {
+      "month": "2022-11",
+      "poverty_rate_raw": 25.1,
+      "poverty_rate": 25.8
+    },
+    {
+      "month": "2022-12",
+      "poverty_rate_raw": 28.1,
+      "poverty_rate": 27.0
+    },
+    {
+      "month": "2023-01",
+      "poverty_rate_raw": 27.7,
+      "poverty_rate": 28.3
+    },
+    {
+      "month": "2023-02",
+      "poverty_rate_raw": 29.2,
+      "poverty_rate": 30.4
+    },
+    {
+      "month": "2023-03",
+      "poverty_rate_raw": 34.4,
+      "poverty_rate": 31.1
+    },
+    {
+      "month": "2023-04",
+      "poverty_rate_raw": 29.8,
+      "poverty_rate": 31.1
+    },
+    {
+      "month": "2023-05",
+      "poverty_rate_raw": 29.2,
+      "poverty_rate": 28.1
+    },
+    {
+      "month": "2023-06",
+      "poverty_rate_raw": 25.1,
+      "poverty_rate": 28.0
+    },
+    {
+      "month": "2023-07",
+      "poverty_rate_raw": 29.6,
+      "poverty_rate": 28.0
+    },
+    {
+      "month": "2023-08",
+      "poverty_rate_raw": 29.3,
+      "poverty_rate": 28.0
+    },
+    {
+      "month": "2023-09",
+      "poverty_rate_raw": 25.1,
+      "poverty_rate": 26.0
+    },
+    {
+      "month": "2023-10",
+      "poverty_rate_raw": 23.6,
+      "poverty_rate": 24.2
+    },
+    {
+      "month": "2023-11",
+      "poverty_rate_raw": 23.9,
+      "poverty_rate": 26.6
+    },
+    {
+      "month": "2023-12",
+      "poverty_rate_raw": 32.4,
+      "poverty_rate": 26.9
+    },
+    {
+      "month": "2024-01",
+      "poverty_rate_raw": 24.5,
+      "poverty_rate": 28.8
+    },
+    {
+      "month": "2024-02",
+      "poverty_rate_raw": 29.4,
+      "poverty_rate": 29.0
+    },
+    {
+      "month": "2024-03",
+      "poverty_rate_raw": 33.2,
+      "poverty_rate": 29.1
+    },
+    {
+      "month": "2024-04",
+      "poverty_rate_raw": 24.6,
+      "poverty_rate": 27.3
+    },
+    {
+      "month": "2024-05",
+      "poverty_rate_raw": 24.0,
+      "poverty_rate": 24.7
+    },
+    {
+      "month": "2024-06",
+      "poverty_rate_raw": 25.6,
+      "poverty_rate": 25.5
+    },
+    {
+      "month": "2024-07",
+      "poverty_rate_raw": 26.8,
+      "poverty_rate": 26.5
+    },
+    {
+      "month": "2024-08",
+      "poverty_rate_raw": 27.0,
+      "poverty_rate": 25.8
+    },
+    {
+      "month": "2024-09",
+      "poverty_rate_raw": 23.4,
+      "poverty_rate": 24.8
+    },
+    {
+      "month": "2024-10",
+      "poverty_rate_raw": 23.9,
+      "poverty_rate": 24.5
+    },
+    {
+      "month": "2024-11",
+      "poverty_rate_raw": 26.2,
+      "poverty_rate": 25.3
+    },
+    {
+      "month": "2024-12",
+      "poverty_rate_raw": 25.8,
+      "poverty_rate": 25.7
+    },
+    {
+      "month": "2025-01",
+      "poverty_rate_raw": 24.9,
+      "poverty_rate": 25.4
+    }
+  ]
+}

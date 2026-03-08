@@ -1,0 +1,244 @@
+{
+  "metadata": {
+    "method": "NTL spatial weights + activity indicator differentials",
+    "target_period": "2025-Q4",
+    "national_gdp_yoy": 2.2,
+    "n_departments": 25,
+    "ntl_months": 12,
+    "indicator_months": 3,
+    "alpha": 0.4,
+    "indicators": [
+      "credit_by_department",
+      "electricity_by_department",
+      "tax_revenue_by_department"
+    ],
+    "note": "Dept GDP = National (2.20%) + 0.4 × (dept composite – national composite). Composite = mean YoY of credit, electricity, tax revenue (last 3 months). Capped at ±3 pp."
+  },
+  "departmental_nowcasts": [
+    {
+      "dept_code": "01",
+      "department": "Amazonas",
+      "gdp_yoy": 2.24,
+      "adj_pp": 0.04,
+      "ntl_share": 0.025,
+      "gdp_contribution": 0.0561,
+      "composite_yoy": 13.26
+    },
+    {
+      "dept_code": "02",
+      "department": "Ancash",
+      "gdp_yoy": 0.61,
+      "adj_pp": -1.59,
+      "ntl_share": 0.0487,
+      "gdp_contribution": 0.0298,
+      "composite_yoy": 1.9
+    },
+    {
+      "dept_code": "03",
+      "department": "Apurímac",
+      "gdp_yoy": 4.29,
+      "adj_pp": 2.09,
+      "ntl_share": 0.024,
+      "gdp_contribution": 0.1029,
+      "composite_yoy": 27.52
+    },
+    {
+      "dept_code": "04",
+      "department": "Arequipa",
+      "gdp_yoy": 5.43,
+      "adj_pp": 3.23,
+      "ntl_share": 0.0504,
+      "gdp_contribution": 0.2737,
+      "composite_yoy": 42.99
+    },
+    {
+      "dept_code": "05",
+      "department": "Ayacucho",
+      "gdp_yoy": 3.28,
+      "adj_pp": 1.08,
+      "ntl_share": 0.0804,
+      "gdp_contribution": 0.2638,
+      "composite_yoy": 20.51
+    },
+    {
+      "dept_code": "06",
+      "department": "Cajamarca",
+      "gdp_yoy": 4.38,
+      "adj_pp": 2.18,
+      "ntl_share": 0.0672,
+      "gdp_contribution": 0.2942,
+      "composite_yoy": 28.15
+    },
+    {
+      "dept_code": "07",
+      "department": "Callao",
+      "gdp_yoy": 0.04,
+      "adj_pp": -2.16,
+      "ntl_share": 0.0016,
+      "gdp_contribution": 0.0001,
+      "composite_yoy": -2.07
+    },
+    {
+      "dept_code": "08",
+      "department": "Cusco",
+      "gdp_yoy": 1.77,
+      "adj_pp": -0.43,
+      "ntl_share": 0.0344,
+      "gdp_contribution": 0.0608,
+      "composite_yoy": 9.95
+    },
+    {
+      "dept_code": "09",
+      "department": "Huancavelica",
+      "gdp_yoy": 2.43,
+      "adj_pp": 0.23,
+      "ntl_share": 0.0305,
+      "gdp_contribution": 0.074,
+      "composite_yoy": 14.55
+    },
+    {
+      "dept_code": "10",
+      "department": "Huánuco",
+      "gdp_yoy": 3.2,
+      "adj_pp": 1.0,
+      "ntl_share": 0.0183,
+      "gdp_contribution": 0.0585,
+      "composite_yoy": 19.92
+    },
+    {
+      "dept_code": "11",
+      "department": "Ica",
+      "gdp_yoy": 1.26,
+      "adj_pp": -0.94,
+      "ntl_share": 0.0152,
+      "gdp_contribution": 0.0191,
+      "composite_yoy": 6.4
+    },
+    {
+      "dept_code": "12",
+      "department": "Junín",
+      "gdp_yoy": 2.81,
+      "adj_pp": 0.61,
+      "ntl_share": 0.0273,
+      "gdp_contribution": 0.0768,
+      "composite_yoy": 17.24
+    },
+    {
+      "dept_code": "13",
+      "department": "La Libertad",
+      "gdp_yoy": 2.03,
+      "adj_pp": -0.17,
+      "ntl_share": 0.0251,
+      "gdp_contribution": 0.0508,
+      "composite_yoy": 11.77
+    },
+    {
+      "dept_code": "14",
+      "department": "Lambayeque",
+      "gdp_yoy": 5.43,
+      "adj_pp": 3.23,
+      "ntl_share": 0.0199,
+      "gdp_contribution": 0.108,
+      "composite_yoy": 84.97
+    },
+    {
+      "dept_code": "15",
+      "department": "Lima",
+      "gdp_yoy": 0.83,
+      "adj_pp": -1.37,
+      "ntl_share": 0.2097,
+      "gdp_contribution": 0.1742,
+      "composite_yoy": 3.43
+    },
+    {
+      "dept_code": "16",
+      "department": "Loreto",
+      "gdp_yoy": 1.13,
+      "adj_pp": -1.07,
+      "ntl_share": 0.0161,
+      "gdp_contribution": 0.0183,
+      "composite_yoy": 5.54
+    },
+    {
+      "dept_code": "17",
+      "department": "Madre de Dios",
+      "gdp_yoy": 4.08,
+      "adj_pp": 1.88,
+      "ntl_share": 0.0036,
+      "gdp_contribution": 0.0147,
+      "composite_yoy": 26.08
+    },
+    {
+      "dept_code": "18",
+      "department": "Moquegua",
+      "gdp_yoy": 1.41,
+      "adj_pp": -0.79,
+      "ntl_share": 0.0924,
+      "gdp_contribution": 0.1299,
+      "composite_yoy": 7.44
+    },
+    {
+      "dept_code": "19",
+      "department": "Pasco",
+      "gdp_yoy": 2.91,
+      "adj_pp": 0.71,
+      "ntl_share": 0.0053,
+      "gdp_contribution": 0.0153,
+      "composite_yoy": 17.94
+    },
+    {
+      "dept_code": "20",
+      "department": "Piura",
+      "gdp_yoy": 0.32,
+      "adj_pp": -1.88,
+      "ntl_share": 0.0993,
+      "gdp_contribution": 0.032,
+      "composite_yoy": -0.12
+    },
+    {
+      "dept_code": "21",
+      "department": "Puno",
+      "gdp_yoy": 5.43,
+      "adj_pp": 3.23,
+      "ntl_share": 0.0359,
+      "gdp_contribution": 0.1948,
+      "composite_yoy": 48.68
+    },
+    {
+      "dept_code": "22",
+      "department": "San Martín",
+      "gdp_yoy": 3.14,
+      "adj_pp": 0.94,
+      "ntl_share": 0.0164,
+      "gdp_contribution": 0.0515,
+      "composite_yoy": 19.55
+    },
+    {
+      "dept_code": "23",
+      "department": "Tacna",
+      "gdp_yoy": 2.52,
+      "adj_pp": 0.32,
+      "ntl_share": 0.0256,
+      "gdp_contribution": 0.0646,
+      "composite_yoy": 15.23
+    },
+    {
+      "dept_code": "24",
+      "department": "Tumbes",
+      "gdp_yoy": 1.75,
+      "adj_pp": -0.45,
+      "ntl_share": 0.0224,
+      "gdp_contribution": 0.0394,
+      "composite_yoy": 9.86
+    },
+    {
+      "dept_code": "25",
+      "department": "Ucayali",
+      "gdp_yoy": -0.57,
+      "adj_pp": -2.77,
+      "ntl_share": 0.0055,
+      "gdp_contribution": -0.0032,
+      "composite_yoy": -31.89
+    }
+  ]
+}

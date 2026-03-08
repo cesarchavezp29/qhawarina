@@ -1,0 +1,70 @@
+# NEXUS — Publication Lags Configuration
+# Category-level defaults + per-series overrides.
+# Values are in calendar days after the reference month ends.
+# The panel already carries publication_lag_days per series; this YAML
+# provides category defaults (for any new series) and overrides.
+
+defaults:
+  gdp_indicators: 45
+  leading_indicators: 30
+  credit_financial: 30
+  inflation: 1
+  food_prices: 1
+  commodity_prices: 5
+  monetary: 15
+  employment: 30
+  confidence: 15
+  fiscal: 30
+  trade: 45
+  payment_systems: 60
+
+overrides:
+  # Real-time / next-day
+  PD04722MM: 1    # policy rate — announced same day
+  PN01246PM: 5    # exchange rate
+  PN01271PM: 1    # CPI monthly var — next day
+  PN01273PM: 1    # CPI 12m var — next day
+  PN38706PM: 1    # core CPI index — next day
+  PN39445PM: 1    # food prices index — next day
+  PN01383PM: 1    # food prices var — next day
+  PN01286PM: 1    # wholesale price index monthly var — next day
+  PN01287PM: 1    # wholesale price index 12m var — next day
+
+  # Fast indicators (~7 days)
+  PN00027MM: 7    # international reserves
+  PN07807NM: 7    # TAMN lending rate
+  PN07816NM: 7    # TIPMN deposit rate
+
+  # Medium lag (~15 days)
+  PD37981AM: 15   # business expectations
+  PD12912AM: 15   # inflation expectations
+  PN00178MM: 15   # currency in circulation
+  PN01013MM: 15   # monetary base
+
+  # Standard lag (~30 days)
+  PD37966AM: 30   # electricity production
+  PD37967GM: 30   # cement consumption
+  PN00518MM: 30   # private credit
+  PN38063GM: 30   # unemployment rate
+  PN02204FM: 30   # fiscal revenue
+  PN02409FM: 30   # fiscal spending
+
+  # Slow indicators (~45 days)
+  PN01770AM: 45   # GDP index
+  PN01728AM: 45   # GDP yoy
+  PN01731AM: 45   # GDP sa
+  PN01713AM: 45   # GDP agriculture
+  PN01716AM: 45   # GDP fishing
+  PN01717AM: 45   # GDP mining
+  PN01720AM: 45   # GDP manufacturing
+  PN01723AM: 45   # GDP electricity
+  PN01724AM: 45   # GDP construction
+  PN01725AM: 45   # GDP commerce
+  PN01726AM: 45   # GDP services
+  PN38714BM: 45   # exports
+  PN38718BM: 45   # imports
+  PN38923BM: 45   # terms of trade
+
+  # Very slow (~60+ days)
+  PN31879GM: 60   # formal employment
+  GDP_MONTHLY_CL: 90  # Chow-Lin monthly GDP (depends on quarterly release)

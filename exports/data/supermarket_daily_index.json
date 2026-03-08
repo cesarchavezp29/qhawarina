@@ -1,0 +1,81 @@
+{
+  "metadata": {
+    "method": "Jevons bilateral index (geometric mean)",
+    "base_date": "2026-02-10",
+    "base_value": 100,
+    "stores": [
+      "Plaza Vea",
+      "Metro",
+      "Wong"
+    ],
+    "frequency": "daily",
+    "generated_at": "2026-02-18T17:24:50.492830",
+    "total_skus": 40472,
+    "note": "Missing business days filled with linear interpolation"
+  },
+  "daily_series": [
+    {
+      "date": "2026-02-10",
+      "index_all": 100.0,
+      "index_food": 100.0,
+      "index_nonfood": 100.0,
+      "var_all": null,
+      "n_products": null,
+      "interpolated": false
+    },
+    {
+      "date": "2026-02-11",
+      "index_all": 99.51,
+      "index_food": 99.46,
+      "index_nonfood": 99.65,
+      "var_all": -0.489,
+      "n_products": 38978,
+      "interpolated": false
+    },
+    {
+      "date": "2026-02-12",
+      "index_all": 99.63,
+      "index_food": 99.58,
+      "index_nonfood": 99.8,
+      "var_all": 0.124,
+      "n_products": 39437,
+      "interpolated": false
+    },
+    {
+      "date": "2026-02-13",
+      "index_all": 99.76,
+      "index_food": 99.7,
+      "index_nonfood": 99.94,
+      "var_all": 0.124,
+      "n_products": 39896,
+      "interpolated": false
+    },
+    {
+      "date": "2026-02-16",
+      "index_all": 99.88,
+      "index_food": 99.81,
+      "index_nonfood": 100.08,
+      "var_all": 0.124,
+      "n_products": 40355,
+      "interpolated": false
+    },
+    {
+      "date": "2026-02-17",
+      "index_all": 99.85,
+      "index_food": 99.77,
+      "index_nonfood": 100.11,
+      "var_all": -0.029,
+      "n_products": 40413,
+      "interpolated": false
+    },
+    {
+      "date": "2026-02-18",
+      "index_all": 99.82,
+      "index_food": 99.72,
+      "index_nonfood": 100.14,
+      "var_all": -0.029,
+      "n_products": 40472,
+      "interpolated": false
+    }
+  ]
+}

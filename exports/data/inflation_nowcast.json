@@ -1,0 +1,1963 @@
+{
+  "metadata": {
+    "generated_at": "2026-03-07T18:59:26.612688",
+    "model": "DynamicFactorModel",
+    "model_params": {
+      "k_factors": 2,
+      "include_factor_lags": 1,
+      "include_target_ar": true
+    },
+    "data_vintage": "2026-02",
+    "series_coverage": "25/26"
+  },
+  "nowcast": {
+    "target_period": "2026-03",
+    "value": 0.172,
+    "unit": "percent_3m_ma",
+    "bridge_r2": 0.707
+  },
+  "forecasts": [
+    {
+      "month": "2026-03",
+      "value": 0.164,
+      "lower": -0.08,
+      "upper": 0.407
+    },
+    {
+      "month": "2026-04",
+      "value": 0.174,
+      "lower": -0.069,
+      "upper": 0.417
+    },
+    {
+      "month": "2026-05",
+      "value": 0.183,
+      "lower": -0.06,
+      "upper": 0.426
+    },
+    {
+      "month": "2026-06",
+      "value": 0.19,
+      "lower": -0.053,
+      "upper": 0.434
+    },
+    {
+      "month": "2026-07",
+      "value": 0.197,
+      "lower": -0.046,
+      "upper": 0.44
+    },
+    {
+      "month": "2026-08",
+      "value": 0.203,
+      "lower": -0.04,
+      "upper": 0.446
+    }
+  ],
+  "monthly_series": [
+    {
+      "month": "2004-01",
+      "official": 0.537,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2004-02",
+      "official": 0.812,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2004-03",
+      "official": 0.695,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2004-04",
+      "official": 0.508,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2004-05",
+      "official": 0.264,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2004-06",
+      "official": 0.298,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2004-07",
+      "official": 0.37,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2004-08",
+      "official": 0.249,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2004-09",
+      "official": 0.067,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2004-10",
+      "official": -0.006,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2004-11",
+      "official": 0.093,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2004-12",
+      "official": 0.085,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2005-01",
+      "official": 0.126,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2005-02",
+      "official": -0.048,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2005-03",
+      "official": 0.172,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2005-04",
+      "official": 0.178,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2005-05",
+      "official": 0.298,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2005-06",
+      "official": 0.17,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2005-07",
+      "official": 0.165,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2005-08",
+      "official": 0.063,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2005-09",
+      "official": -0.056,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2005-10",
+      "official": -0.043,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2005-11",
+      "official": 0.04,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2005-12",
+      "official": 0.211,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2006-01",
+      "official": 0.329,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2006-02",
+      "official": 0.489,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2006-03",
+      "official": 0.502,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2006-04",
+      "official": 0.505,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2006-05",
+      "official": 0.146,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2006-06",
+      "official": -0.05,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2006-07",
+      "official": -0.277,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2006-08",
+      "official": -0.055,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2006-09",
+      "official": -0.001,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2006-10",
+      "official": 0.07,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2006-11",
+      "official": -0.07,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2006-12",
+      "official": -0.071,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2007-01",
+      "official": -0.082,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2007-02",
+      "official": 0.098,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2007-03",
+      "official": 0.206,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2007-04",
+      "official": 0.262,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2007-05",
+      "official": 0.34,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2007-06",
+      "official": 0.38,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2007-07",
+      "official": 0.479,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2007-08",
+      "official": 0.361,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2007-09",
+      "official": 0.408,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2007-10",
+      "official": 0.354,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2007-11",
+      "official": 0.346,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2007-12",
+      "official": 0.293,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2008-01",
+      "official": 0.262,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2008-02",
+      "official": 0.527,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2008-03",
+      "official": 0.724,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2008-04",
+      "official": 0.701,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2008-05",
+      "official": 0.522,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2008-06",
+      "official": 0.431,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2008-07",
+      "official": 0.565,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2008-08",
+      "official": 0.639,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2008-09",
+      "official": 0.571,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2008-10",
+      "official": 0.59,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2008-11",
+      "official": 0.496,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2008-12",
+      "official": 0.427,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2009-01",
+      "official": 0.258,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2009-02",
+      "official": 0.13,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2009-03",
+      "official": 0.13,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2009-04",
+      "official": 0.101,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2009-05",
+      "official": 0.112,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2009-06",
+      "official": -0.121,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2009-07",
+      "official": -0.065,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2009-08",
+      "official": -0.12,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2009-09",
+      "official": -0.036,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2009-10",
+      "official": -0.057,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2009-11",
+      "official": -0.026,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2009-12",
+      "official": 0.109,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2010-01",
+      "official": 0.167,
+      "nowcast": null,
+      "error": null
+    },
+    {
+      "month": "2010-02",
+      "official": 0.312,
+      "nowcast": 0.113,
+      "error": -0.199
+    },
+    {
+      "month": "2010-03",
+      "official": 0.3,
+      "nowcast": 0.229,
+      "error": -0.071
+    },
+    {
+      "month": "2010-04",
+      "official": 0.21,
+      "nowcast": 0.259,
+      "error": 0.05
+    },
+    {
+      "month": "2010-05",
+      "official": 0.181,
+      "nowcast": 0.181,
+      "error": -0.0
+    },
+    {
+      "month": "2010-06",
+      "official": 0.171,
+      "nowcast": 0.248,
+      "error": 0.077
+    },
+    {
+      "month": "2010-07",
+      "official": 0.284,
+      "nowcast": 0.301,
+      "error": 0.016
+    },
+    {
+      "month": "2010-08",
+      "official": 0.294,
+      "nowcast": 0.329,
+      "error": 0.034
+    },
+    {
+      "month": "2010-09",
+      "official": 0.2,
+      "nowcast": 0.384,
+      "error": 0.184
+    },
+    {
+      "month": "2010-10",
+      "official": 0.032,
+      "nowcast": 0.207,
+      "error": 0.176
+    },
+    {
+      "month": "2010-11",
+      "official": -0.055,
+      "nowcast": 0.123,
+      "error": 0.178
+    },
+    {
+      "month": "2010-12",
+      "official": 0.015,
+      "nowcast": 0.04,
+      "error": 0.025
+    },
+    {
+      "month": "2011-01",
+      "official": 0.192,
+      "nowcast": 0.091,
+      "error": -0.102
+    },
+    {
+      "month": "2011-02",
+      "official": 0.317,
+      "nowcast": 0.215,
+      "error": -0.102
+    },
+    {
+      "month": "2011-03",
+      "official": 0.492,
+      "nowcast": 0.304,
+      "error": -0.188
+    },
+    {
+      "month": "2011-04",
+      "official": 0.589,
+      "nowcast": 0.435,
+      "error": -0.154
+    },
+    {
+      "month": "2011-05",
+      "official": 0.453,
+      "nowcast": 0.585,
+      "error": 0.132
+    },
+    {
+      "month": "2011-06",
+      "official": 0.252,
+      "nowcast": 0.413,
+      "error": 0.161
+    },
+    {
+      "month": "2011-07",
+      "official": 0.289,
+      "nowcast": 0.187,
+      "error": -0.102
+    },
+    {
+      "month": "2011-08",
+      "official": 0.386,
+      "nowcast": 0.249,
+      "error": -0.137
+    },
+    {
+      "month": "2011-09",
+      "official": 0.464,
+      "nowcast": 0.313,
+      "error": -0.151
+    },
+    {
+      "month": "2011-10",
+      "official": 0.305,
+      "nowcast": 0.366,
+      "error": 0.061
+    },
+    {
+      "month": "2011-11",
+      "official": 0.36,
+      "nowcast": 0.304,
+      "error": -0.056
+    },
+    {
+      "month": "2011-12",
+      "official": 0.339,
+      "nowcast": 0.393,
+      "error": 0.054
+    },
+    {
+      "month": "2012-01",
+      "official": 0.2,
+      "nowcast": 0.383,
+      "error": 0.182
+    },
+    {
+      "month": "2012-02",
+      "official": 0.165,
+      "nowcast": 0.183,
+      "error": 0.019
+    },
+    {
+      "month": "2012-03",
+      "official": 0.33,
+      "nowcast": 0.175,
+      "error": -0.155
+    },
+    {
+      "month": "2012-04",
+      "official": 0.541,
+      "nowcast": 0.325,
+      "error": -0.216
+    },
+    {
+      "month": "2012-05",
+      "official": 0.446,
+      "nowcast": 0.471,
+      "error": 0.025
+    },
+    {
+      "month": "2012-06",
+      "official": 0.178,
+      "nowcast": 0.433,
+      "error": 0.254
+    },
+    {
+      "month": "2012-07",
+      "official": 0.031,
+      "nowcast": 0.175,
+      "error": 0.144
+    },
+    {
+      "month": "2012-08",
+      "official": 0.187,
+      "nowcast": 0.067,
+      "error": -0.121
+    },
+    {
+      "month": "2012-09",
+      "official": 0.38,
+      "nowcast": 0.265,
+      "error": -0.115
+    },
+    {
+      "month": "2012-10",
+      "official": 0.296,
+      "nowcast": 0.388,
+      "error": 0.092
+    },
+    {
+      "month": "2012-11",
+      "official": 0.081,
+      "nowcast": 0.247,
+      "error": 0.166
+    },
+    {
+      "month": "2012-12",
+      "official": -0.014,
+      "nowcast": 0.097,
+      "error": 0.111
+    },
+    {
+      "month": "2013-01",
+      "official": 0.079,
+      "nowcast": 0.038,
+      "error": -0.041
+    },
+    {
+      "month": "2013-02",
+      "official": 0.095,
+      "nowcast": 0.102,
+      "error": 0.007
+    },
+    {
+      "month": "2013-03",
+      "official": 0.311,
+      "nowcast": 0.126,
+      "error": -0.185
+    },
+    {
+      "month": "2013-04",
+      "official": 0.357,
+      "nowcast": 0.299,
+      "error": -0.058
+    },
+    {
+      "month": "2013-05",
+      "official": 0.452,
+      "nowcast": 0.297,
+      "error": -0.154
+    },
+    {
+      "month": "2013-06",
+      "official": 0.236,
+      "nowcast": 0.357,
+      "error": 0.121
+    },
+    {
+      "month": "2013-07",
+      "official": 0.335,
+      "nowcast": 0.246,
+      "error": -0.088
+    },
+    {
+      "month": "2013-08",
+      "official": 0.451,
+      "nowcast": 0.319,
+      "error": -0.132
+    },
+    {
+      "month": "2013-09",
+      "official": 0.4,
+      "nowcast": 0.412,
+      "error": 0.012
+    },
+    {
+      "month": "2013-10",
+      "official": 0.23,
+      "nowcast": 0.327,
+      "error": 0.097
+    },
+    {
+      "month": "2013-11",
+      "official": -0.024,
+      "nowcast": 0.231,
+      "error": 0.254
+    },
+    {
+      "month": "2013-12",
+      "official": -0.005,
+      "nowcast": 0.06,
+      "error": 0.064
+    },
+    {
+      "month": "2014-01",
+      "official": 0.088,
+      "nowcast": 0.109,
+      "error": 0.021
+    },
+    {
+      "month": "2014-02",
+      "official": 0.361,
+      "nowcast": 0.13,
+      "error": -0.231
+    },
+    {
+      "month": "2014-03",
+      "official": 0.479,
+      "nowcast": 0.312,
+      "error": -0.167
+    },
+    {
+      "month": "2014-04",
+      "official": 0.504,
+      "nowcast": 0.444,
+      "error": -0.06
+    },
+    {
+      "month": "2014-05",
+      "official": 0.379,
+      "nowcast": 0.457,
+      "error": 0.078
+    },
+    {
+      "month": "2014-06",
+      "official": 0.259,
+      "nowcast": 0.358,
+      "error": 0.099
+    },
+    {
+      "month": "2014-07",
+      "official": 0.273,
+      "nowcast": 0.303,
+      "error": 0.031
+    },
+    {
+      "month": "2014-08",
+      "official": 0.169,
+      "nowcast": 0.294,
+      "error": 0.125
+    },
+    {
+      "month": "2014-09",
+      "official": 0.169,
+      "nowcast": 0.186,
+      "error": 0.017
+    },
+    {
+      "month": "2014-10",
+      "official": 0.151,
+      "nowcast": 0.194,
+      "error": 0.043
+    },
+    {
+      "month": "2014-11",
+      "official": 0.13,
+      "nowcast": 0.209,
+      "error": 0.079
+    },
+    {
+      "month": "2014-12",
+      "official": 0.153,
+      "nowcast": 0.177,
+      "error": 0.024
+    },
+    {
+      "month": "2015-01",
+      "official": 0.083,
+      "nowcast": 0.227,
+      "error": 0.144
+    },
+    {
+      "month": "2015-02",
+      "official": 0.234,
+      "nowcast": 0.147,
+      "error": -0.087
+    },
+    {
+      "month": "2015-03",
+      "official": 0.413,
+      "nowcast": 0.243,
+      "error": -0.17
+    },
+    {
+      "month": "2015-04",
+      "official": 0.486,
+      "nowcast": 0.417,
+      "error": -0.069
+    },
+    {
+      "month": "2015-05",
+      "official": 0.573,
+      "nowcast": 0.44,
+      "error": -0.133
+    },
+    {
+      "month": "2015-06",
+      "official": 0.429,
+      "nowcast": 0.517,
+      "error": 0.088
+    },
+    {
+      "month": "2015-07",
+      "official": 0.449,
+      "nowcast": 0.363,
+      "error": -0.086
+    },
+    {
+      "month": "2015-08",
+      "official": 0.387,
+      "nowcast": 0.393,
+      "error": 0.006
+    },
+    {
+      "month": "2015-09",
+      "official": 0.285,
+      "nowcast": 0.341,
+      "error": 0.056
+    },
+    {
+      "month": "2015-10",
+      "official": 0.183,
+      "nowcast": 0.28,
+      "error": 0.098
+    },
+    {
+      "month": "2015-11",
+      "official": 0.171,
+      "nowcast": 0.214,
+      "error": 0.042
+    },
+    {
+      "month": "2015-12",
+      "official": 0.311,
+      "nowcast": 0.205,
+      "error": -0.106
+    },
+    {
+      "month": "2016-01",
+      "official": 0.387,
+      "nowcast": 0.289,
+      "error": -0.099
+    },
+    {
+      "month": "2016-02",
+      "official": 0.331,
+      "nowcast": 0.374,
+      "error": 0.043
+    },
+    {
+      "month": "2016-03",
+      "official": 0.382,
+      "nowcast": 0.317,
+      "error": -0.065
+    },
+    {
+      "month": "2016-04",
+      "official": 0.261,
+      "nowcast": 0.375,
+      "error": 0.113
+    },
+    {
+      "month": "2016-05",
+      "official": 0.273,
+      "nowcast": 0.272,
+      "error": -0.001
+    },
+    {
+      "month": "2016-06",
+      "official": 0.12,
+      "nowcast": 0.264,
+      "error": 0.144
+    },
+    {
+      "month": "2016-07",
+      "official": 0.144,
+      "nowcast": 0.155,
+      "error": 0.011
+    },
+    {
+      "month": "2016-08",
+      "official": 0.193,
+      "nowcast": 0.173,
+      "error": -0.02
+    },
+    {
+      "month": "2016-09",
+      "official": 0.215,
+      "nowcast": 0.204,
+      "error": -0.011
+    },
+    {
+      "month": "2016-10",
+      "official": 0.326,
+      "nowcast": 0.214,
+      "error": -0.112
+    },
+    {
+      "month": "2016-11",
+      "official": 0.303,
+      "nowcast": 0.292,
+      "error": -0.012
+    },
+    {
+      "month": "2016-12",
+      "official": 0.346,
+      "nowcast": 0.275,
+      "error": -0.071
+    },
+    {
+      "month": "2017-01",
+      "official": 0.287,
+      "nowcast": 0.296,
+      "error": 0.008
+    },
+    {
+      "month": "2017-02",
+      "official": 0.298,
+      "nowcast": 0.265,
+      "error": -0.034
+    },
+    {
+      "month": "2017-03",
+      "official": 0.622,
+      "nowcast": 0.262,
+      "error": -0.36
+    },
+    {
+      "month": "2017-04",
+      "official": 0.457,
+      "nowcast": 0.526,
+      "error": 0.069
+    },
+    {
+      "month": "2017-05",
+      "official": 0.208,
+      "nowcast": 0.39,
+      "error": 0.183
+    },
+    {
+      "month": "2017-06",
+      "official": -0.28,
+      "nowcast": 0.196,
+      "error": 0.476
+    },
+    {
+      "month": "2017-07",
+      "official": -0.128,
+      "nowcast": -0.162,
+      "error": -0.034
+    },
+    {
+      "month": "2017-08",
+      "official": 0.237,
+      "nowcast": -0.044,
+      "error": -0.281
+    },
+    {
+      "month": "2017-09",
+      "official": 0.285,
+      "nowcast": 0.211,
+      "error": -0.074
+    },
+    {
+      "month": "2017-10",
+      "official": 0.062,
+      "nowcast": 0.245,
+      "error": 0.183
+    },
+    {
+      "month": "2017-11",
+      "official": -0.227,
+      "nowcast": 0.077,
+      "error": 0.305
+    },
+    {
+      "month": "2017-12",
+      "official": -0.17,
+      "nowcast": -0.134,
+      "error": 0.036
+    },
+    {
+      "month": "2018-01",
+      "official": 0.029,
+      "nowcast": -0.086,
+      "error": -0.115
+    },
+    {
+      "month": "2018-02",
+      "official": 0.178,
+      "nowcast": 0.053,
+      "error": -0.125
+    },
+    {
+      "month": "2018-03",
+      "official": 0.288,
+      "nowcast": 0.167,
+      "error": -0.121
+    },
+    {
+      "month": "2018-04",
+      "official": 0.2,
+      "nowcast": 0.243,
+      "error": 0.043
+    },
+    {
+      "month": "2018-05",
+      "official": 0.123,
+      "nowcast": 0.191,
+      "error": 0.068
+    },
+    {
+      "month": "2018-06",
+      "official": 0.072,
+      "nowcast": 0.136,
+      "error": 0.065
+    },
+    {
+      "month": "2018-07",
+      "official": 0.245,
+      "nowcast": 0.101,
+      "error": -0.144
+    },
+    {
+      "month": "2018-08",
+      "official": 0.283,
+      "nowcast": 0.229,
+      "error": -0.054
+    },
+    {
+      "month": "2018-09",
+      "official": 0.235,
+      "nowcast": 0.251,
+      "error": 0.016
+    },
+    {
+      "month": "2018-10",
+      "official": 0.135,
+      "nowcast": 0.23,
+      "error": 0.095
+    },
+    {
+      "month": "2018-11",
+      "official": 0.132,
+      "nowcast": 0.155,
+      "error": 0.023
+    },
+    {
+      "month": "2018-12",
+      "official": 0.129,
+      "nowcast": 0.155,
+      "error": 0.027
+    },
+    {
+      "month": "2019-01",
+      "official": 0.123,
+      "nowcast": 0.147,
+      "error": 0.023
+    },
+    {
+      "month": "2019-02",
+      "official": 0.125,
+      "nowcast": 0.145,
+      "error": 0.02
+    },
+    {
+      "month": "2019-03",
+      "official": 0.307,
+      "nowcast": 0.14,
+      "error": -0.166
+    },
+    {
+      "month": "2019-04",
+      "official": 0.351,
+      "nowcast": 0.272,
+      "error": -0.079
+    },
+    {
+      "month": "2019-05",
+      "official": 0.358,
+      "nowcast": 0.302,
+      "error": -0.057
+    },
+    {
+      "month": "2019-06",
+      "official": 0.087,
+      "nowcast": 0.311,
+      "error": 0.224
+    },
+    {
+      "month": "2019-07",
+      "official": 0.088,
+      "nowcast": 0.116,
+      "error": 0.028
+    },
+    {
+      "month": "2019-08",
+      "official": 0.059,
+      "nowcast": 0.1,
+      "error": 0.041
+    },
+    {
+      "month": "2019-09",
+      "official": 0.09,
+      "nowcast": 0.087,
+      "error": -0.003
+    },
+    {
+      "month": "2019-10",
+      "official": 0.059,
+      "nowcast": 0.116,
+      "error": 0.057
+    },
+    {
+      "month": "2019-11",
+      "official": 0.075,
+      "nowcast": 0.088,
+      "error": 0.012
+    },
+    {
+      "month": "2019-12",
+      "official": 0.145,
+      "nowcast": 0.094,
+      "error": -0.051
+    },
+    {
+      "month": "2020-01",
+      "official": 0.126,
+      "nowcast": 0.152,
+      "error": 0.026
+    },
+    {
+      "month": "2020-02",
+      "official": 0.137,
+      "nowcast": 0.133,
+      "error": -0.004
+    },
+    {
+      "month": "2020-03",
+      "official": 0.281,
+      "nowcast": 0.137,
+      "error": -0.144
+    },
+    {
+      "month": "2020-04",
+      "official": 0.298,
+      "nowcast": 0.249,
+      "error": -0.049
+    },
+    {
+      "month": "2020-05",
+      "official": 0.318,
+      "nowcast": 0.321,
+      "error": 0.003
+    },
+    {
+      "month": "2020-06",
+      "official": 0.014,
+      "nowcast": 0.356,
+      "error": 0.342
+    },
+    {
+      "month": "2020-07",
+      "official": 0.134,
+      "nowcast": 0.113,
+      "error": -0.02
+    },
+    {
+      "month": "2020-08",
+      "official": 0.029,
+      "nowcast": 0.143,
+      "error": 0.115
+    },
+    {
+      "month": "2020-09",
+      "official": 0.163,
+      "nowcast": 0.012,
+      "error": -0.151
+    },
+    {
+      "month": "2020-10",
+      "official": 0.014,
+      "nowcast": 0.093,
+      "error": 0.079
+    },
+    {
+      "month": "2020-11",
+      "official": 0.225,
+      "nowcast": 0.022,
+      "error": -0.203
+    },
+    {
+      "month": "2020-12",
+      "official": 0.195,
+      "nowcast": 0.211,
+      "error": 0.015
+    },
+    {
+      "month": "2021-01",
+      "official": 0.437,
+      "nowcast": 0.155,
+      "error": -0.282
+    },
+    {
+      "month": "2021-02",
+      "official": 0.222,
+      "nowcast": 0.377,
+      "error": 0.155
+    },
+    {
+      "month": "2021-03",
+      "official": 0.486,
+      "nowcast": 0.194,
+      "error": -0.291
+    },
+    {
+      "month": "2021-04",
+      "official": 0.203,
+      "nowcast": 0.388,
+      "error": 0.185
+    },
+    {
+      "month": "2021-05",
+      "official": 0.334,
+      "nowcast": 0.165,
+      "error": -0.169
+    },
+    {
+      "month": "2021-06",
+      "official": 0.227,
+      "nowcast": 0.261,
+      "error": 0.034
+    },
+    {
+      "month": "2021-07",
+      "official": 0.598,
+      "nowcast": 0.251,
+      "error": -0.347
+    },
+    {
+      "month": "2021-08",
+      "official": 0.837,
+      "nowcast": 0.502,
+      "error": -0.335
+    },
+    {
+      "month": "2021-09",
+      "official": 0.798,
+      "nowcast": 0.715,
+      "error": -0.082
+    },
+    {
+      "month": "2021-10",
+      "official": 0.656,
+      "nowcast": 0.686,
+      "error": 0.029
+    },
+    {
+      "month": "2021-11",
+      "official": 0.447,
+      "nowcast": 0.58,
+      "error": 0.133
+    },
+    {
+      "month": "2021-12",
+      "official": 0.575,
+      "nowcast": 0.431,
+      "error": -0.144
+    },
+    {
+      "month": "2022-01",
+      "official": 0.393,
+      "nowcast": 0.544,
+      "error": 0.151
+    },
+    {
+      "month": "2022-02",
+      "official": 0.377,
+      "nowcast": 0.373,
+      "error": -0.004
+    },
+    {
+      "month": "2022-03",
+      "official": 0.61,
+      "nowcast": 0.369,
+      "error": -0.241
+    },
+    {
+      "month": "2022-04",
+      "official": 0.919,
+      "nowcast": 0.756,
+      "error": -0.163
+    },
+    {
+      "month": "2022-05",
+      "official": 0.943,
+      "nowcast": 0.83,
+      "error": -0.113
+    },
+    {
+      "month": "2022-06",
+      "official": 0.846,
+      "nowcast": 0.89,
+      "error": 0.045
+    },
+    {
+      "month": "2022-07",
+      "official": 0.839,
+      "nowcast": 0.896,
+      "error": 0.057
+    },
+    {
+      "month": "2022-08",
+      "official": 0.933,
+      "nowcast": 0.681,
+      "error": -0.251
+    },
+    {
+      "month": "2022-09",
+      "official": 0.71,
+      "nowcast": 0.79,
+      "error": 0.08
+    },
+    {
+      "month": "2022-10",
+      "official": 0.512,
+      "nowcast": 0.592,
+      "error": 0.079
+    },
+    {
+      "month": "2022-11",
+      "official": 0.463,
+      "nowcast": 0.49,
+      "error": 0.027
+    },
+    {
+      "month": "2022-12",
+      "official": 0.553,
+      "nowcast": 0.451,
+      "error": -0.102
+    },
+    {
+      "month": "2023-01",
+      "official": 0.513,
+      "nowcast": 0.404,
+      "error": -0.108
+    },
+    {
+      "month": "2023-02",
+      "official": 0.438,
+      "nowcast": 0.623,
+      "error": 0.185
+    },
+    {
+      "month": "2023-03",
+      "official": 0.591,
+      "nowcast": 0.361,
+      "error": -0.231
+    },
+    {
+      "month": "2023-04",
+      "official": 0.701,
+      "nowcast": 0.582,
+      "error": -0.119
+    },
+    {
+      "month": "2023-05",
+      "official": 0.709,
+      "nowcast": 0.618,
+      "error": -0.091
+    },
+    {
+      "month": "2023-06",
+      "official": 0.24,
+      "nowcast": 0.627,
+      "error": 0.387
+    },
+    {
+      "month": "2023-07",
+      "official": 0.185,
+      "nowcast": 0.204,
+      "error": 0.018
+    },
+    {
+      "month": "2023-08",
+      "official": 0.205,
+      "nowcast": 0.174,
+      "error": -0.031
+    },
+    {
+      "month": "2023-09",
+      "official": 0.261,
+      "nowcast": 0.201,
+      "error": -0.06
+    },
+    {
+      "month": "2023-10",
+      "official": 0.023,
+      "nowcast": 0.309,
+      "error": 0.285
+    },
+    {
+      "month": "2023-11",
+      "official": -0.156,
+      "nowcast": 0.142,
+      "error": 0.298
+    },
+    {
+      "month": "2023-12",
+      "official": -0.027,
+      "nowcast": -0.028,
+      "error": -0.002
+    },
+    {
+      "month": "2024-01",
+      "official": 0.087,
+      "nowcast": -0.005,
+      "error": -0.093
+    },
+    {
+      "month": "2024-02",
+      "official": 0.328,
+      "nowcast": 0.096,
+      "error": -0.232
+    },
+    {
+      "month": "2024-03",
+      "official": 0.529,
+      "nowcast": 0.306,
+      "error": -0.222
+    },
+    {
+      "month": "2024-04",
+      "official": 0.505,
+      "nowcast": 0.395,
+      "error": -0.11
+    },
+    {
+      "month": "2024-05",
+      "official": 0.289,
+      "nowcast": 0.422,
+      "error": 0.133
+    },
+    {
+      "month": "2024-06",
+      "official": -0.007,
+      "nowcast": 0.236,
+      "error": 0.242
+    },
+    {
+      "month": "2024-07",
+      "official": 0.089,
+      "nowcast": 0.076,
+      "error": -0.014
+    },
+    {
+      "month": "2024-08",
+      "official": 0.214,
+      "nowcast": 0.132,
+      "error": -0.082
+    },
+    {
+      "month": "2024-09",
+      "official": 0.094,
+      "nowcast": 0.204,
+      "error": 0.11
+    },
+    {
+      "month": "2024-10",
+      "official": -0.015,
+      "nowcast": 0.133,
+      "error": 0.149
+    },
+    {
+      "month": "2024-11",
+      "official": -0.079,
+      "nowcast": 0.072,
+      "error": 0.151
+    },
+    {
+      "month": "2024-12",
+      "official": 0.036,
+      "nowcast": 0.036,
+      "error": 0.001
+    },
+    {
+      "month": "2025-01",
+      "official": 0.036,
+      "nowcast": 0.112,
+      "error": 0.077
+    },
+    {
+      "month": "2025-02",
+      "official": 0.067,
+      "nowcast": 0.15,
+      "error": 0.083
+    },
+    {
+      "month": "2025-03",
+      "official": 0.302,
+      "nowcast": 0.168,
+      "error": -0.133
+    },
+    {
+      "month": "2025-04",
+      "official": 0.439,
+      "nowcast": 0.292,
+      "error": -0.147
+    },
+    {
+      "month": "2025-05",
+      "official": 0.357,
+      "nowcast": 0.35,
+      "error": -0.007
+    },
+    {
+      "month": "2025-06",
+      "official": 0.13,
+      "nowcast": 0.295,
+      "error": 0.165
+    },
+    {
+      "month": "2025-07",
+      "official": 0.101,
+      "nowcast": 0.192,
+      "error": 0.091
+    },
+    {
+      "month": "2025-08",
+      "official": 0.023,
+      "nowcast": 0.173,
+      "error": 0.15
+    },
+    {
+      "month": "2025-09",
+      "official": -0.016,
+      "nowcast": 0.119,
+      "error": 0.135
+    },
+    {
+      "month": "2025-10",
+      "official": -0.126,
+      "nowcast": 0.118,
+      "error": 0.244
+    },
+    {
+      "month": "2025-11",
+      "official": 0.007,
+      "nowcast": 0.058,
+      "error": 0.05
+    },
+    {
+      "month": "2025-12",
+      "official": 0.085,
+      "nowcast": 0.134,
+      "error": 0.049
+    },
+    {
+      "month": "2026-01",
+      "official": 0.15,
+      "nowcast": 0.178,
+      "error": 0.028
+    }
+  ],
+  "recent_months": [
+    {
+      "month": "2022-01",
+      "official": 0.393,
+      "nowcast": 0.544,
+      "error": 0.151
+    },
+    {
+      "month": "2022-02",
+      "official": 0.377,
+      "nowcast": 0.373,
+      "error": -0.004
+    },
+    {
+      "month": "2022-03",
+      "official": 0.61,
+      "nowcast": 0.369,
+      "error": -0.241
+    },
+    {
+      "month": "2022-04",
+      "official": 0.919,
+      "nowcast": 0.756,
+      "error": -0.163
+    },
+    {
+      "month": "2022-05",
+      "official": 0.943,
+      "nowcast": 0.83,
+      "error": -0.113
+    },
+    {
+      "month": "2022-06",
+      "official": 0.846,
+      "nowcast": 0.89,
+      "error": 0.045
+    },
+    {
+      "month": "2022-07",
+      "official": 0.839,
+      "nowcast": 0.896,
+      "error": 0.057
+    },
+    {
+      "month": "2022-08",
+      "official": 0.933,
+      "nowcast": 0.681,
+      "error": -0.251
+    },
+    {
+      "month": "2022-09",
+      "official": 0.71,
+      "nowcast": 0.79,
+      "error": 0.08
+    },
+    {
+      "month": "2022-10",
+      "official": 0.512,
+      "nowcast": 0.592,
+      "error": 0.079
+    },
+    {
+      "month": "2022-11",
+      "official": 0.463,
+      "nowcast": 0.49,
+      "error": 0.027
+    },
+    {
+      "month": "2022-12",
+      "official": 0.553,
+      "nowcast": 0.451,
+      "error": -0.102
+    },
+    {
+      "month": "2023-01",
+      "official": 0.513,
+      "nowcast": 0.404,
+      "error": -0.108
+    },
+    {
+      "month": "2023-02",
+      "official": 0.438,
+      "nowcast": 0.623,
+      "error": 0.185
+    },
+    {
+      "month": "2023-03",
+      "official": 0.591,
+      "nowcast": 0.361,
+      "error": -0.231
+    },
+    {
+      "month": "2023-04",
+      "official": 0.701,
+      "nowcast": 0.582,
+      "error": -0.119
+    },
+    {
+      "month": "2023-05",
+      "official": 0.709,
+      "nowcast": 0.618,
+      "error": -0.091
+    },
+    {
+      "month": "2023-06",
+      "official": 0.24,
+      "nowcast": 0.627,
+      "error": 0.387
+    },
+    {
+      "month": "2023-07",
+      "official": 0.185,
+      "nowcast": 0.204,
+      "error": 0.018
+    },
+    {
+      "month": "2023-08",
+      "official": 0.205,
+      "nowcast": 0.174,
+      "error": -0.031
+    },
+    {
+      "month": "2023-09",
+      "official": 0.261,
+      "nowcast": 0.201,
+      "error": -0.06
+    },
+    {
+      "month": "2023-10",
+      "official": 0.023,
+      "nowcast": 0.309,
+      "error": 0.285
+    },
+    {
+      "month": "2023-11",
+      "official": -0.156,
+      "nowcast": 0.142,
+      "error": 0.298
+    },
+    {
+      "month": "2023-12",
+      "official": -0.027,
+      "nowcast": -0.028,
+      "error": -0.002
+    },
+    {
+      "month": "2024-01",
+      "official": 0.087,
+      "nowcast": -0.005,
+      "error": -0.093
+    },
+    {
+      "month": "2024-02",
+      "official": 0.328,
+      "nowcast": 0.096,
+      "error": -0.232
+    },
+    {
+      "month": "2024-03",
+      "official": 0.529,
+      "nowcast": 0.306,
+      "error": -0.222
+    },
+    {
+      "month": "2024-04",
+      "official": 0.505,
+      "nowcast": 0.395,
+      "error": -0.11
+    },
+    {
+      "month": "2024-05",
+      "official": 0.289,
+      "nowcast": 0.422,
+      "error": 0.133
+    },
+    {
+      "month": "2024-06",
+      "official": -0.007,
+      "nowcast": 0.236,
+      "error": 0.242
+    },
+    {
+      "month": "2024-07",
+      "official": 0.089,
+      "nowcast": 0.076,
+      "error": -0.014
+    },
+    {
+      "month": "2024-08",
+      "official": 0.214,
+      "nowcast": 0.132,
+      "error": -0.082
+    },
+    {
+      "month": "2024-09",
+      "official": 0.094,
+      "nowcast": 0.204,
+      "error": 0.11
+    },
+    {
+      "month": "2024-10",
+      "official": -0.015,
+      "nowcast": 0.133,
+      "error": 0.149
+    },
+    {
+      "month": "2024-11",
+      "official": -0.079,
+      "nowcast": 0.072,
+      "error": 0.151
+    },
+    {
+      "month": "2024-12",
+      "official": 0.036,
+      "nowcast": 0.036,
+      "error": 0.001
+    },
+    {
+      "month": "2025-01",
+      "official": 0.036,
+      "nowcast": 0.112,
+      "error": 0.077
+    },
+    {
+      "month": "2025-02",
+      "official": 0.067,
+      "nowcast": 0.15,
+      "error": 0.083
+    },
+    {
+      "month": "2025-03",
+      "official": 0.302,
+      "nowcast": 0.168,
+      "error": -0.133
+    },
+    {
+      "month": "2025-04",
+      "official": 0.439,
+      "nowcast": 0.292,
+      "error": -0.147
+    },
+    {
+      "month": "2025-05",
+      "official": 0.357,
+      "nowcast": 0.35,
+      "error": -0.007
+    },
+    {
+      "month": "2025-06",
+      "official": 0.13,
+      "nowcast": 0.295,
+      "error": 0.165
+    },
+    {
+      "month": "2025-07",
+      "official": 0.101,
+      "nowcast": 0.192,
+      "error": 0.091
+    },
+    {
+      "month": "2025-08",
+      "official": 0.023,
+      "nowcast": 0.173,
+      "error": 0.15
+    },
+    {
+      "month": "2025-09",
+      "official": -0.016,
+      "nowcast": 0.119,
+      "error": 0.135
+    },
+    {
+      "month": "2025-10",
+      "official": -0.126,
+      "nowcast": 0.118,
+      "error": 0.244
+    },
+    {
+      "month": "2025-11",
+      "official": 0.007,
+      "nowcast": 0.058,
+      "error": 0.05
+    },
+    {
+      "month": "2025-12",
+      "official": 0.085,
+      "nowcast": 0.134,
+      "error": 0.049
+    },
+    {
+      "month": "2026-01",
+      "official": 0.15,
+      "nowcast": 0.178,
+      "error": 0.028
+    }
+  ],
+  "category_contributions": [
+    {
+      "category": "Food (supermarket)",
+      "weight": 0.2222,
+      "data_available": false
+    },
+    {
+      "category": "Non-food",
+      "weight": 0.06,
+      "data_available": false
+    }
+  ],
+  "backtest_metrics": {
+    "rmse": 0.319,
+    "mae": 0.245,
+    "r2": 0.199,
+    "relative_rmse_vs_ar1": 0.991
+  }
+}

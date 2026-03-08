@@ -1,0 +1,85 @@
+
+
+====================================================================================================
+                              ANSWERING YOUR POLICY QUESTIONS
+====================================================================================================
+
+====================================================================================================
+Q1: WHAT IF QALI WARMA EXPANDS 20%?
+====================================================================================================
+
+Current program:
+  Coverage: 3,700,000 children
+  Budget: S/ 2,100M per year
+
+After 20% expansion:
+  Coverage: 4,440,000 children (+740,000)
+  Budget: S/ 2,520M per year
+  Fiscal cost: S/ 420M
+
+Macroeconomic impacts:
+  National poverty: -0.16pp
+  GDP growth: +0.17pp (multiplier effect)
+
+Impact by population group:
+  Children     poverty: -0.128pp
+  Elderly      poverty: -0.008pp
+  Rural        poverty: -0.008pp
+  Urban        poverty: -0.008pp
+  Workers      poverty: -0.008pp
+
+Cost-effectiveness:
+  Cost per person out of poverty: S/ 772,058,823,529
+
+====================================================================================================
+Q2: WHAT IF PENSION 65 BENEFIT INCREASES 15%?
+====================================================================================================
+
+Current program:
+  Coverage: 560,000 elderly
+  Benefit: S/ 2,500 per person per year
+  Budget: S/ 1,400M
+
+After 15% benefit increase:
+  New benefit: S/ 2,875 per person per year
+  Budget: S/ 1,610M
+  Fiscal cost: S/ 210M
+
+Impacts:
+  Elderly poverty: -0.14pp
+  National poverty: -0.18pp
+  GDP: +0.06pp
+
+====================================================================================================
+Q3: WHAT IF MINIMUM WAGE RISES 15%?
+====================================================================================================
+
+Current minimum wage: S/ 1,025 per month
+New minimum wage: S/ 1,179 per month (+S/ 154)
+Workers affected: 2,500,000
+
+Positive effects:
+  Worker poverty: -0.30pp
+  National poverty: -0.38pp
+
+Negative effects:
+  Formal employment loss: ~562 jobs
+  Inflation: +0.45pp (cost-push from higher labor costs)
+
+Note: Trade-off between poverty reduction and formal employment
+
+====================================================================================================
+Traceback (most recent call last):
+  File "D:\Nexus\nexus\scripts\answer_policy_questions.py", line 376, in <module>
+    main()
+    ~~~~^^
+  File "D:\Nexus\nexus\scripts\answer_policy_questions.py", line 363, in main
+    question_4_oil_vs_copper()
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\Nexus\nexus\scripts\answer_policy_questions.py", line 148, in question_4_oil_vs_copper
+    print("Q4: WHAT IF OIL PRICES \u219130% BUT COPPER PRICES \u219310%?")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User\AppData\Local\Python\pythoncore-3.14-64\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2191' in position 23: character maps to <undefined>

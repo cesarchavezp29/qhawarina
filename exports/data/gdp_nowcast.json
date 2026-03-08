@@ -1,0 +1,997 @@
+{
+  "metadata": {
+    "generated_at": "2026-03-07T18:59:24.596586",
+    "methodology": "Dynamic Factor Model with Ridge bridge equation (Baker 2023, Aruoba 2020)",
+    "model": "DynamicFactorModel",
+    "model_params": {
+      "k_factors": 3,
+      "factor_order": 1,
+      "bridge_method": "ridge",
+      "bridge_alpha": 1.0,
+      "rolling_window_years": 7,
+      "exclude_covid": true
+    },
+    "n_indicators": 37,
+    "training_window": "2007-2024 (rolling 7-year window, excl. COVID 2020-2021)",
+    "last_official_gdp": {
+      "quarter": "2025-Q4",
+      "official": 3.17,
+      "nowcast": null,
+      "nowcast_full": null,
+      "error": null
+    },
+    "data_vintage": "2025-12",
+    "series_coverage": "37/36"
+  },
+  "nowcast": {
+    "target_period": "2025-Q4",
+    "value": 2.2,
+    "unit": "percent_yoy",
+    "bridge_r2": 0.556
+  },
+  "forecasts": [
+    {
+      "quarter": "2026-Q1",
+      "value": 2.98,
+      "lower": -10.42,
+      "upper": 16.38
+    },
+    {
+      "quarter": "2026-Q2",
+      "value": 3.47,
+      "lower": -9.92,
+      "upper": 16.87
+    }
+  ],
+  "quarterly_series": [
+    {
+      "quarter": "2004-Q1",
+      "official": 4.57,
+      "nowcast": null,
+      "nowcast_full": null,
+      "error": null
+    },
+    {
+      "quarter": "2004-Q2",
+      "official": 3.74,
+      "nowcast": null,
+      "nowcast_full": null,
+      "error": null
+    },
+    {
+      "quarter": "2004-Q3",
+      "official": 4.28,
+      "nowcast": null,
+      "nowcast_full": null,
+      "error": null
+    },
+    {
+      "quarter": "2004-Q4",
+      "official": 7.28,
+      "nowcast": null,
+      "nowcast_full": null,
+      "error": null
+    },
+    {
+      "quarter": "2005-Q1",
+      "official": 5.63,
+      "nowcast": null,
+      "nowcast_full": null,
+      "error": null
+    },
+    {
+      "quarter": "2005-Q2",
+      "official": 5.43,
+      "nowcast": null,
+      "nowcast_full": null,
+      "error": null
+    },
+    {
+      "quarter": "2005-Q3",
+      "official": 6.47,
+      "nowcast": null,
+      "nowcast_full": null,
+      "error": null
+    },
+    {
+      "quarter": "2005-Q4",
+      "official": 7.6,
+      "nowcast": null,
+      "nowcast_full": null,
+      "error": null
+    },
+    {
+      "quarter": "2006-Q1",
+      "official": 8.28,
+      "nowcast": null,
+      "nowcast_full": null,
+      "error": null
+    },
+    {
+      "quarter": "2006-Q2",
+      "official": 6.33,
+      "nowcast": null,
+      "nowcast_full": null,
+      "error": null
+    },
+    {
+      "quarter": "2006-Q3",
+      "official": 8.29,
+      "nowcast": null,
+      "nowcast_full": null,
+      "error": null
+    },
+    {
+      "quarter": "2006-Q4",
+      "official": 7.32,
+      "nowcast": null,
+      "nowcast_full": null,
+      "error": null
+    },
+    {
+      "quarter": "2007-Q1",
+      "official": 5.29,
+      "nowcast": null,
+      "nowcast_full": null,
+      "error": null
+    },
+    {
+      "quarter": "2007-Q2",
+      "official": 6.33,
+      "nowcast": null,
+      "nowcast_full": null,
+      "error": null
+    },
+    {
+      "quarter": "2007-Q3",
+      "official": 10.84,
+      "nowcast": null,
+      "nowcast_full": null,
+      "error": null
+    },
+    {
+      "quarter": "2007-Q4",
+      "official": 11.42,
+      "nowcast": null,
+      "nowcast_full": null,
+      "error": null
+    },
+    {
+      "quarter": "2008-Q1",
+      "official": 10.15,
+      "nowcast": null,
+      "nowcast_full": null,
+      "error": null
+    },
+    {
+      "quarter": "2008-Q2",
+      "official": 10.53,
+      "nowcast": null,
+      "nowcast_full": null,
+      "error": null
+    },
+    {
+      "quarter": "2008-Q3",
+      "official": 9.58,
+      "nowcast": null,
+      "nowcast_full": null,
+      "error": null
+    },
+    {
+      "quarter": "2008-Q4",
+      "official": 6.48,
+      "nowcast": null,
+      "nowcast_full": null,
+      "error": null
+    },
+    {
+      "quarter": "2009-Q1",
+      "official": 2.59,
+      "nowcast": null,
+      "nowcast_full": null,
+      "error": null
+    },
+    {
+      "quarter": "2009-Q2",
+      "official": -0.73,
+      "nowcast": null,
+      "nowcast_full": null,
+      "error": null
+    },
+    {
+      "quarter": "2009-Q3",
+      "official": -0.1,
+      "nowcast": null,
+      "nowcast_full": null,
+      "error": null
+    },
+    {
+      "quarter": "2009-Q4",
+      "official": 2.73,
+      "nowcast": null,
+      "nowcast_full": null,
+      "error": null
+    },
+    {
+      "quarter": "2010-Q1",
+      "official": 5.65,
+      "nowcast": 4.85,
+      "nowcast_full": 4.85,
+      "error": -0.8
+    },
+    {
+      "quarter": "2010-Q2",
+      "official": 9.47,
+      "nowcast": 6.32,
+      "nowcast_full": 6.32,
+      "error": -3.15
+    },
+    {
+      "quarter": "2010-Q3",
+      "official": 9.51,
+      "nowcast": 7.25,
+      "nowcast_full": 7.25,
+      "error": -2.26
+    },
+    {
+      "quarter": "2010-Q4",
+      "official": 8.5,
+      "nowcast": 7.57,
+      "nowcast_full": 7.57,
+      "error": -0.94
+    },
+    {
+      "quarter": "2011-Q1",
+      "official": 8.41,
+      "nowcast": 7.63,
+      "nowcast_full": 7.63,
+      "error": -0.78
+    },
+    {
+      "quarter": "2011-Q2",
+      "official": 5.29,
+      "nowcast": 7.13,
+      "nowcast_full": 7.13,
+      "error": 1.85
+    },
+    {
+      "quarter": "2011-Q3",
+      "official": 5.81,
+      "nowcast": 6.9,
+      "nowcast_full": 6.9,
+      "error": 1.09
+    },
+    {
+      "quarter": "2011-Q4",
+      "official": 6.01,
+      "nowcast": 6.03,
+      "nowcast_full": 6.03,
+      "error": 0.02
+    },
+    {
+      "quarter": "2012-Q1",
+      "official": 6.11,
+      "nowcast": 6.26,
+      "nowcast_full": 6.26,
+      "error": 0.14
+    },
+    {
+      "quarter": "2012-Q2",
+      "official": 5.89,
+      "nowcast": 5.68,
+      "nowcast_full": 5.68,
+      "error": -0.22
+    },
+    {
+      "quarter": "2012-Q3",
+      "official": 7.02,
+      "nowcast": 6.26,
+      "nowcast_full": 6.26,
+      "error": -0.76
+    },
+    {
+      "quarter": "2012-Q4",
+      "official": 5.56,
+      "nowcast": 6.57,
+      "nowcast_full": 6.57,
+      "error": 1.01
+    },
+    {
+      "quarter": "2013-Q1",
+      "official": 4.98,
+      "nowcast": 6.52,
+      "nowcast_full": 6.52,
+      "error": 1.54
+    },
+    {
+      "quarter": "2013-Q2",
+      "official": 6.26,
+      "nowcast": 6.29,
+      "nowcast_full": 6.29,
+      "error": 0.03
+    },
+    {
+      "quarter": "2013-Q3",
+      "official": 5.23,
+      "nowcast": 5.07,
+      "nowcast_full": 5.07,
+      "error": -0.15
+    },
+    {
+      "quarter": "2013-Q4",
+      "official": 6.84,
+      "nowcast": 5.45,
+      "nowcast_full": 5.45,
+      "error": -1.39
+    },
+    {
+      "quarter": "2014-Q1",
+      "official": 4.96,
+      "nowcast": 5.65,
+      "nowcast_full": 5.65,
+      "error": 0.7
+    },
+    {
+      "quarter": "2014-Q2",
+      "official": 1.96,
+      "nowcast": 6.03,
+      "nowcast_full": 6.03,
+      "error": 4.07
+    },
+    {
+      "quarter": "2014-Q3",
+      "official": 1.82,
+      "nowcast": 4.98,
+      "nowcast_full": 4.98,
+      "error": 3.15
+    },
+    {
+      "quarter": "2014-Q4",
+      "official": 1.07,
+      "nowcast": 4.33,
+      "nowcast_full": 4.33,
+      "error": 3.26
+    },
+    {
+      "quarter": "2015-Q1",
+      "official": 1.93,
+      "nowcast": 3.93,
+      "nowcast_full": 3.93,
+      "error": 2.0
+    },
+    {
+      "quarter": "2015-Q2",
+      "official": 3.18,
+      "nowcast": 3.9,
+      "nowcast_full": 3.9,
+      "error": 0.73
+    },
+    {
+      "quarter": "2015-Q3",
+      "official": 3.16,
+      "nowcast": 3.65,
+      "nowcast_full": 3.65,
+      "error": 0.49
+    },
+    {
+      "quarter": "2015-Q4",
+      "official": 4.62,
+      "nowcast": 2.77,
+      "nowcast_full": 2.77,
+      "error": -1.84
+    },
+    {
+      "quarter": "2016-Q1",
+      "official": 4.48,
+      "nowcast": 4.14,
+      "nowcast_full": 4.14,
+      "error": -0.34
+    },
+    {
+      "quarter": "2016-Q2",
+      "official": 3.74,
+      "nowcast": 4.39,
+      "nowcast_full": 4.39,
+      "error": 0.66
+    },
+    {
+      "quarter": "2016-Q3",
+      "official": 4.61,
+      "nowcast": 4.55,
+      "nowcast_full": 4.55,
+      "error": -0.06
+    },
+    {
+      "quarter": "2016-Q4",
+      "official": 3.07,
+      "nowcast": 3.37,
+      "nowcast_full": 3.37,
+      "error": 0.3
+    },
+    {
+      "quarter": "2017-Q1",
+      "official": 2.28,
+      "nowcast": 2.51,
+      "nowcast_full": 2.51,
+      "error": 0.22
+    },
+    {
+      "quarter": "2017-Q2",
+      "official": 2.65,
+      "nowcast": 1.28,
+      "nowcast_full": 1.28,
+      "error": -1.36
+    },
+    {
+      "quarter": "2017-Q3",
+      "official": 2.81,
+      "nowcast": 2.3,
+      "nowcast_full": 2.3,
+      "error": -0.52
+    },
+    {
+      "quarter": "2017-Q4",
+      "official": 2.32,
+      "nowcast": 1.88,
+      "nowcast_full": 1.88,
+      "error": -0.44
+    },
+    {
+      "quarter": "2018-Q1",
+      "official": 3.17,
+      "nowcast": 2.12,
+      "nowcast_full": 2.12,
+      "error": -1.05
+    },
+    {
+      "quarter": "2018-Q2",
+      "official": 5.6,
+      "nowcast": 3.14,
+      "nowcast_full": 3.14,
+      "error": -2.45
+    },
+    {
+      "quarter": "2018-Q3",
+      "official": 2.44,
+      "nowcast": 2.48,
+      "nowcast_full": 2.48,
+      "error": 0.05
+    },
+    {
+      "quarter": "2018-Q4",
+      "official": 4.62,
+      "nowcast": 2.5,
+      "nowcast_full": 2.5,
+      "error": -2.11
+    },
+    {
+      "quarter": "2019-Q1",
+      "official": 2.4,
+      "nowcast": 3.1,
+      "nowcast_full": 3.1,
+      "error": 0.7
+    },
+    {
+      "quarter": "2019-Q2",
+      "official": 1.15,
+      "nowcast": 3.22,
+      "nowcast_full": 3.22,
+      "error": 2.07
+    },
+    {
+      "quarter": "2019-Q3",
+      "official": 3.39,
+      "nowcast": 3.58,
+      "nowcast_full": 3.58,
+      "error": 0.19
+    },
+    {
+      "quarter": "2019-Q4",
+      "official": 2.06,
+      "nowcast": 2.61,
+      "nowcast_full": 2.61,
+      "error": 0.55
+    },
+    {
+      "quarter": "2020-Q1",
+      "official": -3.57,
+      "nowcast": null,
+      "nowcast_full": 2.77,
+      "error": null
+    },
+    {
+      "quarter": "2020-Q2",
+      "official": -30.05,
+      "nowcast": null,
+      "nowcast_full": 2.77,
+      "error": null
+    },
+    {
+      "quarter": "2020-Q3",
+      "official": -8.69,
+      "nowcast": null,
+      "nowcast_full": 2.77,
+      "error": null
+    },
+    {
+      "quarter": "2020-Q4",
+      "official": -1.38,
+      "nowcast": null,
+      "nowcast_full": 2.77,
+      "error": null
+    },
+    {
+      "quarter": "2021-Q1",
+      "official": 4.23,
+      "nowcast": null,
+      "nowcast_full": 2.77,
+      "error": null
+    },
+    {
+      "quarter": "2021-Q2",
+      "official": 42.09,
+      "nowcast": null,
+      "nowcast_full": 2.77,
+      "error": null
+    },
+    {
+      "quarter": "2021-Q3",
+      "official": 11.76,
+      "nowcast": null,
+      "nowcast_full": 2.77,
+      "error": null
+    },
+    {
+      "quarter": "2021-Q4",
+      "official": 3.46,
+      "nowcast": null,
+      "nowcast_full": 2.77,
+      "error": null
+    },
+    {
+      "quarter": "2022-Q1",
+      "official": 3.92,
+      "nowcast": 4.17,
+      "nowcast_full": 4.17,
+      "error": 0.25
+    },
+    {
+      "quarter": "2022-Q2",
+      "official": 3.42,
+      "nowcast": 4.06,
+      "nowcast_full": 4.06,
+      "error": 0.64
+    },
+    {
+      "quarter": "2022-Q3",
+      "official": 2.06,
+      "nowcast": 2.93,
+      "nowcast_full": 2.93,
+      "error": 0.87
+    },
+    {
+      "quarter": "2022-Q4",
+      "official": 2.03,
+      "nowcast": 2.46,
+      "nowcast_full": 2.46,
+      "error": 0.43
+    },
+    {
+      "quarter": "2023-Q1",
+      "official": 0.04,
+      "nowcast": 2.26,
+      "nowcast_full": 2.26,
+      "error": 2.22
+    },
+    {
+      "quarter": "2023-Q2",
+      "official": -0.36,
+      "nowcast": 2.04,
+      "nowcast_full": 2.04,
+      "error": 2.4
+    },
+    {
+      "quarter": "2023-Q3",
+      "official": -0.63,
+      "nowcast": 0.94,
+      "nowcast_full": 0.94,
+      "error": 1.57
+    },
+    {
+      "quarter": "2023-Q4",
+      "official": -0.43,
+      "nowcast": 1.42,
+      "nowcast_full": 1.42,
+      "error": 1.85
+    },
+    {
+      "quarter": "2024-Q1",
+      "official": 1.49,
+      "nowcast": 1.63,
+      "nowcast_full": 1.63,
+      "error": 0.14
+    },
+    {
+      "quarter": "2024-Q2",
+      "official": 3.86,
+      "nowcast": 1.72,
+      "nowcast_full": 1.72,
+      "error": -2.13
+    },
+    {
+      "quarter": "2024-Q3",
+      "official": 4.1,
+      "nowcast": 2.48,
+      "nowcast_full": 2.48,
+      "error": -1.62
+    },
+    {
+      "quarter": "2024-Q4",
+      "official": 4.44,
+      "nowcast": 3.42,
+      "nowcast_full": 3.42,
+      "error": -1.03
+    },
+    {
+      "quarter": "2025-Q1",
+      "official": 4.03,
+      "nowcast": 4.85,
+      "nowcast_full": 4.85,
+      "error": 0.82
+    },
+    {
+      "quarter": "2025-Q2",
+      "official": 2.84,
+      "nowcast": 4.22,
+      "nowcast_full": 4.22,
+      "error": 1.38
+    },
+    {
+      "quarter": "2025-Q3",
+      "official": 3.77,
+      "nowcast": 3.43,
+      "nowcast_full": 3.43,
+      "error": -0.34
+    },
+    {
+      "quarter": "2025-Q4",
+      "official": 3.17,
+      "nowcast": null,
+      "nowcast_full": null,
+      "error": null
+    }
+  ],
+  "annual_series": [
+    {
+      "year": 2004,
+      "official": 4.97,
+      "nowcast": null,
+      "nowcast_full": null,
+      "error": null
+    },
+    {
+      "year": 2005,
+      "official": 6.28,
+      "nowcast": null,
+      "nowcast_full": null,
+      "error": null
+    },
+    {
+      "year": 2006,
+      "official": 7.56,
+      "nowcast": null,
+      "nowcast_full": null,
+      "error": null
+    },
+    {
+      "year": 2007,
+      "official": 8.47,
+      "nowcast": null,
+      "nowcast_full": null,
+      "error": null
+    },
+    {
+      "year": 2008,
+      "official": 9.19,
+      "nowcast": null,
+      "nowcast_full": null,
+      "error": null
+    },
+    {
+      "year": 2009,
+      "official": 1.12,
+      "nowcast": null,
+      "nowcast_full": null,
+      "error": null
+    },
+    {
+      "year": 2010,
+      "official": 8.29,
+      "nowcast": 6.5,
+      "nowcast_full": 6.5,
+      "error": -1.79
+    },
+    {
+      "year": 2011,
+      "official": 6.38,
+      "nowcast": 6.92,
+      "nowcast_full": 6.92,
+      "error": 0.54
+    },
+    {
+      "year": 2012,
+      "official": 6.15,
+      "nowcast": 6.19,
+      "nowcast_full": 6.19,
+      "error": 0.04
+    },
+    {
+      "year": 2013,
+      "official": 5.83,
+      "nowcast": 5.84,
+      "nowcast_full": 5.84,
+      "error": 0.01
+    },
+    {
+      "year": 2014,
+      "official": 2.45,
+      "nowcast": 5.25,
+      "nowcast_full": 5.25,
+      "error": 2.79
+    },
+    {
+      "year": 2015,
+      "official": 3.22,
+      "nowcast": 3.56,
+      "nowcast_full": 3.56,
+      "error": 0.34
+    },
+    {
+      "year": 2016,
+      "official": 3.97,
+      "nowcast": 4.11,
+      "nowcast_full": 4.11,
+      "error": 0.14
+    },
+    {
+      "year": 2017,
+      "official": 2.52,
+      "nowcast": 1.99,
+      "nowcast_full": 1.99,
+      "error": -0.53
+    },
+    {
+      "year": 2018,
+      "official": 3.96,
+      "nowcast": 2.56,
+      "nowcast_full": 2.56,
+      "error": -1.39
+    },
+    {
+      "year": 2019,
+      "official": 2.25,
+      "nowcast": 3.13,
+      "nowcast_full": 3.13,
+      "error": 0.88
+    },
+    {
+      "year": 2020,
+      "official": -10.92,
+      "nowcast": null,
+      "nowcast_full": 2.77,
+      "error": null
+    },
+    {
+      "year": 2021,
+      "official": 15.38,
+      "nowcast": null,
+      "nowcast_full": 2.77,
+      "error": null
+    },
+    {
+      "year": 2022,
+      "official": 2.86,
+      "nowcast": 3.4,
+      "nowcast_full": 3.4,
+      "error": 0.55
+    },
+    {
+      "year": 2023,
+      "official": -0.34,
+      "nowcast": 1.67,
+      "nowcast_full": 1.67,
+      "error": 2.01
+    },
+    {
+      "year": 2024,
+      "official": 3.47,
+      "nowcast": 2.31,
+      "nowcast_full": 2.31,
+      "error": -1.16
+    },
+    {
+      "year": 2025,
+      "official": 3.45,
+      "nowcast": 4.17,
+      "nowcast_full": 4.17,
+      "error": 0.71
+    }
+  ],
+  "recent_quarters": [
+    {
+      "quarter": "2022-Q1",
+      "official": 3.92,
+      "nowcast": 4.17,
+      "error": 0.25
+    },
+    {
+      "quarter": "2022-Q2",
+      "official": 3.42,
+      "nowcast": 4.06,
+      "error": 0.64
+    },
+    {
+      "quarter": "2022-Q3",
+      "official": 2.06,
+      "nowcast": 2.93,
+      "error": 0.87
+    },
+    {
+      "quarter": "2022-Q4",
+      "official": 2.03,
+      "nowcast": 2.46,
+      "error": 0.43
+    },
+    {
+      "quarter": "2023-Q1",
+      "official": 0.04,
+      "nowcast": 2.26,
+      "error": 2.22
+    },
+    {
+      "quarter": "2023-Q2",
+      "official": -0.36,
+      "nowcast": 2.04,
+      "error": 2.4
+    },
+    {
+      "quarter": "2023-Q3",
+      "official": -0.63,
+      "nowcast": 0.94,
+      "error": 1.57
+    },
+    {
+      "quarter": "2023-Q4",
+      "official": -0.43,
+      "nowcast": 1.42,
+      "error": 1.85
+    },
+    {
+      "quarter": "2024-Q1",
+      "official": 1.49,
+      "nowcast": 1.63,
+      "error": 0.14
+    },
+    {
+      "quarter": "2024-Q2",
+      "official": 3.86,
+      "nowcast": 1.72,
+      "error": -2.13
+    },
+    {
+      "quarter": "2024-Q3",
+      "official": 4.1,
+      "nowcast": 2.48,
+      "error": -1.62
+    },
+    {
+      "quarter": "2024-Q4",
+      "official": 4.44,
+      "nowcast": 3.42,
+      "error": -1.03
+    },
+    {
+      "quarter": "2025-Q1",
+      "official": 4.03,
+      "nowcast": 4.85,
+      "error": 0.82
+    },
+    {
+      "quarter": "2025-Q2",
+      "official": 2.84,
+      "nowcast": 4.22,
+      "error": 1.38
+    },
+    {
+      "quarter": "2025-Q3",
+      "official": 3.77,
+      "nowcast": 3.43,
+      "error": -0.34
+    },
+    {
+      "quarter": "2025-Q4",
+      "official": 3.17,
+      "nowcast": null,
+      "error": null
+    }
+  ],
+  "forecast_vs_actual": [
+    {
+      "quarter": "2023-Q4",
+      "official": -0.43,
+      "nowcast": 1.42,
+      "error": 1.85
+    },
+    {
+      "quarter": "2024-Q1",
+      "official": 1.49,
+      "nowcast": 1.63,
+      "error": 0.14
+    },
+    {
+      "quarter": "2024-Q2",
+      "official": 3.86,
+      "nowcast": 1.72,
+      "error": -2.13
+    },
+    {
+      "quarter": "2024-Q3",
+      "official": 4.1,
+      "nowcast": 2.48,
+      "error": -1.62
+    },
+    {
+      "quarter": "2024-Q4",
+      "official": 4.44,
+      "nowcast": 3.42,
+      "error": -1.03
+    },
+    {
+      "quarter": "2025-Q1",
+      "official": 4.03,
+      "nowcast": 4.85,
+      "error": 0.82
+    },
+    {
+      "quarter": "2025-Q2",
+      "official": 2.84,
+      "nowcast": 4.22,
+      "error": 1.38
+    },
+    {
+      "quarter": "2025-Q3",
+      "official": 3.77,
+      "nowcast": 3.43,
+      "error": -0.34
+    }
+  ],
+  "subcomponent_contributions": [],
+  "top_contributors": [
+    {
+      "series": "Manufacturing production index",
+      "loading": 0.84
+    },
+    {
+      "series": "Non-traditional exports",
+      "loading": 0.71
+    },
+    {
+      "series": "Tax revenue (IGV)",
+      "loading": 0.68
+    },
+    {
+      "series": "Formal employment (urban)",
+      "loading": 0.65
+    },
+    {
+      "series": "Credit to private sector",
+      "loading": 0.59
+    }
+  ],
+  "backtest_metrics": {
+    "rmse": 1.41,
+    "mae": 1.05,
+    "r2": 0.89,
+    "relative_rmse_vs_ar1": 0.695
+  }
+}
