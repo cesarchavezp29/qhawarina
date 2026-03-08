@@ -1,0 +1,303 @@
+{
+  "base_year": 2023,
+  "current_minimum_wage": 1025,
+  "deflators": {
+    "2015": 1.3376,
+    "2016": 1.2912,
+    "2017": 1.256,
+    "2018": 1.2397,
+    "2019": 1.2137,
+    "2020": 1.192,
+    "2021": 1.1464,
+    "2022": 1.0626,
+    "2023": 1.0,
+    "2024": 0.977,
+    "2025": 0.9626,
+    "2026": 0.9573
+  },
+  "wage_distribution": {
+    "total_wage_workers": 7469122,
+    "formal_workers": 3167343,
+    "informal_workers": 4301779,
+    "informality_rate": 57.6,
+    "at_or_below_min": 1723916,
+    "pct_at_or_below_min": 23.1,
+    "median_formal": 2800.0,
+    "median_informal": 1516.5,
+    "kaitz_index": 0.366,
+    "percentiles": {
+      "p10": 498.3,
+      "p25": 1083.2,
+      "p50": 2050.0,
+      "p75": 3400.0,
+      "p90": 7020.0
+    },
+    "distribution_brackets": [
+      {
+        "label": "<= RMV (S/1025)",
+        "share_pct": 23.08
+      },
+      {
+        "label": "RMV .. RMV+10%",
+        "share_pct": 3.79
+      },
+      {
+        "label": "RMV+10% .. RMV+25%",
+        "share_pct": 3.22
+      },
+      {
+        "label": "RMV+25% .. RMV+50%",
+        "share_pct": 7.55
+      },
+      {
+        "label": "RMV+50% .. 2xRMV",
+        "share_pct": 15.22
+      },
+      {
+        "label": "> 2xRMV",
+        "share_pct": 47.13
+      }
+    ]
+  },
+  "scenarios": [
+    {
+      "pct_increase": 2.4,
+      "formal_affected": 28901,
+      "formal_sub_min_non_compliant": 367728,
+      "formal_displaced": 70,
+      "formal_net_benefited": 28830,
+      "informal_lighthouse_benefited": 1442304,
+      "informal_wage_increase_soles": 10.0,
+      "monthly_cost_employers_soles": 299111,
+      "by_domain": {
+        "Costa urbana": 9346,
+        "Sierra urbana": 5147,
+        "Selva urbana": 489,
+        "Lima Metropolitana": 1423,
+        "Costa rural": 3756,
+        "Sierra rural": 1773,
+        "Selva rural": 5524,
+        "Lima Provincias": 1442
+      },
+      "new_min_nominal": 1050,
+      "new_min_real": 1050.0
+    },
+    {
+      "pct_increase": 7.3,
+      "formal_affected": 56348,
+      "formal_sub_min_non_compliant": 367728,
+      "formal_displaced": 412,
+      "formal_net_benefited": 55935,
+      "informal_lighthouse_benefited": 1545924,
+      "informal_wage_increase_soles": 30.0,
+      "monthly_cost_employers_soles": 2313829,
+      "by_domain": {
+        "Costa urbana": 16903,
+        "Sierra urbana": 7754,
+        "Selva urbana": 1991,
+        "Lima Metropolitana": 2475,
+        "Costa rural": 4451,
+        "Sierra rural": 4760,
+        "Selva rural": 8302,
+        "Lima Provincias": 9712
+      },
+      "new_min_nominal": 1100,
+      "new_min_real": 1100.0
+    },
+    {
+      "pct_increase": 12.2,
+      "formal_affected": 66323,
+      "formal_sub_min_non_compliant": 367728,
+      "formal_displaced": 809,
+      "formal_net_benefited": 65514,
+      "informal_lighthouse_benefited": 1579414,
+      "informal_wage_increase_soles": 50.0,
+      "monthly_cost_employers_soles": 5514202,
+      "by_domain": {
+        "Costa urbana": 19335,
+        "Sierra urbana": 9342,
+        "Selva urbana": 1991,
+        "Lima Metropolitana": 3063,
+        "Costa rural": 5946,
+        "Sierra rural": 5538,
+        "Selva rural": 8987,
+        "Lima Provincias": 12121
+      },
+      "new_min_nominal": 1150,
+      "new_min_real": 1150.0
+    },
+    {
+      "pct_increase": 17.1,
+      "formal_affected": 81995,
+      "formal_sub_min_non_compliant": 367728,
+      "formal_displaced": 1400,
+      "formal_net_benefited": 80595,
+      "informal_lighthouse_benefited": 1631032,
+      "informal_wage_increase_soles": 70.0,
+      "monthly_cost_employers_soles": 9176452,
+      "by_domain": {
+        "Costa urbana": 23170,
+        "Sierra urbana": 11809,
+        "Selva urbana": 2023,
+        "Lima Metropolitana": 3063,
+        "Costa rural": 6180,
+        "Sierra rural": 5538,
+        "Selva rural": 9855,
+        "Lima Provincias": 20356
+      },
+      "new_min_nominal": 1200,
+      "new_min_real": 1200.0
+    },
+    {
+      "pct_increase": 26.8,
+      "formal_affected": 174719,
+      "formal_sub_min_non_compliant": 367728,
+      "formal_displaced": 4688,
+      "formal_net_benefited": 170031,
+      "informal_lighthouse_benefited": 1957987,
+      "informal_wage_increase_soles": 110.0,
+      "monthly_cost_employers_soles": 20677380,
+      "by_domain": {
+        "Costa urbana": 42168,
+        "Sierra urbana": 25812,
+        "Selva urbana": 5134,
+        "Lima Metropolitana": 5643,
+        "Costa rural": 14353,
+        "Sierra rural": 11232,
+        "Selva rural": 24312,
+        "Lima Provincias": 46064
+      },
+      "new_min_nominal": 1300,
+      "new_min_real": 1300.0
+    },
+    {
+      "pct_increase": 46.3,
+      "formal_affected": 230252,
+      "formal_sub_min_non_compliant": 367728,
+      "formal_displaced": 10670,
+      "formal_net_benefited": 219582,
+      "informal_lighthouse_benefited": 2106196,
+      "informal_wage_increase_soles": 190.0,
+      "monthly_cost_employers_soles": 60464193,
+      "by_domain": {
+        "Costa urbana": 52357,
+        "Sierra urbana": 35571,
+        "Selva urbana": 6514,
+        "Lima Metropolitana": 6987,
+        "Costa rural": 16244,
+        "Sierra rural": 15461,
+        "Selva rural": 29027,
+        "Lima Provincias": 68092
+      },
+      "new_min_nominal": 1500,
+      "new_min_real": 1500.0
+    }
+  ],
+  "kaitz_series": [
+    {
+      "year": 2019,
+      "min_wage_nominal": 930,
+      "min_wage_real": 1128.8,
+      "median_formal_real": 3034.4,
+      "deflator": 1.2137,
+      "kaitz_index": 0.372
+    },
+    {
+      "year": 2020,
+      "min_wage_nominal": 930,
+      "min_wage_real": 1108.5,
+      "median_formal_real": 2860.7,
+      "deflator": 1.192,
+      "kaitz_index": 0.388
+    },
+    {
+      "year": 2021,
+      "min_wage_nominal": 930,
+      "min_wage_real": 1066.1,
+      "median_formal_real": 2705.4,
+      "deflator": 1.1464,
+      "kaitz_index": 0.394
+    },
+    {
+      "year": 2022,
+      "min_wage_nominal": 1025,
+      "min_wage_real": 1089.2,
+      "median_formal_real": 2705.5,
+      "deflator": 1.0626,
+      "kaitz_index": 0.403
+    },
+    {
+      "year": 2023,
+      "min_wage_nominal": 1025,
+      "min_wage_real": 1025.0,
+      "median_formal_real": 2800.0,
+      "deflator": 1.0,
+      "kaitz_index": 0.366
+    }
+  ],
+  "literature": [
+    {
+      "study": "Céspedes & Sánchez (2014)",
+      "country": "Peru",
+      "period": "2002-2012",
+      "formal_elasticity": "-0.05 to -0.15",
+      "informal_elasticity": "—",
+      "method": "Panel DiD, ENAHO",
+      "source": "BCRP DT 2014-014"
+    },
+    {
+      "study": "Jaramillo (2013)",
+      "country": "Peru",
+      "period": "2003-2010",
+      "formal_elasticity": "-0.08",
+      "informal_elasticity": "—",
+      "method": "ENAHO panel, DiD",
+      "source": "PUCP Working Paper"
+    },
+    {
+      "study": "Chacaltana (2001)",
+      "country": "Peru",
+      "period": "1990s",
+      "formal_elasticity": "—",
+      "informal_elasticity": "lighthouse ~0.3-0.5",
+      "method": "Cross-section",
+      "source": "ILO/CIES"
+    },
+    {
+      "study": "Neumark & Wascher (2007)",
+      "country": "Multi",
+      "period": "—",
+      "formal_elasticity": "-0.1 to -0.3",
+      "informal_elasticity": "—",
+      "method": "Meta-analysis",
+      "source": "Foundations & Trends Micro"
+    },
+    {
+      "study": "Boeri, Garibaldi & Ribeiro (2011)",
+      "country": "LatAm",
+      "period": "—",
+      "formal_elasticity": "—",
+      "informal_elasticity": "0.3-0.5 (lighthouse)",
+      "method": "Cross-country panel",
+      "source": "Journal of Applied Econ."
+    }
+  ],
+  "methodology": {
+    "employment_elasticity": -0.1,
+    "employment_elasticity_source": "Céspedes & Sánchez (2014), BCRP DT 2014-014",
+    "lighthouse_elasticity": 0.4,
+    "lighthouse_source": "Boeri, Garibaldi & Ribeiro (2011)",
+    "formality_definition": "P517 in [1,2] (written contract) OR P558A1==1 (pension)",
+    "wage_variable": "P524A1 deflated to 2023 soles via CPI Lima (PN01271PM)",
+    "weight": "FAC500A (expansion factor)",
+    "survey": "ENAHO Modulo 500 (Empleo e Ingresos)",
+    "years_used": [
+      "2019",
+      "2020",
+      "2021",
+      "2022",
+      "2023"
+    ],
+    "cpi_base": "BCRP PN01271PM, annual average, base 2023=1.00"
+  }
+}
