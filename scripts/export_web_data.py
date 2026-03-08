@@ -1565,6 +1565,14 @@ def main():
             shutil.copy2(src, dst)
             copied.append(src.name)
         logger.info(f"[sync] Copied {len(copied)} JSON files → {WEB_DATA_DIR}")
+        csv_src = DATA_DIR / "csv"
+        csv_dst = WEB_DATA_DIR / "csv"
+        if csv_src.exists():
+            csv_dst.mkdir(exist_ok=True)
+            csv_files = list(csv_src.glob("*.csv"))
+            for f in csv_files:
+                shutil.copy2(f, csv_dst / f.name)
+            logger.info(f"[sync] Copied {len(csv_files)} CSV files → {csv_dst}")
     else:
         logger.info(f"[sync] Web repo not found at {WEB_DATA_DIR} — skipping auto-copy")
 
@@ -1615,6 +1623,14 @@ def main_daily():
                 shutil.copy2(src, dst)
                 copied.append(src.name)
             logger.info(f"[sync] Copied {len(copied)} JSON files → {WEB_DATA_DIR}")
+            csv_src = DATA_DIR / "csv"
+            csv_dst = WEB_DATA_DIR / "csv"
+            if csv_src.exists():
+                csv_dst.mkdir(exist_ok=True)
+                csv_files = list(csv_src.glob("*.csv"))
+                for f in csv_files:
+                    shutil.copy2(f, csv_dst / f.name)
+                logger.info(f"[sync] Copied {len(csv_files)} CSV files → {csv_dst}")
     else:
         main()
 
