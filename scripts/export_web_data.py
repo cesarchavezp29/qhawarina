@@ -14,7 +14,7 @@ Outputs are written to exports/ directory for rsync to web server.
 import json
 import logging
 import sys
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict, Any
 
@@ -1374,6 +1374,121 @@ def export_backtest_results():
         logger.info(f"Exported poverty backtest: {len(poverty_backtest)} years")
 
 
+def generate_nota_diaria() -> None:
+    """Generate bilingual daily brief (nota_diaria.json) from already-exported JSONs."""
+    import json as _json
+    from datetime import date as _date
+
+    today = _date.today().isoformat()
+
+    def _load(name):
+        p = DATA_DIR / name
+        if not p.exists():
+            return None
+        with open(p, encoding="utf-8") as f:
+            return _json.load(f)
+
+    gdp   = _load("gdp_nowcast.json")
+    infl  = _load("inflation_nowcast.json")
+    prices= _load("daily_price_index.json")
+    pol   = _load("political_index_daily.json")
+
+    highlights = []
+
+    # ── Prices ────────────────────────────────────────────────────────────────
+    if prices and prices.get("latest"):
+        lat = prices["latest"]
+        cum = lat.get("cum_pct", 0.0)
+        sign_es = "subió" if cum > 0 else "bajó"
+        sign_en = "rose" if cum > 0 else "fell"
+        highlights.append({
+            "icon": "🛒",
+            "text_es": f"Precios de supermercado {sign_es} {abs(cum):.2f}% en lo que va del mes.",
+            "text_en": f"Supermarket prices {sign_en} {abs(cum):.2f}% month-to-date.",
+        })
+        movers = lat.get("top_movers", [])
+        for mv in movers[:2]:
+            v = mv.get("var", 0.0)
+            icon = "📈" if v > 0 else "📉"
+            highlights.append({
+                "icon": icon,
+                "text_es": f"{mv.get('label_es', mv.get('category', ''))}: {v:+.1f}% en el mes.",
+                "text_en": f"{mv.get('label_en', mv.get('category', ''))}: {v:+.1f}% this month.",
+            })
+
+    # ── GDP ───────────────────────────────────────────────────────────────────
+    if gdp and gdp.get("nowcast"):
+        nw = gdp["nowcast"]
+        val = nw.get("value", 0.0)
+        period = nw.get("target_period", "")
+        highlights.append({
+            "icon": "📊",
+            "text_es": f"Nowcast PBI {period}: {val:+.2f}% (variación anual estimada).",
+            "text_en": f"GDP nowcast {period}: {val:+.2f}% (estimated year-on-year).",
+        })
+
+    # ── Inflation ─────────────────────────────────────────────────────────────
+    if infl and infl.get("nowcast"):
+        nw = infl["nowcast"]
+        val = nw.get("value", 0.0)
+        highlights.append({
+            "icon": "💹",
+            "text_es": f"Nowcast inflación mensual: {val:+.2f}% (IPC mensual estimado).",
+            "text_en": f"Monthly inflation nowcast: {val:+.2f}% (estimated monthly CPI).",
+        })
+
+    # ── Political risk ────────────────────────────────────────────────────────
+    if pol and pol.get("current"):
+        cur = pol["current"]
+        score = cur.get("score", 0.0)
+        level = cur.get("level", "MODERADO")
+        level_map_es = {
+            "MINIMO": "mínimo", "BAJO": "bajo", "MODERADO": "moderado",
+            "ELEVADO": "elevado", "ALTO": "alto", "CRITICO": "crítico",
+        }
+        level_map_en = {
+            "MINIMO": "minimal", "BAJO": "low", "MODERADO": "moderate",
+            "ELEVADO": "elevated", "ALTO": "high", "CRITICO": "critical",
+        }
+        highlights.append({
+            "icon": "🏛️",
+            "text_es": f"Riesgo político: PRR {round(score)} — nivel {level_map_es.get(level, level.lower())}.",
+            "text_en": f"Political risk: PRR {round(score)} — {level_map_en.get(level, level.lower())} level.",
+        })
+
+    # ── Headline (from top highlight) ─────────────────────────────────────────
+    if prices and prices.get("latest"):
+        cum = prices["latest"].get("cum_pct", 0.0)
+        headline_es = f"Precios supermercado {'+' if cum >= 0 else ''}{cum:.2f}% MTD · Nowcast PBI {gdp['nowcast']['value']:+.2f}%" if gdp else f"Precios supermercado {'+' if cum >= 0 else ''}{cum:.2f}% acumulado del mes"
+        headline_en = f"Supermarket prices {'+' if cum >= 0 else ''}{cum:.2f}% MTD · GDP nowcast {gdp['nowcast']['value']:+.2f}%" if gdp else f"Supermarket prices {'+' if cum >= 0 else ''}{cum:.2f}% month-to-date"
+    elif gdp:
+        val = gdp["nowcast"]["value"]
+        period = gdp["nowcast"].get("target_period", "")
+        headline_es = f"Nowcast PBI {period}: {val:+.2f}% variación anual estimada"
+        headline_en = f"GDP nowcast {period}: {val:+.2f}% estimated year-on-year"
+    else:
+        headline_es = "Actualización diaria — Qhawarina"
+        headline_en = "Daily update — Qhawarina"
+
+    body_es = "Datos de alta frecuencia actualizados. Revisa las páginas de estadísticas para el detalle completo."
+    body_en = "High-frequency data updated. Visit the statistics pages for full detail."
+
+    output = {
+        "date": today,
+        "headline_es": headline_es,
+        "headline_en": headline_en,
+        "body_es": body_es,
+        "body_en": body_en,
+        "highlights": highlights,
+        "updated_at": datetime.now(timezone.utc).isoformat(),
+    }
+
+    out_path = DATA_DIR / "nota_diaria.json"
+    with open(out_path, "w", encoding="utf-8") as f:
+        _json.dump(output, f, ensure_ascii=False, indent=2)
+    logger.info(f"[nota_diaria] Written → {out_path.name} ({len(highlights)} highlights)")
+
+
 def main():
     """Main export pipeline."""
 
@@ -1430,6 +1545,10 @@ def main():
     logger.info("\nExporting backtest results...")
     export_backtest_results()
 
+    # Generate daily brief (nota_diaria.json) from exported JSONs
+    logger.info("\nGenerating nota diaria...")
+    generate_nota_diaria()
+
     logger.info("\n" + "=" * 60)
     logger.info("EXPORT COMPLETE")
     logger.info(f"Output directory: {DATA_DIR}")
@@ -1478,6 +1597,9 @@ def main_daily():
 
         logger.info("Building supermarket price index...")
         export_supermarket_daily_index()
+
+        logger.info("Generating nota diaria...")
+        generate_nota_diaria()
 
         logger.info("=" * 60)
         logger.info("DAILY EXPORT COMPLETE")
