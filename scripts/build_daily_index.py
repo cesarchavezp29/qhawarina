@@ -253,6 +253,20 @@ def main():
     articles = deduplicate_articles(articles)
     logger.info("  After dedup: %d articles", len(articles))
 
+    # ── Step 2b: Restore existing classifications ─────────────────────────
+    # Merge in existing article_category from classified file so Step 3 only
+    # processes truly new/unclassified articles (not all 25k every run).
+    if classified_path.exists() and not args.force:
+        try:
+            existing = pd.read_parquet(classified_path)[
+                ["url_hash", "article_category", "article_severity", "article_severity_label"]
+            ]
+            articles = articles.merge(existing, on="url_hash", how="left")
+            n_restored = int(articles["article_category"].notna().sum())
+            logger.info("  Restored %d existing classifications", n_restored)
+        except Exception as e:
+            logger.warning("Could not restore classifications: %s", e)
+
     # ── Step 3: Classify with Claude ──────────────────────────────────────
     logger.info("=" * 60)
 

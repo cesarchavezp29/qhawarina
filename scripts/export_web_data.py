@@ -24,6 +24,13 @@ import pandas as pd
 PROJECT_ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
+# Load .env so ANTHROPIC_API_KEY is available for Haiku justification
+try:
+    from dotenv import load_dotenv
+    load_dotenv(PROJECT_ROOT / ".env")
+except ImportError:
+    pass
+
 from config.settings import (
     TARGETS_DIR,
     PROCESSED_DIR,
@@ -621,8 +628,88 @@ def export_poverty_nowcast(poverty_df: pd.DataFrame, national_rate: float):
         logger.warning(f"Failed to export GeoJSON: {e}")
 
 
+def _haiku_justification(
+    today_arts: "pd.DataFrame",
+    prr_raw: float,
+    prr_7d: float,
+    level: str,
+    date_str: str,
+) -> dict:
+    """Call Claude Haiku to justify today's PRR score.
+
+    Returns dict with keys:
+        justification : str  — 3-4 sentence analysis in Spanish
+        top_drivers   : list — top 5 articles [{title, source, category, severity}]
+    """
+    _INT_TO_FLOAT = {0: 0.0, 1: 0.2, 2: 0.5, 3: 0.9}
+    result = {"justification": None, "top_drivers": []}
+
+    if today_arts.empty:
+        return result
+
+    # Build top drivers list (sorted by severity desc)
+    drivers_df = today_arts.copy()
+    drivers_df["sev_float"] = drivers_df["article_severity"].map(_INT_TO_FLOAT).fillna(0.0)
+    drivers_df = drivers_df.sort_values("sev_float", ascending=False).head(5)
+
+    top_drivers = [
+        {
+            "title": str(r["title"])[:120],
+            "source": str(r.get("source", "")),
+            "category": str(r["article_category"]),
+            "severity": round(float(r["sev_float"]), 2),
+        }
+        for _, r in drivers_df.iterrows()
+    ]
+    result["top_drivers"] = top_drivers
+
+    n_pol = int((today_arts["article_category"].isin(["political", "both"])).sum())
+    n_econ = int((today_arts["article_category"].isin(["economic", "both"])).sum())
+    n_total = len(today_arts)
+    mult = f"{prr_raw / 100:.1f}"
+    level_labels = {
+        "MINIMO": "mínimo", "BAJO": "bajo", "MODERADO": "moderado",
+        "ELEVADO": "elevado", "ALTO": "alto", "CRITICO": "crítico",
+    }
+    level_es = level_labels.get(level, level.lower())
+
+    drivers_text = "\n".join(
+        f"- [{d['severity']:.1f}] [{d['category']}] {d['title']} ({d['source']})"
+        for d in top_drivers
+    )
+
+    prompt = (
+        f"Eres el analista de riesgo político de Qhawarina. "
+        f"Hoy ({date_str}) analizaste {n_total} artículos de prensa peruana.\n\n"
+        f"Resultado: PRR = {prr_raw:.0f} ({mult}× el promedio histórico). "
+        f"Nivel: {level_es}.\n"
+        f"Artículos políticos: {n_pol} | Artículos económicos: {n_econ}\n\n"
+        f"Los {len(top_drivers)} artículos de mayor severidad hoy:\n{drivers_text}\n\n"
+        f"Escribe un análisis breve (3-4 oraciones) en español que explique:\n"
+        f"1. Por qué el riesgo político está en este nivel hoy\n"
+        f"2. Qué eventos específicos lo impulsan\n"
+        f"3. Si la tendencia es de escalamiento o de normalización\n\n"
+        f"No uses viñetas. Escribe en prosa fluida, tono analítico profesional. "
+        f"Máximo 80 palabras."
+    )
+
+    try:
+        import anthropic
+        client = anthropic.Anthropic()
+        msg = client.messages.create(
+            model="claude-haiku-4-5-20251001",
+            max_tokens=200,
+            messages=[{"role": "user", "content": prompt}],
+        )
+        result["justification"] = msg.content[0].text.strip()
+    except Exception as e:
+        logger.warning("Haiku justification failed: %s", e)
+
+    return result
+
+
 def _haiku_driver_phrase(articles_text: str, date_str: str) -> str | None:
-    """Call Claude Haiku to get a 5-10 word driver phrase for a high-risk day."""
+    """Legacy: get a short driver phrase. Kept for major_events summary."""
     try:
         import anthropic
         client = anthropic.Anthropic()
@@ -892,18 +979,31 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
         })
     # ─────────────────────────────────────────────────────────────────────────
 
-    # ── Driver phrase for today if score is high ─────────────────────────────
+    # ── Haiku justification for today's score ────────────────────────────────
     today_score = float(latest["score_smooth"])
+    today_prr_raw = float(latest.get("instability_index", today_score))
     driver_phrase = None
-    if today_score > 120 and articles_cache is not None:
+    justification = None
+    top_drivers: list = []
+
+    if today_score > 80 and articles_cache is not None:
         today_date = latest["date"].date() if hasattr(latest["date"], "date") else latest["date"]
         today_arts = articles_cache[
             (articles_cache["date"] == today_date) &
-            (articles_cache["article_category"].isin(["political", "both"]))
-        ].head(3)
+            (articles_cache["article_category"].isin(["political", "economic", "both"]))
+        ]
+        haiku_result = _haiku_justification(
+            today_arts, today_prr_raw, today_score,
+            classify_level(today_score), str(today_date)
+        )
+        justification = haiku_result.get("justification")
+        top_drivers = haiku_result.get("top_drivers", [])
+        # Legacy short phrase (still used for tooltip, etc.)
         if not today_arts.empty:
-            arts_text = "\n".join(f"- {r['title']}" for _, r in today_arts.iterrows())
-            driver_phrase = _haiku_driver_phrase(arts_text, str(today_date))
+            top3 = today_arts[today_arts["article_category"].isin(["political", "both"])].head(3)
+            if not top3.empty:
+                arts_text = "\n".join(f"- {r['title']}" for _, r in top3.iterrows())
+                driver_phrase = _haiku_driver_phrase(arts_text, str(today_date))
     # ─────────────────────────────────────────────────────────────────────────
 
     output = {
@@ -924,6 +1024,8 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
             "articles_political": int(latest.get("n_articles_political", 0)),
             "articles_economic": int(latest.get("n_articles_economic", 0)),
             "driver_phrase": driver_phrase,
+            "justification": justification,
+            "top_drivers": top_drivers,
         },
         "aggregates": {
             "7d_avg": round(last_7d, 1),
