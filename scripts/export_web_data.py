@@ -749,9 +749,14 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
             logger.warning("Could not load articles cache: %s", e)
 
     # ── AI-GPR dual index (Iacoviello & Tong 2026) ───────────────────────────
-    # IRP_t = (Σ political_score_i for day t) / S_bar_political × 100
-    # IRE_t = (Σ economic_score_i for day t) / S_bar_economic × 100
-    # Both indices: mean = 100 over 2025 baseline by construction.
+    # Normalized formula (Iacoviello & Tong eq. 1, footnote 4):
+    #   IRP_t = (Σ political_score_i / N_articles_t) / S_bar_political × 100
+    #   IRE_t = (Σ economic_score_i / N_articles_t) / S_bar_economic × 100
+    #
+    # Where N_articles_t = TOTAL articles on day t (including irrelevant ones).
+    # This eliminates volume bias: a day with 150 articles and 15 political ones
+    # scores the same as a day with 50 articles and 5 political ones (same proportion
+    # and same average intensity). Makes the index stationary by construction.
 
     if articles_cache is not None and len(articles_cache) > 0:
         art = articles_cache.copy()
@@ -766,6 +771,9 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
             n_excluded = n_before - len(art)
             if n_excluded > 0:
                 logger.info("Excluded %d GDELT articles from index computation", n_excluded)
+
+        # Total articles per day (denominator for normalization — ALL articles, including score=0)
+        n_total_s = art.groupby("day").size().rename("n_total")
 
         has_dual = "political_score" in art.columns and "economic_score" in art.columns
         if has_dual:
@@ -785,20 +793,24 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
                 .groupby("day")["sev_float"].sum() * 40
             ).rename("eco_sum")
 
-        daily_sums = pd.concat([pol_sum_s, eco_sum_s], axis=1).fillna(0).reset_index()
-        daily_sums.columns = ["date", "pol_sum", "eco_sum"]
+        daily_sums = pd.concat([n_total_s, pol_sum_s, eco_sum_s], axis=1).fillna(0).reset_index()
+        daily_sums.columns = ["date", "n_total", "pol_sum", "eco_sum"]
+
+        # Normalize by total articles per day (Iacoviello & Tong footnote 4)
+        daily_sums["pol_norm"] = daily_sums["pol_sum"] / daily_sums["n_total"].clip(lower=1)
+        daily_sums["eco_norm"] = daily_sums["eco_sum"] / daily_sums["n_total"].clip(lower=1)
 
         # Baseline: 2025 calendar year (freeze after 30+ days available)
         ref = daily_sums[pd.to_datetime(daily_sums["date"]).dt.year == 2025]
         if len(ref) >= 30:
-            s_bar_pol = ref["pol_sum"].mean() or 1.0
-            s_bar_eco = ref["eco_sum"].mean() or 1.0
+            s_bar_pol = ref["pol_norm"].mean() or 1.0
+            s_bar_eco = ref["eco_norm"].mean() or 1.0
         else:
-            s_bar_pol = daily_sums["pol_sum"].mean() or 1.0
-            s_bar_eco = daily_sums["eco_sum"].mean() or 1.0
+            s_bar_pol = daily_sums["pol_norm"].mean() or 1.0
+            s_bar_eco = daily_sums["eco_norm"].mean() or 1.0
 
-        daily_sums["irp"] = (daily_sums["pol_sum"] / s_bar_pol) * 100.0
-        daily_sums["ire"] = (daily_sums["eco_sum"] / s_bar_eco) * 100.0
+        daily_sums["irp"] = (daily_sums["pol_norm"] / s_bar_pol) * 100.0
+        daily_sums["ire"] = (daily_sums["eco_norm"] / s_bar_eco) * 100.0
 
         today_vals = daily_sums.iloc[-1] if not daily_sums.empty else None
         if today_vals is not None:
@@ -956,12 +968,14 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
         logger.warning("Could not fetch daily FX from BCRP: %s", _e)
     # ─────────────────────────────────────────────────────────────────────────
 
-    # ── Monthly series: political avg + FX yoy from panel (for scatter) ─────
+    # ── Monthly series: political avg + economic avg + FX yoy ────────────────
     political_df["month"] = political_df["date"].dt.to_period("M")
     monthly_pol = (
-        political_df.groupby("month")["score_smooth"]
-        .mean()
-        .reset_index()
+        political_df.groupby("month").agg(
+            score_smooth=("score_smooth", "mean"),
+            ire_7d=("ire_7d", "mean"),
+            n_articles_total=("n_articles_total", "sum"),
+        ).reset_index()
     )
     monthly_pol["month_str"] = monthly_pol["month"].dt.strftime("%Y-%m")
 
@@ -985,6 +999,8 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
         monthly_series.append({
             "month": row["month_str"],
             "political_avg": round(float(row["score_smooth"]), 1),
+            "economic_avg": round(float(row["ire_7d"]), 1),
+            "n_articles": int(row["n_articles_total"]),
             "fx_level": round(fx_lv, 4) if fx_lv is not None else None,
             "fx_yoy": round(fx_yy, 2) if fx_yy is not None else None,
         })
