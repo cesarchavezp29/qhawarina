@@ -13,6 +13,7 @@
 set PROJECT=D:\Nexus\nexus
 set LOGFILE=%PROJECT%\logs\daily_political.log
 set WEBSITE=D:\qhawarina\public\assets\data
+set PYTHON=C:\Users\User\AppData\Local\Python\bin\python.exe
 
 echo. >> %LOGFILE%
 echo ============================================================ >> %LOGFILE%
@@ -21,7 +22,7 @@ echo ============================================================ >> %LOGFILE%
 
 :: Step 1: Backfill GDELT gaps (last 7 days)
 echo [%TIME%] Step 1: GDELT backfill (last 7 days)... >> %LOGFILE%
-python %PROJECT%\scripts\backfill_gdelt.py --days 7 >> %LOGFILE% 2>&1
+%PYTHON% %PROJECT%\scripts\backfill_gdelt.py --days 7 >> %LOGFILE% 2>&1
 if %errorlevel% neq 0 (
     echo [%TIME%] WARNING: GDELT backfill failed, continuing anyway >> %LOGFILE%
 )
@@ -29,7 +30,7 @@ echo [%TIME%] Step 1 DONE >> %LOGFILE%
 
 :: Step 2: Fetch RSS + build daily index
 echo [%TIME%] Step 2: RSS fetch + build daily index... >> %LOGFILE%
-python %PROJECT%\scripts\build_daily_index.py >> %LOGFILE% 2>&1
+%PYTHON% %PROJECT%\scripts\build_daily_index.py >> %LOGFILE% 2>&1
 if %errorlevel% neq 0 (
     echo [%TIME%] ERROR: Daily index build failed >> %LOGFILE%
     exit /b 1
@@ -38,7 +39,7 @@ echo [%TIME%] Step 2 DONE >> %LOGFILE%
 
 :: Step 3: Export to website JSON
 echo [%TIME%] Step 3: Exporting to website... >> %LOGFILE%
-python %PROJECT%\scripts\export_web_data.py >> %LOGFILE% 2>&1
+%PYTHON% %PROJECT%\scripts\export_web_data.py >> %LOGFILE% 2>&1
 if %errorlevel% neq 0 (
     echo [%TIME%] ERROR: Export failed >> %LOGFILE%
     exit /b 1

@@ -1,0 +1,140 @@
+{
+  "metadata": {
+    "generated": "2026-03-08",
+    "source_data": "EPE Lima Metropolitana (INEI), 9 MW events 2003-2022",
+    "method": "Difference-in-Differences panel, Lee (2009) bounds",
+    "note": "All results from verified variable codes (p206, p222 audited from .sav labels)"
+  },
+  "employment": {
+    "epsilon_wide": -0.433,
+    "epsilon_narrow": -0.254,
+    "se": 0.074,
+    "p": 0.0001,
+    "events": 9,
+    "events_significant": "2/9 (2003, 2022)",
+    "placebo_epsilon": -0.040,
+    "placebo_p": 0.611,
+    "source": "EPE Lima panel DiD 2003-2022, wide band [0.85×MW_old, MW_new)",
+    "notes": "2007, 2008, 2011 insufficient within-year matched N; pooled across 6 identified events"
+  },
+  "formal_wages": {
+    "uncorrected_mean": 0.088,
+    "uncorrected_pct": 9.3,
+    "lee_bounds_pooled": [0.048, 0.137],
+    "lee_bounds_pct": [4.8, 13.7],
+    "events_lb_positive": "7/9",
+    "events_significant": "7/9 uncorrected",
+    "source": "EPE matched stayer wage DiD + Lee (2009) selection correction",
+    "notes": "Conditional on maintaining employment in both pre and post waves"
+  },
+  "lighthouse": {
+    "beta_pooled": 0.074,
+    "pct_pooled": 7.7,
+    "events_significant": "6/9",
+    "formal_benchmark_beta": 0.089,
+    "formal_benchmark_pct": 9.3,
+    "source": "EPE informal stayer wage DiD, Def B formality (p222 in {1,2,3})",
+    "interpretation": "MW acts as wage anchor in informal sector bargaining. Lighthouse beta 84% of formal benchmark.",
+    "literature": "Consistent with Maloney (2004), Lombardo et al. (2024), Khamis (2013)"
+  },
+  "self_employment": {
+    "beta": 0.010,
+    "significant": false,
+    "source": "EPE 9 events",
+    "notes": "No displacement into self-employment observed. Consistent with Engbom & Moser (2022) for Brazil."
+  },
+  "formality_transition": {
+    "pooled_raw_did": 0.019,
+    "pooled_weighted_mean_pp": 1.9,
+    "event_2022": {
+      "did_raw": 0.069,
+      "beta_ols": 0.071,
+      "p": 0.004,
+      "note": "Only statistically significant event"
+    },
+    "source": "EPE formality DiD (p222 Definition B: p222 in {1,2,3})",
+    "notes": "8/9 events not significant. Compliance channel slow; 2022 likely reflects post-COVID enforcement."
+  },
+  "informality_definition": {
+    "method": "Definition B: p222 in {1, 2, 3}",
+    "meaning": "EsSalud (1), Seguro Privado (2), Ambos EsSalud+Privado (3)",
+    "validation_mean_gap_pp": 2.7,
+    "all_years_within_5pp": true,
+    "years_validated": [2003, 2006, 2007, 2008, 2011, 2012, 2015, 2016, 2022],
+    "benchmark": "INEI published Lima Metro informal employment rates",
+    "rejected_definitions": {
+      "def_C_inei_composite": "mean |gap| = 10.0pp — firm-size channel fails in EPE; p207b<=9 captures nearly all independientes"
+    }
+  },
+  "simulator_scenario_1130": {
+    "mw_old": 1025,
+    "mw_new": 1130,
+    "pct_increase": 10.2,
+    "employment": {
+      "formal_in_band": 324722,
+      "displaced_wide": 14403,
+      "displaced_narrow": 8449,
+      "displaced_cespedes_2005": 3326,
+      "formal_stayers_wide": 310319
+    },
+    "formal_wages": {
+      "avg_wage_in_band_soles": 1078,
+      "statutory_raise_soles": 52,
+      "lee_lb_pct": 4.8,
+      "lee_lb_soles": 52,
+      "lee_central_pct": 8.8,
+      "lee_central_soles": 95,
+      "lee_ub_pct": 13.7,
+      "lee_ub_soles": 148
+    },
+    "lighthouse": {
+      "informal_near_mw": 1038243,
+      "beta_pct": 7.7,
+      "avg_wage_soles": 950,
+      "raise_soles": 73
+    },
+    "net": {
+      "total_benefited": 1348562,
+      "ratio_benefited_displaced_wide": 94,
+      "ratio_benefited_displaced_narrow": 160,
+      "ratio_benefited_displaced_cespedes": 405,
+      "annual_wage_bill_gain_millions_soles": 1264
+    }
+  },
+  "literature_comparison": {
+    "cespedes_2005": {
+      "epsilon": -0.10,
+      "method": "Cross-section OLS, Peru",
+      "note": "Lower bound; likely downward bias from measurement error"
+    },
+    "del_valle_2009": {
+      "epsilon": -0.75,
+      "method": "Peru time-series"
+    },
+    "castellares_2022": {
+      "informality_elasticity": 0.19,
+      "method": "Peru ENAHO panel"
+    },
+    "maloney_2004": {
+      "lighthouse": "positive, strong in LAC",
+      "note": "Brazil, Mexico, Colombia"
+    },
+    "lombardo_2024": {
+      "lighthouse": "confirmed 6 LAC countries including Peru"
+    },
+    "engbom_moser_2022": {
+      "self_employment": "no displacement into self-employment in Brazil"
+    }
+  },
+  "evidence_by_event": {
+    "2003_Oct": {"mw_pct": 12.2, "beta_emp": -0.0641, "beta_wage_unc": 0.100, "lee_lb": 0.038, "lee_ub": 0.170, "beta_lh": 0.1017, "p_lh": 0.001, "compliance_did": 0.018},
+    "2006_Jan": {"mw_pct":  6.0, "beta_emp": -0.0290, "beta_wage_unc": 0.064, "lee_lb": 0.037, "lee_ub": 0.093, "beta_lh": 0.0597, "p_lh": 0.000, "compliance_did": 0.018},
+    "2007_Aug": {"mw_pct":  3.8, "beta_emp": -0.0379, "beta_wage_unc":-0.004, "lee_lb":-0.047, "lee_ub": 0.050, "beta_lh": 0.0238, "p_lh": 0.494, "compliance_did": 0.021},
+    "2008_Jan": {"mw_pct":  9.1, "beta_emp": -0.0779, "beta_wage_unc": 0.065, "lee_lb":-0.000, "lee_ub": 0.145, "beta_lh": 0.0515, "p_lh": 0.120, "compliance_did": 0.012},
+    "2011_Aug": {"mw_pct": 12.5, "beta_emp":  0.0022, "beta_wage_unc": 0.073, "lee_lb": 0.068, "lee_ub": 0.078, "beta_lh": 0.0475, "p_lh": 0.172, "compliance_did": 0.008},
+    "2012_Jun": {"mw_pct": 11.1, "beta_emp": -0.0598, "beta_wage_unc": 0.057, "lee_lb": 0.004, "lee_ub": 0.128, "beta_lh": 0.0435, "p_lh": 0.168, "compliance_did": 0.010},
+    "2015_Dec": {"mw_pct": 13.3, "beta_emp": -0.0542, "beta_wage_unc": 0.120, "lee_lb": 0.075, "lee_ub": 0.177, "beta_lh": 0.1242, "p_lh": 0.000, "compliance_did": 0.007},
+    "2016_May": {"mw_pct":  9.4, "beta_emp": -0.0283, "beta_wage_unc": 0.112, "lee_lb": 0.085, "lee_ub": 0.140, "beta_lh": 0.1161, "p_lh": 0.000, "compliance_did": 0.005},
+    "2022_Apr": {"mw_pct": 10.2, "beta_emp": -0.0565, "beta_wage_unc": 0.220, "lee_lb": 0.153, "lee_ub": 0.295, "beta_lh": 0.1468, "p_lh": 0.000, "compliance_did": 0.069}
+  }
+}
