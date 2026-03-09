@@ -52,121 +52,9 @@ logger = logging.getLogger("nexus.daily_pipeline")
 
 
 # ---------------------------------------------------------------------------
-# Keyword-based fallback classifier (no API key required)
+# AI-GPR methodology (Iacoviello & Tong 2026): Haiku classification only.
+# NO keyword fallback. If Haiku is unavailable → pipeline FAILS.
 # ---------------------------------------------------------------------------
-_POLITICAL_KEYWORDS = [
-    "congreso", "parlamento", "presidente", "boluarte", "premier", "gabinete",
-    "ministro", "gobierno", "partido", "elecciones", "votación", "voto",
-    "censura", "interpelación", "moción", "destitución", "renuncia", "golpe",
-    "crisis política", "constitución", "referéndum", "fiscal", "corrupción",
-    "investigación", "juicio", "tribunal", "poder judicial", "congresista",
-    "ejecutivo", "legislativo", "democracia", "protesta", "marcha", "huelga",
-    "paro", "bloqueo", "manifestación", "enfrentamiento", "represión",
-    "estado de emergencia", "toque de queda", "fuerzas armadas", "policía",
-    # English
-    "president", "congress", "government", "minister", "cabinet", "election",
-    "impeach", "resign", "protest", "strike", "coup", "corruption", "crisis",
-]
-
-_ECONOMIC_KEYWORDS = [
-    "economía", "inflación", "pbi", "bcrp", "soles", "mef", "presupuesto",
-    "inversión", "exportaciones", "importaciones", "inei", "pobreza",
-    "empleo", "desempleo", "tipo de cambio", "dólar", "precio", "tarifas",
-    "minería", "petróleo", "gas", "electricidad", "banca", "crédito",
-    "deuda", "déficit", "superávit", "reservas", "aranceles", "aduana",
-    "mercado", "bolsa", "lima stock", "cavali", "smv", "sunat", "tributario",
-    # English
-    "economy", "inflation", "gdp", "central bank", "exchange rate", "dollar",
-    "trade", "investment", "mining", "fiscal", "budget", "debt", "tariff",
-    "interest rate", "recession", "growth", "unemployment",
-]
-
-_HIGH_SEVERITY = [
-    "muerto", "muerte", "fallecido", "víctima", "herido", "violencia",
-    "golpe de estado", "autogolpe", "estado de emergencia", "toque de queda",
-    "crisis", "colapso", "caída", "derrumbe", "escándalo", "corrupción grave",
-    "detención", "arresto", "preso", "encarcelado", "fuga", "acusado",
-    "dead", "killed", "violence", "emergency", "crisis", "collapse", "arrested",
-]
-
-_MED_SEVERITY = [
-    "renuncia", "dimisión", "censura", "interpelación", "moción", "destitución",
-    "investigación", "acusación", "denuncia", "escándalo", "protesta", "huelga",
-    "bloqueo", "paro", "marcha", "manifestación", "enfrentamiento",
-    "resign", "impeach", "investigate", "protest", "strike", "block",
-]
-
-
-def _keyword_classify(articles: pd.DataFrame, classified_path: Path) -> pd.DataFrame:
-    """Classify articles using keywords. Merges with existing cached classifications."""
-    articles = articles.copy()
-
-    # Start from cached if available — only classify unclassified rows
-    if classified_path.exists():
-        cached = pd.read_parquet(classified_path)
-        cached_hashes = set(cached["url_hash"].dropna())
-    else:
-        cached = pd.DataFrame()
-        cached_hashes = set()
-
-    needs_classification = ~articles["url_hash"].isin(cached_hashes)
-    to_classify = articles[needs_classification].copy()
-    logger.info("  %d articles need keyword classification (%d already cached)",
-                needs_classification.sum(), (~needs_classification).sum())
-
-    if not to_classify.empty:
-        def classify_row(row):
-            text = f"{row.get('title', '')} {row.get('summary', '')}".lower()
-
-            is_political = any(kw in text for kw in _POLITICAL_KEYWORDS)
-            is_economic = any(kw in text for kw in _ECONOMIC_KEYWORDS)
-
-            if not is_political and not is_economic:
-                return "irrelevant", 0, ""
-
-            category = "political" if is_political else "economic"
-            if is_political and is_economic:
-                category = "political"  # political takes precedence
-
-            # Severity: 1-5
-            high = any(kw in text for kw in _HIGH_SEVERITY)
-            med = any(kw in text for kw in _MED_SEVERITY)
-            severity = 4 if high else (3 if med else 2)
-            labels = {1: "minimal", 2: "low", 3: "moderate", 4: "high", 5: "critical"}
-
-            return category, severity, labels[severity]
-
-        results = to_classify.apply(classify_row, axis=1)
-        to_classify["article_category"] = [r[0] for r in results]
-        to_classify["article_severity"] = [r[1] for r in results]
-        to_classify["article_severity_label"] = [r[2] for r in results]
-
-        # Merge with cached
-        if not cached.empty:
-            combined = pd.concat([cached, to_classify], ignore_index=True)
-            combined = combined.drop_duplicates(subset=["url_hash"], keep="last")
-        else:
-            combined = to_classify
-
-        # Re-merge with full articles list to ensure all rows have classifications
-        articles = articles.merge(
-            combined[["url_hash", "article_category", "article_severity", "article_severity_label"]],
-            on="url_hash", how="left"
-        )
-        articles["article_category"] = articles["article_category"].fillna("irrelevant")
-        articles["article_severity"] = articles["article_severity"].fillna(0)
-        articles["article_severity_label"] = articles["article_severity_label"].fillna("")
-    else:
-        # All cached — just merge
-        articles = articles.merge(
-            cached[["url_hash", "article_category", "article_severity", "article_severity_label"]],
-            on="url_hash", how="left"
-        )
-        articles["article_category"] = articles["article_category"].fillna("irrelevant")
-        articles["article_severity"] = articles["article_severity"].fillna(0)
-        articles["article_severity_label"] = articles["article_severity_label"].fillna("")
-
-    return articles
 
 
 def main():
@@ -253,81 +141,109 @@ def main():
     articles = deduplicate_articles(articles)
     logger.info("  After dedup: %d articles", len(articles))
 
-    # ── Step 2b: Restore existing classifications ─────────────────────────
-    # Merge in existing article_category from classified file so Step 3 only
-    # processes truly new/unclassified articles (not all 25k every run).
+    # ── Step 2b: Restore existing dual scores ─────────────────────────────
+    # Merge in political_score/economic_score from classified file so Step 3
+    # only processes truly new (unscored) articles — not all 25k every run.
     if classified_path.exists() and not args.force:
         try:
-            existing = pd.read_parquet(classified_path)[
-                ["url_hash", "article_category", "article_severity", "article_severity_label"]
-            ]
-            articles = articles.merge(existing, on="url_hash", how="left")
-            n_restored = int(articles["article_category"].notna().sum())
-            logger.info("  Restored %d existing classifications", n_restored)
+            existing_cols = ["url_hash", "political_score", "economic_score"]
+            existing = pd.read_parquet(classified_path)
+            available = [c for c in existing_cols if c in existing.columns]
+            if len(available) > 1:
+                articles = articles.merge(existing[available], on="url_hash", how="left")
+                n_scored = int(articles["political_score"].notna().sum()) if "political_score" in articles.columns else 0
+                logger.info("  Restored %d existing dual scores", n_scored)
         except Exception as e:
-            logger.warning("Could not restore classifications: %s", e)
+            logger.warning("Could not restore scores: %s", e)
 
-    # ── Step 3: Classify with Claude ──────────────────────────────────────
+    # ── Step 3: Dual-classify with Claude Haiku (AI-GPR methodology) ────────
     logger.info("=" * 60)
 
     if args.skip_claude and classified_path.exists():
-        logger.info("STEP 3: Loading cached classifications")
+        logger.info("STEP 3: Loading cached classifications (--skip-claude)")
         articles = pd.read_parquet(classified_path)
     elif args.skip_claude:
-        logger.warning("STEP 3: --skip-claude but no cached classifications found")
-        logger.warning("  Skipping classification — index will be empty")
-        articles["article_category"] = "irrelevant"
-        articles["article_severity"] = 0
-        articles["article_severity_label"] = ""
+        logger.error("STEP 3: --skip-claude but no classified parquet found. ABORTING.")
+        return 1
     else:
-        # Check for API key
-        has_key = bool(os.environ.get("ANTHROPIC_API_KEY"))
-        if not has_key:
-            logger.warning("ANTHROPIC_API_KEY not set — using keyword classifier fallback")
-            articles = _keyword_classify(articles, classified_path)
-            articles.to_parquet(classified_path, index=False)
-            logger.info("  Keyword-classified %d articles", len(articles))
+        # ── PROTECTION A: Backup before any write ─────────────────────────
+        if classified_path.exists():
+            import shutil
+            backup_path = classified_path.with_suffix(".BACKUP.parquet")
+            shutil.copy2(classified_path, backup_path)
+            logger.info("  Backup saved: %s", backup_path.name)
+
+        # ── PROTECTION: Haiku-only — no API key = ABORT ───────────────────
+        if not os.environ.get("ANTHROPIC_API_KEY"):
+            logger.error("ANTHROPIC_API_KEY not set. ABORTING — no fallback allowed.")
+            return 1
+
+        # ── PROTECTION B: Append-only — only classify articles with no scores ──
+        logger.info("STEP 3: AI-GPR dual classification (Iacoviello & Tong 2026)")
+
+        has_pol = "political_score" in articles.columns
+        has_eco = "economic_score" in articles.columns
+
+        if args.force or not (has_pol and has_eco):
+            to_classify = articles
+            logger.info("  Classifying all %d articles", len(to_classify))
         else:
-            logger.info("STEP 3: Classifying articles with Claude API")
+            needs_mask = articles["political_score"].isna() | articles["economic_score"].isna()
+            to_classify = articles[needs_mask]
+            n_already = (~needs_mask).sum()
+            logger.info("  Already scored: %d  |  New: %d", n_already, len(to_classify))
 
-            if args.force or "article_category" not in articles.columns:
-                # Classify all
-                to_classify = articles
-            else:
-                # Only classify unclassified articles
-                unclassified_mask = articles["article_category"].isna() | (
-                    articles["article_category"] == ""
+        if not to_classify.empty:
+            from src.nlp.classifier import classify_articles_dual
+            classified = None
+            try:
+                classified = classify_articles_dual(
+                    to_classify,
+                    batch_size=rss_config["classification"]["batch_size"],
+                    model=rss_config["classification"]["model"],
+                    delay=rss_config["classification"]["delay"],
                 )
-                if unclassified_mask.any():
-                    to_classify = articles[unclassified_mask]
-                else:
-                    to_classify = pd.DataFrame()  # all already classified
-                    logger.info("  All articles already classified")
+            except RuntimeError as e:
+                # Classification failed — NEVER fill with 0.0.
+                # Filling unscored articles with 0.0 is indistinguishable from
+                # genuinely irrelevant articles and corrupts the index.
+                # Leave unscored articles as null; the index builder handles nulls
+                # by treating them as 0 only at aggregation time, not storage.
+                logger.error("Classification FAILED: %s", e)
+                logger.error("Parquet NOT updated. Keeping existing data.")
+                logger.error(
+                    "DO NOT fill with 0.0 — that corrupts append-only detection. "
+                    "Re-run when API is available."
+                )
+                return 1
 
-            if not to_classify.empty:
-                try:
-                    from src.nlp.classifier import classify_articles_batch
-                    classified = classify_articles_batch(
-                        to_classify,
-                        batch_size=rss_config["classification"]["batch_size"],
-                        model=rss_config["classification"]["model"],
-                        delay=rss_config["classification"]["delay"],
-                    )
-                    # Merge classifications back
-                    if len(classified) < len(articles):
-                        for col in ["article_category", "article_severity", "article_severity_label"]:
-                            articles.loc[classified.index, col] = classified[col]
-                    else:
-                        articles = classified
-                except ImportError:
+            if classified is not None:
+                # ── PROTECTION C: Sanity check ─────────────────────────────────
+                both_zero = (
+                    (classified["political_score"].fillna(0) == 0) &
+                    (classified["economic_score"].fillna(0) == 0)
+                ).mean()
+                if both_zero > 0.95 and len(classified) > 50:
                     logger.error(
-                        "anthropic not installed. Install with: pip install anthropic"
+                        "ABORT: %.0f%% of articles scored 0 on both indices. "
+                        "Likely API failure. Parquet NOT updated.", both_zero * 100
                     )
                     return 1
 
-        # Save classified articles
-        save_parquet(articles, classified_path)
-        logger.info("  Saved classified articles to %s", classified_path.name)
+                # Merge new scores back (append-only)
+                if len(classified) < len(articles):
+                    for col in ["political_score", "economic_score"]:
+                        articles.loc[classified.index, col] = pd.to_numeric(
+                            classified[col], errors="coerce"
+                        ).values
+                else:
+                    articles = classified
+
+                # Save classified articles
+                save_parquet(articles, classified_path)
+                logger.info("  Saved %d articles to %s", len(articles), classified_path.name)
+        else:
+            logger.info("  All articles already scored — skipping API call")
 
     # ── Step 4: Build daily index ─────────────────────────────────────────
     logger.info("=" * 60)

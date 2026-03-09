@@ -487,6 +487,197 @@ def classify_articles_batch(
     return df
 
 
+_POLITICAL_SYSTEM_PROMPT = """Eres un clasificador de riesgo político para Perú. Tu tarea es evaluar si un artículo de prensa señala una amenaza a la estabilidad política e institucional doméstica del Perú.
+
+DEFINICIÓN: Riesgo político abarca amenazas al orden institucional democrático, la continuidad del gobierno, la estabilidad social, y el funcionamiento normal de los poderes del Estado en Perú.
+
+Asigna un puntaje de 0 a 100 (usa CUALQUIER valor entero, no solo múltiplos de 10 o 20). Los siguientes son PUNTOS DE REFERENCIA:
+
+  0: Sin relevancia para la estabilidad política de Perú. Noticias internacionales, deportes, entretenimiento, cultura, operaciones gubernamentales rutinarias, legislación ordinaria sin controversia.
+ 20: Tensión menor. Fricción política de bajo nivel que no amenaza la continuidad institucional. Declaraciones políticas ordinarias, desacuerdos menores entre actores políticos.
+ 40: Inestabilidad moderada. Disputas escalando entre poderes del Estado, malestar social creciente en varias regiones, desafíos de gobernabilidad que podrían intensificarse.
+ 60: Crisis significativa. Confrontación activa entre actores institucionales, movilización social extendida, amenazas serias a la continuidad gubernamental o legislativa.
+ 80: Crisis severa. Amenaza inminente a la continuidad del Ejecutivo o Legislativo, malestar civil generalizado, quiebre de normas institucionales, violencia política.
+100: Emergencia de régimen. Ruptura constitucional activa, violencia estatal contra civiles, colapso de la gobernanza democrática.
+
+REGLAS:
+- Evalúa SOLO eventos que afecten el orden político DOMÉSTICO de Perú.
+- Política internacional (elecciones EEUU, conflictos globales) = 0, SALVO que desencadenen directamente una crisis política en Perú.
+- Usa cualquier entero: 5, 17, 33, 52, 68, 74, 91 — el que mejor refleje el contenido.
+- Evalúa basándote en lo que el artículo DICE o implica fuertemente, no en conocimiento externo.
+- Obituarios, aniversarios, reseñas de libros/películas = 0.
+- Sé consistente."""
+
+_ECONOMIC_SYSTEM_PROMPT = """Eres un clasificador de riesgo económico para Perú. Tu tarea es evaluar si un artículo de prensa señala una amenaza a la estabilidad económica del Perú, específicamente riesgos que afecten al Perú de manera DESPROPORCIONADA respecto a otras economías.
+
+DEFINICIÓN: Riesgo económico abarca amenazas a la estabilidad macroeconómica, fiscal, financiera, y productiva del Perú.
+
+Asigna un puntaje de 0 a 100 (usa CUALQUIER valor entero, no solo múltiplos de 10 o 20). Los siguientes son PUNTOS DE REFERENCIA:
+
+  0: Sin relevancia para la estabilidad económica de Perú. Noticias económicas internacionales generales sin impacto diferenciado en Perú, negocios rutinarios, deportes, entretenimiento.
+ 20: Preocupación económica menor. Ajustes de política rutinarios, dificultades sectoriales modestas, presiones fiscales manejables.
+ 40: Estrés económico moderado. Deterioro significativo en indicadores clave peruanos, vulnerabilidades notables en sectores de los que Perú depende desproporcionadamente.
+ 60: Vulnerabilidad económica significativa. Deterioro agudo que amenaza la estabilidad macroeconómica peruana, disrupciones mayores en los motores económicos primarios.
+ 80: Crisis económica severa. Estrés financiero sistémico en Perú, colapso de fuentes principales de ingreso nacional, intervenciones de emergencia requeridas.
+100: Emergencia económica. Riesgo de default soberano, quiebre del sistema bancario, pérdida total de confianza del mercado.
+
+PRUEBA CLAVE para eventos internacionales: "¿Este evento amenaza la economía de Perú MÁS que al promedio de economías emergentes?" Si no → 0. Si sí → puntaje según severidad.
+
+REGLAS:
+- Eventos económicos internacionales que afectan a todos los países por igual = 0.
+- Usa cualquier entero: 5, 17, 33, 52, 68, 74, 91.
+- Evalúa basándote en lo que el artículo DICE o implica fuertemente.
+- Sé consistente."""
+
+_DUAL_USER_TEMPLATE = """Evalúa los siguientes {n} artículos. Para CADA artículo, responde con un JSON en una línea separada. EXACTAMENTE {n} líneas, una por artículo, en orden.
+
+{articles_block}
+
+Responde EXACTAMENTE {n} líneas JSON, una por artículo, en orden:
+{{"score": <0-100>}}
+{{"score": <0-100>}}
+..."""
+
+
+def _score_batch(articles: list[dict], system_prompt: str, client, model: str) -> list[int | None]:
+    """Single Haiku call for one dimension (political or economic).
+
+    Returns list of integer scores (0-100) or None for parse failures.
+    Raises RuntimeError if the API call itself fails (no fallback).
+    """
+    n = len(articles)
+    lines = []
+    for a in articles:
+        lines.append(
+            f"Artículo {a['id']}:\nTítulo: {a['title']}\nFuente: {a['source']}\n{a['summary'][:300]}"
+        )
+    articles_block = "\n\n".join(lines)
+    user_msg = _DUAL_USER_TEMPLATE.format(n=n, articles_block=articles_block)
+
+    try:
+        response = client.messages.create(
+            model=model,
+            max_tokens=n * 20 + 50,
+            temperature=0,
+            system=system_prompt,
+            messages=[{"role": "user", "content": user_msg}],
+        )
+        raw = response.content[0].text.strip()
+    except Exception as e:
+        raise RuntimeError(f"Haiku API call failed: {e}") from e
+
+    scores: list[int | None] = []
+    for line in raw.splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            obj = json.loads(line)
+            scores.append(max(0, min(100, int(obj["score"]))))
+        except Exception:
+            scores.append(None)
+
+    # Pad/trim to exactly n
+    while len(scores) < n:
+        scores.append(None)
+    return scores[:n]
+
+
+def classify_articles_dual(
+    articles_df: pd.DataFrame,
+    batch_size: int = 20,
+    client=None,
+    model: str = "claude-haiku-4-5-20251001",
+    delay: float = 0.3,
+) -> pd.DataFrame:
+    """Dual-prompt AI-GPR classifier (Iacoviello & Tong 2026).
+
+    Each article receives TWO independent scores:
+    - political_score (0-100): threat to Peru's political stability
+    - economic_score (0-100): threat to Peru's economic stability
+
+    Makes 2 API calls per batch (one per dimension). Temperature = 0.
+    Raises RuntimeError on API failure — NO keyword fallback ever.
+
+    Parameters
+    ----------
+    articles_df : DataFrame with columns: title, summary/description, published, source
+    batch_size : articles per API call (20 recommended)
+    client : optional pre-initialized Anthropic client
+    model : Haiku model ID
+    delay : seconds between batch pairs
+
+    Returns
+    -------
+    DataFrame with political_score and economic_score columns added.
+    """
+    import os
+    if client is None:
+        api_key = os.environ.get("ANTHROPIC_API_KEY")
+        if not api_key:
+            raise RuntimeError(
+                "ANTHROPIC_API_KEY not set. Cannot classify without Haiku. "
+                "NO keyword fallback — set the API key and retry."
+            )
+        client = _get_client()
+
+    df = articles_df.copy()
+    n = len(df)
+
+    logger.info("Dual-classifying %d articles (2 calls per batch of %d)...", n, batch_size)
+
+    # Prepare article dicts
+    all_articles = []
+    for i, (idx, row) in enumerate(df.iterrows()):
+        pub = row.get("published", "")
+        date_str = pub.strftime("%Y-%m-%d") if hasattr(pub, "strftime") else str(pub)[:10]
+        summary = str(row.get("summary") or row.get("description") or "")
+        all_articles.append({
+            "id": i + 1,
+            "idx": idx,
+            "date": date_str,
+            "title": str(row.get("title", "")),
+            "summary": summary,
+            "source": str(row.get("source", "")),
+        })
+
+    # Initialize columns as None
+    df["political_score"] = None
+    df["economic_score"] = None
+
+    processed = 0
+    for batch_start in range(0, n, batch_size):
+        batch = all_articles[batch_start : batch_start + batch_size]
+
+        # Political call
+        pol_scores = _score_batch(batch, _POLITICAL_SYSTEM_PROMPT, client, model)
+        # Economic call
+        eco_scores = _score_batch(batch, _ECONOMIC_SYSTEM_PROMPT, client, model)
+
+        for i, a in enumerate(batch):
+            idx = a["idx"]
+            df.at[idx, "political_score"] = pol_scores[i]
+            df.at[idx, "economic_score"] = eco_scores[i]
+
+        processed += len(batch)
+        if processed % 200 == 0 or processed == n:
+            logger.info("  Dual-classified %d/%d articles", processed, n)
+
+        if batch_start + batch_size < n:
+            time.sleep(delay)
+
+    # Summary
+    pol_nonzero = (df["political_score"].fillna(0) > 0).sum()
+    eco_nonzero = (df["economic_score"].fillna(0) > 0).sum()
+    logger.info(
+        "Done. Political nonzero: %d (%.1f%%)  Economic nonzero: %d (%.1f%%)",
+        pol_nonzero, pol_nonzero / n * 100,
+        eco_nonzero, eco_nonzero / n * 100,
+    )
+
+    return df
+
+
 def compute_monthly_event_score(
     events_df: pd.DataFrame,
     score_column: str = "severity_claude",

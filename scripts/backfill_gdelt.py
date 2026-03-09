@@ -1,17 +1,28 @@
 """Backfill missing days in the RSS article cache using GDELT DOC API 2.0.
 
-GDELT archives news from thousands of sources including Peruvian media
-(El Comercio, RPP, La República, Gestión, etc.) going back years.
+*** DISABLED — DO NOT USE ***
 
-Usage:
-    python scripts/backfill_gdelt.py                          # auto-detect gaps
-    python scripts/backfill_gdelt.py --start 2026-02-09 --end 2026-02-12
-    python scripts/backfill_gdelt.py --date 2026-02-10        # single day
+GDELT pulls from 10,000+ global sources. Even with Peru keyword filters,
+it introduces ~12,000 non-Peru articles that Haiku misclassifies at ~5%.
+This pollutes the AI-GPR index. Direct Peru RSS feeds (11 feeds, 6 outlets)
+provide sufficient coverage (~50-80 articles/day).
+
+All existing GDELT articles (13,878) have been zeroed out in the parquet
+and excluded by the GDELT filter in export_web_data.py.
+
+If you need historical backfill, use the Arc Publishing archive scraper
+(scripts/build_daily_index.py --backfill) which is scoped to elcomercio.pe
+and gestion.pe only.
 
 GDELT DOC API 2.0:
     https://api.gdeltproject.org/api/v2/doc/doc
     Max 250 results per request, no auth required.
 """
+import sys
+print("ERROR: backfill_gdelt.py is DISABLED. See docstring for reason.")
+print("Use: python scripts/build_daily_index.py --backfill")
+sys.exit(1)
+
 
 import argparse
 import hashlib

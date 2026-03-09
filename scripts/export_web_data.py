@@ -748,78 +748,91 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
         except Exception as e:
             logger.warning("Could not load articles cache: %s", e)
 
-    # ── AI-GPR index (Iacoviello & Tong 2026): PRR_t = 100 × Σs_it / S̄ ────
-    # Map legacy integer severity (0-3) to float scale (0.0-1.0)
-    _INT_TO_FLOAT = {0: 0.0, 1: 0.2, 2: 0.5, 3: 0.9}
+    # ── AI-GPR dual index (Iacoviello & Tong 2026) ───────────────────────────
+    # IRP_t = (Σ political_score_i for day t) / S_bar_political × 100
+    # IRE_t = (Σ economic_score_i for day t) / S_bar_economic × 100
+    # Both indices: mean = 100 over 2025 baseline by construction.
 
     if articles_cache is not None and len(articles_cache) > 0:
         art = articles_cache.copy()
-        art["sev_float"] = art["article_severity"].map(_INT_TO_FLOAT).fillna(0.0)
         art["day"] = pd.to_datetime(art["date"]).dt.normalize()
 
-        # Political contribution: 0.6 × Σ(severity for political/both articles)
-        pol_sum = (
-            art[art["article_category"].isin(["political", "both"])]
-            .groupby("day")["sev_float"].sum() * 0.6
-        )
-        # Economic contribution: 0.4 × Σ(severity for economic/both articles)
-        eco_sum = (
-            art[art["article_category"].isin(["economic", "both"])]
-            .groupby("day")["sev_float"].sum() * 0.4
-        )
-        daily_sum_s = pol_sum.add(eco_sum, fill_value=0).rename("daily_sum").reset_index()
-        daily_sum_s.columns = ["date", "daily_sum"]
+        # LEVEL 3 SAFETY NET: exclude GDELT and non-Peru aggregator feeds.
+        # Direct Peru feeds (elcomercio, gestion, larepublica, andina, rpp, correo)
+        # are the only valid signal sources. GDELT adds ~12k global noise articles.
+        if "feed_name" in art.columns:
+            n_before = len(art)
+            art = art[~art["feed_name"].str.contains("gdelt", case=False, na=False)]
+            n_excluded = n_before - len(art)
+            if n_excluded > 0:
+                logger.info("Excluded %d GDELT articles from index computation", n_excluded)
 
-        # ── Freeze S_bar to 2025 calendar-year reference period ──────────────
-        # Recalculating S_bar from all data causes PRR to collapse whenever a
-        # high-volume political period (2026) inflates the mean denominator.
-        # Reference: Iacoviello & Tong (2026) — S_bar is a fixed historical mean.
-        S_BAR_FROZEN = 2.4614   # 2025 mean daily_sum (346 days). Recalibrate annually.
-        ref_2025 = daily_sum_s[pd.to_datetime(daily_sum_s["date"]).dt.year == 2025]
-        s_bar_dynamic = ref_2025["daily_sum"].mean() if len(ref_2025) >= 30 else daily_sum_s["daily_sum"].mean()
-        s_bar = s_bar_dynamic if abs(s_bar_dynamic - S_BAR_FROZEN) / S_BAR_FROZEN < 0.20 else S_BAR_FROZEN
-        s_bar = s_bar or 1.0
-
-        # Diagnostics
-        today_daily_sum = daily_sum_s.iloc[-1]["daily_sum"] if not daily_sum_s.empty else 0.0
-        print(f"[AI-GPR] S_bar = {s_bar:.4f}  (2025-frozen={S_BAR_FROZEN}, 2025-dynamic={s_bar_dynamic:.4f})")
-        print(f"[AI-GPR] Today's daily_sum = {today_daily_sum:.4f}")
-        print(f"[AI-GPR] Today's PRR = {today_daily_sum / s_bar * 100:.1f}")
-
-        daily_sum_s["prr"] = (daily_sum_s["daily_sum"] / s_bar) * 100.0
-
-        political_df = political_df.merge(daily_sum_s[["date", "prr"]], on="date", how="left")
-        political_df["prr"] = political_df["prr"].fillna(0.0)
-        political_df["instability_index"] = political_df["prr"]
-    else:
-        # Fallback: legacy SWP-based composite (not PRR-calibrated)
-        is_v2 = "political_swp" in political_df.columns
-        if is_v2:
-            political_df["instability_index"] = (
-                0.6 * political_df["political_swp"] +
-                0.4 * political_df["economic_swp"]
-            ) * 1000
+        has_dual = "political_score" in art.columns and "economic_score" in art.columns
+        if has_dual:
+            # New dual-score schema (AI-GPR: IRP/IRE)
+            pol_sum_s = art.groupby("day")["political_score"].sum().fillna(0).rename("pol_sum")
+            eco_sum_s = art.groupby("day")["economic_score"].sum().fillna(0).rename("eco_sum")
         else:
-            political_df["instability_index"] = (
-                0.6 * political_df["political_score"] +
-                0.4 * political_df["economic_score"]
-            ) * 100
+            # Legacy fallback: map article_severity to scores
+            _INT_TO_FLOAT = {0: 0.0, 1: 0.2, 2: 0.5, 3: 0.9}
+            art["sev_float"] = art["article_severity"].map(_INT_TO_FLOAT).fillna(0.0)
+            pol_sum_s = (
+                art[art["article_category"].isin(["political", "both"])]
+                .groupby("day")["sev_float"].sum() * 60
+            ).rename("pol_sum")
+            eco_sum_s = (
+                art[art["article_category"].isin(["economic", "both"])]
+                .groupby("day")["sev_float"].sum() * 40
+            ).rename("eco_sum")
 
-    # ── Smoothing + quality flags ─────────────────────────────────────────────
+        daily_sums = pd.concat([pol_sum_s, eco_sum_s], axis=1).fillna(0).reset_index()
+        daily_sums.columns = ["date", "pol_sum", "eco_sum"]
+
+        # Baseline: 2025 calendar year (freeze after 30+ days available)
+        ref = daily_sums[pd.to_datetime(daily_sums["date"]).dt.year == 2025]
+        if len(ref) >= 30:
+            s_bar_pol = ref["pol_sum"].mean() or 1.0
+            s_bar_eco = ref["eco_sum"].mean() or 1.0
+        else:
+            s_bar_pol = daily_sums["pol_sum"].mean() or 1.0
+            s_bar_eco = daily_sums["eco_sum"].mean() or 1.0
+
+        daily_sums["irp"] = (daily_sums["pol_sum"] / s_bar_pol) * 100.0
+        daily_sums["ire"] = (daily_sums["eco_sum"] / s_bar_eco) * 100.0
+
+        today_vals = daily_sums.iloc[-1] if not daily_sums.empty else None
+        if today_vals is not None:
+            print(f"[AI-GPR] IRP today = {today_vals['irp']:.1f}  IRE today = {today_vals['ire']:.1f}")
+
+        political_df = political_df.merge(daily_sums[["date", "irp", "ire"]], on="date", how="left")
+        political_df["irp"] = political_df["irp"].fillna(0.0)
+        political_df["ire"] = political_df["ire"].fillna(0.0)
+        # Keep instability_index as political IRP for backward compat with smoothing below
+        political_df["instability_index"] = political_df["irp"]
+    else:
+        political_df["irp"] = 0.0
+        political_df["ire"] = 0.0
+        political_df["instability_index"] = 0.0
+
+    # ── Smoothing (7-day rolling, centered) for both indices ─────────────────
     MIN_ARTICLES = 5
     SMOOTH_WINDOW = 7
 
     political_df["low_coverage"] = political_df["n_articles_total"] < MIN_ARTICLES
 
-    political_df["score_smooth"] = (
-        political_df["instability_index"]
+    political_df["irp_7d"] = (
+        political_df["irp"]
         .rolling(window=SMOOTH_WINDOW, center=True, min_periods=2)
-        .mean()
-        .round(1)
+        .mean().round(1).fillna(political_df["irp"])
     )
-    political_df["score_smooth"] = political_df["score_smooth"].fillna(
-        political_df["instability_index"]
+    political_df["ire_7d"] = (
+        political_df["ire"]
+        .rolling(window=SMOOTH_WINDOW, center=True, min_periods=2)
+        .mean().round(1).fillna(political_df["ire"])
     )
+    # Backward compat
+    political_df["instability_index"] = political_df["irp"]
+    political_df["score_smooth"] = political_df["irp_7d"]
 
     PROVISIONAL_DAYS = 5
     cutoff = political_df["date"].max() - pd.Timedelta(days=PROVISIONAL_DAYS)
@@ -841,32 +854,30 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
         max_year = valid_365d["score_smooth"].max()
         max_year_date = valid_365d.loc[valid_365d["score_smooth"] == max_year, "date"].iloc[0]
 
-    # Classification level
-    def classify_level(prr: float) -> str:
-        if prr < 50:
-            return "MINIMO"
-        elif prr < 80:
-            return "BAJO"
-        elif prr < 120:
-            return "MODERADO"
-        elif prr < 160:
-            return "ELEVADO"
-        elif prr < 200:
-            return "ALTO"
-        else:
-            return "CRITICO"
+    # Level classification (applied to both IRP and IRE)
+    def classify_level(score: float) -> str:
+        if score < 50:   return "MINIMO"
+        if score < 100:  return "BAJO"
+        if score < 150:  return "MODERADO"
+        if score < 200:  return "ELEVADO"
+        if score < 300:  return "ALTO"
+        return "CRITICO"
 
-    # Daily series (last 365 days) — smoothed PRR as main signal, raw for reference
+    # Daily series (last 365 days) — dual indices
     daily_series = [
         {
             "date": row["date"].strftime("%Y-%m-%d"),
-            "score": round(row["score_smooth"], 1),       # 7d rolling avg (legacy)
-            "score_raw": round(row["instability_index"], 1),  # raw daily PRR (legacy)
-            "prr": round(row["instability_index"], 1),    # raw daily PRR
-            "prr_7d": round(row["score_smooth"], 1),      # 7d rolling avg
+            "political_raw": round(row["irp"], 1),
+            "political_7d":  round(row["irp_7d"], 1),
+            "economic_raw":  round(row["ire"], 1),
+            "economic_7d":   round(row["ire_7d"], 1),
+            # legacy fields (kept for backward compat)
+            "score":     round(row["irp_7d"], 1),
+            "prr":       round(row["irp"], 1),
+            "prr_7d":    round(row["irp_7d"], 1),
             "n_articles": int(row["n_articles_total"]),
             "low_coverage": bool(row["low_coverage"]),
-            "provisional": bool(row["provisional"]),
+            "provisional":  bool(row["provisional"]),
         }
         for _, row in last_365d.iterrows()
     ]
@@ -883,7 +894,7 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
         if articles_cache is not None:
             day_arts = articles_cache[
                 (articles_cache["date"] == event_date) &
-                (articles_cache["article_category"].isin(["political", "both"]))
+                (articles_cache["political_score"] > 0)
             ].head(3)
             if not day_arts.empty:
                 arts_text = "\n".join(
@@ -979,31 +990,86 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
         })
     # ─────────────────────────────────────────────────────────────────────────
 
-    # ── Haiku justification for today's score ────────────────────────────────
-    today_score = float(latest["score_smooth"])
-    today_prr_raw = float(latest.get("instability_index", today_score))
-    driver_phrase = None
-    justification = None
-    top_drivers: list = []
+    # ── Haiku dual justification for today ───────────────────────────────────
+    irp_today  = float(latest.get("irp", 0))
+    ire_today  = float(latest.get("ire", 0))
+    irp_7d     = float(latest.get("irp_7d", irp_today))
+    ire_7d     = float(latest.get("ire_7d", ire_today))
 
-    if today_score > 80 and articles_cache is not None:
+    political_justification = None
+    economic_justification  = None
+    top_political_drivers: list = []
+    top_economic_drivers:  list = []
+    today_all = pd.DataFrame()  # initialized here so it's always in scope
+
+    if articles_cache is not None:
         today_date = latest["date"].date() if hasattr(latest["date"], "date") else latest["date"]
-        today_arts = articles_cache[
-            (articles_cache["date"] == today_date) &
-            (articles_cache["article_category"].isin(["political", "economic", "both"]))
-        ]
-        haiku_result = _haiku_justification(
-            today_arts, today_prr_raw, today_score,
-            classify_level(today_score), str(today_date)
-        )
-        justification = haiku_result.get("justification")
-        top_drivers = haiku_result.get("top_drivers", [])
-        # Legacy short phrase (still used for tooltip, etc.)
-        if not today_arts.empty:
-            top3 = today_arts[today_arts["article_category"].isin(["political", "both"])].head(3)
-            if not top3.empty:
-                arts_text = "\n".join(f"- {r['title']}" for _, r in top3.iterrows())
-                driver_phrase = _haiku_driver_phrase(arts_text, str(today_date))
+        today_all  = articles_cache[articles_cache["date"] == today_date]
+        has_dual   = "political_score" in today_all.columns and "economic_score" in today_all.columns
+
+        if has_dual and (irp_today > 0 or ire_today > 0):
+            try:
+                client = __import__("anthropic").Anthropic()
+
+                # Top 5 political articles
+                top_pol = today_all.nlargest(5, "political_score")[
+                    ["title", "source", "political_score"]
+                ]
+                if not top_pol.empty and irp_today > 0:
+                    drivers_text = "\n".join(
+                        f"- [{int(r.political_score)}] {r.title} ({r.source})"
+                        for _, r in top_pol.iterrows() if r.political_score > 0
+                    )
+                    if drivers_text:
+                        msg = client.messages.create(
+                            model="claude-haiku-4-5-20251001",
+                            max_tokens=150,
+                            temperature=0,
+                            messages=[{"role": "user", "content":
+                                f"Eres el analista de riesgo político de Qhawarina. "
+                                f"Hoy el Índice de Riesgo Político = {irp_today:.0f} "
+                                f"({irp_today/100:.1f}× el promedio).\n"
+                                f"Los 5 artículos con mayor puntaje político:\n{drivers_text}\n\n"
+                                f"Escribe 2-3 oraciones explicando por qué el riesgo político "
+                                f"está en este nivel. Máximo 60 palabras. Solo el texto."
+                            }]
+                        )
+                        political_justification = msg.content[0].text.strip()
+                    top_political_drivers = [
+                        {"title": r.title, "source": r.source, "score": int(r.political_score)}
+                        for _, r in top_pol.iterrows() if r.political_score > 0
+                    ]
+
+                # Top 5 economic articles
+                top_eco = today_all.nlargest(5, "economic_score")[
+                    ["title", "source", "economic_score"]
+                ]
+                if not top_eco.empty and ire_today > 0:
+                    drivers_text = "\n".join(
+                        f"- [{int(r.economic_score)}] {r.title} ({r.source})"
+                        for _, r in top_eco.iterrows() if r.economic_score > 0
+                    )
+                    if drivers_text:
+                        msg = client.messages.create(
+                            model="claude-haiku-4-5-20251001",
+                            max_tokens=150,
+                            temperature=0,
+                            messages=[{"role": "user", "content":
+                                f"Eres el analista de riesgo económico de Qhawarina. "
+                                f"Hoy el Índice de Riesgo Económico = {ire_today:.0f} "
+                                f"({ire_today/100:.1f}× el promedio).\n"
+                                f"Los 5 artículos con mayor puntaje económico:\n{drivers_text}\n\n"
+                                f"Escribe 2-3 oraciones explicando por qué el riesgo económico "
+                                f"está en este nivel. Máximo 60 palabras. Solo el texto."
+                            }]
+                        )
+                        economic_justification = msg.content[0].text.strip()
+                    top_economic_drivers = [
+                        {"title": r.title, "source": r.source, "score": int(r.economic_score)}
+                        for _, r in top_eco.iterrows() if r.economic_score > 0
+                    ]
+            except Exception as e:
+                logger.warning("Haiku justification failed: %s", e)
     # ─────────────────────────────────────────────────────────────────────────
 
     output = {
@@ -1012,28 +1078,44 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
             "coverage_days": len(political_df),
             "rss_feeds": 11,
             "rss_sources": 6,
-            "methodology": "AI-GPR: PRR_t = 100 x sum(s_it) / S_bar (Iacoviello & Tong 2026), mean=100",
+            "methodology": "AI-GPR dual index (Iacoviello & Tong 2026): IRP + IRE, mean=100 over 2025 baseline",
         },
         "current": {
             "date": latest["date"].strftime("%Y-%m-%d"),
-            "score": round(today_score, 3),              # 7d smoothed PRR (legacy)
-            "prr_7d": round(today_score, 1),             # 7d rolling avg
-            "prr_raw": round(float(latest["instability_index"]), 1),  # raw daily PRR
-            "level": classify_level(today_score),
-            "articles_total": int(latest.get("n_articles_total", 0)),
-            "articles_political": int(latest.get("n_articles_political", 0)),
-            "articles_economic": int(latest.get("n_articles_economic", 0)),
-            "driver_phrase": driver_phrase,
-            "justification": justification,
-            "top_drivers": top_drivers,
+            # Dual indices
+            "political_raw":  round(irp_today, 1),
+            "political_7d":   round(irp_7d, 1),
+            "political_level": classify_level(irp_7d),
+            "political_multiplier": round(irp_7d / 100, 2),
+            "economic_raw":   round(ire_today, 1),
+            "economic_7d":    round(ire_7d, 1),
+            "economic_level": classify_level(ire_7d),
+            "economic_multiplier": round(ire_7d / 100, 2),
+            # Legacy fields (for homepage card backward compat)
+            "score":   round(irp_7d, 1),
+            "prr_7d":  round(irp_7d, 1),
+            "prr_raw": round(irp_today, 1),
+            "level":   classify_level(irp_7d),
+            "articles_total":               int(latest.get("n_articles_total", 0)),
+            "articles_political_relevant":  int(today_all["political_score"].gt(0).sum() if not today_all.empty and "political_score" in today_all.columns else 0),
+            "articles_economic_relevant":   int(today_all["economic_score"].gt(0).sum() if not today_all.empty and "economic_score" in today_all.columns else 0),
+            "political_justification": political_justification,
+            "economic_justification":  economic_justification,
+            "top_political_drivers":   top_political_drivers,
+            "top_economic_drivers":    top_economic_drivers,
+            # Legacy
+            "justification": political_justification,
+            "top_drivers":   top_political_drivers,
         },
         "aggregates": {
-            "7d_avg": round(last_7d, 1),
-            "30d_avg": round(last_30d, 1),
+            "political_7d_avg":  round(political_df.tail(7)["irp_7d"].mean(), 1),
+            "political_30d_avg": round(political_df.tail(30)["irp_7d"].mean(), 1),
+            "economic_7d_avg":   round(political_df.tail(7)["ire_7d"].mean(), 1),
+            "economic_30d_avg":  round(political_df.tail(30)["ire_7d"].mean(), 1),
             "year_max": round(max_year, 1),
             "year_max_date": max_year_date.strftime("%Y-%m-%d"),
         },
-        "major_events": major_events[:10],  # Top 10
+        "major_events": major_events[:10],
         "daily_series": daily_series,
         "daily_fx_series": daily_fx_series,
         "monthly_series": monthly_series,

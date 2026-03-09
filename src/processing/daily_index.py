@@ -141,7 +141,9 @@ def build_daily_index_v2(
     ----------
     articles_df : DataFrame
         ALL articles (including irrelevant). Must have columns:
-        published, source, article_category, article_severity.
+        published, source, and EITHER:
+          - new dual-score schema: political_score, economic_score (0-10 floats)
+          - legacy schema: article_category, article_severity (str/int)
     start_date : str
         First date for the index (should be when coverage is stable).
     smoothing_window : int
@@ -171,9 +173,20 @@ def build_daily_index_v2(
         logger.warning("No articles after start_date %s", start_date)
         return _empty_index_v2()
 
+    # ── Detect schema: dual-score (new) vs category+severity (legacy) ──
+    use_dual_scores = (
+        "political_score" in df.columns and "economic_score" in df.columns
+    )
+    if use_dual_scores:
+        df["political_score"] = pd.to_numeric(df["political_score"], errors="coerce").fillna(0.0)
+        df["economic_score"] = pd.to_numeric(df["economic_score"], errors="coerce").fillna(0.0)
+        logger.info("Using dual-score schema (political_score / economic_score, 0-10)")
+    else:
+        logger.info("Using legacy schema (article_category / article_severity)")
+
     # ── Step 1: Per-source daily severity-weighted proportion ──────────
     # For each source on each day, compute:
-    #   SWP = sum(severity/3 for political articles) / total_articles
+    #   SWP = sum(score/10 for relevant articles) / total_articles
     # This captures both the proportion of political coverage AND its intensity.
 
     sources = sorted(df["source"].unique())
@@ -187,17 +200,31 @@ def build_daily_index_v2(
         # Total articles per day for this source (denominator)
         total = src_by_day.size().rename("total")
 
-        # Political: sum(severity/3) for political+both articles
-        pol_arts = src_df[src_df["article_category"].isin(["political", "both"])]
-        pol_sev = pol_arts.groupby("date")["article_severity"].apply(
-            lambda x: (x / 3).sum()
-        ).rename("pol_sev_sum")
+        if use_dual_scores:
+            # Political: sum(political_score/100) for articles with political_score > 0
+            # Dividing by 100 maps the 0-100 scale to 0-1, same as old severity/3
+            pol_arts = src_df[src_df["political_score"] > 0]
+            pol_sev = pol_arts.groupby("date")["political_score"].apply(
+                lambda x: (x / 100).sum()
+            ).rename("pol_sev_sum")
 
-        # Economic: sum(severity/3) for economic+both articles
-        econ_arts = src_df[src_df["article_category"].isin(["economic", "both"])]
-        econ_sev = econ_arts.groupby("date")["article_severity"].apply(
-            lambda x: (x / 3).sum()
-        ).rename("econ_sev_sum")
+            # Economic: sum(economic_score/100) for articles with economic_score > 0
+            econ_arts = src_df[src_df["economic_score"] > 0]
+            econ_sev = econ_arts.groupby("date")["economic_score"].apply(
+                lambda x: (x / 100).sum()
+            ).rename("econ_sev_sum")
+        else:
+            # Political: sum(severity/3) for political+both articles
+            pol_arts = src_df[src_df["article_category"].isin(["political", "both"])]
+            pol_sev = pol_arts.groupby("date")["article_severity"].apply(
+                lambda x: (x / 3).sum()
+            ).rename("pol_sev_sum")
+
+            # Economic: sum(severity/3) for economic+both articles
+            econ_arts = src_df[src_df["article_category"].isin(["economic", "both"])]
+            econ_sev = econ_arts.groupby("date")["article_severity"].apply(
+                lambda x: (x / 3).sum()
+            ).rename("econ_sev_sum")
 
         combined = pd.DataFrame({"total": total}).join(pol_sev).join(econ_sev).fillna(0)
         combined["pol_swp"] = combined["pol_sev_sum"] / combined["total"]
@@ -276,8 +303,12 @@ def build_daily_index_v2(
         # Count relevant articles across all sources
         day_all = df[df["date"] == day]
         if not day_all.empty:
-            n_pol = len(day_all[day_all["article_category"].isin(["political", "both"])])
-            n_econ = len(day_all[day_all["article_category"].isin(["economic", "both"])])
+            if use_dual_scores:
+                n_pol = int((day_all["political_score"] > 0).sum())
+                n_econ = int((day_all["economic_score"] > 0).sum())
+            else:
+                n_pol = len(day_all[day_all["article_category"].isin(["political", "both"])])
+                n_econ = len(day_all[day_all["article_category"].isin(["economic", "both"])])
             n_total = len(day_all)
 
         rows.append({
