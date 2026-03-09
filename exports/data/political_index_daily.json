@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-03-09T17:18:47.519424",
+    "generated_at": "2026-03-09T17:27:50.782222",
     "coverage_days": 433,
     "rss_feeds": 11,
     "rss_sources": 6,
@@ -122,7 +122,7 @@
       "score": 122.9,
       "level": "MODERADO",
       "n_articles": 35,
-      "summary": "Candidatos con irregularidades financieras en campañas electorales.",
+      "summary": "Irregularidades financieras y falta de transparencia en campañas electorales.",
       "report_url": "/political/daily-reports/2026-02-22.html"
     },
     {
@@ -130,7 +130,7 @@
       "score": 133.7,
       "level": "MODERADO",
       "n_articles": 61,
-      "summary": "Balcázar enfrenta juicios mientras ejerce presidencia.",
+      "summary": "Conflicto entre poderes y juicios al presidente.",
       "report_url": "/political/daily-reports/2026-02-21.html"
     },
     {
@@ -138,7 +138,7 @@
       "score": 145.3,
       "level": "MODERADO",
       "n_articles": 101,
-      "summary": "Disputa por control del Congreso y potencial indulto presidencial.",
+      "summary": "Disputa por poder presidencial entre bloques parlamentarios rivales.",
       "report_url": "/political/daily-reports/2026-02-20.html"
     },
     {
@@ -146,7 +146,7 @@
       "score": 154.0,
       "level": "ELEVADO",
       "n_articles": 114,
-      "summary": "La destitución presidencial refleja la inestabilidad política extrema.",
+      "summary": "Sucesión presidencial acelerada por censura política congresional.",
       "report_url": "/political/daily-reports/2026-02-19.html"
     },
     {
@@ -154,7 +154,7 @@
       "score": 146.8,
       "level": "MODERADO",
       "n_articles": 130,
-      "summary": "Conflicto interno por sucesión en la presidencia del Congreso.",
+      "summary": "Pugna por el liderazgo político tras censura ministerial.",
       "report_url": "/political/daily-reports/2026-02-18.html"
     },
     {
@@ -162,7 +162,7 @@
       "score": 157.1,
       "level": "ELEVADO",
       "n_articles": 109,
-      "summary": "Confrontación política agresiva entre candidatos presidenciales.",
+      "summary": "Conflicto electoral entre principales candidatos presidenciales.",
       "report_url": "/political/daily-reports/2026-02-17.html"
     },
     {
@@ -170,7 +170,7 @@
       "score": 150.7,
       "level": "ELEVADO",
       "n_articles": 94,
-      "summary": "Incertidumbre sobre la sucesión presidencial y cambios políticos.",
+      "summary": "Incertidumbre sobre la sucesión presidencial y cambios políticos inminentes.",
       "report_url": "/political/daily-reports/2026-02-16.html"
     },
     {
@@ -178,7 +178,7 @@
       "score": 124.5,
       "level": "MODERADO",
       "n_articles": 34,
-      "summary": "Conflicto político interno en la dirección del Congreso.",
+      "summary": "Conflicto político interno por liderazgo parlamentario genera tensiones.",
       "report_url": "/political/daily-reports/2026-02-15.html"
     },
     {
@@ -186,7 +186,7 @@
       "score": 123.4,
       "level": "MODERADO",
       "n_articles": 23,
-      "summary": "Conflictos institucionales y presunta corrupción en el Tribunal Constitucional.",
+      "summary": "Conflictos internos en instituciones judiciales y económicas del Estado.",
       "report_url": "/political/daily-reports/2025-09-15.html"
     },
     {
@@ -194,7 +194,7 @@
       "score": 131.2,
       "level": "MODERADO",
       "n_articles": 9,
-      "summary": "Persecución política y debilidad institucional del Estado peruano.",
+      "summary": "Desestabilización institucional por conflictos políticos y legales.",
       "report_url": "/political/daily-reports/2025-09-14.html"
     }
   ],
@@ -208,8 +208,8 @@
       "score": 61.5,
       "prr": 0.0,
       "prr_7d": 61.5,
-      "n_articles": 163,
-      "low_coverage": false,
+      "n_articles": 1,
+      "low_coverage": true,
       "provisional": false
     },
     {
@@ -221,7 +221,7 @@
       "score": 70.6,
       "prr": 207.1,
       "prr_7d": 70.6,
-      "n_articles": 6,
+      "n_articles": 5,
       "low_coverage": false,
       "provisional": false
     },
@@ -234,8 +234,8 @@
       "score": 70.6,
       "prr": 0.0,
       "prr_7d": 70.6,
-      "n_articles": 219,
-      "low_coverage": false,
+      "n_articles": 0,
+      "low_coverage": true,
       "provisional": false
     },
     {
@@ -247,7 +247,7 @@
       "score": 55.3,
       "prr": 116.0,
       "prr_7d": 55.3,
-      "n_articles": 15,
+      "n_articles": 12,
       "low_coverage": false,
       "provisional": false
     },
@@ -273,8 +273,8 @@
       "score": 53.2,
       "prr": 0.0,
       "prr_7d": 53.2,
-      "n_articles": 196,
-      "low_coverage": false,
+      "n_articles": 0,
+      "low_coverage": true,
       "provisional": false
     },
     {
@@ -286,8 +286,8 @@
       "score": 53.2,
       "prr": 0.0,
       "prr_7d": 53.2,
-      "n_articles": 145,
-      "low_coverage": false,
+      "n_articles": 0,
+      "low_coverage": true,
       "provisional": false
     },
     {
@@ -299,8 +299,8 @@
       "score": 53.1,
       "prr": 17.9,
       "prr_7d": 53.1,
-      "n_articles": 181,
-      "low_coverage": false,
+      "n_articles": 2,
+      "low_coverage": true,
       "provisional": false
     },
     {
@@ -312,7 +312,7 @@
       "score": 60.5,
       "prr": 174.5,
       "prr_7d": 60.5,
-      "n_articles": 11,
+      "n_articles": 9,
       "low_coverage": false,
       "provisional": false
     },
@@ -364,8 +364,8 @@
       "score": 53.1,
       "prr": 0.0,
       "prr_7d": 53.1,
-      "n_articles": 222,
-      "low_coverage": false,
+      "n_articles": 0,
+      "low_coverage": true,
       "provisional": false
     },
     {
@@ -377,8 +377,8 @@
       "score": 66.6,
       "prr": 0.0,
       "prr_7d": 66.6,
-      "n_articles": 144,
-      "low_coverage": false,
+      "n_articles": 0,
+      "low_coverage": true,
       "provisional": false
     },
     {
@@ -390,8 +390,8 @@
       "score": 64.1,
       "prr": 0.0,
       "prr_7d": 64.1,
-      "n_articles": 209,
-      "low_coverage": false,
+      "n_articles": 0,
+      "low_coverage": true,
       "provisional": false
     },
     {
@@ -403,7 +403,7 @@
       "score": 47.5,
       "prr": 140.4,
       "prr_7d": 47.5,
-      "n_articles": 9,
+      "n_articles": 6,
       "low_coverage": false,
       "provisional": false
     },
@@ -442,8 +442,8 @@
       "score": 76.1,
       "prr": 0.0,
       "prr_7d": 76.1,
-      "n_articles": 206,
-      "low_coverage": false,
+      "n_articles": 0,
+      "low_coverage": true,
       "provisional": false
     },
     {
@@ -455,8 +455,8 @@
       "score": 56.0,
       "prr": 0.0,
       "prr_7d": 56.0,
-      "n_articles": 205,
-      "low_coverage": false,
+      "n_articles": 0,
+      "low_coverage": true,
       "provisional": false
     },
     {
@@ -468,8 +468,8 @@
       "score": 65.5,
       "prr": 23.2,
       "prr_7d": 65.5,
-      "n_articles": 7,
-      "low_coverage": false,
+      "n_articles": 4,
+      "low_coverage": true,
       "provisional": false
     },
     {
@@ -494,8 +494,8 @@
       "score": 81.9,
       "prr": 0.0,
       "prr_7d": 81.9,
-      "n_articles": 232,
-      "low_coverage": false,
+      "n_articles": 0,
+      "low_coverage": true,
       "provisional": false
     },
     {
@@ -507,7 +507,7 @@
       "score": 96.1,
       "prr": 161.1,
       "prr_7d": 96.1,
-      "n_articles": 13,
+      "n_articles": 9,
       "low_coverage": false,
       "provisional": false
     },
@@ -546,8 +546,8 @@
       "score": 87.0,
       "prr": 100.0,
       "prr_7d": 87.0,
-      "n_articles": 223,
-      "low_coverage": false,
+      "n_articles": 2,
+      "low_coverage": true,
       "provisional": false
     },
     {
@@ -559,8 +559,8 @@
       "score": 82.9,
       "prr": 0.0,
       "prr_7d": 82.9,
-      "n_articles": 216,
-      "low_coverage": false,
+      "n_articles": 0,
+      "low_coverage": true,
       "provisional": false
     },
     {
@@ -572,8 +572,8 @@
       "score": 100.3,
       "prr": 0.0,
       "prr_7d": 100.3,
-      "n_articles": 5,
-      "low_coverage": false,
+      "n_articles": 0,
+      "low_coverage": true,
       "provisional": false
     },
     {
@@ -585,8 +585,8 @@
       "score": 75.5,
       "prr": 135.7,
       "prr_7d": 75.5,
-      "n_articles": 215,
-      "low_coverage": false,
+      "n_articles": 2,
+      "low_coverage": true,
       "provisional": false
     },
     {
@@ -598,7 +598,7 @@
       "score": 61.3,
       "prr": 132.4,
       "prr_7d": 61.3,
-      "n_articles": 29,
+      "n_articles": 22,
       "low_coverage": false,
       "provisional": false
     },
@@ -624,8 +624,8 @@
       "score": 80.7,
       "prr": 0.0,
       "prr_7d": 80.7,
-      "n_articles": 215,
-      "low_coverage": false,
+      "n_articles": 0,
+      "low_coverage": true,
       "provisional": false
     },
     {
@@ -637,8 +637,8 @@
       "score": 66.5,
       "prr": 0.0,
       "prr_7d": 66.5,
-      "n_articles": 17,
-      "low_coverage": false,
+      "n_articles": 0,
+      "low_coverage": true,
       "provisional": false
     },
     {
@@ -650,8 +650,8 @@
       "score": 65.4,
       "prr": 0.0,
       "prr_7d": 65.4,
-      "n_articles": 155,
-      "low_coverage": false,
+      "n_articles": 0,
+      "low_coverage": true,
       "provisional": false
     },
     {
@@ -663,7 +663,7 @@
       "score": 42.4,
       "prr": 136.4,
       "prr_7d": 42.4,
-      "n_articles": 15,
+      "n_articles": 10,
       "low_coverage": false,
       "provisional": false
     },
@@ -702,8 +702,8 @@
       "score": 67.1,
       "prr": 0.0,
       "prr_7d": 67.1,
-      "n_articles": 212,
-      "low_coverage": false,
+      "n_articles": 0,
+      "low_coverage": true,
       "provisional": false
     },
     {
@@ -715,8 +715,8 @@
       "score": 51.0,
       "prr": 107.1,
       "prr_7d": 51.0,
-      "n_articles": 208,
-      "low_coverage": false,
+      "n_articles": 1,
+      "low_coverage": true,
       "provisional": false
     },
     {
@@ -728,8 +728,8 @@
       "score": 53.2,
       "prr": 0.0,
       "prr_7d": 53.2,
-      "n_articles": 6,
-      "low_coverage": false,
+      "n_articles": 0,
+      "low_coverage": true,
       "provisional": false
     },
     {
@@ -806,8 +806,8 @@
       "score": 50.8,
       "prr": 53.6,
       "prr_7d": 50.8,
-      "n_articles": 218,
-      "low_coverage": false,
+      "n_articles": 2,
+      "low_coverage": true,
       "provisional": false
     },
     {
@@ -819,7 +819,7 @@
       "score": 46.9,
       "prr": 59.3,
       "prr_7d": 46.9,
-      "n_articles": 18,
+      "n_articles": 10,
       "low_coverage": false,
       "provisional": false
     },
@@ -923,8 +923,8 @@
       "score": 99.4,
       "prr": 0.0,
       "prr_7d": 99.4,
-      "n_articles": 201,
-      "low_coverage": false,
+      "n_articles": 1,
+      "low_coverage": true,
       "provisional": false
     },
     {
@@ -975,8 +975,8 @@
       "score": 126.4,
       "prr": 464.1,
       "prr_7d": 126.4,
-      "n_articles": 33,
-      "low_coverage": false,
+      "n_articles": 1,
+      "low_coverage": true,
       "provisional": false
     },
     {
@@ -988,8 +988,8 @@
       "score": 114.1,
       "prr": 0.0,
       "prr_7d": 114.1,
-      "n_articles": 21,
-      "low_coverage": false,
+      "n_articles": 0,
+      "low_coverage": true,
       "provisional": false
     },
     {
@@ -1001,8 +1001,8 @@
       "score": 113.3,
       "prr": 0.0,
       "prr_7d": 113.3,
-      "n_articles": 178,
-      "low_coverage": false,
+      "n_articles": 1,
+      "low_coverage": true,
       "provisional": false
     },
     {
@@ -1014,8 +1014,8 @@
       "score": 113.5,
       "prr": 0.0,
       "prr_7d": 113.5,
-      "n_articles": 186,
-      "low_coverage": false,
+      "n_articles": 0,
+      "low_coverage": true,
       "provisional": false
     },
     {
@@ -1027,7 +1027,7 @@
       "score": 73.4,
       "prr": 145.8,
       "prr_7d": 73.4,
-      "n_articles": 15,
+      "n_articles": 12,
       "low_coverage": false,
       "provisional": false
     },
@@ -1079,8 +1079,8 @@
       "score": 89.3,
       "prr": 57.1,
       "prr_7d": 89.3,
-      "n_articles": 29,
-      "low_coverage": false,
+      "n_articles": 2,
+      "low_coverage": true,
       "provisional": false
     },
     {
@@ -1105,8 +1105,8 @@
       "score": 98.8,
       "prr": 0.0,
       "prr_7d": 98.8,
-      "n_articles": 189,
-      "low_coverage": false,
+      "n_articles": 0,
+      "low_coverage": true,
       "provisional": false
     },
     {
@@ -1118,7 +1118,7 @@
       "score": 72.6,
       "prr": 57.6,
       "prr_7d": 72.6,
-      "n_articles": 20,
+      "n_articles": 14,
       "low_coverage": false,
       "provisional": false
     },
@@ -1157,8 +1157,8 @@
       "score": 71.7,
       "prr": 0.0,
       "prr_7d": 71.7,
-      "n_articles": 227,
-      "low_coverage": false,
+      "n_articles": 1,
+      "low_coverage": true,
       "provisional": false
     },
     {
@@ -1170,8 +1170,8 @@
       "score": 72.9,
       "prr": 0.0,
       "prr_7d": 72.9,
-      "n_articles": 219,
-      "low_coverage": false,
+      "n_articles": 2,
+      "low_coverage": true,
       "provisional": false
     },
     {
@@ -1183,7 +1183,7 @@
       "score": 64.0,
       "prr": 81.6,
       "prr_7d": 64.0,
-      "n_articles": 12,
+      "n_articles": 7,
       "low_coverage": false,
       "provisional": false
     },
@@ -1235,8 +1235,8 @@
       "score": 81.6,
       "prr": 185.7,
       "prr_7d": 81.6,
-      "n_articles": 209,
-      "low_coverage": false,
+      "n_articles": 2,
+      "low_coverage": true,
       "provisional": false
     },
     {
@@ -1248,7 +1248,7 @@
       "score": 71.8,
       "prr": 97.6,
       "prr_7d": 71.8,
-      "n_articles": 22,
+      "n_articles": 12,
       "low_coverage": false,
       "provisional": false
     },
@@ -1261,7 +1261,7 @@
       "score": 76.9,
       "prr": 0.0,
       "prr_7d": 76.9,
-      "n_articles": 3,
+      "n_articles": 0,
       "low_coverage": true,
       "provisional": false
     },
@@ -1274,7 +1274,7 @@
       "score": 76.6,
       "prr": 0.0,
       "prr_7d": 76.6,
-      "n_articles": 3,
+      "n_articles": 0,
       "low_coverage": true,
       "provisional": false
     },
@@ -1287,7 +1287,7 @@
       "score": 65.4,
       "prr": 42.8,
       "prr_7d": 65.4,
-      "n_articles": 4,
+      "n_articles": 2,
       "low_coverage": true,
       "provisional": false
     },
@@ -1339,8 +1339,8 @@
       "score": 70.1,
       "prr": 0.0,
       "prr_7d": 70.1,
-      "n_articles": 11,
-      "low_coverage": false,
+      "n_articles": 1,
+      "low_coverage": true,
       "provisional": false
     },
     {
@@ -1352,7 +1352,7 @@
       "score": 74.8,
       "prr": 14.3,
       "prr_7d": 74.8,
-      "n_articles": 3,
+      "n_articles": 1,
       "low_coverage": true,
       "provisional": false
     },
@@ -1365,8 +1365,8 @@
       "score": 63.8,
       "prr": 100.0,
       "prr_7d": 63.8,
-      "n_articles": 7,
-      "low_coverage": false,
+      "n_articles": 2,
+      "low_coverage": true,
       "provisional": false
     },
     {
@@ -1417,8 +1417,8 @@
       "score": 95.7,
       "prr": 0.0,
       "prr_7d": 95.7,
-      "n_articles": 13,
-      "low_coverage": false,
+      "n_articles": 0,
+      "low_coverage": true,
       "provisional": false
     },
     {
@@ -4576,8 +4576,8 @@
       "score": 33.1,
       "prr": 0.0,
       "prr_7d": 33.1,
-      "n_articles": 8,
-      "low_coverage": false,
+      "n_articles": 0,
+      "low_coverage": true,
       "provisional": false
     },
     {
@@ -4589,8 +4589,8 @@
       "score": 37.3,
       "prr": 0.0,
       "prr_7d": 37.3,
-      "n_articles": 15,
-      "low_coverage": false,
+      "n_articles": 0,
+      "low_coverage": true,
       "provisional": false
     },
     {
@@ -4602,8 +4602,8 @@
       "score": 48.9,
       "prr": 0.0,
       "prr_7d": 48.9,
-      "n_articles": 216,
-      "low_coverage": false,
+      "n_articles": 0,
+      "low_coverage": true,
       "provisional": false
     },
     {
@@ -4615,8 +4615,8 @@
       "score": 58.4,
       "prr": 0.0,
       "prr_7d": 58.4,
-      "n_articles": 199,
-      "low_coverage": false,
+      "n_articles": 0,
+      "low_coverage": true,
       "provisional": false
     },
     {
@@ -6124,7 +6124,7 @@
       "month": "2025-01",
       "political_avg": 44.9,
       "economic_avg": 48.8,
-      "n_articles": 4582,
+      "n_articles": 65,
       "fx_level": 3.7477,
       "fx_yoy": 0.21
     },
@@ -6132,7 +6132,7 @@
       "month": "2025-02",
       "political_avg": 53.6,
       "economic_avg": 75.3,
-      "n_articles": 2774,
+      "n_articles": 92,
       "fx_level": 3.6977,
       "fx_yoy": -3.39
     },
@@ -6140,7 +6140,7 @@
       "month": "2025-03",
       "political_avg": 66.2,
       "economic_avg": 60.6,
-      "n_articles": 2892,
+      "n_articles": 134,
       "fx_level": 3.6526,
       "fx_yoy": -1.54
     },
@@ -6148,7 +6148,7 @@
       "month": "2025-04",
       "political_avg": 64.7,
       "economic_avg": 62.7,
-      "n_articles": 2085,
+      "n_articles": 146,
       "fx_level": 3.6997,
       "fx_yoy": -0.36
     },
@@ -6156,7 +6156,7 @@
       "month": "2025-05",
       "political_avg": 92.7,
       "economic_avg": 83.4,
-      "n_articles": 1683,
+      "n_articles": 171,
       "fx_level": 3.6601,
       "fx_yoy": -1.9
     },
@@ -6164,7 +6164,7 @@
       "month": "2025-06",
       "political_avg": 120.3,
       "economic_avg": 75.1,
-      "n_articles": 472,
+      "n_articles": 440,
       "fx_level": 3.6039,
       "fx_yoy": -4.78
     },
@@ -6228,7 +6228,7 @@
       "month": "2026-02",
       "political_avg": 94.9,
       "economic_avg": 103.1,
-      "n_articles": 2087,
+      "n_articles": 1649,
       "fx_level": null,
       "fx_yoy": null
     },

@@ -816,9 +816,13 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
         if today_vals is not None:
             print(f"[AI-GPR] IRP today = {today_vals['irp']:.1f}  IRE today = {today_vals['ire']:.1f}")
 
-        political_df = political_df.merge(daily_sums[["date", "irp", "ire"]], on="date", how="left")
+        political_df = political_df.merge(
+            daily_sums[["date", "irp", "ire", "n_total"]], on="date", how="left"
+        )
         political_df["irp"] = political_df["irp"].fillna(0.0)
         political_df["ire"] = political_df["ire"].fillna(0.0)
+        # Use clean article count (no GDELT) for display — overwrite old parquet's n_articles_total
+        political_df["n_articles_total"] = political_df["n_total"].fillna(0).astype(int)
         # Keep instability_index as political IRP for backward compat with smoothing below
         political_df["instability_index"] = political_df["irp"]
     else:
