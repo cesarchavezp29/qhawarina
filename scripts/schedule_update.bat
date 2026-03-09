@@ -13,7 +13,7 @@ REM     schedule_update.bat status     — Check task status
 REM ============================================================================
 
 set TASK_NAME=NEXUS_Data_Update
-set PYTHON_EXE=python
+set PYTHON_EXE=C:\Users\User\AppData\Local\Python\pythoncore-3.14-64\python.exe
 set SCRIPT_DIR=%~dp0
 set PROJECT_DIR=%SCRIPT_DIR%..
 set UPDATE_SCRIPT=%SCRIPT_DIR%update_all.py

@@ -773,8 +773,10 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
     daily_series = [
         {
             "date": row["date"].strftime("%Y-%m-%d"),
-            "score": round(row["score_smooth"], 1),
-            "score_raw": round(row["instability_index"], 1),
+            "score": round(row["score_smooth"], 1),       # 7d rolling avg (legacy)
+            "score_raw": round(row["instability_index"], 1),  # raw daily PRR (legacy)
+            "prr": round(row["instability_index"], 1),    # raw daily PRR
+            "prr_7d": round(row["score_smooth"], 1),      # 7d rolling avg
             "n_articles": int(row["n_articles_total"]),
             "low_coverage": bool(row["low_coverage"]),
             "provisional": bool(row["provisional"]),
@@ -914,7 +916,9 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
         },
         "current": {
             "date": latest["date"].strftime("%Y-%m-%d"),
-            "score": round(today_score, 3),
+            "score": round(today_score, 3),              # 7d smoothed PRR (legacy)
+            "prr_7d": round(today_score, 1),             # 7d rolling avg
+            "prr_raw": round(float(latest["instability_index"]), 1),  # raw daily PRR
             "level": classify_level(today_score),
             "articles_total": int(latest.get("n_articles_total", 0)),
             "articles_political": int(latest.get("n_articles_political", 0)),
@@ -932,6 +936,23 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
         "daily_fx_series": daily_fx_series,
         "monthly_series": monthly_series,
     }
+
+    # Append guard: refuse to overwrite if new data would shrink the series by >10%
+    existing_path = DATA_DIR / "political_index_daily.json"
+    if existing_path.exists():
+        try:
+            with open(existing_path, "r", encoding="utf-8") as f_ex:
+                existing_json = json.load(f_ex)
+            existing_count = len(existing_json.get("daily_series", []))
+            new_count = len(daily_series)
+            if new_count < existing_count * 0.9:
+                raise ValueError(
+                    f"Append guard triggered: new daily_series has {new_count} entries "
+                    f"but existing has {existing_count} (threshold: {int(existing_count * 0.9)}). "
+                    "Refusing to overwrite. Check data pipeline integrity."
+                )
+        except (json.JSONDecodeError, KeyError):
+            pass  # Corrupted existing JSON — allow overwrite
 
     with open(DATA_DIR / "political_index_daily.json", "w", encoding="utf-8") as f:
         json.dump(output, f, indent=2, ensure_ascii=False)

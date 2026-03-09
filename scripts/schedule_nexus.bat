@@ -14,7 +14,7 @@ REM     schedule_nexus.bat remove     — Remove all scheduled tasks
 REM     schedule_nexus.bat status     — Check task statuses
 REM ============================================================================
 
-set PYTHON_EXE=python
+set PYTHON_EXE=C:\Users\User\AppData\Local\Python\pythoncore-3.14-64\python.exe
 set SCRIPT_DIR=%~dp0
 set PROJECT_DIR=%SCRIPT_DIR%..
 set UPDATE_SCRIPT=%SCRIPT_DIR%update_nexus.py

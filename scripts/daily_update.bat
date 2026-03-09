@@ -15,7 +15,7 @@ REM     daily_update.bat           — Run all daily steps
 REM     daily_update.bat --check   — Dry run (show what would happen)
 REM ============================================================================
 
-set PYTHON_EXE=python
+set PYTHON_EXE=C:\Users\User\AppData\Local\Python\pythoncore-3.14-64\python.exe
 set SCRIPT_DIR=%~dp0
 set PROJECT_DIR=%SCRIPT_DIR%..
 set UPDATE_SCRIPT=%SCRIPT_DIR%update_nexus.py

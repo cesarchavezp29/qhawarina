@@ -13,7 +13,7 @@
 set PROJECT=D:\Nexus\nexus
 set LOGFILE=%PROJECT%\logs\daily_political.log
 set WEBSITE=D:\qhawarina\public\assets\data
-set PYTHON=C:\Users\User\AppData\Local\Python\bin\python.exe
+set PYTHON=C:\Users\User\AppData\Local\Python\pythoncore-3.14-64\python.exe
 
 if not exist "%PYTHON%" (
     set PYTHON=C:\Users\User\AppData\Local\Programs\Python\Python312\python.exe

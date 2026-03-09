@@ -14,7 +14,7 @@
 
 set PROJECT=D:\Nexus\nexus
 set LOGFILE=%PROJECT%\logs\daily_scraper.log
-set PYTHON=C:\Users\User\AppData\Local\Python\bin\python.exe
+set PYTHON=C:\Users\User\AppData\Local\Python\pythoncore-3.14-64\python.exe
 
 cd /d %PROJECT%
 
