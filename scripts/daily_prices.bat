@@ -15,6 +15,16 @@ set LOGFILE=%PROJECT%\logs\daily_prices.log
 set TODAY=%DATE:~-4%-%DATE:~3,2%-%DATE:~0,2%
 set PYTHON=C:\Users\User\AppData\Local\Python\bin\python.exe
 
+if not exist "%PYTHON%" (
+    set PYTHON=C:\Users\User\AppData\Local\Programs\Python\Python312\python.exe
+)
+if not exist "%PYTHON%" (
+    for /f "usebackq tokens=*" %%i in (`where python 2^>nul`) do set PYTHON=%%i & goto :found_python
+    echo [%TIME%] FATAL: Python not found >> %LOGFILE%
+    exit /b 1
+)
+:found_python
+
 echo. >> %LOGFILE%
 echo ============================================================ >> %LOGFILE%
 echo [%DATE% %TIME%] STARTING DAILY PRICE PIPELINE >> %LOGFILE%
