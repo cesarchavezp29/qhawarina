@@ -4,8 +4,8 @@
     "methodology_note": "index_all uses INEI IPC expenditure weights via weighted geometric mean of category-level Jevons ratios. index_all_unweighted is the simple geometric mean across all matched products.",
     "base_date": "2026-02-10",
     "base_value": 100,
-    "last_date": "2026-03-07",
-    "n_days": 26,
+    "last_date": "2026-03-09",
+    "n_days": 28,
     "stores": [
       "Plaza Vea",
       "Metro",
@@ -15,7 +15,7 @@
     "ratio_filter": "0.5 < ratio < 2.0",
     "inflation_window": "30-day rolling average (yoy_inflation, mom_inflation)",
     "reference": "Cavallo & Rigobon (2016), Billion Prices Project, MIT",
-    "updated": "2026-03-07"
+    "updated": "2026-03-10"
   },
   "categories": {
     "arroz_cereales": {
@@ -769,111 +769,165 @@
     },
     {
       "date": "2026-03-07",
-      "index_all": 99.427,
-      "index_all_unweighted": 99.5767,
-      "index_food": 99.4814,
-      "index_nonfood": 99.8893,
-      "var_all": -0.0757,
-      "var_food": -0.1408,
-      "cum_pct": -0.573,
+      "index_all": 99.4205,
+      "index_all_unweighted": 99.5637,
+      "index_food": 99.4684,
+      "index_nonfood": 99.8764,
+      "var_all": -0.0822,
+      "var_food": -0.1539,
+      "cum_pct": -0.5795,
       "yoy_inflation": null,
       "mom_inflation": null,
       "interpolated": false,
-      "n_matched": 33029,
-      "index_arroz_cereales": 99.3885,
-      "index_pan_harinas": 99.3336,
-      "index_carnes": 99.4845,
+      "n_matched": 33015,
+      "index_arroz_cereales": 99.4211,
+      "index_pan_harinas": 99.3282,
+      "index_carnes": 99.4774,
       "index_pescados_mariscos": 100.3532,
-      "index_lacteos": 99.4999,
-      "index_frutas": 100.0309,
+      "index_lacteos": 99.5115,
+      "index_frutas": 99.8773,
       "index_verduras": 98.962,
       "index_aceites_grasas": 98.9712,
-      "index_azucar_dulces": 100.146,
-      "index_bebidas": 99.4017,
+      "index_azucar_dulces": 100.1067,
+      "index_bebidas": 99.4203,
       "index_limpieza": 99.1206,
       "index_cuidado_personal": 98.9009,
-      "index_other": 100.7117
+      "index_other": 100.6898
+    },
+    {
+      "date": "2026-03-08",
+      "index_all": 99.4368,
+      "index_all_unweighted": 99.5931,
+      "index_food": 99.5068,
+      "index_nonfood": 99.8782,
+      "var_all": 0.0164,
+      "var_food": 0.0386,
+      "cum_pct": -0.5632,
+      "yoy_inflation": null,
+      "mom_inflation": null,
+      "interpolated": false,
+      "n_matched": 40452,
+      "index_arroz_cereales": 99.3947,
+      "index_pan_harinas": 99.3632,
+      "index_carnes": 99.5315,
+      "index_pescados_mariscos": 100.3532,
+      "index_lacteos": 99.5192,
+      "index_frutas": 99.9157,
+      "index_verduras": 98.962,
+      "index_aceites_grasas": 98.9966,
+      "index_azucar_dulces": 100.1701,
+      "index_bebidas": 99.4236,
+      "index_limpieza": 99.1159,
+      "index_cuidado_personal": 98.9055,
+      "index_other": 100.6946
+    },
+    {
+      "date": "2026-03-09",
+      "index_all": 99.386,
+      "index_all_unweighted": 99.6136,
+      "index_food": 99.4959,
+      "index_nonfood": 99.9937,
+      "var_all": -0.0511,
+      "var_food": -0.011,
+      "cum_pct": -0.614,
+      "yoy_inflation": null,
+      "mom_inflation": null,
+      "interpolated": false,
+      "n_matched": 40334,
+      "index_arroz_cereales": 99.2424,
+      "index_pan_harinas": 99.2497,
+      "index_carnes": 99.6192,
+      "index_pescados_mariscos": 99.7842,
+      "index_lacteos": 99.5214,
+      "index_frutas": 99.7364,
+      "index_verduras": 98.8103,
+      "index_aceites_grasas": 98.7269,
+      "index_azucar_dulces": 100.3179,
+      "index_bebidas": 99.2993,
+      "index_limpieza": 99.4158,
+      "index_cuidado_personal": 99.0114,
+      "index_other": 100.6784
     }
   ],
   "latest": {
-    "date": "2026-03-07",
-    "index_all": 99.427,
-    "index_food": 99.4814,
-    "cum_pct": -0.573,
-    "var_all": -0.0757,
+    "date": "2026-03-09",
+    "index_all": 99.386,
+    "index_food": 99.4959,
+    "cum_pct": -0.614,
+    "var_all": -0.0511,
     "yoy_inflation": null,
     "mom_inflation": null,
-    "n_products_today": 33029,
+    "n_products_today": 40334,
     "top_movers": [
       {
-        "category": "frutas",
-        "label_es": "Frutas",
-        "label_en": "Fruits",
-        "var": -0.33
-      },
-      {
-        "category": "carnes",
-        "label_es": "Carnes",
-        "label_en": "Meat",
-        "var": -0.21
-      },
-      {
-        "category": "pan_harinas",
-        "label_es": "Pan y Harinas",
-        "label_en": "Bread & Flour",
-        "var": -0.09
+        "category": "pescados_mariscos",
+        "label_es": "Pescados y Mariscos",
+        "label_en": "Fish & Seafood",
+        "var": -0.57
       },
       {
         "category": "limpieza",
         "label_es": "Limpieza",
         "label_en": "Cleaning",
-        "var": -0.06
+        "var": 0.3
+      },
+      {
+        "category": "aceites_grasas",
+        "label_es": "Aceites y Grasas",
+        "label_en": "Oils & Fats",
+        "var": -0.27
+      },
+      {
+        "category": "frutas",
+        "label_es": "Frutas",
+        "label_en": "Fruits",
+        "var": -0.18
       }
     ],
     "product_movers": [
       {
-        "name": "Arándanos Extra Wong 500g",
-        "store": "wong",
-        "category": "carnes",
-        "var": 95.2
+        "name": "Cápsulas Cartical-D Fitosana 100u",
+        "store": "plazavea",
+        "category": "cuidado_personal",
+        "var": 100.0
       },
       {
-        "name": "Mix de Lechuga Crespa Ecologic x 2 Unid",
-        "store": "metro",
-        "category": "carnes",
-        "var": 56.0
+        "name": "Golden Milk Fitosana - Batido 300g",
+        "store": "plazavea",
+        "category": "cuidado_personal",
+        "var": 100.0
       },
       {
-        "name": "Lechuga Roja Hidropónica de Invernade...",
-        "store": "metro",
-        "category": "frutas",
-        "var": 54.55
+        "name": "Cardo Mariano Fitosana - Capsulas 100u",
+        "store": "plazavea",
+        "category": "cuidado_personal",
+        "var": 100.0
       },
       {
-        "name": "Cheesecake Horneado de Maracuyá Dulce...",
-        "store": "wong",
-        "category": "pan_harinas",
-        "var": 53.98
+        "name": "Ashwagandha con Melena de Leon Fitosa...",
+        "store": "plazavea",
+        "category": "cuidado_personal",
+        "var": 100.0
       }
     ],
     "stores_coverage": {
-      "metro": 12558,
-      "plazavea": 10572,
-      "wong": 14962
+      "metro": 12541,
+      "plazavea": 13075,
+      "wong": 15009
     },
     "categories_coverage": {
-      "aceites_grasas": 655,
-      "arroz_cereales": 1303,
-      "azucar_dulces": 945,
-      "bebidas": 955,
-      "carnes": 14442,
-      "cuidado_personal": 1118,
-      "frutas": 1920,
-      "lacteos": 2553,
-      "limpieza": 2991,
-      "pan_harinas": 6496,
-      "pescados_mariscos": 227,
-      "verduras": 315
+      "aceites_grasas": 685,
+      "arroz_cereales": 1333,
+      "azucar_dulces": 1133,
+      "bebidas": 969,
+      "carnes": 14585,
+      "cuidado_personal": 2810,
+      "frutas": 1955,
+      "lacteos": 2748,
+      "limpieza": 3102,
+      "pan_harinas": 6580,
+      "pescados_mariscos": 230,
+      "verduras": 313
     }
   }
 }
