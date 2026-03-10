@@ -506,6 +506,7 @@ REGLAS:
 - Usa cualquier entero: 5, 17, 33, 52, 68, 74, 91 — el que mejor refleje el contenido.
 - Evalúa basándote en lo que el artículo DICE o implica fuertemente, no en conocimiento externo.
 - Obituarios, aniversarios, reseñas de libros/películas = 0.
+- Resultados deportivos, marcadores, ligas internacionales = 0 SIEMPRE, aunque el título incluya marcas o patrocinadores (ej: "LaLiga EA Sports: Espanyol 1-1 Oviedo" → 0, "Champions League" → 0).
 - Sé consistente."""
 
 _ECONOMIC_SYSTEM_PROMPT = """Eres un clasificador de riesgo económico para Perú. Tu tarea es evaluar si un artículo de prensa señala una amenaza a la estabilidad económica del Perú, específicamente riesgos que afecten al Perú de manera DESPROPORCIONADA respecto a otras economías.
@@ -525,6 +526,7 @@ PRUEBA CLAVE para eventos internacionales: "¿Este evento amenaza la economía d
 
 REGLAS:
 - Eventos económicos internacionales que afectan a todos los países por igual = 0.
+- Resultados deportivos, marcadores, ligas internacionales = 0 SIEMPRE, aunque el título incluya nombres de empresas o patrocinadores (ej: "LaLiga EA Sports: Espanyol 1-1 Oviedo" → 0, "NBA Finals" → 0, "Copa del Mundo" → 0).
 - Usa cualquier entero: 5, 17, 33, 52, 68, 74, 91.
 - Evalúa basándote en lo que el artículo DICE o implica fuertemente.
 - Sé consistente."""
