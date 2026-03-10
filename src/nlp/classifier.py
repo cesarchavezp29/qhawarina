@@ -507,6 +507,10 @@ REGLAS:
 - Evalúa basándote en lo que el artículo DICE o implica fuertemente, no en conocimiento externo.
 - Obituarios, aniversarios, reseñas de libros/películas = 0.
 - Resultados deportivos, marcadores, ligas internacionales = 0 SIEMPRE, aunque el título incluya marcas o patrocinadores (ej: "LaLiga EA Sports: Espanyol 1-1 Oviedo" → 0, "Champions League" → 0).
+- Tipo de cambio/dólar diario = 0 SIEMPRE. Una cotización rutinaria del dólar NO es un evento político (ej: "Precio del dólar HOY, martes 17 de febrero: ¿cuál es la cotización?" → 0, "Tipo de cambio: ¿en cuánto cerró el dólar este jueves?" → 0). EXCEPCIÓN: si el título explica que la suba/baja se DEBE A una crisis política (ej: "el dólar sube tras la vacancia") → sí puede puntuar.
+- Pronósticos meteorológicos y alertas de SENAMHI = 0 SIEMPRE. El clima no es un riesgo político (ej: "SENAMHI: Lima registró la temperatura más alta del verano" → 0, "SENAMHI advierte lluvias en la sierra" → 0).
+- Decisiones de la Reserva Federal de EEUU (Fed) o de bancos centrales extranjeros = 0. La Fed no es un actor político peruano (ej: "La FED mantiene sus tasas de interés" → 0, "Powell no recortará tasas" → 0).
+- Desvíos de tránsito por procesiones religiosas o eventos culturales = 0 (ej: "Señor de los Milagros: desvíos y cierre de calles" → 0).
 - Sé consistente."""
 
 _ECONOMIC_SYSTEM_PROMPT = """Eres un clasificador de riesgo económico para Perú. Tu tarea es evaluar si un artículo de prensa señala una amenaza a la estabilidad económica del Perú, específicamente riesgos que afecten al Perú de manera DESPROPORCIONADA respecto a otras economías.
@@ -527,6 +531,11 @@ PRUEBA CLAVE para eventos internacionales: "¿Este evento amenaza la economía d
 REGLAS:
 - Eventos económicos internacionales que afectan a todos los países por igual = 0.
 - Resultados deportivos, marcadores, ligas internacionales = 0 SIEMPRE, aunque el título incluya nombres de empresas o patrocinadores (ej: "LaLiga EA Sports: Espanyol 1-1 Oviedo" → 0, "NBA Finals" → 0, "Copa del Mundo" → 0).
+- Pronósticos meteorológicos y alertas de SENAMHI = 0 SIEMPRE. El clima rutinario no es un riesgo económico (ej: "SENAMHI: Lima registró la temperatura más alta del verano" → 0, "Lima tendrá neblina y lloviznas" → 0). EXCEPCIÓN: fenómenos El Niño severos, heladas que destruyen cultivos, inundaciones catastróficas → sí pueden puntuar como riesgo agrícola.
+- Tipo de cambio/dólar diario RUTINARIO = 0. Una simple cotización de cierre no es un riesgo económico (ej: "Precio del dólar HOY: ¿en cuánto cerró el tipo de cambio?" → 0, "Tipo de cambio este jueves: S/3.45" → 0). EXCEPCIÓN: si el título indica una variación significativa o análisis macro del impacto en Perú (ej: "el dólar sube 1.5% ante crisis en Camisea" → sí puntúa).
+- Decisiones de la Reserva Federal de EEUU (Fed): puntaje BAJO (10-30 máximo) solo si el artículo analiza explícitamente el impacto en la economía peruana. Una noticia genérica sobre tasas de la Fed sin mención de Perú = 0 (ej: "La FED mantiene tasas: ¿qué significa para EEUU?" → 0; "BCRP: la Fed fuerza a mantener tasas en Perú" → 20).
+- Desvíos de tránsito, cierres de calles por eventos religiosos o culturales = 0 (ej: "Señor de los Milagros: desvíos y cierre de calles" → 0).
+- Bolsas extranjeras sin impacto Peru (Ibex 35, Wall Street caídas leves) = 0.
 - Usa cualquier entero: 5, 17, 33, 52, 68, 74, 91.
 - Evalúa basándote en lo que el artículo DICE o implica fuertemente.
 - Sé consistente."""
