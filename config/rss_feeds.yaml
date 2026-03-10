@@ -45,7 +45,10 @@ rss:
       - domain: "gestion.pe"
         source: "gestion"
         sections: ["economia", "peru"]
-    delay: 0.3
+      - domain: "diariocorreo.pe"
+        source: "correo"
+        sections: ["politica", "economia"]
+    delay: 0.5
     batch_size: 100
   index:
     start_date: "2025-01-01"

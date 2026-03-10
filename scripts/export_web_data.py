@@ -772,18 +772,62 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
             if n_excluded > 0:
                 logger.info("Excluded %d GDELT articles from index computation", n_excluded)
 
-        # Total articles per day (denominator for normalization — ALL articles, including score=0)
-        n_total_s = art.groupby("day").size().rename("n_total")
-
         has_dual = "political_score" in art.columns and "economic_score" in art.columns
-        if has_dual:
-            # New dual-score schema (AI-GPR: IRP/IRE)
+
+        if has_dual and "feed_name" in art.columns:
+            # Per-feed mean normalization (EPU-style, composition-bias-resistant):
+            #   Step 1: SWP_it = Σ(score) / N_it  (severity-weighted proportion per feed)
+            #   Step 2: Y_it = SWP_it / mean_i(SWP_i)  → each feed's sample mean = 1.0
+            #           Grouping by feed_name separates "gestion-peru (archive)" from
+            #           "gestion-economia (archive)" — they have very different political signals
+            #   Step 3: Z_t = Σ(N_it × Y_it) / N_total_t  (volume-weighted across feeds)
+            #   Step 4: IRP_t = Z_t / mean_2025(Z) × 100  (normalize to 2025 baseline)
+            src_grp = art.groupby(["feed_name", "day"])
+            src_n   = src_grp.size().rename("n")
+            src_pol = src_grp["political_score"].sum().rename("pol_sum")
+            src_eco = src_grp["economic_score"].sum().rename("eco_sum")
+
+            src_df = pd.concat([src_n, src_pol, src_eco], axis=1).fillna(0).reset_index()
+            src_df["pol_swp"] = src_df["pol_sum"] / src_df["n"].clip(lower=1)
+            src_df["eco_swp"] = src_df["eco_sum"] / src_df["n"].clip(lower=1)
+
+            # Each feed normalized to its own historical mean
+            src_means = src_df.groupby("feed_name")[["pol_swp", "eco_swp"]].mean()
+            src_df = src_df.merge(
+                src_means.rename(columns={"pol_swp": "pol_mean", "eco_swp": "eco_mean"}),
+                on="feed_name",
+            )
+            src_df["pol_y"] = src_df["pol_swp"] / src_df["pol_mean"].clip(lower=1e-8)
+            src_df["eco_y"] = src_df["eco_swp"] / src_df["eco_mean"].clip(lower=1e-8)
+
+            src_df["w_pol"] = src_df["n"] * src_df["pol_y"]
+            src_df["w_eco"] = src_df["n"] * src_df["eco_y"]
+
+            daily_agg = src_df.groupby("day").agg(
+                w_pol=("w_pol", "sum"),
+                w_eco=("w_eco", "sum"),
+                n_total=("n", "sum"),
+            ).reset_index().rename(columns={"day": "date"})
+
+            daily_sums = daily_agg.copy()
+            daily_sums["pol_norm"] = daily_sums["w_pol"] / daily_sums["n_total"].clip(lower=1)
+            daily_sums["eco_norm"] = daily_sums["w_eco"] / daily_sums["n_total"].clip(lower=1)
+
+        elif has_dual:
+            # Fallback (no feed_name column): simple volume normalization
+            n_total_s = art.groupby("day").size().rename("n_total")
             pol_sum_s = art.groupby("day")["political_score"].sum().fillna(0).rename("pol_sum")
             eco_sum_s = art.groupby("day")["economic_score"].sum().fillna(0).rename("eco_sum")
+            daily_sums = pd.concat([n_total_s, pol_sum_s, eco_sum_s], axis=1).fillna(0).reset_index()
+            daily_sums.columns = ["date", "n_total", "pol_sum", "eco_sum"]
+            daily_sums["pol_norm"] = daily_sums["pol_sum"] / daily_sums["n_total"].clip(lower=1)
+            daily_sums["eco_norm"] = daily_sums["eco_sum"] / daily_sums["n_total"].clip(lower=1)
+
         else:
             # Legacy fallback: map article_severity to scores
             _INT_TO_FLOAT = {0: 0.0, 1: 0.2, 2: 0.5, 3: 0.9}
             art["sev_float"] = art["article_severity"].map(_INT_TO_FLOAT).fillna(0.0)
+            n_total_s = art.groupby("day").size().rename("n_total")
             pol_sum_s = (
                 art[art["article_category"].isin(["political", "both"])]
                 .groupby("day")["sev_float"].sum() * 60
@@ -792,13 +836,10 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
                 art[art["article_category"].isin(["economic", "both"])]
                 .groupby("day")["sev_float"].sum() * 40
             ).rename("eco_sum")
-
-        daily_sums = pd.concat([n_total_s, pol_sum_s, eco_sum_s], axis=1).fillna(0).reset_index()
-        daily_sums.columns = ["date", "n_total", "pol_sum", "eco_sum"]
-
-        # Normalize by total articles per day (Iacoviello & Tong footnote 4)
-        daily_sums["pol_norm"] = daily_sums["pol_sum"] / daily_sums["n_total"].clip(lower=1)
-        daily_sums["eco_norm"] = daily_sums["eco_sum"] / daily_sums["n_total"].clip(lower=1)
+            daily_sums = pd.concat([n_total_s, pol_sum_s, eco_sum_s], axis=1).fillna(0).reset_index()
+            daily_sums.columns = ["date", "n_total", "pol_sum", "eco_sum"]
+            daily_sums["pol_norm"] = daily_sums["pol_sum"] / daily_sums["n_total"].clip(lower=1)
+            daily_sums["eco_norm"] = daily_sums["eco_sum"] / daily_sums["n_total"].clip(lower=1)
 
         # Baseline: 2025 calendar year (freeze after 30+ days available)
         ref = daily_sums[pd.to_datetime(daily_sums["date"]).dt.year == 2025]
