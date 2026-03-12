@@ -15,7 +15,7 @@
     "ratio_filter": "0.5 < ratio < 2.0",
     "inflation_window": "30-day rolling average (yoy_inflation, mom_inflation)",
     "reference": "Cavallo & Rigobon (2016), Billion Prices Project, MIT",
-    "updated": "2026-03-11"
+    "updated": "2026-03-12"
   },
   "categories": {
     "arroz_cereales": {
@@ -886,25 +886,25 @@
     ],
     "product_movers": [
       {
-        "name": "Cápsulas Cartical-D Fitosana 100u",
-        "store": "plazavea",
-        "category": "cuidado_personal",
-        "var": 100.0
-      },
-      {
         "name": "Golden Milk Fitosana - Batido 300g",
         "store": "plazavea",
         "category": "cuidado_personal",
         "var": 100.0
       },
       {
-        "name": "Cardo Mariano Fitosana - Capsulas 100u",
+        "name": "Ashwagandha con Melena de Leon Fitosa...",
         "store": "plazavea",
         "category": "cuidado_personal",
         "var": 100.0
       },
       {
-        "name": "Ashwagandha con Melena de Leon Fitosa...",
+        "name": "Cápsulas Cartical-D Fitosana 100u",
+        "store": "plazavea",
+        "category": "cuidado_personal",
+        "var": 100.0
+      },
+      {
+        "name": "Cardo Mariano Fitosana - Capsulas 100u",
         "store": "plazavea",
         "category": "cuidado_personal",
         "var": 100.0
