@@ -1,136 +1,148 @@
 {
   "metadata": {
-    "generated_at": "2026-03-12T05:06:32.434666",
-    "coverage_days": 436,
+    "generated_at": "2026-03-13T05:02:42.116764",
+    "coverage_days": 437,
     "rss_feeds": 11,
     "rss_sources": 6,
     "methodology": "AI-GPR dual index (Iacoviello & Tong 2026): IRP + IRE, mean=100 over 2025 baseline"
   },
   "current": {
-    "date": "2026-03-12",
-    "political_raw": 142.3,
-    "political_7d": 104.2,
-    "political_level": "MODERADO",
-    "political_multiplier": 1.04,
-    "economic_raw": 111.3,
-    "economic_7d": 109.6,
-    "economic_level": "MODERADO",
-    "economic_multiplier": 1.1,
-    "score": 104.2,
-    "prr_7d": 104.2,
-    "prr_raw": 142.3,
-    "level": "MODERADO",
-    "articles_total": 73,
+    "date": "2026-03-13",
+    "political_raw": 289.1,
+    "political_7d": 193.6,
+    "political_level": "ELEVADO",
+    "political_multiplier": 1.94,
+    "economic_raw": 244.5,
+    "economic_7d": 180.2,
+    "economic_level": "ELEVADO",
+    "economic_multiplier": 1.8,
+    "score": 193.6,
+    "prr_7d": 193.6,
+    "prr_raw": 289.1,
+    "level": "ELEVADO",
+    "articles_total": 68,
     "articles_political_relevant": 35,
-    "articles_economic_relevant": 36,
-    "political_justification": "El riesgo político elevado (142) refleja incertidumbre sobre políticas económicas clave como Petroperú, cambios ministeriales frecuentes en Salud, y la emergencia de candidatos presidenciales con bajo posicionamiento previo. Adicionalmente, conflictos institucionales en el Ministerio Público generan volatilidad regulatoria.",
-    "economic_justification": "El Índice de Riesgo Económico se eleva por incertidumbre en inversiones, volatilidad cambiaria (dólar fluctuante) y presiones operativas en la industria. Sumado a esto, investigaciones contra exfuncionarios del Banco de la Nación generan desconfianza institucional, afectando la confianza de inversionistas y el clima económico general.",
+    "articles_economic_relevant": 28,
+    "political_justification": "El riesgo político elevado refleja incertidumbre electoral pre-2026 con un mapa político fragmentado, sumado a controversias sobre figuras políticas clave y cambios operacionales en el proceso electoral. Adicionalmente, tensiones laborales en el sector público amplían la inestabilidad política general.",
+    "economic_justification": "El riesgo económico crítico (244 puntos) refleja presiones simultáneas en finanzas públicas, costos laborales y cadenas de suministro. Las amenazas pensionarias, obligaciones CAS-CTS y vulnerabilidades en combustibles generan incertidumbre sobre sostenibilidad fiscal y operativa. La dependencia de importaciones energéticas amplifica volatilidad.",
     "top_political_drivers": [
       {
-        "title": "Denisse Miralles niega que se privatice Petroperú: \"Nunca estuvo en el plan privatizarlo, nunca fue una solución\"",
-        "source": "larepublica",
-        "score": 58
-      },
-      {
-        "title": "Artista Mario Colán, líder de ‘De qué color son tus muertos’, busca ser diputado para fortalecer el sector de las artes",
-        "source": "larepublica",
-        "score": 52
-      },
-      {
-        "title": "¿Quién es Wolfgang Grozo, candidato presidencial que sube en las encuestas?",
-        "source": "larepublica",
-        "score": 42
-      },
-      {
-        "title": "Juan Carlos Velasco Guerrero asume como nuevo ministro de Salud",
+        "title": "Las amistades peligrosas de Wolfang Grozo",
         "source": "elcomercio",
-        "score": 35
+        "score": 55
       },
       {
-        "title": "Rafael Vela: ANC del Ministerio Público lo suspende por 9 meses por declaraciones en el caso Alejandro Toledo",
-        "source": "larepublica",
-        "score": 35
+        "title": "La cédula electoral más costosa y grande de nuestra historia: ¿Cuánto cuesta diseñarla e imprimirla?",
+        "source": "elcomercio",
+        "score": 50
+      },
+      {
+        "title": "Radiografía del voto presidencial 2026: Perú ante un mapa político altamente dividido",
+        "source": "elcomercio",
+        "score": 45
+      },
+      {
+        "title": "Trabajadores CAS a un paso de recibir “grati” y CTS",
+        "source": "gestion",
+        "score": 45
+      },
+      {
+        "title": "ONPE cambió algunos locales de votación: ¿cómo será la reasignación de locales?",
+        "source": "rpp",
+        "score": 42
       }
     ],
     "top_economic_drivers": [
       {
-        "title": "Inversión en el Perú en tiempos inciertos: ¿Qué perspectivas tienen cinco ejecutivas peruanas para este 2026?",
-        "source": "elcomercio",
-        "score": 72
-      },
-      {
-        "title": "Precio del dólar en Perú del jueves 12 de marzo: cuál es el tipo de cambio",
-        "source": "elcomercio",
-        "score": 68
-      },
-      {
-        "title": "Soc. Nacional de Industrias: “Estamos en proceso de ingresar solicitudes y tener la autorización para usar diésel y GLP para operar”",
-        "source": "elcomercio",
-        "score": 65
-      },
-      {
-        "title": "Contraloría recomienda inicio de acciones legales contra exfuncionarios del Banco de la Nación",
-        "source": "larepublica",
+        "title": "Comex advierte de un “ataque a la caja fiscal”: riesgos pensionarios en militares y policías",
+        "source": "gestion",
         "score": 55
       },
       {
-        "title": "Dólar cierra en S/3,42 este miércoles: ¿Volverá a estar debajo de S/3,40?",
-        "source": "elcomercio",
-        "score": 48
-      }
-    ],
-    "justification": "El riesgo político elevado (142) refleja incertidumbre sobre políticas económicas clave como Petroperú, cambios ministeriales frecuentes en Salud, y la emergencia de candidatos presidenciales con bajo posicionamiento previo. Adicionalmente, conflictos institucionales en el Ministerio Público generan volatilidad regulatoria.",
-    "top_drivers": [
-      {
-        "title": "Denisse Miralles niega que se privatice Petroperú: \"Nunca estuvo en el plan privatizarlo, nunca fue una solución\"",
-        "source": "larepublica",
-        "score": 58
-      },
-      {
-        "title": "Artista Mario Colán, líder de ‘De qué color son tus muertos’, busca ser diputado para fortalecer el sector de las artes",
-        "source": "larepublica",
+        "title": "Trabajadores CAS a un paso de recibir “grati” y CTS",
+        "source": "gestion",
         "score": 52
       },
       {
-        "title": "¿Quién es Wolfgang Grozo, candidato presidencial que sube en las encuestas?",
-        "source": "larepublica",
-        "score": 42
+        "title": "Gasolina y diésel: hay autonomía de suministro para 2 semanas, dice Minem",
+        "source": "gestion",
+        "score": 48
       },
       {
-        "title": "Juan Carlos Velasco Guerrero asume como nuevo ministro de Salud",
+        "title": "TUUA mantiene en vilo a aerolíneas: la alerta de IATA y por qué el 18 se volvió fecha clave",
+        "source": "gestion",
+        "score": 45
+      },
+      {
+        "title": "Plantas envasadoras de GLP afirman que el abastecimiento no es normal",
+        "source": "gestion",
+        "score": 38
+      }
+    ],
+    "justification": "El riesgo político elevado refleja incertidumbre electoral pre-2026 con un mapa político fragmentado, sumado a controversias sobre figuras políticas clave y cambios operacionales en el proceso electoral. Adicionalmente, tensiones laborales en el sector público amplían la inestabilidad política general.",
+    "top_drivers": [
+      {
+        "title": "Las amistades peligrosas de Wolfang Grozo",
         "source": "elcomercio",
-        "score": 35
+        "score": 55
       },
       {
-        "title": "Rafael Vela: ANC del Ministerio Público lo suspende por 9 meses por declaraciones en el caso Alejandro Toledo",
-        "source": "larepublica",
-        "score": 35
+        "title": "La cédula electoral más costosa y grande de nuestra historia: ¿Cuánto cuesta diseñarla e imprimirla?",
+        "source": "elcomercio",
+        "score": 50
+      },
+      {
+        "title": "Radiografía del voto presidencial 2026: Perú ante un mapa político altamente dividido",
+        "source": "elcomercio",
+        "score": 45
+      },
+      {
+        "title": "Trabajadores CAS a un paso de recibir “grati” y CTS",
+        "source": "gestion",
+        "score": 45
+      },
+      {
+        "title": "ONPE cambió algunos locales de votación: ¿cómo será la reasignación de locales?",
+        "source": "rpp",
+        "score": 42
       }
     ]
   },
   "aggregates": {
-    "political_7d_avg": 79.1,
-    "political_30d_avg": 32.5,
-    "economic_7d_avg": 94.0,
-    "economic_30d_avg": 32.9,
-    "year_max": 104.2,
-    "year_max_date": "2026-03-12"
+    "political_7d_avg": 134.4,
+    "political_30d_avg": 45.2,
+    "economic_7d_avg": 130.0,
+    "economic_30d_avg": 45.7,
+    "year_max": 193.6,
+    "year_max_date": "2026-03-13"
   },
-  "major_events": [],
-  "daily_series": [
+  "major_events": [
     {
-      "date": "2025-03-13",
-      "political_raw": 0.0,
-      "political_7d": 0.0,
-      "economic_raw": 0.0,
-      "economic_7d": 0.0,
-      "score": 0.0,
-      "prr": 0.0,
-      "prr_7d": 0.0,
-      "n_articles": 0,
-      "low_coverage": true,
-      "provisional": false
+      "date": "2026-03-13",
+      "score": 193.6,
+      "level": "ELEVADO",
+      "n_articles": 68,
+      "summary": "Fragmentación política impide decisiones legislativas unificadas.",
+      "report_url": "/political/daily-reports/2026-03-13.html"
     },
+    {
+      "date": "2026-03-12",
+      "score": 175.5,
+      "level": "ELEVADO",
+      "n_articles": 227,
+      "summary": "Sucesión presidencial genera inestabilidad política continua en Perú.",
+      "report_url": "/political/daily-reports/2026-03-12.html"
+    },
+    {
+      "date": "2026-03-11",
+      "score": 157.5,
+      "level": "ELEVADO",
+      "n_articles": 100,
+      "summary": "Conflictos internos y corrupción debilitan partidos políticos.",
+      "report_url": "/political/daily-reports/2026-03-11.html"
+    }
+  ],
+  "daily_series": [
     {
       "date": "2025-03-14",
       "political_raw": 0.0,
@@ -3507,7 +3519,7 @@
       "score": 0.0,
       "prr": 0.0,
       "prr_7d": 0.0,
-      "n_articles": 0,
+      "n_articles": 1,
       "low_coverage": true,
       "provisional": false
     },
@@ -3780,7 +3792,7 @@
       "score": 0.0,
       "prr": 0.0,
       "prr_7d": 0.0,
-      "n_articles": 0,
+      "n_articles": 1,
       "low_coverage": true,
       "provisional": false
     },
@@ -4560,7 +4572,7 @@
       "score": 0.0,
       "prr": 0.0,
       "prr_7d": 0.0,
-      "n_articles": 0,
+      "n_articles": 1,
       "low_coverage": true,
       "provisional": false
     },
@@ -4671,12 +4683,12 @@
     {
       "date": "2026-02-26",
       "political_raw": 0.0,
-      "political_7d": 42.2,
+      "political_7d": 41.8,
       "economic_raw": 0.0,
-      "economic_7d": 20.3,
-      "score": 42.2,
+      "economic_7d": 22.0,
+      "score": 41.8,
       "prr": 0.0,
-      "prr_7d": 42.2,
+      "prr_7d": 41.8,
       "n_articles": 0,
       "low_coverage": true,
       "provisional": false
@@ -4684,12 +4696,12 @@
     {
       "date": "2026-02-27",
       "political_raw": 0.0,
-      "political_7d": 42.2,
+      "political_7d": 41.8,
       "economic_raw": 0.0,
-      "economic_7d": 20.3,
-      "score": 42.2,
+      "economic_7d": 22.0,
+      "score": 41.8,
       "prr": 0.0,
-      "prr_7d": 42.2,
+      "prr_7d": 41.8,
       "n_articles": 0,
       "low_coverage": true,
       "provisional": false
@@ -4697,25 +4709,25 @@
     {
       "date": "2026-02-28",
       "political_raw": 0.0,
-      "political_7d": 42.2,
+      "political_7d": 46.5,
       "economic_raw": 0.0,
-      "economic_7d": 30.5,
-      "score": 42.2,
+      "economic_7d": 39.8,
+      "score": 46.5,
       "prr": 0.0,
-      "prr_7d": 42.2,
+      "prr_7d": 46.5,
       "n_articles": 0,
       "low_coverage": true,
       "provisional": false
     },
     {
       "date": "2026-03-01",
-      "political_raw": 295.3,
-      "political_7d": 42.2,
-      "economic_raw": 142.4,
-      "economic_7d": 30.5,
-      "score": 42.2,
-      "prr": 295.3,
-      "prr_7d": 42.2,
+      "political_raw": 292.4,
+      "political_7d": 46.5,
+      "economic_raw": 154.3,
+      "economic_7d": 39.8,
+      "score": 46.5,
+      "prr": 292.4,
+      "prr_7d": 46.5,
       "n_articles": 1,
       "low_coverage": true,
       "provisional": false
@@ -4723,25 +4735,25 @@
     {
       "date": "2026-03-02",
       "political_raw": 0.0,
-      "political_7d": 65.9,
+      "political_7d": 46.5,
       "economic_raw": 0.0,
-      "economic_7d": 46.6,
-      "score": 65.9,
+      "economic_7d": 57.1,
+      "score": 46.5,
       "prr": 0.0,
-      "prr_7d": 65.9,
+      "prr_7d": 46.5,
       "n_articles": 0,
       "low_coverage": true,
       "provisional": false
     },
     {
       "date": "2026-03-03",
-      "political_raw": 0.0,
-      "political_7d": 65.9,
-      "economic_raw": 71.2,
-      "economic_7d": 50.7,
-      "score": 65.9,
-      "prr": 0.0,
-      "prr_7d": 65.9,
+      "political_raw": 33.2,
+      "political_7d": 46.5,
+      "economic_raw": 124.0,
+      "economic_7d": 61.0,
+      "score": 46.5,
+      "prr": 33.2,
+      "prr_7d": 46.5,
       "n_articles": 2,
       "low_coverage": true,
       "provisional": false
@@ -4749,117 +4761,130 @@
     {
       "date": "2026-03-04",
       "political_raw": 0.0,
-      "political_7d": 78.9,
+      "political_7d": 65.0,
       "economic_raw": 0.0,
-      "economic_7d": 69.6,
-      "score": 78.9,
+      "economic_7d": 81.3,
+      "score": 65.0,
       "prr": 0.0,
-      "prr_7d": 78.9,
+      "prr_7d": 65.0,
       "n_articles": 0,
       "low_coverage": true,
       "provisional": false
     },
     {
       "date": "2026-03-05",
-      "political_raw": 165.8,
-      "political_7d": 41.1,
-      "economic_raw": 112.9,
-      "economic_7d": 59.9,
-      "score": 41.1,
-      "prr": 165.8,
-      "prr_7d": 41.1,
-      "n_articles": 2,
+      "political_raw": 0.0,
+      "political_7d": 32.9,
+      "economic_raw": 121.2,
+      "economic_7d": 64.6,
+      "score": 32.9,
+      "prr": 0.0,
+      "prr_7d": 32.9,
+      "n_articles": 1,
       "low_coverage": true,
       "provisional": false
     },
     {
       "date": "2026-03-06",
       "political_raw": 0.0,
-      "political_7d": 49.9,
-      "economic_raw": 28.5,
-      "economic_7d": 70.8,
-      "score": 49.9,
+      "political_7d": 47.6,
+      "economic_raw": 27.6,
+      "economic_7d": 75.0,
+      "score": 47.6,
       "prr": 0.0,
-      "prr_7d": 49.9,
+      "prr_7d": 47.6,
       "n_articles": 1,
       "low_coverage": true,
       "provisional": false
     },
     {
       "date": "2026-03-07",
-      "political_raw": 91.4,
-      "political_7d": 62.9,
-      "economic_raw": 132.6,
-      "economic_7d": 74.9,
-      "score": 62.9,
-      "prr": 91.4,
-      "prr_7d": 62.9,
+      "political_raw": 129.2,
+      "political_7d": 63.7,
+      "economic_raw": 141.7,
+      "economic_7d": 85.6,
+      "score": 63.7,
+      "prr": 129.2,
+      "prr_7d": 63.7,
       "n_articles": 2,
       "low_coverage": true,
       "provisional": false
     },
     {
       "date": "2026-03-08",
-      "political_raw": 30.6,
-      "political_7d": 80.4,
-      "economic_raw": 74.1,
-      "economic_7d": 96.4,
-      "score": 80.4,
-      "prr": 30.6,
-      "prr_7d": 80.4,
-      "n_articles": 17,
-      "low_coverage": false,
-      "provisional": true
+      "political_raw": 67.7,
+      "political_7d": 85.0,
+      "economic_raw": 37.5,
+      "economic_7d": 99.7,
+      "score": 85.0,
+      "prr": 67.7,
+      "prr_7d": 85.0,
+      "n_articles": 4,
+      "low_coverage": true,
+      "provisional": false
     },
     {
       "date": "2026-03-09",
-      "political_raw": 61.2,
-      "political_7d": 77.0,
-      "economic_raw": 76.1,
-      "economic_7d": 96.2,
-      "score": 77.0,
-      "prr": 61.2,
-      "prr_7d": 77.0,
-      "n_articles": 65,
+      "political_raw": 102.9,
+      "political_7d": 112.2,
+      "economic_raw": 72.7,
+      "economic_7d": 108.0,
+      "score": 112.2,
+      "prr": 102.9,
+      "prr_7d": 112.2,
+      "n_articles": 32,
       "low_coverage": false,
       "provisional": true
     },
     {
       "date": "2026-03-10",
-      "political_raw": 91.3,
-      "political_7d": 89.8,
-      "economic_raw": 100.3,
-      "economic_7d": 107.5,
-      "score": 89.8,
-      "prr": 91.3,
-      "prr_7d": 89.8,
-      "n_articles": 84,
-      "low_coverage": false,
+      "political_raw": 146.2,
+      "political_7d": 153.5,
+      "economic_raw": 198.3,
+      "economic_7d": 139.0,
+      "score": 153.5,
+      "prr": 146.2,
+      "prr_7d": 153.5,
+      "n_articles": 2,
+      "low_coverage": true,
       "provisional": true
     },
     {
       "date": "2026-03-11",
-      "political_raw": 122.2,
-      "political_7d": 89.5,
-      "economic_raw": 150.6,
-      "economic_7d": 102.5,
-      "score": 89.5,
-      "prr": 122.2,
-      "prr_7d": 89.5,
-      "n_articles": 153,
+      "political_raw": 149.2,
+      "political_7d": 157.5,
+      "economic_raw": 98.6,
+      "economic_7d": 138.5,
+      "score": 157.5,
+      "prr": 149.2,
+      "prr_7d": 157.5,
+      "n_articles": 100,
       "low_coverage": false,
       "provisional": true
     },
     {
       "date": "2026-03-12",
-      "political_raw": 142.3,
-      "political_7d": 104.2,
-      "economic_raw": 111.3,
-      "economic_7d": 109.6,
-      "score": 104.2,
-      "prr": 142.3,
-      "prr_7d": 104.2,
-      "n_articles": 73,
+      "political_raw": 190.1,
+      "political_7d": 175.5,
+      "economic_raw": 179.5,
+      "economic_7d": 158.7,
+      "score": 175.5,
+      "prr": 190.1,
+      "prr_7d": 175.5,
+      "n_articles": 227,
+      "low_coverage": false,
+      "provisional": true
+    },
+    {
+      "date": "2026-03-13",
+      "political_raw": 289.1,
+      "political_7d": 193.6,
+      "economic_raw": 244.5,
+      "economic_7d": 180.2,
+      "score": 193.6,
+      "prr": 289.1,
+      "prr_7d": 193.6,
+      "n_articles": 68,
       "low_coverage": false,
       "provisional": true
     }
@@ -6044,6 +6069,10 @@
     {
       "date": "2026-03-10",
       "fx": 3.4422
+    },
+    {
+      "date": "2026-03-11",
+      "fx": 3.4251
     }
   ],
   "monthly_series": [
@@ -6131,7 +6160,7 @@
       "month": "2025-11",
       "political_avg": 0.0,
       "economic_avg": 0.0,
-      "n_articles": 0,
+      "n_articles": 1,
       "fx_level": null,
       "fx_yoy": null
     },
@@ -6139,7 +6168,7 @@
       "month": "2025-12",
       "political_avg": 0.0,
       "economic_avg": 0.0,
-      "n_articles": 0,
+      "n_articles": 1,
       "fx_level": null,
       "fx_yoy": null
     },
@@ -6153,17 +6182,17 @@
     },
     {
       "month": "2026-02",
-      "political_avg": 4.5,
-      "economic_avg": 2.5,
-      "n_articles": 0,
+      "political_avg": 4.6,
+      "economic_avg": 3.0,
+      "n_articles": 1,
       "fx_level": null,
       "fx_yoy": null
     },
     {
       "month": "2026-03",
-      "political_avg": 70.6,
-      "economic_avg": 76.3,
-      "n_articles": 400,
+      "political_avg": 94.3,
+      "economic_avg": 99.1,
+      "n_articles": 440,
       "fx_level": null,
       "fx_yoy": null
     }
