@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-03-07T18:59:24.596586",
+    "generated_at": "2026-03-13T17:17:40.272416",
     "methodology": "Dynamic Factor Model with Ridge bridge equation (Baker 2023, Aruoba 2020)",
     "model": "DynamicFactorModel",
     "model_params": {
@@ -822,97 +822,113 @@
       "quarter": "2022-Q1",
       "official": 3.92,
       "nowcast": 4.17,
-      "error": 0.25
+      "error": 0.25,
+      "is_forecast": false
     },
     {
       "quarter": "2022-Q2",
       "official": 3.42,
       "nowcast": 4.06,
-      "error": 0.64
+      "error": 0.64,
+      "is_forecast": false
     },
     {
       "quarter": "2022-Q3",
       "official": 2.06,
       "nowcast": 2.93,
-      "error": 0.87
+      "error": 0.87,
+      "is_forecast": false
     },
     {
       "quarter": "2022-Q4",
       "official": 2.03,
       "nowcast": 2.46,
-      "error": 0.43
+      "error": 0.43,
+      "is_forecast": false
     },
     {
       "quarter": "2023-Q1",
       "official": 0.04,
       "nowcast": 2.26,
-      "error": 2.22
+      "error": 2.22,
+      "is_forecast": false
     },
     {
       "quarter": "2023-Q2",
       "official": -0.36,
       "nowcast": 2.04,
-      "error": 2.4
+      "error": 2.4,
+      "is_forecast": false
     },
     {
       "quarter": "2023-Q3",
       "official": -0.63,
       "nowcast": 0.94,
-      "error": 1.57
+      "error": 1.57,
+      "is_forecast": false
     },
     {
       "quarter": "2023-Q4",
       "official": -0.43,
       "nowcast": 1.42,
-      "error": 1.85
+      "error": 1.85,
+      "is_forecast": false
     },
     {
       "quarter": "2024-Q1",
       "official": 1.49,
       "nowcast": 1.63,
-      "error": 0.14
+      "error": 0.14,
+      "is_forecast": false
     },
     {
       "quarter": "2024-Q2",
       "official": 3.86,
       "nowcast": 1.72,
-      "error": -2.13
+      "error": -2.13,
+      "is_forecast": false
     },
     {
       "quarter": "2024-Q3",
       "official": 4.1,
       "nowcast": 2.48,
-      "error": -1.62
+      "error": -1.62,
+      "is_forecast": false
     },
     {
       "quarter": "2024-Q4",
       "official": 4.44,
       "nowcast": 3.42,
-      "error": -1.03
+      "error": -1.03,
+      "is_forecast": false
     },
     {
       "quarter": "2025-Q1",
       "official": 4.03,
       "nowcast": 4.85,
-      "error": 0.82
+      "error": 0.82,
+      "is_forecast": false
     },
     {
       "quarter": "2025-Q2",
       "official": 2.84,
       "nowcast": 4.22,
-      "error": 1.38
+      "error": 1.38,
+      "is_forecast": false
     },
     {
       "quarter": "2025-Q3",
       "official": 3.77,
       "nowcast": 3.43,
-      "error": -0.34
+      "error": -0.34,
+      "is_forecast": false
     },
     {
       "quarter": "2025-Q4",
       "official": 3.17,
       "nowcast": null,
-      "error": null
+      "error": null,
+      "is_forecast": false
     }
   ],
   "forecast_vs_actual": [
