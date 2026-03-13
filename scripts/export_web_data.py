@@ -884,6 +884,7 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
         # Low-coverage interpolation: days with < 25 articles are noise spikes
         # (weekends, holidays). Set to NaN and interpolate from neighbours.
         MIN_ARTICLES = 25
+        daily_sums = daily_sums.sort_values("date").reset_index(drop=True)
         low_cov_mask = daily_sums["n_total"] < MIN_ARTICLES
         daily_sums.loc[low_cov_mask, ["irp", "ire"]] = float("nan")
         daily_sums[["irp", "ire"]] = (
@@ -902,6 +903,13 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
         political_df["ire"] = political_df["ire"].fillna(0.0)
         # Use clean article count (no GDELT) for display — overwrite old parquet's n_articles_total
         political_df["n_articles_total"] = political_df["n_total"].fillna(0).astype(int)
+        # Prefer parquet values (already clean + low-coverage interpolated) over recalculated
+        if "political_index" in political_df.columns:
+            valid = political_df["political_index"].notna() & (political_df["political_index"] > 0)
+            political_df.loc[valid, "irp"] = political_df.loc[valid, "political_index"]
+        if "economic_index" in political_df.columns:
+            valid = political_df["economic_index"].notna() & (political_df["economic_index"] > 0)
+            political_df.loc[valid, "ire"] = political_df.loc[valid, "economic_index"]
         # Keep instability_index as political IRP for backward compat with smoothing below
         political_df["instability_index"] = political_df["irp"]
     else:
