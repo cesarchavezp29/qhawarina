@@ -881,6 +881,16 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
         daily_sums["irp"] = (daily_sums["pol_norm"] / s_bar_pol) * 100.0
         daily_sums["ire"] = (daily_sums["eco_norm"] / s_bar_eco) * 100.0
 
+        # Low-coverage interpolation: days with < 25 articles are noise spikes
+        # (weekends, holidays). Set to NaN and interpolate from neighbours.
+        MIN_ARTICLES = 25
+        low_cov_mask = daily_sums["n_total"] < MIN_ARTICLES
+        daily_sums.loc[low_cov_mask, ["irp", "ire"]] = float("nan")
+        daily_sums[["irp", "ire"]] = (
+            daily_sums[["irp", "ire"]]
+            .interpolate(method="linear", limit_direction="both")
+        )
+
         today_vals = daily_sums.iloc[-1] if not daily_sums.empty else None
         if today_vals is not None:
             print(f"[AI-GPR] IRP today = {today_vals['irp']:.1f}  IRE today = {today_vals['ire']:.1f}")
