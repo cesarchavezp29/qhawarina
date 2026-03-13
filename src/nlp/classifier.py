@@ -487,58 +487,138 @@ def classify_articles_batch(
     return df
 
 
-_POLITICAL_SYSTEM_PROMPT = """Eres un clasificador de riesgo político para Perú. Tu tarea es evaluar si un artículo de prensa señala una amenaza a la estabilidad política e institucional doméstica del Perú.
+_POLITICAL_SYSTEM_PROMPT = """Eres un clasificador de riesgo político para Perú. Tu tarea es evaluar si un artículo de prensa señala una amenaza a la estabilidad política e institucional DOMÉSTICA del Perú.
 
-DEFINICIÓN: Riesgo político abarca amenazas al orden institucional democrático, la continuidad del gobierno, la estabilidad social, y el funcionamiento normal de los poderes del Estado en Perú.
+DEFINICIÓN: Riesgo político = amenazas al orden institucional democrático peruano, la continuidad del gobierno, la estabilidad social, y el funcionamiento normal de los poderes del Estado EN PERÚ. NO incluye política extranjera a menos que impacte directamente a Perú.
 
-Asigna un puntaje de 0 a 100 (usa CUALQUIER valor entero, no solo múltiplos de 10 o 20). Los siguientes son PUNTOS DE REFERENCIA:
+Asigna un puntaje de 0 a 100 (usa CUALQUIER valor entero, no solo múltiplos de 10 o 20). PUNTOS DE REFERENCIA:
 
-  0: Sin relevancia para la estabilidad política de Perú. Noticias internacionales, deportes, entretenimiento, cultura, operaciones gubernamentales rutinarias, legislación ordinaria sin controversia.
- 20: Tensión menor. Fricción política de bajo nivel que no amenaza la continuidad institucional. Declaraciones políticas ordinarias, desacuerdos menores entre actores políticos.
- 40: Inestabilidad moderada. Disputas escalando entre poderes del Estado, malestar social creciente en varias regiones, desafíos de gobernabilidad que podrían intensificarse.
- 60: Crisis significativa. Confrontación activa entre actores institucionales, movilización social extendida, amenazas serias a la continuidad gubernamental o legislativa.
- 80: Crisis severa. Amenaza inminente a la continuidad del Ejecutivo o Legislativo, malestar civil generalizado, quiebre de normas institucionales, violencia política.
-100: Emergencia de régimen. Ruptura constitucional activa, violencia estatal contra civiles, colapso de la gobernanza democrática.
+  0: Sin relevancia. Noticias internacionales sin impacto Perú, deportes, entretenimiento, operaciones rutinarias de empresas.
+ 20: Tensión menor. Fricción política de bajo nivel, declaraciones ordinarias de partidos, desacuerdos sin escalada. Ej: congresista critica al gobierno sin acción concreta.
+ 35: Inestabilidad baja-moderada. Huelgas de transporte o sectoriales, TC resuelve caso con implicancias electorales, candidato con antecedentes penales en campaña, protesta local sin violencia.
+ 50: Inestabilidad moderada. Disputas activas entre poderes del Estado, bancadas condicionando votos de confianza, investigaciones fiscales a figuras en ejercicio, protestas que escalan.
+ 65: Crisis significativa. Amenaza de vacancia o censura en proceso, movilización social extendida, confrontación seria Ejecutivo-Legislativo, ministro renunciado bajo presión política.
+ 80: Crisis severa. Amenaza inminente de caída del Ejecutivo/Legislativo, violencia política masiva, quiebre institucional.
+100: Emergencia. Ruptura constitucional activa, colapso de gobernanza.
 
-REGLAS:
-- Evalúa SOLO eventos que afecten el orden político DOMÉSTICO de Perú.
-- Política internacional (elecciones EEUU, conflictos globales) = 0, SALVO que desencadenen directamente una crisis política en Perú.
-- Usa cualquier entero: 5, 17, 33, 52, 68, 74, 91 — el que mejor refleje el contenido.
-- Evalúa basándote en lo que el artículo DICE o implica fuertemente, no en conocimiento externo.
-- Obituarios, aniversarios, reseñas de libros/películas = 0.
-- Resultados deportivos, marcadores, ligas internacionales = 0 SIEMPRE, aunque el título incluya marcas o patrocinadores (ej: "LaLiga EA Sports: Espanyol 1-1 Oviedo" → 0, "Champions League" → 0).
-- Tipo de cambio/dólar diario = 0 SIEMPRE. Una cotización rutinaria del dólar NO es un evento político (ej: "Precio del dólar HOY, martes 17 de febrero: ¿cuál es la cotización?" → 0, "Tipo de cambio: ¿en cuánto cerró el dólar este jueves?" → 0). EXCEPCIÓN: si el título explica que la suba/baja se DEBE A una crisis política (ej: "el dólar sube tras la vacancia") → sí puede puntuar.
-- Pronósticos meteorológicos y alertas de SENAMHI = 0 SIEMPRE. El clima no es un riesgo político (ej: "SENAMHI: Lima registró la temperatura más alta del verano" → 0, "SENAMHI advierte lluvias en la sierra" → 0).
-- Decisiones de la Reserva Federal de EEUU (Fed) o de bancos centrales extranjeros = 0. La Fed no es un actor político peruano (ej: "La FED mantiene sus tasas de interés" → 0, "Powell no recortará tasas" → 0).
-- Desvíos de tránsito por procesiones religiosas o eventos culturales = 0 (ej: "Señor de los Milagros: desvíos y cierre de calles" → 0).
-- Sé consistente."""
+REGLA CLAVE — DIMENSIÓN DOMINANTE: Si un artículo trata sobre una ACCIÓN POLÍTICA (partidos condicionando al gobierno, bancadas amenazando censura, negociaciones de votos) usando una crisis económica como CONTEXTO o HERRAMIENTA, el puntaje político debe reflejar la acción política. Ejemplo: "Fuerza Popular usa la crisis energética para condicionar el voto de confianza" → pol≥55, aunque el contexto sea económico.
 
-_ECONOMIC_SYSTEM_PROMPT = """Eres un clasificador de riesgo económico para Perú. Tu tarea es evaluar si un artículo de prensa señala una amenaza a la estabilidad económica del Perú, específicamente riesgos que afecten al Perú de manera DESPROPORCIONADA respecto a otras economías.
+EJEMPLOS CALIBRADOS (úsalos como ancla):
+- "Congreso debate moción de vacancia contra presidente" → pol=75
+- "Bancada FP condiciona voto de confianza al gabinete" → pol=55
+- "Transportistas inician paro nacional por alza de combustibles" → pol=35
+- "TC admite habeas corpus de candidato con condena penal" → pol=40
+- "Ministro de Economía renuncia por presión del Congreso" → pol=60
+- "Congresista presenta denuncia constitucional contra premier" → pol=45
+- "Candidato presidencial sin respaldo en región Arequipa" → pol=20
+- "Aprobación del presidente cae a 18% según encuesta" → pol=25
+- "Senace aprueba EIA de proyecto minero Trapiche" → pol=0
+- "Hudbay presenta ITS para optimizar mina Constancia" → pol=0
+- "Falabella abre nueva tienda en Trujillo" → pol=0
+- "Copa Libertadores: Cristal clasifica a fase de grupos" → pol=0
+- "Federico Salazar y Katia Condos anuncian separación" → pol=0
+- "Sismo de magnitud 4.1 sacude Cañete" → pol=0
 
-DEFINICIÓN: Riesgo económico abarca amenazas a la estabilidad macroeconómica, fiscal, financiera, y productiva del Perú.
+PALABRAS CLAVE QUE SEÑALAN RIESGO POLÍTICO (pol≥30 si el contexto es peruano):
+vacancia, censura, interpelación, moción, voto de confianza, gabinete, premier, presidente del Consejo, bancada, partido político, elecciones, campaña electoral, JNE, ONPE, JEE, debate presidencial, inscripción de candidatos, plancha presidencial, alianza política, fragmentación política, Ejecutivo vs. Legislativo, crisis de gobernabilidad, golpe de Estado, protestas masivas, estado de emergencia, toque de queda, bloqueo de carretera por protesta política, Cerrón, Congreso, Poder Judicial (cuando involucra figuras políticas en casos de corrupción sistémica), huelga de transportistas, paro nacional, paro regional.
 
-Asigna un puntaje de 0 a 100 (usa CUALQUIER valor entero, no solo múltiplos de 10 o 20). Los siguientes son PUNTOS DE REFERENCIA:
+PALABRAS CLAVE QUE NO SON RIESGO POLÍTICO — pol=0 SALVO contexto político explícito:
+PBI, inflación, tipo de cambio, dólar, BCRP, MEF, tasa de interés, exportaciones, importaciones, déficit fiscal, bonos soberanos, producción minera, créditos hipotecarios, empleo, canasta básica, inversión extranjera, bolsa de valores, Fed, bancos centrales extranjeros, criptomonedas, EIA (estudio de impacto ambiental), ITS (informe técnico sustentatorio), Senace, ProInversión (adjudicaciones rutinarias), expansión de empresa privada, apertura de tienda, resultado financiero de empresa.
 
-  0: Sin relevancia para la estabilidad económica de Perú. Noticias económicas internacionales generales sin impacto diferenciado en Perú, negocios rutinarios, deportes, entretenimiento.
- 20: Preocupación económica menor. Ajustes de política rutinarios, dificultades sectoriales modestas, presiones fiscales manejables.
- 40: Estrés económico moderado. Deterioro significativo en indicadores clave peruanos, vulnerabilidades notables en sectores de los que Perú depende desproporcionadamente.
- 60: Vulnerabilidad económica significativa. Deterioro agudo que amenaza la estabilidad macroeconómica peruana, disrupciones mayores en los motores económicos primarios.
- 80: Crisis económica severa. Estrés financiero sistémico en Perú, colapso de fuentes principales de ingreso nacional, intervenciones de emergencia requeridas.
-100: Emergencia económica. Riesgo de default soberano, quiebre del sistema bancario, pérdida total de confianza del mercado.
+REGLAS ADICIONALES:
+- Aprobaciones técnicas de proyectos mineros/energéticos (EIA, ITS, Senace, Osinergmin regulatorio) = pol=0. Son decisiones administrativas, no políticas.
+- Política extranjera sin impacto Perú = 0 (ej: "elecciones Colombia", "Trump habla con Putin") → 0.
+- Deportes = 0 SIEMPRE (resultados, fichajes, transferencias, ligas europeas, Copa Libertadores, béisbol) → 0.
+- Farándula/celebridades = 0 SIEMPRE. Conductores de TV, actores, influencers NO son actores políticos.
+- Privatización/gestión de empresas estatales (Petroperú, EsSalud): si es decisión TÉCNICA o ECONÓMICA → pol=0-15. Solo sube pol si hay confrontación POLÍTICA explícita (moción de censura al ministro por Petroperú) → pol≥40.
+- Gastronomía/turismo/cultura premiados = 0. El reconocimiento culinario NO es riesgo político.
+- Crimen común (femicidio, robo, secuestro individual sin actores estatales) = pol=0-10.
+- Tipo de cambio/dólar: SIEMPRE pol=0. Es indicador económico. EXCEPCIÓN ÚNICA: artículo dice explícitamente que una crisis POLÍTICA PERUANA hundió el sol.
+- SENAMHI, pronósticos meteorológicos, sismos = 0.
+- Noticias puramente económicas = pol=0 salvo vínculo EXPLÍCITO con acción política peruana.
+- Usa cualquier entero: 5, 17, 33, 52, 68, 74, 91. Sé consistente."""
 
-PRUEBA CLAVE para eventos internacionales: "¿Este evento amenaza la economía de Perú MÁS que al promedio de economías emergentes?" Si no → 0. Si sí → puntaje según severidad.
+_ECONOMIC_SYSTEM_PROMPT = """Eres un clasificador de riesgo económico para Perú. Tu tarea es evaluar si un artículo de prensa señala una amenaza a la estabilidad económica del Perú, específicamente riesgos que afecten a Perú de manera DIRECTA y CONCRETA.
 
-REGLAS:
-- Eventos económicos internacionales que afectan a todos los países por igual = 0.
-- Resultados deportivos, marcadores, ligas internacionales = 0 SIEMPRE, aunque el título incluya nombres de empresas o patrocinadores (ej: "LaLiga EA Sports: Espanyol 1-1 Oviedo" → 0, "NBA Finals" → 0, "Copa del Mundo" → 0).
-- Pronósticos meteorológicos y alertas de SENAMHI = 0 SIEMPRE. El clima rutinario no es un riesgo económico (ej: "SENAMHI: Lima registró la temperatura más alta del verano" → 0, "Lima tendrá neblina y lloviznas" → 0). EXCEPCIÓN: fenómenos El Niño severos, heladas que destruyen cultivos, inundaciones catastróficas → sí pueden puntuar como riesgo agrícola.
-- Tipo de cambio/dólar diario RUTINARIO = 0. Una simple cotización de cierre no es un riesgo económico (ej: "Precio del dólar HOY: ¿en cuánto cerró el tipo de cambio?" → 0, "Tipo de cambio este jueves: S/3.45" → 0). EXCEPCIÓN: si el título indica una variación significativa o análisis macro del impacto en Perú (ej: "el dólar sube 1.5% ante crisis en Camisea" → sí puntúa).
-- Decisiones de la Reserva Federal de EEUU (Fed): puntaje BAJO (10-30 máximo) solo si el artículo analiza explícitamente el impacto en la economía peruana. Una noticia genérica sobre tasas de la Fed sin mención de Perú = 0 (ej: "La FED mantiene tasas: ¿qué significa para EEUU?" → 0; "BCRP: la Fed fuerza a mantener tasas en Perú" → 20).
-- Desvíos de tránsito, cierres de calles por eventos religiosos o culturales = 0 (ej: "Señor de los Milagros: desvíos y cierre de calles" → 0).
-- Bolsas extranjeras sin impacto Peru (Ibex 35, Wall Street caídas leves) = 0.
-- Usa cualquier entero: 5, 17, 33, 52, 68, 74, 91.
-- Evalúa basándote en lo que el artículo DICE o implica fuertemente.
-- Sé consistente."""
+DEFINICIÓN: Riesgo económico = amenazas a la estabilidad macroeconómica, fiscal, financiera, o productiva DE PERÚ. Debe ser un riesgo que afecte a Perú MÁS que al promedio de economías emergentes.
+
+Asigna un puntaje de 0 a 100 (usa CUALQUIER valor entero). PUNTOS DE REFERENCIA:
+
+  0: Sin relevancia económica para Perú. Internacional genérico, deportes, farándula, clima rutinario, acciones legislativas/políticas sin impacto económico directo.
+ 20: Riesgo menor. Presiones sectoriales modestas, ajustes regulatorios sin urgencia, variaciones normales de precios.
+ 40: Estrés moderado. Deterioro en indicadores peruanos clave, disrupciones en sectores importantes, leyes con costo fiscal significativo (>S/500M).
+ 60: Vulnerabilidad significativa. Disrupciones mayores en motores económicos peruanos (minería, gas, exportaciones), inflación por encima de tendencia histórica, precio del petróleo >$90 impactando costos peruanos.
+ 80: Crisis severa. Colapso sectorial, crisis fiscal aguda, paralización de suministro energético nacional, estrés financiero sistémico.
+100: Emergencia. Default soberano, quiebre bancario, pérdida total de confianza del mercado peruano.
+
+EVENTOS DE ALTO IMPACTO ECONÓMICO PARA PERÚ — estos tipos de artículos deben recibir eco≥60:
+- Ruptura o interrupción del gasoducto Camisea/TGP (suministro nacional de gas natural) → eco=70-85. Camisea abastece ~95% del gas natural peruano; su interrupción es una emergencia energética nacional.
+- Precio del petróleo supera $90-100/barril por guerra, embargo o cierre de estrecho → eco=60-75. Perú importa derivados y el alza eleva inflación y costos de transporte directamente.
+- Agencia Internacional de Energía (AIE/IEA) reporta caída de oferta global de millones de barriles/día → eco=65-75. Impacta precios de combustibles peruanos de forma inmediata.
+- Datos oficiales de inflación peruana mostrando máximos de varios años (>4%) → eco=65-75.
+- Precio de combustibles en Perú sube >20% → eco=60-70.
+- Paralización de Las Bambas, Antamina u otra gran mina peruana → eco=65-80.
+- Moody's, S&P o Fitch rebajan calificación soberana o perspectiva de Perú → eco=65-75.
+- BBVA/BCP/Scotiabank recortan proyección de PBI de Perú en ≥0.5 puntos por shocks concretos → eco=45-60.
+- Leyes aprobadas con costo fiscal directo >S/1,000 millones al año → eco=40-55.
+- Exportaciones peruanas caen >10% por aranceles externos o cierre de mercados → eco=55-70.
+
+EJEMPLOS CALIBRADOS (úsalos como ancla):
+- "TGP reporta ruptura en gasoducto Camisea; suministro de gas interrumpido" → eco=80
+- "Precio del petróleo supera $100 por guerra en Medio Oriente" → eco=68
+- "IEA: cierre del estrecho de Ormuz reduce oferta mundial en 8 millones de barriles/día" → eco=72
+- "Inflación en Perú alcanza 4.2%, máximo en 4 años, según INEI" → eco=68
+- "Precio del balón de gas supera S/100 en Lima" → eco=55
+- "BBVA ajusta proyección de PBI de Perú de 3.1% a 2.9% por crisis energética" → eco=48
+- "Las Bambas suspende operaciones por bloqueo de comunidades" → eco=72
+- "Moody's coloca deuda peruana en perspectiva negativa" → eco=65
+- "Congreso aprueba CTS y gratificaciones para trabajadores CAS: costo S/2,800 millones/año" → eco=45
+- "Aranceles de Trump afectan exportaciones peruanas de joyería y textiles" → eco=52
+- "BCRP mantiene tasa de referencia en 4.25%" → eco=30
+- "Tipo de cambio hoy: sol cierra a S/3.45" → eco=0
+- "Bancadas condicionan voto de confianza usando crisis del gas como argumento" → eco=25 (el gas es contexto, la maniobra es política)
+- "Delia Espinoza inhabilitada por el Congreso" → eco=0
+- "Senace aprueba EIA de proyecto minero Trapiche" → eco=20 (aprobación regulatoria rutinaria, no crisis)
+- "Reunión del ministro del Interior sobre seguridad ciudadana" → eco=0
+- "Colegios regresan a clases presenciales" → eco=0
+- "Camión de bomberos casi choca con auto particular" → eco=0
+- "Atlético de Madrid ganó 5-2 a Tottenham" → eco=0
+- "Federico Salazar y Katia Condos anuncian separación" → eco=0
+- "Sismo de magnitud 4.1 sacude Cañete" → eco=0
+
+REGLA CLAVE — DIMENSIÓN DOMINANTE: Si un artículo describe una MANIOBRA POLÍTICA que usa una crisis económica como CONTEXTO, eco=15-35 (el contexto), pol=50-70 (la acción). NO inflés eco porque el artículo menciona una crisis económica de fondo.
+
+CONTENIDO POLÍTICO PURO — eco=0 OBLIGATORIO:
+- Candidatos, encuestas de intención de voto, debates electorales, ONPE, JNE, inscripción de candidatos, plancha presidencial → eco=0 SIEMPRE.
+- Voto de confianza, censura, interpelación, moción de vacancia → eco=0.
+- Alianzas partidarias, cambios de bancada, fragmentación política → eco=0.
+- Cobertura judicial de figuras políticas (Cerrón, Fujimori, magistrados, fiscales) sin impacto macroeconómico directo → eco=0.
+- Inhabilitaciones, sanciones disciplinarias del Congreso → eco=0.
+- "Confianza" o "respaldo" en sentido político (apoyo parlamentario, respaldo regional a candidato) → eco=0. Solo eco>0 si habla de confianza del INVERSOR, MERCADO o CALIFICADORA con datos.
+
+PROHIBIDO — RAZONAMIENTO EN CADENA (eco=0 aunque la cadena parezca válida):
+NO: "reunión de seguridad → orden público → economía mejora → eco>0" → eco=0.
+NO: "escuelas regresan a clases → padres trabajan → productividad → eco>0" → eco=0.
+NO: "accidente de tránsito → caos vial → pérdida económica → eco>0" → eco=0.
+NO: "arresto de criminal → seguridad → inversión → eco>0" → eco=0.
+NO: "incertidumbre política → confianza inversora → eco>0" → eco=0.
+NO: "candidato sin respaldo → inestabilidad → eco>0" → eco=0.
+eco>0 SOLO si el artículo describe impacto económico DIRECTO y OBSERVABLE con datos concretos o hechos físicos (paralización, corte de suministro, cifra de PBI, dato de inflación, rebaja de calificación).
+
+REGLAS ADICIONALES:
+- Deportes = 0 SIEMPRE (resultados, fichajes, Copa Libertadores, béisbol, NBA, NFL) → 0.
+- Farándula y celebridades = 0.
+- Sismos/temblores = 0 salvo que destruyan infraestructura productiva con cifras concretas.
+- Política extranjera sin impacto económico directo en Perú = 0.
+- Gastronomía/premios culturales = eco=0-10 máximo.
+- Bitcoin/crypto = 0-15 máximo. Perú no es economía cripto-dependiente.
+- Crimen individual = eco=0 salvo que interrumpa sectores productivos con datos.
+- Tipo de cambio/dólar cotización diaria = eco=0-5. EXCEPCIÓN: movimiento ≥1% en un día con causa concreta analizada → eco=35-45.
+- Fed/bancos centrales extranjeros = 0-20, SOLO si analiza impacto concreto en Perú/BCRP.
+- Bolsas extranjeras caídas leves = 0. EXCEPCIÓN: caídas >3% que impacten activos peruanos con datos.
+- Ajustes regulatorios rutinarios (SBS eleva límites de billetera digital, Sunafil recuerda RMV, Osinergmin fija tarifa) = eco=10-20 máximo.
+- Expansión de empresa privada (tienda nueva, centro de distribución, nuevo modelo de moto) = eco=10-25. NO es riesgo económico sistémico.
+- Usa cualquier entero: 5, 17, 33, 52, 68, 74, 91. Sé consistente."""
 
 _DUAL_USER_TEMPLATE = """Evalúa los siguientes {n} artículos. Para CADA artículo, responde con un JSON en una línea separada. EXACTAMENTE {n} líneas, una por artículo, en orden.
 
@@ -656,9 +736,76 @@ def classify_articles_dual(
     df["political_score"] = None
     df["economic_score"] = None
 
+    # ── Deterministic pre-filter ──────────────────────────────────────────────
+    # Mark obvious zero-risk articles BEFORE the API call to save cost.
+    # IMPORTANT: Articles are kept in the DataFrame (score=0, not dropped) so
+    # they still contribute to N_it in the SWP denominator (AI-GPR methodology).
+    # Only apply patterns where false-positive risk is near zero.
+
+    titles_lower = df["title"].fillna("").str.lower()
+
+    _pre_sports = (
+        r"champions league|premier league|la liga|serie a|bundesliga|ligue 1|"
+        r"real madrid|fc barcelona|atlético de madrid|manchester|liverpool|chelsea|"
+        r"bayern|juventus|psg|inter miami|mbappé|haaland|"
+        r"nba|nfl|mlb|nhl|grand slam|wimbledon|roland garros|"
+        r"copa libertadores|copa del mundo|mundial de f[uú]tbol|clásico mundial de béisbol|"
+        r"sporting cristal|alianza lima|universitario de deportes|fbc melgar|"
+        r"fichaje|transferencia.*jugador|jugador.*transferencia|"
+        r"partidos de hoy.*copa|copa.*partidos de hoy|horarios.*copa|copa.*horarios"
+    )
+    _pre_farandula = (
+        r"cómo se conocieron|historia de amor|boda y|anuncio de ruptura|"
+        r"confirma relaci[oó]n|ruptura sentimental|separaci[oó]n de pareja|"
+        r"vida amorosa|conductora?.*amor|amor.*conductora?"
+    )
+    _pre_sismo = r"\b(sismo|sismos|temblor|temblores|terremoto|terremotos|movimiento s[ií]smico)\b"
+    _pre_weather = (
+        r"\bSENAMHI\b|pronóstico.*lluvia|pronóstico.*temperatura|"
+        r"temperatura.*m[aá]xima.*m[ií]nima|lluvias para hoy|clima de hoy"
+    )
+    _pre_fx_routine = r"(precio del d[oó]lar|d[oó]lar hoy|divisa cierra|tipo de cambio hoy|sol se cotiza)"
+    _pre_fx_large   = r"(puntos b[aá]sicos|pierde|gana|dispara|desploma|hunde|sube.*%|baja.*%)"
+    _pre_gastro = r"\breceta\b|\brecetas\b|cómo preparar.*ingredientes|gastronomía.*premio|mejor restaurante del mundo"
+
+    pre_mask = (
+        titles_lower.str.contains(_pre_sports,    regex=True, na=False) |
+        titles_lower.str.contains(_pre_farandula, regex=True, na=False) |
+        titles_lower.str.contains(_pre_sismo,     regex=True, na=False) |
+        titles_lower.str.contains(_pre_weather,   regex=True, na=False) |
+        titles_lower.str.contains(_pre_gastro,    regex=True, na=False) |
+        (
+            titles_lower.str.contains(_pre_fx_routine, regex=True, na=False) &
+            ~titles_lower.str.contains(_pre_fx_large,  regex=True, na=False)
+        )
+    )
+
+    n_pre = int(pre_mask.sum())
+    if n_pre > 0:
+        df.loc[pre_mask, "political_score"] = 0
+        df.loc[pre_mask, "economic_score"]  = 0
+        logger.info(
+            "Pre-filter: %d/%d articles set to 0 before API (sports=%d, farándula=%d, "
+            "sismo=%d, weather=%d, gastro=%d, fx_routine=%d) — kept in df for N_it denominator",
+            n_pre, n,
+            titles_lower[pre_mask].str.contains(_pre_sports,    regex=True, na=False).sum(),
+            titles_lower[pre_mask].str.contains(_pre_farandula, regex=True, na=False).sum(),
+            titles_lower[pre_mask].str.contains(_pre_sismo,     regex=True, na=False).sum(),
+            titles_lower[pre_mask].str.contains(_pre_weather,   regex=True, na=False).sum(),
+            titles_lower[pre_mask].str.contains(_pre_gastro,    regex=True, na=False).sum(),
+            (titles_lower[pre_mask].str.contains(_pre_fx_routine, regex=True, na=False) &
+             ~titles_lower[pre_mask].str.contains(_pre_fx_large,  regex=True, na=False)).sum(),
+        )
+
+    # Only send non-pre-filtered articles to Haiku
+    to_classify = [a for a in all_articles if not pre_mask.loc[a["idx"]]]
+    n_api = len(to_classify)
+    logger.info("Sending %d/%d articles to Haiku (%d pre-filtered)", n_api, n, n_pre)
+    # ─────────────────────────────────────────────────────────────────────────
+
     processed = 0
-    for batch_start in range(0, n, batch_size):
-        batch = all_articles[batch_start : batch_start + batch_size]
+    for batch_start in range(0, n_api, batch_size):
+        batch = to_classify[batch_start : batch_start + batch_size]
 
         # Political call
         pol_scores = _score_batch(batch, _POLITICAL_SYSTEM_PROMPT, client, model)
@@ -671,11 +818,196 @@ def classify_articles_dual(
             df.at[idx, "economic_score"] = eco_scores[i]
 
         processed += len(batch)
-        if processed % 200 == 0 or processed == n:
-            logger.info("  Dual-classified %d/%d articles", processed, n)
+        if processed % 200 == 0 or processed == n_api:
+            logger.info("  Dual-classified %d/%d articles (sent to API)", processed, n_api)
 
-        if batch_start + batch_size < n:
+        if batch_start + batch_size < n_api:
             time.sleep(delay)
+
+    # ── Deterministic post-filter ─────────────────────────────────────────────
+    # Catch systematic errors the LLM makes regardless of prompt improvements.
+    # These are keyword-based overrides for categories that should ALWAYS be 0.
+    # Rule: only override when we are CERTAIN. When in doubt, leave the LLM score.
+
+    titles = df["title"].fillna("").str.lower()
+
+    # 1. Farándula / celebrity gossip → both=0
+    _farandula = (
+        r"cómo se conocieron|historia de amor|boda y|anuncio de ruptura|"
+        r"confirma relaci[oó]n|romance|ruptura sentimental|separaci[oó]n de pareja|"
+        r"novio|novia|coraz[oó]n roto|ex pareja|vida amorosa|"
+        r"conductora?.*amor|amor.*conductora?|esposo.*actor|actriz.*esposo"
+    )
+    mask_farandula = titles.str.contains(_farandula, regex=True, na=False)
+    df.loc[mask_farandula, "political_score"] = 0
+    df.loc[mask_farandula, "economic_score"] = 0
+
+    # 2. Sports (European leagues, international competitions, Peruvian clubs) → both=0
+    _sports = (
+        r"champions league|premier league|la liga|serie a|bundesliga|ligue 1|"
+        r"real madrid|fc barcelona|atlético de madrid|manchester|liverpool|chelsea|"
+        r"bayern|juventus|psg|inter miami|mbappé|haaland|messi|ronaldo|"
+        r"nba|nfl|mlb|nhl|grand slam|wimbledon|roland garros|"
+        r"copa libertadores|copa del mundo|mundial de f[uú]tbol|clásico mundial de béisbol|"
+        r"sporting cristal|alianza lima|universitario de deportes|fbc melgar|"
+        r"copa conmebol|fase de grupos.*copa|copa.*fase de grupos|"
+        r"fichaje|transferencia.*jugador|jugador.*transferencia|"
+        r"partidos de hoy.*copa|copa.*partidos de hoy|horarios.*copa|copa.*horarios"
+    )
+    mask_sports = titles.str.contains(_sports, regex=True, na=False)
+    df.loc[mask_sports, "political_score"] = 0
+    df.loc[mask_sports, "economic_score"] = 0
+
+    # 3. Daily FX close (routine quote) → pol=0, eco≤5
+    # Only suppress routine closes; large moves (puntos básicos, %) keep their eco score.
+    _fx_routine = r"(precio del d[oó]lar|d[oó]lar hoy|divisa cierra|tipo de cambio hoy|sol se cotiza)"
+    _fx_large_move = r"(puntos b[aá]sicos|pierde|gana|dispara|desploma|hunde|sube.*%|baja.*%)"
+    mask_fx_routine = (
+        titles.str.contains(_fx_routine, regex=True, na=False) &
+        ~titles.str.contains(_fx_large_move, regex=True, na=False)
+    )
+    df.loc[mask_fx_routine, "economic_score"] = df.loc[mask_fx_routine, "economic_score"].clip(upper=5)
+    df.loc[mask_fx_routine, "political_score"] = 0
+
+    # 4. Earthquakes / seismic activity → both=0
+    # Seismic events are natural, not political/economic instability signals.
+    _sismo = r"\b(sismo|sismos|temblor|temblores|terremoto|terremotos|movimiento s[ií]smico)\b"
+    mask_sismo = titles.str.contains(_sismo, regex=True, na=False)
+    df.loc[mask_sismo, "political_score"] = 0
+    df.loc[mask_sismo, "economic_score"] = 0
+
+    # 5. Routine weather / SENAMHI → both=0
+    # Only suppress pure forecasts; El Niño emergency declarations are NOT suppressed here.
+    _weather_routine = (
+        r"\bSENAMHI\b|pronóstico.*lluvia|pronóstico.*temperatura|"
+        r"temperatura.*m[aá]xima.*m[ií]nima|lluvias para hoy|"
+        r"clima de hoy|tiempo.*hoy.*Lima|"
+        r"\bneblina\b|\bgarúa\b|llovizna.*Lima|Lima.*llovizna|"
+        r"Lima la gris|amaneció con frío|temperatura bajó"
+    )
+    mask_weather = titles.str.contains(_weather_routine, regex=True, na=False)
+    df.loc[mask_weather, "political_score"] = 0
+    df.loc[mask_weather, "economic_score"] = 0
+
+    # 6. Congressional sanctions / inhabilitaciones against political/judicial figures → eco=0
+    # These are disciplinary legislative actions, not economic events.
+    _inhabilitacion = (
+        r"(inhabilita|inhabilitaci[oó]n|reconsideraci[oó]n de votaci[oó]n|"
+        r"congreso rechaza|congreso aprueba inhabilit)"
+    )
+    mask_inhab = titles.str.contains(_inhabilitacion, regex=True, na=False)
+    df.loc[mask_inhab, "economic_score"] = 0
+
+    # 7. Pure political actions (voto de confianza, bancada, censura, moción) → eco=0
+    # These are legislative/governance actions; economic impact is indirect (chain-reasoning trap).
+    _pol_action = (
+        r"\bvoto de confianza\b|"
+        r"\bcensura\b.*\bgabinete\b|\bgabinete\b.*\bcensura\b|"
+        r"\bmoción de vacancia\b|"
+        r"\bbancada\b.*(apoya|rechaza|condiciona|exige|pide|voto)|"
+        r"(apoya|rechaza|condiciona|exige|pide|voto).*\bbancada\b"
+    )
+    mask_pol_action = titles.str.contains(_pol_action, regex=True, na=False)
+    df.loc[mask_pol_action, "economic_score"] = 0
+
+    # 8. Electoral content (candidates, polls, JNE logistics) → eco=0
+    _electoral = (
+        r"(candidato|candidata).*(\bsin respaldo\b|encuesta|sondeo|debate.*versus|versus.*debate)|"
+        r"\bjne\b.*candidat|\bje[ee]\b.*candidat|candidat.*\bjne\b|"
+        r"inscripci[oó]n de candidat|plancha presidencial|intenci[oó]n de voto"
+    )
+    mask_electoral = titles.str.contains(_electoral, regex=True, na=False)
+    df.loc[mask_electoral, "economic_score"] = 0
+
+    # 9. Daily market brief column ("Mercados e indicadores") → pol=0
+    # This is a routine financial data column, not a political instability signal.
+    mask_mercados = titles.str.contains(r"mercados e indicadores", regex=False, na=False)
+    df.loc[mask_mercados, "political_score"] = 0
+
+    # 10. Recipes / gastronomy → both=0
+    _gastronomia = (
+        r"\breceta\b|\brecetas\b|cómo preparar|ingredientes.*cocina|"
+        r"gastronomía.*premio|premio.*gastronomía|mejor restaurante|"
+        r"cocina nikkei|cocina peruana.*reconoc"
+    )
+    mask_gastro = titles.str.contains(_gastronomia, regex=True, na=False)
+    df.loc[mask_gastro, "political_score"] = 0
+    df.loc[mask_gastro, "economic_score"] = 0
+
+    # Exception guard: if crisis/emergency language is present, do NOT apply
+    # lifestyle post-filters (rules 11-15). Real economic shocks can mention
+    # holidays, weather, or travel in their headlines.
+    _crisis_guard = (
+        r"crisis|emergencia|desastre|destruy|colapso|pérdida.*millones|"
+        r"inunda|sequía|helada.*producci[oó]n|ni[ñn]o costero|fen[oó]meno.*ni[ñn]o|"
+        r"bloque[oó]|paro|huelga|protesta|desabastecimiento|escasez"
+    )
+    mask_crisis_exception = titles.str.contains(_crisis_guard, regex=True, na=False)
+
+    # 11. Horoscopes / astrology → both=0
+    _horoscope = (
+        r"hor[oó]scopo|signo del zod[ií]aco|predicciones.*signo|"
+        r"\btarot\b|carta astral|ascendente.*signo|signo.*ascendente"
+    )
+    mask_horoscope = titles.str.contains(_horoscope, regex=True, na=False) & ~mask_crisis_exception
+    df.loc[mask_horoscope, "political_score"] = 0
+    df.loc[mask_horoscope, "economic_score"] = 0
+
+    # 12. Lottery / raffle results → both=0
+    _lottery = r"la tinka|loter[ií]a.*resultado|sorteo.*ganador|resultado.*sorteo|n[uú]meros ganadores"
+    mask_lottery = titles.str.contains(_lottery, regex=True, na=False) & ~mask_crisis_exception
+    df.loc[mask_lottery, "political_score"] = 0
+    df.loc[mask_lottery, "economic_score"] = 0
+
+    # 13. Reality TV / entertainment shows → both=0
+    _reality = (
+        r"\bgran hermano\b|esto es guerra|al fondo hay sitio|la voz per[uú]|"
+        r"\bfarándula\b|reality.*per[uú]|per[uú].*reality|"
+        r"programa.*televis[i].*hoy|telenovela"
+    )
+    mask_reality = titles.str.contains(_reality, regex=True, na=False) & ~mask_crisis_exception
+    df.loc[mask_reality, "political_score"] = 0
+    df.loc[mask_reality, "economic_score"] = 0
+
+    # 14. Holiday travel tips / personal savings listicles → both=0
+    # These are lifestyle articles, not macro economic signals.
+    _lifestyle_tips = (
+        r"consejos para viajar|tips para (ahorrar|viajar)|c[oó]mo ahorrar en|"
+        r"feriado largo.*(d[oó]nde ir|qu[eé] hacer|visitar)|"
+        r"qu[eé] hacer en (semana santa|fiestas patrias|a[nñ]o nuevo|navidad)|"
+        r"destinos para (semana santa|fiestas patrias|vacaciones)|"
+        r"lugares para visitar.*feriado|feriado.*lugares para visitar"
+    )
+    mask_lifestyle = titles.str.contains(_lifestyle_tips, regex=True, na=False) & ~mask_crisis_exception
+    df.loc[mask_lifestyle, "political_score"] = 0
+    df.loc[mask_lifestyle, "economic_score"] = 0
+
+    # 15. Personal finance advice (cap eco at 20, not zero — some marginal relevance)
+    _personal_finance = (
+        r"finanzas personales|c[oó]mo invertir.*bolsa|mejor cuenta de ahorro|"
+        r"tarjeta de cr[eé]dito.*beneficio|AFP.*retiro.*pasos|"
+        r"c[oó]mo retirar.*AFP|pasos para retirar"
+    )
+    mask_personal_fin = (
+        titles.str.contains(_personal_finance, regex=True, na=False) &
+        ~mask_crisis_exception &
+        (df["economic_score"].fillna(0) > 20)
+    )
+    df.loc[mask_personal_fin, "economic_score"] = 20
+
+    masks = [mask_farandula, mask_sports, mask_fx_routine, mask_sismo, mask_weather,
+             mask_inhab, mask_pol_action, mask_electoral, mask_mercados, mask_gastro,
+             mask_horoscope, mask_lottery, mask_reality, mask_lifestyle, mask_personal_fin]
+    labels = ["farándula", "sports", "fx_routine", "sismo", "weather",
+              "inhabilitacion", "pol_action", "electoral", "mercados", "gastro",
+              "horoscope", "lottery", "reality", "lifestyle_tips", "personal_finance"]
+    n_filtered = masks[0].copy()
+    for m in masks[1:]:
+        n_filtered = n_filtered | m
+    if n_filtered.sum() > 0:
+        counts = ", ".join(f"{lbl}={m.sum()}" for lbl, m in zip(labels, masks) if m.sum() > 0)
+        logger.info("Post-filter applied to %d articles (%s)", n_filtered.sum(), counts)
+    # ─────────────────────────────────────────────────────────────────────────
 
     # Summary
     pol_nonzero = (df["political_score"].fillna(0) > 0).sum()

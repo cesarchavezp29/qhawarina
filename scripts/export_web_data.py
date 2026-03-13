@@ -184,6 +184,7 @@ def export_gdp_nowcast(gdp_df: pd.DataFrame, latest: pd.Series, fresh_nowcast: D
             "official": round(float(row["gdp_yoy"]), 2) if pd.notna(row["gdp_yoy"]) else None,
             "nowcast": round(float(row["dfm_nowcast"]), 2) if pd.notna(row["dfm_nowcast"]) else None,
             "error": round(float(row["dfm_nowcast"] - row["gdp_yoy"]), 2) if pd.notna(row["dfm_nowcast"]) and pd.notna(row["gdp_yoy"]) else None,
+            "is_forecast": False,
         })
 
     # Annual aggregation (average of 4 quarters per year)
@@ -231,6 +232,17 @@ def export_gdp_nowcast(gdp_df: pd.DataFrame, latest: pd.Series, fresh_nowcast: D
                 "value": round(float(fc["forecast_value"]), 2),
                 "lower": round(float(fc["forecast_lower"]), 2),
                 "upper": round(float(fc["forecast_upper"]), 2),
+            })
+
+    # Append current nowcast target to recent_quarters so the chart shows the live estimate
+    if target_period and nowcast_value is not None:
+        if not any(q["quarter"] == target_period for q in recent_quarters):
+            recent_quarters.append({
+                "quarter": target_period,
+                "official": None,
+                "nowcast": nowcast_value,
+                "error": None,
+                "is_forecast": True,
             })
 
     # Compute forecast vs actual track record (last 8 non-COVID quarters with both values)
@@ -744,7 +756,7 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
         try:
             articles_cache = pd.read_parquet(articles_cache_path)
             articles_cache["published"] = pd.to_datetime(articles_cache["published"], utc=True)
-            articles_cache["date"] = articles_cache["published"].dt.date
+            articles_cache["date"] = articles_cache["published"].dt.tz_convert("America/Lima").dt.date
         except Exception as e:
             logger.warning("Could not load articles cache: %s", e)
 
@@ -791,12 +803,27 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
             src_df["pol_swp"] = src_df["pol_sum"] / src_df["n"].clip(lower=1)
             src_df["eco_swp"] = src_df["eco_sum"] / src_df["n"].clip(lower=1)
 
-            # Each feed normalized to its own historical mean
-            src_means = src_df.groupby("feed_name")[["pol_swp", "eco_swp"]].mean()
+            # Each feed normalized to its FROZEN 2025-baseline mean.
+            # Using 2025-only (days with pol_swp > 1, i.e. meaningful classification)
+            # prevents retroactive drift: corrections or additions to 2026 data do NOT
+            # shift historical IRP values.
+            # Fallback: feeds with < 5 meaningful 2025 days use their all-time active mean.
+            _src_2025 = src_df[
+                (pd.to_datetime(src_df["day"]).dt.year == 2025) &
+                (src_df["pol_swp"] > 1)
+            ]
+            _src_2025_counts = _src_2025.groupby("feed_name").size()
+            _feeds_stable = _src_2025_counts[_src_2025_counts >= 5].index
+            _means_2025 = _src_2025[_src_2025["feed_name"].isin(_feeds_stable)].groupby("feed_name")[["pol_swp", "eco_swp"]].mean()
+            _means_active = src_df[src_df["pol_swp"] > 0].groupby("feed_name")[["pol_swp", "eco_swp"]].mean()
+            src_means = _means_2025.combine_first(_means_active)
             src_df = src_df.merge(
                 src_means.rename(columns={"pol_swp": "pol_mean", "eco_swp": "eco_mean"}),
                 on="feed_name",
+                how="left",
             )
+            src_df["pol_mean"] = src_df["pol_mean"].fillna(1.0)
+            src_df["eco_mean"] = src_df["eco_mean"].fillna(1.0)
             src_df["pol_y"] = src_df["pol_swp"] / src_df["pol_mean"].clip(lower=1e-8)
             src_df["eco_y"] = src_df["eco_swp"] / src_df["eco_mean"].clip(lower=1e-8)
 
@@ -871,7 +898,10 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
         political_df["ire"] = 0.0
         political_df["instability_index"] = 0.0
 
-    # ── Smoothing (7-day rolling, centered) for both indices ─────────────────
+    # ── Smoothing (7-day centered rolling average) ────────────────────────────
+    # Documented methodology (Iacoviello & Tong 2026, applied to Peru):
+    #   IRPt_smooth = (1/7) × Σ IRPt+k,  k ∈ [-3, +3]
+    # center=True implements this symmetric window.
     MIN_ARTICLES = 5
     SMOOTH_WINDOW = 7
 
@@ -895,6 +925,45 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
     cutoff = political_df["date"].max() - pd.Timedelta(days=PROVISIONAL_DAYS)
     political_df["provisional"] = political_df["date"] > cutoff
 
+    # ── Drop partial today ONLY if the nightly pipeline isn't running ─────────
+    # run_daily_pipeline.py writes run_time to pipeline_status.json at startup,
+    # before this export step runs. So if run_time matches today (in PET),
+    # the pipeline is active and today's data is being collected — keep it.
+    # If run_time is from a previous day, today's data is partial — drop it.
+    from datetime import timezone, timedelta as _td
+    import json as _json
+    _now_utc = datetime.now(timezone.utc)
+    _now_pet = _now_utc.replace(tzinfo=None) + _td(hours=-5)
+    _today_pet_str = _now_pet.strftime("%Y-%m-%d")
+
+    _pipeline_running_today = False
+    try:
+        _status_path = Path(__file__).parent.parent / "data" / "pipeline_status.json"
+        if _status_path.exists():
+            _status = _json.loads(_status_path.read_text(encoding="utf-8"))
+            # run_daily_pipeline.py sets status["date"] = today (local machine date)
+            # at startup, before calling export. Match against PET date.
+            _status_date = _status.get("date", "")
+            _pipeline_running_today = (_status_date == _today_pet_str)
+    except Exception:
+        pass
+
+    # Always strip any dates beyond today PET (UTC midnight articles leaked into tomorrow)
+    _has_future = (political_df["date"].astype(str) > _today_pet_str).any()
+    if _has_future:
+        political_df = political_df[political_df["date"].astype(str) <= _today_pet_str].copy()
+        logger.info("  Stripped future dates beyond %s", _today_pet_str)
+
+    if not _pipeline_running_today:
+        _has_today = (political_df["date"].astype(str) == _today_pet_str).any()
+        if _has_today:
+            political_df = political_df[political_df["date"].astype(str) < _today_pet_str].copy()
+            logger.info(
+                "  Pipeline not running today — dropped partial today (%s), latest = %s",
+                _today_pet_str, political_df["date"].max()
+            )
+    # ─────────────────────────────────────────────────────────────────────────
+
     latest_idx = political_df.index[-1]
     latest = political_df.loc[latest_idx].copy()
     # ─────────────────────────────────────────────────────────────────────────
@@ -902,25 +971,25 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
     # Calculate aggregates using smoothed score
     last_7d = political_df.tail(7)["score_smooth"].mean()
     last_30d = political_df.tail(30)["score_smooth"].mean()
-    last_365d = political_df.tail(365)
-    valid_365d = last_365d[last_365d["score_smooth"] > 0]
-    if valid_365d.empty:
+    # Use the full series for max-year lookup (not a 365-day slice)
+    valid_series = political_df[political_df["score_smooth"] > 0]
+    if valid_series.empty:
         max_year = 0.0
-        max_year_date = last_365d["date"].iloc[-1]
+        max_year_date = political_df["date"].iloc[-1]
     else:
-        max_year = valid_365d["score_smooth"].max()
-        max_year_date = valid_365d.loc[valid_365d["score_smooth"] == max_year, "date"].iloc[0]
+        max_year = valid_series["score_smooth"].max()
+        max_year_date = valid_series.loc[valid_series["score_smooth"] == max_year, "date"].iloc[0]
 
     # Level classification (applied to both IRP and IRE)
     def classify_level(score: float) -> str:
         if score < 50:   return "MINIMO"
-        if score < 100:  return "BAJO"
-        if score < 150:  return "MODERADO"
-        if score < 200:  return "ELEVADO"
-        if score < 300:  return "ALTO"
+        if score < 80:   return "BAJO"
+        if score < 120:  return "MODERADO"
+        if score < 160:  return "ELEVADO"
+        if score < 200:  return "ALTO"
         return "CRITICO"
 
-    # Daily series (last 365 days) — dual indices
+    # Daily series — full history (no 365-day truncation)
     daily_series = [
         {
             "date": row["date"].strftime("%Y-%m-%d"),
@@ -936,7 +1005,7 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
             "low_coverage": bool(row["low_coverage"]),
             "provisional":  bool(row["provisional"]),
         }
-        for _, row in last_365d.iterrows()
+        for _, row in political_df.iterrows()
     ]
 
     # Major events: PRR >= 120 (ELEVADO+) AND at least 5 articles (avoids noise spikes)
@@ -1070,10 +1139,40 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
 
         if has_dual and (irp_today > 0 or ire_today > 0):
             try:
+                import re as _re
                 client = __import__("anthropic").Anthropic()
 
-                # Top 5 political articles
-                top_pol = today_all.nlargest(5, "political_score")[
+                # Keyword exclusion: articles that Haiku misclassifies as risk but are
+                # clearly sports matches, entertainment events, or industry conferences.
+                _EXCL_RE = _re.compile(
+                    r'\b(champions league|premier league|la liga|bundesliga|serie a|ligue 1'
+                    r'|copa del rey|copa libertadores|sudamericana|eliminatorias'
+                    r'|atlético de madrid|atletico de madrid|real madrid|fc barcelona'
+                    r'|manchester (city|united)|liverpool fc|tottenham|chelsea fc'
+                    r'|triunfo colchonero|triunfo blanquiazul|triunfo blanquirrojo'
+                    r'|ganó \d+-\d+|perdió \d+-\d+|empató \d+-\d+'
+                    r'|octavos de final|cuartos de final|semifinal.*copa|final.*copa'
+                    r'|simposio \w+|congreso empresarial|webinar|workshop'
+                    # Routine FX quote articles (daily "precio del dólar hoy" = irrelevant)
+                    r'|precio del dólar.*hoy|tipo de cambio.*hoy|a cuánto (cerró|abrió|está) el (dólar|tipo de cambio)'
+                    r'|cotización del dólar)\b',
+                    _re.IGNORECASE,
+                )
+
+                def _exclude_sports(df_: "pd.DataFrame") -> "pd.DataFrame":
+                    """Drop rows whose title clearly matches sports/entertainment patterns."""
+                    mask = df_["title"].str.contains(_EXCL_RE, na=False)
+                    dropped = mask.sum()
+                    if dropped:
+                        logger.info("  top_drivers: excluded %d sports/conf articles", dropped)
+                    return df_[~mask]
+
+                # Top 5 political articles — pol is dominant dimension (pol >= eco)
+                pol_primary = today_all[
+                    today_all["political_score"] >= today_all["economic_score"]
+                ] if "economic_score" in today_all.columns else today_all
+                pol_primary = _exclude_sports(pol_primary)
+                top_pol = pol_primary.nlargest(5, "political_score")[
                     ["title", "source", "political_score"]
                 ]
                 if not top_pol.empty and irp_today > 0:
@@ -1088,11 +1187,14 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
                             temperature=0,
                             messages=[{"role": "user", "content":
                                 f"Eres el analista de riesgo político de Qhawarina. "
-                                f"Hoy el Índice de Riesgo Político = {irp_today:.0f} "
-                                f"({irp_today/100:.1f}× el promedio).\n"
+                                f"ESCALA: media histórica=100. <50=mínimo, 50-80=bajo, "
+                                f"80-120=moderado, 120-160=elevado, 160-200=alto, >200=crítico. "
+                                f"El índice NO tiene techo en 100 — puede superar 200 en crisis. "
+                                f"Hoy IRP={irp_today:.0f} ({irp_today/100:.2f}× el promedio) → "
+                                f"nivel {'mínimo' if irp_today<50 else 'bajo' if irp_today<80 else 'moderado' if irp_today<120 else 'elevado' if irp_today<160 else 'alto' if irp_today<200 else 'crítico'}.\n"
                                 f"Los 5 artículos con mayor puntaje político:\n{drivers_text}\n\n"
-                                f"Escribe 2-3 oraciones explicando por qué el riesgo político "
-                                f"está en este nivel. Máximo 60 palabras. Solo el texto."
+                                f"Escribe 2-3 oraciones explicando el nivel de riesgo político. "
+                                f"NO menciones el número del índice. Máximo 60 palabras. Solo el texto."
                             }]
                         )
                         political_justification = msg.content[0].text.strip()
@@ -1101,8 +1203,14 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
                         for _, r in top_pol.iterrows() if r.political_score > 0
                     ]
 
-                # Top 5 economic articles
-                top_eco = today_all.nlargest(5, "economic_score")[
+                # Top 5 economic articles — eco is clearly dominant (eco > pol * 1.3).
+                # The 1.3× threshold prevents political articles (candidates, censure)
+                # from appearing here just because they also mention economic context.
+                eco_primary = today_all[
+                    today_all["economic_score"] > today_all["political_score"] * 1.3
+                ] if "political_score" in today_all.columns else today_all
+                eco_primary = _exclude_sports(eco_primary)
+                top_eco = eco_primary.nlargest(5, "economic_score")[
                     ["title", "source", "economic_score"]
                 ]
                 if not top_eco.empty and ire_today > 0:
@@ -1117,11 +1225,14 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
                             temperature=0,
                             messages=[{"role": "user", "content":
                                 f"Eres el analista de riesgo económico de Qhawarina. "
-                                f"Hoy el Índice de Riesgo Económico = {ire_today:.0f} "
-                                f"({ire_today/100:.1f}× el promedio).\n"
+                                f"ESCALA: media histórica=100. <50=mínimo, 50-80=bajo, "
+                                f"80-120=moderado, 120-160=elevado, 160-200=alto, >200=crítico. "
+                                f"El índice NO tiene techo en 100 — puede superar 200 en crisis. "
+                                f"Hoy IRE={ire_today:.0f} ({ire_today/100:.2f}× el promedio) → "
+                                f"nivel {'mínimo' if ire_today<50 else 'bajo' if ire_today<80 else 'moderado' if ire_today<120 else 'elevado' if ire_today<160 else 'alto' if ire_today<200 else 'crítico'}.\n"
                                 f"Los 5 artículos con mayor puntaje económico:\n{drivers_text}\n\n"
-                                f"Escribe 2-3 oraciones explicando por qué el riesgo económico "
-                                f"está en este nivel. Máximo 60 palabras. Solo el texto."
+                                f"Escribe 2-3 oraciones explicando el nivel de riesgo económico. "
+                                f"NO menciones el número del índice. Máximo 60 palabras. Solo el texto."
                             }]
                         )
                         economic_justification = msg.content[0].text.strip()
@@ -1440,8 +1551,14 @@ def export_panel_data():
 
 
 def export_supermarket_daily_index():
-    """Build and export the supermarket daily price index JSON."""
-    import subprocess
+    """Build and export supermarket daily price index JSONs.
+
+    Runs build_price_index.py → writes daily_price_index.json.
+    Also regenerates supermarket_daily_index.json (legacy schema with
+    daily_series key) so that /estadisticas/inflacion/precios-alta-frecuencia
+    stays current.
+    """
+    import subprocess, json as _json
 
     logger.info("Building supermarket daily price index...")
     script_path = PROJECT_ROOT / "scripts" / "build_price_index.py"
@@ -1452,10 +1569,57 @@ def export_supermarket_daily_index():
         text=True,
     )
 
-    if result.returncode == 0:
-        logger.info("Supermarket daily price index built and exported")
-    else:
+    if result.returncode != 0:
         logger.error(f"Failed to build supermarket price index: {result.stderr[-500:]}")
+        return
+
+    logger.info("Supermarket daily price index built and exported")
+
+    # Regenerate supermarket_daily_index.json from daily_price_index.json.
+    # The precios-alta-frecuencia page reads daily_series[] which has a
+    # slightly different schema — keep it in sync so it doesn't go stale.
+    src_path = DATA_DIR / "daily_price_index.json"
+    dst_path = DATA_DIR / "supermarket_daily_index.json"
+    try:
+        src = _json.loads(src_path.read_text(encoding="utf-8"))
+        raw_series = src.get("series", [])
+        metadata = src.get("metadata", {})
+
+        daily_series = [
+            {
+                "date":          row.get("date", ""),
+                "index_all":     round(row["index_all"], 4) if row.get("index_all") is not None else None,
+                "index_food":    round(row["index_food"], 4) if row.get("index_food") is not None else None,
+                "index_nonfood": round(row["index_nonfood"], 4) if row.get("index_nonfood") is not None else None,
+                "var_all":       round(row["var_all"], 6) if row.get("var_all") is not None else None,
+                "n_products":    row.get("n_products"),
+                "interpolated":  row.get("interpolated", False),
+            }
+            for row in raw_series
+        ]
+
+        out = {
+            "metadata": {
+                "method":        metadata.get("method", "Jevons bilateral index (geometric mean)"),
+                "base_date":     metadata.get("base_date", ""),
+                "base_value":    100,
+                "stores":        metadata.get("stores", ["Plaza Vea", "Metro", "Wong"]),
+                "frequency":     "daily",
+                "generated_at":  metadata.get("generated_at", ""),
+                "total_skus":    metadata.get("total_skus"),
+                "note":          "Updated daily from build_price_index.py",
+            },
+            "daily_series": daily_series,
+        }
+
+        dst_path.write_text(_json.dumps(out, ensure_ascii=False), encoding="utf-8")
+        logger.info(
+            "  Regenerated supermarket_daily_index.json: %d days, latest=%s",
+            len(daily_series),
+            daily_series[-1]["date"] if daily_series else "n/a",
+        )
+    except Exception as exc:
+        logger.warning("  Could not regenerate supermarket_daily_index.json: %s", exc)
 
 
 def export_gdp_regional_nowcast():
@@ -1718,8 +1882,8 @@ def generate_nota_diaria() -> None:
         }
         highlights.append({
             "icon": "🏛️",
-            "text_es": f"Riesgo político: PRR {round(score)} — nivel {level_map_es.get(level, level.lower())}.",
-            "text_en": f"Political risk: PRR {round(score)} — {level_map_en.get(level, level.lower())} level.",
+            "text_es": f"Riesgo político: IRP {round(score)} — nivel {level_map_es.get(level, level.lower())}.",
+            "text_en": f"Political risk: IRP {round(score)} — {level_map_en.get(level, level.lower())} level.",
         })
 
     # ── Headline (from top highlight) ─────────────────────────────────────────

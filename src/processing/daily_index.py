@@ -67,7 +67,7 @@ def build_daily_index(
         return _empty_index()
 
     df["published"] = pd.to_datetime(df["published"], utc=True)
-    df["date"] = df["published"].dt.date
+    df["date"] = df["published"].dt.tz_convert("America/Lima").dt.date
 
     pol_mask = df["article_category"].isin(["political", "both"])
     econ_mask = df["article_category"].isin(["economic", "both"])
@@ -164,7 +164,7 @@ def build_daily_index_v2(
 
     df = articles_df.copy()
     df["published"] = pd.to_datetime(df["published"], utc=True)
-    df["date"] = df["published"].dt.normalize().dt.tz_localize(None)
+    df["date"] = df["published"].dt.tz_convert("America/Lima").dt.normalize().dt.tz_localize(None)
 
     start = pd.Timestamp(start_date)
     df = df[df["date"] >= start].copy()
@@ -241,11 +241,14 @@ def build_daily_index_v2(
         sd = source_daily[src]
         for dim in ["pol_swp", "econ_swp"]:
             sigma = sd[dim].std()
-            if sigma > 0:
+            if pd.notna(sigma) and sigma > 0:
                 sd[f"{dim}_std"] = sd[dim] / sigma
             else:
-                sd[f"{dim}_std"] = 0.0
-            logger.info("  %s %s: mean=%.4f sigma=%.4f", src, dim, sd[dim].mean(), sigma)
+                # New source with < 2 days of data (sigma=NaN) or zero-variance:
+                # use sigma=1.0 (no normalization) so the feed contributes its raw
+                # SWP rather than being silenced.
+                sd[f"{dim}_std"] = sd[dim] / 1.0
+            logger.info("  %s %s: mean=%.4f sigma=%.4f n_days=%d", src, dim, sd[dim].mean(), sigma if pd.notna(sigma) else 0.0, len(sd))
 
     # ── Step 3: Volume-weighted aggregation across sources ─────────────
     # On each day, weight each source by its article volume.
@@ -325,6 +328,27 @@ def build_daily_index_v2(
 
     result = pd.DataFrame(rows)
 
+    # ── Step 3b: Flag and interpolate low-coverage days ─────────────────
+    # Days with fewer than MIN_ARTICLES_PER_DAY total articles are noise
+    # (typically weekends/holidays with sparse feeds). Interpolate their
+    # Z scores from adjacent valid days so they don't spike the index.
+    MIN_ARTICLES_PER_DAY = 25
+    low_cov = result["n_articles_total"] < MIN_ARTICLES_PER_DAY
+    n_low = int(low_cov.sum())
+    if n_low > 0:
+        logger.info(
+            "Low-coverage interpolation: %d days with < %d articles → interpolating Z scores",
+            n_low, MIN_ARTICLES_PER_DAY,
+        )
+        for dim in ["political", "economic"]:
+            z_col = f"{dim}_z"
+            result.loc[low_cov, z_col] = np.nan
+        # Linear interpolation (fills gaps between valid days)
+        result[["political_z", "economic_z"]] = (
+            result[["political_z", "economic_z"]]
+            .interpolate(method="linear", limit_direction="both")
+        )
+
     # ── Step 4: Normalize to mean=100 ──────────────────────────────────
     # The baseline is the full sample. Index_t = Z_t × (100 / M).
     # A value of 200 means twice the average instability coverage.
@@ -346,12 +370,13 @@ def build_daily_index_v2(
         ).mean()
 
     # Output columns
+    result["low_coverage"] = result["n_articles_total"] < MIN_ARTICLES_PER_DAY
     output_cols = [
         "date",
         "political_swp", "political_index", "political_smooth",
         "economic_swp", "economic_index", "economic_smooth",
         "n_articles_political", "n_articles_economic", "n_articles_total",
-        "n_sources",
+        "n_sources", "low_coverage",
     ]
     result = result[output_cols].copy()
 

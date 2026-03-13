@@ -1,38 +1,136 @@
 rss:
   feeds:
+    # ── El Comercio (Grupo El Comercio / Arc Publishing) ─────────────────────
+    - name: "El Comercio - Portada"
+      url: "https://elcomercio.pe/arc/outboundfeeds/rss/?outputType=xml"
+      source: "elcomercio"
     - name: "El Comercio - Politica"
       url: "https://elcomercio.pe/arc/outboundfeeds/rss/category/politica/?outputType=xml"
       source: "elcomercio"
     - name: "El Comercio - Economia"
       url: "https://elcomercio.pe/arc/outboundfeeds/rss/category/economia/?outputType=xml"
       source: "elcomercio"
+    - name: "El Comercio - Peru"
+      url: "https://elcomercio.pe/arc/outboundfeeds/rss/category/peru/?outputType=xml"
+      source: "elcomercio"
+    - name: "El Comercio - Lima"
+      url: "https://elcomercio.pe/arc/outboundfeeds/rss/category/lima/?outputType=xml"
+      source: "elcomercio"
+    - name: "El Comercio - Mundo"
+      url: "https://elcomercio.pe/arc/outboundfeeds/rss/category/mundo/?outputType=xml"
+      source: "elcomercio"
+    - name: "El Comercio - Tecnologia"
+      url: "https://elcomercio.pe/arc/outboundfeeds/rss/category/tecnologia/?outputType=xml"
+      source: "elcomercio"
+
+    # ── Gestión (Grupo El Comercio / Arc Publishing) ──────────────────────────
+    - name: "Gestion - Portada"
+      url: "https://gestion.pe/arc/outboundfeeds/rss/?outputType=xml"
+      source: "gestion"
     - name: "Gestion - Peru"
       url: "https://gestion.pe/arc/outboundfeeds/rss/category/peru/?outputType=xml"
       source: "gestion"
     - name: "Gestion - Economia"
       url: "https://gestion.pe/arc/outboundfeeds/rss/category/economia/?outputType=xml"
       source: "gestion"
-    - name: "La Republica - Politica"
-      url: "https://larepublica.pe/rss/politica.xml"
-      source: "larepublica"
-    - name: "La Republica - Economia"
-      url: "https://larepublica.pe/rss/economia.xml"
-      source: "larepublica"
-    - name: "Andina - Politica"
-      url: "https://andina.pe/agencia/rss.aspx?id=2"
-      source: "andina"
-    - name: "Andina - Economia"
-      url: "https://andina.pe/agencia/rss.aspx?id=3"
-      source: "andina"
-    - name: "RPP Noticias"
-      url: "https://rpp.pe/feed/"
-      source: "rpp"
+    - name: "Gestion - Tu Dinero"
+      url: "https://gestion.pe/arc/outboundfeeds/rss/category/tu-dinero/?outputType=xml"
+      source: "gestion"
+    - name: "Gestion - Mundo"
+      url: "https://gestion.pe/arc/outboundfeeds/rss/category/mundo/?outputType=xml"
+      source: "gestion"
+    - name: "Gestion - Tecnologia"
+      url: "https://gestion.pe/arc/outboundfeeds/rss/category/tecnologia/?outputType=xml"
+      source: "gestion"
+    - name: "Gestion - Opinion"
+      url: "https://gestion.pe/arc/outboundfeeds/rss/category/opinion/?outputType=xml"
+      source: "gestion"
+
+    # ── Correo (Grupo El Comercio / Arc Publishing) ───────────────────────────
+    - name: "Correo - Portada"
+      url: "https://diariocorreo.pe/arc/outboundfeeds/rss/?outputType=xml"
+      source: "correo"
     - name: "Correo - Politica"
       url: "https://diariocorreo.pe/arc/outboundfeeds/rss/category/politica/?outputType=xml"
       source: "correo"
     - name: "Correo - Economia"
       url: "https://diariocorreo.pe/arc/outboundfeeds/rss/category/economia/?outputType=xml"
       source: "correo"
+    - name: "Correo - Peru"
+      url: "https://diariocorreo.pe/arc/outboundfeeds/rss/category/peru/?outputType=xml"
+      source: "correo"
+    - name: "Correo - Mundo"
+      url: "https://diariocorreo.pe/arc/outboundfeeds/rss/category/mundo/?outputType=xml"
+      source: "correo"
+
+    # ── La República ──────────────────────────────────────────────────────────
+    - name: "La Republica - Politica"
+      url: "https://larepublica.pe/rss/politica.xml"
+      source: "larepublica"
+    - name: "La Republica - Economia"
+      url: "https://larepublica.pe/rss/economia.xml"
+      source: "larepublica"
+    - name: "La Republica - Sociedad"
+      url: "https://larepublica.pe/rss/sociedad.xml"
+      source: "larepublica"
+    - name: "La Republica - Mundo"
+      url: "https://larepublica.pe/rss/mundo.xml"
+      source: "larepublica"
+
+    # ── Andina (Agencia Peruana de Noticias) ──────────────────────────────────
+    - name: "Andina - Portada"
+      url: "https://andina.pe/agencia/rss.aspx"
+      source: "andina"
+    - name: "Andina - Politica"
+      url: "https://andina.pe/agencia/rss.aspx?id=2"
+      source: "andina"
+    - name: "Andina - Economia"
+      url: "https://andina.pe/agencia/rss.aspx?id=3"
+      source: "andina"
+    - name: "Andina - Regional"
+      url: "https://andina.pe/agencia/rss.aspx?id=4"
+      source: "andina"
+
+    # ── RPP Noticias ──────────────────────────────────────────────────────────
+    - name: "RPP Noticias"
+      url: "https://rpp.pe/feed/"
+      source: "rpp"
+
+    # ── Peru 21 (Grupo El Comercio) ───────────────────────────────────────────
+    - name: "Peru21 - General"
+      url: "https://peru21.pe/rss/"
+      source: "peru21"
+
+    # ── Caretas (investigative journalism) ────────────────────────────────────
+    - name: "Caretas - General"
+      url: "https://caretas.pe/feed"
+      source: "caretas"
+
+    # ── ATV Noticias ──────────────────────────────────────────────────────────
+    - name: "ATV - General"
+      url: "https://www.atv.pe/feed"
+      source: "atv"
+
+    # ── Canal N ───────────────────────────────────────────────────────────────
+    - name: "Canal N - General"
+      url: "https://canaln.pe/feed"
+      source: "canaln"
+
+    # ── El Búho (investigative) ───────────────────────────────────────────────
+    - name: "El Buho - General"
+      url: "https://elbuho.pe/feed"
+      source: "elbuho"
+
+    # ── Inforegión ────────────────────────────────────────────────────────────
+    - name: "Inforegion - General"
+      url: "https://www.inforegion.pe/feed"
+      source: "inforegion"
+
+    # ── Diario UNO ────────────────────────────────────────────────────────────
+    - name: "Diario UNO - General"
+      url: "https://diariouno.pe/feed"
+      source: "diariouno"
+
   classification:
     model: "claude-haiku-4-5-20251001"
     batch_size: 20
