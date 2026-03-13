@@ -487,138 +487,51 @@ def classify_articles_batch(
     return df
 
 
-_POLITICAL_SYSTEM_PROMPT = """Eres un clasificador de riesgo político para Perú. Tu tarea es evaluar si un artículo de prensa señala una amenaza a la estabilidad política e institucional DOMÉSTICA del Perú.
+_POLITICAL_SYSTEM_PROMPT = """Clasificarás un artículo de prensa peruana. Evalúa ÚNICAMENTE el riesgo de inestabilidad política institucional en el Perú basándote en lo que el artículo afirma o implica directamente.
 
-DEFINICIÓN: Riesgo político = amenazas al orden institucional democrático peruano, la continuidad del gobierno, la estabilidad social, y el funcionamiento normal de los poderes del Estado EN PERÚ. NO incluye política extranjera a menos que impacte directamente a Perú.
+Riesgo político se define como: la amenaza, materialización o escalamiento de eventos adversos que afectan la estabilidad institucional del Perú, incluyendo: crisis de gobernabilidad, vacancias presidenciales, censuras ministeriales, rupturas entre poderes del Estado, protestas masivas que amenazan la continuidad del gobierno, crisis constitucionales, y conflictos sociales que escalan a nivel nacional.
 
-Asigna un puntaje de 0 a 100 (usa CUALQUIER valor entero, no solo múltiplos de 10 o 20). PUNTOS DE REFERENCIA:
+Asigna un puntaje entero de 0 a 100:
 
-  0: Sin relevancia. Noticias internacionales sin impacto Perú, deportes, entretenimiento, operaciones rutinarias de empresas.
- 20: Tensión menor. Fricción política de bajo nivel, declaraciones ordinarias de partidos, desacuerdos sin escalada. Ej: congresista critica al gobierno sin acción concreta.
- 35: Inestabilidad baja-moderada. Huelgas de transporte o sectoriales, TC resuelve caso con implicancias electorales, candidato con antecedentes penales en campaña, protesta local sin violencia.
- 50: Inestabilidad moderada. Disputas activas entre poderes del Estado, bancadas condicionando votos de confianza, investigaciones fiscales a figuras en ejercicio, protestas que escalan.
- 65: Crisis significativa. Amenaza de vacancia o censura en proceso, movilización social extendida, confrontación seria Ejecutivo-Legislativo, ministro renunciado bajo presión política.
- 80: Crisis severa. Amenaza inminente de caída del Ejecutivo/Legislativo, violencia política masiva, quiebre institucional.
-100: Emergencia. Ruptura constitucional activa, colapso de gobernanza.
+0:      Sin relevancia política. Deportes, farándula, clima, recetas, tecnología, noticias internacionales sin impacto en Perú, obituarios, efemérides.
+1-20:   Tensión menor. Declaraciones políticas rutinarias, sesiones legislativas ordinarias, nombramientos menores.
+21-40:  Inestabilidad baja-moderada. Investigaciones parlamentarias, huelgas sectoriales, protestas locales, disputas partidarias.
+41-60:  Inestabilidad significativa. Mociones de interpelación, cambios de gabinete bajo presión, protestas regionales que se expanden, conflictos entre poderes del Estado.
+61-80:  Crisis mayor. Intentos de vacancia con firmas suficientes, censuras ministeriales aprobadas, protestas masivas nacionales, estados de emergencia.
+81-100: Emergencia. Vacancia consumada, renuncia presidencial, ruptura constitucional, violencia política masiva, golpe de estado.
 
-REGLA CLAVE — DIMENSIÓN DOMINANTE: Si un artículo trata sobre una ACCIÓN POLÍTICA (partidos condicionando al gobierno, bancadas amenazando censura, negociaciones de votos) usando una crisis económica como CONTEXTO o HERRAMIENTA, el puntaje político debe reflejar la acción política. Ejemplo: "Fuerza Popular usa la crisis energética para condicionar el voto de confianza" → pol≥55, aunque el contexto sea económico.
+PUNTAJE 0 OBLIGATORIO para:
+- Noticias internacionales sin impacto directo en la política peruana
+- Eventos económicos puros (sin maniobra política)
+- Deportes, farándula, entretenimiento, gastronomía
+- Artículos sobre política de otros países
+- Reportes climáticos o de desastres naturales (salvo que generen crisis política)
 
-EJEMPLOS CALIBRADOS (úsalos como ancla):
-- "Congreso debate moción de vacancia contra presidente" → pol=75
-- "Bancada FP condiciona voto de confianza al gabinete" → pol=55
-- "Transportistas inician paro nacional por alza de combustibles" → pol=35
-- "TC admite habeas corpus de candidato con condena penal" → pol=40
-- "Ministro de Economía renuncia por presión del Congreso" → pol=60
-- "Congresista presenta denuncia constitucional contra premier" → pol=45
-- "Candidato presidencial sin respaldo en región Arequipa" → pol=20
-- "Aprobación del presidente cae a 18% según encuesta" → pol=25
-- "Senace aprueba EIA de proyecto minero Trapiche" → pol=0
-- "Hudbay presenta ITS para optimizar mina Constancia" → pol=0
-- "Falabella abre nueva tienda en Trujillo" → pol=0
-- "Copa Libertadores: Cristal clasifica a fase de grupos" → pol=0
-- "Federico Salazar y Katia Condos anuncian separación" → pol=0
-- "Sismo de magnitud 4.1 sacude Cañete" → pol=0
+REGLA: Si un artículo usa una crisis económica como CONTEXTO para una maniobra política (ej: "oposición condiciona voto de confianza por crisis energética"), el puntaje POLÍTICO debe ser alto. Lo que importa es la ACCIÓN política, no el tema económico."""
 
-PALABRAS CLAVE QUE SEÑALAN RIESGO POLÍTICO (pol≥30 si el contexto es peruano):
-vacancia, censura, interpelación, moción, voto de confianza, gabinete, premier, presidente del Consejo, bancada, partido político, elecciones, campaña electoral, JNE, ONPE, JEE, debate presidencial, inscripción de candidatos, plancha presidencial, alianza política, fragmentación política, Ejecutivo vs. Legislativo, crisis de gobernabilidad, golpe de Estado, protestas masivas, estado de emergencia, toque de queda, bloqueo de carretera por protesta política, Cerrón, Congreso, Poder Judicial (cuando involucra figuras políticas en casos de corrupción sistémica), huelga de transportistas, paro nacional, paro regional.
+_ECONOMIC_SYSTEM_PROMPT = """Clasificarás un artículo de prensa peruana. Evalúa ÚNICAMENTE el riesgo de disrupción económica en el Perú basándote en lo que el artículo afirma o implica directamente.
 
-PALABRAS CLAVE QUE NO SON RIESGO POLÍTICO — pol=0 SALVO contexto político explícito:
-PBI, inflación, tipo de cambio, dólar, BCRP, MEF, tasa de interés, exportaciones, importaciones, déficit fiscal, bonos soberanos, producción minera, créditos hipotecarios, empleo, canasta básica, inversión extranjera, bolsa de valores, Fed, bancos centrales extranjeros, criptomonedas, EIA (estudio de impacto ambiental), ITS (informe técnico sustentatorio), Senace, ProInversión (adjudicaciones rutinarias), expansión de empresa privada, apertura de tienda, resultado financiero de empresa.
+Riesgo económico se define como: la amenaza, materialización o escalamiento de eventos adversos que DISRUMPEN la actividad económica normal del Perú, incluyendo: crisis financieras, colapso de sectores productivos, interrupciones en cadenas de suministro (energía, gas, minería), shocks de precios que afectan a la población, riesgo fiscal grave, paralizaciones económicas por conflictos, y amenazas comerciales externas (aranceles, sanciones).
 
-REGLAS ADICIONALES:
-- Aprobaciones técnicas de proyectos mineros/energéticos (EIA, ITS, Senace, Osinergmin regulatorio) = pol=0. Son decisiones administrativas, no políticas.
-- Política extranjera sin impacto Perú = 0 (ej: "elecciones Colombia", "Trump habla con Putin") → 0.
-- Deportes = 0 SIEMPRE (resultados, fichajes, transferencias, ligas europeas, Copa Libertadores, béisbol) → 0.
-- Farándula/celebridades = 0 SIEMPRE. Conductores de TV, actores, influencers NO son actores políticos.
-- Privatización/gestión de empresas estatales (Petroperú, EsSalud): si es decisión TÉCNICA o ECONÓMICA → pol=0-15. Solo sube pol si hay confrontación POLÍTICA explícita (moción de censura al ministro por Petroperú) → pol≥40.
-- Gastronomía/turismo/cultura premiados = 0. El reconocimiento culinario NO es riesgo político.
-- Crimen común (femicidio, robo, secuestro individual sin actores estatales) = pol=0-10.
-- Tipo de cambio/dólar: SIEMPRE pol=0. Es indicador económico. EXCEPCIÓN ÚNICA: artículo dice explícitamente que una crisis POLÍTICA PERUANA hundió el sol.
-- SENAMHI, pronósticos meteorológicos, sismos = 0.
-- Noticias puramente económicas = pol=0 salvo vínculo EXPLÍCITO con acción política peruana.
-- Usa cualquier entero: 5, 17, 33, 52, 68, 74, 91. Sé consistente."""
+Asigna un puntaje entero de 0 a 100:
 
-_ECONOMIC_SYSTEM_PROMPT = """Eres un clasificador de riesgo económico para Perú. Tu tarea es evaluar si un artículo de prensa señala una amenaza a la estabilidad económica del Perú, específicamente riesgos que afecten a Perú de manera DIRECTA y CONCRETA.
+0:      Sin relevancia económica O noticia económica sin elemento de RIESGO/DISRUPCIÓN. Deportes, farándula, clima sin impacto productivo, noticias positivas (crecimiento, inversión nueva, récords de exportación).
+1-20:   Riesgo menor. Presiones sectoriales modestas, volatilidad cambiaria dentro de rangos normales, advertencias de analistas sin impacto inmediato.
+21-40:  Estrés moderado. Deterioro de indicadores clave, conflictos laborales en sectores medianos, alzas de precios que afectan canasta básica.
+41-60:  Vulnerabilidad significativa. Disrupciones en minería, gas o exportaciones principales, bloqueos de carreteras que afectan suministro, reformas que amenazan estabilidad fiscal.
+61-80:  Crisis severa. Colapso sectorial, paralización energética nacional, fuga de capitales, downgrade crediticio.
+81-100: Emergencia. Default soberano, colapso del sistema financiero, hiperinflación, paralización económica generalizada.
 
-DEFINICIÓN: Riesgo económico = amenazas a la estabilidad macroeconómica, fiscal, financiera, o productiva DE PERÚ. Debe ser un riesgo que afecte a Perú MÁS que al promedio de economías emergentes.
+PUNTAJE 0 OBLIGATORIO para:
+- Noticias económicas POSITIVAS (crecimiento, inversión, inauguraciones, premios empresariales, récords)
+- Reportes RUTINARIOS sin shock (dólar hoy, tipo de cambio cierra en X, cotización de metales sin contexto de crisis)
+- Tendencias ESTRUCTURALES crónicas (desempleo juvenil alto, informalidad laboral, brecha salarial — son problemas de largo plazo, NO disrupción aguda)
+- Especulación sobre tecnología/futuro (IA reemplazará empleos, criptomonedas, tendencias globales)
+- Consumo y estilo de vida (perfumería crece, turismo aumenta, nuevo restaurante, moda)
+- Convocatorias laborales, ofertas de empleo, becas
+- Maniobras POLÍTICAS que usan temas económicos como pretexto (ej: "Congreso bloquea reforma de pensiones" = político, no económico — el riesgo es la inestabilidad institucional)
 
-Asigna un puntaje de 0 a 100 (usa CUALQUIER valor entero). PUNTOS DE REFERENCIA:
-
-  0: Sin relevancia económica para Perú. Internacional genérico, deportes, farándula, clima rutinario, acciones legislativas/políticas sin impacto económico directo.
- 20: Riesgo menor. Presiones sectoriales modestas, ajustes regulatorios sin urgencia, variaciones normales de precios.
- 40: Estrés moderado. Deterioro en indicadores peruanos clave, disrupciones en sectores importantes, leyes con costo fiscal significativo (>S/500M).
- 60: Vulnerabilidad significativa. Disrupciones mayores en motores económicos peruanos (minería, gas, exportaciones), inflación por encima de tendencia histórica, precio del petróleo >$90 impactando costos peruanos.
- 80: Crisis severa. Colapso sectorial, crisis fiscal aguda, paralización de suministro energético nacional, estrés financiero sistémico.
-100: Emergencia. Default soberano, quiebre bancario, pérdida total de confianza del mercado peruano.
-
-EVENTOS DE ALTO IMPACTO ECONÓMICO PARA PERÚ — estos tipos de artículos deben recibir eco≥60:
-- Ruptura o interrupción del gasoducto Camisea/TGP (suministro nacional de gas natural) → eco=70-85. Camisea abastece ~95% del gas natural peruano; su interrupción es una emergencia energética nacional.
-- Precio del petróleo supera $90-100/barril por guerra, embargo o cierre de estrecho → eco=60-75. Perú importa derivados y el alza eleva inflación y costos de transporte directamente.
-- Agencia Internacional de Energía (AIE/IEA) reporta caída de oferta global de millones de barriles/día → eco=65-75. Impacta precios de combustibles peruanos de forma inmediata.
-- Datos oficiales de inflación peruana mostrando máximos de varios años (>4%) → eco=65-75.
-- Precio de combustibles en Perú sube >20% → eco=60-70.
-- Paralización de Las Bambas, Antamina u otra gran mina peruana → eco=65-80.
-- Moody's, S&P o Fitch rebajan calificación soberana o perspectiva de Perú → eco=65-75.
-- BBVA/BCP/Scotiabank recortan proyección de PBI de Perú en ≥0.5 puntos por shocks concretos → eco=45-60.
-- Leyes aprobadas con costo fiscal directo >S/1,000 millones al año → eco=40-55.
-- Exportaciones peruanas caen >10% por aranceles externos o cierre de mercados → eco=55-70.
-
-EJEMPLOS CALIBRADOS (úsalos como ancla):
-- "TGP reporta ruptura en gasoducto Camisea; suministro de gas interrumpido" → eco=80
-- "Precio del petróleo supera $100 por guerra en Medio Oriente" → eco=68
-- "IEA: cierre del estrecho de Ormuz reduce oferta mundial en 8 millones de barriles/día" → eco=72
-- "Inflación en Perú alcanza 4.2%, máximo en 4 años, según INEI" → eco=68
-- "Precio del balón de gas supera S/100 en Lima" → eco=55
-- "BBVA ajusta proyección de PBI de Perú de 3.1% a 2.9% por crisis energética" → eco=48
-- "Las Bambas suspende operaciones por bloqueo de comunidades" → eco=72
-- "Moody's coloca deuda peruana en perspectiva negativa" → eco=65
-- "Congreso aprueba CTS y gratificaciones para trabajadores CAS: costo S/2,800 millones/año" → eco=45
-- "Aranceles de Trump afectan exportaciones peruanas de joyería y textiles" → eco=52
-- "BCRP mantiene tasa de referencia en 4.25%" → eco=30
-- "Tipo de cambio hoy: sol cierra a S/3.45" → eco=0
-- "Bancadas condicionan voto de confianza usando crisis del gas como argumento" → eco=25 (el gas es contexto, la maniobra es política)
-- "Delia Espinoza inhabilitada por el Congreso" → eco=0
-- "Senace aprueba EIA de proyecto minero Trapiche" → eco=20 (aprobación regulatoria rutinaria, no crisis)
-- "Reunión del ministro del Interior sobre seguridad ciudadana" → eco=0
-- "Colegios regresan a clases presenciales" → eco=0
-- "Camión de bomberos casi choca con auto particular" → eco=0
-- "Atlético de Madrid ganó 5-2 a Tottenham" → eco=0
-- "Federico Salazar y Katia Condos anuncian separación" → eco=0
-- "Sismo de magnitud 4.1 sacude Cañete" → eco=0
-
-REGLA CLAVE — DIMENSIÓN DOMINANTE: Si un artículo describe una MANIOBRA POLÍTICA que usa una crisis económica como CONTEXTO, eco=15-35 (el contexto), pol=50-70 (la acción). NO inflés eco porque el artículo menciona una crisis económica de fondo.
-
-CONTENIDO POLÍTICO PURO — eco=0 OBLIGATORIO:
-- Candidatos, encuestas de intención de voto, debates electorales, ONPE, JNE, inscripción de candidatos, plancha presidencial → eco=0 SIEMPRE.
-- Voto de confianza, censura, interpelación, moción de vacancia → eco=0.
-- Alianzas partidarias, cambios de bancada, fragmentación política → eco=0.
-- Cobertura judicial de figuras políticas (Cerrón, Fujimori, magistrados, fiscales) sin impacto macroeconómico directo → eco=0.
-- Inhabilitaciones, sanciones disciplinarias del Congreso → eco=0.
-- "Confianza" o "respaldo" en sentido político (apoyo parlamentario, respaldo regional a candidato) → eco=0. Solo eco>0 si habla de confianza del INVERSOR, MERCADO o CALIFICADORA con datos.
-
-PROHIBIDO — RAZONAMIENTO EN CADENA (eco=0 aunque la cadena parezca válida):
-NO: "reunión de seguridad → orden público → economía mejora → eco>0" → eco=0.
-NO: "escuelas regresan a clases → padres trabajan → productividad → eco>0" → eco=0.
-NO: "accidente de tránsito → caos vial → pérdida económica → eco>0" → eco=0.
-NO: "arresto de criminal → seguridad → inversión → eco>0" → eco=0.
-NO: "incertidumbre política → confianza inversora → eco>0" → eco=0.
-NO: "candidato sin respaldo → inestabilidad → eco>0" → eco=0.
-eco>0 SOLO si el artículo describe impacto económico DIRECTO y OBSERVABLE con datos concretos o hechos físicos (paralización, corte de suministro, cifra de PBI, dato de inflación, rebaja de calificación).
-
-REGLAS ADICIONALES:
-- Deportes = 0 SIEMPRE (resultados, fichajes, Copa Libertadores, béisbol, NBA, NFL) → 0.
-- Farándula y celebridades = 0.
-- Sismos/temblores = 0 salvo que destruyan infraestructura productiva con cifras concretas.
-- Política extranjera sin impacto económico directo en Perú = 0.
-- Gastronomía/premios culturales = eco=0-10 máximo.
-- Bitcoin/crypto = 0-15 máximo. Perú no es economía cripto-dependiente.
-- Crimen individual = eco=0 salvo que interrumpa sectores productivos con datos.
-- Tipo de cambio/dólar cotización diaria = eco=0-5. EXCEPCIÓN: movimiento ≥1% en un día con causa concreta analizada → eco=35-45.
-- Fed/bancos centrales extranjeros = 0-20, SOLO si analiza impacto concreto en Perú/BCRP.
-- Bolsas extranjeras caídas leves = 0. EXCEPCIÓN: caídas >3% que impacten activos peruanos con datos.
-- Ajustes regulatorios rutinarios (SBS eleva límites de billetera digital, Sunafil recuerda RMV, Osinergmin fija tarifa) = eco=10-20 máximo.
-- Expansión de empresa privada (tienda nueva, centro de distribución, nuevo modelo de moto) = eco=10-25. NO es riesgo económico sistémico.
-- Usa cualquier entero: 5, 17, 33, 52, 68, 74, 91. Sé consistente."""
+REGLA: Riesgo económico = DISRUPCIÓN o AMENAZA ACTIVA a la actividad económica. NO es lo mismo que "noticia sobre economía". Si no hay disrupción, amenaza o shock, el puntaje es 0."""
 
 _DUAL_USER_TEMPLATE = """Evalúa los siguientes {n} artículos. Para CADA artículo, responde con un JSON en una línea separada. EXACTAMENTE {n} líneas, una por artículo, en orden.
 
