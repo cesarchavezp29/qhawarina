@@ -680,8 +680,9 @@ def _haiku_justification(
     n_total = len(today_arts)
     mult = f"{prr_raw / 100:.1f}"
     level_labels = {
-        "MINIMO": "mínimo", "BAJO": "bajo", "MODERADO": "moderado",
+        "MINIMO": "mínimo", "BAJO": "bajo", "NORMAL": "normal",
         "ELEVADO": "elevado", "ALTO": "alto", "CRITICO": "crítico",
+        "MODERADO": "normal",  # legacy alias
     }
     level_es = level_labels.get(level, level.lower())
 
@@ -982,10 +983,17 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
 
     # Level classification (applied to both IRP and IRE)
     def classify_level(score: float) -> str:
+        # mean=100. Thresholds anchored around the mean:
+        #   mínimo  < 50    (virtually no coverage)
+        #   bajo    50-90   (below-average)
+        #   normal  90-110  (near historical mean)
+        #   elevado 110-150 (clearly above average)
+        #   alto    150-200 (very high)
+        #   crítico > 200   (extraordinary)
         if score < 50:   return "MINIMO"
-        if score < 80:   return "BAJO"
-        if score < 120:  return "MODERADO"
-        if score < 160:  return "ELEVADO"
+        if score < 90:   return "BAJO"
+        if score < 110:  return "NORMAL"
+        if score < 150:  return "ELEVADO"
         if score < 200:  return "ALTO"
         return "CRITICO"
 
@@ -1187,11 +1195,11 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
                             temperature=0,
                             messages=[{"role": "user", "content":
                                 f"Eres el analista de riesgo político de Qhawarina. "
-                                f"ESCALA: media histórica=100. <50=mínimo, 50-80=bajo, "
-                                f"80-120=moderado, 120-160=elevado, 160-200=alto, >200=crítico. "
+                                f"ESCALA: media histórica=100. <50=mínimo, 50-90=bajo, "
+                                f"90-110=normal, 110-150=elevado, 150-200=alto, >200=crítico. "
                                 f"El índice NO tiene techo en 100 — puede superar 200 en crisis. "
                                 f"Hoy IRP={irp_today:.0f} ({irp_today/100:.2f}× el promedio) → "
-                                f"nivel {'mínimo' if irp_today<50 else 'bajo' if irp_today<80 else 'moderado' if irp_today<120 else 'elevado' if irp_today<160 else 'alto' if irp_today<200 else 'crítico'}.\n"
+                                f"nivel {'mínimo' if irp_today<50 else 'bajo' if irp_today<90 else 'normal' if irp_today<110 else 'elevado' if irp_today<150 else 'alto' if irp_today<200 else 'crítico'}.\n"
                                 f"Los 5 artículos con mayor puntaje político:\n{drivers_text}\n\n"
                                 f"Escribe 2-3 oraciones explicando el nivel de riesgo político. "
                                 f"NO menciones el número del índice. Máximo 60 palabras. Solo el texto."
@@ -1225,11 +1233,11 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
                             temperature=0,
                             messages=[{"role": "user", "content":
                                 f"Eres el analista de riesgo económico de Qhawarina. "
-                                f"ESCALA: media histórica=100. <50=mínimo, 50-80=bajo, "
-                                f"80-120=moderado, 120-160=elevado, 160-200=alto, >200=crítico. "
+                                f"ESCALA: media histórica=100. <50=mínimo, 50-90=bajo, "
+                                f"90-110=normal, 110-150=elevado, 150-200=alto, >200=crítico. "
                                 f"El índice NO tiene techo en 100 — puede superar 200 en crisis. "
                                 f"Hoy IRE={ire_today:.0f} ({ire_today/100:.2f}× el promedio) → "
-                                f"nivel {'mínimo' if ire_today<50 else 'bajo' if ire_today<80 else 'moderado' if ire_today<120 else 'elevado' if ire_today<160 else 'alto' if ire_today<200 else 'crítico'}.\n"
+                                f"nivel {'mínimo' if ire_today<50 else 'bajo' if ire_today<90 else 'normal' if ire_today<110 else 'elevado' if ire_today<150 else 'alto' if ire_today<200 else 'crítico'}.\n"
                                 f"Los 5 artículos con mayor puntaje económico:\n{drivers_text}\n\n"
                                 f"Escribe 2-3 oraciones explicando el nivel de riesgo económico. "
                                 f"NO menciones el número del índice. Máximo 60 palabras. Solo el texto."
@@ -1871,14 +1879,16 @@ def generate_nota_diaria() -> None:
     if pol and pol.get("current"):
         cur = pol["current"]
         score = cur.get("score", 0.0)
-        level = cur.get("level", "MODERADO")
+        level = cur.get("level", "NORMAL")
         level_map_es = {
-            "MINIMO": "mínimo", "BAJO": "bajo", "MODERADO": "moderado",
+            "MINIMO": "mínimo", "BAJO": "bajo", "NORMAL": "normal",
             "ELEVADO": "elevado", "ALTO": "alto", "CRITICO": "crítico",
+            "MODERADO": "normal",  # legacy alias
         }
         level_map_en = {
-            "MINIMO": "minimal", "BAJO": "low", "MODERADO": "moderate",
+            "MINIMO": "minimal", "BAJO": "low", "NORMAL": "normal",
             "ELEVADO": "elevated", "ALTO": "high", "CRITICO": "critical",
+            "MODERADO": "normal",  # legacy alias
         }
         highlights.append({
             "icon": "🏛️",
