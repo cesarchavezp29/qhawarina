@@ -128,6 +128,22 @@ def main():
 
     logger.info("  Total articles: %d", len(articles))
 
+    # ── Source whitelist — keep ONLY Peruvian sources ─────────────────────
+    # Prevents foreign sources (Taiwanese, Arabic, Korean, Argentine, etc.)
+    # from re-entering the pipeline on each nightly run.
+    PERU_SOURCES = {
+        "elcomercio", "gestion", "correo", "larepublica", "andina",
+        "rpp", "peru21", "trome", "caretas", "atv", "canaln",
+        "elbuho", "inforegion", "diariouno", "larazon", "panamericana",
+    }
+    if "source" in articles.columns:
+        n_before = len(articles)
+        articles = articles[articles["source"].isin(PERU_SOURCES)].copy()
+        n_dropped = n_before - len(articles)
+        if n_dropped > 0:
+            logger.info("  Source whitelist: dropped %d foreign articles → %d Peru-only", n_dropped, len(articles))
+    # ─────────────────────────────────────────────────────────────────────────
+
     if articles.empty:
         logger.warning("No articles available — writing empty index")
         from src.processing.daily_index import _empty_index

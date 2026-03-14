@@ -1,0 +1,225 @@
+{
+  "estimated": "2026-03-08",
+  "comparison": [
+    {
+      "design": "Wage-bin (local)",
+      "event": "2017: S/850→S/930",
+      "sample": "formal_wage",
+      "elasticity": 5.0665,
+      "se": 0.6432,
+      "ci_95": [
+        3.7682,
+        6.1608
+      ],
+      "status": "not_identified",
+      "source": "wage_bin_did.py"
+    },
+    {
+      "design": "Wage-bin (net)",
+      "event": "2017: S/850→S/930",
+      "sample": "formal_wage",
+      "elasticity": 6.1242,
+      "se": 0.838,
+      "ci_95": [
+        4.4666,
+        7.7006
+      ],
+      "status": "not_identified",
+      "source": "wage_bin_did.py"
+    },
+    {
+      "design": "Wage-bin (local)",
+      "event": "2017: S/850→S/930",
+      "sample": "all_wage",
+      "elasticity": 1.658,
+      "se": 0.389,
+      "ci_95": [
+        0.8769,
+        2.42
+      ],
+      "status": "not_identified",
+      "source": "wage_bin_did.py"
+    },
+    {
+      "design": "Wage-bin (net)",
+      "event": "2017: S/850→S/930",
+      "sample": "all_wage",
+      "elasticity": 2.3635,
+      "se": 0.533,
+      "ci_95": [
+        1.3825,
+        3.3485
+      ],
+      "status": "not_identified",
+      "source": "wage_bin_did.py"
+    },
+    {
+      "design": "Wage-bin (local)",
+      "event": "2017: S/850→S/930",
+      "sample": "salaried_only",
+      "elasticity": 4.4015,
+      "se": 6.7181,
+      "ci_95": [
+        -8.7517,
+        17.3422
+      ],
+      "status": "not_identified",
+      "source": "wage_bin_did.py"
+    },
+    {
+      "design": "Wage-bin (net)",
+      "event": "2017: S/850→S/930",
+      "sample": "salaried_only",
+      "elasticity": 10.4329,
+      "se": 7.6067,
+      "ci_95": [
+        -5.2115,
+        25.2286
+      ],
+      "status": "not_identified",
+      "source": "wage_bin_did.py"
+    },
+    {
+      "design": "Wage-bin (local)",
+      "event": "2022: S/930→S/1025",
+      "sample": "formal_wage",
+      "elasticity": 3.3192,
+      "se": 0.7933,
+      "ci_95": [
+        1.9229,
+        4.9674
+      ],
+      "status": "not_identified",
+      "source": "wage_bin_did.py"
+    },
+    {
+      "design": "Wage-bin (net)",
+      "event": "2022: S/930→S/1025",
+      "sample": "formal_wage",
+      "elasticity": 1.8121,
+      "se": 0.9128,
+      "ci_95": [
+        0.2023,
+        3.7696
+      ],
+      "status": "not_identified",
+      "source": "wage_bin_did.py"
+    },
+    {
+      "design": "Wage-bin (local)",
+      "event": "2022: S/930→S/1025",
+      "sample": "all_wage",
+      "elasticity": 2.3046,
+      "se": 0.4328,
+      "ci_95": [
+        1.4742,
+        3.1147
+      ],
+      "status": "not_identified",
+      "source": "wage_bin_did.py"
+    },
+    {
+      "design": "Wage-bin (net)",
+      "event": "2022: S/930→S/1025",
+      "sample": "all_wage",
+      "elasticity": 1.4685,
+      "se": 0.5978,
+      "ci_95": [
+        0.3991,
+        2.6614
+      ],
+      "status": "not_identified",
+      "source": "wage_bin_did.py"
+    },
+    {
+      "design": "Wage-bin (local)",
+      "event": "2022: S/930→S/1025",
+      "sample": "salaried_only",
+      "elasticity": -3.7764,
+      "se": 10.1366,
+      "ci_95": [
+        -23.8217,
+        18.2425
+      ],
+      "status": "not_identified",
+      "source": "wage_bin_did.py"
+    },
+    {
+      "design": "Wage-bin (net)",
+      "event": "2022: S/930→S/1025",
+      "sample": "salaried_only",
+      "elasticity": -6.6622,
+      "se": 11.601,
+      "ci_95": [
+        -29.9132,
+        16.8611
+      ],
+      "status": "not_identified",
+      "source": "wage_bin_did.py"
+    },
+    {
+      "design": "Region×sector bite DiD (region+sector FE)",
+      "event": "2017: S/850->S/930 | region x sector | narrow bite | all_formal",
+      "sample": "formal",
+      "elasticity": null,
+      "se": null,
+      "ci_95": null,
+      "status": "not_identified",
+      "source": "region_sector_did.py"
+    },
+    {
+      "design": "Region×sector bite DiD (region+sector FE)",
+      "event": "2022: S/930->S/1025 | region x sector | narrow bite | all_formal",
+      "sample": "formal",
+      "elasticity": null,
+      "se": null,
+      "ci_95": null,
+      "status": "not_identified",
+      "source": "region_sector_did.py"
+    },
+    {
+      "design": "Region×sector bite DiD (region+sector FE)",
+      "event": "2022: S/930->S/1025 | region x sector | wide bite | all_formal",
+      "sample": "formal",
+      "elasticity": null,
+      "se": null,
+      "ci_95": null,
+      "status": "not_identified",
+      "source": "region_sector_did.py"
+    },
+    {
+      "design": "Region×sector bite DiD (region+sector FE)",
+      "event": "2017: S/850->S/930 | region x sector | narrow bite | salaried",
+      "sample": "formal",
+      "elasticity": null,
+      "se": null,
+      "ci_95": null,
+      "status": "insufficient_cells",
+      "source": "region_sector_did.py"
+    },
+    {
+      "design": "Region×sector bite DiD (region+sector FE)",
+      "event": "2022: S/930->S/1025 | region x sector | narrow bite | salaried",
+      "sample": "formal",
+      "elasticity": null,
+      "se": null,
+      "ci_95": null,
+      "status": "low_power",
+      "source": "region_sector_did.py"
+    },
+    {
+      "design": "Literature (Céspedes & Sánchez 2014)",
+      "event": "2007–2010 MW events",
+      "sample": "all",
+      "elasticity": -0.1,
+      "se": null,
+      "ci_95": null,
+      "status": "literature",
+      "source": "Céspedes & Sánchez (2014), BCRP DT 2014-007"
+    }
+  ],
+  "n_identified": 0,
+  "recommended_elast": -0.1,
+  "recommended_se": null,
+  "recommended_source": "Literature fallback — no design passed quality gate"
+}

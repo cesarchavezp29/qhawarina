@@ -1,0 +1,516 @@
+{
+  "estimated": "2026-03-08",
+  "method": "Cengiz et al. (2019) wage-bin design",
+  "n_boot": 200,
+  "bin_window": [
+    0.5,
+    1.8
+  ],
+  "bin_width": 0.05,
+  "results": [
+    {
+      "event": "2017: S/850→S/930",
+      "sample": "formal_wage",
+      "old_min": 850.0,
+      "new_min": 930.0,
+      "status": "not_identified",
+      "n_workers_pre": 8322,
+      "n_workers_post": 7919,
+      "ln_mw": 0.089948,
+      "E_aff_pre": 232126.0,
+      "E_aff_post": 366135.0,
+      "E_ctrl_pre": 585515.0,
+      "E_ctrl_post": 532378.0,
+      "dlnE_aff": 0.455719,
+      "dlnE_ctrl": -0.095137,
+      "elasticity_local": 5.0665,
+      "elasticity_net": 6.1242,
+      "se_local": 0.6432,
+      "se_net": 0.838,
+      "ci_local": [
+        3.7682,
+        6.1608
+      ],
+      "ci_net": [
+        4.4666,
+        7.7006
+      ],
+      "n_boot": 200,
+      "diagnostics": {
+        "mass_below_min": {
+          "pre": 0.121301,
+          "post": 0.145387
+        },
+        "mass_binding": {
+          "pre": 0.049402,
+          "post": 0.084849
+        },
+        "mass_spillover": {
+          "pre": 0.118316,
+          "post": 0.109607
+        },
+        "bunching_detected": "yes",
+        "top_positive_bins": [
+          {
+            "bin_label": "[0.65,0.70)",
+            "dlnE": 1.8934999704360962,
+            "employment_pre": 7191.08544921875,
+            "employment_post": 47768.55078125
+          },
+          {
+            "bin_label": "[1.35,1.40)",
+            "dlnE": 1.2073999643325806,
+            "employment_pre": 26720.12890625,
+            "employment_post": 89369.7109375
+          },
+          {
+            "bin_label": "[0.80,0.85)",
+            "dlnE": 0.9068999886512756,
+            "employment_pre": 19921.705078125,
+            "employment_post": 49340.8046875
+          }
+        ],
+        "top_negative_bins": [
+          {
+            "bin_label": "[1.75,1.80)",
+            "dlnE": -1.098099946975708,
+            "employment_pre": 74291.4453125,
+            "employment_post": 24777.3515625
+          },
+          {
+            "bin_label": "[1.55,1.60)",
+            "dlnE": -1.0211000442504883,
+            "employment_pre": 112918.6796875,
+            "employment_post": 40671.703125
+          },
+          {
+            "bin_label": "[0.70,0.75)",
+            "dlnE": -0.945900022983551,
+            "employment_pre": 26905.669921875,
+            "employment_post": 10448.52734375
+          }
+        ]
+      }
+    },
+    {
+      "event": "2017: S/850→S/930",
+      "sample": "all_wage",
+      "old_min": 850.0,
+      "new_min": 930.0,
+      "status": "not_identified",
+      "n_workers_pre": 20533,
+      "n_workers_post": 19445,
+      "ln_mw": 0.089948,
+      "E_aff_pre": 861001.0,
+      "E_aff_post": 999474.0,
+      "E_ctrl_pre": 1107031.0,
+      "E_ctrl_post": 1038961.0,
+      "dlnE_aff": 0.149134,
+      "dlnE_ctrl": -0.06346,
+      "elasticity_local": 1.658,
+      "elasticity_net": 2.3635,
+      "se_local": 0.389,
+      "se_net": 0.533,
+      "ci_local": [
+        0.8769,
+        2.42
+      ],
+      "ci_net": [
+        1.3825,
+        3.3485
+      ],
+      "n_boot": 200,
+      "diagnostics": {
+        "mass_below_min": {
+          "pre": 0.225163,
+          "post": 0.253399
+        },
+        "mass_binding": {
+          "pre": 0.076324,
+          "post": 0.073663
+        },
+        "mass_spillover": {
+          "pre": 0.119999,
+          "post": 0.108488
+        },
+        "bunching_detected": "no",
+        "top_positive_bins": [
+          {
+            "bin_label": "[0.65,0.70)",
+            "dlnE": 2.238100051879883,
+            "employment_pre": 23569.681640625,
+            "employment_post": 220970.109375
+          },
+          {
+            "bin_label": "[1.35,1.40)",
+            "dlnE": 1.638800024986267,
+            "employment_pre": 50263.2109375,
+            "employment_post": 258809.75
+          },
+          {
+            "bin_label": "[0.95,1.00)",
+            "dlnE": 0.9771000146865845,
+            "employment_pre": 64849.42578125,
+            "employment_post": 172288.3125
+          }
+        ],
+        "top_negative_bins": [
+          {
+            "bin_label": "[1.75,1.80)",
+            "dlnE": -1.7008999586105347,
+            "employment_pre": 181031.96875,
+            "employment_post": 33043.1953125
+          },
+          {
+            "bin_label": "[0.70,0.75)",
+            "dlnE": -1.4397000074386597,
+            "employment_pre": 125961.546875,
+            "employment_post": 29851.619140625
+          },
+          {
+            "bin_label": "[1.40,1.45)",
+            "dlnE": -1.3111000061035156,
+            "employment_pre": 169058.921875,
+            "employment_post": 45565.19140625
+          }
+        ]
+      }
+    },
+    {
+      "event": "2017: S/850→S/930",
+      "sample": "salaried_only",
+      "old_min": 850.0,
+      "new_min": 930.0,
+      "status": "not_identified",
+      "n_workers_pre": 138,
+      "n_workers_post": 135,
+      "ln_mw": 0.089948,
+      "E_aff_pre": 2491.0,
+      "E_aff_post": 3701.0,
+      "E_ctrl_pre": 12786.0,
+      "E_ctrl_post": 7432.0,
+      "dlnE_aff": 0.395903,
+      "dlnE_ctrl": -0.542518,
+      "elasticity_local": 4.4015,
+      "elasticity_net": 10.4329,
+      "se_local": 6.7181,
+      "se_net": 7.6067,
+      "ci_local": [
+        -8.7517,
+        17.3422
+      ],
+      "ci_net": [
+        -5.2115,
+        25.2286
+      ],
+      "n_boot": 200,
+      "diagnostics": {
+        "mass_below_min": {
+          "pre": 0.120999,
+          "post": 0.098442
+        },
+        "mass_binding": {
+          "pre": 0.041754,
+          "post": 0.084056
+        },
+        "mass_spillover": {
+          "pre": 0.030561,
+          "post": 0.022843
+        },
+        "bunching_detected": "yes",
+        "top_positive_bins": [
+          {
+            "bin_label": "[0.65,0.70)",
+            "dlnE": 5.871399879455566,
+            "employment_pre": 0.0,
+            "employment_post": 354.7380065917969
+          },
+          {
+            "bin_label": "[0.75,0.80)",
+            "dlnE": 5.777900218963623,
+            "employment_pre": 0.0,
+            "employment_post": 323.08880615234375
+          },
+          {
+            "bin_label": "[0.50,0.55)",
+            "dlnE": 5.76669979095459,
+            "employment_pre": 0.0,
+            "employment_post": 319.4783935546875
+          }
+        ],
+        "top_negative_bins": [
+          {
+            "bin_label": "[0.80,0.85)",
+            "dlnE": -7.393400192260742,
+            "employment_pre": 1625.2781982421875,
+            "employment_post": 0.0
+          },
+          {
+            "bin_label": "[1.15,1.20)",
+            "dlnE": -6.843100070953369,
+            "employment_pre": 937.3790893554688,
+            "employment_post": 0.0
+          },
+          {
+            "bin_label": "[1.75,1.80)",
+            "dlnE": -6.3993000984191895,
+            "employment_pre": 2451.142578125,
+            "employment_post": 4.0756001472473145
+          }
+        ]
+      }
+    },
+    {
+      "event": "2022: S/930→S/1025",
+      "sample": "formal_wage",
+      "old_min": 930.0,
+      "new_min": 1025.0,
+      "status": "not_identified",
+      "n_workers_pre": 7073,
+      "n_workers_post": 7524,
+      "ln_mw": 0.097263,
+      "E_aff_pre": 230533.0,
+      "E_aff_post": 318375.0,
+      "E_ctrl_pre": 645122.0,
+      "E_ctrl_post": 746971.0,
+      "dlnE_aff": 0.322835,
+      "dlnE_ctrl": 0.146587,
+      "elasticity_local": 3.3192,
+      "elasticity_net": 1.8121,
+      "se_local": 0.7933,
+      "se_net": 0.9128,
+      "ci_local": [
+        1.9229,
+        4.9674
+      ],
+      "ci_net": [
+        0.2023,
+        3.7696
+      ],
+      "n_boot": 200,
+      "diagnostics": {
+        "mass_below_min": {
+          "pre": 0.127348,
+          "post": 0.135042
+        },
+        "mass_binding": {
+          "pre": 0.055612,
+          "post": 0.074346
+        },
+        "mass_spillover": {
+          "pre": 0.169744,
+          "post": 0.137353
+        },
+        "bunching_detected": "yes",
+        "top_positive_bins": [
+          {
+            "bin_label": "[0.75,0.80)",
+            "dlnE": 0.9388999938964844,
+            "employment_pre": 20807.2578125,
+            "employment_post": 53208.58984375
+          },
+          {
+            "bin_label": "[1.65,1.70)",
+            "dlnE": 0.8152999877929688,
+            "employment_pre": 52160.24609375,
+            "employment_post": 117878.4765625
+          },
+          {
+            "bin_label": "[1.75,1.80)",
+            "dlnE": 0.65829998254776,
+            "employment_pre": 33845.32421875,
+            "employment_post": 65373.3359375
+          }
+        ],
+        "top_negative_bins": [
+          {
+            "bin_label": "[0.65,0.70)",
+            "dlnE": -0.6811000108718872,
+            "employment_pre": 44807.71875,
+            "employment_post": 22676.525390625
+          },
+          {
+            "bin_label": "[1.35,1.40)",
+            "dlnE": -0.6200000047683716,
+            "employment_pre": 111580.828125,
+            "employment_post": 60024.6796875
+          },
+          {
+            "bin_label": "[1.10,1.15)",
+            "dlnE": -0.5521000027656555,
+            "employment_pre": 202652.171875,
+            "employment_post": 116671.28125
+          }
+        ]
+      }
+    },
+    {
+      "event": "2022: S/930→S/1025",
+      "sample": "all_wage",
+      "old_min": 930.0,
+      "new_min": 1025.0,
+      "status": "not_identified",
+      "n_workers_pre": 17685,
+      "n_workers_post": 19031,
+      "ln_mw": 0.097263,
+      "E_aff_pre": 797668.0,
+      "E_aff_post": 998091.0,
+      "E_ctrl_pre": 1279654.0,
+      "E_ctrl_post": 1388060.0,
+      "dlnE_aff": 0.224152,
+      "dlnE_ctrl": 0.081318,
+      "elasticity_local": 2.3046,
+      "elasticity_net": 1.4685,
+      "se_local": 0.4328,
+      "se_net": 0.5978,
+      "ci_local": [
+        1.4742,
+        3.1147
+      ],
+      "ci_net": [
+        0.3991,
+        2.6614
+      ],
+      "n_boot": 200,
+      "diagnostics": {
+        "mass_below_min": {
+          "pre": 0.209202,
+          "post": 0.232384
+        },
+        "mass_binding": {
+          "pre": 0.075163,
+          "post": 0.085979
+        },
+        "mass_spillover": {
+          "pre": 0.151392,
+          "post": 0.134925
+        },
+        "bunching_detected": "yes",
+        "top_positive_bins": [
+          {
+            "bin_label": "[1.75,1.80)",
+            "dlnE": 1.1404999494552612,
+            "employment_pre": 46628.265625,
+            "employment_post": 145872.671875
+          },
+          {
+            "bin_label": "[0.75,0.80)",
+            "dlnE": 1.1318000555038452,
+            "employment_pre": 76208.953125,
+            "employment_post": 236337.59375
+          },
+          {
+            "bin_label": "[1.50,1.55)",
+            "dlnE": 0.6944000124931335,
+            "employment_pre": 83784.640625,
+            "employment_post": 167774.859375
+          }
+        ],
+        "top_negative_bins": [
+          {
+            "bin_label": "[1.35,1.40)",
+            "dlnE": -0.9761000275611877,
+            "employment_pre": 339115.5,
+            "employment_post": 127765.8515625
+          },
+          {
+            "bin_label": "[1.60,1.65)",
+            "dlnE": -0.7960000038146973,
+            "employment_pre": 200939.625,
+            "employment_post": 90654.0859375
+          },
+          {
+            "bin_label": "[0.65,0.70)",
+            "dlnE": -0.6270999908447266,
+            "employment_pre": 185351.5625,
+            "employment_post": 99001.1015625
+          }
+        ]
+      }
+    },
+    {
+      "event": "2022: S/930→S/1025",
+      "sample": "salaried_only",
+      "old_min": 930.0,
+      "new_min": 1025.0,
+      "status": "not_identified",
+      "n_workers_pre": 109,
+      "n_workers_post": 115,
+      "ln_mw": 0.097263,
+      "E_aff_pre": 2822.0,
+      "E_aff_post": 1955.0,
+      "E_ctrl_pre": 5227.0,
+      "E_ctrl_post": 6920.0,
+      "dlnE_aff": -0.367305,
+      "dlnE_ctrl": 0.280684,
+      "elasticity_local": -3.7764,
+      "elasticity_net": -6.6622,
+      "se_local": 10.1366,
+      "se_net": 11.601,
+      "ci_local": [
+        -23.8217,
+        18.2425
+      ],
+      "ci_net": [
+        -29.9132,
+        16.8611
+      ],
+      "n_boot": 200,
+      "diagnostics": {
+        "mass_below_min": {
+          "pre": 0.027803,
+          "post": 0.08285
+        },
+        "mass_binding": {
+          "pre": 0.073209,
+          "post": 0.017377
+        },
+        "mass_spillover": {
+          "pre": 0.157771,
+          "post": 0.113527
+        },
+        "bunching_detected": "no",
+        "top_positive_bins": [
+          {
+            "bin_label": "[1.65,1.70)",
+            "dlnE": 7.8078999519348145,
+            "employment_pre": 0.0,
+            "employment_post": 2459.854736328125
+          },
+          {
+            "bin_label": "[0.90,0.95)",
+            "dlnE": 7.029900074005127,
+            "employment_pre": 0.0,
+            "employment_post": 1129.8880615234375
+          },
+          {
+            "bin_label": "[0.95,1.00)",
+            "dlnE": 5.514200210571289,
+            "employment_pre": 0.0,
+            "employment_post": 248.17979431152344
+          }
+        ],
+        "top_negative_bins": [
+          {
+            "bin_label": "[1.70,1.75)",
+            "dlnE": -6.526199817657471,
+            "employment_pre": 682.7864990234375,
+            "employment_post": 0.0
+          },
+          {
+            "bin_label": "[1.05,1.10)",
+            "dlnE": -6.280399799346924,
+            "employment_pre": 533.99560546875,
+            "employment_post": 0.0
+          },
+          {
+            "bin_label": "[1.55,1.60)",
+            "dlnE": -5.560200214385986,
+            "employment_pre": 259.8822021484375,
+            "employment_post": 0.0
+          }
+        ]
+      }
+    }
+  ]
+}

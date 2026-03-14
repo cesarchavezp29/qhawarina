@@ -1,0 +1,46 @@
+{
+  "estimated": "2026-03-07",
+  "sample": "2004-Q2 – 2025-Q4",
+  "n_obs_total": 85,
+  "covid_excluded": "2020Q2–2020Q3 only",
+  "specifications_run": [
+    "bivariate",
+    "trivariate_price_puzzle",
+    "trivariate",
+    "bvar_minnesota",
+    "5var_ols"
+  ],
+  "final_elasticities": {
+    "commodity_10pct": {
+      "gdp_pp": 0.089,
+      "inflation_pp": 0.009,
+      "gdp_source": "trivariate",
+      "inf_source": "5var_ols",
+      "gdp_ci_lo": -0.128,
+      "gdp_ci_hi": 0.182,
+      "inf_ci_lo": -0.022,
+      "inf_ci_hi": 0.014
+    },
+    "fx_10pct_depreciation": {
+      "gdp_pp": -1.216,
+      "inflation_pp": 0.105,
+      "gdp_source": "5var_ols",
+      "inf_source": "bivariate",
+      "gdp_ci_lo": -3.798,
+      "gdp_ci_hi": 1.735,
+      "inf_ci_lo": -0.192,
+      "inf_ci_hi": 0.191
+    },
+    "rate_100bp": {
+      "gdp_pp": -1.228,
+      "inflation_pp": -0.15,
+      "gdp_source": "bivariate",
+      "inf_source": "BCRP literature",
+      "gdp_ci_lo": -5.371,
+      "gdp_ci_hi": 3.462,
+      "inf_ci_lo": null,
+      "inf_ci_hi": null
+    }
+  },
+  "model_note": "Bivariate/trivariate VAR(2) with QoQ log-differences. COVID lockdown quarters (2020Q2-Q3) excluded. Cholesky identification (commodity first). BCRP benchmarks used where VAR gives wrong sign or no CI."
+}

@@ -1,0 +1,12 @@
+{
+  "date": "2026-03-10",
+  "run_time": "2026-03-10T22:49:01.753406",
+  "supermarket": {
+    "passed": true,
+    "errors": []
+  },
+  "rss": {
+    "passed": true,
+    "errors": []
+  }
+}

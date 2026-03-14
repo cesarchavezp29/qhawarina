@@ -1,0 +1,96 @@
+{
+  "date_estimated": "2026-03-08",
+  "design1_regional": {
+    "event_2017": {
+      "old_min": 850,
+      "new_min": 930,
+      "n_depts": 23,
+      "n_obs": 46,
+      "mean_bite": 0.052611547589332994,
+      "beta_ols": -0.25671741116678476,
+      "se_ols": 2.0822593084915177,
+      "employment_elasticity": -2.854057185454057,
+      "se_elasticity": 23.14952894845852,
+      "eligible_for_simulation": false
+    },
+    "event_2022": {
+      "old_min": 930,
+      "new_min": 1025,
+      "n_depts": 24,
+      "n_obs": 69,
+      "mean_bite": 0.056127452972453085,
+      "beta_2period": -0.5465353872251592,
+      "se_2period": 1.796979960830668,
+      "employment_elasticity_2period": -5.619132362774076,
+      "se_elasticity_2period": 18.47541529639359,
+      "beta_eventstudy_pre": 0.10468326677222431,
+      "se_eventstudy_pre": 1.6167022299235607,
+      "beta_eventstudy_post": -0.54584081094172,
+      "se_eventstudy_post": 1.5394663664252901,
+      "eligible_for_simulation": false
+    }
+  },
+  "design2_cell": {
+    "event_2017": {
+      "n_cells": 56,
+      "n_depts": 14,
+      "n_sectors": 13,
+      "n_obs": 97,
+      "mean_bite": 0.05042709089135017,
+      "employment_elasticity": 2.058,
+      "se_elasticity": 19.736,
+      "beta_ols": 0.18512,
+      "eligible_for_simulation": false
+    },
+    "event_2022": {
+      "n_cells": 61,
+      "n_depts": 13,
+      "n_sectors": 13,
+      "n_obs": 156,
+      "mean_bite": 0.04461242584993082,
+      "employment_elasticity": 33.365,
+      "se_elasticity": 13.838,
+      "beta_ols": 3.24514,
+      "eligible_for_simulation": false
+    }
+  },
+  "design3_individual": {
+    "event_2017": {
+      "outcome": "formal_binary",
+      "n_treat": 2978,
+      "n_control": 4753,
+      "did_coef": -0.0108,
+      "did_se": 0.0012,
+      "did_pval": 0.0,
+      "n_clusters": 25
+    },
+    "event_2022": {
+      "outcome": "formal_binary",
+      "n_treat": 2089,
+      "n_control": 5158,
+      "did_coef": 0.0006,
+      "did_se": 0.0011,
+      "did_pval": 0.5688,
+      "n_clusters": 25
+    }
+  },
+  "design4_cengiz": {
+    "event_2017": {
+      "missing_mass": 154859,
+      "excess_mass": 142544,
+      "net_employment_loss": 12315,
+      "total_pre_employment": 6200908,
+      "employment_elasticity_cengiz": 0.022
+    },
+    "event_2022": {
+      "missing_mass": 75238,
+      "excess_mass": 166500,
+      "net_employment_loss": -91263,
+      "total_pre_employment": 6398619,
+      "employment_elasticity_cengiz": -0.147
+    }
+  },
+  "recommended_elasticity": -0.1,
+  "n_credible_designs": 0,
+  "identification_note": "Regional bite DiD exploits dept-level variation in bite fraction across 25 departments. Event study pre-trend test checks parallel trends. Identification fails if: N_clusters<15, SE>0.20, or pre-trend test rejects."
+}

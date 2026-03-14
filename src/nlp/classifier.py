@@ -507,6 +507,12 @@ PUNTAJE 0 OBLIGATORIO para:
 - Artículos sobre política de otros países
 - Reportes climáticos o de desastres naturales (salvo que generen crisis política)
 
+EJEMPLOS DE PUNTAJE 0 POLÍTICO:
+- "Ruptura del gasoducto Camisea" → pol=0 (evento económico/industrial, no político)
+- "BCR mantiene tasa de referencia" → pol=0 (política monetaria técnica)
+- "Precio del dólar hoy" → pol=0
+- "Trump anuncia aranceles" → pol=0 (política exterior extranjera — salvo que artículo describa crisis política interna peruana por ello)
+
 REGLA: Si un artículo usa una crisis económica como CONTEXTO para una maniobra política (ej: "oposición condiciona voto de confianza por crisis energética"), el puntaje POLÍTICO debe ser alto. Lo que importa es la ACCIÓN política, no el tema económico."""
 
 _ECONOMIC_SYSTEM_PROMPT = """Clasificarás un artículo de prensa peruana. Evalúa ÚNICAMENTE el riesgo de disrupción económica en el Perú basándote en lo que el artículo afirma o implica directamente.
@@ -530,6 +536,27 @@ PUNTAJE 0 OBLIGATORIO para:
 - Consumo y estilo de vida (perfumería crece, turismo aumenta, nuevo restaurante, moda)
 - Convocatorias laborales, ofertas de empleo, becas
 - Maniobras POLÍTICAS que usan temas económicos como pretexto (ej: "Congreso bloquea reforma de pensiones" = político, no económico — el riesgo es la inestabilidad institucional)
+
+EJEMPLOS DE PUNTAJE 0 (memoriza estos patrones — estos artículos deben recibir eco=0):
+- "Roberto Chiabra será candidato presidencial" → eco=0 (candidatura política, no disrupción económica)
+- "Eduardo Arana: Gobierno hará prevalecer autoridad" → eco=0 (declaración política)
+- "Congreso aprueba cambios a ley de inversiones" → eco=0 (legislación, no disrupción — salvo que el artículo indique que causa fuga de capitales o rechazo de mercados)
+- "MTC modifica reglamento portuario" → eco=0 (regulación rutinaria)
+- "Sunafil: qué tipo de denuncias laborales se pueden realizar" → eco=0 (información al consumidor)
+- "Desempleo en EEUU sube a 4.2%" → eco=0 (dato extranjero sin impacto directo en Perú)
+- "Wall Street cae 2%" → eco=0 (mercado extranjero — salvo que artículo conecte con efecto en BVL o economía peruana con datos)
+- "CAF firma acuerdos de cooperación" → eco=0 (noticia positiva/institucional)
+- "Juliana Oxenford critica gestión ministerial" → eco=0 (opinión televisiva)
+- "Indecopi multa a universidad" → eco=0 (regulación puntual, no disrupción sistémica)
+- "SBS: cómo acceder a tu pensión" → eco=0 (información al consumidor)
+- "Mujeres ocupan 4 de cada 10 puestos altos" → eco=0 (estadística social, no riesgo económico)
+
+EJEMPLOS DE PUNTAJE ALTO (para contraste — solo estos tipos merecen eco≥40):
+- "Ruptura del gasoducto Camisea paraliza suministro de gas al 64% del país" → eco=80 (disrupción energética nacional)
+- "Trump anuncia arancel de 50% al cobre peruano" → eco=70 (amenaza directa a exportaciones)
+- "Bloqueo de carreteras impide suministro de oxígeno a hospitales del sur" → eco=60 (disrupción de cadena de suministro con impacto en vidas)
+- "BCR: expectativas empresariales caen a zona pesimista" → eco=45 (deterioro de indicadores macro)
+- "Petroperú reporta pérdidas de S/2,000 millones" → eco=55 (crisis fiscal en empresa estatal)
 
 REGLA: Riesgo económico = DISRUPCIÓN o AMENAZA ACTIVA a la actividad económica. NO es lo mismo que "noticia sobre economía". Si no hay disrupción, amenaza o shock, el puntaje es 0."""
 
@@ -585,6 +612,77 @@ def _score_batch(articles: list[dict], system_prompt: str, client, model: str) -
     while len(scores) < n:
         scores.append(None)
     return scores[:n]
+
+
+def post_filter_scores(df: pd.DataFrame) -> pd.DataFrame:
+    """Apply deterministic post-filters to existing scored articles.
+
+    Same rules as the inline post-filter in classify_articles_dual, but
+    callable standalone so we can apply to an already-classified parquet
+    without re-running the full Haiku classification.
+    """
+    import re as _re
+    df = df.copy()
+    titles = df["title"].fillna("").str.lower()
+
+    _crisis_guard = (
+        r"crisis|emergencia|desastre|destruy|colapso|pérdida.*millones|"
+        r"inunda|sequía|helada.*producci[oó]n|ni[ñn]o costero|fen[oó]meno.*ni[ñn]o|"
+        r"bloque[oó]|paro|huelga|protesta|desabastecimiento|escasez"
+    )
+    mask_crisis = titles.str.contains(_crisis_guard, regex=True, na=False)
+
+    rules_eco_zero = [
+        # Foreign stock markets
+        (r"wall street|nasdaq|dow jones|s&p 500|bolsa de nueva york|"
+         r"mercados? (de|en) (eeuu|estados unidos|asia|europa|china|jap[oó]n)|"
+         r"bolsas (europeas|asi[aá]ticas|chinas)|nikkei|ftse|dax\b|cac 40", True),
+        # Foreign unemployment / economic data
+        (r"desempleo (en |de )(eeuu|estados unidos|china|europa|jap[oó]n|reino unido|alemania)|"
+         r"inflaci[oó]n (en |de )(eeuu|estados unidos|china|europa)|"
+         r"pib (de|en) (china|eeuu|estados unidos|europa|alemania)", True),
+        # Daily market summary columns
+        (r"mercados e indicadores|indicadores econ[oó]micos hoy|cierre de mercados|"
+         r"resumen (de |)mercados|apertura de (la |)bolsa hoy", True),
+        # Corporate earnings / positive growth
+        (r"eleva (sus )?ingresos|reporta ganancias|incrementa (sus )?ventas|"
+         r"registra crecimiento|aumenta (su )?facturaci[oó]n|utilidades crecen|"
+         r"crece \d+% en (sus )?ventas|record de ventas|r[eé]cord de (ingresos|ganancias)", True),
+        # Sports club business
+        (r"sport boys.*(crec|ingres|venta|centenari|expand|presupuest)|"
+         r"(alianza lima|universitario|cristal|melgar|ayacucho fc).*(crec|ingres|venta|presupuest|patrocin)", True),
+        # Political candidacies (no crisis exception)
+        (r"ser[aá] candidat[oa]|lanza (su )?candidatura|postula (a|como)|"
+         r"inscribe (su )?candidatura|plancha presidencial|f[oó]rmula presidencial", False),
+        # Consumer info / routine regulatory
+        (r"sbs (publica|aprueba|establece).*(proyecto|norma|reglamento)|"
+         r"indecopi (multa|sanciona|resuelve).{0,40}(universidad|colegio|empresa|proveedor)|"
+         r"sunafil.*(denunci|orient|capacit|inform)|"
+         r"c[oó]mo (acceder|obtener|solicitar|retirar).*(pensi[oó]n|afp|cts|gratificaci[oó]n|bono)|"
+         r"premio.*(reconoc|otorg|entreg|galardon)|ranking de (empresas|universidades|pa[ií]ses)|"
+         r"mujeres ocupan|brecha (salarial|de g[eé]nero)|paridad de g[eé]nero|equidad laboral", True),
+    ]
+
+    n_zeroed = 0
+    for pattern, use_crisis_exception in rules_eco_zero:
+        mask = titles.str.contains(pattern, regex=True, na=False)
+        if use_crisis_exception:
+            mask = mask & ~mask_crisis
+        changed = mask & (df["economic_score"].fillna(0) > 0)
+        n_zeroed += int(changed.sum())
+        df.loc[mask, "economic_score"] = 0
+
+    # FX routine cap at 10
+    _fx_routine = r"(precio del d[oó]lar|d[oó]lar hoy|divisa cierra|tipo de cambio hoy|sol se cotiza)"
+    _fx_large_move = r"(puntos b[aá]sicos|pierde|gana|dispara|desploma|hunde|sube.*%|baja.*%)"
+    mask_fx = (
+        titles.str.contains(_fx_routine, regex=True, na=False) &
+        ~titles.str.contains(_fx_large_move, regex=True, na=False)
+    )
+    df.loc[mask_fx, "economic_score"] = df.loc[mask_fx, "economic_score"].clip(upper=10)
+
+    logger.info("post_filter_scores: zeroed eco on %d articles", n_zeroed)
+    return df
 
 
 def classify_articles_dual(
@@ -908,12 +1006,79 @@ def classify_articles_dual(
     )
     df.loc[mask_personal_fin, "economic_score"] = 20
 
+    # 16. Foreign stock markets (Wall Street, Nasdaq, Dow, Asian/European exchanges) → eco=0
+    _foreign_markets = (
+        r"wall street|nasdaq|dow jones|s&p 500|bolsa de nueva york|"
+        r"mercados? (de|en) (eeuu|estados unidos|asia|europa|china|jap[oó]n)|"
+        r"bolsas (europeas|asi[aá]ticas|chinas)|nikkei|ftse|dax\b|cac 40"
+    )
+    mask_foreign_markets = titles.str.contains(_foreign_markets, regex=True, na=False) & ~mask_crisis_exception
+    df.loc[mask_foreign_markets, "economic_score"] = 0
+
+    # 17. Foreign unemployment / economic data (not Peru-specific) → eco=0
+    _foreign_econ_data = (
+        r"desempleo (en |de )(eeuu|estados unidos|china|europa|jap[oó]n|reino unido|alemania)|"
+        r"inflaci[oó]n (en |de )(eeuu|estados unidos|china|europa)|"
+        r"pib (de|en) (china|eeuu|estados unidos|europa|alemania)"
+    )
+    mask_foreign_econ = titles.str.contains(_foreign_econ_data, regex=True, na=False) & ~mask_crisis_exception
+    df.loc[mask_foreign_econ, "economic_score"] = 0
+
+    # 18. Daily market summary columns → eco=0
+    _market_summary = (
+        r"mercados e indicadores|indicadores econ[oó]micos hoy|cierre de mercados|"
+        r"resumen (de |)mercados|apertura de (la |)bolsa hoy"
+    )
+    mask_market_summary = titles.str.contains(_market_summary, regex=True, na=False) & ~mask_crisis_exception
+    df.loc[mask_market_summary, "economic_score"] = 0
+
+    # 19. Corporate earnings / positive growth → eco=0
+    _corp_earnings = (
+        r"eleva (sus )?ingresos|reporta ganancias|incrementa (sus )?ventas|"
+        r"registra crecimiento|aumenta (su )?facturaci[oó]n|utilidades crecen|"
+        r"crece \d+% en (sus )?ventas|record de ventas|r[eé]cord de (ingresos|ganancias)"
+    )
+    mask_corp_earnings = titles.str.contains(_corp_earnings, regex=True, na=False) & ~mask_crisis_exception
+    df.loc[mask_corp_earnings, "economic_score"] = 0
+
+    # 20. Sports club business / anniversary / expansion (not disruption) → eco=0
+    _sports_biz = (
+        r"sport boys.*(crec|ingres|venta|centenari|expand|presupuest)|"
+        r"(alianza lima|universitario|cristal|melgar|ayacucho fc).*(crec|ingres|venta|presupuest|patrocin)"
+    )
+    mask_sports_biz = titles.str.contains(_sports_biz, regex=True, na=False) & ~mask_crisis_exception
+    df.loc[mask_sports_biz, "economic_score"] = 0
+
+    # 21. Political candidacies (not economic) → eco=0
+    _candidacy = (
+        r"ser[aá] candidat[oa]|lanza (su )?candidatura|postula (a|como)|"
+        r"inscribe (su )?candidatura|plancha presidencial|f[oó]rmula presidencial"
+    )
+    mask_candidacy = titles.str.contains(_candidacy, regex=True, na=False)
+    df.loc[mask_candidacy, "economic_score"] = 0
+
+    # 22. Consumer info / regulatory routine → eco=0
+    _consumer_info = (
+        r"sbs (publica|aprueba|establece).*(proyecto|norma|reglamento)|"
+        r"indecopi (multa|sanciona|resuelve).{0,40}(universidad|colegio|empresa|proveedor)|"
+        r"sunafil.*(denunci|orient|capacit|inform)|"
+        r"c[oó]mo (acceder|obtener|solicitar|retirar).*(pensi[oó]n|afp|cts|gratificaci[oó]n|bono)|"
+        r"premio.*(reconoc|otorg|entreg|galardon)|ranking de (empresas|universidades|pa[ií]ses)|"
+        r"mujeres ocupan|brecha (salarial|de g[eé]nero)|paridad de g[eé]nero|equidad laboral"
+    )
+    mask_consumer_info = titles.str.contains(_consumer_info, regex=True, na=False) & ~mask_crisis_exception
+    df.loc[mask_consumer_info, "economic_score"] = 0
+
     masks = [mask_farandula, mask_sports, mask_fx_routine, mask_sismo, mask_weather,
              mask_inhab, mask_pol_action, mask_electoral, mask_mercados, mask_gastro,
-             mask_horoscope, mask_lottery, mask_reality, mask_lifestyle, mask_personal_fin]
+             mask_horoscope, mask_lottery, mask_reality, mask_lifestyle, mask_personal_fin,
+             mask_foreign_markets, mask_foreign_econ, mask_market_summary,
+             mask_corp_earnings, mask_sports_biz, mask_candidacy, mask_consumer_info]
     labels = ["farándula", "sports", "fx_routine", "sismo", "weather",
               "inhabilitacion", "pol_action", "electoral", "mercados", "gastro",
-              "horoscope", "lottery", "reality", "lifestyle_tips", "personal_finance"]
+              "horoscope", "lottery", "reality", "lifestyle_tips", "personal_finance",
+              "foreign_markets", "foreign_econ", "market_summary",
+              "corp_earnings", "sports_biz", "candidacy", "consumer_info"]
     n_filtered = masks[0].copy()
     for m in masks[1:]:
         n_filtered = n_filtered | m
