@@ -1281,13 +1281,15 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
         "current": {
             "date": latest["date"].strftime("%Y-%m-%d"),
             # Dual indices
-            "political_raw":  round(irp_today, 1),
-            "political_7d":   round(irp_7d, 1),
-            "political_level": classify_level(irp_7d),
+            "political_raw":       round(irp_today, 1),
+            "political_raw_level": classify_level(irp_today),
+            "political_7d":        round(irp_7d, 1),
+            "political_level":     classify_level(irp_7d),
             "political_multiplier": round(irp_7d / 100, 2),
-            "economic_raw":   round(ire_today, 1),
-            "economic_7d":    round(ire_7d, 1),
-            "economic_level": classify_level(ire_7d),
+            "economic_raw":       round(ire_today, 1),
+            "economic_raw_level": classify_level(ire_today),
+            "economic_7d":        round(ire_7d, 1),
+            "economic_level":     classify_level(ire_7d),
             "economic_multiplier": round(ire_7d / 100, 2),
             # Legacy fields (for homepage card backward compat)
             "score":   round(irp_7d, 1),

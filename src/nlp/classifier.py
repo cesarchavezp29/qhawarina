@@ -663,13 +663,24 @@ def post_filter_scores(df: pd.DataFrame) -> pd.DataFrame:
          r"mujeres ocupan|brecha (salarial|de g[eé]nero)|paridad de g[eé]nero|equidad laboral", True),
     ]
 
-    # Celebrity / tabloid → zero BOTH scores (no crisis exception needed)
+    # Celebrity / tabloid / entertainment → zero BOTH scores (no crisis exception)
     _celeb = (
         r"maju mantilla|magaly medina|far[aá]ndula|reconciliaci[oó]n.*salcedo|"
         r"se agarran a golpes|pelea en combi|"
         r"supuesta reconciliaci[oó]n|infidelidad|ampay\b|esc[aá]ndalo sentimental|"
         r"romance entre|separaci[oó]n de|confirma su embarazo|boda de|"
-        r"chollywood|showbiz|telenovela|reality (de amor|sentimental)"
+        r"chollywood|showbiz|telenovela|reality (de amor|sentimental)|"
+        # TV shows / entertainment personalities
+        r"ale fuller|mayra go[ñn]i|flavia laos|ma[ñn]ana me caso|esto es guerra|"
+        r"al fondo hay sitio|gran hermano|la voz per[uú]|yo soy\b|el gran chef|"
+        r"natti natasha|bad bunny|taylor swift|reggaet[oó]n|concierto de|gira musical|"
+        # TV premieres / show announcements
+        r"primer adelanto de|estreno de.*serie|nueva temporada de|reaparecen con|"
+        # Street crime / accidents (not systemic disruption)
+        r"asaltan a|roban a|accidente de tr[aá]nsito|choque vehicular|atropell[oa]\b|"
+        # Religious / opinion surveys
+        r"preferencias religiosas|creencias religiosas|fe de los j[oó]venes|"
+        r"religi[oó]n.*encuesta|encuesta.*religi[oó]n"
     )
     mask_celeb = titles.str.contains(_celeb, regex=True, na=False)
     n_celeb_eco = int((mask_celeb & (df["economic_score"].fillna(0) > 0)).sum())
@@ -1091,7 +1102,14 @@ def classify_articles_dual(
         r"se agarran a golpes|pelea en combi|"
         r"supuesta reconciliaci[oó]n|infidelidad|ampay\b|esc[aá]ndalo sentimental|"
         r"romance entre|separaci[oó]n de|confirma su embarazo|boda de|"
-        r"chollywood|showbiz|telenovela|reality (de amor|sentimental)"
+        r"chollywood|showbiz|telenovela|reality (de amor|sentimental)|"
+        r"ale fuller|mayra go[ñn]i|flavia laos|ma[ñn]ana me caso|esto es guerra|"
+        r"al fondo hay sitio|gran hermano|la voz per[uú]|yo soy\b|el gran chef|"
+        r"natti natasha|bad bunny|taylor swift|reggaet[oó]n|concierto de|gira musical|"
+        r"primer adelanto de|estreno de.*serie|nueva temporada de|reaparecen con|"
+        r"asaltan a|roban a|accidente de tr[aá]nsito|choque vehicular|atropell[oa]\b|"
+        r"preferencias religiosas|creencias religiosas|fe de los j[oó]venes|"
+        r"religi[oó]n.*encuesta|encuesta.*religi[oó]n"
     )
     mask_celeb = titles.str.contains(_celeb, regex=True, na=False)
     df.loc[mask_celeb, "economic_score"] = 0
