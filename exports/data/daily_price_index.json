@@ -4,8 +4,8 @@
     "methodology_note": "index_all uses INEI IPC expenditure weights via weighted geometric mean of category-level Jevons ratios. index_all_unweighted is the simple geometric mean across all matched products.",
     "base_date": "2026-02-10",
     "base_value": 100,
-    "last_date": "2026-03-12",
-    "n_days": 31,
+    "last_date": "2026-03-11",
+    "n_days": 30,
     "stores": [
       "Plaza Vea",
       "Metro",
@@ -15,7 +15,7 @@
     "ratio_filter": "0.5 < ratio < 2.0",
     "inflation_window": "30-day rolling average (yoy_inflation, mom_inflation)",
     "reference": "Cavallo & Rigobon (2016), Billion Prices Project, MIT",
-    "updated": "2026-03-13"
+    "updated": "2026-03-14"
   },
   "categories": {
     "arroz_cereales": {
@@ -901,112 +901,85 @@
       "index_limpieza": 99.4661,
       "index_cuidado_personal": 98.9531,
       "index_other": 100.7155
-    },
-    {
-      "date": "2026-03-12",
-      "index_all": 99.3209,
-      "index_all_unweighted": 99.6162,
-      "index_food": 99.5561,
-      "index_nonfood": 99.8247,
-      "var_all": -0.0127,
-      "var_food": 0.0205,
-      "cum_pct": -0.6791,
-      "yoy_inflation": null,
-      "mom_inflation": null,
-      "interpolated": false,
-      "n_matched": 37920,
-      "index_arroz_cereales": 99.305,
-      "index_pan_harinas": 99.0277,
-      "index_carnes": 99.7088,
-      "index_pescados_mariscos": 98.5707,
-      "index_lacteos": 99.4601,
-      "index_frutas": 100.5555,
-      "index_verduras": 98.4556,
-      "index_aceites_grasas": 98.9242,
-      "index_azucar_dulces": 101.1678,
-      "index_bebidas": 98.9513,
-      "index_limpieza": 99.2773,
-      "index_cuidado_personal": 98.7524,
-      "index_other": 100.5501
     }
   ],
   "latest": {
-    "date": "2026-03-12",
-    "index_all": 99.3209,
-    "index_food": 99.5561,
-    "cum_pct": -0.6791,
-    "var_all": -0.0127,
+    "date": "2026-03-11",
+    "index_all": 99.3335,
+    "index_food": 99.5357,
+    "cum_pct": -0.6665,
+    "var_all": -0.1857,
     "yoy_inflation": null,
     "mom_inflation": null,
-    "n_products_today": 37920,
+    "n_products_today": 39942,
     "top_movers": [
+      {
+        "category": "pescados_mariscos",
+        "label_es": "Pescados y Mariscos",
+        "label_en": "Fish & Seafood",
+        "var": -0.84
+      },
       {
         "category": "frutas",
         "label_es": "Frutas",
         "label_en": "Fruits",
-        "var": 1.03
+        "var": -0.8
       },
       {
-        "category": "aceites_grasas",
-        "label_es": "Aceites y Grasas",
-        "label_en": "Oils & Fats",
-        "var": 0.5
+        "category": "pan_harinas",
+        "label_es": "Pan y Harinas",
+        "label_en": "Bread & Flour",
+        "var": -0.3
       },
       {
-        "category": "azucar_dulces",
-        "label_es": "Azúcar y Dulces",
-        "label_en": "Sugar & Sweets",
-        "var": -0.26
-      },
-      {
-        "category": "verduras",
-        "label_es": "Verduras",
-        "label_en": "Vegetables",
-        "var": -0.23
+        "category": "arroz_cereales",
+        "label_es": "Arroz y Cereales",
+        "label_en": "Rice & Cereals",
+        "var": -0.19
       }
     ],
     "product_movers": [
       {
-        "name": "Lechuga de Seda Hidropónica de Invern...",
+        "name": "Infusiones WAWASANA Plena Caja 20un",
+        "store": "plazavea",
+        "category": "other",
+        "var": 98.33
+      },
+      {
+        "name": "Turrón de Chocolate Dulce Pasión 12 P...",
         "store": "wong",
-        "category": "frutas",
-        "var": 100.0
+        "category": "pan_harinas",
+        "var": 82.0
       },
       {
-        "name": "Lechuga Crespa Hidropónica de Inverna...",
+        "name": "Turrón de Chocolate 8 Porciones",
         "store": "wong",
-        "category": "carnes",
-        "var": 100.0
+        "category": "pan_harinas",
+        "var": 81.23
       },
       {
-        "name": "Torta Selva Negra con Durazno 20 Porc...",
-        "store": "metro",
+        "name": "Torta Carrot Cake Dulce Pasión 10 Por...",
+        "store": "wong",
         "category": "pan_harinas",
-        "var": 100.0
-      },
-      {
-        "name": "Torta Alemana con Cerezas 16 Porciones",
-        "store": "metro",
-        "category": "pan_harinas",
-        "var": 100.0
+        "var": 80.23
       }
     ],
     "stores_coverage": {
-      "metro": 11412,
-      "plazavea": 13018,
-      "wong": 13900
+      "metro": 12459,
+      "plazavea": 12962,
+      "wong": 14941
     },
     "categories_coverage": {
-      "aceites_grasas": 699,
-      "arroz_cereales": 1106,
-      "azucar_dulces": 1001,
-      "bebidas": 965,
-      "carnes": 13953,
-      "cuidado_personal": 2827,
-      "frutas": 1943,
-      "lacteos": 2149,
-      "limpieza": 3090,
-      "pan_harinas": 6273,
+      "aceites_grasas": 688,
+      "arroz_cereales": 1326,
+      "azucar_dulces": 1063,
+      "bebidas": 978,
+      "carnes": 14499,
+      "cuidado_personal": 2826,
+      "frutas": 1946,
+      "lacteos": 2712,
+      "limpieza": 3080,
+      "pan_harinas": 6558,
       "pescados_mariscos": 224,
       "verduras": 308
     }
