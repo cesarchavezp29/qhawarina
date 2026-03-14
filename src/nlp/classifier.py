@@ -663,6 +663,22 @@ def post_filter_scores(df: pd.DataFrame) -> pd.DataFrame:
          r"mujeres ocupan|brecha (salarial|de g[eé]nero)|paridad de g[eé]nero|equidad laboral", True),
     ]
 
+    # Celebrity / tabloid → zero BOTH scores (no crisis exception needed)
+    _celeb = (
+        r"maju mantilla|magaly medina|far[aá]ndula|reconciliaci[oó]n.*salcedo|"
+        r"se agarran a golpes|pelea en combi|"
+        r"supuesta reconciliaci[oó]n|infidelidad|ampay\b|esc[aá]ndalo sentimental|"
+        r"romance entre|separaci[oó]n de|confirma su embarazo|boda de|"
+        r"chollywood|showbiz|telenovela|reality (de amor|sentimental)"
+    )
+    mask_celeb = titles.str.contains(_celeb, regex=True, na=False)
+    n_celeb_eco = int((mask_celeb & (df["economic_score"].fillna(0) > 0)).sum())
+    n_celeb_pol = int((mask_celeb & (df["political_score"].fillna(0) > 0)).sum())
+    df.loc[mask_celeb, "economic_score"] = 0
+    df.loc[mask_celeb, "political_score"] = 0
+    if n_celeb_eco + n_celeb_pol > 0:
+        logger.info("post_filter_scores: celeb/tabloid zeroed eco=%d pol=%d articles", n_celeb_eco, n_celeb_pol)
+
     n_zeroed = 0
     for pattern, use_crisis_exception in rules_eco_zero:
         mask = titles.str.contains(pattern, regex=True, na=False)
@@ -1069,16 +1085,28 @@ def classify_articles_dual(
     mask_consumer_info = titles.str.contains(_consumer_info, regex=True, na=False) & ~mask_crisis_exception
     df.loc[mask_consumer_info, "economic_score"] = 0
 
+    # 23. Celebrity gossip / tabloid / entertainment → BOTH scores 0
+    _celeb = (
+        r"maju mantilla|magaly medina|far[aá]ndula|reconciliaci[oó]n.*salcedo|"
+        r"se agarran a golpes|pelea en combi|"
+        r"supuesta reconciliaci[oó]n|infidelidad|ampay\b|esc[aá]ndalo sentimental|"
+        r"romance entre|separaci[oó]n de|confirma su embarazo|boda de|"
+        r"chollywood|showbiz|telenovela|reality (de amor|sentimental)"
+    )
+    mask_celeb = titles.str.contains(_celeb, regex=True, na=False)
+    df.loc[mask_celeb, "economic_score"] = 0
+    df.loc[mask_celeb, "political_score"] = 0
+
     masks = [mask_farandula, mask_sports, mask_fx_routine, mask_sismo, mask_weather,
              mask_inhab, mask_pol_action, mask_electoral, mask_mercados, mask_gastro,
              mask_horoscope, mask_lottery, mask_reality, mask_lifestyle, mask_personal_fin,
              mask_foreign_markets, mask_foreign_econ, mask_market_summary,
-             mask_corp_earnings, mask_sports_biz, mask_candidacy, mask_consumer_info]
+             mask_corp_earnings, mask_sports_biz, mask_candidacy, mask_consumer_info, mask_celeb]
     labels = ["farándula", "sports", "fx_routine", "sismo", "weather",
               "inhabilitacion", "pol_action", "electoral", "mercados", "gastro",
               "horoscope", "lottery", "reality", "lifestyle_tips", "personal_finance",
               "foreign_markets", "foreign_econ", "market_summary",
-              "corp_earnings", "sports_biz", "candidacy", "consumer_info"]
+              "corp_earnings", "sports_biz", "candidacy", "consumer_info", "celeb_gossip"]
     n_filtered = masks[0].copy()
     for m in masks[1:]:
         n_filtered = n_filtered | m
