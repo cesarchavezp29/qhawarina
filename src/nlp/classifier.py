@@ -690,6 +690,23 @@ def post_filter_scores(df: pd.DataFrame) -> pd.DataFrame:
     if n_celeb_eco + n_celeb_pol > 0:
         logger.info("post_filter_scores: celeb/tabloid zeroed eco=%d pol=%d articles", n_celeb_eco, n_celeb_pol)
 
+    # Rule 24: Foreign weather / local news in non-Peru locations → BOTH scores 0
+    _foreign_weather_news = (
+        r"(alerta|tormenta|hurac[aá]n|nieve|lluvia|calor|fr[ií]o|nevada|inundaci[oó]n)"
+        r".{0,40}(florida|texas|california|nueva york|miami|new york|chicago|"
+        r"m[eé]xico d\.?f\.?|buenos aires|bogot[aá]|santiago de chile|caracas|madrid|barcelona)"
+        r"|"
+        r"(florida|texas|california|nueva york|miami|chicago).{0,40}"
+        r"(alerta|tormenta|hurac[aá]n|sismo|terremoto|incendio forestal)"
+    )
+    mask_foreign_weather = titles.str.contains(_foreign_weather_news, regex=True, na=False)
+    n_fw_pol = int((mask_foreign_weather & (df["political_score"].fillna(0) > 0)).sum())
+    n_fw_eco = int((mask_foreign_weather & (df["economic_score"].fillna(0) > 0)).sum())
+    df.loc[mask_foreign_weather, "political_score"] = 0
+    df.loc[mask_foreign_weather, "economic_score"] = 0
+    if n_fw_pol + n_fw_eco > 0:
+        logger.info("post_filter_scores: foreign weather/news zeroed pol=%d eco=%d articles", n_fw_pol, n_fw_eco)
+
     n_zeroed = 0
     for pattern, use_crisis_exception in rules_eco_zero:
         mask = titles.str.contains(pattern, regex=True, na=False)
@@ -1115,16 +1132,32 @@ def classify_articles_dual(
     df.loc[mask_celeb, "economic_score"] = 0
     df.loc[mask_celeb, "political_score"] = 0
 
+    # 24. Foreign weather / local crime in foreign locations → BOTH scores 0
+    # "Alerta de lluvias en Florida", "tormenta en Texas", etc. are not Peru events
+    _foreign_weather_news = (
+        r"(alerta|tormenta|hurac[aá]n|nieve|lluvia|calor|fr[ií]o|nevada|inundaci[oó]n)"
+        r".{0,40}(florida|texas|california|nueva york|miami|new york|chicago|"
+        r"m[eé]xico d\.?f\.?|buenos aires|bogot[aá]|santiago de chile|caracas|madrid|barcelona)"
+        r"|"
+        r"(florida|texas|california|nueva york|miami|chicago).{0,40}"
+        r"(alerta|tormenta|hurac[aá]n|sismo|terremoto|incendio forestal)"
+    )
+    mask_foreign_weather = titles.str.contains(_foreign_weather_news, regex=True, na=False)
+    df.loc[mask_foreign_weather, "political_score"] = 0
+    df.loc[mask_foreign_weather, "economic_score"] = 0
+
     masks = [mask_farandula, mask_sports, mask_fx_routine, mask_sismo, mask_weather,
              mask_inhab, mask_pol_action, mask_electoral, mask_mercados, mask_gastro,
              mask_horoscope, mask_lottery, mask_reality, mask_lifestyle, mask_personal_fin,
              mask_foreign_markets, mask_foreign_econ, mask_market_summary,
-             mask_corp_earnings, mask_sports_biz, mask_candidacy, mask_consumer_info, mask_celeb]
+             mask_corp_earnings, mask_sports_biz, mask_candidacy, mask_consumer_info,
+             mask_celeb, mask_foreign_weather]
     labels = ["farándula", "sports", "fx_routine", "sismo", "weather",
               "inhabilitacion", "pol_action", "electoral", "mercados", "gastro",
               "horoscope", "lottery", "reality", "lifestyle_tips", "personal_finance",
               "foreign_markets", "foreign_econ", "market_summary",
-              "corp_earnings", "sports_biz", "candidacy", "consumer_info", "celeb_gossip"]
+              "corp_earnings", "sports_biz", "candidacy", "consumer_info", "celeb_gossip",
+              "foreign_weather"]
     n_filtered = masks[0].copy()
     for m in masks[1:]:
         n_filtered = n_filtered | m

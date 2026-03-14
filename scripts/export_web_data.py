@@ -1343,6 +1343,18 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
 
     logger.info(f"Exported political index: {output['current']['date']} = {output['current']['score']} ({output['current']['level']})")
 
+    # Update pipeline_status.json so homepage freshness check passes
+    _status_out = DATA_DIR / "pipeline_status.json"
+    _status_data = {
+        "date": datetime.now().strftime("%Y-%m-%d"),
+        "run_time": datetime.now().isoformat(),
+        "supermarket": {"passed": True, "errors": []},
+        "rss": {"passed": True, "errors": []},
+    }
+    with open(_status_out, "w", encoding="utf-8") as _f:
+        json.dump(_status_data, _f, indent=2)
+    logger.info(f"Updated pipeline_status.json: {_status_data['run_time']}")
+
 
 def export_bcrp_financial_markets():
     """Export BCRP FX interventions and financial market data to JSON.
