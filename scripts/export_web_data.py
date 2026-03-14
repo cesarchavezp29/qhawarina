@@ -1274,8 +1274,8 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
         "metadata": {
             "generated_at": datetime.now().isoformat(),
             "coverage_days": len(political_df),
-            "rss_feeds": 11,
-            "rss_sources": 6,
+            "rss_feeds": 35,
+            "rss_sources": 16,
             "methodology": "AI-GPR dual index (Iacoviello & Tong 2026): IRP + IRE, mean=100 over 2025 baseline",
         },
         "current": {

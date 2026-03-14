@@ -12,6 +12,62 @@ import pandas as pd
 
 logger = logging.getLogger("nexus.nlp.classifier")
 
+# ── Comprehensive sports pattern (used in pre-filter, inline post-filter, standalone post-filter) ──
+_SPORTS_PATTERN = (
+    # ── International club competitions ───────────────────────────────────────
+    r"champions league|europa league|conference league|"
+    r"copa libertadores|copa sudamericana|recopa sudamericana|"
+    r"copa del mundo de clubes|mundial de clubes|"
+    r"copa del mundo|mundial de f[uú]tbol|eurocopa|copa am[eé]rica|"
+    r"clásico mundial de b[eé]isbol|world series|superbowl|super bowl|"
+    # ── League names ──────────────────────────────────────────────────────────
+    r"premier league|la liga\b|serie a\b|bundesliga|ligue 1|eredivisie|"
+    r"mls\b|liga mx\b|brasileir[aã]o|liga argentina|primera divisi[oó]n argentina|"
+    r"liga 1\b|liga1\b|"   # Peru's Liga 1
+    # ── European club names ───────────────────────────────────────────────────
+    r"real madrid|fc barcelona|atlético de madrid|sevilla fc|real sociedad|"
+    r"manchester (city|united)|liverpool fc|chelsea fc|arsenal fc|tottenham|"
+    r"newcastle united|aston villa|"
+    r"bayern munich|borussia dortmund|rb leipzig|bayer leverkusen|"
+    r"juventus|inter de mil[aá]n|ac milan|napoli|as roma|fiorentina|lazio\b|"
+    r"psg|paris saint-germain|olympique (de )?marsella|lyon\b|"
+    r"ajax\b|psv eindhoven|benfica\b|porto\b|sporting\b|"
+    # ── Latin American clubs ──────────────────────────────────────────────────
+    r"boca juniors|river plate|racing club|independiente|san lorenzo|"
+    r"flamengo|palmeiras|fluminense|corinthians|s[aã]o paulo|atletico mineiro|"
+    r"nacional\b.*uruguay|pe[ñn]arol|colo colo|universidad de chile|"
+    r"am[eé]rica\b.*m[eé]xico|chivas\b|cruz azul\b|pumas unam|tigres uanl|"
+    r"inter miami|"
+    # ── Peruvian Liga 1 clubs (all) ───────────────────────────────────────────
+    r"sporting cristal|alianza lima|universitario de deportes|"
+    r"fbc melgar|atlético grau|sport huancayo|cusco fc|"
+    r"cienciano\b|ayacucho fc|adt de tarma|"
+    r"carlos mannucci|uni[oó]n comercio|sport boys\b|"
+    r"comerciantes unidos|univ[eé]rsitario\b.*f[uú]tbol|los chankas|"
+    r"deportivo binacional|pirata fc|academia cantolao|"
+    # ── Athletes (global stars) ───────────────────────────────────────────────
+    r"messi|ronaldo|mbapp[eé]|haaland|neymar|vinicius|rodri\b|bellingham|"
+    r"lebron james|steph curry|giannis|luka don[cč]i[cč]|shai gilgeous|"
+    r"lionel messi|cristiano ronaldo|"
+    # ── North American leagues ────────────────────────────────────────────────
+    r"\bnba\b|\bnfl\b|\bmlb\b|\bnhl\b|\bmls\b|\bwnba\b|"
+    # ── Tennis ───────────────────────────────────────────────────────────────
+    r"grand slam|wimbledon|roland garros|us open.*tenis|abierto de australia|"
+    r"djokovic|alcaraz|sinner\b|swiatek|"
+    # ── F1 / motorsport ──────────────────────────────────────────────────────
+    r"f[oó]rmula 1|formula one|gran premio de|gp de|max verstappen|lewis hamilton|"
+    r"ferrari f1|mercedes f1|red bull racing|"
+    # ── Olympics / multi-sport ────────────────────────────────────────────────
+    r"juegos ol[ií]mpicos|olimpiadas|juegos panamericanos|"
+    r"atletismo.*mundial|mundial.*atletismo|campeonato mundial.*nataci[oó]n|"
+    # ── Generic sports match vocabulary (high-precision) ─────────────────────
+    r"fichaje|transferencia.*jugador|jugador.*transferencia|"
+    r"partidos de hoy.*copa|copa.*partidos de hoy|horarios.*liga|"
+    r"tabla de posiciones|tabla acumulada|"
+    r"copa conmebol|fase de grupos.*copa|copa.*fase de grupos|"
+    r"jornada \d+.*liga|liga.*jornada \d+"
+)
+
 # Binning: 1-5 → ordinal 1-3
 SCORE_TO_BIN3 = {1: 1, 2: 1, 3: 2, 4: 3, 5: 3}
 
@@ -663,6 +719,15 @@ def post_filter_scores(df: pd.DataFrame) -> pd.DataFrame:
          r"mujeres ocupan|brecha (salarial|de g[eé]nero)|paridad de g[eé]nero|equidad laboral", True),
     ]
 
+    # Sports matches / clubs / competitions → zero BOTH scores
+    mask_sports_pf = titles.str.contains(_SPORTS_PATTERN, regex=True, na=False)
+    n_sports_pol = int((mask_sports_pf & (df["political_score"].fillna(0) > 0)).sum())
+    n_sports_eco = int((mask_sports_pf & (df["economic_score"].fillna(0) > 0)).sum())
+    df.loc[mask_sports_pf, "political_score"] = 0
+    df.loc[mask_sports_pf, "economic_score"] = 0
+    if n_sports_pol + n_sports_eco > 0:
+        logger.info("post_filter_scores: sports zeroed pol=%d eco=%d articles", n_sports_pol, n_sports_eco)
+
     # Celebrity / tabloid / entertainment → zero BOTH scores (no crisis exception)
     _celeb = (
         r"maju mantilla|magaly medina|far[aá]ndula|reconciliaci[oó]n.*salcedo|"
@@ -799,16 +864,7 @@ def classify_articles_dual(
 
     titles_lower = df["title"].fillna("").str.lower()
 
-    _pre_sports = (
-        r"champions league|premier league|la liga|serie a|bundesliga|ligue 1|"
-        r"real madrid|fc barcelona|atlético de madrid|manchester|liverpool|chelsea|"
-        r"bayern|juventus|psg|inter miami|mbappé|haaland|"
-        r"nba|nfl|mlb|nhl|grand slam|wimbledon|roland garros|"
-        r"copa libertadores|copa del mundo|mundial de f[uú]tbol|clásico mundial de béisbol|"
-        r"sporting cristal|alianza lima|universitario de deportes|fbc melgar|"
-        r"fichaje|transferencia.*jugador|jugador.*transferencia|"
-        r"partidos de hoy.*copa|copa.*partidos de hoy|horarios.*copa|copa.*horarios"
-    )
+    _pre_sports = _SPORTS_PATTERN
     _pre_farandula = (
         r"cómo se conocieron|historia de amor|boda y|anuncio de ruptura|"
         r"confirma relaci[oó]n|ruptura sentimental|separaci[oó]n de pareja|"
@@ -897,18 +953,8 @@ def classify_articles_dual(
     df.loc[mask_farandula, "political_score"] = 0
     df.loc[mask_farandula, "economic_score"] = 0
 
-    # 2. Sports (European leagues, international competitions, Peruvian clubs) → both=0
-    _sports = (
-        r"champions league|premier league|la liga|serie a|bundesliga|ligue 1|"
-        r"real madrid|fc barcelona|atlético de madrid|manchester|liverpool|chelsea|"
-        r"bayern|juventus|psg|inter miami|mbappé|haaland|messi|ronaldo|"
-        r"nba|nfl|mlb|nhl|grand slam|wimbledon|roland garros|"
-        r"copa libertadores|copa del mundo|mundial de f[uú]tbol|clásico mundial de béisbol|"
-        r"sporting cristal|alianza lima|universitario de deportes|fbc melgar|"
-        r"copa conmebol|fase de grupos.*copa|copa.*fase de grupos|"
-        r"fichaje|transferencia.*jugador|jugador.*transferencia|"
-        r"partidos de hoy.*copa|copa.*partidos de hoy|horarios.*copa|copa.*horarios"
-    )
+    # 2. Sports (all leagues, clubs, competitions, athletes) → both=0
+    _sports = _SPORTS_PATTERN
     mask_sports = titles.str.contains(_sports, regex=True, na=False)
     df.loc[mask_sports, "political_score"] = 0
     df.loc[mask_sports, "economic_score"] = 0
