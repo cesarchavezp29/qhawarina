@@ -1295,10 +1295,10 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
             prompt = (
                 f"Eres un analista político-económico. Estos son los 3 artículos de mayor riesgo "
                 f"{dim_es} del día {date_str}:\n{numbered}\n\n"
-                f"Escribe un TÍTULO de 3-5 palabras que resuma el evento principal. "
-                f"Solo el título, sin explicación.\n\n"
+                f"Escribe un TÍTULO de máximo 3 palabras que resuma el evento principal. "
+                f"Solo el título, sin explicación, sin puntuación.\n\n"
                 f"Ejemplos: 'Vacancia Boluarte', 'Crisis Camisea', 'Censura Santiváñez', "
-                f"'Aranceles Trump', 'Masacre Pataz'"
+                f"'Aranceles Trump', 'Masacre Pataz', 'Censura Jerí'"
             )
             msg = haiku.messages.create(
                 model="claude-haiku-4-5-20251001",

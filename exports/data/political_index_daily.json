@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-03-14T15:50:44.602948",
+    "generated_at": "2026-03-14T16:10:52.113142",
     "coverage_days": 438,
     "rss_feeds": 35,
     "rss_sources": 16,
@@ -26,7 +26,7 @@
     "articles_political_relevant": 92,
     "articles_economic_relevant": 47,
     "political_justification": "El panorama político muestra estabilidad relativa con preocupaciones puntuales. Las elecciones regionales y decisiones judiciales pendientes generan incertidumbre moderada, mientras que medidas de seguridad y gasto social reflejan gestión de crisis localizadas sin amenazar la gobernanza nacional.",
-    "economic_justification": "La economía enfrenta presiones simultáneas: déficit fiscal por nuevas leyes de gasto, vulnerabilidad energética con interrupciones de suministro, y daños infraestructurales por desastres climáticos. Aunque hay iniciativas de diversificación energética, los riesgos de corto plazo en finanzas públicas y abastecimiento dominan el panorama.",
+    "economic_justification": "La economía enfrenta presiones simultáneas: déficit fiscal por nuevas leyes de gasto, vulnerabilidad energética con interrupciones de suministro, y daños infraestructurales por desastres climáticos. Aunque hay iniciativas de diversificación energética, los riesgos de corto plazo superan las oportunidades, generando un entorno de incertidumbre moderada-elevada.",
     "top_political_drivers": [
       {
         "title": "Elecciones en el CAL 2026: ¿Delia Espinoza o Humberto Abanto?",
@@ -124,7 +124,7 @@
       "score": 134.0,
       "level": "ELEVADO",
       "n_articles": 130,
-      "summary": "Pugna por el poder entre bloques parlamentarios enfrentados.",
+      "summary": "Pugna política sobre indulto y liderazgo del Congreso.",
       "report_url": "/political/daily-reports/2026-02-20.html"
     },
     {
@@ -132,7 +132,7 @@
       "score": 141.6,
       "level": "ELEVADO",
       "n_articles": 134,
-      "summary": "Debilitamiento institucional tras concentración de poder político.",
+      "summary": "Perú Libre retorna al poder generando debilitamiento institucional.",
       "report_url": "/political/daily-reports/2026-02-19.html"
     },
     {
@@ -140,7 +140,7 @@
       "score": 147.5,
       "level": "ELEVADO",
       "n_articles": 171,
-      "summary": "Conflicto político entre el Congreso y funcionarios del gobierno.",
+      "summary": "Conflicto entre el Congreso y ministros genera inestabilidad institucional.",
       "report_url": "/political/daily-reports/2026-02-18.html"
     },
     {
@@ -148,7 +148,7 @@
       "score": 150.8,
       "level": "ALTO",
       "n_articles": 136,
-      "summary": "Incertidumbre sobre la sucesión presidencial ante posible censura.",
+      "summary": "Congreso debate censura presidencial con incertidumbre sucesoria.",
       "report_url": "/political/daily-reports/2026-02-17.html"
     },
     {
@@ -156,7 +156,7 @@
       "score": 148.2,
       "level": "ELEVADO",
       "n_articles": 157,
-      "summary": "Desconfianza ciudadana hacia el liderazgo político actual.",
+      "summary": "Desconfianza generalizada en liderazgo político actual.",
       "report_url": "/political/daily-reports/2026-02-16.html"
     },
     {
@@ -164,7 +164,7 @@
       "score": 138.7,
       "level": "ELEVADO",
       "n_articles": 67,
-      "summary": "Conflicto político en el Congreso por elección de directiva.",
+      "summary": "Conflicto político interno en la dirección del Congreso.",
       "report_url": "/political/daily-reports/2026-02-15.html"
     },
     {
@@ -172,7 +172,7 @@
       "score": 125.1,
       "level": "ELEVADO",
       "n_articles": 41,
-      "summary": "Crisis política por posible destitución del Presidente Jerí.",
+      "summary": "Crisis política por cuestionamientos al presidente José Jerí.",
       "report_url": "/political/daily-reports/2026-02-14.html"
     },
     {
@@ -180,7 +180,7 @@
       "score": 122.3,
       "level": "ELEVADO",
       "n_articles": 91,
-      "summary": "Conflicto de poderes entre Ejecutivo y Congreso sobre sucesión presidencial.",
+      "summary": "Lucha por el poder entre el Ejecutivo y Congreso.",
       "report_url": "/political/daily-reports/2025-10-14.html"
     },
     {
@@ -188,7 +188,7 @@
       "score": 132.1,
       "level": "ELEVADO",
       "n_articles": 76,
-      "summary": "Debilitamiento de medidas contra figuras políticas investigadas.",
+      "summary": "Investigación a José Jerí sin medidas restrictivas genera impunidad.",
       "report_url": "/political/daily-reports/2025-10-13.html"
     },
     {
@@ -196,7 +196,7 @@
       "score": 138.6,
       "level": "ELEVADO",
       "n_articles": 51,
-      "summary": "Sucesión presidencial acelerada genera inestabilidad política constante.",
+      "summary": "Falta de designación ministerial genera incertidumbre institucional.",
       "report_url": "/political/daily-reports/2025-10-12.html"
     }
   ],
@@ -205,85 +205,85 @@
       "date": "2025-03-21",
       "dimension": "political",
       "value": 158.6,
-      "label": "Fiscalia persigue magistrados TC"
+      "label": "Persecución Judicial Institucional"
     },
     {
       "date": "2025-04-01",
       "dimension": "economic",
       "value": 186.6,
-      "label": "Crisis Sanitaria Medifarma"
+      "label": "Aranceles Trump"
     },
     {
       "date": "2025-05-04",
       "dimension": "economic",
       "value": 167.2,
-      "label": "Majes Siguas: Arbitraje Internacional"
+      "label": "Arbitraje Majes Siguas"
     },
     {
       "date": "2025-05-15",
       "dimension": "political",
       "value": 139.4,
-      "label": "Investigacion Primero la Gente"
+      "label": "Investigación Primero Gente"
     },
     {
       "date": "2025-05-19",
       "dimension": "economic",
       "value": 151.5,
-      "label": "Petroperu: Dependencia Estatal"
+      "label": "Petroperú requiere rescate"
     },
     {
       "date": "2025-06-14",
       "dimension": "political",
       "value": 178.8,
-      "label": "Inmunidad congresal: impunidad"
+      "label": "Impunidad Congresal"
     },
     {
       "date": "2025-07-10",
       "dimension": "economic",
       "value": 273.0,
-      "label": "Crisis Mineria Informal"
+      "label": "Crisis Minería Informal"
     },
     {
       "date": "2025-07-24",
       "dimension": "political",
       "value": 134.5,
-      "label": "Fuga exfuncionario hacia Ecuador"
+      "label": "Fuga Jorge Cuba"
     },
     {
       "date": "2025-08-17",
       "dimension": "political",
       "value": 131.2,
-      "label": "Crisis institucional Boluarte"
+      "label": "Colapso Institucional Peruano"
     },
     {
       "date": "2025-09-08",
       "dimension": "political",
       "value": 160.9,
-      "label": "Audios Santivañez: escandalo judicial"
+      "label": "Audios Santiváñez"
     },
     {
       "date": "2025-09-17",
       "dimension": "economic",
       "value": 186.5,
-      "label": "Pensiones: Reforma en Riesgo"
+      "label": "Pensiones en Riesgo"
     },
     {
       "date": "2025-10-12",
       "dimension": "political",
       "value": 138.6,
-      "label": "Mociones Vacancia Boluarte"
+      "label": "Vacancia Boluarte"
     },
     {
       "date": "2026-02-17",
       "dimension": "political",
       "value": 150.8,
-      "label": "Censura Jeri: Destitucion Presidencial"
+      "label": "Censura Jerí"
     },
     {
       "date": "2026-03-05",
       "dimension": "economic",
       "value": 314.9,
-      "label": "Crisis GNV Camisea"
+      "label": "Crisis Camisea"
     }
   ],
   "daily_series": [
