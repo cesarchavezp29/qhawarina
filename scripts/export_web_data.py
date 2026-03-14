@@ -1270,6 +1270,136 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
                 logger.warning("Haiku justification failed: %s", e)
     # ─────────────────────────────────────────────────────────────────────────
 
+    # ── Peak events: local maxima with Haiku labels ───────────────────────────
+    def compute_peak_events(df: "pd.DataFrame", arts: "pd.DataFrame | None") -> list:
+        """Detect political + economic peak days, label them via Haiku, cache results."""
+        import json as _json
+        import anthropic as _anthropic
+
+        CACHE_PATH = DATA_DIR / "peak_events_cache.json"
+        POL_THRESHOLD = 130
+        ECO_THRESHOLD = 150
+        DEDUP_WINDOW  = 14  # days
+
+        # Load cache
+        try:
+            cache: dict = _json.loads(CACHE_PATH.read_text(encoding="utf-8")) if CACHE_PATH.exists() else {}
+        except Exception:
+            cache = {}
+
+        haiku = _anthropic.Anthropic()
+
+        def _call_haiku(dimension: str, date_str: str, titles: list[str]) -> str:
+            dim_es = "político" if dimension == "political" else "económico"
+            numbered = "\n".join(f"{i+1}. {t}" for i, t in enumerate(titles[:3]))
+            prompt = (
+                f"Eres un analista político-económico. Estos son los 3 artículos de mayor riesgo "
+                f"{dim_es} del día {date_str}:\n{numbered}\n\n"
+                f"Escribe un TÍTULO de 3-5 palabras que resuma el evento principal. "
+                f"Solo el título, sin explicación.\n\n"
+                f"Ejemplos: 'Vacancia Boluarte', 'Crisis Camisea', 'Censura Santiváñez', "
+                f"'Aranceles Trump', 'Masacre Pataz'"
+            )
+            msg = haiku.messages.create(
+                model="claude-haiku-4-5-20251001",
+                max_tokens=30,
+                temperature=0,
+                messages=[{"role": "user", "content": prompt}],
+            )
+            return msg.content[0].text.strip().strip("'\"")
+
+        def _detect_peaks(series: "pd.Series", threshold: float) -> list[int]:
+            """Return integer index positions of local peaks above threshold."""
+            peaks = []
+            vals = series.values
+            for i in range(1, len(vals) - 1):
+                if vals[i] > threshold and vals[i] > vals[i - 1] and vals[i] > vals[i + 1]:
+                    peaks.append(i)
+            return peaks
+
+        def _dedup(peaks: list[int], dates: "pd.Series", values: "pd.Series") -> list[int]:
+            """Within any 14-day window keep only the highest peak."""
+            if not peaks:
+                return []
+            kept = []
+            last_kept_date = None
+            # Sort by value desc so within any window the highest wins
+            sorted_peaks = sorted(peaks, key=lambda i: values.iloc[i], reverse=True)
+            used = set()
+            for i in sorted_peaks:
+                if i in used:
+                    continue
+                d = dates.iloc[i]
+                # Mark all peaks within ±7 days as used
+                for j in sorted_peaks:
+                    if j in used:
+                        continue
+                    if abs((dates.iloc[j] - d).days) < DEDUP_WINDOW:
+                        used.add(j)
+                kept.append(i)
+            return kept
+
+        results = []
+        df_sorted = df.sort_values("date").reset_index(drop=True)
+        dates_s = df_sorted["date"]
+
+        for dimension, col, threshold in [
+            ("political", "irp_7d", POL_THRESHOLD),
+            ("economic",  "ire_7d", ECO_THRESHOLD),
+        ]:
+            if col not in df_sorted.columns:
+                continue
+            raw_peaks = _detect_peaks(df_sorted[col], threshold)
+            dedup_peaks = _dedup(raw_peaks, dates_s, df_sorted[col])
+
+            for idx in dedup_peaks:
+                date_ts = dates_s.iloc[idx]
+                date_str = date_ts.strftime("%Y-%m-%d") if hasattr(date_ts, "strftime") else str(date_ts)[:10]
+                value = round(float(df_sorted[col].iloc[idx]), 1)
+                cache_key = f"{date_str}_{dimension}"
+
+                if cache_key in cache:
+                    label = cache[cache_key]
+                else:
+                    label = None
+                    if arts is not None:
+                        try:
+                            score_col = "political_score" if dimension == "political" else "economic_score"
+                            peak_date = date_ts.date() if hasattr(date_ts, "date") else date_ts
+                            day_arts = arts[arts["date"] == peak_date]
+                            if score_col in day_arts.columns:
+                                top3 = day_arts.nlargest(3, score_col)["title"].tolist()
+                                if top3:
+                                    label = _call_haiku(dimension, date_str, top3)
+                        except Exception as _le:
+                            logger.warning("Peak label failed for %s: %s", cache_key, _le)
+                    if label:
+                        cache[cache_key] = label
+
+                results.append({
+                    "date": date_str,
+                    "dimension": dimension,
+                    "value": value,
+                    "label": label or "",
+                })
+
+        # Persist cache
+        try:
+            CACHE_PATH.write_text(_json.dumps(cache, ensure_ascii=False, indent=2), encoding="utf-8")
+        except Exception as _ce:
+            logger.warning("Could not save peak_events_cache: %s", _ce)
+
+        results.sort(key=lambda x: x["date"])
+        return results
+
+    try:
+        peak_events = compute_peak_events(political_df, articles_cache)
+        logger.info("Peak events computed: %d", len(peak_events))
+    except Exception as _pe:
+        logger.warning("compute_peak_events failed: %s", _pe)
+        peak_events = []
+    # ─────────────────────────────────────────────────────────────────────────
+
     output = {
         "metadata": {
             "generated_at": datetime.now().isoformat(),
@@ -1316,6 +1446,7 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
             "year_max_date": max_year_date.strftime("%Y-%m-%d"),
         },
         "major_events": major_events[:10],
+        "peak_events": peak_events,
         "daily_series": daily_series,
         "daily_fx_series": daily_fx_series,
         "monthly_series": monthly_series,

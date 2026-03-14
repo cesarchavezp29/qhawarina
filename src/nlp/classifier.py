@@ -23,7 +23,7 @@ _SPORTS_PATTERN = (
     # ── League names ──────────────────────────────────────────────────────────
     r"premier league|la liga\b|serie a\b|bundesliga|ligue 1|eredivisie|"
     r"mls\b|liga mx\b|brasileir[aã]o|liga argentina|primera divisi[oó]n argentina|"
-    r"liga 1\b|liga1\b|"   # Peru's Liga 1
+    r"liga 1\b|liga1\b|liga 2\b|torneo apertura|torneo clausura|"   # Peru's Liga 1/2
     # ── European club names ───────────────────────────────────────────────────
     r"real madrid|fc barcelona|atlético de madrid|sevilla fc|real sociedad|"
     r"manchester (city|united)|liverpool fc|chelsea fc|arsenal fc|tottenham|"
@@ -717,7 +717,43 @@ def post_filter_scores(df: pd.DataFrame) -> pd.DataFrame:
          r"c[oó]mo (acceder|obtener|solicitar|retirar).*(pensi[oó]n|afp|cts|gratificaci[oó]n|bono)|"
          r"premio.*(reconoc|otorg|entreg|galardon)|ranking de (empresas|universidades|pa[ií]ses)|"
          r"mujeres ocupan|brecha (salarial|de g[eé]nero)|paridad de g[eé]nero|equidad laboral", True),
+        # Health info / medical awareness (not systemic health crisis)
+        (r"glaucoma|miopía|astigmatismo|chequeo.*médico|chequeos.*médicos|"
+         r"c[oó]mo proteger.*(pacientes|salud)|c[oó]mo prevenir.*(c[aá]ncer|diabetes|hipertens)|"
+         r"covid.{0,20}(c[oó]mo proteger|prevenci[oó]n|vacunaci[oó]n rutinaria)|"
+         r"vacunaci[oó]n.{0,20}(calendario|rutinaria|anual)|"
+         r"enfermedades.{0,20}m[aá]s comunes|s[ií]ntomas de|remedios para|"
+         r"oncol[oó]gico.*chequeo|chequeo.*oncol[oó]gico", True),
+        # Foreign economic agreements / IMF loans to non-Peru countries
+        (r"fmi.{0,30}(acuerdo|pr[eé]stamo|programa).{0,30}(argentina|ecuador|colombia|m[eé]xico|bolivia|brasil)|"
+         r"banco mundial.{0,30}(pr[eé]stamo|acuerdo).{0,30}(argentina|ecuador|colombia|m[eé]xico)|"
+         r"(argentina|brasil|colombia).{0,30}(pr[eé]stamo|acuerdo).{0,30}fmi|"
+         r"deuda (de|externa).{0,20}(argentina|brasil|colombia|m[eé]xico|bolivia)", True),
+        # Product recalls / vehicle safety notices → not economic instability
+        (r"indecopi alerta.{0,30}(revisi[oó]n|retiro|recall)|"
+         r"llamados? a revisi[oó]n.{0,30}veh[ií]culo|"
+         r"retiro del mercado.{0,30}(producto|veh[ií]culo|alimento)|"
+         r"recall.{0,20}veh[ií]culo|"
+         r"(ford|toyota|chevrolet|kia|hyundai|volkswagen).{0,30}(revisi[oó]n|retiro|defecto)", True),
+        # Economist opinion columns (cap separately, not zero — handled below)
+        # Gender diversity / talent features (not systemic economic risk)
+        (r"talento femenino|ambiciones del talento|liderazgo femenino.*empresa|"
+         r"mujeres en (cargos|puestos|roles).*(directivos|ejecutivos|gerenciales)|"
+         r"radiograf[ií]a.*(g[eé]nero|mujer)|"
+         r"chef.{0,30}(impulsa|promueve|cocina).{0,30}(comedores|popular)|"
+         r"gastronomía.{0,30}(premio|reconoc|mejor.*mundo)|"
+         r"mejor restaurante.{0,30}(per[uú]|latinoam[eé]rica|mundo)", True),
     ]
+
+    # Economist opinion columns → eco capped at 20 (informed market signal, not crisis)
+    _opinion_col = (
+        r"elmer cuba.*:|: elmer cuba|"
+        r"pablo lavado.*:|carlos adri[aá]nz[eé]n.*:|jorge gonz[aá]lez izquierdo.*:|"
+        r"la (ha |han )?sacado barata|opina sobre la econom[ií]a|"
+        r"economista.{0,20}(opina|analiza|explica|advierte sobre)"
+    )
+    mask_opinion = titles.str.contains(_opinion_col, regex=True, na=False)
+    df.loc[mask_opinion & (df["economic_score"].fillna(0) > 20), "economic_score"] = 20
 
     # Sports matches / clubs / competitions → zero BOTH scores
     mask_sports_pf = titles.str.contains(_SPORTS_PATTERN, regex=True, na=False)
