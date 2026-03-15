@@ -791,6 +791,87 @@ def post_filter_scores(df: pd.DataFrame) -> pd.DataFrame:
     if n_celeb_eco + n_celeb_pol > 0:
         logger.info("post_filter_scores: celeb/tabloid zeroed eco=%d pol=%d articles", n_celeb_eco, n_celeb_pol)
 
+    # Foreign leader / ex-president health & personal news → BOTH scores 0
+    # (their medical status has no bearing on Peru's economy or politics)
+    _foreign_leader_health = (
+        r"(expresidente|ex[ -]presidente|presidente).{0,40}"
+        r"(brasile[ñn]o|argentino|colombiano|chileno|venezolano|boliviano|ecuatoriano|"
+        r"paraguayo|uruguayo|estadounidense|franc[eé]s|alem[aá]n|espa[ñn]ol|"
+        r"italiano|ingl[eé]s|chino|ruso|canadiense|japon[eé]s|coreano|turco|israelí).{0,80}"
+        r"(estable|disfunci[oó]n|hospitalizado|internado|cirug[ií]a|recupera|"
+        r"salud|diagn[oó]stico|fallece|muere|cancer|tumor|infarto|accidente cerebral)|"
+        # Specific foreign ex-presidents by name + health context
+        r"(bolsonaro|lula|milei|petro|maduro|boric|noboa|arce|lacalle).{0,60}"
+        r"(estable|disfunci[oó]n|hospitalizado|internado|cirug[ií]a|recupera|salud|"
+        r"diagn[oó]stico|fallece|muere|cancer|tumor|infarto)"
+    )
+    mask_fl_health = titles.str.contains(_foreign_leader_health, regex=True, na=False) & ~mask_crisis
+    n_flh_eco = int((mask_fl_health & (df["economic_score"].fillna(0) > 0)).sum())
+    n_flh_pol = int((mask_fl_health & (df["political_score"].fillna(0) > 0)).sum())
+    df.loc[mask_fl_health, "economic_score"] = 0
+    df.loc[mask_fl_health, "political_score"] = 0
+    if n_flh_eco + n_flh_pol > 0:
+        logger.info("post_filter_scores: foreign leader health zeroed eco=%d pol=%d articles", n_flh_eco, n_flh_pol)
+
+    # Arts / cultural events with no political or economic relevance → BOTH scores 0
+    _cultural = (
+        r"fae lima|festival de artes esc[eé]nicas|festival artes esc[eé]nicas|"
+        r"escena y memoria|cierre del fae|apertura del fae|"
+        r"festival de (teatro|danza|jazz|cine documental|literatura) |"
+        r"festival internacional de (teatro|danza|jazz|literatura)|"
+        r"(temporada|estreno).{0,20}(ballet|[oó]pera).{0,30}(gran teatro|centro cultural)|"
+        r"gran teatro nacional.{0,30}(programa|temporada|estreno)|"
+        r"(inauguraci[oó]n|apertura|clausura).{0,30}exposici[oó]n.{0,30}(arte|pintura|escultura)|"
+        r"bienal de arte|galería de arte.{0,20}inaugur"
+    )
+    mask_cultural = titles.str.contains(_cultural, regex=True, na=False)
+    n_cult_eco = int((mask_cultural & (df["economic_score"].fillna(0) > 0)).sum())
+    n_cult_pol = int((mask_cultural & (df["political_score"].fillna(0) > 0)).sum())
+    df.loc[mask_cultural, "economic_score"] = 0
+    df.loc[mask_cultural, "political_score"] = 0
+    if n_cult_eco + n_cult_pol > 0:
+        logger.info("post_filter_scores: cultural/arts zeroed eco=%d pol=%d articles", n_cult_eco, n_cult_pol)
+
+    # Deaths of foreign intellectuals / cultural figures → BOTH scores 0
+    # (crisis exception: if title also contains economic/political crisis language, keep)
+    _intell_death = (
+        r"(muere|fallece|muerte de).{0,120}"
+        r"(fil[oó]sofos?|fil[oó]sofas?|"
+        r"escritores?|escritoras?|"
+        r"novelistas?|"
+        r"poetas?|poetisas?|"
+        r"dram[aá]turgos?|dram[aá]turgas?|"
+        r"compositores?|compositoras?|"
+        r"m[uú]sicos?|m[uú]sicas?|"
+        r"pensadores?|pensadoras?|"
+        r"te[oó]logos?|te[oó]logas?|"
+        r"soci[oó]logos?|soci[oó]logas?|"
+        r"antrop[oó]logos?|antrop[oó]logas?|"
+        r"arque[oó]logos?|arque[oó]logas?|"
+        r"historiadores?|historiadoras?|"
+        r"ensayistas?|"
+        r"fil[oó]logos?|fil[oó]logas?|"
+        r"lingü[ií]stas?|"
+        r"psic[oó]logos?|psic[oó]logas?|"
+        r"pintores?|pintoras?|"
+        r"escultores?|escultoras?|"
+        r"artistas? pl[aá]sticos?|"
+        r"actores?|actrices?|"
+        r"directores? de cine|directoras? de cine|"
+        r"bailarines?|bailarinas?|"
+        r"coreógrafos?|coreógrafas?|"
+        r"cantantes?|"
+        r"guionistas?|"
+        r"cineastas?)"
+    )
+    mask_intell = titles.str.contains(_intell_death, regex=True, na=False) & ~mask_crisis
+    n_intell_eco = int((mask_intell & (df["economic_score"].fillna(0) > 0)).sum())
+    n_intell_pol = int((mask_intell & (df["political_score"].fillna(0) > 0)).sum())
+    df.loc[mask_intell, "economic_score"] = 0
+    df.loc[mask_intell, "political_score"] = 0
+    if n_intell_eco + n_intell_pol > 0:
+        logger.info("post_filter_scores: intellectual/cultural deaths zeroed eco=%d pol=%d articles", n_intell_eco, n_intell_pol)
+
     # Rule 24: Foreign weather / local news in non-Peru locations → BOTH scores 0
     _foreign_weather_news = (
         r"(alerta|tormenta|hurac[aá]n|nieve|lluvia|calor|fr[ií]o|nevada|inundaci[oó]n)"

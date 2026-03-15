@@ -109,9 +109,71 @@ def step_sync() -> bool:
     )
 
 
-def step_git_push(today: date) -> bool:
+def step_monthly_poverty() -> bool:
+    """
+    Monthly poverty nowcast — runs on the 15th of each month.
+
+    Sequence:
+      1. regional_download — fetch latest departmental BCRP series
+      2. regional          — rebuild panel_departmental_monthly.parquet
+      3. build_poverty_nowcast.py  — rebuild vintage_panel + monthly_indicators
+      4. generate_poverty_nowcast.py — produce poverty_nowcast.json + copy to web
+
+    Returns True even if some sub-steps warn (non-fatal), False only on hard failure.
+    """
+    today_dt = datetime.now()
+    if today_dt.day != 15:
+        logger.info("Monthly poverty: skipping (today is the %dth, runs on the 15th)", today_dt.day)
+        return True  # not an error — just not time yet
+
+    logger.info("=" * 60)
+    logger.info("MONTHLY POVERTY NOWCAST — %s", today_dt.strftime("%Y-%m-%d"))
+    logger.info("=" * 60)
+
+    # Step 1: Fetch latest regional BCRP data
+    ok1 = run(
+        "Regional BCRP download",
+        [PYTHON, str(SCRIPTS / "update_nexus.py"), "--only", "regional_download"],
+    )
+    if not ok1:
+        logger.warning("Regional download failed — poverty nowcast will use existing data")
+
+    # Step 2: Rebuild departmental monthly panel
+    ok2 = run(
+        "Regional panel rebuild",
+        [PYTHON, str(SCRIPTS / "update_nexus.py"), "--only", "regional"],
+    )
+    if not ok2:
+        logger.warning("Regional panel rebuild failed — poverty nowcast may be stale")
+
+    # Step 3: Rebuild vintage panel + monthly indicators
+    ok3 = run(
+        "Build poverty vintage panel",
+        [PYTHON, str(SCRIPTS / "build_poverty_nowcast.py")],
+    )
+    if not ok3:
+        logger.error("build_poverty_nowcast.py FAILED — aborting nowcast generation")
+        return False
+
+    # Step 4: Generate nowcast + export JSON to web
+    ok4 = run(
+        "Generate poverty nowcast",
+        [PYTHON, str(SCRIPTS / "generate_poverty_nowcast.py")],
+    )
+    if not ok4:
+        logger.error("generate_poverty_nowcast.py FAILED")
+        return False
+
+    logger.info("Monthly poverty nowcast complete.")
+    return True
+
+
+def step_git_push(today: date, include_poverty: bool = False) -> bool:
     """Step 5: Git commit + push in qhawarina repo."""
-    msg = f"Daily update {today.isoformat()}: prices + political index"
+    if include_poverty:
+        msg = f"Daily update {today.isoformat()}: prices + political index + poverty nowcast"
+    else:
+        msg = f"Daily update {today.isoformat()}: prices + political index"
 
     ok = run("Git add", ["git", "add", "public/assets/data/"], cwd=WEB_DIR)
     if not ok:
@@ -141,7 +203,8 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--skip-scrape", action="store_true")
     parser.add_argument("--skip-political", action="store_true")
-    parser.add_argument("--no-push", action="store_true")
+    parser.add_argument("--no-push", action="store_true")  # kept for backward compat
+    parser.add_argument("--push", action="store_true", help="Push to GitHub after export (off by default)")
     args = parser.parse_args()
 
     today = date.today()
@@ -164,10 +227,16 @@ def main():
     results["export"] = step_export()
     results["sync"] = step_sync()
 
-    if not args.no_push:
-        results["push"] = step_git_push(today)
+    poverty_ran = False
+    poverty_result = step_monthly_poverty()  # has its own day-15 guard; returns True on non-15th
+    if datetime.now().day == 15:
+        results["poverty"] = poverty_result
+        poverty_ran = poverty_result
+
+    if args.push:
+        results["push"] = step_git_push(today, include_poverty=poverty_ran)
     else:
-        logger.info("Skipping git push (--no-push)")
+        logger.info("Skipping git push (auto-push disabled — run with --push to deploy)")
 
     logger.info("=" * 60)
     logger.info("PIPELINE COMPLETE — %s", datetime.now().strftime("%H:%M:%S"))

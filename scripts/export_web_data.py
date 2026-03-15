@@ -222,17 +222,27 @@ def export_gdp_nowcast(gdp_df: pd.DataFrame, latest: pd.Series, fresh_nowcast: D
         bridge_r2 = round(float(fresh_nowcast.get("bridge_r2", 0.934)), 3)
         target_period = fresh_nowcast.get("target_period", target_period)
 
-        # Extract forecasts
+        # Extract forecasts — use backtest RMSE (1.41pp) for honest CI instead of bridge residual SE
+        backtest_rmse = 1.41
+        ci_half = 1.96 * backtest_rmse
         for fc in fresh_nowcast.get("forecasts", []):
             # Convert date to quarter string
             fc_date = pd.to_datetime(fc["date"])
             quarter_str = f"{fc_date.year}-Q{(fc_date.month - 1) // 3 + 1}"
+            val = round(float(fc["forecast_value"]), 2)
             forecasts.append({
                 "quarter": quarter_str,
-                "value": round(float(fc["forecast_value"]), 2),
-                "lower": round(float(fc["forecast_lower"]), 2),
-                "upper": round(float(fc["forecast_upper"]), 2),
+                "value": val,
+                "lower": round(val - ci_half, 2),
+                "upper": round(val + ci_half, 2),
             })
+
+    # If the model's target_period already has official data, advance to first forecast quarter
+    official_quarters = {q["quarter"] for q in all_quarters if q["official"] is not None}
+    if target_period in official_quarters and forecasts:
+        first_fc = forecasts[0]
+        target_period = first_fc["quarter"]
+        nowcast_value = first_fc["value"]
 
     # Append current nowcast target to recent_quarters so the chart shows the live estimate
     if target_period and nowcast_value is not None:
@@ -766,7 +776,7 @@ def _haiku_driver_phrase(articles_text: str, date_str: str) -> str | None:
         return None
 
 
-def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
+def export_political_index(political_df: pd.DataFrame, latest: pd.Series, skip_haiku: bool = False):
     """Export political instability index to JSON. Supports v1 and v2 schema."""
     import numpy as np
 
@@ -915,6 +925,16 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
         daily_sums["irp"] = (daily_sums["pol_norm"] / s_bar_pol) * 100.0
         daily_sums["ire"] = (daily_sums["eco_norm"] / s_bar_eco) * 100.0
 
+        # Drop today's partial data — early-morning exports capture only a few hours.
+        # The 9 PM pipeline run will include the full day when it re-exports.
+        from datetime import date as _date_today, timezone as _tz_lima, timedelta as _td_lima
+        _lima_today = (datetime.now(_tz_lima.utc) + _td_lima(hours=-5)).date()
+        daily_sums = daily_sums[pd.to_datetime(daily_sums["date"]).dt.date < _lima_today]
+        daily_sums = daily_sums.reset_index(drop=True)
+        # Also drop today's partial data from political_df (the base of the LEFT join below).
+        # Without this, partial-day parquet rows survive the merge and appear as the latest entry.
+        political_df = political_df[pd.to_datetime(political_df["date"]).dt.date < _lima_today]
+
         # Low-coverage interpolation: days with < 25 articles are noise spikes
         # (weekends, holidays). Set to NaN and interpolate from neighbours.
         MIN_ARTICLES = 25
@@ -937,13 +957,10 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
         political_df["ire"] = political_df["ire"].fillna(0.0)
         # Use clean article count (no GDELT) for display — overwrite old parquet's n_articles_total
         political_df["n_articles_total"] = political_df["n_total"].fillna(0).astype(int)
-        # Prefer parquet values (already clean + low-coverage interpolated) over recalculated
-        if "political_index" in political_df.columns:
-            valid = political_df["political_index"].notna() & (political_df["political_index"] > 0)
-            political_df.loc[valid, "irp"] = political_df.loc[valid, "political_index"]
-        if "economic_index" in political_df.columns:
-            valid = political_df["economic_index"].notna() & (political_df["economic_index"] > 0)
-            political_df.loc[valid, "ire"] = political_df.loc[valid, "economic_index"]
+        # NOTE: do NOT override irp/ire with old parquet political_index/economic_index.
+        # Those were computed with the old S_bar (2025 full-year, incompatible with the
+        # expanded feed regime). The freshly computed daily_sums irp/ire (new S_bar,
+        # Jun 2025 – Mar 8 2026) are always preferred.
         # Keep instability_index as political IRP for backward compat with smoothing below
         political_df["instability_index"] = political_df["irp"]
     else:
@@ -1208,7 +1225,7 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
             today_all  = articles_cache[articles_cache["date"] == today_date]
         has_dual   = "political_score" in today_all.columns and "economic_score" in today_all.columns
 
-        if has_dual and (irp_today > 0 or ire_today > 0):
+        if not skip_haiku and has_dual and (irp_today > 0 or ire_today > 0):
             try:
                 import re as _re
                 client = __import__("anthropic").Anthropic()
@@ -2250,6 +2267,7 @@ def main_daily():
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument("--daily", action="store_true", help="Run daily-only fast export")
+    parser.add_argument("--no-haiku", action="store_true", help="Skip Haiku API calls (faster, no justification text)")
     args, _ = parser.parse_known_args()
 
     if args.daily:
@@ -2263,7 +2281,7 @@ def main_daily():
         latest_political = political_df.iloc[-1]
 
         logger.info("Exporting political index...")
-        export_political_index(political_df, latest_political)
+        export_political_index(political_df, latest_political, skip_haiku=args.no_haiku)
 
         logger.info("Exporting BCRP financial markets (FX + bonds + BVL)...")
         export_bcrp_financial_markets()
