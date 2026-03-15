@@ -56,3 +56,5 @@ Thumbs.db
 *.pt
 *.bin
 *.onnx
+data/raw/enaho/978_panel/*.csv
+data/raw/enaho/978_panel/*.dta

@@ -3,234 +3,235 @@
     "mw_pre": 930,
     "mw_post": 1025,
     "year_pre": 2021,
-    "source": "ENAHO Panel 2020-2024 (srienaho-978, Mod-1477)",
+    "formality": "V4 algorithm (p419a1, p510, p511a, p512a, p517)",
+    "source": "ENAHO Panel 2020-2024 (srienaho-978, Mod-1477 + Mod-400)",
     "generated": "2026-03-15"
   },
   "departments": {
     "01": {
       "dept_code": "01",
       "dept_name": "Amazonas",
-      "median_formal_2021": 2431.55,
-      "kaitz_pre": 0.3825,
-      "share_at_risk": 0.0696,
-      "share_below_new_mw": 0.0595,
-      "n_formal_2021": 22276
+      "median_formal_2021": 2062.82,
+      "kaitz_pre": 0.4508,
+      "share_at_risk": 0.1302,
+      "share_below_new_mw": 0.1704,
+      "n_formal_2021": 30548
     },
     "02": {
       "dept_code": "02",
       "dept_name": "Ancash",
-      "median_formal_2021": 1887.31,
-      "kaitz_pre": 0.4928,
-      "share_at_risk": 0.136,
-      "share_below_new_mw": 0.1478,
-      "n_formal_2021": 87892
+      "median_formal_2021": 1574.64,
+      "kaitz_pre": 0.5906,
+      "share_at_risk": 0.1537,
+      "share_below_new_mw": 0.2426,
+      "n_formal_2021": 115992
     },
     "03": {
       "dept_code": "03",
-      "dept_name": "Apurímac",
-      "median_formal_2021": 2404.15,
-      "kaitz_pre": 0.3868,
-      "share_at_risk": 0.1127,
-      "share_below_new_mw": 0.0976,
-      "n_formal_2021": 22590
+      "dept_name": "Apurimac",
+      "median_formal_2021": 1881.49,
+      "kaitz_pre": 0.4943,
+      "share_at_risk": 0.1593,
+      "share_below_new_mw": 0.2401,
+      "n_formal_2021": 35822
     },
     "04": {
       "dept_code": "04",
       "dept_name": "Arequipa",
-      "median_formal_2021": 1795.51,
-      "kaitz_pre": 0.518,
-      "share_at_risk": 0.1647,
-      "share_below_new_mw": 0.1596,
-      "n_formal_2021": 158472
+      "median_formal_2021": 1715.51,
+      "kaitz_pre": 0.5421,
+      "share_at_risk": 0.1826,
+      "share_below_new_mw": 0.1894,
+      "n_formal_2021": 185577
     },
     "05": {
       "dept_code": "05",
       "dept_name": "Ayacucho",
-      "median_formal_2021": 2107.5,
-      "kaitz_pre": 0.4413,
-      "share_at_risk": 0.0577,
-      "share_below_new_mw": 0.0379,
-      "n_formal_2021": 34299
+      "median_formal_2021": 1568.49,
+      "kaitz_pre": 0.5929,
+      "share_at_risk": 0.112,
+      "share_below_new_mw": 0.2477,
+      "n_formal_2021": 55968
     },
     "06": {
       "dept_code": "06",
       "dept_name": "Cajamarca",
-      "median_formal_2021": 2477.83,
-      "kaitz_pre": 0.3753,
-      "share_at_risk": 0.1013,
-      "share_below_new_mw": 0.0604,
-      "n_formal_2021": 77795
+      "median_formal_2021": 2059.79,
+      "kaitz_pre": 0.4515,
+      "share_at_risk": 0.1495,
+      "share_below_new_mw": 0.1703,
+      "n_formal_2021": 102535
     },
     "07": {
       "dept_code": "07",
       "dept_name": "Callao",
-      "median_formal_2021": 1516.22,
-      "kaitz_pre": 0.6134,
-      "share_at_risk": 0.251,
-      "share_below_new_mw": 0.2509,
-      "n_formal_2021": 158501
+      "median_formal_2021": 1481.41,
+      "kaitz_pre": 0.6278,
+      "share_at_risk": 0.2772,
+      "share_below_new_mw": 0.2869,
+      "n_formal_2021": 196097
     },
     "08": {
       "dept_code": "08",
       "dept_name": "Cusco",
-      "median_formal_2021": 2059.53,
-      "kaitz_pre": 0.4516,
-      "share_at_risk": 0.0749,
-      "share_below_new_mw": 0.0776,
-      "n_formal_2021": 70489
+      "median_formal_2021": 1562.16,
+      "kaitz_pre": 0.5953,
+      "share_at_risk": 0.155,
+      "share_below_new_mw": 0.227,
+      "n_formal_2021": 110264
     },
     "09": {
       "dept_code": "09",
       "dept_name": "Huancavelica",
-      "median_formal_2021": 2082.89,
-      "kaitz_pre": 0.4465,
-      "share_at_risk": 0.151,
-      "share_below_new_mw": 0.0976,
-      "n_formal_2021": 13688
+      "median_formal_2021": 1295.35,
+      "kaitz_pre": 0.7179,
+      "share_at_risk": 0.2474,
+      "share_below_new_mw": 0.372,
+      "n_formal_2021": 31869
     },
     "10": {
       "dept_code": "10",
-      "dept_name": "Huánuco",
-      "median_formal_2021": 2135.91,
-      "kaitz_pre": 0.4354,
-      "share_at_risk": 0.1546,
-      "share_below_new_mw": 0.133,
-      "n_formal_2021": 33717
+      "dept_name": "Huanuco",
+      "median_formal_2021": 1725.45,
+      "kaitz_pre": 0.539,
+      "share_at_risk": 0.167,
+      "share_below_new_mw": 0.2469,
+      "n_formal_2021": 51271
     },
     "11": {
       "dept_code": "11",
       "dept_name": "Ica",
-      "median_formal_2021": 1550.11,
-      "kaitz_pre": 0.6,
-      "share_at_risk": 0.1062,
-      "share_below_new_mw": 0.0653,
-      "n_formal_2021": 113727
+      "median_formal_2021": 1529.37,
+      "kaitz_pre": 0.6081,
+      "share_at_risk": 0.1378,
+      "share_below_new_mw": 0.1173,
+      "n_formal_2021": 142551
     },
     "12": {
       "dept_code": "12",
-      "dept_name": "Junín",
-      "median_formal_2021": 2055.49,
-      "kaitz_pre": 0.4524,
-      "share_at_risk": 0.1314,
-      "share_below_new_mw": 0.1295,
-      "n_formal_2021": 79793
+      "dept_name": "Junin",
+      "median_formal_2021": 1638.54,
+      "kaitz_pre": 0.5676,
+      "share_at_risk": 0.1747,
+      "share_below_new_mw": 0.2535,
+      "n_formal_2021": 107883
     },
     "13": {
       "dept_code": "13",
       "dept_name": "La Libertad",
-      "median_formal_2021": 1501.3,
-      "kaitz_pre": 0.6195,
-      "share_at_risk": 0.1996,
-      "share_below_new_mw": 0.1382,
-      "n_formal_2021": 216468
+      "median_formal_2021": 1494.47,
+      "kaitz_pre": 0.6223,
+      "share_at_risk": 0.2053,
+      "share_below_new_mw": 0.1912,
+      "n_formal_2021": 273319
     },
     "14": {
       "dept_code": "14",
       "dept_name": "Lambayeque",
-      "median_formal_2021": 1556.52,
-      "kaitz_pre": 0.5975,
-      "share_at_risk": 0.1921,
-      "share_below_new_mw": 0.1294,
-      "n_formal_2021": 127194
+      "median_formal_2021": 1473.57,
+      "kaitz_pre": 0.6311,
+      "share_at_risk": 0.2154,
+      "share_below_new_mw": 0.1899,
+      "n_formal_2021": 165848
     },
     "15": {
       "dept_code": "15",
       "dept_name": "Lima",
-      "median_formal_2021": 1554.83,
-      "kaitz_pre": 0.5981,
-      "share_at_risk": 0.2359,
-      "share_below_new_mw": 0.2006,
-      "n_formal_2021": 1444685
+      "median_formal_2021": 1516.22,
+      "kaitz_pre": 0.6134,
+      "share_at_risk": 0.2511,
+      "share_below_new_mw": 0.2308,
+      "n_formal_2021": 1737734
     },
     "16": {
       "dept_code": "16",
       "dept_name": "Loreto",
-      "median_formal_2021": 2432.23,
-      "kaitz_pre": 0.3824,
-      "share_at_risk": 0.0849,
-      "share_below_new_mw": 0.0785,
-      "n_formal_2021": 63345
+      "median_formal_2021": 1819.11,
+      "kaitz_pre": 0.5112,
+      "share_at_risk": 0.1502,
+      "share_below_new_mw": 0.1653,
+      "n_formal_2021": 92417
     },
     "17": {
       "dept_code": "17",
       "dept_name": "Madre de Dios",
-      "median_formal_2021": 2371.53,
-      "kaitz_pre": 0.3922,
-      "share_at_risk": 0.1269,
-      "share_below_new_mw": 0.0517,
-      "n_formal_2021": 12401
+      "median_formal_2021": 2013.25,
+      "kaitz_pre": 0.4619,
+      "share_at_risk": 0.1412,
+      "share_below_new_mw": 0.1168,
+      "n_formal_2021": 14739
     },
     "18": {
       "dept_code": "18",
       "dept_name": "Moquegua",
-      "median_formal_2021": 2263.12,
-      "kaitz_pre": 0.4109,
-      "share_at_risk": 0.1017,
-      "share_below_new_mw": 0.0771,
-      "n_formal_2021": 26143
+      "median_formal_2021": 1985.6,
+      "kaitz_pre": 0.4684,
+      "share_at_risk": 0.1202,
+      "share_below_new_mw": 0.1229,
+      "n_formal_2021": 33697
     },
     "19": {
       "dept_code": "19",
       "dept_name": "Pasco",
-      "median_formal_2021": 1723.94,
-      "kaitz_pre": 0.5395,
-      "share_at_risk": 0.0882,
-      "share_below_new_mw": 0.0933,
-      "n_formal_2021": 18779
+      "median_formal_2021": 1550.28,
+      "kaitz_pre": 0.5999,
+      "share_at_risk": 0.1412,
+      "share_below_new_mw": 0.2527,
+      "n_formal_2021": 26171
     },
     "20": {
       "dept_code": "20",
       "dept_name": "Piura",
-      "median_formal_2021": 1580.12,
-      "kaitz_pre": 0.5886,
-      "share_at_risk": 0.1494,
-      "share_below_new_mw": 0.1399,
-      "n_formal_2021": 148707
+      "median_formal_2021": 1439.68,
+      "kaitz_pre": 0.646,
+      "share_at_risk": 0.1922,
+      "share_below_new_mw": 0.2352,
+      "n_formal_2021": 212475
     },
     "21": {
       "dept_code": "21",
       "dept_name": "Puno",
-      "median_formal_2021": 2063.41,
-      "kaitz_pre": 0.4507,
-      "share_at_risk": 0.0894,
-      "share_below_new_mw": 0.118,
-      "n_formal_2021": 54394
+      "median_formal_2021": 1546.23,
+      "kaitz_pre": 0.6015,
+      "share_at_risk": 0.1307,
+      "share_below_new_mw": 0.2637,
+      "n_formal_2021": 92124
     },
     "22": {
       "dept_code": "22",
-      "dept_name": "San Martín",
-      "median_formal_2021": 1995.21,
-      "kaitz_pre": 0.4661,
-      "share_at_risk": 0.1307,
-      "share_below_new_mw": 0.1456,
-      "n_formal_2021": 39296
+      "dept_name": "San Martin",
+      "median_formal_2021": 1543.96,
+      "kaitz_pre": 0.6023,
+      "share_at_risk": 0.1678,
+      "share_below_new_mw": 0.2486,
+      "n_formal_2021": 59408
     },
     "23": {
       "dept_code": "23",
       "dept_name": "Tacna",
-      "median_formal_2021": 1797.78,
-      "kaitz_pre": 0.5173,
-      "share_at_risk": 0.1717,
-      "share_below_new_mw": 0.185,
-      "n_formal_2021": 28144
+      "median_formal_2021": 1558.46,
+      "kaitz_pre": 0.5967,
+      "share_at_risk": 0.2195,
+      "share_below_new_mw": 0.2902,
+      "n_formal_2021": 36829
     },
     "24": {
       "dept_code": "24",
       "dept_name": "Tumbes",
-      "median_formal_2021": 1680.61,
-      "kaitz_pre": 0.5534,
-      "share_at_risk": 0.2476,
-      "share_below_new_mw": 0.2223,
-      "n_formal_2021": 19425
+      "median_formal_2021": 1470.53,
+      "kaitz_pre": 0.6324,
+      "share_at_risk": 0.2596,
+      "share_below_new_mw": 0.2969,
+      "n_formal_2021": 27430
     },
     "25": {
       "dept_code": "25",
       "dept_name": "Ucayali",
-      "median_formal_2021": 1919.51,
-      "kaitz_pre": 0.4845,
-      "share_at_risk": 0.1421,
-      "share_below_new_mw": 0.1304,
-      "n_formal_2021": 35796
+      "median_formal_2021": 1599.59,
+      "kaitz_pre": 0.5814,
+      "share_at_risk": 0.2131,
+      "share_below_new_mw": 0.1889,
+      "n_formal_2021": 49921
     }
   }
 }
