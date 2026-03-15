@@ -7,7 +7,9 @@ CSVs are UTF-8 with BOM so Excel opens them correctly with Spanish characters.
 
 Outputs:
   precios_diarios.csv       — daily_price_index.json  → series[]
-  riesgo_politico.csv       — political_index_daily.json → daily_series[]
+  riesgo_politico.csv       — political_index_daily.json → daily_series[] (IRP columns)
+  riesgo_economico.csv      — political_index_daily.json → daily_series[] (IRE columns)
+  indices_riesgo_mensual.csv — risk_index_monthly_peaks.json → months[]
   pbi_nowcast.csv           — gdp_nowcast.json → quarterly_series[]
   pobreza_nacional.csv      — poverty_nowcast.json → historical_series[]
   pobreza_departamental.csv — poverty_nowcast.json → departments[]
@@ -64,9 +66,38 @@ def export_riesgo_politico() -> None:
     if not series:
         print("  SKIP riesgo_politico.csv — political_index_daily.json missing or empty")
         return
-    cols = ["date", "score", "score_raw", "n_articles"]
+    cols = ["date", "political_7d", "political_raw", "n_articles"]
     rows = [{k: row.get(k, "") for k in cols} for row in series]
     write_csv("riesgo_politico.csv", rows, cols)
+
+
+def export_riesgo_economico() -> None:
+    data = load_json("political_index_daily.json")
+    series = data.get("daily_series", [])
+    if not series:
+        print("  SKIP riesgo_economico.csv — political_index_daily.json missing or empty")
+        return
+    cols = ["date", "economic_7d", "economic_raw", "n_articles"]
+    rows = [{k: row.get(k, "") for k in cols} for row in series if row.get("economic_7d") is not None]
+    if not rows:
+        print("  SKIP riesgo_economico.csv — no economic_7d data")
+        return
+    write_csv("riesgo_economico.csv", rows, cols)
+
+
+def export_indices_riesgo_mensual() -> None:
+    data = load_json("risk_index_monthly_peaks.json")
+    months = data.get("months", [])
+    if not months:
+        print("  SKIP indices_riesgo_mensual.csv — risk_index_monthly_peaks.json missing or empty")
+        return
+    cols = [
+        "month",
+        "irp_7d_peak", "irp_peak_date", "irp_event",
+        "ire_7d_peak", "ire_peak_date", "ire_event",
+    ]
+    rows = [{k: m.get(k, "") for k in cols} for m in months]
+    write_csv("indices_riesgo_mensual.csv", rows, cols)
 
 
 def export_pbi_nowcast() -> None:
@@ -119,6 +150,8 @@ def main() -> None:
     print(f"\nGenerating CSV exports → {CSV_DIR}\n")
     export_precios_diarios()
     export_riesgo_politico()
+    export_riesgo_economico()
+    export_indices_riesgo_mensual()
     export_pbi_nowcast()
     export_pobreza_nacional()
     export_pobreza_departamental()
