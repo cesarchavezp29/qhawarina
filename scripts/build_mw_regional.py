@@ -12,14 +12,16 @@ ubigeo   : 6-char UBIGEO (first 2 digits = dept code 01-25)
 fac500a  : expansion / survey weight  (MUST use for all estimates)
 ocu500   : 1 = employed (filter to this)
 ocupinf  : informality status  1=informal  2=formal  (INEI official definition)
-p524a1   : gross monthly income from main job (soles/month, current) ← wage variable
+i524a1   : ingreso total imputado, deflactado, ANUALIZADO from main job (soles/year)
+           Divide by 12 to get monthly. Standard variable in all Peru labor papers.
 p207     : sex  (1=male 2=female)
 p208a    : age
 
 Formality definition: ocupinf == 2  (INEI official formal worker classification)
-Wage variable: p524a1  (monthly soles, raw reported; ~42% coverage among employed)
-  — NOT i524a1 (that is imputed ANNUAL income, needs /12)
-  — NOT d529t  (deflated annual, only covers independents/obreros)
+Wage variable: i524a1 / 12  (imputed annual income / 12 = monthly soles)
+  — This is what INEI researchers and all published papers use (Céspedes, Sánchez, etc.)
+  — NOT p524a1 (raw reported amount — requires frequency adjustment via p524b)
+  — NOT d529t  (also annualized; lower coverage for salaried workers)
 
 Department codes (INEI, 2-digit string):
   01 Amazonas  02 Ancash   03 Apurimac  04 Arequipa  05 Ayacucho
@@ -86,7 +88,7 @@ df.columns = [c.lower() for c in df.columns]
 print(f"  Columns (first 30): {list(df.columns[:30])}")
 
 # ── Column selection & type coercion ─────────────────────────────────────────
-need = ["ubigeo", "fac500a", "ocu500", "ocupinf", "p524a1", "p207", "p208a"]
+need = ["ubigeo", "fac500a", "ocu500", "ocupinf", "i524a1", "p207", "p208a"]
 
 missing = [c for c in need if c not in df.columns]
 if missing:
@@ -95,7 +97,7 @@ if missing:
         df[c] = np.nan
 
 df = df[need].copy()
-for c in ["fac500a", "ocu500", "ocupinf", "p524a1", "p207", "p208a"]:
+for c in ["fac500a", "ocu500", "ocupinf", "i524a1", "p207", "p208a"]:
     df[c] = pd.to_numeric(df[c], errors="coerce")
 
 # ubigeo: coerce to zero-padded 6-char string, extract dept (first 2)
@@ -110,13 +112,13 @@ employed = df[df["ocu500"] == 1].copy()
 print(f"  Employed rows: {len(employed):,}  (weighted sum: {employed['fac500a'].sum():,.0f})")
 
 # ── Monthly wage ──────────────────────────────────────────────────────────────
-# p524a1 = gross monthly income from main job (soles, current prices)
-# This is the standard variable for MW analysis in Peru labor economics.
-employed["wage_monthly"] = employed["p524a1"].copy()
+# i524a1 = ingreso total imputado, deflactado, ANUALIZADO (soles/year).
+# Divide by 12 to obtain monthly income — standard in all Peru labor papers.
+employed["wage_monthly"] = employed["i524a1"] / 12.0
 
-# Keep only positive wages (workers who report monetary income)
+# Keep only positive wages
 valid_wage = employed["wage_monthly"] > 0
-print(f"  Workers with valid p524a1 wage: {valid_wage.sum():,} / {len(employed):,}")
+print(f"  Workers with valid i524a1/12 wage: {valid_wage.sum():,} / {len(employed):,}")
 employed = employed[valid_wage].copy()
 
 # ── Formality (INEI official definition) ─────────────────────────────────────
@@ -355,8 +357,8 @@ output = {
         "band_lo":      BAND_LO,
         "band_hi":      BAND_HI,
         "formality":    "ocupinf==2 (INEI official formal worker classification)",
-        "wage_var":     "p524a1 (gross monthly income from main job, soles, current prices)",
-        "filter":       "ocu500==1 (employed), p524a1>0",
+        "wage_var":     "i524a1/12 (imputed annualized income / 12 = monthly soles; deflactado)",
+        "filter":       "ocu500==1 (employed), i524a1>0",
         "generated":    "2026-03-15",
         "x_grid_min":   WAGE_MIN,
         "x_grid_max":   WAGE_MAX,
