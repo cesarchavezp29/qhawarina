@@ -4,8 +4,8 @@
     "methodology_note": "index_all uses INEI IPC expenditure weights via weighted geometric mean of category-level Jevons ratios. index_all_unweighted is the simple geometric mean across all matched products.",
     "base_date": "2026-02-10",
     "base_value": 100,
-    "last_date": "2026-03-11",
-    "n_days": 30,
+    "last_date": "2026-03-14",
+    "n_days": 33,
     "stores": [
       "Plaza Vea",
       "Metro",
@@ -15,7 +15,7 @@
     "ratio_filter": "0.5 < ratio < 2.0",
     "inflation_window": "30-day rolling average (yoy_inflation, mom_inflation)",
     "reference": "Cavallo & Rigobon (2016), Billion Prices Project, MIT",
-    "updated": "2026-03-14"
+    "updated": "2026-03-15"
   },
   "categories": {
     "arroz_cereales": {
@@ -901,87 +901,168 @@
       "index_limpieza": 99.4661,
       "index_cuidado_personal": 98.9531,
       "index_other": 100.7155
+    },
+    {
+      "date": "2026-03-12",
+      "index_all": 99.28016666666667,
+      "index_all_unweighted": 99.57956666666666,
+      "index_food": 99.48010000000001,
+      "index_nonfood": 99.90353333333333,
+      "var_all": -0.0537,
+      "var_food": -0.0559,
+      "cum_pct": -0.7198,
+      "yoy_inflation": null,
+      "mom_inflation": null,
+      "interpolated": false,
+      "n_matched": 39797,
+      "index_arroz_cereales": 99.27029999999999,
+      "index_pan_harinas": 99.07436666666666,
+      "index_carnes": 99.64486666666666,
+      "index_pescados_mariscos": 98.6306,
+      "index_lacteos": 99.45413333333333,
+      "index_frutas": 99.7426,
+      "index_verduras": 98.63596666666666,
+      "index_aceites_grasas": 98.6224,
+      "index_azucar_dulces": 101.30966666666667,
+      "index_bebidas": 99.00909999999999,
+      "index_limpieza": 99.34433333333334,
+      "index_cuidado_personal": 98.81673333333333,
+      "index_other": 100.64403333333334
+    },
+    {
+      "date": "2026-03-13",
+      "index_all": 99.22683333333333,
+      "index_all_unweighted": 99.51193333333333,
+      "index_food": 99.4245,
+      "index_nonfood": 99.79886666666667,
+      "var_all": -0.0537,
+      "var_food": -0.0559,
+      "cum_pct": -0.7732,
+      "yoy_inflation": null,
+      "mom_inflation": null,
+      "interpolated": false,
+      "n_matched": 39653,
+      "index_arroz_cereales": 99.1902,
+      "index_pan_harinas": 99.07893333333334,
+      "index_carnes": 99.51763333333334,
+      "index_pescados_mariscos": 98.5218,
+      "index_lacteos": 99.41296666666666,
+      "index_frutas": 99.9548,
+      "index_verduras": 98.58793333333334,
+      "index_aceites_grasas": 98.8168,
+      "index_azucar_dulces": 101.18813333333333,
+      "index_bebidas": 98.9777,
+      "index_limpieza": 99.22256666666667,
+      "index_cuidado_personal": 98.68036666666667,
+      "index_other": 100.57256666666666
+    },
+    {
+      "date": "2026-03-14",
+      "index_all": 99.1735,
+      "index_all_unweighted": 99.4443,
+      "index_food": 99.3689,
+      "index_nonfood": 99.6942,
+      "var_all": -0.0537,
+      "var_food": -0.0559,
+      "cum_pct": -0.8265,
+      "yoy_inflation": null,
+      "mom_inflation": null,
+      "interpolated": false,
+      "n_matched": 39509,
+      "index_arroz_cereales": 99.1101,
+      "index_pan_harinas": 99.0835,
+      "index_carnes": 99.3904,
+      "index_pescados_mariscos": 98.413,
+      "index_lacteos": 99.3718,
+      "index_frutas": 100.167,
+      "index_verduras": 98.5399,
+      "index_aceites_grasas": 99.0112,
+      "index_azucar_dulces": 101.0666,
+      "index_bebidas": 98.9463,
+      "index_limpieza": 99.1008,
+      "index_cuidado_personal": 98.544,
+      "index_other": 100.5011
     }
   ],
   "latest": {
-    "date": "2026-03-11",
-    "index_all": 99.3335,
-    "index_food": 99.5357,
-    "cum_pct": -0.6665,
-    "var_all": -0.1857,
+    "date": "2026-03-14",
+    "index_all": 99.1735,
+    "index_food": 99.3689,
+    "cum_pct": -0.8265,
+    "var_all": -0.0537,
     "yoy_inflation": null,
     "mom_inflation": null,
-    "n_products_today": 39942,
+    "n_products_today": 39509,
     "top_movers": [
-      {
-        "category": "pescados_mariscos",
-        "label_es": "Pescados y Mariscos",
-        "label_en": "Fish & Seafood",
-        "var": -0.84
-      },
       {
         "category": "frutas",
         "label_es": "Frutas",
         "label_en": "Fruits",
-        "var": -0.8
+        "var": 0.21
       },
       {
-        "category": "pan_harinas",
-        "label_es": "Pan y Harinas",
-        "label_en": "Bread & Flour",
-        "var": -0.3
+        "category": "aceites_grasas",
+        "label_es": "Aceites y Grasas",
+        "label_en": "Oils & Fats",
+        "var": 0.2
       },
       {
-        "category": "arroz_cereales",
-        "label_es": "Arroz y Cereales",
-        "label_en": "Rice & Cereals",
-        "var": -0.19
+        "category": "cuidado_personal",
+        "label_es": "Cuidado Personal",
+        "label_en": "Personal Care",
+        "var": -0.14
+      },
+      {
+        "category": "carnes",
+        "label_es": "Carnes",
+        "label_en": "Meat",
+        "var": -0.13
       }
     ],
     "product_movers": [
       {
-        "name": "Infusiones WAWASANA Plena Caja 20un",
-        "store": "plazavea",
-        "category": "other",
-        "var": 98.33
+        "name": "Torta Selva Negra con Durazno 20 Porc...",
+        "store": "metro",
+        "category": "pan_harinas",
+        "var": 100.0
       },
       {
-        "name": "Turrón de Chocolate Dulce Pasión 12 P...",
+        "name": "Lechuga de Seda Hidropónica de Invern...",
         "store": "wong",
-        "category": "pan_harinas",
-        "var": 82.0
+        "category": "frutas",
+        "var": 100.0
       },
       {
-        "name": "Turrón de Chocolate 8 Porciones",
+        "name": "Torta Helada de Fresa 20 Porciones",
         "store": "wong",
         "category": "pan_harinas",
-        "var": 81.23
+        "var": 99.64
       },
       {
-        "name": "Torta Carrot Cake Dulce Pasión 10 Por...",
-        "store": "wong",
+        "name": "Torta Tres Leches de Sauco 10 Porciones",
+        "store": "metro",
         "category": "pan_harinas",
-        "var": 80.23
+        "var": 99.6
       }
     ],
     "stores_coverage": {
-      "metro": 12459,
-      "plazavea": 12962,
-      "wong": 14941
+      "metro": 12520,
+      "plazavea": 13059,
+      "wong": 14991
     },
     "categories_coverage": {
-      "aceites_grasas": 688,
-      "arroz_cereales": 1326,
-      "azucar_dulces": 1063,
-      "bebidas": 978,
-      "carnes": 14499,
-      "cuidado_personal": 2826,
-      "frutas": 1946,
-      "lacteos": 2712,
-      "limpieza": 3080,
-      "pan_harinas": 6558,
-      "pescados_mariscos": 224,
-      "verduras": 308
+      "aceites_grasas": 711,
+      "arroz_cereales": 1347,
+      "azucar_dulces": 1042,
+      "bebidas": 981,
+      "carnes": 14539,
+      "cuidado_personal": 2876,
+      "frutas": 1967,
+      "lacteos": 2711,
+      "limpieza": 3087,
+      "pan_harinas": 6598,
+      "pescados_mariscos": 228,
+      "verduras": 306
     }
   }
 }
