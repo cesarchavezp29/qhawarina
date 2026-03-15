@@ -388,6 +388,29 @@ def export_inflation_nowcast(inflation_df: pd.DataFrame, latest: pd.Series, fres
                 "upper": round(float(fc["forecast_upper"]), 3),
             })
 
+        # Append nowcast-only entries for months between last official data and target_period.
+        # These are months where BCRP data exists but INEI hasn't published official CPI yet.
+        forecast_by_month = {fc["month"]: fc["value"] for fc in forecasts}
+        forecast_by_month[target_period] = nowcast_value  # target period itself
+
+        last_official_ts = (
+            pd.to_datetime(recent_months[-1]["month"]) if recent_months else pd.Timestamp("2000-01-01")
+        )
+        target_ts = pd.to_datetime(target_period)
+        cur = last_official_ts + pd.offsets.MonthBegin(1)
+        while cur <= target_ts:
+            m = cur.strftime("%Y-%m")
+            val = forecast_by_month.get(m, nowcast_value)
+            entry = {
+                "month": m,
+                "official": None,
+                "nowcast": round(float(val), 3) if val is not None else None,
+                "error": None,
+            }
+            recent_months.append(entry)
+            all_months.append(entry)
+            cur += pd.offsets.MonthBegin(1)
+
     output = {
         "metadata": {
             "generated_at": datetime.now().isoformat(),
@@ -869,14 +892,25 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
             daily_sums["pol_norm"] = daily_sums["pol_sum"] / daily_sums["n_total"].clip(lower=1)
             daily_sums["eco_norm"] = daily_sums["eco_sum"] / daily_sums["n_total"].clip(lower=1)
 
-        # Baseline: 2025 calendar year (freeze after 30+ days available)
-        ref = daily_sums[pd.to_datetime(daily_sums["date"]).dt.year == 2025]
+        # Baseline: stable feed regime Jun 2025 – Mar 8 2026 (feed expansion on Mar 9 2026).
+        # Early 2025 (<Jun) had only 5 feeds / ~20 arts/day → not representative.
+        # Mar 9+ expanded to 42 feeds / 250+ arts/day → different regime, excluded.
+        # Using Jun 2025–Mar 8 2026 (248 days, 7–14 feeds, 31–96 arts/day) as the
+        # frozen "normal" reference so IRP/IRE 100 = average of that stable period.
+        import datetime as _dt
+        _REGIME_START = _dt.date(2025, 6, 1)
+        _REGIME_END   = _dt.date(2026, 3, 9)   # exclusive (feed expansion day)
+        _dates = pd.to_datetime(daily_sums["date"]).dt.date
+        ref = daily_sums[(_dates >= _REGIME_START) & (_dates < _REGIME_END)]
         if len(ref) >= 30:
             s_bar_pol = ref["pol_norm"].mean() or 1.0
             s_bar_eco = ref["eco_norm"].mean() or 1.0
+            logger.info("S_bar reference: %s – %s (%d days)  pol=%.4f  eco=%.4f",
+                        _REGIME_START, _REGIME_END, len(ref), s_bar_pol, s_bar_eco)
         else:
             s_bar_pol = daily_sums["pol_norm"].mean() or 1.0
             s_bar_eco = daily_sums["eco_norm"].mean() or 1.0
+            logger.warning("Fewer than 30 days in regime window — using full-history mean")
 
         daily_sums["irp"] = (daily_sums["pol_norm"] / s_bar_pol) * 100.0
         daily_sums["ire"] = (daily_sums["eco_norm"] / s_bar_eco) * 100.0
@@ -1159,8 +1193,19 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
     today_all = pd.DataFrame()  # initialized here so it's always in scope
 
     if articles_cache is not None:
-        today_date = latest["date"].date() if hasattr(latest["date"], "date") else latest["date"]
-        today_all  = articles_cache[articles_cache["date"] == today_date]
+        # Always prefer actual Lima date (UTC-5) for article filtering.
+        # Fallback to latest["date"] only if no articles exist for today — this prevents
+        # March 14 justification from reusing March 13 articles when political_df latest
+        # row is still March 13 (e.g. pipeline_status not yet updated).
+        from datetime import timezone as _tz14, timedelta as _td14
+        _actual_today = (datetime.now(_tz14.utc) + _td14(hours=-5)).date()
+        today_all_actual = articles_cache[articles_cache["date"] == _actual_today]
+        if not today_all_actual.empty:
+            today_date = _actual_today
+            today_all  = today_all_actual
+        else:
+            today_date = latest["date"].date() if hasattr(latest["date"], "date") else latest["date"]
+            today_all  = articles_cache[articles_cache["date"] == today_date]
         has_dual   = "political_score" in today_all.columns and "economic_score" in today_all.columns
 
         if has_dual and (irp_today > 0 or ire_today > 0):
@@ -1181,7 +1226,24 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series):
                     r'|simposio \w+|congreso empresarial|webinar|workshop'
                     # Routine FX quote articles (daily "precio del dólar hoy" = irrelevant)
                     r'|precio del dólar.*hoy|tipo de cambio.*hoy|a cuánto (cerró|abrió|está) el (dólar|tipo de cambio)'
-                    r'|cotización del dólar)\b',
+                    r'|cotización del dólar'
+                    # Arts / cultural events (no macroeconomic relevance)
+                    r'|fae lima|festival de artes escénicas|festival artes escénicas'
+                    r'|escena y memoria|cierre del fae|apertura del fae'
+                    r'|gran teatro nacional.{0,30}(programa|temporada|estreno)'
+                    r'|bienal de arte|galería de arte'
+                    # Foreign leader health / personal news
+                    r'|bolsonaro|lula da silva|jair bolsonaro'
+                    r'|(expresidente|ex[ -]presidente).{0,40}(brasileño|argentino|colombiano|chileno|venezolano|boliviano|ecuatoriano|paraguayo|uruguayo)'
+                    # Deaths of foreign intellectuals/cultural figures
+                    r'|(muere|fallece|muerte de).{0,120}'
+                    r'(filósofos?|filósofas?|escritores?|escritoras?|novelistas?|poetas?|poetisas?|'
+                    r'dramaturgos?|dramaturgAs?|compositores?|compositoras?|músicos?|músicas?|'
+                    r'pensadores?|pensadoras?|teólogos?|teólogas?|sociólogos?|sociólogas?|'
+                    r'antropólogos?|antropólogas?|arqueólogos?|arqueólogas?|historiadores?|historiadoras?|'
+                    r'ensayistas?|lingüistas?|psicólogos?|psicólogas?|'
+                    r'pintores?|pintoras?|escultores?|escultoras?|actores?|actrices?|'
+                    r'bailarines?|bailarinas?|cantantes?|cineastas?|guionistas?))\b',
                     _re.IGNORECASE,
                 )
 

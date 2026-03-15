@@ -51,6 +51,10 @@ def disaggregate_to_districts(
     ntl["date"] = pd.to_datetime(ntl["date"])
     ntl["year"] = ntl["date"].dt.year
 
+    # Normalise column name: pipeline v7 uses ntl_sum_eqarea, older used ntl_sum
+    if "ntl_sum" not in ntl.columns and "ntl_sum_eqarea" in ntl.columns:
+        ntl = ntl.rename(columns={"ntl_sum_eqarea": "ntl_sum"})
+
     # Select year for NTL weights
     if year is None:
         year = ntl["year"].max()
