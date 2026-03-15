@@ -49,7 +49,7 @@ DEFAULT_END_MONTH = 12
 # For backtesting: initial training window
 BACKTEST_TRAIN_START = "2007-01"
 BACKTEST_EVAL_START = "2010-01"
-BACKTEST_EVAL_END = "2025-09"  # Extended to cover Q3 2025
+BACKTEST_EVAL_END = "2026-01"  # Extended through Jan 2026
 
 # ── ENAHO / INEI ─────────────────────────────────────────────────────────────
 RAW_ENAHO_DIR = RAW_DIR / "inei" / "enaho"
