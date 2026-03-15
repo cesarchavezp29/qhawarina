@@ -808,6 +808,15 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series, skip_h
         art = articles_cache.copy()
         art["day"] = pd.to_datetime(art["date"]).dt.normalize()
 
+        # Apply deterministic post-filter rules (zeroes false positives, boosts underscored).
+        # This runs on the in-memory copy only — does NOT modify the parquet on disk.
+        try:
+            from src.nlp.classifier import post_filter_scores
+            art = post_filter_scores(art)
+            logger.info("post_filter_scores applied to in-memory article frame (%d rows)", len(art))
+        except Exception as _pf_err:
+            logger.warning("post_filter_scores failed (skipping): %s", _pf_err)
+
         # LEVEL 3 SAFETY NET: exclude GDELT and non-Peru aggregator feeds.
         # Direct Peru feeds (elcomercio, gestion, larepublica, andina, rpp, correo)
         # are the only valid signal sources. GDELT adds ~12k global noise articles.
@@ -817,6 +826,24 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series, skip_h
             n_excluded = n_before - len(art)
             if n_excluded > 0:
                 logger.info("Excluded %d GDELT articles from index computation", n_excluded)
+
+        # ── Heuristic eco-leak fix ────────────────────────────────────────────
+        # When pol_score > eco_score AND eco_score < 40, the economic score is
+        # almost always political content leaking through Haiku's eco prompt.
+        # Zero it out here so it never enters the daily aggregation.
+        # This does NOT touch the parquet — index computation only.
+        if "political_score" in art.columns and "economic_score" in art.columns:
+            _eco_leak = (
+                art["political_score"].fillna(0) > art["economic_score"].fillna(0)
+            ) & (
+                art["economic_score"].fillna(0) < 40
+            ) & (
+                art["economic_score"].fillna(0) > 0
+            )
+            n_eco_leak = int(_eco_leak.sum())
+            if n_eco_leak > 0:
+                art.loc[_eco_leak, "economic_score"] = 0
+                logger.info("Eco-leak heuristic zeroed eco on %d articles (pol>eco, eco<40)", n_eco_leak)
 
         has_dual = "political_score" in art.columns and "economic_score" in art.columns
 
