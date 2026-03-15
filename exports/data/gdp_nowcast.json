@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-03-14T16:09:02.606727",
+    "generated_at": "2026-03-15T03:21:06.904283",
     "methodology": "Dynamic Factor Model with Ridge bridge equation (Baker 2023, Aruoba 2020)",
     "model": "DynamicFactorModel",
     "model_params": {
@@ -11,7 +11,7 @@
       "rolling_window_years": 7,
       "exclude_covid": true
     },
-    "n_indicators": 37,
+    "n_indicators": 36,
     "training_window": "2007-2024 (rolling 7-year window, excl. COVID 2020-2021)",
     "last_official_gdp": {
       "quarter": "2025-Q4",
@@ -21,26 +21,26 @@
       "error": null
     },
     "data_vintage": "2025-12",
-    "series_coverage": "37/36"
+    "series_coverage": "36/36"
   },
   "nowcast": {
-    "target_period": "2025-Q4",
-    "value": 2.2,
+    "target_period": "2026-Q1",
+    "value": 2.84,
     "unit": "percent_yoy",
-    "bridge_r2": 0.556
+    "bridge_r2": 0.562
   },
   "forecasts": [
     {
       "quarter": "2026-Q1",
-      "value": 2.98,
-      "lower": -10.42,
-      "upper": 16.38
+      "value": 2.84,
+      "lower": 0.08,
+      "upper": 5.6
     },
     {
       "quarter": "2026-Q2",
-      "value": 3.47,
-      "lower": -9.92,
-      "upper": 16.87
+      "value": 3.27,
+      "lower": 0.51,
+      "upper": 6.03
     }
   ],
   "quarterly_series": [
@@ -929,6 +929,13 @@
       "nowcast": null,
       "error": null,
       "is_forecast": false
+    },
+    {
+      "quarter": "2026-Q1",
+      "official": null,
+      "nowcast": 2.84,
+      "error": null,
+      "is_forecast": true
     }
   ],
   "forecast_vs_actual": [

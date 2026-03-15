@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-03-14T16:09:04.377067",
+    "generated_at": "2026-03-15T03:21:09.316966",
     "model": "DynamicFactorModel",
     "model_params": {
       "k_factors": 2,
@@ -8,50 +8,50 @@
       "include_target_ar": true
     },
     "data_vintage": "2026-02",
-    "series_coverage": "25/26"
+    "series_coverage": "24/26"
   },
   "nowcast": {
     "target_period": "2026-03",
-    "value": 0.172,
+    "value": 0.182,
     "unit": "percent_3m_ma",
-    "bridge_r2": 0.707
+    "bridge_r2": 0.703
   },
   "forecasts": [
     {
       "month": "2026-03",
-      "value": 0.164,
-      "lower": -0.08,
-      "upper": 0.407
+      "value": 0.161,
+      "lower": -0.084,
+      "upper": 0.406
     },
     {
       "month": "2026-04",
-      "value": 0.174,
-      "lower": -0.069,
-      "upper": 0.417
+      "value": 0.169,
+      "lower": -0.076,
+      "upper": 0.414
     },
     {
       "month": "2026-05",
-      "value": 0.183,
-      "lower": -0.06,
-      "upper": 0.426
+      "value": 0.176,
+      "lower": -0.069,
+      "upper": 0.421
     },
     {
       "month": "2026-06",
-      "value": 0.19,
-      "lower": -0.053,
-      "upper": 0.434
+      "value": 0.182,
+      "lower": -0.063,
+      "upper": 0.427
     },
     {
       "month": "2026-07",
-      "value": 0.197,
-      "lower": -0.046,
-      "upper": 0.44
+      "value": 0.188,
+      "lower": -0.057,
+      "upper": 0.433
     },
     {
       "month": "2026-08",
-      "value": 0.203,
-      "lower": -0.04,
-      "upper": 0.446
+      "value": 0.193,
+      "lower": -0.052,
+      "upper": 0.438
     }
   ],
   "monthly_series": [
@@ -496,176 +496,176 @@
     {
       "month": "2010-02",
       "official": 0.312,
-      "nowcast": 0.113,
-      "error": -0.199
+      "nowcast": 0.139,
+      "error": -0.173
     },
     {
       "month": "2010-03",
       "official": 0.3,
-      "nowcast": 0.229,
-      "error": -0.071
+      "nowcast": 0.245,
+      "error": -0.055
     },
     {
       "month": "2010-04",
       "official": 0.21,
-      "nowcast": 0.259,
-      "error": 0.05
+      "nowcast": 0.288,
+      "error": 0.079
     },
     {
       "month": "2010-05",
       "official": 0.181,
-      "nowcast": 0.181,
-      "error": -0.0
+      "nowcast": 0.221,
+      "error": 0.04
     },
     {
       "month": "2010-06",
       "official": 0.171,
-      "nowcast": 0.248,
-      "error": 0.077
+      "nowcast": 0.182,
+      "error": 0.011
     },
     {
       "month": "2010-07",
       "official": 0.284,
-      "nowcast": 0.301,
-      "error": 0.016
+      "nowcast": 0.168,
+      "error": -0.116
     },
     {
       "month": "2010-08",
       "official": 0.294,
-      "nowcast": 0.329,
-      "error": 0.034
+      "nowcast": 0.332,
+      "error": 0.037
     },
     {
       "month": "2010-09",
       "official": 0.2,
-      "nowcast": 0.384,
-      "error": 0.184
+      "nowcast": 0.303,
+      "error": 0.102
     },
     {
       "month": "2010-10",
       "official": 0.032,
-      "nowcast": 0.207,
-      "error": 0.176
+      "nowcast": 0.245,
+      "error": 0.213
     },
     {
       "month": "2010-11",
       "official": -0.055,
-      "nowcast": 0.123,
-      "error": 0.178
+      "nowcast": 0.083,
+      "error": 0.138
     },
     {
       "month": "2010-12",
       "official": 0.015,
-      "nowcast": 0.04,
-      "error": 0.025
+      "nowcast": 0.022,
+      "error": 0.007
     },
     {
       "month": "2011-01",
       "official": 0.192,
-      "nowcast": 0.091,
-      "error": -0.102
+      "nowcast": 0.078,
+      "error": -0.114
     },
     {
       "month": "2011-02",
       "official": 0.317,
-      "nowcast": 0.215,
-      "error": -0.102
+      "nowcast": 0.217,
+      "error": -0.1
     },
     {
       "month": "2011-03",
       "official": 0.492,
-      "nowcast": 0.304,
-      "error": -0.188
+      "nowcast": 0.307,
+      "error": -0.185
     },
     {
       "month": "2011-04",
       "official": 0.589,
-      "nowcast": 0.435,
-      "error": -0.154
+      "nowcast": 0.443,
+      "error": -0.145
     },
     {
       "month": "2011-05",
       "official": 0.453,
-      "nowcast": 0.585,
-      "error": 0.132
+      "nowcast": 0.61,
+      "error": 0.157
     },
     {
       "month": "2011-06",
       "official": 0.252,
-      "nowcast": 0.413,
-      "error": 0.161
+      "nowcast": 0.407,
+      "error": 0.155
     },
     {
       "month": "2011-07",
       "official": 0.289,
-      "nowcast": 0.187,
-      "error": -0.102
+      "nowcast": 0.253,
+      "error": -0.037
     },
     {
       "month": "2011-08",
       "official": 0.386,
-      "nowcast": 0.249,
-      "error": -0.137
+      "nowcast": 0.316,
+      "error": -0.07
     },
     {
       "month": "2011-09",
       "official": 0.464,
-      "nowcast": 0.313,
-      "error": -0.151
+      "nowcast": 0.315,
+      "error": -0.149
     },
     {
       "month": "2011-10",
       "official": 0.305,
-      "nowcast": 0.366,
-      "error": 0.061
+      "nowcast": 0.398,
+      "error": 0.093
     },
     {
       "month": "2011-11",
       "official": 0.36,
-      "nowcast": 0.304,
-      "error": -0.056
+      "nowcast": 0.3,
+      "error": -0.06
     },
     {
       "month": "2011-12",
       "official": 0.339,
-      "nowcast": 0.393,
-      "error": 0.054
+      "nowcast": 0.4,
+      "error": 0.061
     },
     {
       "month": "2012-01",
       "official": 0.2,
-      "nowcast": 0.383,
-      "error": 0.182
+      "nowcast": 0.362,
+      "error": 0.161
     },
     {
       "month": "2012-02",
       "official": 0.165,
-      "nowcast": 0.183,
-      "error": 0.019
+      "nowcast": 0.173,
+      "error": 0.008
     },
     {
       "month": "2012-03",
       "official": 0.33,
-      "nowcast": 0.175,
-      "error": -0.155
+      "nowcast": 0.206,
+      "error": -0.124
     },
     {
       "month": "2012-04",
       "official": 0.541,
-      "nowcast": 0.325,
-      "error": -0.216
+      "nowcast": 0.323,
+      "error": -0.218
     },
     {
       "month": "2012-05",
       "official": 0.446,
-      "nowcast": 0.471,
-      "error": 0.025
+      "nowcast": 0.454,
+      "error": 0.008
     },
     {
       "month": "2012-06",
       "official": 0.178,
-      "nowcast": 0.433,
-      "error": 0.254
+      "nowcast": 0.425,
+      "error": 0.247
     },
     {
       "month": "2012-07",
@@ -676,632 +676,632 @@
     {
       "month": "2012-08",
       "official": 0.187,
-      "nowcast": 0.067,
-      "error": -0.121
+      "nowcast": 0.062,
+      "error": -0.126
     },
     {
       "month": "2012-09",
       "official": 0.38,
-      "nowcast": 0.265,
-      "error": -0.115
+      "nowcast": 0.237,
+      "error": -0.144
     },
     {
       "month": "2012-10",
       "official": 0.296,
-      "nowcast": 0.388,
-      "error": 0.092
+      "nowcast": 0.377,
+      "error": 0.081
     },
     {
       "month": "2012-11",
       "official": 0.081,
-      "nowcast": 0.247,
-      "error": 0.166
+      "nowcast": 0.275,
+      "error": 0.194
     },
     {
       "month": "2012-12",
       "official": -0.014,
-      "nowcast": 0.097,
-      "error": 0.111
+      "nowcast": 0.087,
+      "error": 0.101
     },
     {
       "month": "2013-01",
       "official": 0.079,
-      "nowcast": 0.038,
-      "error": -0.041
+      "nowcast": 0.039,
+      "error": -0.04
     },
     {
       "month": "2013-02",
       "official": 0.095,
-      "nowcast": 0.102,
-      "error": 0.007
+      "nowcast": 0.101,
+      "error": 0.006
     },
     {
       "month": "2013-03",
       "official": 0.311,
-      "nowcast": 0.126,
-      "error": -0.185
+      "nowcast": 0.122,
+      "error": -0.189
     },
     {
       "month": "2013-04",
       "official": 0.357,
-      "nowcast": 0.299,
-      "error": -0.058
+      "nowcast": 0.286,
+      "error": -0.071
     },
     {
       "month": "2013-05",
       "official": 0.452,
-      "nowcast": 0.297,
+      "nowcast": 0.298,
       "error": -0.154
     },
     {
       "month": "2013-06",
       "official": 0.236,
-      "nowcast": 0.357,
-      "error": 0.121
+      "nowcast": 0.39,
+      "error": 0.154
     },
     {
       "month": "2013-07",
       "official": 0.335,
-      "nowcast": 0.246,
-      "error": -0.088
+      "nowcast": 0.263,
+      "error": -0.072
     },
     {
       "month": "2013-08",
       "official": 0.451,
-      "nowcast": 0.319,
-      "error": -0.132
+      "nowcast": 0.312,
+      "error": -0.139
     },
     {
       "month": "2013-09",
       "official": 0.4,
-      "nowcast": 0.412,
-      "error": 0.012
+      "nowcast": 0.395,
+      "error": -0.005
     },
     {
       "month": "2013-10",
       "official": 0.23,
-      "nowcast": 0.327,
-      "error": 0.097
+      "nowcast": 0.302,
+      "error": 0.072
     },
     {
       "month": "2013-11",
       "official": -0.024,
-      "nowcast": 0.231,
-      "error": 0.254
+      "nowcast": 0.162,
+      "error": 0.185
     },
     {
       "month": "2013-12",
       "official": -0.005,
-      "nowcast": 0.06,
-      "error": 0.064
+      "nowcast": -0.018,
+      "error": -0.013
     },
     {
       "month": "2014-01",
       "official": 0.088,
-      "nowcast": 0.109,
-      "error": 0.021
+      "nowcast": 0.005,
+      "error": -0.083
     },
     {
       "month": "2014-02",
       "official": 0.361,
-      "nowcast": 0.13,
-      "error": -0.231
+      "nowcast": 0.155,
+      "error": -0.206
     },
     {
       "month": "2014-03",
       "official": 0.479,
-      "nowcast": 0.312,
-      "error": -0.167
+      "nowcast": 0.34,
+      "error": -0.139
     },
     {
       "month": "2014-04",
       "official": 0.504,
-      "nowcast": 0.444,
-      "error": -0.06
+      "nowcast": 0.437,
+      "error": -0.067
     },
     {
       "month": "2014-05",
       "official": 0.379,
-      "nowcast": 0.457,
-      "error": 0.078
+      "nowcast": 0.472,
+      "error": 0.093
     },
     {
       "month": "2014-06",
       "official": 0.259,
-      "nowcast": 0.358,
-      "error": 0.099
+      "nowcast": 0.341,
+      "error": 0.082
     },
     {
       "month": "2014-07",
       "official": 0.273,
-      "nowcast": 0.303,
-      "error": 0.031
+      "nowcast": 0.276,
+      "error": 0.004
     },
     {
       "month": "2014-08",
       "official": 0.169,
-      "nowcast": 0.294,
-      "error": 0.125
+      "nowcast": 0.316,
+      "error": 0.147
     },
     {
       "month": "2014-09",
       "official": 0.169,
-      "nowcast": 0.186,
-      "error": 0.017
+      "nowcast": 0.189,
+      "error": 0.019
     },
     {
       "month": "2014-10",
       "official": 0.151,
-      "nowcast": 0.194,
-      "error": 0.043
+      "nowcast": 0.209,
+      "error": 0.058
     },
     {
       "month": "2014-11",
       "official": 0.13,
-      "nowcast": 0.209,
-      "error": 0.079
+      "nowcast": 0.208,
+      "error": 0.078
     },
     {
       "month": "2014-12",
       "official": 0.153,
-      "nowcast": 0.177,
-      "error": 0.024
+      "nowcast": 0.139,
+      "error": -0.014
     },
     {
       "month": "2015-01",
       "official": 0.083,
-      "nowcast": 0.227,
-      "error": 0.144
+      "nowcast": 0.218,
+      "error": 0.134
     },
     {
       "month": "2015-02",
       "official": 0.234,
-      "nowcast": 0.147,
-      "error": -0.087
+      "nowcast": 0.1,
+      "error": -0.134
     },
     {
       "month": "2015-03",
       "official": 0.413,
-      "nowcast": 0.243,
-      "error": -0.17
+      "nowcast": 0.257,
+      "error": -0.156
     },
     {
       "month": "2015-04",
       "official": 0.486,
-      "nowcast": 0.417,
-      "error": -0.069
+      "nowcast": 0.392,
+      "error": -0.094
     },
     {
       "month": "2015-05",
       "official": 0.573,
-      "nowcast": 0.44,
-      "error": -0.133
+      "nowcast": 0.395,
+      "error": -0.179
     },
     {
       "month": "2015-06",
       "official": 0.429,
-      "nowcast": 0.517,
-      "error": 0.088
+      "nowcast": 0.503,
+      "error": 0.074
     },
     {
       "month": "2015-07",
       "official": 0.449,
-      "nowcast": 0.363,
-      "error": -0.086
+      "nowcast": 0.364,
+      "error": -0.085
     },
     {
       "month": "2015-08",
       "official": 0.387,
-      "nowcast": 0.393,
-      "error": 0.006
+      "nowcast": 0.398,
+      "error": 0.012
     },
     {
       "month": "2015-09",
       "official": 0.285,
-      "nowcast": 0.341,
-      "error": 0.056
+      "nowcast": 0.34,
+      "error": 0.055
     },
     {
       "month": "2015-10",
       "official": 0.183,
-      "nowcast": 0.28,
-      "error": 0.098
+      "nowcast": 0.271,
+      "error": 0.089
     },
     {
       "month": "2015-11",
       "official": 0.171,
-      "nowcast": 0.214,
-      "error": 0.042
+      "nowcast": 0.212,
+      "error": 0.041
     },
     {
       "month": "2015-12",
       "official": 0.311,
-      "nowcast": 0.205,
-      "error": -0.106
+      "nowcast": 0.219,
+      "error": -0.092
     },
     {
       "month": "2016-01",
       "official": 0.387,
-      "nowcast": 0.289,
-      "error": -0.099
+      "nowcast": 0.288,
+      "error": -0.1
     },
     {
       "month": "2016-02",
       "official": 0.331,
-      "nowcast": 0.374,
-      "error": 0.043
+      "nowcast": 0.383,
+      "error": 0.052
     },
     {
       "month": "2016-03",
       "official": 0.382,
-      "nowcast": 0.317,
-      "error": -0.065
+      "nowcast": 0.314,
+      "error": -0.068
     },
     {
       "month": "2016-04",
       "official": 0.261,
-      "nowcast": 0.375,
-      "error": 0.113
+      "nowcast": 0.391,
+      "error": 0.13
     },
     {
       "month": "2016-05",
       "official": 0.273,
-      "nowcast": 0.272,
-      "error": -0.001
+      "nowcast": 0.286,
+      "error": 0.013
     },
     {
       "month": "2016-06",
       "official": 0.12,
-      "nowcast": 0.264,
-      "error": 0.144
+      "nowcast": 0.267,
+      "error": 0.147
     },
     {
       "month": "2016-07",
       "official": 0.144,
-      "nowcast": 0.155,
-      "error": 0.011
+      "nowcast": 0.166,
+      "error": 0.023
     },
     {
       "month": "2016-08",
       "official": 0.193,
-      "nowcast": 0.173,
-      "error": -0.02
+      "nowcast": 0.174,
+      "error": -0.019
     },
     {
       "month": "2016-09",
       "official": 0.215,
-      "nowcast": 0.204,
-      "error": -0.011
+      "nowcast": 0.213,
+      "error": -0.002
     },
     {
       "month": "2016-10",
       "official": 0.326,
-      "nowcast": 0.214,
-      "error": -0.112
+      "nowcast": 0.229,
+      "error": -0.097
     },
     {
       "month": "2016-11",
       "official": 0.303,
-      "nowcast": 0.292,
-      "error": -0.012
+      "nowcast": 0.295,
+      "error": -0.008
     },
     {
       "month": "2016-12",
       "official": 0.346,
-      "nowcast": 0.275,
-      "error": -0.071
+      "nowcast": 0.273,
+      "error": -0.073
     },
     {
       "month": "2017-01",
       "official": 0.287,
-      "nowcast": 0.296,
-      "error": 0.008
+      "nowcast": 0.33,
+      "error": 0.042
     },
     {
       "month": "2017-02",
       "official": 0.298,
-      "nowcast": 0.265,
-      "error": -0.034
+      "nowcast": 0.28,
+      "error": -0.019
     },
     {
       "month": "2017-03",
       "official": 0.622,
-      "nowcast": 0.262,
-      "error": -0.36
+      "nowcast": 0.269,
+      "error": -0.353
     },
     {
       "month": "2017-04",
       "official": 0.457,
-      "nowcast": 0.526,
-      "error": 0.069
+      "nowcast": 0.54,
+      "error": 0.084
     },
     {
       "month": "2017-05",
       "official": 0.208,
-      "nowcast": 0.39,
-      "error": 0.183
+      "nowcast": 0.398,
+      "error": 0.191
     },
     {
       "month": "2017-06",
       "official": -0.28,
-      "nowcast": 0.196,
-      "error": 0.476
+      "nowcast": 0.201,
+      "error": 0.481
     },
     {
       "month": "2017-07",
       "official": -0.128,
-      "nowcast": -0.162,
-      "error": -0.034
+      "nowcast": -0.177,
+      "error": -0.049
     },
     {
       "month": "2017-08",
       "official": 0.237,
-      "nowcast": -0.044,
-      "error": -0.281
+      "nowcast": -0.059,
+      "error": -0.296
     },
     {
       "month": "2017-09",
       "official": 0.285,
-      "nowcast": 0.211,
-      "error": -0.074
+      "nowcast": 0.218,
+      "error": -0.067
     },
     {
       "month": "2017-10",
       "official": 0.062,
-      "nowcast": 0.245,
-      "error": 0.183
+      "nowcast": 0.249,
+      "error": 0.187
     },
     {
       "month": "2017-11",
       "official": -0.227,
-      "nowcast": 0.077,
-      "error": 0.305
+      "nowcast": 0.079,
+      "error": 0.307
     },
     {
       "month": "2017-12",
       "official": -0.17,
-      "nowcast": -0.134,
-      "error": 0.036
+      "nowcast": -0.137,
+      "error": 0.033
     },
     {
       "month": "2018-01",
       "official": 0.029,
-      "nowcast": -0.086,
-      "error": -0.115
+      "nowcast": -0.095,
+      "error": -0.124
     },
     {
       "month": "2018-02",
       "official": 0.178,
-      "nowcast": 0.053,
-      "error": -0.125
+      "nowcast": 0.057,
+      "error": -0.121
     },
     {
       "month": "2018-03",
       "official": 0.288,
-      "nowcast": 0.167,
-      "error": -0.121
+      "nowcast": 0.174,
+      "error": -0.114
     },
     {
       "month": "2018-04",
       "official": 0.2,
-      "nowcast": 0.243,
-      "error": 0.043
+      "nowcast": 0.256,
+      "error": 0.056
     },
     {
       "month": "2018-05",
       "official": 0.123,
-      "nowcast": 0.191,
-      "error": 0.068
+      "nowcast": 0.189,
+      "error": 0.066
     },
     {
       "month": "2018-06",
       "official": 0.072,
-      "nowcast": 0.136,
-      "error": 0.065
+      "nowcast": 0.131,
+      "error": 0.059
     },
     {
       "month": "2018-07",
       "official": 0.245,
-      "nowcast": 0.101,
-      "error": -0.144
+      "nowcast": 0.093,
+      "error": -0.152
     },
     {
       "month": "2018-08",
       "official": 0.283,
-      "nowcast": 0.229,
-      "error": -0.054
+      "nowcast": 0.228,
+      "error": -0.055
     },
     {
       "month": "2018-09",
       "official": 0.235,
-      "nowcast": 0.251,
-      "error": 0.016
+      "nowcast": 0.26,
+      "error": 0.025
     },
     {
       "month": "2018-10",
       "official": 0.135,
-      "nowcast": 0.23,
-      "error": 0.095
+      "nowcast": 0.227,
+      "error": 0.092
     },
     {
       "month": "2018-11",
       "official": 0.132,
-      "nowcast": 0.155,
-      "error": 0.023
+      "nowcast": 0.148,
+      "error": 0.016
     },
     {
       "month": "2018-12",
       "official": 0.129,
-      "nowcast": 0.155,
-      "error": 0.027
+      "nowcast": 0.145,
+      "error": 0.016
     },
     {
       "month": "2019-01",
       "official": 0.123,
-      "nowcast": 0.147,
-      "error": 0.023
+      "nowcast": 0.14,
+      "error": 0.017
     },
     {
       "month": "2019-02",
       "official": 0.125,
-      "nowcast": 0.145,
-      "error": 0.02
+      "nowcast": 0.137,
+      "error": 0.012
     },
     {
       "month": "2019-03",
       "official": 0.307,
-      "nowcast": 0.14,
-      "error": -0.166
+      "nowcast": 0.128,
+      "error": -0.179
     },
     {
       "month": "2019-04",
       "official": 0.351,
-      "nowcast": 0.272,
-      "error": -0.079
+      "nowcast": 0.268,
+      "error": -0.083
     },
     {
       "month": "2019-05",
       "official": 0.358,
       "nowcast": 0.302,
-      "error": -0.057
+      "error": -0.056
     },
     {
       "month": "2019-06",
       "official": 0.087,
-      "nowcast": 0.311,
-      "error": 0.224
+      "nowcast": 0.313,
+      "error": 0.226
     },
     {
       "month": "2019-07",
       "official": 0.088,
-      "nowcast": 0.116,
-      "error": 0.028
+      "nowcast": 0.107,
+      "error": 0.019
     },
     {
       "month": "2019-08",
       "official": 0.059,
-      "nowcast": 0.1,
-      "error": 0.041
+      "nowcast": 0.114,
+      "error": 0.055
     },
     {
       "month": "2019-09",
       "official": 0.09,
-      "nowcast": 0.087,
-      "error": -0.003
+      "nowcast": 0.092,
+      "error": 0.002
     },
     {
       "month": "2019-10",
       "official": 0.059,
-      "nowcast": 0.116,
-      "error": 0.057
+      "nowcast": 0.105,
+      "error": 0.046
     },
     {
       "month": "2019-11",
       "official": 0.075,
-      "nowcast": 0.088,
-      "error": 0.012
+      "nowcast": 0.085,
+      "error": 0.01
     },
     {
       "month": "2019-12",
       "official": 0.145,
-      "nowcast": 0.094,
-      "error": -0.051
+      "nowcast": 0.101,
+      "error": -0.043
     },
     {
       "month": "2020-01",
       "official": 0.126,
-      "nowcast": 0.152,
-      "error": 0.026
+      "nowcast": 0.145,
+      "error": 0.02
     },
     {
       "month": "2020-02",
       "official": 0.137,
-      "nowcast": 0.133,
-      "error": -0.004
+      "nowcast": 0.128,
+      "error": -0.009
     },
     {
       "month": "2020-03",
       "official": 0.281,
-      "nowcast": 0.137,
-      "error": -0.144
+      "nowcast": 0.148,
+      "error": -0.132
     },
     {
       "month": "2020-04",
       "official": 0.298,
-      "nowcast": 0.249,
-      "error": -0.049
+      "nowcast": 0.27,
+      "error": -0.028
     },
     {
       "month": "2020-05",
       "official": 0.318,
-      "nowcast": 0.321,
-      "error": 0.003
+      "nowcast": 0.345,
+      "error": 0.026
     },
     {
       "month": "2020-06",
       "official": 0.014,
-      "nowcast": 0.356,
-      "error": 0.342
+      "nowcast": 0.283,
+      "error": 0.269
     },
     {
       "month": "2020-07",
       "official": 0.134,
-      "nowcast": 0.113,
-      "error": -0.02
+      "nowcast": 0.128,
+      "error": -0.006
     },
     {
       "month": "2020-08",
       "official": 0.029,
-      "nowcast": 0.143,
-      "error": 0.115
+      "nowcast": 0.197,
+      "error": 0.168
     },
     {
       "month": "2020-09",
       "official": 0.163,
-      "nowcast": 0.012,
-      "error": -0.151
+      "nowcast": 0.103,
+      "error": -0.06
     },
     {
       "month": "2020-10",
       "official": 0.014,
-      "nowcast": 0.093,
-      "error": 0.079
+      "nowcast": 0.107,
+      "error": 0.093
     },
     {
       "month": "2020-11",
       "official": 0.225,
-      "nowcast": 0.022,
-      "error": -0.203
+      "nowcast": 0.032,
+      "error": -0.192
     },
     {
       "month": "2020-12",
       "official": 0.195,
-      "nowcast": 0.211,
-      "error": 0.015
+      "nowcast": 0.209,
+      "error": 0.013
     },
     {
       "month": "2021-01",
       "official": 0.437,
-      "nowcast": 0.155,
-      "error": -0.282
+      "nowcast": 0.157,
+      "error": -0.28
     },
     {
       "month": "2021-02",
       "official": 0.222,
-      "nowcast": 0.377,
-      "error": 0.155
+      "nowcast": 0.416,
+      "error": 0.193
     },
     {
       "month": "2021-03",
       "official": 0.486,
-      "nowcast": 0.194,
-      "error": -0.291
+      "nowcast": 0.199,
+      "error": -0.286
     },
     {
       "month": "2021-04",
       "official": 0.203,
-      "nowcast": 0.388,
-      "error": 0.185
+      "nowcast": 0.377,
+      "error": 0.173
     },
     {
       "month": "2021-05",
@@ -1312,50 +1312,50 @@
     {
       "month": "2021-06",
       "official": 0.227,
-      "nowcast": 0.261,
-      "error": 0.034
+      "nowcast": 0.283,
+      "error": 0.056
     },
     {
       "month": "2021-07",
       "official": 0.598,
-      "nowcast": 0.251,
-      "error": -0.347
+      "nowcast": 0.279,
+      "error": -0.319
     },
     {
       "month": "2021-08",
       "official": 0.837,
-      "nowcast": 0.502,
-      "error": -0.335
+      "nowcast": 0.568,
+      "error": -0.269
     },
     {
       "month": "2021-09",
       "official": 0.798,
-      "nowcast": 0.715,
-      "error": -0.082
+      "nowcast": 0.725,
+      "error": -0.072
     },
     {
       "month": "2021-10",
       "official": 0.656,
-      "nowcast": 0.686,
-      "error": 0.029
+      "nowcast": 0.689,
+      "error": 0.032
     },
     {
       "month": "2021-11",
       "official": 0.447,
-      "nowcast": 0.58,
-      "error": 0.133
+      "nowcast": 0.593,
+      "error": 0.146
     },
     {
       "month": "2021-12",
       "official": 0.575,
-      "nowcast": 0.431,
-      "error": -0.144
+      "nowcast": 0.427,
+      "error": -0.148
     },
     {
       "month": "2022-01",
       "official": 0.393,
-      "nowcast": 0.544,
-      "error": 0.151
+      "nowcast": 0.551,
+      "error": 0.159
     },
     {
       "month": "2022-02",
@@ -1372,50 +1372,50 @@
     {
       "month": "2022-04",
       "official": 0.919,
-      "nowcast": 0.756,
-      "error": -0.163
+      "nowcast": 0.754,
+      "error": -0.165
     },
     {
       "month": "2022-05",
       "official": 0.943,
-      "nowcast": 0.83,
-      "error": -0.113
+      "nowcast": 0.839,
+      "error": -0.104
     },
     {
       "month": "2022-06",
       "official": 0.846,
-      "nowcast": 0.89,
-      "error": 0.045
+      "nowcast": 0.892,
+      "error": 0.047
     },
     {
       "month": "2022-07",
       "official": 0.839,
-      "nowcast": 0.896,
-      "error": 0.057
+      "nowcast": 0.898,
+      "error": 0.059
     },
     {
       "month": "2022-08",
       "official": 0.933,
-      "nowcast": 0.681,
-      "error": -0.251
+      "nowcast": 0.683,
+      "error": -0.25
     },
     {
       "month": "2022-09",
       "official": 0.71,
-      "nowcast": 0.79,
-      "error": 0.08
+      "nowcast": 0.8,
+      "error": 0.09
     },
     {
       "month": "2022-10",
       "official": 0.512,
-      "nowcast": 0.592,
-      "error": 0.079
+      "nowcast": 0.594,
+      "error": 0.082
     },
     {
       "month": "2022-11",
       "official": 0.463,
-      "nowcast": 0.49,
-      "error": 0.027
+      "nowcast": 0.485,
+      "error": 0.023
     },
     {
       "month": "2022-12",
@@ -1426,26 +1426,26 @@
     {
       "month": "2023-01",
       "official": 0.513,
-      "nowcast": 0.404,
-      "error": -0.108
+      "nowcast": 0.411,
+      "error": -0.102
     },
     {
       "month": "2023-02",
       "official": 0.438,
-      "nowcast": 0.623,
-      "error": 0.185
+      "nowcast": 0.619,
+      "error": 0.181
     },
     {
       "month": "2023-03",
       "official": 0.591,
-      "nowcast": 0.361,
-      "error": -0.231
+      "nowcast": 0.355,
+      "error": -0.236
     },
     {
       "month": "2023-04",
       "official": 0.701,
-      "nowcast": 0.582,
-      "error": -0.119
+      "nowcast": 0.571,
+      "error": -0.13
     },
     {
       "month": "2023-05",
@@ -1456,202 +1456,214 @@
     {
       "month": "2023-06",
       "official": 0.24,
-      "nowcast": 0.627,
-      "error": 0.387
+      "nowcast": 0.624,
+      "error": 0.384
     },
     {
       "month": "2023-07",
       "official": 0.185,
-      "nowcast": 0.204,
-      "error": 0.018
+      "nowcast": 0.191,
+      "error": 0.006
     },
     {
       "month": "2023-08",
       "official": 0.205,
-      "nowcast": 0.174,
-      "error": -0.031
+      "nowcast": 0.171,
+      "error": -0.034
     },
     {
       "month": "2023-09",
       "official": 0.261,
-      "nowcast": 0.201,
-      "error": -0.06
+      "nowcast": 0.187,
+      "error": -0.074
     },
     {
       "month": "2023-10",
       "official": 0.023,
-      "nowcast": 0.309,
-      "error": 0.285
+      "nowcast": 0.295,
+      "error": 0.272
     },
     {
       "month": "2023-11",
       "official": -0.156,
-      "nowcast": 0.142,
-      "error": 0.298
+      "nowcast": 0.123,
+      "error": 0.279
     },
     {
       "month": "2023-12",
       "official": -0.027,
-      "nowcast": -0.028,
-      "error": -0.002
+      "nowcast": -0.055,
+      "error": -0.029
     },
     {
       "month": "2024-01",
       "official": 0.087,
-      "nowcast": -0.005,
-      "error": -0.093
+      "nowcast": -0.026,
+      "error": -0.113
     },
     {
       "month": "2024-02",
       "official": 0.328,
-      "nowcast": 0.096,
-      "error": -0.232
+      "nowcast": 0.091,
+      "error": -0.236
     },
     {
       "month": "2024-03",
       "official": 0.529,
-      "nowcast": 0.306,
-      "error": -0.222
+      "nowcast": 0.304,
+      "error": -0.224
     },
     {
       "month": "2024-04",
       "official": 0.505,
-      "nowcast": 0.395,
-      "error": -0.11
+      "nowcast": 0.404,
+      "error": -0.102
     },
     {
       "month": "2024-05",
       "official": 0.289,
-      "nowcast": 0.422,
-      "error": 0.133
+      "nowcast": 0.43,
+      "error": 0.141
     },
     {
       "month": "2024-06",
       "official": -0.007,
-      "nowcast": 0.236,
-      "error": 0.242
+      "nowcast": 0.249,
+      "error": 0.256
     },
     {
       "month": "2024-07",
       "official": 0.089,
-      "nowcast": 0.076,
-      "error": -0.014
+      "nowcast": 0.066,
+      "error": -0.023
     },
     {
       "month": "2024-08",
       "official": 0.214,
-      "nowcast": 0.132,
-      "error": -0.082
+      "nowcast": 0.125,
+      "error": -0.09
     },
     {
       "month": "2024-09",
       "official": 0.094,
-      "nowcast": 0.204,
-      "error": 0.11
+      "nowcast": 0.205,
+      "error": 0.111
     },
     {
       "month": "2024-10",
       "official": -0.015,
-      "nowcast": 0.133,
-      "error": 0.149
+      "nowcast": 0.131,
+      "error": 0.146
     },
     {
       "month": "2024-11",
       "official": -0.079,
-      "nowcast": 0.072,
-      "error": 0.151
+      "nowcast": 0.068,
+      "error": 0.147
     },
     {
       "month": "2024-12",
       "official": 0.036,
-      "nowcast": 0.036,
-      "error": 0.001
+      "nowcast": 0.027,
+      "error": -0.008
     },
     {
       "month": "2025-01",
       "official": 0.036,
-      "nowcast": 0.112,
-      "error": 0.077
+      "nowcast": 0.103,
+      "error": 0.068
     },
     {
       "month": "2025-02",
       "official": 0.067,
-      "nowcast": 0.15,
-      "error": 0.083
+      "nowcast": 0.066,
+      "error": -0.001
     },
     {
       "month": "2025-03",
       "official": 0.302,
-      "nowcast": 0.168,
-      "error": -0.133
+      "nowcast": 0.079,
+      "error": -0.223
     },
     {
       "month": "2025-04",
       "official": 0.439,
-      "nowcast": 0.292,
-      "error": -0.147
+      "nowcast": 0.268,
+      "error": -0.171
     },
     {
       "month": "2025-05",
       "official": 0.357,
-      "nowcast": 0.35,
-      "error": -0.007
+      "nowcast": 0.37,
+      "error": 0.013
     },
     {
       "month": "2025-06",
       "official": 0.13,
-      "nowcast": 0.295,
-      "error": 0.165
+      "nowcast": 0.305,
+      "error": 0.175
     },
     {
       "month": "2025-07",
       "official": 0.101,
-      "nowcast": 0.192,
-      "error": 0.091
+      "nowcast": 0.154,
+      "error": 0.053
     },
     {
       "month": "2025-08",
       "official": 0.023,
-      "nowcast": 0.173,
-      "error": 0.15
+      "nowcast": 0.108,
+      "error": 0.085
     },
     {
       "month": "2025-09",
       "official": -0.016,
-      "nowcast": 0.119,
-      "error": 0.135
+      "nowcast": 0.079,
+      "error": 0.095
     },
     {
       "month": "2025-10",
       "official": -0.126,
-      "nowcast": 0.118,
-      "error": 0.244
+      "nowcast": 0.042,
+      "error": 0.168
     },
     {
       "month": "2025-11",
       "official": 0.007,
-      "nowcast": 0.058,
-      "error": 0.05
+      "nowcast": -0.014,
+      "error": -0.022
     },
     {
       "month": "2025-12",
       "official": 0.085,
-      "nowcast": 0.134,
-      "error": 0.049
+      "nowcast": 0.054,
+      "error": -0.031
     },
     {
       "month": "2026-01",
       "official": 0.15,
-      "nowcast": 0.178,
-      "error": 0.028
+      "nowcast": 0.09,
+      "error": -0.061
+    },
+    {
+      "month": "2026-02",
+      "official": null,
+      "nowcast": 0.182,
+      "error": null
+    },
+    {
+      "month": "2026-03",
+      "official": null,
+      "nowcast": 0.182,
+      "error": null
     }
   ],
   "recent_months": [
     {
       "month": "2022-01",
       "official": 0.393,
-      "nowcast": 0.544,
-      "error": 0.151
+      "nowcast": 0.551,
+      "error": 0.159
     },
     {
       "month": "2022-02",
@@ -1668,50 +1680,50 @@
     {
       "month": "2022-04",
       "official": 0.919,
-      "nowcast": 0.756,
-      "error": -0.163
+      "nowcast": 0.754,
+      "error": -0.165
     },
     {
       "month": "2022-05",
       "official": 0.943,
-      "nowcast": 0.83,
-      "error": -0.113
+      "nowcast": 0.839,
+      "error": -0.104
     },
     {
       "month": "2022-06",
       "official": 0.846,
-      "nowcast": 0.89,
-      "error": 0.045
+      "nowcast": 0.892,
+      "error": 0.047
     },
     {
       "month": "2022-07",
       "official": 0.839,
-      "nowcast": 0.896,
-      "error": 0.057
+      "nowcast": 0.898,
+      "error": 0.059
     },
     {
       "month": "2022-08",
       "official": 0.933,
-      "nowcast": 0.681,
-      "error": -0.251
+      "nowcast": 0.683,
+      "error": -0.25
     },
     {
       "month": "2022-09",
       "official": 0.71,
-      "nowcast": 0.79,
-      "error": 0.08
+      "nowcast": 0.8,
+      "error": 0.09
     },
     {
       "month": "2022-10",
       "official": 0.512,
-      "nowcast": 0.592,
-      "error": 0.079
+      "nowcast": 0.594,
+      "error": 0.082
     },
     {
       "month": "2022-11",
       "official": 0.463,
-      "nowcast": 0.49,
-      "error": 0.027
+      "nowcast": 0.485,
+      "error": 0.023
     },
     {
       "month": "2022-12",
@@ -1722,26 +1734,26 @@
     {
       "month": "2023-01",
       "official": 0.513,
-      "nowcast": 0.404,
-      "error": -0.108
+      "nowcast": 0.411,
+      "error": -0.102
     },
     {
       "month": "2023-02",
       "official": 0.438,
-      "nowcast": 0.623,
-      "error": 0.185
+      "nowcast": 0.619,
+      "error": 0.181
     },
     {
       "month": "2023-03",
       "official": 0.591,
-      "nowcast": 0.361,
-      "error": -0.231
+      "nowcast": 0.355,
+      "error": -0.236
     },
     {
       "month": "2023-04",
       "official": 0.701,
-      "nowcast": 0.582,
-      "error": -0.119
+      "nowcast": 0.571,
+      "error": -0.13
     },
     {
       "month": "2023-05",
@@ -1752,194 +1764,206 @@
     {
       "month": "2023-06",
       "official": 0.24,
-      "nowcast": 0.627,
-      "error": 0.387
+      "nowcast": 0.624,
+      "error": 0.384
     },
     {
       "month": "2023-07",
       "official": 0.185,
-      "nowcast": 0.204,
-      "error": 0.018
+      "nowcast": 0.191,
+      "error": 0.006
     },
     {
       "month": "2023-08",
       "official": 0.205,
-      "nowcast": 0.174,
-      "error": -0.031
+      "nowcast": 0.171,
+      "error": -0.034
     },
     {
       "month": "2023-09",
       "official": 0.261,
-      "nowcast": 0.201,
-      "error": -0.06
+      "nowcast": 0.187,
+      "error": -0.074
     },
     {
       "month": "2023-10",
       "official": 0.023,
-      "nowcast": 0.309,
-      "error": 0.285
+      "nowcast": 0.295,
+      "error": 0.272
     },
     {
       "month": "2023-11",
       "official": -0.156,
-      "nowcast": 0.142,
-      "error": 0.298
+      "nowcast": 0.123,
+      "error": 0.279
     },
     {
       "month": "2023-12",
       "official": -0.027,
-      "nowcast": -0.028,
-      "error": -0.002
+      "nowcast": -0.055,
+      "error": -0.029
     },
     {
       "month": "2024-01",
       "official": 0.087,
-      "nowcast": -0.005,
-      "error": -0.093
+      "nowcast": -0.026,
+      "error": -0.113
     },
     {
       "month": "2024-02",
       "official": 0.328,
-      "nowcast": 0.096,
-      "error": -0.232
+      "nowcast": 0.091,
+      "error": -0.236
     },
     {
       "month": "2024-03",
       "official": 0.529,
-      "nowcast": 0.306,
-      "error": -0.222
+      "nowcast": 0.304,
+      "error": -0.224
     },
     {
       "month": "2024-04",
       "official": 0.505,
-      "nowcast": 0.395,
-      "error": -0.11
+      "nowcast": 0.404,
+      "error": -0.102
     },
     {
       "month": "2024-05",
       "official": 0.289,
-      "nowcast": 0.422,
-      "error": 0.133
+      "nowcast": 0.43,
+      "error": 0.141
     },
     {
       "month": "2024-06",
       "official": -0.007,
-      "nowcast": 0.236,
-      "error": 0.242
+      "nowcast": 0.249,
+      "error": 0.256
     },
     {
       "month": "2024-07",
       "official": 0.089,
-      "nowcast": 0.076,
-      "error": -0.014
+      "nowcast": 0.066,
+      "error": -0.023
     },
     {
       "month": "2024-08",
       "official": 0.214,
-      "nowcast": 0.132,
-      "error": -0.082
+      "nowcast": 0.125,
+      "error": -0.09
     },
     {
       "month": "2024-09",
       "official": 0.094,
-      "nowcast": 0.204,
-      "error": 0.11
+      "nowcast": 0.205,
+      "error": 0.111
     },
     {
       "month": "2024-10",
       "official": -0.015,
-      "nowcast": 0.133,
-      "error": 0.149
+      "nowcast": 0.131,
+      "error": 0.146
     },
     {
       "month": "2024-11",
       "official": -0.079,
-      "nowcast": 0.072,
-      "error": 0.151
+      "nowcast": 0.068,
+      "error": 0.147
     },
     {
       "month": "2024-12",
       "official": 0.036,
-      "nowcast": 0.036,
-      "error": 0.001
+      "nowcast": 0.027,
+      "error": -0.008
     },
     {
       "month": "2025-01",
       "official": 0.036,
-      "nowcast": 0.112,
-      "error": 0.077
+      "nowcast": 0.103,
+      "error": 0.068
     },
     {
       "month": "2025-02",
       "official": 0.067,
-      "nowcast": 0.15,
-      "error": 0.083
+      "nowcast": 0.066,
+      "error": -0.001
     },
     {
       "month": "2025-03",
       "official": 0.302,
-      "nowcast": 0.168,
-      "error": -0.133
+      "nowcast": 0.079,
+      "error": -0.223
     },
     {
       "month": "2025-04",
       "official": 0.439,
-      "nowcast": 0.292,
-      "error": -0.147
+      "nowcast": 0.268,
+      "error": -0.171
     },
     {
       "month": "2025-05",
       "official": 0.357,
-      "nowcast": 0.35,
-      "error": -0.007
+      "nowcast": 0.37,
+      "error": 0.013
     },
     {
       "month": "2025-06",
       "official": 0.13,
-      "nowcast": 0.295,
-      "error": 0.165
+      "nowcast": 0.305,
+      "error": 0.175
     },
     {
       "month": "2025-07",
       "official": 0.101,
-      "nowcast": 0.192,
-      "error": 0.091
+      "nowcast": 0.154,
+      "error": 0.053
     },
     {
       "month": "2025-08",
       "official": 0.023,
-      "nowcast": 0.173,
-      "error": 0.15
+      "nowcast": 0.108,
+      "error": 0.085
     },
     {
       "month": "2025-09",
       "official": -0.016,
-      "nowcast": 0.119,
-      "error": 0.135
+      "nowcast": 0.079,
+      "error": 0.095
     },
     {
       "month": "2025-10",
       "official": -0.126,
-      "nowcast": 0.118,
-      "error": 0.244
+      "nowcast": 0.042,
+      "error": 0.168
     },
     {
       "month": "2025-11",
       "official": 0.007,
-      "nowcast": 0.058,
-      "error": 0.05
+      "nowcast": -0.014,
+      "error": -0.022
     },
     {
       "month": "2025-12",
       "official": 0.085,
-      "nowcast": 0.134,
-      "error": 0.049
+      "nowcast": 0.054,
+      "error": -0.031
     },
     {
       "month": "2026-01",
       "official": 0.15,
-      "nowcast": 0.178,
-      "error": 0.028
+      "nowcast": 0.09,
+      "error": -0.061
+    },
+    {
+      "month": "2026-02",
+      "official": null,
+      "nowcast": 0.182,
+      "error": null
+    },
+    {
+      "month": "2026-03",
+      "official": null,
+      "nowcast": 0.182,
+      "error": null
     }
   ],
   "category_contributions": [
