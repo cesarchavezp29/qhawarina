@@ -47,13 +47,16 @@ DEPT_NAMES = {
 
 
 def calculate_ntl_shares(ntl_df: pd.DataFrame, n_months: int = 12) -> pd.DataFrame:
+    # v7.1 pipeline uses ntl_sum_eqarea; older used ntl_sum
+    ntl_col = "ntl_sum" if "ntl_sum" in ntl_df.columns else "ntl_sum_eqarea"
     latest_date = ntl_df["date"].max()
     cutoff_date = latest_date - pd.DateOffset(months=n_months - 1)
     recent = ntl_df[ntl_df["date"] >= cutoff_date].copy()
     dept_ntl = (
-        recent.groupby(["DEPT_CODE", "department"])["ntl_sum"]
+        recent.groupby(["DEPT_CODE", "department"])[ntl_col]
         .sum()
         .reset_index()
+        .rename(columns={ntl_col: "ntl_sum"})
     )
     total_ntl = dept_ntl["ntl_sum"].sum()
     dept_ntl["ntl_share"] = dept_ntl["ntl_sum"] / total_ntl

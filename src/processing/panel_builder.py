@@ -143,10 +143,13 @@ def _build_ntl_panel_departmental(ntl_path: Path) -> list[pd.DataFrame]:
     df = pd.read_parquet(ntl_path)
     df["date"] = pd.to_datetime(df["date"])
 
+    # v7.1 pipeline uses ntl_sum_eqarea; older used ntl_sum
+    ntl_col = "ntl_sum" if "ntl_sum" in df.columns else "ntl_sum_eqarea"
+
     frames = []
     for dept_code in sorted(df["DEPT_CODE"].unique()):
         sub = df[df["DEPT_CODE"] == dept_code].sort_values("date").copy()
-        ts = sub.set_index("date")["ntl_sum"]
+        ts = sub.set_index("date")[ntl_col]
         sid = f"NTL_SUM_{dept_code}"
 
         # STL seasonal adjustment (NTL has ~157 months >> 24 minimum)
@@ -201,7 +204,9 @@ def _build_ntl_panel_national(ntl_path: Path) -> list[pd.DataFrame]:
     df = pd.read_parquet(ntl_path)
     df["date"] = pd.to_datetime(df["date"])
 
-    agg = df.groupby("date")["ntl_sum"].sum().sort_index()
+    # v7.1 pipeline uses ntl_sum_eqarea; older used ntl_sum
+    ntl_col = "ntl_sum" if "ntl_sum" in df.columns else "ntl_sum_eqarea"
+    agg = df.groupby("date")[ntl_col].sum().sort_index()
     ts = agg
 
     # STL seasonal adjustment

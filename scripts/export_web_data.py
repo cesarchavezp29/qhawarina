@@ -865,14 +865,17 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series, skip_h
             src_df["w_eco"] = src_df["n"] * src_df["eco_y"]
 
             daily_agg = src_df.groupby("day").agg(
-                w_pol=("w_pol", "sum"),
-                w_eco=("w_eco", "sum"),
+                pol_sum=("pol_sum", "sum"),
+                eco_sum=("eco_sum", "sum"),
                 n_total=("n", "sum"),
             ).reset_index().rename(columns={"day": "date"})
 
             daily_sums = daily_agg.copy()
-            daily_sums["pol_norm"] = daily_sums["w_pol"] / daily_sums["n_total"].clip(lower=1)
-            daily_sums["eco_norm"] = daily_sums["w_eco"] / daily_sums["n_total"].clip(lower=1)
+            # IRP/IRE formula: normalize daily pol_sum by reference-period mean pol_sum.
+            # DO NOT divide by n_total — article count is not comparable across feed regimes.
+            # Adding zero-score feeds inflates the denominator and suppresses the index.
+            daily_sums["pol_norm"] = daily_sums["pol_sum"]
+            daily_sums["eco_norm"] = daily_sums["eco_sum"]
 
         elif has_dual:
             # Fallback (no feed_name column): simple volume normalization
@@ -881,8 +884,8 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series, skip_h
             eco_sum_s = art.groupby("day")["economic_score"].sum().fillna(0).rename("eco_sum")
             daily_sums = pd.concat([n_total_s, pol_sum_s, eco_sum_s], axis=1).fillna(0).reset_index()
             daily_sums.columns = ["date", "n_total", "pol_sum", "eco_sum"]
-            daily_sums["pol_norm"] = daily_sums["pol_sum"] / daily_sums["n_total"].clip(lower=1)
-            daily_sums["eco_norm"] = daily_sums["eco_sum"] / daily_sums["n_total"].clip(lower=1)
+            daily_sums["pol_norm"] = daily_sums["pol_sum"]
+            daily_sums["eco_norm"] = daily_sums["eco_sum"]
 
         else:
             # Legacy fallback: map article_severity to scores
@@ -899,8 +902,8 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series, skip_h
             ).rename("eco_sum")
             daily_sums = pd.concat([n_total_s, pol_sum_s, eco_sum_s], axis=1).fillna(0).reset_index()
             daily_sums.columns = ["date", "n_total", "pol_sum", "eco_sum"]
-            daily_sums["pol_norm"] = daily_sums["pol_sum"] / daily_sums["n_total"].clip(lower=1)
-            daily_sums["eco_norm"] = daily_sums["eco_sum"] / daily_sums["n_total"].clip(lower=1)
+            daily_sums["pol_norm"] = daily_sums["pol_sum"]
+            daily_sums["eco_norm"] = daily_sums["eco_sum"]
 
         # Baseline: stable feed regime Jun 2025 – Mar 8 2026 (feed expansion on Mar 9 2026).
         # Early 2025 (<Jun) had only 5 feeds / ~20 arts/day → not representative.
@@ -915,7 +918,7 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series, skip_h
         if len(ref) >= 30:
             s_bar_pol = ref["pol_norm"].mean() or 1.0
             s_bar_eco = ref["eco_norm"].mean() or 1.0
-            logger.info("S_bar reference: %s – %s (%d days)  pol=%.4f  eco=%.4f",
+            logger.info("S_bar reference: %s – %s (%d days)  pol_sum_mean=%.1f  eco_sum_mean=%.1f",
                         _REGIME_START, _REGIME_END, len(ref), s_bar_pol, s_bar_eco)
         else:
             s_bar_pol = daily_sums["pol_norm"].mean() or 1.0
