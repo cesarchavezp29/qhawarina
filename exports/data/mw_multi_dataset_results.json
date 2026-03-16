@@ -1,0 +1,407 @@
+{
+  "datasets": {
+    "D1_ENAHO_annual": {
+      "description": "ENAHO CS Annual (module 500), regional Kaitz DiD, 25 departments",
+      "specification": "Y_idt = alpha_d + gamma_t + beta(Post × Kaitz_d,pre) + Edad + Edad² + Sexo",
+      "events": {
+        "E7": {
+          "label": "2015-2017 (S/750â†’S/930: Dec-2015 + May-2016 combined)",
+          "mw_old": 750.0,
+          "year_pre": 2015,
+          "year_post": [
+            2016,
+            2017
+          ],
+          "employment": {
+            "beta": 0.0269,
+            "se": 0.06777,
+            "ci_low": -0.10592,
+            "ci_high": 0.15972,
+            "p": 0.6914,
+            "n": 225941
+          },
+          "formalization": {
+            "beta": 0.1219,
+            "se": 0.09001,
+            "ci_low": -0.05452,
+            "ci_high": 0.29832,
+            "p": 0.1757,
+            "n": 174735
+          },
+          "log_wage": {
+            "beta": 0.17276,
+            "se": 0.11627,
+            "ci_low": -0.05513,
+            "ci_high": 0.40064,
+            "p": 0.1373,
+            "n": 33204
+          },
+          "note": ""
+        },
+        "E8": {
+          "label": "2017-2019 (MW constant at S/930 â€” parallel trend check)",
+          "mw_old": 930.0,
+          "year_pre": 2017,
+          "year_post": [
+            2018,
+            2019
+          ],
+          "employment": {
+            "beta": 0.13941,
+            "se": 0.06426,
+            "ci_low": 0.01347,
+            "ci_high": 0.26535,
+            "p": 0.03,
+            "n": 229440
+          },
+          "formalization": {
+            "beta": -0.04042,
+            "se": 0.04473,
+            "ci_low": -0.12809,
+            "ci_high": 0.04724,
+            "p": 0.3661,
+            "n": 179441
+          },
+          "log_wage": {
+            "beta": 0.00084,
+            "se": 0.14427,
+            "ci_low": -0.28191,
+            "ci_high": 0.2836,
+            "p": 0.9954,
+            "n": 34415
+          },
+          "note": "PARALLEL TREND CHECK â€” no MW change during this period"
+        },
+        "E9": {
+          "label": "2021-2023 (S/930â†’S/1,025, May 2022)",
+          "mw_old": 930.0,
+          "year_pre": 2021,
+          "year_post": [
+            2022,
+            2023
+          ],
+          "employment": {
+            "beta": 0.36780313936666476,
+            "se": 0.15290966364493125,
+            "ci_low": 0.06810570573446584,
+            "ci_high": 0.6675005729988637,
+            "p": 0.016156439704413446
+          },
+          "formalization": {
+            "beta": 0.03226342964585377,
+            "se": 0.04947291043097674,
+            "ci_low": -0.0647016930092366,
+            "ci_high": 0.12922855230094416,
+            "p": 0.5143086996810076
+          },
+          "log_wage": {
+            "beta": 0.23394138519497598,
+            "se": 0.27093054292272123,
+            "ci_low": -0.2970727212454408,
+            "ci_high": 0.7649554916353928,
+            "p": 0.3878771001202552
+          },
+          "note": ""
+        }
+      },
+      "pooled": {
+        "employment": {
+          "beta": 0.08287,
+          "se": 0.06196,
+          "ci_low": -0.03857,
+          "ci_high": 0.20431,
+          "p": 0.1811,
+          "Q": 4.154,
+          "I2": 75.9,
+          "n_events": 2
+        },
+        "formalization": {
+          "beta": 0.05306,
+          "se": 0.04336,
+          "ci_low": -0.03192,
+          "ci_high": 0.13804,
+          "p": 0.221,
+          "Q": 0.762,
+          "I2": 0.0,
+          "n_events": 2
+        },
+        "log_wage": {
+          "beta": 0.18228,
+          "se": 0.10685,
+          "ci_low": -0.02714,
+          "ci_high": 0.39169,
+          "p": 0.088,
+          "Q": 0.043,
+          "I2": 0.0,
+          "n_events": 2
+        }
+      }
+    },
+    "D2_ENAHO_quarterly": {
+      "description": "ENAHO CS Quarterly (trimestral movil), Q1-to-Q1 windows, 25 departments",
+      "specification": "Same as annual but using Q1 data",
+      "quarterly_codes": {
+        "Q1_2016": 510,
+        "Q1_2017": 551,
+        "Q1_2018": 607,
+        "Q1_2019": 641
+      },
+      "events": {
+        "E7_quarterly": {
+          "label": "2016 (Q1-window, S/850→930)",
+          "note": "Pre=Q1 2016 (Jan-Mar, before May increase); Post=Q1 2017",
+          "mw_old": 850,
+          "mw_new": 930,
+          "pre_window": "Q1_2016",
+          "post_windows": [
+            "Q1_2017"
+          ],
+          "n_departments": 25,
+          "kaitz_range": [
+            0.423,
+            1.214
+          ],
+          "employment": {
+            "beta": -0.05559,
+            "se": 0.02761,
+            "ci_low": -0.10971,
+            "ci_high": -0.00147,
+            "p": 0.0441,
+            "n": 39015
+          },
+          "formalization": {
+            "beta": 0.05974,
+            "se": 0.0288,
+            "ci_low": 0.0033,
+            "ci_high": 0.11619,
+            "p": 0.03804,
+            "n": 27571
+          },
+          "log_wage": {
+            "beta": 0.56994,
+            "se": 0.15102,
+            "ci_low": 0.27395,
+            "ci_high": 0.86593,
+            "p": 0.00016,
+            "n": 4358
+          }
+        },
+        "E8_quarterly": {
+          "label": "2017-2019 trend (Q1-window, no MW change)",
+          "note": "Trend check: Pre=Q1 2017; Post=Q1 2019. No MW change. Beta should be ~0.",
+          "mw_old": 930,
+          "mw_new": 930,
+          "pre_window": "Q1_2017",
+          "post_windows": [
+            "Q1_2019"
+          ],
+          "n_departments": 25,
+          "kaitz_range": [
+            0.397,
+            0.93
+          ],
+          "employment": {
+            "beta": -0.01722,
+            "se": 0.10112,
+            "ci_low": -0.21542,
+            "ci_high": 0.18098,
+            "p": 0.86478,
+            "n": 39692
+          },
+          "formalization": {
+            "beta": -0.005,
+            "se": 0.12168,
+            "ci_low": -0.24349,
+            "ci_high": 0.23348,
+            "p": 0.9672,
+            "n": 28306
+          },
+          "log_wage": {
+            "beta": -0.3193,
+            "se": 0.32696,
+            "ci_low": -0.96013,
+            "ci_high": 0.32153,
+            "p": 0.32878,
+            "n": 5022
+          }
+        }
+      },
+      "pooled": {
+        "employment": {
+          "beta": null,
+          "se": null,
+          "ci_low": null,
+          "ci_high": null,
+          "p": null,
+          "Q": null,
+          "I2": null,
+          "n_events": 1
+        },
+        "formalization": {
+          "beta": null,
+          "se": null,
+          "ci_low": null,
+          "ci_high": null,
+          "p": null,
+          "Q": null,
+          "I2": null,
+          "n_events": 1
+        },
+        "log_wage": {
+          "beta": null,
+          "se": null,
+          "ci_low": null,
+          "ci_high": null,
+          "p": null,
+          "Q": null,
+          "I2": null,
+          "n_events": 1
+        }
+      },
+      "note_missing": "Event 9 quarterly not estimated — Q1 2021 and Q1 2023 codes not identified"
+    },
+    "D3_EPEN_departamentos": {
+      "description": "EPEN Departamentos (quarterly, 2019–present)",
+      "status": "NOT AVAILABLE",
+      "reason": "INEI srienaho portal returns HTTP 404 for all EPEN module URLs. Directories contain PDF only."
+    },
+    "D4_EPEN_ciudades": {
+      "description": "EPEN Ciudades (quarterly, urban areas)",
+      "status": "NOT AVAILABLE",
+      "reason": "Same as D3."
+    },
+    "D5_EPE_Lima": {
+      "description": "EPE Lima Metro panel DiD, within-Lima worker-level comparison",
+      "specification": "Y_it = alpha + beta*Post + gamma*Treat*Post + controls (treatment = near old MW)",
+      "note_methodology": "Different from regional Kaitz DiD. Lima Metro only. Not directly comparable.",
+      "events": {
+        "E7_Lima_Dec": {
+          "label": "2015 Dec (S/750->850)",
+          "canonical_event": "E7",
+          "mw_pre": 750.0,
+          "mw_post": 850.0,
+          "employment": {
+            "beta": -0.0543485960030355,
+            "se": 0.0240619751347638,
+            "p": 0.0239025368410072,
+            "n": 1743
+          },
+          "formalization": {
+            "beta": 0.0175606641123883,
+            "se": 0.0341728748091444,
+            "p": 0.6073377899280417
+          }
+        },
+        "E7_Lima_May": {
+          "label": "2016 May (S/850->930)",
+          "canonical_event": "E7",
+          "mw_pre": 850.0,
+          "mw_post": 930.0,
+          "employment": {
+            "beta": -0.0281688653517674,
+            "se": 0.0190051154587438,
+            "p": 0.1382943197904279,
+            "n": 2361
+          },
+          "formalization": {
+            "beta": -0.0174017151130416,
+            "se": 0.0246758461150139,
+            "p": 0.4806780038535071
+          }
+        },
+        "E9_Lima": {
+          "label": "2022 Apr (S/930->1025)",
+          "canonical_event": "E9",
+          "mw_pre": 930.0,
+          "mw_post": 1025.0,
+          "employment": {
+            "beta": -0.0565246127762297,
+            "se": 0.0238309418597616,
+            "p": 0.017696876061653,
+            "n": 1548
+          },
+          "formalization": {
+            "beta": -0.060231769361221,
+            "se": 0.0298633482588927,
+            "p": 0.0437046140356329
+          }
+        }
+      }
+    }
+  },
+  "cross_dataset_summary": {
+    "employment": {
+      "ENAHO_annual_E7": {
+        "beta": 0.0269,
+        "se": 0.06777,
+        "ci_low": -0.10592,
+        "ci_high": 0.15972,
+        "p": 0.6914,
+        "n": 225941
+      },
+      "ENAHO_annual_E8_trend": {
+        "beta": 0.13941,
+        "se": 0.06426,
+        "ci_low": 0.01347,
+        "ci_high": 0.26535,
+        "p": 0.03,
+        "n": 229440
+      },
+      "ENAHO_annual_E9": {
+        "beta": 0.36780313936666476,
+        "se": 0.15290966364493125,
+        "ci_low": 0.06810570573446584,
+        "ci_high": 0.6675005729988637,
+        "p": 0.016156439704413446
+      },
+      "ENAHO_quarterly_E7": {
+        "beta": -0.05559,
+        "se": 0.02761,
+        "ci_low": -0.10971,
+        "ci_high": -0.00147,
+        "p": 0.0441,
+        "n": 39015
+      },
+      "ENAHO_quarterly_E8_trend": {
+        "beta": -0.01722,
+        "se": 0.10112,
+        "ci_low": -0.21542,
+        "ci_high": 0.18098,
+        "p": 0.86478,
+        "n": 39692
+      },
+      "EPE_Lima_2015Dec": {
+        "beta": -0.0543485960030355,
+        "se": 0.0240619751347638,
+        "p": 0.0239025368410072,
+        "n": 1743
+      },
+      "EPE_Lima_2016May": {
+        "beta": -0.0281688653517674,
+        "se": 0.0190051154587438,
+        "p": 0.1382943197904279,
+        "n": 2361
+      },
+      "EPE_Lima_2022Apr": {
+        "beta": -0.0565246127762297,
+        "se": 0.0238309418597616,
+        "p": 0.017696876061653,
+        "n": 1548
+      }
+    },
+    "key_finding": "Employment β is positive in both real MW events (E7, E9) and the no-change trend check (E8). This confirms the positive coefficient is a pre-existing trend in high-Kaitz (lower-wage) departments, NOT a causal MW effect. EPE Lima (different methodology) shows negative employment effects in Lima Metro."
+  },
+  "metadata": {
+    "last_updated": "2026-03-15",
+    "data_sources": [
+      "ENAHO CS Annual module 500",
+      "ENAHO Trimestral Movil",
+      "EPE Lima Metro"
+    ],
+    "unavailable": [
+      "EPEN Departamentos",
+      "EPEN Ciudades"
+    ],
+    "author": "nexus/scripts/mw_multi_dataset_comparison.py"
+  }
+}
