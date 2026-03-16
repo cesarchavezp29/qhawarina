@@ -147,7 +147,7 @@ def export_tipo_cambio() -> None:
 
 
 def main() -> None:
-    print(f"\nGenerating CSV exports → {CSV_DIR}\n")
+    print(f"\nGenerating CSV exports -> {CSV_DIR}\n")
     export_precios_diarios()
     export_riesgo_politico()
     export_riesgo_economico()
