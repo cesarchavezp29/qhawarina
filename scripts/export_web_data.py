@@ -1938,6 +1938,109 @@ def export_inflation_regional_nowcast():
         logger.error(f"Failed to generate regional inflation nowcast: {result.stderr}")
 
 
+def export_monthly_peaks_json():
+    """Re-generate risk_index_monthly_peaks.json from political_index_daily.json.
+
+    Reads daily_series from the already-exported JSON, groups by month,
+    finds the peak 7d value per dimension, looks up event labels from
+    peak_events_cache.json, and writes the result.
+
+    Only complete months are included (current partial month is excluded).
+    Run every day — a new month row appears automatically on the 1st.
+    """
+    import datetime as _dt
+
+    daily_json_path = DATA_DIR / "political_index_daily.json"
+    cache_path      = DATA_DIR / "peak_events_cache.json"
+    out_path        = DATA_DIR / "risk_index_monthly_peaks.json"
+
+    if not daily_json_path.exists():
+        logger.warning("export_monthly_peaks_json: political_index_daily.json not found — skipping")
+        return
+
+    with open(daily_json_path, encoding="utf-8") as f:
+        daily_data = json.load(f)
+
+    daily_series = daily_data.get("daily_series", [])
+    if not daily_series:
+        logger.warning("export_monthly_peaks_json: daily_series empty — skipping")
+        return
+
+    # Load event label cache (may not exist yet on fresh install)
+    event_cache: dict = {}
+    if cache_path.exists():
+        try:
+            with open(cache_path, encoding="utf-8") as f:
+                event_cache = json.load(f)
+        except Exception:
+            pass
+
+    # Current month string — exclude it (partial)
+    current_month = _dt.date.today().strftime("%Y-%m")
+
+    # Group daily rows by month
+    from collections import defaultdict
+    by_month: dict[str, list] = defaultdict(list)
+    for row in daily_series:
+        m = row["date"][:7]
+        if m != current_month:
+            by_month[m].append(row)
+
+    months_out = []
+    for month in sorted(by_month.keys()):
+        rows = by_month[month]
+
+        # IRP peak
+        irp_row  = max(rows, key=lambda r: r.get("political_7d", 0))
+        irp_peak = round(irp_row.get("political_7d", 0), 1)
+        irp_date = irp_row["date"]
+
+        # IRE peak
+        ire_row  = max(rows, key=lambda r: r.get("economic_7d", 0))
+        ire_peak = round(ire_row.get("economic_7d", 0), 1)
+        ire_date = ire_row["date"]
+
+        # Look up event labels from cache
+        irp_event = event_cache.get(f"{irp_date}_political", "")
+        ire_event = event_cache.get(f"{ire_date}_economic", "")
+
+        # Preserve existing top_articles if they exist in the old file
+        existing_irp_arts: list = []
+        existing_ire_arts: list = []
+        if out_path.exists():
+            try:
+                with open(out_path, encoding="utf-8") as f:
+                    old = json.load(f)
+                for om in old.get("months", []):
+                    if om["month"] == month:
+                        existing_irp_arts = om.get("irp_top_articles", [])
+                        existing_ire_arts = om.get("ire_top_articles", [])
+                        break
+            except Exception:
+                pass
+
+        months_out.append({
+            "month":            month,
+            "irp_7d_peak":      irp_peak,
+            "irp_peak_date":    irp_date,
+            "irp_event":        irp_event,
+            "irp_top_articles": existing_irp_arts,
+            "ire_7d_peak":      ire_peak,
+            "ire_peak_date":    ire_date,
+            "ire_event":        ire_event,
+            "ire_top_articles": existing_ire_arts,
+        })
+
+    result = {
+        "generated_at": _dt.datetime.utcnow().isoformat() + "Z",
+        "months": months_out,
+    }
+    with open(out_path, "w", encoding="utf-8") as f:
+        json.dump(result, f, ensure_ascii=False, indent=2)
+
+    logger.info("Monthly peaks JSON updated: %d complete months", len(months_out))
+
+
 def export_gdp_contributions():
     """Export sectoral GDP contributions to YoY growth as JSON for the web chart.
 
@@ -2235,6 +2338,10 @@ def main():
 
     export_political_index(data["political"], data["political_latest"])
 
+    # Re-generate monthly peaks table (complete months only)
+    logger.info("\nUpdating monthly risk peaks JSON...")
+    export_monthly_peaks_json()
+
     # Export panel data
     logger.info("\nExporting historical panel data...")
     export_panel_data()
@@ -2310,6 +2417,9 @@ def main_daily():
 
         logger.info("Exporting political index...")
         export_political_index(political_df, latest_political, skip_haiku=args.no_haiku)
+
+        logger.info("Updating monthly risk peaks JSON...")
+        export_monthly_peaks_json()
 
         logger.info("Exporting BCRP financial markets (FX + bonds + BVL)...")
         export_bcrp_financial_markets()
