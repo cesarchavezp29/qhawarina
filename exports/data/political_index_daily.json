@@ -1,122 +1,76 @@
 {
   "metadata": {
-    "generated_at": "2026-03-16T03:23:28.203468",
-    "coverage_days": 438,
+    "generated_at": "2026-03-16T05:32:33.364943",
+    "coverage_days": 440,
     "rss_feeds": 35,
     "rss_sources": 16,
     "methodology": "AI-GPR dual index (Iacoviello & Tong 2026): IRP + IRE, mean=100 over 2025 baseline"
   },
   "current": {
-    "date": "2026-03-14",
-    "political_raw": 144.4,
-    "political_raw_level": "ELEVADO",
-    "political_7d": 51.6,
+    "date": "2026-03-16",
+    "political_raw": 82.8,
+    "political_raw_level": "BAJO",
+    "political_7d": 86.1,
     "political_level": "BAJO",
-    "political_multiplier": 0.52,
-    "economic_raw": 377.3,
-    "economic_raw_level": "CRITICO",
+    "political_multiplier": 0.86,
+    "economic_raw": 0.0,
+    "economic_raw_level": "MINIMO",
     "economic_7d": 175.0,
     "economic_level": "ALTO",
     "economic_multiplier": 1.75,
-    "score": 51.6,
-    "prr_7d": 51.6,
-    "prr_raw": 144.4,
+    "score": 86.1,
+    "prr_7d": 86.1,
+    "prr_raw": 82.8,
     "level": "BAJO",
-    "articles_total": 222,
-    "articles_political_relevant": 131,
-    "articles_economic_relevant": 47,
-    "political_justification": "El país enfrenta un riesgo político elevado, principalmente por la debilidad institucional del gabinete ministerial que enfrenta una votación de confianza con respaldo insuficiente en el Congreso. Esta fragilidad ejecutiva, combinada con tensiones políticas de fondo, genera incertidumbre sobre la gobernabilidad.",
-    "economic_justification": "La economía peruana enfrenta presiones críticas simultáneas: crisis energética por fuga de gas, impacto del fenómeno El Niño, volatilidad de precios internacionales y presiones fiscales por gasto público. Estos factores convergen generando contracción económica proyectada, amplificando vulnerabilidades estructurales del país.",
+    "articles_total": 23,
+    "articles_political_relevant": 3,
+    "articles_economic_relevant": 1,
+    "political_justification": "El panorama político actual presenta un nivel bajo de riesgo. Los temas en agenda se concentran en cuestiones específicas de gobernanza local y conflictividad social acotada, sin evidencia de polarización sistémica o crisis institucionales que amenacen la estabilidad general del país.",
+    "economic_justification": null,
     "top_political_drivers": [
       {
-        "title": "Hoy reclama gratis tu crucimanía que te regala Diario Correo",
+        "title": "“Las redes son un pozo séptico que los hinchas utilizan para escupir sus maldades y complejos”: Ortiz Bisso y que hay detrás del preocupante caso de la periodista Talía Azcárate",
+        "source": "elcomercio",
+        "score": 25
+      },
+      {
+        "title": "Director de hospital El Carmen de Huancayo a un paso de la censura por plagas",
         "source": "correo",
-        "score": 55
+        "score": 22
       },
       {
-        "title": "Gabinete Miralles llega debilitado al voto de confianza: 57 congresistas le darían la espalda a ministros",
-        "source": "larepublica",
-        "score": 55
-      },
-      {
-        "title": "Cerrón quiere dejar su guarida",
+        "title": "El primer cara a cara",
         "source": "elcomercio",
-        "score": 45
-      },
-      {
-        "title": "Jaime García: “El crecimiento económico no basta para generar progreso social”",
-        "source": "larepublica",
-        "score": 45
-      },
-      {
-        "title": "Premios Oscar: Ethan Hawke, Nicole Kidman, Kathy Bates y más estrellas desfilaron en la alfombra roja",
-        "source": "elcomercio",
-        "score": 35
+        "score": 10
       }
     ],
-    "top_economic_drivers": [
-      {
-        "title": "Gobierno aprueba transferencia de S/25 millones para pago de bono extraordinario a docentes",
-        "source": "larepublica",
-        "score": 65
-      },
-      {
-        "title": "Minem: Ministro Alfaro apunta a falla humana en fuga de gasoducto Camisea  y descarta atentado",
-        "source": "correo",
-        "score": 60
-      },
-      {
-        "title": "Oferta inmobiliaria en Cusco crece a doble dígito: Las zonas  y preferencias",
-        "source": "gestion",
-        "score": 50
-      },
-      {
-        "title": "Crisis del gas, El Niño y alza del petróleo empujarían caída de la economía peruana de -1,1% en marzo",
-        "source": "larepublica",
-        "score": 50
-      },
-      {
-        "title": "Trump insta a los países árabes a unirse a la ofensiva contra Irán",
-        "source": "caretas",
-        "score": 45
-      }
-    ],
-    "justification": "El país enfrenta un riesgo político elevado, principalmente por la debilidad institucional del gabinete ministerial que enfrenta una votación de confianza con respaldo insuficiente en el Congreso. Esta fragilidad ejecutiva, combinada con tensiones políticas de fondo, genera incertidumbre sobre la gobernabilidad.",
+    "top_economic_drivers": [],
+    "justification": "El panorama político actual presenta un nivel bajo de riesgo. Los temas en agenda se concentran en cuestiones específicas de gobernanza local y conflictividad social acotada, sin evidencia de polarización sistémica o crisis institucionales que amenacen la estabilidad general del país.",
     "top_drivers": [
       {
-        "title": "Hoy reclama gratis tu crucimanía que te regala Diario Correo",
+        "title": "“Las redes son un pozo séptico que los hinchas utilizan para escupir sus maldades y complejos”: Ortiz Bisso y que hay detrás del preocupante caso de la periodista Talía Azcárate",
+        "source": "elcomercio",
+        "score": 25
+      },
+      {
+        "title": "Director de hospital El Carmen de Huancayo a un paso de la censura por plagas",
         "source": "correo",
-        "score": 55
+        "score": 22
       },
       {
-        "title": "Gabinete Miralles llega debilitado al voto de confianza: 57 congresistas le darían la espalda a ministros",
-        "source": "larepublica",
-        "score": 55
-      },
-      {
-        "title": "Cerrón quiere dejar su guarida",
+        "title": "El primer cara a cara",
         "source": "elcomercio",
-        "score": 45
-      },
-      {
-        "title": "Jaime García: “El crecimiento económico no basta para generar progreso social”",
-        "source": "larepublica",
-        "score": 45
-      },
-      {
-        "title": "Premios Oscar: Ethan Hawke, Nicole Kidman, Kathy Bates y más estrellas desfilaron en la alfombra roja",
-        "source": "elcomercio",
-        "score": 35
+        "score": 10
       }
     ]
   },
   "aggregates": {
-    "political_7d_avg": 23.7,
-    "political_30d_avg": 7.6,
-    "economic_7d_avg": 82.5,
-    "economic_30d_avg": 30.0,
-    "year_max": 51.6,
-    "year_max_date": "2026-03-14"
+    "political_7d_avg": 48.0,
+    "political_30d_avg": 13.8,
+    "economic_7d_avg": 104.5,
+    "economic_30d_avg": 24.4,
+    "year_max": 86.1,
+    "year_max_date": "2026-03-16"
   },
   "major_events": [],
   "peak_events": [],
@@ -423,12 +377,12 @@
     {
       "date": "2025-01-24",
       "political_raw": 0.0,
-      "political_7d": 8.9,
+      "political_7d": 11.3,
       "economic_raw": 0.0,
-      "economic_7d": 46.1,
-      "score": 8.9,
+      "economic_7d": 0.0,
+      "score": 11.3,
       "prr": 0.0,
-      "prr_7d": 8.9,
+      "prr_7d": 11.3,
       "n_articles": 0,
       "low_coverage": true,
       "provisional": false
@@ -436,12 +390,12 @@
     {
       "date": "2025-01-25",
       "political_raw": 0.0,
-      "political_7d": 8.9,
+      "political_7d": 11.3,
       "economic_raw": 0.0,
-      "economic_7d": 46.1,
-      "score": 8.9,
+      "economic_7d": 0.0,
+      "score": 11.3,
       "prr": 0.0,
-      "prr_7d": 8.9,
+      "prr_7d": 11.3,
       "n_articles": 0,
       "low_coverage": true,
       "provisional": false
@@ -449,25 +403,25 @@
     {
       "date": "2025-01-26",
       "political_raw": 0.0,
-      "political_7d": 8.9,
+      "political_7d": 11.3,
       "economic_raw": 0.0,
-      "economic_7d": 46.1,
-      "score": 8.9,
+      "economic_7d": 0.0,
+      "score": 11.3,
       "prr": 0.0,
-      "prr_7d": 8.9,
+      "prr_7d": 11.3,
       "n_articles": 0,
       "low_coverage": true,
       "provisional": false
     },
     {
       "date": "2025-01-27",
-      "political_raw": 62.0,
-      "political_7d": 8.9,
-      "economic_raw": 322.7,
-      "economic_7d": 46.1,
-      "score": 8.9,
-      "prr": 62.0,
-      "prr_7d": 8.9,
+      "political_raw": 78.8,
+      "political_7d": 11.3,
+      "economic_raw": 0.0,
+      "economic_7d": 0.0,
+      "score": 11.3,
+      "prr": 78.8,
+      "prr_7d": 11.3,
       "n_articles": 1,
       "low_coverage": true,
       "provisional": false
@@ -475,12 +429,12 @@
     {
       "date": "2025-01-28",
       "political_raw": 0.0,
-      "political_7d": 8.9,
+      "political_7d": 11.3,
       "economic_raw": 0.0,
-      "economic_7d": 46.1,
-      "score": 8.9,
+      "economic_7d": 0.0,
+      "score": 11.3,
       "prr": 0.0,
-      "prr_7d": 8.9,
+      "prr_7d": 11.3,
       "n_articles": 0,
       "low_coverage": true,
       "provisional": false
@@ -488,12 +442,12 @@
     {
       "date": "2025-01-29",
       "political_raw": 0.0,
-      "political_7d": 8.9,
+      "political_7d": 11.3,
       "economic_raw": 0.0,
-      "economic_7d": 46.1,
-      "score": 8.9,
+      "economic_7d": 0.0,
+      "score": 11.3,
       "prr": 0.0,
-      "prr_7d": 8.9,
+      "prr_7d": 11.3,
       "n_articles": 0,
       "low_coverage": true,
       "provisional": false
@@ -501,12 +455,12 @@
     {
       "date": "2025-01-30",
       "political_raw": 0.0,
-      "political_7d": 8.9,
+      "political_7d": 11.3,
       "economic_raw": 0.0,
-      "economic_7d": 46.1,
-      "score": 8.9,
+      "economic_7d": 0.0,
+      "score": 11.3,
       "prr": 0.0,
-      "prr_7d": 8.9,
+      "prr_7d": 11.3,
       "n_articles": 0,
       "low_coverage": true,
       "provisional": false
@@ -2282,12 +2236,12 @@
     {
       "date": "2025-06-16",
       "political_raw": 0.0,
-      "political_7d": 8.9,
+      "political_7d": 11.3,
       "economic_raw": 0.0,
-      "economic_7d": 46.1,
-      "score": 8.9,
+      "economic_7d": 0.0,
+      "score": 11.3,
       "prr": 0.0,
-      "prr_7d": 8.9,
+      "prr_7d": 11.3,
       "n_articles": 0,
       "low_coverage": true,
       "provisional": false
@@ -2295,12 +2249,12 @@
     {
       "date": "2025-06-17",
       "political_raw": 0.0,
-      "political_7d": 8.9,
+      "political_7d": 11.3,
       "economic_raw": 0.0,
-      "economic_7d": 46.1,
-      "score": 8.9,
+      "economic_7d": 0.0,
+      "score": 11.3,
       "prr": 0.0,
-      "prr_7d": 8.9,
+      "prr_7d": 11.3,
       "n_articles": 0,
       "low_coverage": true,
       "provisional": false
@@ -2308,25 +2262,25 @@
     {
       "date": "2025-06-18",
       "political_raw": 0.0,
-      "political_7d": 8.9,
+      "political_7d": 11.3,
       "economic_raw": 0.0,
-      "economic_7d": 46.1,
-      "score": 8.9,
+      "economic_7d": 0.0,
+      "score": 11.3,
       "prr": 0.0,
-      "prr_7d": 8.9,
+      "prr_7d": 11.3,
       "n_articles": 0,
       "low_coverage": true,
       "provisional": false
     },
     {
       "date": "2025-06-19",
-      "political_raw": 62.0,
-      "political_7d": 8.9,
-      "economic_raw": 322.7,
-      "economic_7d": 46.1,
-      "score": 8.9,
-      "prr": 62.0,
-      "prr_7d": 8.9,
+      "political_raw": 78.8,
+      "political_7d": 11.3,
+      "economic_raw": 0.0,
+      "economic_7d": 0.0,
+      "score": 11.3,
+      "prr": 78.8,
+      "prr_7d": 11.3,
       "n_articles": 1,
       "low_coverage": true,
       "provisional": false
@@ -2334,12 +2288,12 @@
     {
       "date": "2025-06-20",
       "political_raw": 0.0,
-      "political_7d": 8.9,
+      "political_7d": 11.3,
       "economic_raw": 0.0,
-      "economic_7d": 46.1,
-      "score": 8.9,
+      "economic_7d": 0.0,
+      "score": 11.3,
       "prr": 0.0,
-      "prr_7d": 8.9,
+      "prr_7d": 11.3,
       "n_articles": 0,
       "low_coverage": true,
       "provisional": false
@@ -2347,12 +2301,12 @@
     {
       "date": "2025-06-21",
       "political_raw": 0.0,
-      "political_7d": 8.9,
+      "political_7d": 11.3,
       "economic_raw": 0.0,
-      "economic_7d": 46.1,
-      "score": 8.9,
+      "economic_7d": 0.0,
+      "score": 11.3,
       "prr": 0.0,
-      "prr_7d": 8.9,
+      "prr_7d": 11.3,
       "n_articles": 0,
       "low_coverage": true,
       "provisional": false
@@ -2360,12 +2314,12 @@
     {
       "date": "2025-06-22",
       "political_raw": 0.0,
-      "political_7d": 8.9,
+      "political_7d": 11.3,
       "economic_raw": 0.0,
-      "economic_7d": 46.1,
-      "score": 8.9,
+      "economic_7d": 0.0,
+      "score": 11.3,
       "prr": 0.0,
-      "prr_7d": 8.9,
+      "prr_7d": 11.3,
       "n_articles": 0,
       "low_coverage": true,
       "provisional": false
@@ -5610,12 +5564,12 @@
     {
       "date": "2026-02-27",
       "political_raw": 0.0,
-      "political_7d": 8.9,
+      "political_7d": 11.3,
       "economic_raw": 0.0,
-      "economic_7d": 46.1,
-      "score": 8.9,
+      "economic_7d": 0.0,
+      "score": 11.3,
       "prr": 0.0,
-      "prr_7d": 8.9,
+      "prr_7d": 11.3,
       "n_articles": 0,
       "low_coverage": true,
       "provisional": false
@@ -5623,12 +5577,12 @@
     {
       "date": "2026-02-28",
       "political_raw": 0.0,
-      "political_7d": 8.9,
+      "political_7d": 11.3,
       "economic_raw": 0.0,
-      "economic_7d": 46.1,
-      "score": 8.9,
+      "economic_7d": 0.0,
+      "score": 11.3,
       "prr": 0.0,
-      "prr_7d": 8.9,
+      "prr_7d": 11.3,
       "n_articles": 0,
       "low_coverage": true,
       "provisional": false
@@ -5636,25 +5590,25 @@
     {
       "date": "2026-03-01",
       "political_raw": 0.0,
-      "political_7d": 8.9,
+      "political_7d": 11.3,
       "economic_raw": 0.0,
-      "economic_7d": 46.1,
-      "score": 8.9,
+      "economic_7d": 0.0,
+      "score": 11.3,
       "prr": 0.0,
-      "prr_7d": 8.9,
+      "prr_7d": 11.3,
       "n_articles": 0,
       "low_coverage": true,
       "provisional": false
     },
     {
       "date": "2026-03-02",
-      "political_raw": 62.0,
-      "political_7d": 8.9,
-      "economic_raw": 322.7,
-      "economic_7d": 46.1,
-      "score": 8.9,
-      "prr": 62.0,
-      "prr_7d": 8.9,
+      "political_raw": 78.8,
+      "political_7d": 11.3,
+      "economic_raw": 0.0,
+      "economic_7d": 0.0,
+      "score": 11.3,
+      "prr": 78.8,
+      "prr_7d": 11.3,
       "n_articles": 1,
       "low_coverage": true,
       "provisional": false
@@ -5662,12 +5616,12 @@
     {
       "date": "2026-03-03",
       "political_raw": 0.0,
-      "political_7d": 8.9,
+      "political_7d": 11.3,
       "economic_raw": 0.0,
-      "economic_7d": 46.1,
-      "score": 8.9,
+      "economic_7d": 0.0,
+      "score": 11.3,
       "prr": 0.0,
-      "prr_7d": 8.9,
+      "prr_7d": 11.3,
       "n_articles": 0,
       "low_coverage": true,
       "provisional": false
@@ -5675,12 +5629,12 @@
     {
       "date": "2026-03-04",
       "political_raw": 0.0,
-      "political_7d": 8.9,
+      "political_7d": 11.3,
       "economic_raw": 0.0,
-      "economic_7d": 46.1,
-      "score": 8.9,
+      "economic_7d": 0.0,
+      "score": 11.3,
       "prr": 0.0,
-      "prr_7d": 8.9,
+      "prr_7d": 11.3,
       "n_articles": 0,
       "low_coverage": true,
       "provisional": false
@@ -5688,12 +5642,12 @@
     {
       "date": "2026-03-05",
       "political_raw": 0.0,
-      "political_7d": 8.9,
+      "political_7d": 11.3,
       "economic_raw": 0.0,
-      "economic_7d": 46.1,
-      "score": 8.9,
+      "economic_7d": 0.0,
+      "score": 11.3,
       "prr": 0.0,
-      "prr_7d": 8.9,
+      "prr_7d": 11.3,
       "n_articles": 0,
       "low_coverage": true,
       "provisional": false
@@ -5753,65 +5707,91 @@
     {
       "date": "2026-03-10",
       "political_raw": 0.0,
-      "political_7d": 8.9,
+      "political_7d": 11.3,
       "economic_raw": 0.0,
-      "economic_7d": 46.1,
-      "score": 8.9,
+      "economic_7d": 0.0,
+      "score": 11.3,
       "prr": 0.0,
-      "prr_7d": 8.9,
+      "prr_7d": 11.3,
       "n_articles": 0,
       "low_coverage": true,
-      "provisional": true
+      "provisional": false
     },
     {
       "date": "2026-03-11",
       "political_raw": 0.0,
-      "political_7d": 29.5,
+      "political_7d": 25.6,
       "economic_raw": 0.0,
       "economic_7d": 100.0,
-      "score": 29.5,
+      "score": 25.6,
       "prr": 0.0,
-      "prr_7d": 29.5,
+      "prr_7d": 25.6,
       "n_articles": 0,
       "low_coverage": true,
-      "provisional": true
+      "provisional": false
     },
     {
       "date": "2026-03-12",
       "political_raw": 0.0,
-      "political_7d": 34.4,
+      "political_7d": 37.4,
       "economic_raw": 0.0,
-      "economic_7d": 116.7,
-      "score": 34.4,
+      "economic_7d": 100.0,
+      "score": 37.4,
       "prr": 0.0,
-      "prr_7d": 34.4,
+      "prr_7d": 37.4,
       "n_articles": 0,
       "low_coverage": true,
       "provisional": true
     },
     {
       "date": "2026-03-13",
-      "political_raw": 62.0,
-      "political_7d": 41.3,
-      "economic_raw": 322.7,
-      "economic_7d": 140.0,
-      "score": 41.3,
-      "prr": 62.0,
-      "prr_7d": 41.3,
-      "n_articles": 89,
+      "political_raw": 78.8,
+      "political_7d": 49.2,
+      "economic_raw": 0.0,
+      "economic_7d": 100.0,
+      "score": 49.2,
+      "prr": 78.8,
+      "prr_7d": 49.2,
+      "n_articles": 56,
       "low_coverage": false,
       "provisional": true
     },
     {
       "date": "2026-03-14",
-      "political_raw": 144.4,
-      "political_7d": 51.6,
-      "economic_raw": 377.3,
+      "political_raw": 100.1,
+      "political_7d": 57.4,
+      "economic_raw": 700.0,
+      "economic_7d": 116.7,
+      "score": 57.4,
+      "prr": 100.1,
+      "prr_7d": 57.4,
+      "n_articles": 219,
+      "low_coverage": false,
+      "provisional": true
+    },
+    {
+      "date": "2026-03-15",
+      "political_raw": 82.8,
+      "political_7d": 68.9,
+      "economic_raw": 0.0,
+      "economic_7d": 140.0,
+      "score": 68.9,
+      "prr": 82.8,
+      "prr_7d": 68.9,
+      "n_articles": 542,
+      "low_coverage": false,
+      "provisional": true
+    },
+    {
+      "date": "2026-03-16",
+      "political_raw": 82.8,
+      "political_7d": 86.1,
+      "economic_raw": 0.0,
       "economic_7d": 175.0,
-      "score": 51.6,
-      "prr": 144.4,
-      "prr_7d": 51.6,
-      "n_articles": 222,
+      "score": 86.1,
+      "prr": 82.8,
+      "prr_7d": 86.1,
+      "n_articles": 23,
       "low_coverage": false,
       "provisional": true
     }
@@ -7009,8 +6989,8 @@
   "monthly_series": [
     {
       "month": "2025-01",
-      "political_avg": 2.0,
-      "economic_avg": 10.4,
+      "political_avg": 2.6,
+      "economic_avg": 0.0,
       "n_articles": 1,
       "fx_level": null,
       "fx_yoy": null
@@ -7049,8 +7029,8 @@
     },
     {
       "month": "2025-06",
-      "political_avg": 2.1,
-      "economic_avg": 10.8,
+      "political_avg": 2.6,
+      "economic_avg": 0.0,
       "n_articles": 1,
       "fx_level": null,
       "fx_yoy": null
@@ -7113,17 +7093,17 @@
     },
     {
       "month": "2026-02",
-      "political_avg": 0.6,
-      "economic_avg": 3.3,
+      "political_avg": 0.8,
+      "economic_avg": 0.0,
       "n_articles": 0,
       "fx_level": null,
       "fx_yoy": null
     },
     {
       "month": "2026-03",
-      "political_avg": 15.0,
-      "economic_avg": 57.7,
-      "n_articles": 312,
+      "political_avg": 24.5,
+      "economic_avg": 45.7,
+      "n_articles": 841,
       "fx_level": null,
       "fx_yoy": null
     }
