@@ -1,40 +1,40 @@
 {
-  "date": "2026-03-15",
-  "headline_es": "Precios supermercado -0.83% MTD · Nowcast PBI +2.20%",
-  "headline_en": "Supermarket prices -0.83% MTD · GDP nowcast +2.20%",
+  "date": "2026-03-16",
+  "headline_es": "Precios supermercado -0.82% MTD · Nowcast PBI +2.84%",
+  "headline_en": "Supermarket prices -0.82% MTD · GDP nowcast +2.84%",
   "body_es": "Datos de alta frecuencia actualizados. Revisa las páginas de estadísticas para el detalle completo.",
   "body_en": "High-frequency data updated. Visit the statistics pages for full detail.",
   "highlights": [
     {
       "icon": "🛒",
-      "text_es": "Precios de supermercado bajó 0.83% en lo que va del mes.",
-      "text_en": "Supermarket prices fell 0.83% month-to-date."
+      "text_es": "Precios de supermercado bajó 0.82% en lo que va del mes.",
+      "text_en": "Supermarket prices fell 0.82% month-to-date."
     },
     {
       "icon": "📈",
-      "text_es": "Frutas: +0.2% en el mes.",
-      "text_en": "Fruits: +0.2% this month."
+      "text_es": "Frutas: +0.1% en el mes.",
+      "text_en": "Fruits: +0.1% this month."
     },
     {
-      "icon": "📈",
-      "text_es": "Aceites y Grasas: +0.2% en el mes.",
-      "text_en": "Oils & Fats: +0.2% this month."
+      "icon": "📉",
+      "text_es": "Pan y Harinas: -0.0% en el mes.",
+      "text_en": "Bread & Flour: -0.0% this month."
     },
     {
       "icon": "📊",
-      "text_es": "Nowcast PBI 2025-Q4: +2.20% (variación anual estimada).",
-      "text_en": "GDP nowcast 2025-Q4: +2.20% (estimated year-on-year)."
+      "text_es": "Nowcast PBI 2026-Q1: +2.84% (variación anual estimada).",
+      "text_en": "GDP nowcast 2026-Q1: +2.84% (estimated year-on-year)."
     },
     {
       "icon": "💹",
-      "text_es": "Nowcast inflación mensual: +0.17% (IPC mensual estimado).",
-      "text_en": "Monthly inflation nowcast: +0.17% (estimated monthly CPI)."
+      "text_es": "Nowcast inflación mensual: +0.18% (IPC mensual estimado).",
+      "text_en": "Monthly inflation nowcast: +0.18% (estimated monthly CPI)."
     },
     {
       "icon": "🏛️",
-      "text_es": "Riesgo político: IRP 87 — nivel bajo.",
-      "text_en": "Political risk: IRP 87 — low level."
+      "text_es": "Riesgo político: IRP 52 — nivel bajo.",
+      "text_en": "Political risk: IRP 52 — low level."
     }
   ],
-  "updated_at": "2026-03-15T05:23:14.658900+00:00"
+  "updated_at": "2026-03-16T03:23:50.444745+00:00"
 }
