@@ -953,14 +953,31 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series, skip_h
         daily_sums["ire"] = (daily_sums["eco_norm"] / s_bar_eco) * 100.0
 
         # Drop today's partial data — early-morning exports capture only a few hours.
-        # The 9 PM pipeline run will include the full day when it re-exports.
+        # The 9 PM pipeline run includes the full day, so today is kept when running at 9 PM.
         from datetime import date as _date_today, timezone as _tz_lima, timedelta as _td_lima
         _lima_today = (datetime.now(_tz_lima.utc) + _td_lima(hours=-5)).date()
-        daily_sums = daily_sums[pd.to_datetime(daily_sums["date"]).dt.date < _lima_today]
+
+        # Check pipeline_status.json NOW (before filtering) so the 9 PM run keeps today.
+        _pipeline_running_today_early = False
+        try:
+            _status_path_early = Path(__file__).parent.parent / "data" / "pipeline_status.json"
+            if _status_path_early.exists():
+                import json as _json2
+                _status_early = _json2.loads(_status_path_early.read_text(encoding="utf-8"))
+                _pipeline_running_today_early = (_status_early.get("date", "") == str(_lima_today))
+        except Exception:
+            pass
+
+        # Keep today when the 9 PM pipeline is running; drop otherwise (partial morning data).
+        _cutoff_op = "<=" if _pipeline_running_today_early else "<"
+        if _pipeline_running_today_early:
+            logger.info("9 PM pipeline active — keeping today (%s) in daily_sums", _lima_today)
+            daily_sums = daily_sums[pd.to_datetime(daily_sums["date"]).dt.date <= _lima_today]
+            political_df = political_df[pd.to_datetime(political_df["date"]).dt.date <= _lima_today]
+        else:
+            daily_sums = daily_sums[pd.to_datetime(daily_sums["date"]).dt.date < _lima_today]
+            political_df = political_df[pd.to_datetime(political_df["date"]).dt.date < _lima_today]
         daily_sums = daily_sums.reset_index(drop=True)
-        # Also drop today's partial data from political_df (the base of the LEFT join below).
-        # Without this, partial-day parquet rows survive the merge and appear as the latest entry.
-        political_df = political_df[pd.to_datetime(political_df["date"]).dt.date < _lima_today]
 
         # Low-coverage interpolation: days with < 25 articles are noise spikes
         # (weekends, holidays). Set to NaN and interpolate from neighbours.
