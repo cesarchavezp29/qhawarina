@@ -56,5 +56,19 @@ Thumbs.db
 *.pt
 *.bin
 *.onnx
-data/raw/enaho/978_panel/*.csv
-data/raw/enaho/978_panel/*.dta
+
+# ENAHO raw data (large binary files)
+data/raw/enaho/
+
+# Supermarket manifest (ephemeral)
+data/raw/supermarket/scrape_manifest.csv
+
+# Credentials (NEVER commit)
+.git-credentials*
+
+# Claude worktrees
+.claude/
+
+# Exported reports and vintages (ephemeral)
+exports/reports/
+exports/data/vintages/

@@ -1345,7 +1345,8 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series, skip_h
                 top_eco = eco_primary.nlargest(5, "economic_score")[
                     ["title", "source", "economic_score"]
                 ]
-                if not top_eco.empty and ire_today > 0:
+                eco_meaningful = top_eco[top_eco["economic_score"] > 15]
+                if len(eco_meaningful) >= 2 and ire_today > 0:
                     drivers_text = "\n".join(
                         f"- [{int(r.economic_score)}] {r.title} ({r.source})"
                         for _, r in top_eco.iterrows() if r.economic_score > 0
@@ -1368,10 +1369,10 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series, skip_h
                             }]
                         )
                         economic_justification = msg.content[0].text.strip()
-                    top_economic_drivers = [
-                        {"title": r.title, "source": r.source, "score": int(r.economic_score)}
-                        for _, r in top_eco.iterrows() if r.economic_score > 0
-                    ]
+                top_economic_drivers = [
+                    {"title": r.title, "source": r.source, "score": int(r.economic_score)}
+                    for _, r in eco_meaningful.iterrows()
+                ] if len(eco_meaningful) >= 2 else []
             except Exception as e:
                 logger.warning("Haiku justification failed: %s", e)
     # ─────────────────────────────────────────────────────────────────────────
