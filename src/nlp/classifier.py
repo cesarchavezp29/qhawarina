@@ -1200,6 +1200,21 @@ def post_filter_scores(df: pd.DataFrame) -> pd.DataFrame:
     if n_pp > 0:
         logger.info("post_filter_scores: Petroperú crisis eco>=60 on %d articles", n_pp)
 
+    # TGP / Camisea regulatory threat — license revocation, MINEM sanctions → eco ≥ 55
+    # Physical crisis already handled above (eco ≥ 80). This covers regulatory risk.
+    _tgp_regulatory = (
+        r"(tgp|transportadora de gas).{0,80}"
+        r"(licencia|concesi[oó]n|sanci[oó]n|multa|incumplimiento|normas|negligencia|"
+        r"revocar|cancelar|suspensi[oó]n|investigaci[oó]n|fiscalizaci[oó]n)\b|"
+        r"(minem|osinergmin).{0,60}(tgp|camisea|gasoducto|ducto).{0,60}"
+        r"(licencia|concesi[oó]n|sanci[oó]n|multa|negligencia|normas|cancel)\b"
+    )
+    mask_tgp = nt.str.contains(_tgp_regulatory, regex=True, na=False)
+    df.loc[mask_tgp & (df["economic_score"].fillna(0) < 55), "economic_score"] = 55
+    n_tgp = int(mask_tgp.sum())
+    if n_tgp > 0:
+        logger.info("post_filter_scores: TGP regulatory threat eco>=55 on %d articles", n_tgp)
+
     # Congress proposing fiscal/economic expansion policies → eco ≥ 60
     _fiscal_expansion = (
         r"(congreso|pleno).{0,60}"
@@ -2194,7 +2209,8 @@ def post_filter_scores(df: pd.DataFrame) -> pd.DataFrame:
         # Energy/commodities
         "petroperu", "petroper", "gas", "gnv", "glp", "gasolina",
         "petroleo", "combustible", "electricidad", "energia",
-        "camisea", "oleoducto", "refineria",
+        "camisea", "oleoducto", "refineria", "tgp", "transportadora de gas",
+        "osinergmin", "minem",
         # Mining
         "mineri", "minero", "minera", "cobre", "oro", "plata", "zinc",
         "reinfo", "mape", "concesion minera",
