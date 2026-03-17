@@ -72,3 +72,7 @@ data/raw/supermarket/scrape_manifest.csv
 # Exported reports and vintages (ephemeral)
 exports/reports/
 exports/data/vintages/
+
+# EPE and EPEN raw microdata (large survey CSVs, 30-80MB)
+data/raw/epe/
+data/raw/epen/

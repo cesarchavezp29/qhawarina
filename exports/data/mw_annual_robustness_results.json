@@ -1,0 +1,394 @@
+{
+  "strategy": "Strategy 4: Annual ENAHO robustness",
+  "note": "Annual data has 2+ year gaps between pre/post periods. Weaker identification than quarterly (Strategy 2). Primary results are Cengiz bunching (S1) and quarterly DiD (S2).",
+  "data_source": "ENAHO cross-section annual (Modules 500), 2015-2023",
+  "specification": "Y_idt = alpha_d + gamma_t + beta*(Post_t x Kaitz_d_pre) + controls",
+  "formality_definition": "V4 (contrato + EsSalud + AFP/ONP + planilla)",
+  "caveats": {
+    "C_employed": "Event C (2022) employment may reflect COVID-19 recovery bias. Pre=2021 (pandemic year), Post=2022-23. Excluded from employment pool."
+  },
+  "events": {
+    "A": {
+      "label": "Event A: S/750â†’S/850 (May 2016)",
+      "mw_old": 750,
+      "mw_new": 850,
+      "kaitz_range": [
+        0.3875,
+        0.6263
+      ],
+      "n_departments": 25,
+      "employed": {
+        "beta": 0.05011,
+        "se": 0.07008,
+        "ci_low": -0.08724,
+        "ci_high": 0.18745,
+        "p": 0.47458,
+        "n": 254825
+      },
+      "formal": {
+        "beta": 0.11228,
+        "se": 0.0862,
+        "ci_low": -0.05666,
+        "ci_high": 0.28123,
+        "p": 0.19271,
+        "n": 183818
+      },
+      "log_wage": {
+        "beta": 0.18334,
+        "se": 0.11442,
+        "ci_low": -0.04092,
+        "ci_high": 0.4076,
+        "p": 0.10907,
+        "n": 33205
+      },
+      "employed_event_study": [
+        {
+          "year_offset": 1,
+          "beta": 0.09777,
+          "se": 0.0714,
+          "ci_low": -0.04218,
+          "ci_high": 0.23771,
+          "p": 0.17093
+        },
+        {
+          "year_offset": 2,
+          "beta": 0.00284,
+          "se": 0.07542,
+          "ci_low": -0.14497,
+          "ci_high": 0.15066,
+          "p": 0.96992
+        }
+      ],
+      "formal_event_study": [
+        {
+          "year_offset": 1,
+          "beta": 0.00146,
+          "se": 0.104,
+          "ci_low": -0.20238,
+          "ci_high": 0.2053,
+          "p": 0.98878
+        },
+        {
+          "year_offset": 2,
+          "beta": 0.22227,
+          "se": 0.08726,
+          "ci_low": 0.05124,
+          "ci_high": 0.3933,
+          "p": 0.01086
+        }
+      ],
+      "log_wage_event_study": [
+        {
+          "year_offset": 1,
+          "beta": 0.05876,
+          "se": 0.18553,
+          "ci_low": -0.30488,
+          "ci_high": 0.42239,
+          "p": 0.75148
+        },
+        {
+          "year_offset": 2,
+          "beta": 0.30523,
+          "se": 0.12437,
+          "ci_low": 0.06148,
+          "ci_high": 0.54899,
+          "p": 0.01412
+        }
+      ]
+    },
+    "B": {
+      "label": "Event B: S/850â†’S/930 (April 2018)",
+      "mw_old": 850,
+      "mw_new": 930,
+      "kaitz_range": [
+        0.4069,
+        0.617
+      ],
+      "n_departments": 25,
+      "employed": {
+        "beta": 0.14136,
+        "se": 0.07872,
+        "ci_low": -0.01293,
+        "ci_high": 0.29565,
+        "p": 0.07255,
+        "n": 258436
+      },
+      "formal": {
+        "beta": -0.04413,
+        "se": 0.04651,
+        "ci_low": -0.13529,
+        "ci_high": 0.04703,
+        "p": 0.34275,
+        "n": 188308
+      },
+      "log_wage": {
+        "beta": -0.03059,
+        "se": 0.16503,
+        "ci_low": -0.35404,
+        "ci_high": 0.29285,
+        "p": 0.85293,
+        "n": 34417
+      },
+      "employed_event_study": [
+        {
+          "year_offset": 1,
+          "beta": 0.11713,
+          "se": 0.07373,
+          "ci_low": -0.02738,
+          "ci_high": 0.26165,
+          "p": 0.11215
+        },
+        {
+          "year_offset": 2,
+          "beta": 0.16529,
+          "se": 0.09538,
+          "ci_low": -0.02166,
+          "ci_high": 0.35224,
+          "p": 0.08312
+        }
+      ],
+      "formal_event_study": [
+        {
+          "year_offset": 1,
+          "beta": 0.02626,
+          "se": 0.05493,
+          "ci_low": -0.08141,
+          "ci_high": 0.13392,
+          "p": 0.63266
+        },
+        {
+          "year_offset": 2,
+          "beta": -0.11279,
+          "se": 0.05225,
+          "ci_low": -0.2152,
+          "ci_high": -0.01038,
+          "p": 0.03088
+        }
+      ],
+      "log_wage_event_study": [
+        {
+          "year_offset": 1,
+          "beta": -0.02642,
+          "se": 0.16355,
+          "ci_low": -0.34696,
+          "ci_high": 0.29412,
+          "p": 0.87167
+        },
+        {
+          "year_offset": 2,
+          "beta": -0.03462,
+          "se": 0.2273,
+          "ci_low": -0.48013,
+          "ci_high": 0.41089,
+          "p": 0.87895
+        }
+      ]
+    },
+    "C": {
+      "label": "Event C: S/930â†’S/1,025 (May 2022)",
+      "mw_old": 930,
+      "mw_new": 1025,
+      "kaitz_range": [
+        0.3768,
+        0.6195
+      ],
+      "n_departments": 25,
+      "employed": {
+        "beta": 0.37419,
+        "se": 0.0595,
+        "ci_low": 0.25757,
+        "ci_high": 0.4908,
+        "p": 0.0,
+        "n": 236753
+      },
+      "formal": {
+        "beta": -0.02078,
+        "se": 0.01545,
+        "ci_low": -0.05106,
+        "ci_high": 0.0095,
+        "p": 0.17868,
+        "n": 170187
+      },
+      "log_wage": {
+        "beta": 0.21705,
+        "se": 0.16215,
+        "ci_low": -0.10076,
+        "ci_high": 0.53485,
+        "p": 0.18071,
+        "n": 29322
+      },
+      "employed_event_study": [
+        {
+          "year_offset": 1,
+          "beta": 0.31727,
+          "se": 0.0497,
+          "ci_low": 0.21986,
+          "ci_high": 0.41468,
+          "p": 0.0
+        },
+        {
+          "year_offset": 2,
+          "beta": 0.4303,
+          "se": 0.07323,
+          "ci_low": 0.28678,
+          "ci_high": 0.57383,
+          "p": 0.0
+        }
+      ],
+      "formal_event_study": [
+        {
+          "year_offset": 1,
+          "beta": -0.04202,
+          "se": 0.0235,
+          "ci_low": -0.08808,
+          "ci_high": 0.00404,
+          "p": 0.07379
+        },
+        {
+          "year_offset": 2,
+          "beta": 0.00063,
+          "se": 0.02483,
+          "ci_low": -0.04803,
+          "ci_high": 0.04929,
+          "p": 0.97977
+        }
+      ],
+      "log_wage_event_study": [
+        {
+          "year_offset": 1,
+          "beta": 0.28071,
+          "se": 0.12449,
+          "ci_low": 0.03671,
+          "ci_high": 0.52472,
+          "p": 0.02415
+        },
+        {
+          "year_offset": 2,
+          "beta": 0.1597,
+          "se": 0.20107,
+          "ci_low": -0.23439,
+          "ci_high": 0.55379,
+          "p": 0.42705
+        }
+      ]
+    }
+  },
+  "placebo": {
+    "label": "Placebo annual: 2016 vs 2017 (post-A only, no new increase)",
+    "mw_for_kaitz": 750,
+    "kaitz_pre_year": 2015,
+    "pre_year": 2016,
+    "post_years": [
+      2017
+    ],
+    "note": "Both 2016 and 2017 are post-Event A. No new increase until April 2018. Beta should be ~0 for employment (no new differential). Any significant beta = pre-existing trend, not MW effect.",
+    "kaitz_range": [
+      0.3875,
+      0.6263
+    ],
+    "n_departments": 25,
+    "employed": {
+      "beta": -0.09456,
+      "se": 0.04423,
+      "ci_low": -0.18125,
+      "ci_high": -0.00786,
+      "p": 0.03254,
+      "n": 174112
+    },
+    "employed_event_study": [
+      {
+        "year_offset": 1,
+        "beta": -0.09456,
+        "se": 0.04423,
+        "ci_low": -0.18125,
+        "ci_high": -0.00786,
+        "p": 0.03254
+      }
+    ],
+    "formal": {
+      "beta": 0.21956,
+      "se": 0.08566,
+      "ci_low": 0.05168,
+      "ci_high": 0.38745,
+      "p": 0.01037,
+      "n": 125620
+    },
+    "formal_event_study": [
+      {
+        "year_offset": 1,
+        "beta": 0.21956,
+        "se": 0.08566,
+        "ci_low": 0.05168,
+        "ci_high": 0.38745,
+        "p": 0.01037
+      }
+    ],
+    "log_wage": {
+      "beta": 0.24941,
+      "se": 0.2159,
+      "ci_low": -0.17375,
+      "ci_high": 0.67258,
+      "p": 0.24801,
+      "n": 22934
+    },
+    "log_wage_event_study": [
+      {
+        "year_offset": 1,
+        "beta": 0.24941,
+        "se": 0.2159,
+        "ci_low": -0.17374,
+        "ci_high": 0.67257,
+        "p": 0.248
+      }
+    ]
+  },
+  "pooled": {
+    "employed": {
+      "beta": 0.09045441632788519,
+      "se": 0.0523432117592502,
+      "ci_low": -0.0121382787202452,
+      "ci_high": 0.19304711137601557,
+      "p": 0.08396991366402462,
+      "Q": 0.7495974899200984,
+      "I2": 0.0,
+      "p_Q": 0.38660369776689574,
+      "n_events": 2,
+      "events_included": [
+        "A",
+        "B"
+      ]
+    },
+    "formal": {
+      "beta": -0.019293819579031608,
+      "se": 0.01445458174704054,
+      "ci_low": -0.04762479980323106,
+      "ci_high": 0.009037160645167849,
+      "p": 0.18194534984328592,
+      "Q": 2.6242364841587444,
+      "I2": 23.787356357819135,
+      "p_Q": 0.2692491170946899,
+      "n_events": 3,
+      "events_included": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    "log_wage": {
+      "beta": 0.1398495397368065,
+      "se": 0.08134276944805274,
+      "ci_low": -0.019582288381376878,
+      "ci_high": 0.2992813678549899,
+      "p": 0.0855666597074125,
+      "Q": 1.4377810489733198,
+      "I2": 0.0,
+      "p_Q": 0.48729259536026226,
+      "n_events": 3,
+      "events_included": [
+        "A",
+        "B",
+        "C"
+      ]
+    }
+  }
+}

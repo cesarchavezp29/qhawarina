@@ -1,0 +1,345 @@
+{
+  "check1_wage_audit": {
+    "p524a1": {
+      "n_valid": 10195,
+      "mean": 1786.8978911230995,
+      "median": 1400.0,
+      "p25": 1000.0,
+      "p75": 2000.0,
+      "pct_zero": 1.0866401474725915
+    },
+    "i524a1": {
+      "n_valid": 10302,
+      "mean": 22875.4491314024,
+      "median": 17957.0,
+      "p25": 13196.25,
+      "p75": 26170.25,
+      "pct_zero": 0.048510720869312116
+    },
+    "i524a1_monthly": {
+      "n_valid": 10302,
+      "mean": 1906.287427616867,
+      "median": 1496.4166666666665,
+      "p25": 1099.6875,
+      "p75": 2180.8541666666665,
+      "pct_zero": 0.048510720869312116
+    },
+    "d529t": {
+      "n_valid": 3992,
+      "mean": 2393.877755511022,
+      "median": 1187.0,
+      "p25": 299.0,
+      "p75": 3220.25,
+      "pct_zero": 61.2690404579412
+    },
+    "correlation": {
+      "p524a1": {
+        "p524a1": 1.0,
+        "i524a1_monthly": 0.952,
+        "d529t": 0.251
+      },
+      "i524a1_monthly": {
+        "p524a1": 0.952,
+        "i524a1_monthly": 1.0,
+        "d529t": 0.264
+      },
+      "d529t": {
+        "p524a1": 0.251,
+        "i524a1_monthly": 0.264,
+        "d529t": 1.0
+      }
+    },
+    "n_discrepancy_rows": 10195
+  },
+  "check2_bunching_by_pop": {
+    "all_employed": {
+      "missing_pp": 6.444461822509766,
+      "excess_pp": 5.806512832641602,
+      "ratio": 0.9010081887245178,
+      "ratio_net": 0.9158817529678345,
+      "emp_chg_pct": 2.544054419609565
+    },
+    "dependent_all": {
+      "missing_pp": 6.444461822509766,
+      "excess_pp": 5.806512832641602,
+      "ratio": 0.9010081887245178,
+      "ratio_net": 0.9158817529678345,
+      "emp_chg_pct": 2.544054419609565
+    },
+    "formal_dep": {
+      "missing_pp": 8.031742095947266,
+      "excess_pp": 6.655107498168945,
+      "ratio": 0.8286007046699524,
+      "ratio_net": 0.8470251560211182,
+      "emp_chg_pct": 5.592896586832508
+    },
+    "informal_dep": {
+      "missing_pp": 5.280221462249756,
+      "excess_pp": 5.213306427001953,
+      "ratio": 0.9873272776603699,
+      "ratio_net": 1.0098096132278442,
+      "emp_chg_pct": 0.3425898382540371
+    }
+  },
+  "check3_bin_inspection": {
+    "bins": [
+      {
+        "bin_lo": 700.0,
+        "bin_hi": 725.0,
+        "bc": 712.5,
+        "pre_pct": 0.5450871773064137,
+        "post_pct": 0.6580902729183435,
+        "delta_pp": 0.11300116311758757,
+        "note": ""
+      },
+      {
+        "bin_lo": 725.0,
+        "bin_hi": 750.0,
+        "bc": 737.5,
+        "pre_pct": 0.03057601279579103,
+        "post_pct": 0.07678024703636765,
+        "delta_pp": 0.046202295925468206,
+        "note": ""
+      },
+      {
+        "bin_lo": 750.0,
+        "bin_hi": 775.0,
+        "bc": 762.5,
+        "pre_pct": 0.5709578283131123,
+        "post_pct": 0.37363257724791765,
+        "delta_pp": -0.19732718355953693,
+        "note": ""
+      },
+      {
+        "bin_lo": 775.0,
+        "bin_hi": 800.0,
+        "bc": 787.5,
+        "pre_pct": 0.07563667604699731,
+        "post_pct": 0.20414204336702824,
+        "delta_pp": 0.1285034348256886,
+        "note": ""
+      },
+      {
+        "bin_lo": 800.0,
+        "bin_hi": 825.0,
+        "bc": 812.5,
+        "pre_pct": 0.7420341949909925,
+        "post_pct": 0.5843603052198887,
+        "delta_pp": -0.15767582226544619,
+        "note": ""
+      },
+      {
+        "bin_lo": 825.0,
+        "bin_hi": 850.0,
+        "bc": 837.5,
+        "pre_pct": 0.1228433451615274,
+        "post_pct": 0.05172142409719527,
+        "delta_pp": -0.07112385937944055,
+        "note": "<-- OLD MW (850)"
+      },
+      {
+        "bin_lo": 850.0,
+        "bin_hi": 875.0,
+        "bc": 862.5,
+        "pre_pct": 7.03120157122612,
+        "post_pct": 0.5154796876013279,
+        "delta_pp": -6.515724211931229,
+        "note": "<-- OLD MW (850)"
+      },
+      {
+        "bin_lo": 875.0,
+        "bin_hi": 900.0,
+        "bc": 887.5,
+        "pre_pct": 0.15608042012900114,
+        "post_pct": 0.09435738320462406,
+        "delta_pp": -0.0617249752394855,
+        "note": ""
+      },
+      {
+        "bin_lo": 900.0,
+        "bin_hi": 925.0,
+        "bc": 912.5,
+        "pre_pct": 1.9635528326034546,
+        "post_pct": 0.9353887289762497,
+        "delta_pp": -1.0281660594046116,
+        "note": ""
+      },
+      {
+        "bin_lo": 925.0,
+        "bin_hi": 950.0,
+        "bc": 937.5,
+        "pre_pct": 0.3246786305680871,
+        "post_pct": 5.388839915394783,
+        "delta_pp": 5.064159259200096,
+        "note": "<-- NEW MW (930)"
+      },
+      {
+        "bin_lo": 950.0,
+        "bin_hi": 975.0,
+        "bc": 962.5,
+        "pre_pct": 1.6295194625854492,
+        "post_pct": 2.9066747054457664,
+        "delta_pp": 1.2771532870829105,
+        "note": ""
+      },
+      {
+        "bin_lo": 975.0,
+        "bin_hi": 1000.0,
+        "bc": 987.5,
+        "pre_pct": 0.5129828117787838,
+        "post_pct": 0.34465398639440536,
+        "delta_pp": -0.16833075787872076,
+        "note": ""
+      },
+      {
+        "bin_lo": 1000.0,
+        "bin_hi": 1025.0,
+        "bc": 1012.5,
+        "pre_pct": 4.705865681171417,
+        "post_pct": 3.882477805018425,
+        "delta_pp": -0.8233898319303989,
+        "note": ""
+      },
+      {
+        "bin_lo": 1025.0,
+        "bin_hi": 1050.0,
+        "bc": 1037.5,
+        "pre_pct": 0.22920905612409115,
+        "post_pct": 0.19408368971198797,
+        "delta_pp": -0.035127304727211595,
+        "note": ""
+      },
+      {
+        "bin_lo": 1050.0,
+        "bin_hi": 1075.0,
+        "bc": 1062.5,
+        "pre_pct": 0.6983703002333641,
+        "post_pct": 0.8973070420324802,
+        "delta_pp": 0.1989348093047738,
+        "note": ""
+      },
+      {
+        "bin_lo": 1075.0,
+        "bin_hi": 1100.0,
+        "bc": 1087.5,
+        "pre_pct": 0.19710285123437643,
+        "post_pct": 0.22249410394579172,
+        "delta_pp": 0.025389314396306872,
+        "note": ""
+      },
+      {
+        "bin_lo": 1100.0,
+        "bin_hi": 1125.0,
+        "bc": 1112.5,
+        "pre_pct": 2.1464435383677483,
+        "post_pct": 2.173001505434513,
+        "delta_pp": 0.026556028751656413,
+        "note": ""
+      },
+      {
+        "bin_lo": 1125.0,
+        "bin_hi": 1150.0,
+        "bc": 1137.5,
+        "pre_pct": 0.25720985140651464,
+        "post_pct": 0.3201262326911092,
+        "delta_pp": 0.06291444296948612,
+        "note": ""
+      },
+      {
+        "bin_lo": 1150.0,
+        "bin_hi": 1175.0,
+        "bc": 1162.5,
+        "pre_pct": 0.6753519643098116,
+        "post_pct": 0.595318153500557,
+        "delta_pp": -0.08003574912436306,
+        "note": ""
+      },
+      {
+        "bin_lo": 1175.0,
+        "bin_hi": 1200.0,
+        "bc": 1187.5,
+        "pre_pct": 0.19000980537384748,
+        "post_pct": 0.07877370808273554,
+        "delta_pp": -0.11123802978545427,
+        "note": ""
+      }
+    ],
+    "spike_at_new_mw_pp": 5.064159259200096,
+    "avg_delta_missing_zone_pp": -0.9821295476285741,
+    "verdict": "confirmed"
+  },
+  "check4_compression_controls": {
+    "no_controls": {
+      "beta": 0.0146740853080319,
+      "se": 0.14735470186288835,
+      "p": 0.920675056536725,
+      "n": 25
+    },
+    "with_controls": {
+      "beta": 0.04503854505935003,
+      "se": 0.1657658664512252,
+      "p": 0.7858528908159113,
+      "n": 25
+    },
+    "t_test": {
+      "t": -6.226211110815876,
+      "p": 1.9587859315763963e-06,
+      "mean_did": -0.03017667010092758
+    }
+  },
+  "check5_transition_audit": {
+    "error": "panel match = 0"
+  },
+  "check6_placebo": {
+    "PLACEBO_1100→1200": {
+      "fake_mw_old": 1100,
+      "fake_mw_new": 1200,
+      "missing_pp": 1.21812105178833,
+      "excess_pp": 0.13903926312923431,
+      "ratio": 0.11414240300655365,
+      "ratio_net": Infinity
+    },
+    "PLACEBO_1400→1500": {
+      "fake_mw_old": 1400,
+      "fake_mw_new": 1500,
+      "missing_pp": 1.993332028388977,
+      "excess_pp": 0.02540932036936283,
+      "ratio": 0.012747159227728844,
+      "ratio_net": 0.013710477389395237
+    },
+    "verdict": "CLEAN"
+  },
+  "decision_rule": {
+    "wage_increases": {
+      "status": "HEADLINE-SAFE",
+      "methods": [
+        "EPE stayers DiD",
+        "Cengiz bunching excess mass"
+      ]
+    },
+    "no_employment_destruction": {
+      "status": "HEADLINE-SAFE",
+      "methods": [
+        "Cengiz emp_chg",
+        "Annual DiD"
+      ]
+    },
+    "compression": {
+      "status": "WEAK (p=0.786 with controls — consistent directionally but not significant)"
+    },
+    "formal_informal_transitions": {
+      "status": "UNKNOWN — insufficient data"
+    },
+    "lighthouse": {
+      "status": "NOT HEADLINE-SAFE",
+      "reason": "inconsistent across events, p>0.5"
+    },
+    "formalization": {
+      "status": "SUPPORTABLE WITH CAVEATS",
+      "reason": "quarterly DiD significant, annual ambiguous"
+    },
+    "placebo_check": {
+      "status": "CLEAN"
+    }
+  }
+}

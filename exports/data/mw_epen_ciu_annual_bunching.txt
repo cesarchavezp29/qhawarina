@@ -1,0 +1,44 @@
+EPEN CIUDADES ANNUAL 2023 — POST-EVENT C BUNCHING ANALYSIS
+============================================================
+
+Source: EPEN Ciudades Anual 2023 (INEI download code 873)
+File:   EPEN BD Ciudades Anual 2023.csv
+N obs:  243,626 total | 53,316 formal dep employed
+Wtd pop (formal dep): 3.47M
+
+SAMPLE DEFINITION
+  Employed:   OCUP300 == 1
+  Formal:     Informal_P == '2' (health insurance registered)
+  Wage:       ingtrabw (weekly labor income, converted to monthly)
+  Weight:     FAC300_ANUAL
+  Period:     All 2023 (MW = S/1,025 throughout; Event C May 2022)
+
+KEY RESULTS
+  Median formal wage (wt):   S/2266
+  Kaitz index (MW/median):   0.452
+  At-MW bin share:           1.143%
+  Excess factor at MW:       1.341x counterfactual
+  Excess mass [mw, mw+200):  0.0497
+  Missing [0.85*930, 1025):  0.0306
+  Bunching ratio:            1.622
+
+BY SUBSAMPLE
+  Lima upper stratum:  N=10,590  median=2201  Kaitz=0.466  ratio=1.602
+  Other EPEN cities:   N=42,726  median=2351  Kaitz=0.436  ratio=1.688
+
+QUARTERLY (SEASONALITY CHECK, MW=1025 ALL QUARTERS)
+  Q1_Jan_Mar: N=12,602  share@1025=0.0144  below_mw=0.0383
+  Q2_Apr_Jun: N=13,469  share@1025=0.0087  below_mw=0.0311
+  Q3_Jul_Sep: N=13,624  share@1025=0.0128  below_mw=0.0358
+  Q4_Oct_Dec: N=13,621  share@1025=0.0098  below_mw=0.0329
+
+DATA LIMITATIONS
+  - No 2022 annual EPEN CIU (code 872 returns 404; likely not published).
+  - Without pre-period: single-period bunching only (Lee-Saez), not Cengiz.
+  - CODCIUDAD absent; DIVISION_LIMA=1 is Lima upper stratum, not full Lima.
+  - City-level Kaitz DiD not possible from this file.
+
+CROSS-DATASET COMPARISON (Event C post-period, formal dep)
+  EPEN CIU 2023: median S/2266  Kaitz=0.452  (30 cities)
+  ENAHO CS 2023: median ~S/1,700  Kaitz ~0.60  (national sample)
+  Gap reflects EPEN urban scope + higher city wages.

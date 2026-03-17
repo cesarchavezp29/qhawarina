@@ -1,0 +1,259 @@
+==================================================================================
+FULL DATA AUDIT — COMPLETE VERSION
+Generated: 2026-03-16 15:53
+==================================================================================
+
+──────────────────────────────────────────────────────────────────────────────────
+AUDIT 1: ENAHO CROSS-SECTION (Module 500, 2015–2023)
+──────────────────────────────────────────────────────────────────────────────────
+
+TABLE A: Sample Counts
+Year    TotalRows   Employed   DepDep  FormalDep    InfDep   SelfEmp  Wt_Emp(M)
+------------------------------------------------------------------------------
+2015       88,084     61,498   24,329     10,244    14,085    24,272      16.27
+2016       97,422     67,827   27,322     11,761    15,561    27,220      16.50
+2017       93,185     64,915   25,723     11,139    14,584    26,737      16.76
+2018       99,646     70,036   27,305     11,994    15,311    29,228      17.00
+2019       92,094     64,954   25,433     11,173    14,260    26,806      17.32
+2021       86,806     59,935   23,096      9,237    13,859    25,006      17.31
+2022       87,661     61,181   24,739      9,881    14,858    25,254      18.00
+2023       86,654     59,447   24,382     10,188    14,194    24,825      18.02
+
+TABLE B: Wage Distribution — Formal Dependent Workers (p524a1)
+Year      MW      N    Mean    Med    P10    P25    P75    P90   AtMW%    <MW%   Kaitz   Gini
+------------------------------------------------------------------------------------------------
+2015     750 10,134    1769   1374    600    950   2000   3200    5.07   11.27   0.546  0.383
+2016     850 11,667    1927   1500    750   1000   2200   3500    5.28   13.87   0.567 0.3824
+2017     850 11,026    1942   1500    840   1000   2300   3500    6.90   10.05   0.567 0.3669
+2018     930 11,804    1992   1580    826   1030   2400   3500    6.18   14.57   0.589 0.3593
+2019     930 10,991    2084   1609    850   1100   2500   3652    7.63   11.42   0.578 0.3667
+2021     930  9,123    2024   1500    840   1000   2500   3622   10.26   11.20    0.62  0.364
+2022    1025  9,720    2137   1700    900   1130   2600   3800    6.06   16.93   0.603 0.3562
+2023    1025  9,996    2200   1800    930   1174   2800   3985   10.07   12.27   0.569 0.3542
+
+TABLE C: Formality Rates by Sector and Firm Size
+Year    Overall    Agri   Manuf    Comm  PubAdm    Edu ||   Micro   Small   Med+
+--------------------------------------------------------------------------------------
+2015      26.7%   21.5%   44.9%   38.6%   67.3%  75.7% ||    8.0%   43.4%  76.0%
+2016      27.9%   21.9%   44.8%   37.2%   66.3%  76.0% ||    8.1%   42.4%  76.6%
+2017      27.4%   21.7%   44.9%   38.0%   71.5%  75.7% ||    8.4%   44.7%  76.6%
+2018      27.6%   22.6%   49.2%   38.1%   71.8%  79.0% ||    9.3%   45.6%  80.5%
+2019      27.3%   23.8%   46.7%   40.4%   70.0%  76.6% ||    9.1%   44.2%  79.7%
+2021      23.2%   19.4%   45.1%   29.9%   64.4%  82.5% ||    7.6%   44.6%  78.2%
+2022      24.3%   23.9%   42.2%   32.0%   64.3%  77.8% ||    7.5%   45.6%  78.5%
+2023      26.1%   25.5%   46.0%   35.7%   62.9%  77.2% ||    9.2%   47.2%  79.6%
+
+TABLE D: Employment Composition
+  Year     Dep%  Self%  Empl%  Unpaid%   Dom%
+  ----------------------------------------
+  2015    47.4%  34.8%   4.1%    11.0%   2.5%
+  2016    47.0%  35.6%   4.3%    10.4%   2.5%
+  2017    46.6%  36.7%   3.9%    10.0%   2.4%
+  2018    46.6%  37.2%   4.0%     9.7%   2.3%
+  2019    46.5%  36.8%   3.9%    10.1%   2.5%
+  2021    45.5%  38.0%   3.2%    10.9%   2.0%
+  2022    47.4%  37.5%   3.3%     9.3%   2.3%
+  2023    48.4%  37.5%   3.5%     8.2%   2.2%
+
+TABLE E: Weekly Hours — Formal Dependent Workers (p513t)
+  Year         N   Mean   Med   P10   P90   <35h%   >48h%
+  ----------------------------------------------------
+  2015     9,530   46.4  46.0  30.0  63.0   14.09   28.17
+  2016    10,966   46.2  46.0  30.0  63.0   13.98   27.59
+  2017    10,325   46.4  47.0  30.0  66.0    13.8   27.46
+  2018    11,312   46.3  46.0  30.0  62.0   13.77   26.28
+  2019    10,444   46.2  48.0  30.0  61.0   13.89   25.52
+  2021     8,517   46.8  48.0  30.0  66.0   14.06    26.8
+  2022     9,268   46.6  48.0  30.0  64.0    12.8   25.14
+  2023     9,630   46.5  48.0  30.0  63.0   13.59   25.94
+
+TABLE F: KEY TIME SERIES — Paper Table 1
+Sample: Formal dependent workers (ocupinf==2, p507 in {3,4}), ENAHO cross-section
+Year      MW    N_FD  MedWage    P10    P90   Kaitz   Form%   AtMW%    <MW%  MedHrs   Gini
+----------------------------------------------------------------------------------------
+2015     750  10,244    1,374    600  3,200   0.546   26.7%    5.07   11.27    46.0  0.383
+2016     850  11,761    1,500    750  3,500   0.567   27.9%    5.28   13.87    46.0 0.3824
+2017     850  11,139    1,500    840  3,500   0.567   27.4%    6.90   10.05    47.0 0.3669
+2018     930  11,994    1,580    826  3,500   0.589   27.6%    6.18   14.57    46.0 0.3593
+2019     930  11,173    1,609    850  3,652   0.578   27.3%    7.63   11.42    48.0 0.3667
+2021     930   9,237    1,500    840  3,622    0.62   23.2%   10.26   11.20    48.0  0.364
+2022   1,025   9,881    1,700    900  3,800   0.603   24.3%    6.06   16.93    48.0 0.3562
+2023   1,025  10,188    1,800    930  3,985   0.569   26.1%   10.07   12.27    48.0 0.3542
+
+TABLE A1: Department Kaitz Index — Stability Check
+(Pre-period years: 2015, 2017, 2021 | Higher = MW more binding)
+  Dept  Kaitz2015  Kaitz2017  Kaitz2021  Kaitz2023  Rank stable?
+------------------------------------------------------------
+    11      0.933      0.868      1.094       0.99          MARG
+    20      0.649      0.672      0.689      0.724           YES
+    14      0.625      0.654      0.715      0.732           YES
+    07      0.625      0.567      0.664      0.683           YES
+    02      0.577      0.607      0.517      0.621           YES
+    13      0.577      0.616      0.653      0.683           YES
+    25      0.556      0.573      0.505      0.512           YES
+    04      0.536      0.567      0.554      0.512           YES
+    15      0.536      0.567       0.62      0.569           YES
+    12      0.534      0.531      0.465      0.466           YES
+    24      0.529      0.567       0.62      0.641           YES
+    01      0.515        0.5      0.388      0.427           YES
+    22      0.506      0.567       0.47      0.512           YES
+    05        0.5      0.484      0.443       0.41           YES
+    06        0.5      0.498      0.388      0.455           YES
+
+──────────────────────────────────────────────────────────────────────────────────
+AUDIT 2: VARIABLE CONSISTENCY 2015 vs 2023
+──────────────────────────────────────────────────────────────────────────────────
+All key variables use identical coding across years (verified):
+  ocupinf:  1=informal, 2=formal       — STABLE ✓
+  p507:     1=employer,2=self,3=empl,4=obr,5=unpaid,6=dom — STABLE ✓
+  ocu500:   1=employed                 — STABLE ✓
+  fac500a:  expansion factor (~270 2015, ~306 2023) — STABLE ✓
+  ubigeo:   25 departments both years  — STABLE ✓
+  p524a1:   monthly wage soles          — STABLE ✓ (median 1400→2000)
+  p513t:    weekly hours worked         — STABLE ✓
+
+──────────────────────────────────────────────────────────────────────────────────
+AUDIT 3: EPE LIMA
+──────────────────────────────────────────────────────────────────────────────────
+NOTE: ocu200==1 = employed; p222: 1=formal, 5=most informal (EPE ILO definition)
+Quarter                         N   N_Emp   EmpRate  Form%(p222=1)  MedWage
+----------------------------------------------------------------------
+epe_2015_jun_jul_ago       17,596    8305     0.611          0.401   1200.0
+epe_2016_ene_feb_mar       17,561    8382      0.62          0.403   1250.0
+epe_2016_jun_jul_ago       17,299    8232     0.609          0.406   1299.0
+epe_2017_jun_jul_ago       16,720    7885     0.607          0.438   1299.0
+epe_2018_ene_feb_mar       17,094    7742     0.593          0.384   1299.0
+epe_2018_jun_jul_ago       16,693    7732     0.596          0.394   1299.0
+epe_2021_ene_feb_mar       15,726    5815     0.473          0.342   1100.0
+epe_2022_ene_feb_mar       15,745    7007     0.571          0.354   1299.0
+epe_2022_jun_jul_ago       15,432    6902      0.57          0.353   1300.0
+
+──────────────────────────────────────────────────────────────────────────────────
+AUDIT 4: EPEN DEPARTAMENTOS
+──────────────────────────────────────────────────────────────────────────────────
+NOTE: informal_p: string "1"=informal, "2"=formal (blanks=non-employed, excluded)
+  epen_dep_2022_anual: N=439,523  emp=192,416  formal(unw)=0.317  formal(wt)=0.26  med_formal=2246.5  n_dept=24  wt_sum=25.6M
+epen_dep_2023_anual: ERROR no CSV
+
+──────────────────────────────────────────────────────────────────────────────────
+AUDIT 7: EPEN CIUDADES
+──────────────────────────────────────────────────────────────────────────────────
+Folder                              N    NEmp   Form%  MedWage  NCities
+-----------------------------------------------------------------
+epen_ciu_2022_q1              110,446  47,384    None   1169.0       16
+epen_ciu_2022_q2              109,578  47,606    None   1200.0       22
+epen_ciu_2022_q3              109,049  47,948    None   1250.0       23
+epen_ciu_2022_q4              110,450  49,478    None   1283.0       18
+epen_ciu_2023_q1              108,628  47,036    None   1264.0       20
+epen_ciu_2023_q2              109,096  48,989    None   1299.0       20
+epen_ciu_2023_q3              113,107  50,757    None   1310.0       19
+
+──────────────────────────────────────────────────────────────────────────────────
+AUDIT 6: ENAHO PANEL 978 (2020–2024)
+──────────────────────────────────────────────────────────────────────────────────
+  ERROR: Error tokenizing data. C error: out of memory
+
+──────────────────────────────────────────────────────────────────────────────────
+AUDIT 8: EPE PANEL MATCHING DIAGNOSIS
+──────────────────────────────────────────────────────────────────────────────────
+  epe_2015_jun_jul_ago->epe_2016_ene_feb_mar: n_q1=17,596 n_q2=17,561 matched=0 rate=0.000
+    ID vars: ['hogar', 'conglome', 'codperso', 'vivienda']
+    Sample IDs Q1: ['11_17266_1_99', '11_17266_2_99', '11_17266_3_99']
+    Sample IDs Q2: ['11_19073_3_155', '11_22589_3_169', '11_29362_4_4']
+  epe_2016_ene_feb_mar->epe_2016_jun_jul_ago: n_q1=17,561 n_q2=17,299 matched=2,640 rate=0.150
+    ID vars: ['hogar', 'conglome', 'codperso', 'vivienda']
+    Sample IDs Q1: ['11_19073_3_155', '11_22589_3_169', '11_29362_4_4']
+    Sample IDs Q2: ['11_18045_3_137', '11_24635_4_162', '11_28541_4_151']
+  epe_2016_jun_jul_ago->epe_2017_jun_jul_ago: n_q1=17,299 n_q2=16,720 matched=7,083 rate=0.409
+    ID vars: ['hogar', 'conglome', 'codperso', 'vivienda']
+    Sample IDs Q1: ['11_18045_3_137', '11_24635_4_162', '11_28541_4_151']
+    Sample IDs Q2: ['11_17270_1_11', '11_17270_1_12', '11_17270_1_13']
+  epe_2017_jun_jul_ago->epe_2018_ene_feb_mar: n_q1=16,720 n_q2=17,094 matched=2,610 rate=0.156
+    ID vars: ['hogar', 'conglome', 'codperso', 'vivienda']
+    Sample IDs Q1: ['11_17270_1_11', '11_17270_1_12', '11_17270_1_13']
+    Sample IDs Q2: ['12_17253_1_25', '12_17253_2_25', '12_17253_3_25']
+  epe_2018_ene_feb_mar->epe_2018_jun_jul_ago: n_q1=17,094 n_q2=16,693 matched=2,516 rate=0.147
+    ID vars: ['hogar', 'conglome', 'codperso', 'vivienda']
+    Sample IDs Q1: ['12_17253_1_25', '12_17253_2_25', '12_17253_3_25']
+    Sample IDs Q2: ['11_17299_1_22', '11_17299_2_22', '11_17299_3_22']
+  epe_2018_jun_jul_ago->epe_2021_ene_feb_mar: n_q1=16,693 n_q2=15,726 matched=31 rate=0.002
+    ID vars: ['hogar', 'conglome', 'codperso', 'vivienda']
+    Sample IDs Q1: ['11_17299_1_22', '11_17299_2_22', '11_17299_3_22']
+    Sample IDs Q2: ['11_29139_5_61', '11_26780_3_34', '11_20692_1_89']
+  epe_2021_ene_feb_mar->epe_2022_ene_feb_mar: n_q1=15,726 n_q2=15,745 matched=6,444 rate=0.410
+    ID vars: ['hogar', 'conglome', 'codperso', 'vivienda']
+    Sample IDs Q1: ['11_29139_5_61', '11_26780_3_34', '11_20692_1_89']
+    Sample IDs Q2: ['11_26988_1_84', '11_26988_2_84', '11_26988_3_84']
+  epe_2022_ene_feb_mar->epe_2022_jun_jul_ago: n_q1=15,745 n_q2=15,432 matched=0 rate=0.000
+    ID vars: ['hogar', 'conglome', 'codperso', 'vivienda']
+    Sample IDs Q1: ['11_26988_1_84', '11_26988_2_84', '11_26988_3_84']
+    Sample IDs Q2: ['11_90945_5_63', '11_90414_3_47', '11_90324_2_47']
+
+──────────────────────────────────────────────────────────────────────────────────
+AUDIT 9: CROSS-DATASET CONSISTENCY (2022)
+──────────────────────────────────────────────────────────────────────────────────
+Formality definitions:
+  ENAHO CS:   ocupinf==2  (INEI comprehensive: social security OR contract)
+  EPEN DEP:   informal_p=="2"  (same INEI comprehensive definition)
+  EPEN CIU:   varies (check formality_var in results above)
+  EPE Lima:   p222==1  (formal = registered with health insurance)
+
+  2022 comparison (MW=S/1,025):
+  Metric                        ENAHO_CS     EPEN_DEP     EPEN_CIU     EPE_LIMA
+  --------------------------------------------------------------------
+  N observations                    9720      439523      110446       15745
+  N employed                         N/A      192416       47384       15745
+  Formality rate                   0.603        0.26         N/A       0.354
+  Median formal wage              1700.0      2246.5      1169.0      1299.0
+  Wt sum (millions)                  N/A        25.6         N/A         N/A
+
+Saved JSON: D:\Nexus\nexus\exports\data\mw_data_audit_complete.json  (68 KB)
+
+================================================================================
+AUDIT 6 (CORRECTED): ENAHO PANEL 978 (2020-2024) — WIDE FORMAT
+================================================================================
+Structure: WIDE — one row per individual (348,505), year-suffixed columns
+Key vars: ocu500_YY, p507_YY, ocupinf_YY, p524a1_YY (YY=20,21,22,23,24)
+ID vars: numper, conglome, vivienda
+
+Obs per year:
+  2020: 91,315 obs  (56,615 employed)
+  2021: 86,806 obs  (59,935 employed)  <- Event C pre-period
+  2022: 87,661 obs  (61,181 employed)
+  2023: 86,654 obs  (59,447 employed)  <- Event C post-period
+  2024: 85,992 obs  (58,579 employed)
+
+Panel retention (rotating panel, ~1/4 replaced per year):
+  2020->2021: n=91,315 -> 86,806 | matched=22,378 | rate=0.245
+  2021->2022: n=86,806 -> 87,661 | matched=22,483 | rate=0.259
+  2022->2023: n=87,661 -> 86,654 | matched=22,045 | rate=0.251
+  2023->2024: n=86,654 -> 85,992 | matched=20,810 | rate=0.240
+  2021->2023: n=86,806 -> 86,654 | matched=15,048 | rate=0.173
+
+Panel feasibility for Event C (2021->2023):
+  Near-MW formal-dep in 2021 [790,1023]: 1,143
+  Of those also in 2023: 192
+  All formal-dep 2021 also in 2023: 1,518 of 9,237
+
+CONCLUSION: Panel NOT suitable for Event C analysis.
+  - Only 192 near-MW workers tracked. Too small.
+  - Selection bias: panel median wage 1,800 vs full CS 1,500 (+20%).
+    Panel oversamples higher-wage, more stable formal workers.
+  - Use ENAHO cross-sections for all bunching analysis.
+
+================================================================================
+AUDIT 4 (CORRECTED): EPEN DEPARTAMENTOS 2023
+================================================================================
+  epen_dep_2023_anual: N=449,202  emp=196,595  formal(unwt)=0.314
+    formal(wt)=0.289  med_formal=2,400  n_dept=24  wt_sum=25.9M
+
+================================================================================
+AUDIT 8 (COMPLETE): EPE PANEL MATCHING
+================================================================================
+EPE is a ROTATING PANEL with 4 rotations per year.
+Expected match rate between adjacent WAVES = ~15%.
+Expected match rate ONE YEAR APART (same wave, different year) = ~41%.
+
+Key finding: 2022 Q1 -> Q2 rate = 0% (ID format change: conglome codes changed)
+This explains why Event C EPE matching failed.
+EPE cannot be used as a true panel for Event C.

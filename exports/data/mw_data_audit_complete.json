@@ -1,0 +1,3641 @@
+{
+  "sample_counts": [
+    {
+      "year": 2015,
+      "total": 88084,
+      "employed": 61498,
+      "dependent": 24329,
+      "formal_dep": 10244,
+      "informal_dep": 14085,
+      "self_emp": 24272,
+      "wage_pos": 10134,
+      "wt_sum_emp": 16267066.0
+    },
+    {
+      "year": 2016,
+      "total": 97422,
+      "employed": 67827,
+      "dependent": 27322,
+      "formal_dep": 11761,
+      "informal_dep": 15561,
+      "self_emp": 27220,
+      "wage_pos": 11667,
+      "wt_sum_emp": 16501262.0
+    },
+    {
+      "year": 2017,
+      "total": 93185,
+      "employed": 64915,
+      "dependent": 25723,
+      "formal_dep": 11139,
+      "informal_dep": 14584,
+      "self_emp": 26737,
+      "wage_pos": 11026,
+      "wt_sum_emp": 16759554.0
+    },
+    {
+      "year": 2018,
+      "total": 99646,
+      "employed": 70036,
+      "dependent": 27305,
+      "formal_dep": 11994,
+      "informal_dep": 15311,
+      "self_emp": 29228,
+      "wage_pos": 11804,
+      "wt_sum_emp": 16997968.0
+    },
+    {
+      "year": 2019,
+      "total": 92094,
+      "employed": 64954,
+      "dependent": 25433,
+      "formal_dep": 11173,
+      "informal_dep": 14260,
+      "self_emp": 26806,
+      "wage_pos": 10991,
+      "wt_sum_emp": 17317576.0
+    },
+    {
+      "year": 2021,
+      "total": 86806,
+      "employed": 59935,
+      "dependent": 23096,
+      "formal_dep": 9237,
+      "informal_dep": 13859,
+      "self_emp": 25006,
+      "wage_pos": 9123,
+      "wt_sum_emp": 17312276.0
+    },
+    {
+      "year": 2022,
+      "total": 87661,
+      "employed": 61181,
+      "dependent": 24739,
+      "formal_dep": 9881,
+      "informal_dep": 14858,
+      "self_emp": 25254,
+      "wage_pos": 9720,
+      "wt_sum_emp": 18000016.0
+    },
+    {
+      "year": 2023,
+      "total": 86654,
+      "employed": 59447,
+      "dependent": 24382,
+      "formal_dep": 10188,
+      "informal_dep": 14194,
+      "self_emp": 24825,
+      "wage_pos": 9996,
+      "wt_sum_emp": 18021418.0
+    }
+  ],
+  "wage_dist": [
+    {
+      "year": 2015,
+      "mw": 750,
+      "n": 10134,
+      "mean": 1769.1,
+      "median": 1373.5,
+      "p10": 600.0,
+      "p25": 950.0,
+      "p75": 2000.0,
+      "p90": 3200.0,
+      "p99": 8000.0,
+      "at_mw_pct": 5.07,
+      "below_mw_pct": 11.27,
+      "below_85mw_pct": 10.33,
+      "gini": 0.383,
+      "kaitz_median": 0.546
+    },
+    {
+      "year": 2016,
+      "mw": 850,
+      "n": 11667,
+      "mean": 1927.0,
+      "median": 1500.0,
+      "p10": 750.0,
+      "p25": 1000.0,
+      "p75": 2200.0,
+      "p90": 3500.0,
+      "p99": 10000.0,
+      "at_mw_pct": 5.28,
+      "below_mw_pct": 13.87,
+      "below_85mw_pct": 9.73,
+      "gini": 0.3824,
+      "kaitz_median": 0.567
+    },
+    {
+      "year": 2017,
+      "mw": 850,
+      "n": 11026,
+      "mean": 1942.3,
+      "median": 1500.0,
+      "p10": 840.0,
+      "p25": 1000.0,
+      "p75": 2300.0,
+      "p90": 3500.0,
+      "p99": 8000.0,
+      "at_mw_pct": 6.9,
+      "below_mw_pct": 10.05,
+      "below_85mw_pct": 8.55,
+      "gini": 0.3669,
+      "kaitz_median": 0.567
+    },
+    {
+      "year": 2018,
+      "mw": 930,
+      "n": 11804,
+      "mean": 1991.8,
+      "median": 1580.0,
+      "p10": 825.9,
+      "p25": 1030.0,
+      "p75": 2400.0,
+      "p90": 3500.0,
+      "p99": 8200.0,
+      "at_mw_pct": 6.18,
+      "below_mw_pct": 14.57,
+      "below_85mw_pct": 9.18,
+      "gini": 0.3593,
+      "kaitz_median": 0.589
+    },
+    {
+      "year": 2019,
+      "mw": 930,
+      "n": 10991,
+      "mean": 2083.7,
+      "median": 1609.0,
+      "p10": 850.0,
+      "p25": 1100.0,
+      "p75": 2500.0,
+      "p90": 3652.3,
+      "p99": 9221.7,
+      "at_mw_pct": 7.63,
+      "below_mw_pct": 11.42,
+      "below_85mw_pct": 9.34,
+      "gini": 0.3667,
+      "kaitz_median": 0.578
+    },
+    {
+      "year": 2021,
+      "mw": 930,
+      "n": 9123,
+      "mean": 2024.4,
+      "median": 1500.0,
+      "p10": 840.4,
+      "p25": 1000.0,
+      "p75": 2500.0,
+      "p90": 3621.6,
+      "p99": 8500.0,
+      "at_mw_pct": 10.26,
+      "below_mw_pct": 11.2,
+      "below_85mw_pct": 9.42,
+      "gini": 0.364,
+      "kaitz_median": 0.62
+    },
+    {
+      "year": 2022,
+      "mw": 1025,
+      "n": 9720,
+      "mean": 2136.8,
+      "median": 1700.0,
+      "p10": 900.0,
+      "p25": 1130.0,
+      "p75": 2600.0,
+      "p90": 3800.0,
+      "p99": 8500.0,
+      "at_mw_pct": 6.06,
+      "below_mw_pct": 16.93,
+      "below_85mw_pct": 9.53,
+      "gini": 0.3562,
+      "kaitz_median": 0.603
+    },
+    {
+      "year": 2023,
+      "mw": 1025,
+      "n": 9996,
+      "mean": 2199.8,
+      "median": 1800.0,
+      "p10": 930.0,
+      "p25": 1174.3,
+      "p75": 2800.0,
+      "p90": 3985.4,
+      "p99": 8500.0,
+      "at_mw_pct": 10.07,
+      "below_mw_pct": 12.27,
+      "below_85mw_pct": 9.38,
+      "gini": 0.3542,
+      "kaitz_median": 0.569
+    }
+  ],
+  "formality": [
+    {
+      "year": 2015,
+      "overall": 0.267,
+      "agri_mining": 0.215,
+      "manufacturing": 0.449,
+      "construction": 0.233,
+      "commerce": 0.386,
+      "transport": 0.273,
+      "finance_prof": 0.632,
+      "public_admin": 0.673,
+      "edu_health": 0.757,
+      "micro": 0.08,
+      "small": 0.434,
+      "med_plus": 0.76
+    },
+    {
+      "year": 2016,
+      "overall": 0.279,
+      "agri_mining": 0.219,
+      "manufacturing": 0.448,
+      "construction": 0.211,
+      "commerce": 0.372,
+      "transport": 0.277,
+      "finance_prof": 0.64,
+      "public_admin": 0.663,
+      "edu_health": 0.76,
+      "micro": 0.081,
+      "small": 0.424,
+      "med_plus": 0.766
+    },
+    {
+      "year": 2017,
+      "overall": 0.274,
+      "agri_mining": 0.217,
+      "manufacturing": 0.449,
+      "construction": 0.198,
+      "commerce": 0.38,
+      "transport": 0.283,
+      "finance_prof": 0.618,
+      "public_admin": 0.715,
+      "edu_health": 0.757,
+      "micro": 0.084,
+      "small": 0.447,
+      "med_plus": 0.766
+    },
+    {
+      "year": 2018,
+      "overall": 0.276,
+      "agri_mining": 0.226,
+      "manufacturing": 0.492,
+      "construction": 0.22,
+      "commerce": 0.381,
+      "transport": 0.275,
+      "finance_prof": 0.671,
+      "public_admin": 0.718,
+      "edu_health": 0.79,
+      "micro": 0.093,
+      "small": 0.456,
+      "med_plus": 0.805
+    },
+    {
+      "year": 2019,
+      "overall": 0.273,
+      "agri_mining": 0.238,
+      "manufacturing": 0.467,
+      "construction": 0.196,
+      "commerce": 0.404,
+      "transport": 0.293,
+      "finance_prof": 0.642,
+      "public_admin": 0.7,
+      "edu_health": 0.766,
+      "micro": 0.091,
+      "small": 0.442,
+      "med_plus": 0.797
+    },
+    {
+      "year": 2021,
+      "overall": 0.232,
+      "agri_mining": 0.194,
+      "manufacturing": 0.451,
+      "construction": 0.127,
+      "commerce": 0.299,
+      "transport": 0.274,
+      "finance_prof": 0.637,
+      "public_admin": 0.644,
+      "edu_health": 0.825,
+      "micro": 0.076,
+      "small": 0.446,
+      "med_plus": 0.782
+    },
+    {
+      "year": 2022,
+      "overall": 0.243,
+      "agri_mining": 0.239,
+      "manufacturing": 0.422,
+      "construction": 0.123,
+      "commerce": 0.32,
+      "transport": 0.26,
+      "finance_prof": 0.674,
+      "public_admin": 0.643,
+      "edu_health": 0.778,
+      "micro": 0.075,
+      "small": 0.456,
+      "med_plus": 0.785
+    },
+    {
+      "year": 2023,
+      "overall": 0.261,
+      "agri_mining": 0.255,
+      "manufacturing": 0.46,
+      "construction": 0.176,
+      "commerce": 0.357,
+      "transport": 0.287,
+      "finance_prof": 0.672,
+      "public_admin": 0.629,
+      "edu_health": 0.772,
+      "micro": 0.092,
+      "small": 0.472,
+      "med_plus": 0.796
+    }
+  ],
+  "emp_composition": [
+    {
+      "year": 2015,
+      "employer": 0.0412,
+      "self_emp": 0.3478,
+      "empleado": 0.2453,
+      "obrero": 0.229,
+      "unpaid": 0.1096,
+      "domestic": 0.0252,
+      "dep_total": 0.4743
+    },
+    {
+      "year": 2016,
+      "employer": 0.0429,
+      "self_emp": 0.3563,
+      "empleado": 0.248,
+      "obrero": 0.2223,
+      "unpaid": 0.1042,
+      "domestic": 0.0245,
+      "dep_total": 0.4703
+    },
+    {
+      "year": 2017,
+      "employer": 0.0393,
+      "self_emp": 0.3673,
+      "empleado": 0.2497,
+      "obrero": 0.2165,
+      "unpaid": 0.1004,
+      "domestic": 0.0244,
+      "dep_total": 0.4662
+    },
+    {
+      "year": 2018,
+      "employer": 0.04,
+      "self_emp": 0.3724,
+      "empleado": 0.2523,
+      "obrero": 0.2134,
+      "unpaid": 0.0973,
+      "domestic": 0.023,
+      "dep_total": 0.4657
+    },
+    {
+      "year": 2019,
+      "employer": 0.0393,
+      "self_emp": 0.3684,
+      "empleado": 0.249,
+      "obrero": 0.216,
+      "unpaid": 0.1008,
+      "domestic": 0.0247,
+      "dep_total": 0.465
+    },
+    {
+      "year": 2021,
+      "employer": 0.0325,
+      "self_emp": 0.3804,
+      "empleado": 0.2131,
+      "obrero": 0.2419,
+      "unpaid": 0.1094,
+      "domestic": 0.0201,
+      "dep_total": 0.455
+    },
+    {
+      "year": 2022,
+      "employer": 0.0332,
+      "self_emp": 0.3747,
+      "empleado": 0.2323,
+      "obrero": 0.2415,
+      "unpaid": 0.093,
+      "domestic": 0.0231,
+      "dep_total": 0.4738
+    },
+    {
+      "year": 2023,
+      "employer": 0.0345,
+      "self_emp": 0.3747,
+      "empleado": 0.247,
+      "obrero": 0.2374,
+      "unpaid": 0.0825,
+      "domestic": 0.0216,
+      "dep_total": 0.4844
+    }
+  ],
+  "hours": [
+    {
+      "year": 2015,
+      "n": 9530,
+      "hours_var": "p513t",
+      "mean_hrs": 46.4,
+      "median_hrs": 46.0,
+      "p10_hrs": 30.0,
+      "p90_hrs": 63.0,
+      "part_time_pct": 14.09,
+      "overtime_pct": 28.17
+    },
+    {
+      "year": 2016,
+      "n": 10966,
+      "hours_var": "p513t",
+      "mean_hrs": 46.2,
+      "median_hrs": 46.0,
+      "p10_hrs": 30.0,
+      "p90_hrs": 63.0,
+      "part_time_pct": 13.98,
+      "overtime_pct": 27.59
+    },
+    {
+      "year": 2017,
+      "n": 10325,
+      "hours_var": "p513t",
+      "mean_hrs": 46.4,
+      "median_hrs": 47.0,
+      "p10_hrs": 30.0,
+      "p90_hrs": 66.0,
+      "part_time_pct": 13.8,
+      "overtime_pct": 27.46
+    },
+    {
+      "year": 2018,
+      "n": 11312,
+      "hours_var": "p513t",
+      "mean_hrs": 46.3,
+      "median_hrs": 46.0,
+      "p10_hrs": 30.0,
+      "p90_hrs": 62.0,
+      "part_time_pct": 13.77,
+      "overtime_pct": 26.28
+    },
+    {
+      "year": 2019,
+      "n": 10444,
+      "hours_var": "p513t",
+      "mean_hrs": 46.2,
+      "median_hrs": 48.0,
+      "p10_hrs": 30.0,
+      "p90_hrs": 61.0,
+      "part_time_pct": 13.89,
+      "overtime_pct": 25.52
+    },
+    {
+      "year": 2021,
+      "n": 8517,
+      "hours_var": "p513t",
+      "mean_hrs": 46.8,
+      "median_hrs": 48.0,
+      "p10_hrs": 30.0,
+      "p90_hrs": 66.0,
+      "part_time_pct": 14.06,
+      "overtime_pct": 26.8
+    },
+    {
+      "year": 2022,
+      "n": 9268,
+      "hours_var": "p513t",
+      "mean_hrs": 46.6,
+      "median_hrs": 48.0,
+      "p10_hrs": 30.0,
+      "p90_hrs": 64.0,
+      "part_time_pct": 12.8,
+      "overtime_pct": 25.14
+    },
+    {
+      "year": 2023,
+      "n": 9630,
+      "hours_var": "p513t",
+      "mean_hrs": 46.5,
+      "median_hrs": 48.0,
+      "p10_hrs": 30.0,
+      "p90_hrs": 63.0,
+      "part_time_pct": 13.59,
+      "overtime_pct": 25.94
+    }
+  ],
+  "dept_kaitz": {
+    "2015": [
+      {
+        "dept": "11",
+        "n": 704,
+        "median_wage": 804.2,
+        "kaitz": 0.933
+      },
+      {
+        "dept": "20",
+        "n": 454,
+        "median_wage": 1155.2,
+        "kaitz": 0.649
+      },
+      {
+        "dept": "14",
+        "n": 471,
+        "median_wage": 1200.0,
+        "kaitz": 0.625
+      },
+      {
+        "dept": "07",
+        "n": 703,
+        "median_wage": 1200.0,
+        "kaitz": 0.625
+      },
+      {
+        "dept": "02",
+        "n": 326,
+        "median_wage": 1300.0,
+        "kaitz": 0.577
+      },
+      {
+        "dept": "13",
+        "n": 332,
+        "median_wage": 1300.0,
+        "kaitz": 0.577
+      },
+      {
+        "dept": "25",
+        "n": 328,
+        "median_wage": 1348.9,
+        "kaitz": 0.556
+      },
+      {
+        "dept": "04",
+        "n": 570,
+        "median_wage": 1400.0,
+        "kaitz": 0.536
+      },
+      {
+        "dept": "15",
+        "n": 2442,
+        "median_wage": 1400.0,
+        "kaitz": 0.536
+      },
+      {
+        "dept": "12",
+        "n": 333,
+        "median_wage": 1404.8,
+        "kaitz": 0.534
+      },
+      {
+        "dept": "24",
+        "n": 270,
+        "median_wage": 1419.0,
+        "kaitz": 0.529
+      },
+      {
+        "dept": "01",
+        "n": 200,
+        "median_wage": 1456.5,
+        "kaitz": 0.515
+      },
+      {
+        "dept": "22",
+        "n": 310,
+        "median_wage": 1483.0,
+        "kaitz": 0.506
+      },
+      {
+        "dept": "05",
+        "n": 160,
+        "median_wage": 1500.0,
+        "kaitz": 0.5
+      },
+      {
+        "dept": "06",
+        "n": 172,
+        "median_wage": 1500.0,
+        "kaitz": 0.5
+      },
+      {
+        "dept": "08",
+        "n": 227,
+        "median_wage": 1500.0,
+        "kaitz": 0.5
+      },
+      {
+        "dept": "09",
+        "n": 152,
+        "median_wage": 1500.0,
+        "kaitz": 0.5
+      },
+      {
+        "dept": "16",
+        "n": 393,
+        "median_wage": 1500.0,
+        "kaitz": 0.5
+      },
+      {
+        "dept": "17",
+        "n": 131,
+        "median_wage": 1500.0,
+        "kaitz": 0.5
+      },
+      {
+        "dept": "19",
+        "n": 254,
+        "median_wage": 1500.0,
+        "kaitz": 0.5
+      },
+      {
+        "dept": "03",
+        "n": 116,
+        "median_wage": 1565.0,
+        "kaitz": 0.479
+      },
+      {
+        "dept": "23",
+        "n": 411,
+        "median_wage": 1595.5,
+        "kaitz": 0.47
+      },
+      {
+        "dept": "10",
+        "n": 202,
+        "median_wage": 1600.0,
+        "kaitz": 0.469
+      },
+      {
+        "dept": "21",
+        "n": 175,
+        "median_wage": 1636.8,
+        "kaitz": 0.458
+      },
+      {
+        "dept": "18",
+        "n": 408,
+        "median_wage": 1702.7,
+        "kaitz": 0.44
+      }
+    ],
+    "2016": [
+      {
+        "dept": "11",
+        "n": 888,
+        "median_wage": 850.0,
+        "kaitz": 1.0
+      },
+      {
+        "dept": "20",
+        "n": 532,
+        "median_wage": 1200.0,
+        "kaitz": 0.708
+      },
+      {
+        "dept": "13",
+        "n": 520,
+        "median_wage": 1300.0,
+        "kaitz": 0.654
+      },
+      {
+        "dept": "14",
+        "n": 556,
+        "median_wage": 1366.9,
+        "kaitz": 0.622
+      },
+      {
+        "dept": "07",
+        "n": 697,
+        "median_wage": 1400.0,
+        "kaitz": 0.607
+      },
+      {
+        "dept": "02",
+        "n": 435,
+        "median_wage": 1450.0,
+        "kaitz": 0.586
+      },
+      {
+        "dept": "04",
+        "n": 681,
+        "median_wage": 1500.0,
+        "kaitz": 0.567
+      },
+      {
+        "dept": "15",
+        "n": 2643,
+        "median_wage": 1500.0,
+        "kaitz": 0.567
+      },
+      {
+        "dept": "22",
+        "n": 305,
+        "median_wage": 1500.0,
+        "kaitz": 0.567
+      },
+      {
+        "dept": "24",
+        "n": 272,
+        "median_wage": 1500.0,
+        "kaitz": 0.567
+      },
+      {
+        "dept": "25",
+        "n": 329,
+        "median_wage": 1500.0,
+        "kaitz": 0.567
+      },
+      {
+        "dept": "03",
+        "n": 115,
+        "median_wage": 1500.0,
+        "kaitz": 0.567
+      },
+      {
+        "dept": "21",
+        "n": 212,
+        "median_wage": 1509.4,
+        "kaitz": 0.563
+      },
+      {
+        "dept": "23",
+        "n": 600,
+        "median_wage": 1557.6,
+        "kaitz": 0.546
+      },
+      {
+        "dept": "12",
+        "n": 347,
+        "median_wage": 1574.8,
+        "kaitz": 0.54
+      },
+      {
+        "dept": "06",
+        "n": 309,
+        "median_wage": 1588.9,
+        "kaitz": 0.535
+      },
+      {
+        "dept": "16",
+        "n": 358,
+        "median_wage": 1600.0,
+        "kaitz": 0.531
+      },
+      {
+        "dept": "05",
+        "n": 167,
+        "median_wage": 1600.0,
+        "kaitz": 0.531
+      },
+      {
+        "dept": "19",
+        "n": 284,
+        "median_wage": 1612.0,
+        "kaitz": 0.527
+      },
+      {
+        "dept": "01",
+        "n": 228,
+        "median_wage": 1654.8,
+        "kaitz": 0.514
+      },
+      {
+        "dept": "10",
+        "n": 229,
+        "median_wage": 1670.0,
+        "kaitz": 0.509
+      },
+      {
+        "dept": "08",
+        "n": 240,
+        "median_wage": 1700.0,
+        "kaitz": 0.5
+      },
+      {
+        "dept": "09",
+        "n": 148,
+        "median_wage": 1700.0,
+        "kaitz": 0.5
+      },
+      {
+        "dept": "17",
+        "n": 132,
+        "median_wage": 1700.0,
+        "kaitz": 0.5
+      },
+      {
+        "dept": "18",
+        "n": 534,
+        "median_wage": 1800.0,
+        "kaitz": 0.472
+      }
+    ],
+    "2017": [
+      {
+        "dept": "11",
+        "n": 763,
+        "median_wage": 979.3,
+        "kaitz": 0.868
+      },
+      {
+        "dept": "20",
+        "n": 606,
+        "median_wage": 1264.0,
+        "kaitz": 0.672
+      },
+      {
+        "dept": "14",
+        "n": 565,
+        "median_wage": 1300.0,
+        "kaitz": 0.654
+      },
+      {
+        "dept": "13",
+        "n": 554,
+        "median_wage": 1380.5,
+        "kaitz": 0.616
+      },
+      {
+        "dept": "02",
+        "n": 383,
+        "median_wage": 1400.0,
+        "kaitz": 0.607
+      },
+      {
+        "dept": "25",
+        "n": 304,
+        "median_wage": 1482.5,
+        "kaitz": 0.573
+      },
+      {
+        "dept": "04",
+        "n": 692,
+        "median_wage": 1500.0,
+        "kaitz": 0.567
+      },
+      {
+        "dept": "07",
+        "n": 656,
+        "median_wage": 1500.0,
+        "kaitz": 0.567
+      },
+      {
+        "dept": "15",
+        "n": 2461,
+        "median_wage": 1500.0,
+        "kaitz": 0.567
+      },
+      {
+        "dept": "22",
+        "n": 332,
+        "median_wage": 1500.0,
+        "kaitz": 0.567
+      },
+      {
+        "dept": "24",
+        "n": 310,
+        "median_wage": 1500.0,
+        "kaitz": 0.567
+      },
+      {
+        "dept": "21",
+        "n": 146,
+        "median_wage": 1532.3,
+        "kaitz": 0.555
+      },
+      {
+        "dept": "12",
+        "n": 332,
+        "median_wage": 1600.0,
+        "kaitz": 0.531
+      },
+      {
+        "dept": "09",
+        "n": 131,
+        "median_wage": 1658.8,
+        "kaitz": 0.512
+      },
+      {
+        "dept": "01",
+        "n": 211,
+        "median_wage": 1700.0,
+        "kaitz": 0.5
+      },
+      {
+        "dept": "17",
+        "n": 135,
+        "median_wage": 1700.0,
+        "kaitz": 0.5
+      },
+      {
+        "dept": "19",
+        "n": 269,
+        "median_wage": 1700.0,
+        "kaitz": 0.5
+      },
+      {
+        "dept": "23",
+        "n": 487,
+        "median_wage": 1700.0,
+        "kaitz": 0.5
+      },
+      {
+        "dept": "16",
+        "n": 455,
+        "median_wage": 1703.8,
+        "kaitz": 0.499
+      },
+      {
+        "dept": "06",
+        "n": 198,
+        "median_wage": 1708.0,
+        "kaitz": 0.498
+      },
+      {
+        "dept": "08",
+        "n": 237,
+        "median_wage": 1719.6,
+        "kaitz": 0.494
+      },
+      {
+        "dept": "05",
+        "n": 149,
+        "median_wage": 1754.5,
+        "kaitz": 0.484
+      },
+      {
+        "dept": "03",
+        "n": 131,
+        "median_wage": 1780.7,
+        "kaitz": 0.477
+      },
+      {
+        "dept": "10",
+        "n": 222,
+        "median_wage": 1800.0,
+        "kaitz": 0.472
+      },
+      {
+        "dept": "18",
+        "n": 410,
+        "median_wage": 2000.0,
+        "kaitz": 0.425
+      }
+    ],
+    "2018": [
+      {
+        "dept": "11",
+        "n": 788,
+        "median_wage": 1000.0,
+        "kaitz": 0.93
+      },
+      {
+        "dept": "20",
+        "n": 600,
+        "median_wage": 1210.0,
+        "kaitz": 0.769
+      },
+      {
+        "dept": "13",
+        "n": 573,
+        "median_wage": 1356.0,
+        "kaitz": 0.686
+      },
+      {
+        "dept": "07",
+        "n": 667,
+        "median_wage": 1400.0,
+        "kaitz": 0.664
+      },
+      {
+        "dept": "14",
+        "n": 558,
+        "median_wage": 1400.0,
+        "kaitz": 0.664
+      },
+      {
+        "dept": "02",
+        "n": 513,
+        "median_wage": 1500.0,
+        "kaitz": 0.62
+      },
+      {
+        "dept": "15",
+        "n": 2538,
+        "median_wage": 1592.2,
+        "kaitz": 0.584
+      },
+      {
+        "dept": "04",
+        "n": 931,
+        "median_wage": 1600.0,
+        "kaitz": 0.581
+      },
+      {
+        "dept": "23",
+        "n": 518,
+        "median_wage": 1600.0,
+        "kaitz": 0.581
+      },
+      {
+        "dept": "19",
+        "n": 298,
+        "median_wage": 1700.0,
+        "kaitz": 0.547
+      },
+      {
+        "dept": "25",
+        "n": 331,
+        "median_wage": 1700.0,
+        "kaitz": 0.547
+      },
+      {
+        "dept": "12",
+        "n": 334,
+        "median_wage": 1800.0,
+        "kaitz": 0.517
+      },
+      {
+        "dept": "24",
+        "n": 289,
+        "median_wage": 1800.0,
+        "kaitz": 0.517
+      },
+      {
+        "dept": "22",
+        "n": 317,
+        "median_wage": 1816.3,
+        "kaitz": 0.512
+      },
+      {
+        "dept": "09",
+        "n": 121,
+        "median_wage": 1843.7,
+        "kaitz": 0.504
+      },
+      {
+        "dept": "21",
+        "n": 287,
+        "median_wage": 1868.1,
+        "kaitz": 0.498
+      },
+      {
+        "dept": "17",
+        "n": 252,
+        "median_wage": 1900.0,
+        "kaitz": 0.489
+      },
+      {
+        "dept": "01",
+        "n": 218,
+        "median_wage": 2000.0,
+        "kaitz": 0.465
+      },
+      {
+        "dept": "03",
+        "n": 133,
+        "median_wage": 2000.0,
+        "kaitz": 0.465
+      },
+      {
+        "dept": "05",
+        "n": 170,
+        "median_wage": 2000.0,
+        "kaitz": 0.465
+      },
+      {
+        "dept": "06",
+        "n": 205,
+        "median_wage": 2000.0,
+        "kaitz": 0.465
+      },
+      {
+        "dept": "08",
+        "n": 271,
+        "median_wage": 2000.0,
+        "kaitz": 0.465
+      },
+      {
+        "dept": "10",
+        "n": 206,
+        "median_wage": 2000.0,
+        "kaitz": 0.465
+      },
+      {
+        "dept": "16",
+        "n": 421,
+        "median_wage": 2000.0,
+        "kaitz": 0.465
+      },
+      {
+        "dept": "18",
+        "n": 455,
+        "median_wage": 2000.0,
+        "kaitz": 0.465
+      }
+    ],
+    "2019": [
+      {
+        "dept": "11",
+        "n": 848,
+        "median_wage": 973.9,
+        "kaitz": 0.955
+      },
+      {
+        "dept": "20",
+        "n": 600,
+        "median_wage": 1300.0,
+        "kaitz": 0.715
+      },
+      {
+        "dept": "07",
+        "n": 633,
+        "median_wage": 1400.0,
+        "kaitz": 0.664
+      },
+      {
+        "dept": "13",
+        "n": 548,
+        "median_wage": 1430.2,
+        "kaitz": 0.65
+      },
+      {
+        "dept": "14",
+        "n": 526,
+        "median_wage": 1489.4,
+        "kaitz": 0.624
+      },
+      {
+        "dept": "02",
+        "n": 423,
+        "median_wage": 1500.0,
+        "kaitz": 0.62
+      },
+      {
+        "dept": "23",
+        "n": 501,
+        "median_wage": 1500.0,
+        "kaitz": 0.62
+      },
+      {
+        "dept": "15",
+        "n": 2407,
+        "median_wage": 1600.0,
+        "kaitz": 0.581
+      },
+      {
+        "dept": "25",
+        "n": 305,
+        "median_wage": 1624.6,
+        "kaitz": 0.572
+      },
+      {
+        "dept": "24",
+        "n": 268,
+        "median_wage": 1700.0,
+        "kaitz": 0.547
+      },
+      {
+        "dept": "12",
+        "n": 366,
+        "median_wage": 1800.0,
+        "kaitz": 0.517
+      },
+      {
+        "dept": "21",
+        "n": 206,
+        "median_wage": 1857.5,
+        "kaitz": 0.501
+      },
+      {
+        "dept": "04",
+        "n": 662,
+        "median_wage": 1875.9,
+        "kaitz": 0.496
+      },
+      {
+        "dept": "19",
+        "n": 257,
+        "median_wage": 1910.5,
+        "kaitz": 0.487
+      },
+      {
+        "dept": "09",
+        "n": 127,
+        "median_wage": 1936.4,
+        "kaitz": 0.48
+      },
+      {
+        "dept": "05",
+        "n": 144,
+        "median_wage": 2000.0,
+        "kaitz": 0.465
+      },
+      {
+        "dept": "08",
+        "n": 259,
+        "median_wage": 2000.0,
+        "kaitz": 0.465
+      },
+      {
+        "dept": "16",
+        "n": 444,
+        "median_wage": 2000.0,
+        "kaitz": 0.465
+      },
+      {
+        "dept": "17",
+        "n": 150,
+        "median_wage": 2000.0,
+        "kaitz": 0.465
+      },
+      {
+        "dept": "22",
+        "n": 329,
+        "median_wage": 2000.0,
+        "kaitz": 0.465
+      },
+      {
+        "dept": "01",
+        "n": 193,
+        "median_wage": 2011.8,
+        "kaitz": 0.462
+      },
+      {
+        "dept": "10",
+        "n": 183,
+        "median_wage": 2036.6,
+        "kaitz": 0.457
+      },
+      {
+        "dept": "03",
+        "n": 140,
+        "median_wage": 2100.0,
+        "kaitz": 0.443
+      },
+      {
+        "dept": "06",
+        "n": 246,
+        "median_wage": 2100.0,
+        "kaitz": 0.443
+      },
+      {
+        "dept": "18",
+        "n": 408,
+        "median_wage": 2200.0,
+        "kaitz": 0.423
+      }
+    ],
+    "2021": [
+      {
+        "dept": "11",
+        "n": 639,
+        "median_wage": 850.0,
+        "kaitz": 1.094
+      },
+      {
+        "dept": "14",
+        "n": 494,
+        "median_wage": 1300.0,
+        "kaitz": 0.715
+      },
+      {
+        "dept": "20",
+        "n": 510,
+        "median_wage": 1350.0,
+        "kaitz": 0.689
+      },
+      {
+        "dept": "07",
+        "n": 468,
+        "median_wage": 1400.0,
+        "kaitz": 0.664
+      },
+      {
+        "dept": "13",
+        "n": 521,
+        "median_wage": 1424.0,
+        "kaitz": 0.653
+      },
+      {
+        "dept": "15",
+        "n": 1867,
+        "median_wage": 1500.0,
+        "kaitz": 0.62
+      },
+      {
+        "dept": "24",
+        "n": 247,
+        "median_wage": 1500.0,
+        "kaitz": 0.62
+      },
+      {
+        "dept": "04",
+        "n": 538,
+        "median_wage": 1680.0,
+        "kaitz": 0.554
+      },
+      {
+        "dept": "19",
+        "n": 204,
+        "median_wage": 1700.0,
+        "kaitz": 0.547
+      },
+      {
+        "dept": "02",
+        "n": 335,
+        "median_wage": 1800.0,
+        "kaitz": 0.517
+      },
+      {
+        "dept": "23",
+        "n": 334,
+        "median_wage": 1800.0,
+        "kaitz": 0.517
+      },
+      {
+        "dept": "25",
+        "n": 259,
+        "median_wage": 1842.0,
+        "kaitz": 0.505
+      },
+      {
+        "dept": "22",
+        "n": 259,
+        "median_wage": 1979.2,
+        "kaitz": 0.47
+      },
+      {
+        "dept": "08",
+        "n": 224,
+        "median_wage": 2000.0,
+        "kaitz": 0.465
+      },
+      {
+        "dept": "09",
+        "n": 122,
+        "median_wage": 2000.0,
+        "kaitz": 0.465
+      },
+      {
+        "dept": "12",
+        "n": 308,
+        "median_wage": 2000.0,
+        "kaitz": 0.465
+      },
+      {
+        "dept": "17",
+        "n": 135,
+        "median_wage": 2000.0,
+        "kaitz": 0.465
+      },
+      {
+        "dept": "18",
+        "n": 389,
+        "median_wage": 2000.0,
+        "kaitz": 0.465
+      },
+      {
+        "dept": "21",
+        "n": 135,
+        "median_wage": 2000.0,
+        "kaitz": 0.465
+      },
+      {
+        "dept": "10",
+        "n": 208,
+        "median_wage": 2056.1,
+        "kaitz": 0.452
+      },
+      {
+        "dept": "05",
+        "n": 177,
+        "median_wage": 2100.0,
+        "kaitz": 0.443
+      },
+      {
+        "dept": "01",
+        "n": 157,
+        "median_wage": 2400.0,
+        "kaitz": 0.388
+      },
+      {
+        "dept": "03",
+        "n": 146,
+        "median_wage": 2400.0,
+        "kaitz": 0.388
+      },
+      {
+        "dept": "06",
+        "n": 217,
+        "median_wage": 2400.0,
+        "kaitz": 0.388
+      },
+      {
+        "dept": "16",
+        "n": 344,
+        "median_wage": 2400.0,
+        "kaitz": 0.388
+      }
+    ],
+    "2022": [
+      {
+        "dept": "11",
+        "n": 725,
+        "median_wage": 939.4,
+        "kaitz": 1.091
+      },
+      {
+        "dept": "14",
+        "n": 523,
+        "median_wage": 1310.5,
+        "kaitz": 0.782
+      },
+      {
+        "dept": "20",
+        "n": 517,
+        "median_wage": 1352.4,
+        "kaitz": 0.758
+      },
+      {
+        "dept": "13",
+        "n": 538,
+        "median_wage": 1462.5,
+        "kaitz": 0.701
+      },
+      {
+        "dept": "07",
+        "n": 533,
+        "median_wage": 1500.0,
+        "kaitz": 0.683
+      },
+      {
+        "dept": "15",
+        "n": 1973,
+        "median_wage": 1638.3,
+        "kaitz": 0.626
+      },
+      {
+        "dept": "24",
+        "n": 298,
+        "median_wage": 1693.8,
+        "kaitz": 0.605
+      },
+      {
+        "dept": "02",
+        "n": 338,
+        "median_wage": 1777.6,
+        "kaitz": 0.577
+      },
+      {
+        "dept": "04",
+        "n": 572,
+        "median_wage": 1800.0,
+        "kaitz": 0.569
+      },
+      {
+        "dept": "25",
+        "n": 273,
+        "median_wage": 1800.0,
+        "kaitz": 0.569
+      },
+      {
+        "dept": "22",
+        "n": 291,
+        "median_wage": 1938.0,
+        "kaitz": 0.529
+      },
+      {
+        "dept": "05",
+        "n": 164,
+        "median_wage": 2000.0,
+        "kaitz": 0.512
+      },
+      {
+        "dept": "09",
+        "n": 139,
+        "median_wage": 2000.0,
+        "kaitz": 0.512
+      },
+      {
+        "dept": "12",
+        "n": 349,
+        "median_wage": 2000.0,
+        "kaitz": 0.512
+      },
+      {
+        "dept": "19",
+        "n": 242,
+        "median_wage": 2000.0,
+        "kaitz": 0.512
+      },
+      {
+        "dept": "23",
+        "n": 405,
+        "median_wage": 2000.0,
+        "kaitz": 0.512
+      },
+      {
+        "dept": "21",
+        "n": 137,
+        "median_wage": 2061.9,
+        "kaitz": 0.497
+      },
+      {
+        "dept": "08",
+        "n": 237,
+        "median_wage": 2088.3,
+        "kaitz": 0.491
+      },
+      {
+        "dept": "06",
+        "n": 218,
+        "median_wage": 2200.0,
+        "kaitz": 0.466
+      },
+      {
+        "dept": "16",
+        "n": 347,
+        "median_wage": 2300.0,
+        "kaitz": 0.446
+      },
+      {
+        "dept": "17",
+        "n": 137,
+        "median_wage": 2300.0,
+        "kaitz": 0.446
+      },
+      {
+        "dept": "01",
+        "n": 161,
+        "median_wage": 2383.8,
+        "kaitz": 0.43
+      },
+      {
+        "dept": "10",
+        "n": 204,
+        "median_wage": 2400.0,
+        "kaitz": 0.427
+      },
+      {
+        "dept": "03",
+        "n": 147,
+        "median_wage": 2500.0,
+        "kaitz": 0.41
+      },
+      {
+        "dept": "18",
+        "n": 413,
+        "median_wage": 2500.0,
+        "kaitz": 0.41
+      }
+    ],
+    "2023": [
+      {
+        "dept": "11",
+        "n": 757,
+        "median_wage": 1035.6,
+        "kaitz": 0.99
+      },
+      {
+        "dept": "14",
+        "n": 528,
+        "median_wage": 1400.0,
+        "kaitz": 0.732
+      },
+      {
+        "dept": "20",
+        "n": 561,
+        "median_wage": 1414.9,
+        "kaitz": 0.724
+      },
+      {
+        "dept": "07",
+        "n": 561,
+        "median_wage": 1500.0,
+        "kaitz": 0.683
+      },
+      {
+        "dept": "13",
+        "n": 565,
+        "median_wage": 1500.0,
+        "kaitz": 0.683
+      },
+      {
+        "dept": "24",
+        "n": 273,
+        "median_wage": 1600.0,
+        "kaitz": 0.641
+      },
+      {
+        "dept": "02",
+        "n": 331,
+        "median_wage": 1650.0,
+        "kaitz": 0.621
+      },
+      {
+        "dept": "15",
+        "n": 2146,
+        "median_wage": 1800.0,
+        "kaitz": 0.569
+      },
+      {
+        "dept": "19",
+        "n": 236,
+        "median_wage": 1922.7,
+        "kaitz": 0.533
+      },
+      {
+        "dept": "04",
+        "n": 557,
+        "median_wage": 2000.0,
+        "kaitz": 0.512
+      },
+      {
+        "dept": "08",
+        "n": 248,
+        "median_wage": 2000.0,
+        "kaitz": 0.512
+      },
+      {
+        "dept": "22",
+        "n": 283,
+        "median_wage": 2000.0,
+        "kaitz": 0.512
+      },
+      {
+        "dept": "23",
+        "n": 369,
+        "median_wage": 2000.0,
+        "kaitz": 0.512
+      },
+      {
+        "dept": "09",
+        "n": 156,
+        "median_wage": 2000.0,
+        "kaitz": 0.512
+      },
+      {
+        "dept": "17",
+        "n": 131,
+        "median_wage": 2000.0,
+        "kaitz": 0.512
+      },
+      {
+        "dept": "25",
+        "n": 289,
+        "median_wage": 2000.0,
+        "kaitz": 0.512
+      },
+      {
+        "dept": "16",
+        "n": 368,
+        "median_wage": 2025.0,
+        "kaitz": 0.506
+      },
+      {
+        "dept": "12",
+        "n": 344,
+        "median_wage": 2200.0,
+        "kaitz": 0.466
+      },
+      {
+        "dept": "18",
+        "n": 405,
+        "median_wage": 2200.0,
+        "kaitz": 0.466
+      },
+      {
+        "dept": "21",
+        "n": 142,
+        "median_wage": 2200.0,
+        "kaitz": 0.466
+      },
+      {
+        "dept": "06",
+        "n": 222,
+        "median_wage": 2251.6,
+        "kaitz": 0.455
+      },
+      {
+        "dept": "01",
+        "n": 157,
+        "median_wage": 2400.0,
+        "kaitz": 0.427
+      },
+      {
+        "dept": "10",
+        "n": 225,
+        "median_wage": 2492.2,
+        "kaitz": 0.411
+      },
+      {
+        "dept": "05",
+        "n": 179,
+        "median_wage": 2500.0,
+        "kaitz": 0.41
+      },
+      {
+        "dept": "03",
+        "n": 155,
+        "median_wage": 3396.6,
+        "kaitz": 0.302
+      }
+    ]
+  },
+  "epe": [
+    {
+      "quarter": "epe_2015_jun_jul_ago",
+      "n_rows": 17596,
+      "n_employed": 8305,
+      "emp_rate": 0.611,
+      "formality_rate_p222": 0.401,
+      "wage_stats": {
+        "n_pos": 7961,
+        "mean": 1529.5,
+        "median": 1200.0,
+        "p10": 450.0,
+        "p90": 2815.0
+      },
+      "id_vars_found": [
+        "conglome",
+        "vivienda",
+        "hogar",
+        "codperso"
+      ],
+      "all_cols": [
+        "pano",
+        "pmes",
+        "conglome",
+        "submuestra",
+        "vivienda",
+        "hogar",
+        "codperso",
+        "dominio",
+        "estrato",
+        "codpanel",
+        "p103",
+        "p104",
+        "p105",
+        "p106",
+        "p107",
+        "p108",
+        "p109a",
+        "p109b",
+        "p109c",
+        "p200n",
+        "p200i",
+        "p200a",
+        "p200b",
+        "p200bb",
+        "p200c",
+        "p200d",
+        "p200dd",
+        "p200e",
+        "p200f",
+        "p200g",
+        "p201",
+        "p202",
+        "p203",
+        "p204",
+        "p2041",
+        "p2042",
+        "p2043",
+        "p2044",
+        "p2045",
+        "p2046",
+        "p2047",
+        "p2048",
+        "p2049",
+        "p20410",
+        "p204a",
+        "p205a",
+        "p206",
+        "p206aa",
+        "p207a",
+        "p207b",
+        "p208b1",
+        "p208b2",
+        "p208b3",
+        "p209a",
+        "p209b",
+        "p209c",
+        "p209d",
+        "p209e",
+        "p209f",
+        "p209g",
+        "p209t",
+        "p209bb",
+        "p209cc",
+        "p209h",
+        "p209ee",
+        "p210",
+        "p211a",
+        "p211b",
+        "p212a",
+        "p212b",
+        "p212c",
+        "p212d",
+        "p212e",
+        "p213",
+        "p214",
+        "p215",
+        "p216",
+        "p217",
+        "p218",
+        "p219",
+        "p220",
+        "p222",
+        "p223a1",
+        "p223a2",
+        "p223a3",
+        "p223a4",
+        "p223a5",
+        "p223a6",
+        "p223a7",
+        "p224",
+        "p225",
+        "ocu200",
+        "i211a",
+        "i211b",
+        "i212a",
+        "i212b",
+        "i212c",
+        "i212d",
+        "ingtot",
+        "ingprin",
+        "resident",
+        "fa_jja15"
+      ]
+    },
+    {
+      "quarter": "epe_2016_ene_feb_mar",
+      "n_rows": 17561,
+      "n_employed": 8382,
+      "emp_rate": 0.62,
+      "formality_rate_p222": 0.403,
+      "wage_stats": {
+        "n_pos": 8024,
+        "mean": 1629.7,
+        "median": 1250.0,
+        "p10": 500.0,
+        "p90": 3000.0
+      },
+      "id_vars_found": [
+        "conglome",
+        "vivienda",
+        "hogar",
+        "codperso"
+      ],
+      "all_cols": [
+        "pano",
+        "pmes",
+        "conglome",
+        "submuestra",
+        "vivienda",
+        "hogar",
+        "codperso",
+        "dominio",
+        "estrato",
+        "codpanel",
+        "p103",
+        "p104",
+        "p105",
+        "p106",
+        "p107",
+        "p108",
+        "p109a",
+        "p109b",
+        "p109c",
+        "p200n",
+        "p200i",
+        "p200a",
+        "p200b",
+        "p200bb",
+        "p200c",
+        "p200d",
+        "p200dd",
+        "p200e",
+        "p200f",
+        "p200g",
+        "p201",
+        "p202",
+        "p203",
+        "p204",
+        "p2041",
+        "p2042",
+        "p2043",
+        "p2044",
+        "p2045",
+        "p2046",
+        "p2047",
+        "p2048",
+        "p2049",
+        "p20410",
+        "p204a",
+        "p205a",
+        "p206",
+        "p206aa",
+        "p207a",
+        "p207b",
+        "p208b1",
+        "p208b2",
+        "p208b3",
+        "p209a",
+        "p209b",
+        "p209c",
+        "p209d",
+        "p209e",
+        "p209f",
+        "p209g",
+        "p209t",
+        "p209bb",
+        "p209cc",
+        "p209h",
+        "p209ee",
+        "p210",
+        "p211a",
+        "p211b",
+        "p212a",
+        "p212b",
+        "p212c",
+        "p212d",
+        "p212e",
+        "p213",
+        "p214",
+        "p215",
+        "p216",
+        "p217",
+        "p218",
+        "p219",
+        "p220",
+        "p222",
+        "p223a1",
+        "p223a2",
+        "p223a3",
+        "p223a4",
+        "p223a5",
+        "p223a6",
+        "p223a7",
+        "p224",
+        "p225",
+        "ocu200",
+        "i211a",
+        "i211b",
+        "i212a",
+        "i212b",
+        "i212c",
+        "i212d",
+        "ingtot",
+        "ingprin",
+        "resident",
+        "fa_efm16"
+      ]
+    },
+    {
+      "quarter": "epe_2016_jun_jul_ago",
+      "n_rows": 17299,
+      "n_employed": 8232,
+      "emp_rate": 0.609,
+      "formality_rate_p222": 0.406,
+      "wage_stats": {
+        "n_pos": 7877,
+        "mean": 1627.2,
+        "median": 1299.0,
+        "p10": 455.0,
+        "p90": 3000.0
+      },
+      "id_vars_found": [
+        "conglome",
+        "vivienda",
+        "hogar",
+        "codperso"
+      ],
+      "all_cols": [
+        "pano",
+        "pmes",
+        "conglome",
+        "submuestra",
+        "vivienda",
+        "hogar",
+        "codperso",
+        "dominio",
+        "estrato",
+        "codpanel",
+        "p103",
+        "p104",
+        "p105",
+        "p106",
+        "p107",
+        "p108",
+        "p109a",
+        "p109b",
+        "p109c",
+        "p200n",
+        "p200i",
+        "p200a",
+        "p200b",
+        "p200bb",
+        "p200c",
+        "p200d",
+        "p200dd",
+        "p200e",
+        "p200f",
+        "p200g",
+        "p201",
+        "p202",
+        "p203",
+        "p204",
+        "p2041",
+        "p2042",
+        "p2043",
+        "p2044",
+        "p2045",
+        "p2046",
+        "p2047",
+        "p2048",
+        "p2049",
+        "p20410",
+        "p204a",
+        "p205a",
+        "p206",
+        "p206aa",
+        "p207a",
+        "p207b",
+        "p208b1",
+        "p208b2",
+        "p208b3",
+        "p209a",
+        "p209b",
+        "p209c",
+        "p209d",
+        "p209e",
+        "p209f",
+        "p209g",
+        "p209t",
+        "p209bb",
+        "p209cc",
+        "p209h",
+        "p209ee",
+        "p210",
+        "p211a",
+        "p211b",
+        "p212a",
+        "p212b",
+        "p212c",
+        "p212d",
+        "p212e",
+        "p213",
+        "p214",
+        "p215",
+        "p216",
+        "p217",
+        "p218",
+        "p219",
+        "p220",
+        "p222",
+        "p223a1",
+        "p223a2",
+        "p223a3",
+        "p223a4",
+        "p223a5",
+        "p223a6",
+        "p223a7",
+        "p224",
+        "p225",
+        "ocu200",
+        "i211a",
+        "i211b",
+        "i212a",
+        "i212b",
+        "i212c",
+        "i212d",
+        "ingtot",
+        "ingprin",
+        "resident",
+        "fa_jja16"
+      ]
+    },
+    {
+      "quarter": "epe_2017_jun_jul_ago",
+      "n_rows": 16720,
+      "n_employed": 7885,
+      "emp_rate": 0.607,
+      "formality_rate_p222": 0.438,
+      "wage_stats": {
+        "n_pos": 7592,
+        "mean": 1634.0,
+        "median": 1299.0,
+        "p10": 433.0,
+        "p90": 3000.0
+      },
+      "id_vars_found": [
+        "conglome",
+        "vivienda",
+        "hogar",
+        "codperso"
+      ],
+      "all_cols": [
+        "pano",
+        "pmes",
+        "conglome",
+        "submuestra",
+        "vivienda",
+        "hogar",
+        "codperso",
+        "dominio",
+        "estrato",
+        "codpanel",
+        "p103",
+        "p104",
+        "p105",
+        "p106",
+        "p107",
+        "p108",
+        "p109a",
+        "p109b",
+        "p109c",
+        "p200n",
+        "p200i",
+        "p200a",
+        "p200b",
+        "p200bb",
+        "p200c",
+        "p200d",
+        "p200dd",
+        "p200e",
+        "p200f",
+        "p200g",
+        "p201",
+        "p202",
+        "p203",
+        "p204",
+        "p2041",
+        "p2042",
+        "p2043",
+        "p2044",
+        "p2045",
+        "p2046",
+        "p2047",
+        "p2048",
+        "p2049",
+        "p20410",
+        "p204a",
+        "p205a",
+        "p206",
+        "p206aa",
+        "p207a",
+        "p207b",
+        "p208b1",
+        "p208b2",
+        "p208b3",
+        "p209a",
+        "p209b",
+        "p209c",
+        "p209d",
+        "p209e",
+        "p209f",
+        "p209g",
+        "p209t",
+        "p209bb",
+        "p209cc",
+        "p209h",
+        "p209ee",
+        "p210",
+        "p211a",
+        "p211b",
+        "p212a",
+        "p212b",
+        "p212c",
+        "p212d",
+        "p212e",
+        "p213",
+        "p214",
+        "p215",
+        "p216",
+        "p217",
+        "p218",
+        "p219",
+        "p220",
+        "p222",
+        "p223a1",
+        "p223a2",
+        "p223a3",
+        "p223a4",
+        "p223a5",
+        "p223a6",
+        "p223a7",
+        "p224",
+        "p225",
+        "ocu200",
+        "i211a",
+        "i211b",
+        "i212a",
+        "i212b",
+        "i212c",
+        "i212d",
+        "ingtot",
+        "ingprin",
+        "resident",
+        "fa_jja17"
+      ]
+    },
+    {
+      "quarter": "epe_2018_ene_feb_mar",
+      "n_rows": 17094,
+      "n_employed": 7742,
+      "emp_rate": 0.593,
+      "formality_rate_p222": 0.384,
+      "wage_stats": {
+        "n_pos": 7406,
+        "mean": 1648.4,
+        "median": 1299.0,
+        "p10": 442.0,
+        "p90": 3000.0
+      },
+      "id_vars_found": [
+        "conglome",
+        "vivienda",
+        "hogar",
+        "codperso"
+      ],
+      "all_cols": [
+        "pano",
+        "pmes",
+        "conglome",
+        "submuestra",
+        "vivienda",
+        "hogar",
+        "codperso",
+        "dominio",
+        "estrato",
+        "codpanel",
+        "p103",
+        "p104",
+        "p105",
+        "p106",
+        "p107",
+        "p108",
+        "p109a",
+        "p109b",
+        "p109c",
+        "p200n",
+        "p200i",
+        "p200a",
+        "p200b",
+        "p200bb",
+        "p200c",
+        "p200d",
+        "p200dd",
+        "p200e",
+        "p200f",
+        "p200g",
+        "p201",
+        "p202",
+        "p203",
+        "p204",
+        "p2041",
+        "p2042",
+        "p2043",
+        "p2044",
+        "p2045",
+        "p2046",
+        "p2047",
+        "p2048",
+        "p2049",
+        "p20410",
+        "p204a",
+        "p205a",
+        "p206",
+        "p206aa",
+        "p207a",
+        "p207b",
+        "p208b1",
+        "p208b2",
+        "p208b3",
+        "p209a",
+        "p209b",
+        "p209c",
+        "p209d",
+        "p209e",
+        "p209f",
+        "p209g",
+        "p209t",
+        "p209bb",
+        "p209cc",
+        "p209h",
+        "p209ee",
+        "p210",
+        "p211a",
+        "p211b",
+        "p212a",
+        "p212b",
+        "p212c",
+        "p212d",
+        "p212e",
+        "p213",
+        "p214",
+        "p215",
+        "p216",
+        "p217",
+        "p218",
+        "p219",
+        "p220",
+        "p222",
+        "p223a1",
+        "p223a2",
+        "p223a3",
+        "p223a4",
+        "p223a5",
+        "p223a6",
+        "p223a7",
+        "p224",
+        "p225",
+        "ocu200",
+        "i211a",
+        "i211b",
+        "i212a",
+        "i212b",
+        "i212c",
+        "i212d",
+        "ingtot",
+        "ingprin",
+        "resident",
+        "fa_efm18"
+      ]
+    },
+    {
+      "quarter": "epe_2018_jun_jul_ago",
+      "n_rows": 16693,
+      "n_employed": 7732,
+      "emp_rate": 0.596,
+      "formality_rate_p222": 0.394,
+      "wage_stats": {
+        "n_pos": 7478,
+        "mean": 1671.1,
+        "median": 1299.0,
+        "p10": 433.0,
+        "p90": 3000.0
+      },
+      "id_vars_found": [
+        "conglome",
+        "vivienda",
+        "hogar",
+        "codperso"
+      ],
+      "all_cols": [
+        "pano",
+        "pmes",
+        "conglome",
+        "submuestra",
+        "vivienda",
+        "hogar",
+        "codperso",
+        "dominio",
+        "estrato",
+        "codpanel",
+        "p103",
+        "p104",
+        "p105",
+        "p106",
+        "p107",
+        "p108",
+        "p109a",
+        "p109b",
+        "p109c",
+        "p200n",
+        "p200i",
+        "p200a",
+        "p200b",
+        "p200bb",
+        "p200c",
+        "p200d",
+        "p200dd",
+        "p200e",
+        "p200f",
+        "p200g",
+        "p201",
+        "p202",
+        "p203",
+        "p204",
+        "p2041",
+        "p2042",
+        "p2043",
+        "p2044",
+        "p2045",
+        "p2046",
+        "p2047",
+        "p2048",
+        "p2049",
+        "p20410",
+        "p204a",
+        "p205a",
+        "p206",
+        "p206aa",
+        "p207a",
+        "p207b",
+        "p208b1",
+        "p208b2",
+        "p208b3",
+        "p209a",
+        "p209b",
+        "p209c",
+        "p209d",
+        "p209e",
+        "p209f",
+        "p209g",
+        "p209t",
+        "p209bb",
+        "p209cc",
+        "p209h",
+        "p209ee",
+        "p210",
+        "p211a",
+        "p211b",
+        "p212a",
+        "p212b",
+        "p212c",
+        "p212d",
+        "p212e",
+        "p213",
+        "p214",
+        "p215",
+        "p216",
+        "p217",
+        "p218",
+        "p219",
+        "p220",
+        "p222",
+        "p223a1",
+        "p223a2",
+        "p223a3",
+        "p223a4",
+        "p223a5",
+        "p223a6",
+        "p223a7",
+        "p224",
+        "p225",
+        "ocu200",
+        "i211a",
+        "i211b",
+        "i212a",
+        "i212b",
+        "i212c",
+        "i212d",
+        "ingtot",
+        "ingprin",
+        "resident",
+        "fa_jja18"
+      ]
+    },
+    {
+      "quarter": "epe_2021_ene_feb_mar",
+      "n_rows": 15726,
+      "n_employed": 5815,
+      "emp_rate": 0.473,
+      "formality_rate_p222": 0.342,
+      "wage_stats": {
+        "n_pos": 5475,
+        "mean": 1559.1,
+        "median": 1100.0,
+        "p10": 364.0,
+        "p90": 3000.0
+      },
+      "id_vars_found": [
+        "conglome",
+        "vivienda",
+        "hogar",
+        "codperso"
+      ],
+      "all_cols": [
+        "pano",
+        "pmes",
+        "conglome",
+        "submuestra",
+        "vivienda",
+        "hogar",
+        "codperso",
+        "dominio",
+        "estrato",
+        "codpanel",
+        "p103",
+        "p104",
+        "p105",
+        "p106",
+        "p107",
+        "p108",
+        "p109a",
+        "p109b",
+        "p109c",
+        "p200n",
+        "p200i",
+        "p200a",
+        "p200b",
+        "p200bb",
+        "p200c",
+        "p200d",
+        "p200dd",
+        "p200e",
+        "p200f",
+        "p200g",
+        "p201",
+        "p202",
+        "p203",
+        "p204",
+        "p2041",
+        "p2042",
+        "p2043",
+        "p2044",
+        "p2045",
+        "p2046",
+        "p2047",
+        "p2048",
+        "p2049",
+        "p20410",
+        "p20411",
+        "p204a",
+        "p205a",
+        "p206",
+        "p206aa",
+        "p207a",
+        "p207b",
+        "p208b1",
+        "p208b2",
+        "p208b3",
+        "p209a",
+        "p209b",
+        "p209c",
+        "p209d",
+        "p209e",
+        "p209f",
+        "p209g",
+        "p209t",
+        "p209bb",
+        "p209cc",
+        "p209h",
+        "p209ee",
+        "p210",
+        "p211a",
+        "p211b",
+        "p212a",
+        "p212b",
+        "p212c",
+        "p212d",
+        "p212e",
+        "p213",
+        "p214",
+        "p215",
+        "p216",
+        "p217",
+        "p218",
+        "p219",
+        "p220",
+        "p222",
+        "p223a1",
+        "p223a2",
+        "p223a3",
+        "p223a4",
+        "p223a5",
+        "p223a6",
+        "p223a7",
+        "p224",
+        "p225",
+        "ocu200",
+        "i211a",
+        "i211b",
+        "i212a",
+        "i212b",
+        "i212c",
+        "i212d",
+        "ingtot",
+        "ingprin",
+        "resident",
+        "fa_efm21"
+      ]
+    },
+    {
+      "quarter": "epe_2022_ene_feb_mar",
+      "n_rows": 15745,
+      "n_employed": 7007,
+      "emp_rate": 0.571,
+      "formality_rate_p222": 0.354,
+      "wage_stats": {
+        "n_pos": 6636,
+        "mean": 1697.1,
+        "median": 1299.0,
+        "p10": 429.0,
+        "p90": 3000.0
+      },
+      "id_vars_found": [
+        "conglome",
+        "vivienda",
+        "hogar",
+        "codperso"
+      ],
+      "all_cols": [
+        "pano",
+        "pmes",
+        "conglome",
+        "submuestra",
+        "vivienda",
+        "hogar",
+        "codperso",
+        "dominio",
+        "estrato",
+        "codpanel",
+        "p103",
+        "p104",
+        "p105",
+        "p106",
+        "p107",
+        "p108",
+        "p109a",
+        "p109b",
+        "p109c",
+        "p200n",
+        "p200i",
+        "p200a",
+        "p200b",
+        "p200bb",
+        "p200c",
+        "p200d",
+        "p200dd",
+        "p200e",
+        "p200f",
+        "p200g",
+        "p201",
+        "p202",
+        "p203",
+        "p204",
+        "p2041",
+        "p2042",
+        "p2043",
+        "p2044",
+        "p2045",
+        "p2046",
+        "p2047",
+        "p2048",
+        "p2049",
+        "p20410",
+        "p20411",
+        "p204a",
+        "p205a",
+        "p206",
+        "p206aa",
+        "p207a",
+        "p207b",
+        "p208b1",
+        "p208b2",
+        "p208b3",
+        "p209a",
+        "p209b",
+        "p209c",
+        "p209d",
+        "p209e",
+        "p209f",
+        "p209g",
+        "p209t",
+        "p209bb",
+        "p209cc",
+        "p209h",
+        "p209ee",
+        "p210",
+        "p211a",
+        "p211b",
+        "p212a",
+        "p212b",
+        "p212c",
+        "p212d",
+        "p212e",
+        "p213",
+        "p214",
+        "p215",
+        "p216",
+        "p217",
+        "p218",
+        "p219",
+        "p220",
+        "p222",
+        "p223a1",
+        "p223a2",
+        "p223a3",
+        "p223a4",
+        "p223a5",
+        "p223a6",
+        "p223a7",
+        "p224",
+        "p225",
+        "ocu200",
+        "i211a",
+        "i211b",
+        "i212a",
+        "i212b",
+        "i212c",
+        "i212d",
+        "ingtot",
+        "ingprin",
+        "resident",
+        "fa_efm22"
+      ]
+    },
+    {
+      "quarter": "epe_2022_jun_jul_ago",
+      "n_rows": 15432,
+      "n_employed": 6902,
+      "emp_rate": 0.57,
+      "formality_rate_p222": 0.353,
+      "wage_stats": {
+        "n_pos": 6599,
+        "mean": 1755.2,
+        "median": 1300.0,
+        "p10": 450.0,
+        "p90": 3200.0
+      },
+      "id_vars_found": [
+        "conglome",
+        "vivienda",
+        "hogar",
+        "codperso"
+      ],
+      "all_cols": [
+        "pano",
+        "pmes",
+        "conglome",
+        "submuestra",
+        "vivienda",
+        "hogar",
+        "codperso",
+        "dominio",
+        "estrato",
+        "codpanel",
+        "p103",
+        "p104",
+        "p105",
+        "p106",
+        "p107",
+        "p108",
+        "p109a",
+        "p109b",
+        "p109c",
+        "p200n",
+        "p200i",
+        "p200a",
+        "p200b",
+        "p200bb",
+        "p200c",
+        "p200d",
+        "p200dd",
+        "p200e",
+        "p200f",
+        "p200g",
+        "p201",
+        "p202",
+        "p203",
+        "p204",
+        "p2041",
+        "p2042",
+        "p2043",
+        "p2044",
+        "p2045",
+        "p2046",
+        "p2047",
+        "p2048",
+        "p2049",
+        "p20410",
+        "p20411",
+        "p204a",
+        "p205a",
+        "p206",
+        "p206aa",
+        "p207a",
+        "p207b",
+        "p208b1",
+        "p208b2",
+        "p208b3",
+        "p209a",
+        "p209b",
+        "p209c",
+        "p209d",
+        "p209e",
+        "p209f",
+        "p209g",
+        "p209t",
+        "p209bb",
+        "p209cc",
+        "p209h",
+        "p209ee",
+        "p210",
+        "p211a",
+        "p211b",
+        "p212a",
+        "p212b",
+        "p212c",
+        "p212d",
+        "p212e",
+        "p213",
+        "p214",
+        "p215",
+        "p216",
+        "p217",
+        "p218",
+        "p219",
+        "p220",
+        "p222",
+        "p223a1",
+        "p223a2",
+        "p223a3",
+        "p223a4",
+        "p223a5",
+        "p223a6",
+        "p223a7",
+        "p224",
+        "p225",
+        "ocu200",
+        "i211a",
+        "i211b",
+        "i212a",
+        "i212b",
+        "i212c",
+        "i212d",
+        "ingtot",
+        "ingprin",
+        "resident",
+        "fa_jja22"
+      ]
+    }
+  ],
+  "epen_dep": [
+    {
+      "folder": "epen_dep_2022_anual",
+      "n_rows": 439523,
+      "n_employed": 192416,
+      "formality_rate_unweighted": 0.317,
+      "formality_rate_weighted": 0.26,
+      "wage_stats": {
+        "all_employed": {
+          "n": 176068,
+          "median": 1214.0,
+          "p10": 267.0,
+          "p90": 3283.0
+        },
+        "formal_only": {
+          "n": 60916,
+          "median": 2246.5,
+          "p10": 1025.0,
+          "p90": 4925.0
+        }
+      },
+      "wt_sum": 25649144.0,
+      "n_departments": 24,
+      "cols_sample": [
+        "anio",
+        "mes",
+        "conglomerado",
+        "muestra",
+        "selviv",
+        "hogar",
+        "c201",
+        "estrato",
+        "llave_panel",
+        "ccdd",
+        "area",
+        "c203",
+        "c204",
+        "c205",
+        "c206",
+        "c207",
+        "c208",
+        "c300n",
+        "nroinf",
+        "c301_dia",
+        "c301_mes",
+        "c301_anio",
+        "c303",
+        "c304",
+        "c305",
+        "c306_1",
+        "c306_2",
+        "c306_3",
+        "c306_4",
+        "c306_5"
+      ]
+    },
+    {
+      "folder": "epen_dep_2023_anual",
+      "error": "no CSV"
+    },
+    {
+      "folder": "epen_dep_2023_anual",
+      "n_rows": 449202,
+      "n_employed": 196595,
+      "formality_rate_unweighted": 0.314,
+      "formality_rate_weighted": 0.289,
+      "wage_stats": {
+        "formal_only": {
+          "median": 2400
+        }
+      },
+      "wt_sum": 25910035,
+      "n_departments": 24
+    }
+  ],
+  "epen_ciu": [
+    {
+      "folder": "epen_ciu_2022_q1",
+      "n_rows": 110446,
+      "n_employed": 47384,
+      "formality_var": "unknown",
+      "formality_rate": null,
+      "wage_stats": {
+        "var": "ingtrabw",
+        "n": 43097,
+        "median": 1169.0,
+        "p10": 260.0,
+        "p90": 3166.4
+      },
+      "wt_sum": 25323994.0,
+      "n_cities": 16,
+      "lima_share": 0.0,
+      "cols_sample": [
+        "anio",
+        "mes",
+        "area",
+        "estrato",
+        "llave_panel",
+        "conglomerado",
+        "muestra",
+        "selviv",
+        "hogar",
+        "c201",
+        "c203",
+        "c204",
+        "c205",
+        "c206",
+        "c207",
+        "c208",
+        "c300n",
+        "nroinf",
+        "c301_dia",
+        "c301_mes",
+        "c301_anio",
+        "c303",
+        "c304",
+        "c305",
+        "c306_1",
+        "c306_2",
+        "c306_3",
+        "c306_4",
+        "c306_5",
+        "c306_6"
+      ]
+    },
+    {
+      "folder": "epen_ciu_2022_q2",
+      "n_rows": 109578,
+      "n_employed": 47606,
+      "formality_var": "unknown",
+      "formality_rate": null,
+      "wage_stats": {
+        "var": "ingtrabw",
+        "n": 43619,
+        "median": 1200.0,
+        "p10": 260.0,
+        "p90": 3293.8
+      },
+      "wt_sum": 25426838.0,
+      "n_cities": 22,
+      "lima_share": 0.0,
+      "cols_sample": [
+        "anio",
+        "mes",
+        "area",
+        "estrato",
+        "llave_panel",
+        "conglomerado",
+        "muestra",
+        "selviv",
+        "hogar",
+        "c201",
+        "c203",
+        "c204",
+        "c205",
+        "c206",
+        "c207",
+        "c208",
+        "c300n",
+        "nroinf",
+        "c301_dia",
+        "c301_mes",
+        "c301_anio",
+        "c303",
+        "c304",
+        "c305",
+        "c306_1",
+        "c306_2",
+        "c306_3",
+        "c306_4",
+        "c306_5",
+        "c306_6"
+      ]
+    },
+    {
+      "folder": "epen_ciu_2022_q3",
+      "n_rows": 109049,
+      "n_employed": 47948,
+      "formality_var": "unknown",
+      "formality_rate": null,
+      "wage_stats": {
+        "var": "ingtrabw",
+        "n": 44013,
+        "median": 1250.0,
+        "p10": 270.0,
+        "p90": 3293.0
+      },
+      "wt_sum": 25533963.0,
+      "n_cities": 23,
+      "lima_share": 0.0,
+      "cols_sample": [
+        "anio",
+        "mes",
+        "area",
+        "estrato",
+        "llave_panel",
+        "conglomerado",
+        "muestra",
+        "selviv",
+        "hogar",
+        "c201",
+        "c203",
+        "c204",
+        "c205",
+        "c206",
+        "c207",
+        "c208",
+        "c300n",
+        "nroinf",
+        "c301_dia",
+        "c301_mes",
+        "c301_anio",
+        "c303",
+        "c304",
+        "c305",
+        "c306_1",
+        "c306_2",
+        "c306_3",
+        "c306_4",
+        "c306_5",
+        "c306_6"
+      ]
+    },
+    {
+      "folder": "epen_ciu_2022_q4",
+      "n_rows": 110450,
+      "n_employed": 49478,
+      "formality_var": "unknown",
+      "formality_rate": null,
+      "wage_stats": {
+        "var": "ingtrabw",
+        "n": 45339,
+        "median": 1283.0,
+        "p10": 283.8,
+        "p90": 3383.0
+      },
+      "wt_sum": 25641941.0,
+      "n_cities": 18,
+      "lima_share": 0.0,
+      "cols_sample": [
+        "anio",
+        "mes",
+        "area",
+        "estrato",
+        "llave_panel",
+        "conglomerado",
+        "muestra",
+        "selviv",
+        "hogar",
+        "c201",
+        "c203",
+        "c204",
+        "c205",
+        "c206",
+        "c207",
+        "c208",
+        "c300n",
+        "nroinf",
+        "c301_dia",
+        "c301_mes",
+        "c301_anio",
+        "c303",
+        "c304",
+        "c305",
+        "c306_1",
+        "c306_2",
+        "c306_3",
+        "c306_4",
+        "c306_5",
+        "c306_6"
+      ]
+    },
+    {
+      "folder": "epen_ciu_2023_q1",
+      "n_rows": 108628,
+      "n_employed": 47036,
+      "formality_var": "unknown",
+      "formality_rate": null,
+      "wage_stats": {
+        "var": "ingtrabw",
+        "n": 42697,
+        "median": 1264.0,
+        "p10": 289.0,
+        "p90": 3400.0
+      },
+      "wt_sum": 25748717.0,
+      "n_cities": 20,
+      "lima_share": 0.0,
+      "cols_sample": [
+        "anio",
+        "mes",
+        "area",
+        "estrato",
+        "llave_panel",
+        "conglomerado",
+        "muestra",
+        "selviv",
+        "hogar",
+        "c201",
+        "c203",
+        "c204",
+        "c205",
+        "c206",
+        "c207",
+        "c208",
+        "c300n",
+        "nroinf",
+        "c301_dia",
+        "c301_mes",
+        "c301_anio",
+        "c303",
+        "c304",
+        "c305",
+        "c306_1",
+        "c306_2",
+        "c306_3",
+        "c306_4",
+        "c306_5",
+        "c306_6"
+      ]
+    },
+    {
+      "folder": "epen_ciu_2023_q2",
+      "n_rows": 109096,
+      "n_employed": 48989,
+      "formality_var": "unknown",
+      "formality_rate": null,
+      "wage_stats": {
+        "var": "ingtrabw",
+        "n": 44622,
+        "median": 1299.0,
+        "p10": 263.0,
+        "p90": 3500.0
+      },
+      "wt_sum": 26634192.0,
+      "n_cities": 20,
+      "lima_share": 0.0,
+      "cols_sample": [
+        "anio",
+        "mes",
+        "area",
+        "estrato",
+        "llave_panel",
+        "conglomerado",
+        "muestra",
+        "selviv",
+        "hogar",
+        "c201",
+        "c203",
+        "c204",
+        "c205",
+        "c206",
+        "c207",
+        "c208",
+        "c300n",
+        "nroinf",
+        "c301_dia",
+        "c301_mes",
+        "c301_anio",
+        "c303",
+        "c304",
+        "c305",
+        "c306_1",
+        "c306_2",
+        "c306_3",
+        "c306_4",
+        "c306_5",
+        "c306_6"
+      ]
+    },
+    {
+      "folder": "epen_ciu_2023_q3",
+      "n_rows": 113107,
+      "n_employed": 50757,
+      "formality_var": "unknown",
+      "formality_rate": null,
+      "wage_stats": {
+        "var": "ingtrabw",
+        "n": 46630,
+        "median": 1310.0,
+        "p10": 279.9,
+        "p90": 3500.0
+      },
+      "wt_sum": 25963811.0,
+      "n_cities": 19,
+      "lima_share": 0.0,
+      "cols_sample": [
+        "anio",
+        "mes",
+        "area",
+        "estrato",
+        "llave_panel",
+        "conglomerado",
+        "muestra",
+        "selviv",
+        "hogar",
+        "c201",
+        "c203",
+        "c204",
+        "c205",
+        "c206",
+        "c207",
+        "c208",
+        "c300n",
+        "nroinf",
+        "c301_dia",
+        "c301_mes",
+        "c301_anio",
+        "c303",
+        "c304",
+        "c305",
+        "c306_1",
+        "c306_2",
+        "c306_3",
+        "c306_4",
+        "c306_5",
+        "c306_6"
+      ]
+    },
+    {
+      "source": "EPEN Ciudades Anual 2023 (INEI code 873)",
+      "file": "EPEN BD Ciudades Anual 2023.csv",
+      "type": "annual",
+      "year": 2023,
+      "n_total": 243626,
+      "n_employed_unwt": 151692,
+      "employment_rate_unwt": 0.6226,
+      "formality_var": "Informal_P",
+      "formality_definition": "Informal_P == '2' (health insurance registered)",
+      "n_formal_dep": 53316,
+      "formal_rate_of_employed_wt": 0.398,
+      "weighted_pop_formal_dep_M": 3.468,
+      "wage_var": "ingtrabw",
+      "wage_stats": {
+        "median": 2358.0,
+        "weighted_median": 2266.0,
+        "p10": null,
+        "p90": null
+      },
+      "kaitz": 0.4523,
+      "mw_bin_share_pct": 1.1431,
+      "mw_excess_factor": 1.341,
+      "bunching_ratio_single_period": 1.622,
+      "bunching_method": "Lee-Saez single-period (polynomial counterfactual, degree=4)",
+      "columns_available": [
+        "OCUP300",
+        "Informal_P",
+        "ingtrabw",
+        "FAC300_ANUAL",
+        "MES",
+        "DIVISION_LIMA"
+      ],
+      "columns_missing": [
+        "CODCIUDAD",
+        "NOMCIUDAD",
+        "ocu_dep"
+      ],
+      "geography": "All EPEN cities (binary: DIVISION_LIMA=1 = Lima upper stratum)",
+      "notes": [
+        "2023 annual = post-Event C (MW 930->1025, May 2022). No pre-period annual available.",
+        "INEI code 872 (expected 2022 annual) returns 404; 2022 annual likely not published.",
+        "CODCIUDAD not in file; city-level DiD not possible.",
+        "MES column present (1-12) for seasonal analysis.",
+        "Quarterly seasonality: Q1 has highest MW concentration (share@1025=0.0144)."
+      ],
+      "lima_vs_other": {
+        "lima_hi": 1.602,
+        "lima_hi_kaitz": 0.4657,
+        "other_cities": 1.688,
+        "other_cities_kaitz": 0.436
+      }
+    }
+  ],
+  "panel": {
+    "format": "WIDE (one row per individual, year-suffixed columns)",
+    "n_individuals": 348505,
+    "obs_by_year": {
+      "2020": 91315,
+      "2021": 86806,
+      "2022": 87661,
+      "2023": 86654,
+      "2024": 85992
+    },
+    "employed_by_year": {
+      "2020": 56615,
+      "2021": 59935,
+      "2022": 61181,
+      "2023": 59447,
+      "2024": 58579
+    },
+    "id_vars": [
+      "numper",
+      "conglome",
+      "vivienda"
+    ],
+    "key_vars": {
+      "wage": "p524a1_YY",
+      "formal": "ocupinf_YY",
+      "emp": "ocu500_YY",
+      "dep": "p507_YY"
+    },
+    "weight_vars": {
+      "facpanel2123": "34795 individuals, sum=71.3M",
+      "facpanel2024": "8324 individuals, sum=87.0M"
+    },
+    "retention": [
+      {
+        "pair": "2020->2021",
+        "n1": 91315,
+        "n2": 86806,
+        "n_both": 22378,
+        "rate": 0.245
+      },
+      {
+        "pair": "2021->2022",
+        "n1": 86806,
+        "n2": 87661,
+        "n_both": 22483,
+        "rate": 0.259
+      },
+      {
+        "pair": "2022->2023",
+        "n1": 87661,
+        "n2": 86654,
+        "n_both": 22045,
+        "rate": 0.251
+      },
+      {
+        "pair": "2023->2024",
+        "n1": 86654,
+        "n2": 85992,
+        "n_both": 20810,
+        "rate": 0.24
+      },
+      {
+        "pair": "2021->2023",
+        "n1": 86806,
+        "n2": 86654,
+        "n_both": 15048,
+        "rate": 0.173
+      }
+    ],
+    "panel_feasibility": {
+      "event_c_2021_2023": {
+        "near_mw_fd_2021": 1143,
+        "near_mw_also_in_2023": 192,
+        "all_fd_2021": 9237,
+        "all_fd_also_2023": 1518,
+        "mw_window": "[790, 1023]",
+        "feasible": false,
+        "reason": "Only 192 near-MW formal-dep workers tracked 2021â†’2023. Too small for reliable DID."
+      },
+      "selection_bias": {
+        "panel_2021_fd_median_wage": 1800,
+        "full_cs_2021_fd_median_wage": 1500,
+        "difference_pct": "+20%",
+        "conclusion": "Panel oversamples higher-wage formal workers. Not representative of near-MW workers."
+      }
+    },
+    "panel_design_note": "Rotating panel: ~1/4 households replaced each year. Only ~25% of year-t sample appears in year t+1. Expected 2021->2023 retention = 25%^2 = ~6%, observed 17.3% (some households tracked 2+ years)."
+  },
+  "epe_matching": [
+    {
+      "pair": "epe_2015_jun_jul_ago->epe_2016_ene_feb_mar",
+      "id_vars_used": [
+        "hogar",
+        "conglome",
+        "codperso",
+        "vivienda"
+      ],
+      "n_q1": 17596,
+      "n_q2": 17561,
+      "n_matched": 0,
+      "match_rate": 0.0,
+      "sample_ids_q1": [
+        "11_17266_1_99",
+        "11_17266_2_99",
+        "11_17266_3_99"
+      ],
+      "sample_ids_q2": [
+        "11_19073_3_155",
+        "11_22589_3_169",
+        "11_29362_4_4"
+      ]
+    },
+    {
+      "pair": "epe_2016_ene_feb_mar->epe_2016_jun_jul_ago",
+      "id_vars_used": [
+        "hogar",
+        "conglome",
+        "codperso",
+        "vivienda"
+      ],
+      "n_q1": 17561,
+      "n_q2": 17299,
+      "n_matched": 2640,
+      "match_rate": 0.15,
+      "sample_ids_q1": [
+        "11_19073_3_155",
+        "11_22589_3_169",
+        "11_29362_4_4"
+      ],
+      "sample_ids_q2": [
+        "11_18045_3_137",
+        "11_24635_4_162",
+        "11_28541_4_151"
+      ]
+    },
+    {
+      "pair": "epe_2016_jun_jul_ago->epe_2017_jun_jul_ago",
+      "id_vars_used": [
+        "hogar",
+        "conglome",
+        "codperso",
+        "vivienda"
+      ],
+      "n_q1": 17299,
+      "n_q2": 16720,
+      "n_matched": 7083,
+      "match_rate": 0.409,
+      "sample_ids_q1": [
+        "11_18045_3_137",
+        "11_24635_4_162",
+        "11_28541_4_151"
+      ],
+      "sample_ids_q2": [
+        "11_17270_1_11",
+        "11_17270_1_12",
+        "11_17270_1_13"
+      ]
+    },
+    {
+      "pair": "epe_2017_jun_jul_ago->epe_2018_ene_feb_mar",
+      "id_vars_used": [
+        "hogar",
+        "conglome",
+        "codperso",
+        "vivienda"
+      ],
+      "n_q1": 16720,
+      "n_q2": 17094,
+      "n_matched": 2610,
+      "match_rate": 0.156,
+      "sample_ids_q1": [
+        "11_17270_1_11",
+        "11_17270_1_12",
+        "11_17270_1_13"
+      ],
+      "sample_ids_q2": [
+        "12_17253_1_25",
+        "12_17253_2_25",
+        "12_17253_3_25"
+      ]
+    },
+    {
+      "pair": "epe_2018_ene_feb_mar->epe_2018_jun_jul_ago",
+      "id_vars_used": [
+        "hogar",
+        "conglome",
+        "codperso",
+        "vivienda"
+      ],
+      "n_q1": 17094,
+      "n_q2": 16693,
+      "n_matched": 2516,
+      "match_rate": 0.147,
+      "sample_ids_q1": [
+        "12_17253_1_25",
+        "12_17253_2_25",
+        "12_17253_3_25"
+      ],
+      "sample_ids_q2": [
+        "11_17299_1_22",
+        "11_17299_2_22",
+        "11_17299_3_22"
+      ]
+    },
+    {
+      "pair": "epe_2018_jun_jul_ago->epe_2021_ene_feb_mar",
+      "id_vars_used": [
+        "hogar",
+        "conglome",
+        "codperso",
+        "vivienda"
+      ],
+      "n_q1": 16693,
+      "n_q2": 15726,
+      "n_matched": 31,
+      "match_rate": 0.002,
+      "sample_ids_q1": [
+        "11_17299_1_22",
+        "11_17299_2_22",
+        "11_17299_3_22"
+      ],
+      "sample_ids_q2": [
+        "11_29139_5_61",
+        "11_26780_3_34",
+        "11_20692_1_89"
+      ]
+    },
+    {
+      "pair": "epe_2021_ene_feb_mar->epe_2022_ene_feb_mar",
+      "id_vars_used": [
+        "hogar",
+        "conglome",
+        "codperso",
+        "vivienda"
+      ],
+      "n_q1": 15726,
+      "n_q2": 15745,
+      "n_matched": 6444,
+      "match_rate": 0.41,
+      "sample_ids_q1": [
+        "11_29139_5_61",
+        "11_26780_3_34",
+        "11_20692_1_89"
+      ],
+      "sample_ids_q2": [
+        "11_26988_1_84",
+        "11_26988_2_84",
+        "11_26988_3_84"
+      ]
+    },
+    {
+      "pair": "epe_2022_ene_feb_mar->epe_2022_jun_jul_ago",
+      "id_vars_used": [
+        "hogar",
+        "conglome",
+        "codperso",
+        "vivienda"
+      ],
+      "n_q1": 15745,
+      "n_q2": 15432,
+      "n_matched": 0,
+      "match_rate": 0.0,
+      "sample_ids_q1": [
+        "11_26988_1_84",
+        "11_26988_2_84",
+        "11_26988_3_84"
+      ],
+      "sample_ids_q2": [
+        "11_90945_5_63",
+        "11_90414_3_47",
+        "11_90324_2_47"
+      ]
+    }
+  ],
+  "cross_consistency_2022": {
+    "year": 2022,
+    "mw": 1025,
+    "enaho_cs": {
+      "n_obs": 9720,
+      "median_formal_wage": 1700.0,
+      "below_mw_pct": 16.93,
+      "kaitz": 0.603
+    },
+    "epen_dep": {
+      "n_obs": 439523,
+      "n_employed": 192416,
+      "formality_rate_wt": 0.26,
+      "median_formal_wage": 2246.5,
+      "wt_sum": 25649144.0
+    },
+    "epen_ciu": {
+      "n_obs": 110446,
+      "n_employed": 47384,
+      "formality_rate": null,
+      "median_wage": 1169.0,
+      "n_cities": 16
+    },
+    "epe_lima": {
+      "n_obs": 15745,
+      "emp_rate": 0.571,
+      "formality_rate_p222": 0.354,
+      "median_wage": 1299.0
+    }
+  },
+  "generated_at": "2026-03-16T23:07:14.700828"
+}
