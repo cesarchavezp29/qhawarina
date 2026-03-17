@@ -1,6 +1,6 @@
 # Missing Mass and Minimum Wages: Distributional Effects of Three MW Increases in Peru
 ### [Alt. title: "Where Do the Workers Go? Bunching Evidence from Peru's Minimum Wage Increases"]
-## Complete Paper Outline — Revised v3
+## Complete Paper Outline — Revised v4
 
 ---
 
@@ -9,13 +9,12 @@
 | Method | Event A | Event B | Event C | Verdict |
 |--------|---------|---------|---------|---------|
 | Cengiz bunching | ✓ valid | ✓ valid | ✓ valid | **Main result** |
-| Event study / DiD | ✓ pre-trends pass (p=0.06) | ✗ fail (p=0.001) | ✓ pass (p=0.26) | A+C main text; B → Appendix B |
+| Event study / DiD | ✓ pass (p=0.061, borderline†) | ✗ fail (p=0.001) | ✓ pass (p=0.26) | A (flagged) + C main text; B → Appendix B |
 | IV / OWE | ✗ F=1.7 | ✗ F=0.4, reversed sign | ✗ F=1.5 | Appendix C — not identified |
 | Panel decomp | — | — | ✗ 86% attrition | Appendix A — unreliable |
 | EPEN DEP bunching | — | — | ✗ MW doesn't bind (Kaitz=0.47) | Dropped |
 
-**The paper is a bunching paper.** Regression-based methods are supplementary where valid
-(Events A and C event study) or in the appendix where they fail (IV, Event B, panel).
+†Event A pre-trends pass at 5% (p=0.061) but not at 10%. Results reported with this caveat.
 
 ---
 
@@ -27,44 +26,45 @@ identifiable MW events to study how the wage distribution responded.
 
 **Question**: Do Peru's MW increases produce missing mass below the threshold and bunching at
 it? Do they affect employment and hours? We use the Cengiz et al. (2019) revised bunching
-estimator as the primary tool, with event-study DiD as supplementary evidence where
+estimator as our primary tool, with event-study DiD as supplementary evidence where
 pre-trends hold.
 
 **Contribution**:
 1. First application of the Cengiz et al. (2019) bunching estimator to Peru, using three
    MW events across 2015–2023.
-2. Direct test for MW spillovers to informal wages using the same estimator on both
-   formal and informal workers.
+2. Direct test for MW spillovers to informal wages using the same estimator on formal and
+   informal workers simultaneously.
 3. We attempted the Dube & Lindner (2024) IV/OWE approach; first stages are uniformly
    weak (F < 2, reversed sign in Event B). We report these results in Appendix C.
 
 **Main findings**:
-- Formal dependent workers show clear missing mass and excess mass at the MW in all
-  three events (bunching ratios 0.70–0.83).
-- Wage compression: workers just below the MW see 3–5pp faster wage growth than high-wage
-  workers, consistent with the distributional response.
-- Informal workers show a partial response in Event A (ratio 1.22) but not Events B and C
+- Formal dependent workers show clear missing mass and excess mass at the MW in all three
+  events (bunching ratios 0.70–0.83), with increasing missing mass across events as the MW
+  rises relative to the wage distribution.
+- Wage compression: workers just above the new MW see 3–5pp faster log-wage growth than
+  high-wage workers, consistent with the distributional shift.
+- Informal workers: partial response in Event A (ratio 1.22) but not Events B and C
   (0.99 and 0.81). No consistent spillover pattern.
 - Event study DiD (Events A and C) finds employment effects near zero and not statistically
   significant.
 - Hours adjustment is negligible across all events (DiD ≤ ±1.1h/week).
 - The IV/OWE approach is not identified; no credible employment elasticity is reported.
 
-**Paper structure**: Section 2 describes the institutional context and MW events. Section 3
-presents data. Section 4 describes the empirical strategies. Sections 5–7 present bunching,
-heterogeneity, and supplementary DiD results. Section 8 concludes.
+**Paper structure**: Section 2 describes the institutional context. Section 3 presents data
+and summary statistics (Table 1). Section 4 describes the empirical strategies. Sections 5–7
+present bunching, heterogeneity, and supplementary DiD results. Section 8 concludes.
 
 ---
 
 ## 2. INSTITUTIONAL CONTEXT (≈700 words)
 
 ### 2.1 Peru's Minimum Wage System
-- **Remuneración Mínima Vital (RMV)**: set by executive decree, applies to registered formal
-  dependent workers (empleados and obreros). Not indexed to inflation or productivity.
+- **Remuneración Mínima Vital (RMV)**: set by executive decree, applies to registered
+  formal dependent workers (empleados and obreros). Not indexed to inflation or productivity.
 - Enforcement through SUNAFIL labor inspections, concentrated in Lima and large firms.
   High informality (≈72–75% of employed) and weak enforcement limit direct reach.
-- The MW directly affects the ≈10–15% of the workforce classified as formal dependent
-  workers under INEI's comprehensive formality definition (`ocupinf == 2`).
+- The MW directly affects ≈10–15% of the workforce classified as formal dependent workers
+  under INEI's comprehensive formality definition (`ocupinf == 2`).
 
 ### 2.2 The Three MW Events
 | Event | Pre-MW | Post-MW | Change | Effective date | Analysis years |
@@ -73,92 +73,104 @@ heterogeneity, and supplementary DiD results. Section 8 concludes.
 | B | S/850 | S/930 | +9.4% | April 2018 | Pre: 2017, Post: 2019 |
 | C | S/930 | S/1,025 | +10.2% | May 2022 | Pre: 2021, Post: 2023 |
 
-Event B note: employment pre-trends fail (F-test p=0.001). All regression-based results for
-Event B are in Appendix B. Bunching results are retained in the main analysis — the
-distributional estimator does not require parallel trends.
+Event B: employment pre-trends fail (F-test p=0.001). All regression-based results for
+Event B are in Appendix B. Bunching results are retained in the main analysis.
 
 ### 2.3 Department-Level Kaitz Variation
-The Kaitz index (MW / median formal wage) varies across Peru's 24 departments, ranging from
-0.44 to 1.09 across departments and years, with Huancavelica consistently the most exposed
-(Kaitz 0.72–1.09 depending on year and wage definition). For Event C specifically (2021
-pre-period), the range is 0.45 (Amazonas) to 0.72 (Huancavelica), median 0.60. This
-variation motivates the event-study identification strategy but proves insufficient for
-IV identification (Section 4.4 and Appendix C).
+The Kaitz index (MW / median formal wage) ranges from 0.44 to 1.09 across departments and
+years, with Huancavelica consistently the most exposed (Kaitz 0.72–1.09 depending on year).
+For Event C specifically (2021 pre-period), the range is 0.45–0.72, median 0.60. This
+variation motivates the event-study identification strategy but does not generate sufficient
+variation for IV identification (see Appendix C).
 
 ---
 
 ## 3. DATA (≈700 words)
 
 ### 3.1 ENAHO Module 500 (Cross-Section)
-- **Source**: ENAHO Module 500 (Empleo e Ingresos), INEI Peru. Annual stratified household survey.
-- **Years used**: 2015, 2016, 2017, 2018, 2019, 2021, 2022, 2023. No 2020 (COVID-19).
-- **Sample restriction**: Formal dependent workers, S/200–S/8,000/month.
+- **Source**: ENAHO Module 500 (Empleo e Ingresos), INEI Peru.
+- **Years**: 2015, 2016, 2017, 2018, 2019, 2021, 2022, 2023. No 2020 (COVID-19).
+- **Sample**: Formal dependent workers, S/0–S/6,000/month.
   - Employed: `ocu500 == 1`
-  - Dependent: `cat07p500a1 == 2`; verified with `p507 ∈ {3,4,6}`
+  - Dependent: `p507 ∈ {3, 4, 6}` (empleado, obrero, trabajador del hogar)
   - Formal: `ocupinf == 2` (social security registration or written contract)
 - **Key variables**:
-  - Wage: `p524a1` (monthly cash income, primary job); fallback `i524a1 / 12`
+  - Wage: `p524a1` (monthly cash income); fallback `i524a1 / 12`
   - Hours: `p513t` (total weekly hours, primary job)
-  - Survey weight: `factor07i500a`
+  - Weight: `fac500a`
   - Department: first 2 digits of `ubigeo` (24 departments)
 
-**Sample sizes (formal dependent workers):**
-| Year | N |
-|------|---|
-| 2015 | 10,102 |
-| 2016 | 11,588 |
-| 2017 | 10,930 |
-| 2018 | 11,792 |
-| 2019 | 10,992 |
-| 2021 | 9,008 |
-| 2022 | 9,666 |
-| 2023 | 9,931 |
+### 3.2 Summary Statistics (Table 1)
 
-### 3.2 EPEN CIU Annual 2023 (Appendix D)
-INEI code 873. Single cross-section of urban formal workers. No 2022 annual available.
-Used for corroboration only.
+**TABLE 1: Summary Statistics — Formal Dependent Workers, ENAHO 2015–2023**
+
+| Year | MW | N | Med. wage (S/.) | % at MW | % below MW | Median Kaitz | Mean hrs/wk | Formality rate |
+|------|----|---|:---------------:|:-------:|:----------:|:------------:|:-----------:|:--------------:|
+| 2015 | 750 | 10,134 | 1,374 | 5.1% | 11.3% | 0.546 | 46.4 | 26.7% |
+| 2016 | 850 | 11,667 | 1,500 | 5.3% | 13.9% | 0.567 | 46.2 | 27.9% |
+| 2017 | 850 | 11,026 | 1,500 | 6.9% | 10.1% | 0.567 | 46.4 | 27.4% |
+| 2018 | 930 | 11,804 | 1,580 | 6.2% | 14.6% | 0.589 | 46.3 | 27.6% |
+| 2019 | 930 | 10,991 | 1,609 | 7.6% | 11.4% | 0.578 | 46.2 | 27.3% |
+| 2021 | 930 | 9,123 | 1,500 | 10.3% | 11.2% | 0.620 | 46.8 | 23.2% |
+| 2022 | 1,025 | 9,720 | 1,700 | 6.1% | 16.9% | 0.603 | 46.6 | 24.3% |
+| 2023 | 1,025 | 9,996 | 1,800 | 10.1% | 12.3% | 0.569 | 46.5 | 26.1% |
+
+*N = unweighted formal dependent workers with valid wage. % at MW = share earning MW±12.5 (within one half-bin).
+% below MW = share earning below MW. Median Kaitz = MW / median wage, national. Formality rate = formal dep / all employed.
+Hours from p513t (formal dep with positive hours). COVID-19 year 2021 shows depressed formality and elevated Kaitz.*
+
+**Key patterns**:
+- Median wage rises from S/1,374 (2015) to S/1,800 (2023), a 31% nominal increase, lagging
+  the 37% MW increase — Kaitz rises nationally from 0.546 to 0.620 by 2021 before recovering.
+- Share at MW nearly doubles: 5.1% (2015) → 10.1% (2023), indicating increasing MW bindingness.
+- Formality rate dips sharply in 2021 (23.2%) due to COVID-19 — context for Event C identification.
+- Hours stable at 46–47h/week throughout; no aggregate hours response to MW increases.
+
+### 3.3 EPEN CIU Annual 2023 (Appendix D)
+INEI code 873. Urban formal workers, single cross-section. No 2022 annual available.
 
 ---
 
 ## 4. EMPIRICAL STRATEGY (≈800 words)
 
 ### 4.1 Cengiz Bunching Estimator (Primary)
-Bin width: S/25. Wage distribution: S/200–S/4,000 (survey-weighted).
+Bin width: S/25. Range: S/0–S/6,000 (survey-weighted by `fac500a`).
 
-**Counterfactual**: degree-4 polynomial fit on clean zone (wages > 2 × MW_new), excluding
-the affected zone [0.85 × MW_old, MW_new + 250].
+**Counterfactual**: weighted-average background shift from clean zone (wages > 2 × MW_new),
+applied uniformly as a shift correction to the full pre-post delta.
 
 **Missing mass** (net deficit below MW):
-$$B^{miss} = \sum_{b \in [0.85 \times \text{MW}_{old},\; \text{MW}_{new})} \max(-\Delta_b,\; 0)$$
+$$B^{miss} = \sum_{b \in [0.85 \times \text{MW}_{old},\; \text{MW}_{new})} \max(-\Delta_b^{adj},\; 0)$$
 
 **Excess mass** (net surplus at MW):
-$$B^{exc} = \sum_{b \in [\text{MW}_{new},\; \text{MW}_{new} + 250)} \max(\Delta_b,\; 0)$$
+$$B^{exc} = \sum_{b \in [\text{MW}_{new},\; \text{MW}_{new} + 250)} \max(\Delta_b^{adj},\; 0)$$
 
-**Bunching ratio**: $R = B^{exc} / B^{miss}$. Values below 1 mean the MW zone lost more
-workers than it gained; values above 1 mean a net inflow.
+where $\Delta_b^{adj} = \Delta_b - \bar{\Delta}_{clean}$ subtracts the background trend.
 
-This estimator is valid for all three events. It does not require parallel trends or
-a valid instrument.
+**Bunching ratio**: $R = B^{exc} / B^{miss}$.
+
+This estimator is valid for all three events. It does not require parallel trends.
 
 ### 4.2 Event Study DiD (Supplementary — Events A and C)
-Pre-trend test passed for Events A and C. Event B fails (p = 0.001) → Appendix B.
+Pre-trend test passed for Events A and C. Event A borderline (p=0.061 — see note in
+Table 5). Event B fails (p=0.001) → Appendix B.
 
 $$Y_{idt} = \alpha_d + \gamma_t
   + \sum_{s \neq \text{base}} \beta_s \cdot (K_{d,\text{pre}} \times \mathbf{1}[\text{year}=s])
   + \mathbf{X}_{it}'\delta + \varepsilon_{idt}$$
 
-where $K_{d,\text{pre}} = \text{MW}_\text{old} / \text{median formal wage}_{d,\text{pre}}$.
+$K_{d,\text{pre}} = \text{MW}_\text{old} / \text{median formal wage}_{d,\text{pre}}$.
 SE clustered by department (24 clusters). WLS with survey weights.
 
 ### 4.3 Intensive Margin: Hours DiD (Supplementary)
-2×2 DiD of weighted mean weekly hours (`p513t`):
+2×2 DiD, weighted mean weekly hours (`p513t`):
 - Treatment: [0.85 × MW_old, MW_new)
 - Control: [1.5 × MW_new, 3.0 × MW_new]
 
 ### 4.4 IV / OWE Approach (Appendix C — Not Identified)
 Following Dube & Lindner (2024): OWE = $\hat{\beta}_\text{emp} / \hat{\pi}_\text{wage}$.
-First-stage F-statistics: Event A = 1.7, Event B = 0.4 (reversed sign), Event C = 1.5.
-All below the Stock-Yogo threshold of F > 10. The IV is not identified (see Appendix C).
+F-statistics: A=1.7, B=0.4 (reversed sign), C=1.5. All below Stock-Yogo threshold of F>10.
+See Appendix C.
 
 ---
 
@@ -168,86 +180,83 @@ All below the Stock-Yogo threshold of F > 10. The IV is not identified (see Appe
 
 **TABLE 2: Cengiz Revised Bunching — ENAHO CS**
 
-| Event | Group | Missing (pp) | Excess (pp) | Ratio | Emp. Δ (%) |
-|-------|-------|:-----------:|:-----------:|:-----:|:----------:|
-| **A** (750→850) | Formal dep | 6.78 | 4.72 | 0.696 | 1.33 |
-| | Informal dep | 4.45 | 5.42 | 1.218 | 1.08 |
-| | All workers | 5.41 | 4.72 | 0.872 | 1.18 |
-| **B** (850→930) | Formal dep | 8.03 | 6.66 | 0.829 | 5.59 |
-| | Informal dep | 5.28 | 5.21 | 0.987 | 0.34 |
-| | All workers | 6.44 | 5.81 | 0.901 | 2.54 |
-| **C** (930→1025) | Formal dep | 13.02 | 10.80 | 0.830 | 17.25 |
-| | Informal dep | 5.50 | 4.46 | 0.811 | 5.16 |
-| | All workers | 8.29 | 6.84 | 0.824 | 9.78 |
+| Event | Group | Missing (pp) | Excess (pp) | Ratio |
+|-------|-------|:-----------:|:-----------:|:-----:|
+| **A** (750→850) | Formal dep | 6.78 | 4.72 | 0.696 |
+| | Informal dep | 4.45 | 5.42 | 1.218 |
+| | All workers | 5.41 | 4.72 | 0.872 |
+| **B** (850→930) | Formal dep | 8.03 | 6.66 | 0.829 |
+| | Informal dep | 5.28 | 5.21 | 0.987 |
+| | All workers | 6.44 | 5.81 | 0.901 |
+| **C** (930→1025) | Formal dep | 13.02 | 10.80 | 0.830 |
+| | Informal dep | 5.50 | 4.46 | 0.811 |
+| | All workers | 8.29 | 6.84 | 0.824 |
 
 *Missing (pp) = net share lost from [0.85×MW_old, MW_new). Excess (pp) = net share gained
-at [MW_new, MW_new+250). Ratio = Excess/Missing. Emp. Δ = employment change estimate from
-net excess mass.*
+at [MW_new, MW_new+250). Ratio = Excess/Missing.*
 
 **Interpretation**:
 - Formal dep ratios < 1 across all events (0.70–0.83): more workers leave the affected zone
   than reappear at the MW, indicating transitions out of the treated zone (informal employment,
-  non-employment, or wages above the excess window).
-- Informal workers: ratio > 1 in Event A (1.22), essentially 1 in Event B (0.99), below 1 in
-  Event C (0.81). No consistent spillover pattern across events.
-- Missing mass increases with each MW rise: 6.78pp (A) → 8.03pp (B) → 13.02pp (C), reflecting
+  non-employment, or wages above the S/1,275 excess window).
+- Missing mass increases across events: 6.78pp (A) → 8.03pp (B) → 13.02pp (C), reflecting
   higher MW bite as the RMV rises relative to the wage distribution.
+- Informal workers: ratio > 1 in Event A (1.22), approximately 1 in Event B (0.99), below 1
+  in Event C (0.81). No consistent spillover pattern.
 
-**Placebo test**: Applying the same estimator to artificial MW thresholds (S/1,100→1,200 and
-S/1,400→1,500) on the same Event B population produces ratios of 0.114 and 0.013 respectively,
-compared to 0.829 at the actual S/930 threshold. Bunching is specific to the true MW.
+**Placebo test**: Applying the same estimator to artificial thresholds (S/1,100→1,200 and
+S/1,400→1,500) on the Event B population produces ratios of 0.114 and 0.013, compared to
+0.829 at the actual S/930 threshold. Bunching is specific to the true MW.
 
 ### 5.2 Figure 2: Wage Distributions Pre vs. Post
-Three panels, one per event. Each shows the formal-dep wage distribution in S/25 bins, with
-pre-period (blue bars) and post-period (orange bars) and degree-4 polynomial counterfactual
-(dashed gray). Vertical line marks the post-period MW.
+Three panels (one per event), formal-dep workers, S/25 bins. Pre-period (blue bars),
+post-period (orange bars), polynomial counterfactual (dashed gray). MW marked by vertical
+line. Shaded region = affected zone [0.85×MW_old, MW_new).
 
-*Generated by `scripts/mw_paper_figures.py`. Saved in `exports/figures/fig2_bunching_distributions.png`.*
+*Generated by `scripts/mw_paper_figures.py`. File: `exports/figures/fig2_bunching_distributions.png`.*
 
-### 5.3 Wage Compression (Supplementary — Table 3)
-Workers just below the MW saw faster wage growth than high-wage workers in all three events.
-Using the DiD compression measure (Δ log wage for workers in [MW_old, 1.3×MW_old) vs.
-[1.5×MW_new, 3×MW_new]):
+### 5.3 Wage Compression (Table 3)
+Workers in the compression zone [MW_new, 1.3×MW_new) saw faster wage growth than workers
+in the high-wage zone [1.5×MW_new, 3×MW_new) in all three events.
 
-| Event | Compression DiD | % compression |
-|-------|:--------------:|:-------------:|
+**TABLE 3: Wage Compression DiD — ENAHO CS**
+
+| Event | Compression DiD (log pts) | % compression |
+|-------|:-------------------------:|:-------------:|
 | A (750→850) | −0.036 | −3.1% |
 | B (850→930) | −0.050 | −4.4% |
 | C (930→1025) | −0.069 | −5.4% |
 
-Mean DiD = −0.030, t-test p < 0.001 (N=25 dept×event observations). The compression is not
-driven by Kaitz-intensity (Kaitz regression: β=+0.045, p=0.786), indicating a uniform
-distributional shift rather than an enforcement-intensity channel.
+Mean DiD = −0.030 log points, t-test p < 0.001. Effect grows across events, consistent with
+increasing MW bite (Table 1: Kaitz rises from 0.546 in 2015 to 0.620 in 2021).
+The compression is not driven by Kaitz-intensity (Kaitz regression: β=+0.045, p=0.786),
+indicating a uniform distributional shift rather than an enforcement-intensity channel.
+This finding is descriptive, not causal.
 
 ---
 
 ## 6. HETEROGENEITY (≈700 words)
 
 ### 6.1 By Industry Sector (Table 4 — Panel A)
-*Construction excluded: outlier ratios (A=3.23, C=8.31) caused by sparse cells (<200 obs).*
+*Construction excluded: outlier ratios (A=3.23, C=8.31) driven by sparse cells (<400 obs).*
+*Table 4 uses the same wage variable (`p524a1`) and dependent definition (`p507 ∈ {3,4,6}`)
+as Table 2. "Total" row reproduces the Table 2 formal_dep ratios.*
 
 **TABLE 4, Panel A: Bunching Ratios by Industry**
 
-Note: "Total (reference)" uses `i524a1/12` as wage variable (heterogeneity script default)
-vs. `p524a1` in Table 2 — ratios differ by 0.03–0.04 due to wage variable, not sample.†
-
 | Sector | Event A | Event B | Event C | Average |
 |--------|:-------:|:-------:|:-------:|:-------:|
-| Total (reference)† | 0.733 | 0.854 | 0.840 | 0.809 |
-| Agricultura / Minería‡ | 1.947 | 0.792 | 0.594 | 1.111 |
-| Manufactura | 1.449 | 0.955 | 1.126 | 1.177 |
-| Comercio | 0.791 | 1.230 | 0.728 | 0.916 |
-| Transporte y alojamiento | 1.036 | 1.040 | 0.609 | 0.895 |
-| Finanzas / Servicios prof. | 0.817 | 1.091 | 0.801 | 0.903 |
-| Administración pública | 1.161 | 0.531 | 0.806 | 0.833 |
-| Educación y salud | 0.648 | 0.729 | 1.003 | 0.793 |
+| **Total (= Table 2 formal dep)** | **0.696** | **0.829** | **0.830** | **0.785** |
+| Agricultura / Minería† | 1.886 | 0.801 | 0.570 | 1.086 |
+| Manufactura | 1.449 | 0.947 | 1.133 | 1.176 |
+| Comercio | 0.793 | 1.242 | 0.723 | 0.919 |
+| Transporte y alojamiento | 1.060 | 1.034 | 0.592 | 0.895 |
+| Finanzas / Servicios prof. | 0.808 | 1.089 | 0.806 | 0.901 |
+| Administración pública | 1.139 | 0.504 | 0.809 | 0.817 |
+| Educación y salud | 0.644 | 0.724 | 0.997 | 0.788 |
 
-†Table 4 "Total" uses `i524a1/12` (annualized monthly, the heterogeneity script default);
-Table 2 uses `p524a1` (primary). Difference of 0.03–0.04 in ratios reflects wage variable,
-not population differences. `p524a1` is preferred; Table 2 ratios are definitive.
-
-‡Agriculture/Mining Event A ratio (1.947) is sensitive to a single high-wage outlier bin;
-excluding Event A, the average is 0.69 — similar to other sectors.
+†Agriculture/Mining Event A ratio (1.886) sensitive to outlier bins; excluding Event A,
+average is 0.69 — consistent with other sectors.
 
 ### 6.2 By Firm Size (Table 4 — Panel B)
 
@@ -255,9 +264,9 @@ excluding Event A, the average is 0.69 — similar to other sectors.
 
 | Firm size | Event A | Event B | Event C | Average |
 |-----------|:-------:|:-------:|:-------:|:-------:|
-| Micro (≤10 workers) | 0.987 | 1.002 | 0.699 | 0.896 |
-| Pequeña (11–50) | 1.127 | 0.940 | 0.604 | 0.890 |
-| Mediana/Grande (51+) | 0.704 | 0.826 | 0.922 | 0.817 |
+| Micro (≤10 workers) | 0.902 | 0.925 | 0.707 | 0.845 |
+| Pequeña (11–50) | 1.110 | 0.949 | 0.598 | 0.886 |
+| Mediana/Grande (51+) | 0.700 | 0.814 | 0.919 | 0.811 |
 
 ### 6.3 By Age and Sex (Table 4 — Panel C)
 
@@ -265,20 +274,22 @@ excluding Event A, the average is 0.69 — similar to other sectors.
 
 | Group | Event A | Event B | Event C | Average |
 |-------|:-------:|:-------:|:-------:|:-------:|
-| Age 18–24 | 0.729 | 1.083 | 0.846 | 0.886 |
-| Age 25–44 | 0.786 | 0.818 | 0.822 | 0.808 |
-| Age 45–64 | 0.779 | 0.959 | 0.838 | 0.859 |
-| Men | 0.768 | 0.816 | 0.801 | 0.795 |
-| Women | 0.742 | 0.967 | 0.883 | 0.864 |
+| Age 18–24 | 0.729 | 1.074 | 0.848 | 0.884 |
+| Age 25–44 | 0.774 | 0.813 | 0.821 | 0.803 |
+| Age 45–64 | 0.713 | 0.939 | 0.853 | 0.835 |
+| Men | 0.759 | 0.801 | 0.797 | 0.786 |
+| Women | 0.714 | 0.947 | 0.882 | 0.848 |
 
 **Interpretation**:
-- Ratios cluster near the aggregate 0.80–0.85 for most cells. No heterogeneity is dramatic.
-- Manufactura consistently above aggregate (0.95–1.45): more bunching response, possibly
-  reflecting stronger SUNAFIL enforcement in manufacturing plants.
-- Mediana/Grande firms (51+) show rising ratios (0.70 → 0.82 → 0.92): large firms may
-  be increasing compliance as MW bite grows.
-- Young workers (18–24) show ratio 1.083 in Event B: excess exceeds missing, consistent
-  with MW serving as an entry wage anchor for new hires.
+- Ratios cluster near 0.80–0.85 for most cells. No single subgroup shows dramatically
+  different behavior.
+- Manufactura consistently above aggregate (0.95–1.45): stronger bunching response,
+  likely reflecting higher SUNAFIL enforcement density in manufacturing.
+- Mediana/Grande firms: ratio rises from 0.70 (A) to 0.92 (C) — large-firm compliance
+  increases as MW bite grows.
+- Young workers (18–24): ratio 1.074 in Event B, suggesting MW serves as an entry wage
+  anchor for new hires in that cycle.
+- Women have slightly higher ratios than men in Events B and C.
 
 ---
 
@@ -289,22 +300,24 @@ excluding Event A, the average is 0.69 — similar to other sectors.
 
 **TABLE 5: Event Study Post-Period Employment Coefficients**
 
-| Event | Post β | SE | p | Pre-trend p |
-|-------|-------:|---:|---|:-----------:|
-| A (2017) | −0.011 | 0.040 | 0.79 | 0.061 (PASS) |
-| C (2023) | +0.183 | 0.088 | 0.04 | 0.260 (PASS) |
+| Event | Post β | SE | p | Pre-trend p | Note |
+|-------|-------:|---:|---|:-----------:|------|
+| A (2017) | −0.011 | 0.040 | 0.79 | 0.061 | Borderline pre-trend |
+| C (2023) | +0.183 | 0.088 | 0.04 | 0.260 | Likely COVID recovery |
 
 *β = coefficient on Kaitz_pre × post_t. SE clustered by department (24 clusters).*
 
+**Event A**: pre-trends pass at 5% (p=0.061) but not at 10%. Post coefficient β=−0.011
+(p=0.79) — no detectable employment effect. Results reported with pre-trend caveat.
+
+**Event C**: positive post coefficient (β=+0.183, p=0.04). This likely reflects post-COVID
+recovery in higher-Kaitz departments rather than a MW effect: the 2021 pre-period is a
+COVID trough, and departments with more low-wage formal workers (higher Kaitz) may have
+recovered faster by 2023 regardless of the MW change. The weak first stage (F=1.5 — see
+Appendix C) prevents interpreting this through a wage-effect channel.
+
 **FIGURE 1: Event Study Coefficients — Employment (Events A and C)**
 Two panels, year × Kaitz coefficients with 95% CI, base year = last pre-period.
-
-- **Event A**: post coefficient β=−0.011 (p=0.79). No detectable employment effect.
-- **Event C**: post coefficient β=+0.183 (p=0.04). This positive coefficient likely reflects
-  post-COVID recovery concentrated in higher-Kaitz (lower-wage) departments, rather than
-  MW effects. The 2021 pre-period is a COVID trough; departments with more low-wage formal
-  workers (higher Kaitz) may have recovered faster by 2023 regardless of the MW. The weak
-  first stage (F=1.5) means this cannot be interpreted as a wage-effect channel.
 
 ### 7.2 Intensive Margin: Hours DiD (Table 6)
 
@@ -316,35 +329,34 @@ Two panels, year × Kaitz coefficients with 95% CI, base year = last pre-period.
 | B (850→930) | 44.8h | 45.1h | +0.3h | 41.2h | 42.0h | +0.8h | −0.5h |
 | C (930→1025) | 44.5h | 46.4h | +1.9h | 42.1h | 43.6h | +1.5h | +0.4h |
 
-*Treatment: formal dep earning [0.85×MW_old, MW_new). Control: [1.5×MW_new, 3.0×MW_new].*
+*Treatment: [0.85×MW_old, MW_new). Control: [1.5×MW_new, 3.0×MW_new]. Weighted means.*
 
-No DiD exceeds ±1.1h/week. MW increases do not produce detectable hours adjustment.
+No DiD exceeds ±1.1h/week. No evidence of intensive-margin hours adjustment.
 
 ---
 
 ## 8. CONCLUSION (≈500 words)
 
-1. MW increases in Peru compress the formal wage distribution: bunching ratios of 0.70–0.83
-   across all three events, with missing mass growing from 6.78pp (Event A) to 13.02pp
-   (Event C) as the MW rises relative to wages.
+1. MW increases in Peru produce a clear distributional response: formal dep bunching ratios
+   of 0.70–0.83 across three events. Missing mass grows from 6.78pp (A) to 13.02pp (C) as
+   the MW rises relative to wages. The placebo test (artificial thresholds produce ratios of
+   0.01–0.11) confirms the result is MW-specific.
 
-2. Wage compression of 3–5pp is present in all events and statistically robust
-   (mean DiD = −3.0%, p < 0.001), consistent with the bunching pattern.
+2. Wage compression of 3–5pp is present in all events (mean DiD = −3.0%, p < 0.001),
+   consistent with the bunching pattern.
 
-3. No consistent spillover to informal wages: the informal ratio exceeds 1 only in Event A
-   (1.22). Events B and C show ratios at or below 1.
+3. No consistent informal spillover: the informal ratio exceeds 1 only in Event A (1.22).
 
-4. Employment effects are not identified. The event study DiD (Events A and C) finds effects
-   not different from zero. The IV/OWE approach fails due to weak first stages across all
-   events. The panel decomposition is unreliable due to 86% attrition.
+4. Employment effects are not identified. Event study DiD (Events A and C) finds near-zero
+   effects, with caveats for both events (borderline pre-trend for A; COVID confound for C).
+   The IV/OWE approach fails due to weak first stages.
 
-5. No meaningful hours adjustment across three events.
+5. No meaningful hours adjustment.
 
-**What can be concluded**: Peru's MW increases produce a clear distributional shift — workers
-bunch at the new floor — without detectably large employment losses. High informality,
-uneven enforcement, and a Kaitz index below 1 for most departments likely limit the MW's
-macroeconomic bite. The data cannot distinguish low labor demand elasticity from partial
-non-compliance as the underlying mechanism.
+**What can be concluded**: Peru's MW increases produce a clear distributional shift without
+detectably large employment losses. High informality, uneven enforcement, and a Kaitz index
+below 1 for most departments likely limit employment effects. The data cannot distinguish
+low labor demand elasticity from partial non-compliance.
 
 ---
 
@@ -352,7 +364,7 @@ non-compliance as the underlying mechanism.
 
 ### Appendix A: ENAHO Panel 978 — Event C (Table A1)
 **Caveat**: ~86% attrition over 2021→2023. Results subject to survivorship bias.
-Matched subsample: `facpanel2123 > 0`. Do not use for causal inference.
+Do not use for causal inference. Matched subsample: `facpanel2123 > 0`.
 
 **TABLE A1: Panel Transition Results**
 
@@ -364,22 +376,18 @@ Matched subsample: `facpanel2123 > 0`. Do not use for causal inference.
 | Δ hours (stayers) | −0.5h/wk | −2.1h/wk | +1.6h/wk |
 
 Transition (treatment): 12.1% → formal dep, 2.1% → informal dep, 85.8% not re-interviewed
-(panel attrition — **not unemployment**).
+(**panel attrition — not unemployment**).
 
 Treatment: formal dep 2021, wage ∈ [S/791, S/1,025). Control: wage ∈ [S/1,230, S/2,563].
 
 ### Appendix B: Event B — Pre-Trend Violation and Reversed IV (Table B1)
-Pre-trend joint F-test p = **0.0014**. Pre-period employment coefficients (base 2017):
-- 2015: β=+0.016 (ns); 2016: β=+0.080 (p=0.001)
+Pre-trend joint F-test p = 0.0014. Pre-period employment coefficients (base 2017):
+2015: β=+0.016 (ns); 2016: β=+0.080 (p=0.001). Higher-Kaitz departments had systematically
+higher employment before the 2018 MW change. DiD not identified for Event B employment.
 
-Higher-Kaitz departments had systematically higher employment before the 2018 MW change.
-DiD is not identified for Event B employment.
+IV first stage: π=−0.059 (SE=0.094, F=0.4). Reversed sign. IV ratio uninterpretable.
 
-IV first stage: π=−0.059 (SE=0.094, F=0.4). Reversed sign — higher-Kaitz departments had
-lower wage growth 2017→2019. IV ratio is uninterpretable.
-
-Event B bunching remains in main Table 2 — the distributional estimator is valid and does
-not require parallel trends.
+Event B bunching remains in main Table 2 — valid, does not require parallel trends.
 
 ### Appendix C: IV / OWE — Not Identified (Table C1)
 Instrument: $K_{d,\text{pre}} = \text{MW}_\text{old} / \text{median formal wage}_{d,\text{pre}}$.
@@ -392,18 +400,19 @@ Instrument: $K_{d,\text{pre}} = \text{MW}_\text{old} / \text{median formal wage}
 | B | −0.059 | 0.094 | 0.4 | +0.171 | 0.052 | — | — |
 | C | +0.175 | 0.144 | 1.5 | +0.183 | 0.088 | +1.045 | 0.995 |
 
-Event B OWE not reported (reversed first-stage sign). F < 10 in all events (Stock-Yogo
-threshold). Peru has a single national MW across 24 departments; the instrument generates
-insufficient cross-sectional variation to identify the first stage.
-
-The wide confidence intervals (e.g., Event A: 95% CI [−0.82, +0.62]) confirm the approach
-cannot bound the employment elasticity. We report these results in Appendix C.
+Event B OWE not reported (reversed FS sign). F < 10 in all events. Peru has a single
+national MW across 24 departments; cross-departmental Kaitz variation does not generate
+sufficient first-stage power. We report these results in Appendix C.
 
 ### Appendix D: EPEN CIU Annual 2023 — Lee-Saez Bunching (Table D1)
-Single-period estimate (no 2022 annual available). N=53,316 formal urban workers.
-Formality: `INFORMAL_P == '2'`. MW = S/1,025.
+Single-period Lee-Saez estimate (INEI code 873, N=53,316 formal urban workers).
+**Note**: Lee-Saez single-period ratios are not directly comparable to the Cengiz pre-post
+ratios in Table 2. The Lee-Saez method measures the excess of the current distribution over
+a smooth counterfactual; the Cengiz method measures the pre-to-post change in distribution
+shares. The high Lee-Saez ratios (1.6×) simply confirm excess mass at the MW post-period,
+consistent with Table 2.
 
-**TABLE D1: EPEN CIU Bunching (Post 2023)**
+**TABLE D1: EPEN CIU Bunching (Post 2023, Lee-Saez)**
 
 | Sample | N | Excess factor | Ratio |
 |--------|--:|:-------------:|:-----:|
@@ -411,25 +420,24 @@ Formality: `INFORMAL_P == '2'`. MW = S/1,025.
 | Lima upper stratum | — | — | 1.602 |
 | Other cities | — | — | 1.688 |
 
-Confirms excess mass at S/1,025 in post-period urban data, consistent with Table 2.
-
 ---
 
 ## FILE INDEX
 
 | File | Contents |
 |------|----------|
-| `exports/data/mw_complete_margins.json` | Table 2, Table 3 (compression), lighthouse |
+| `exports/data/mw_complete_margins.json` | Table 2, Table 3, lighthouse |
 | `exports/data/mw_heterogeneity.json` | Table 4 all panels |
 | `exports/data/mw_iv_owe.json` | Table C1, Figure 1, event study |
 | `exports/data/mw_hours_epen_dep.json` | Table 6 |
 | `exports/data/mw_panel_decomposition.json` | Table A1 |
 | `exports/data/mw_epen_ciu_annual_bunching.json` | Table D1 |
+| `exports/data/mw_data_audit_complete.json` | Table 1 (sample_counts, wage_dist, hours) |
 | `exports/data/mw_sanity_checks.json` | Placebo test (Section 5.1) |
-| `exports/data/mw_paper_results_complete.json` | All results aggregated |
 | `exports/figures/fig2_bunching_distributions.png` | Figure 2 |
-| `scripts/mw_paper_figures.py` | Figure 2 generation script |
+| `scripts/mw_paper_figures.py` | Figure 2 generation |
+| `scripts/mw_heterogeneity_bunching.py` | Table 4 (p524a1, p507 {3,4,6}, fac500a) |
 
 ---
 
-*Revised v3: 2026-03-17. Data: ENAHO 2015–2023 (Módulo 500), EPEN CIU Annual 2023, ENAHO Panel 978.*
+*Revised v4: 2026-03-17. Data: ENAHO 2015–2023 (Módulo 500), EPEN CIU Annual 2023, ENAHO Panel 978.*

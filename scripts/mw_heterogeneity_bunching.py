@@ -79,7 +79,7 @@ EVENTS = {
 
 BIN_WIDTH = 25          # soles per bin
 WAGE_MIN = 0
-WAGE_MAX = 5000
+WAGE_MAX = 6000
 BASE_PATH = 'D:/Nexus/nexus/data/raw/enaho'
 MIN_N_WORKERS = 200     # minimum sample workers (unweighted) to report ratio
 OUT_JSON = 'D:/Nexus/nexus/exports/data/mw_heterogeneity.json'
@@ -150,11 +150,11 @@ def build_sample(df, year):
     emp = pd.to_numeric(df.get('ocu500', pd.Series(1, index=df.index)), errors='coerce') == 1
     print(f'    Employed (ocu500==1): {emp.sum():,}')
 
-    # Dependent worker: p507 in {3,4} = empleado, obrero
+    # Dependent worker: p507 in {3,4,6} — matches mw_complete_margins.py DEPENDENT constant
     if 'p507' in df.columns:
         cat = pd.to_numeric(df['p507'], errors='coerce')
-        dep = cat.isin([3, 4])
-        print(f'    Dependent (empleado/obrero p507 in {{3,4}}): {dep.sum():,}')
+        dep = cat.isin([3, 4, 6])
+        print(f'    Dependent (p507 in {{3,4,6}}): {dep.sum():,}')
     else:
         dep = pd.Series(True, index=df.index)
         print('    WARNING: p507 not found, skipping dep filter')
@@ -177,7 +177,7 @@ def build_sample(df, year):
     # Priority matches mw_complete_margins.py get_monthly_wage()
     if 'p524a1' in df.columns:
         wage_cand = pd.to_numeric(df['p524a1'], errors='coerce')
-        if wage_cand.notna().sum() > 500 and wage_cand.median() > 200:
+        if wage_cand.notna().sum() > 1000 and wage_cand.median() > 200:
             wage = wage_cand
             print(f'    Wage: p524a1 (monthly cash wage) median={wage.median():.0f}')
         elif 'i524a1' in df.columns:
@@ -191,9 +191,9 @@ def build_sample(df, year):
     else:
         raise ValueError('No wage variable found')
 
-    # Weight
+    # Weight: factor07i500a (primary, matches mw_complete_margins), fallback fac500a
     weight = None
-    for wv in ['fac500a', 'facpob07', 'factor07', 'fac500']:
+    for wv in ['factor07i500a', 'fac500a', 'facpob07', 'factor07', 'fac500']:
         if wv in df.columns:
             weight = pd.to_numeric(df[wv], errors='coerce').fillna(0)
             print(f'    Weight variable: {wv}')
