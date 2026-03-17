@@ -1,0 +1,74 @@
+{
+  "metadata": {
+    "generated": "2026-03-17T00:16:02.986360"
+  },
+  "hours_intensive_margin": {
+    "A": {
+      "treat_pre_hrs": 44.40319511982269,
+      "treat_post_hrs": 44.82955661180583,
+      "ctrl_pre_hrs": 42.1231992388026,
+      "ctrl_post_hrs": 41.45153679431264,
+      "delta_treat": 0.4263614919831369,
+      "delta_ctrl": -0.6716624444899608,
+      "did": 1.0980239364730977,
+      "n_treat_pre": 837,
+      "n_treat_post": 1851,
+      "n_ctrl_pre": 4403,
+      "n_ctrl_post": 5019
+    },
+    "B": {
+      "treat_pre_hrs": 44.78931229459374,
+      "treat_post_hrs": 45.13724633838383,
+      "ctrl_pre_hrs": 41.18558403962663,
+      "ctrl_post_hrs": 41.98836499681448,
+      "delta_treat": 0.3479340437900902,
+      "delta_ctrl": 0.8027809571878493,
+      "did": -0.45484691339775907,
+      "n_treat_pre": 1037,
+      "n_treat_post": 2226,
+      "n_ctrl_pre": 4704,
+      "n_ctrl_post": 4828
+    },
+    "C": {
+      "treat_pre_hrs": 44.457978128153655,
+      "treat_post_hrs": 46.35071500139887,
+      "ctrl_pre_hrs": 42.146425517379015,
+      "ctrl_post_hrs": 43.605764773804225,
+      "delta_treat": 1.8927368732452123,
+      "delta_ctrl": 1.45933925642521,
+      "did": 0.43339761682000244,
+      "n_treat_pre": 1171,
+      "n_treat_post": 1834,
+      "n_ctrl_pre": 3667,
+      "n_ctrl_post": 4054
+    }
+  },
+  "epen_dep_bunching": {
+    "pre_2022": {
+      "n_obs": 59142,
+      "weighted_pop": 4376221.0,
+      "median_wage": 2179.5,
+      "kaitz": 0.47,
+      "missing_mass_pp": 52.027,
+      "excess_mass_pp": 0.0,
+      "bunching_ratio": null,
+      "ratio_unreliable": false,
+      "mw_bin_share": 0.01339,
+      "mw_cf_share": 0.05362,
+      "mw_excess_factor": 0.25
+    },
+    "post_2023": {
+      "n_obs": 59562,
+      "weighted_pop": 4768590.0,
+      "median_wage": 2331.0,
+      "kaitz": 0.44,
+      "missing_mass_pp": 61.944,
+      "excess_mass_pp": 0.0,
+      "bunching_ratio": null,
+      "ratio_unreliable": false,
+      "mw_bin_share": 0.00879,
+      "mw_cf_share": 0.05863,
+      "mw_excess_factor": 0.15
+    }
+  }
+}

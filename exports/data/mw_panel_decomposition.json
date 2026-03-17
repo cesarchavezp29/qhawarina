@@ -1,0 +1,11 @@
+{
+  "metadata": {
+    "generated": "2026-03-17T00:05:18.259814",
+    "description": "Panel 978 feasibility and near-MW decomposition (Event C)"
+  },
+  "results": {
+    "feasible": true,
+    "n_treatment": 1171,
+    "n_control": 3903
+  }
+}
