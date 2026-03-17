@@ -9,12 +9,13 @@
 | Method | Event A | Event B | Event C | Verdict |
 |--------|---------|---------|---------|---------|
 | Cengiz bunching | ✓ valid | ✓ valid | ✓ valid | **Main result** |
-| Event study / DiD | ✓ pass (p=0.061, borderline†) | ✗ fail (p=0.001) | ✓ pass (p=0.26) | A (flagged) + C main text; B → Appendix B |
-| IV / OWE | ✗ F=1.7 | ✗ F=0.4, reversed sign | ✗ F=1.5 | Appendix C — not identified |
+| Event study / DiD | ⚠ no pre-period† | ✗ fail (p=0.010) | ✗ fail (p=0.034) | Appendix B — not identified |
+| IV / OWE | ✗ F=2.9 (ns) | ✗ F=0.6, reversed sign | ✗ F=2.4 (ns) | Appendix C — not identified |
 | Panel decomp | — | — | ✗ 86% attrition | Appendix A — unreliable |
 | EPEN DEP bunching | — | — | ✗ MW doesn't bind (Kaitz=0.47) | Dropped |
 
-†Event A pre-trends pass at 5% (p=0.061) but not at 10%. Results reported with this caveat.
+†Event A: 2015 is the base year; no prior ENAHO years available for pre-trend test.
+Event B and C: joint employment pre-trend F-tests fail (p=0.010 and p=0.034). DiD reported descriptively.
 
 ---
 
@@ -35,7 +36,8 @@ pre-trends hold.
 2. Direct test for MW spillovers to informal wages using the same estimator on formal and
    informal workers simultaneously.
 3. We attempted the Dube & Lindner (2024) IV/OWE approach; first stages are uniformly
-   weak (F < 2, reversed sign in Event B). We report these results in Appendix C.
+   weak (F ≤ 3, reversed sign in Event B), and employment pre-trends fail in all testable
+   events. We document why these approaches fail in Peru and report results in Appendices B–C.
 
 **Main findings**:
 - Formal dependent workers show clear missing mass and excess mass at the MW in all three
@@ -45,8 +47,8 @@ pre-trends hold.
   high-wage workers, consistent with the distributional shift.
 - Informal workers: partial response in Event A (ratio 1.22) but not Events B and C
   (0.99 and 0.81). No consistent spillover pattern.
-- Event study DiD (Events A and C) finds employment effects near zero and not statistically
-  significant.
+- Event study DiD: pre-trends fail for all testable events (B: p=0.010, C: p=0.034).
+  Results are descriptive only; no identified employment effect is reported.
 - Hours adjustment is negligible across all events (DiD ≤ ±1.1h/week).
 - The IV/OWE approach is not identified; no credible employment elasticity is reported.
 
@@ -73,15 +75,17 @@ present bunching, heterogeneity, and supplementary DiD results. Section 8 conclu
 | B | S/850 | S/930 | +9.4% | April 2018 | Pre: 2017, Post: 2019 |
 | C | S/930 | S/1,025 | +10.2% | May 2022 | Pre: 2021, Post: 2023 |
 
-Event B: employment pre-trends fail (F-test p=0.001). All regression-based results for
-Event B are in Appendix B. Bunching results are retained in the main analysis.
+Event B: employment pre-trends fail (F-test p=0.010). Event C: employment pre-trends also
+fail (p=0.034). All regression-based event study results are in Appendix B. Bunching results
+are retained in the main analysis (Cengiz estimator does not require parallel trends).
 
 ### 2.3 Department-Level Kaitz Variation
-The Kaitz index (MW / median formal wage) ranges from 0.44 to 1.09 across departments and
-years, with Huancavelica consistently the most exposed (Kaitz 0.72–1.09 depending on year).
-For Event C specifically (2021 pre-period), the range is 0.45–0.72, median 0.60. This
-variation motivates the event-study identification strategy but does not generate sufficient
-variation for IV identification (see Appendix C).
+The Kaitz index (MW / weighted-median formal wage by department) ranges from 0.44 to 1.09
+across departments and years, with Huancavelica consistently the most exposed (Kaitz 0.72–1.09
+depending on year). For Event C specifically (2021 pre-period), the range is 0.45–0.72, median
+0.60. This variation does not generate sufficient first-stage power for IV identification (F≤3
+in all events — see Appendix C), and employment pre-trends fail for Events B and C (Appendix B).
+The Kaitz is used here as a descriptive measure of MW bindingness, not as an IV.
 
 ---
 
@@ -151,9 +155,10 @@ where $\Delta_b^{adj} = \Delta_b - \bar{\Delta}_{clean}$ subtracts the backgroun
 
 This estimator is valid for all three events. It does not require parallel trends.
 
-### 4.2 Event Study DiD (Supplementary — Events A and C)
-Pre-trend test passed for Events A and C. Event A borderline (p=0.061 — see note in
-Table 5). Event B fails (p=0.001) → Appendix B.
+### 4.2 Event Study DiD (Appendix B — Not Identified)
+Employment pre-trends fail for Events B (p=0.010) and C (p=0.034). Event A has no
+testable pre-period (2015 = base). All event study results reported in Appendix B as
+descriptive only — not causally identified.
 
 $$Y_{idt} = \alpha_d + \gamma_t
   + \sum_{s \neq \text{base}} \beta_s \cdot (K_{d,\text{pre}} \times \mathbf{1}[\text{year}=s])
@@ -169,7 +174,7 @@ SE clustered by department (24 clusters). WLS with survey weights.
 
 ### 4.4 IV / OWE Approach (Appendix C — Not Identified)
 Following Dube & Lindner (2024): OWE = $\hat{\beta}_\text{emp} / \hat{\pi}_\text{wage}$.
-F-statistics: A=1.7, B=0.4 (reversed sign), C=1.5. All below Stock-Yogo threshold of F>10.
+F-statistics: A=2.9, B=0.6 (reversed sign), C=2.4. All below Stock-Yogo threshold of F>10.
 See Appendix C.
 
 ---
@@ -306,29 +311,32 @@ average is 0.69 — consistent with other sectors.
 
 ## 7. SUPPLEMENTARY: EVENT STUDY AND HOURS (≈600 words)
 
-### 7.1 Event Study DiD — Employment (Table 5, Figure 1)
-*Events A and C only. Event B: Appendix B.*
+### 7.1 Event Study DiD — Employment (Table 5, Figure 1, Appendix B)
+Pre-trend tests fail for all identified events (B: p=0.010; C: p=0.034; A: no pre-period).
+Results reported as descriptive only.
 
-**TABLE 5: Event Study Post-Period Employment Coefficients**
+**TABLE 5: Event Study Post-Period Employment Coefficients (Descriptive)**
 
 | Event | Post β | SE | p | Pre-trend p | Note |
 |-------|-------:|---:|---|:-----------:|------|
-| A (2017) | −0.011 | 0.040 | 0.79 | 0.061 | Borderline pre-trend |
-| C (2023) | +0.183 | 0.088 | 0.04 | 0.260 | Likely COVID recovery |
+| A (2017) | +0.007 | 0.034 | 0.84 | — | No pre-period; untestable |
+| B (2019) | +0.120 | 0.044 | 0.01 | 0.010 | Pre-trend FAIL → Appendix B |
+| C (2023) | +0.224 | 0.078 | 0.004 | 0.034 | Pre-trend FAIL → Appendix B |
 
 *β = coefficient on Kaitz_pre × post_t. SE clustered by department (24 clusters).*
 
-**Event A**: pre-trends pass at 5% (p=0.061) but not at 10%. Post coefficient β=−0.011
-(p=0.79) — no detectable employment effect. Results reported with pre-trend caveat.
+**Event A**: no prior ENAHO waves in our dataset; only 2015 (base year) available.
+Post β=+0.007 (p=0.84) — no employment effect, but identification relies on parallel trends
+that cannot be verified.
 
-**Event C**: positive post coefficient (β=+0.183, p=0.04). This likely reflects post-COVID
-recovery in higher-Kaitz departments rather than a MW effect: the 2021 pre-period is a
-COVID trough, and departments with more low-wage formal workers (higher Kaitz) may have
-recovered faster by 2023 regardless of the MW change. The weak first stage (F=1.5 — see
-Appendix C) prevents interpreting this through a wage-effect channel.
+**Events B and C**: pre-trend F-tests fail. The positive post coefficients likely reflect
+pre-existing employment growth in higher-Kaitz departments rather than a MW effect. For
+Event C specifically, higher-Kaitz departments (more low-wage workers) may have recovered
+faster from the COVID-19 shock by 2023 regardless of the MW change.
 
-**FIGURE 1: Event Study Coefficients — Employment (Events A and C)**
-Two panels, year × Kaitz coefficients with 95% CI, base year = last pre-period.
+**FIGURE 1: Event Study Coefficients — Employment (All Events)**
+Three panels, year × Kaitz coefficients with 95% CI, base year = last pre-period.
+*Caption will note pre-trend failures for Events B and C.*
 
 ### 7.2 Intensive Margin: Hours DiD (Table 6)
 
@@ -358,9 +366,10 @@ No DiD exceeds ±1.1h/week. No evidence of intensive-margin hours adjustment.
 
 3. No consistent informal spillover: the informal ratio exceeds 1 only in Event A (1.22).
 
-4. Employment effects are not identified. Event study DiD (Events A and C) finds near-zero
-   effects, with caveats for both events (borderline pre-trend for A; COVID confound for C).
-   The IV/OWE approach fails due to weak first stages.
+4. Employment effects are not identified by any available method. Event study pre-trends
+   fail for all testable events (B: p=0.010; C: p=0.034). The IV/OWE approach fails due
+   to weak first stages (F≤3) even with corrected weighted-median Kaitz. The data are
+   consistent with small or zero employment effects, but this cannot be established causally.
 
 5. No meaningful hours adjustment.
 
@@ -391,29 +400,42 @@ Transition (treatment): 12.1% → formal dep, 2.1% → informal dep, 85.8% not r
 
 Treatment: formal dep 2021, wage ∈ [S/791, S/1,025). Control: wage ∈ [S/1,230, S/2,563].
 
-### Appendix B: Event B — Pre-Trend Violation and Reversed IV (Table B1)
-Pre-trend joint F-test p = 0.0014. Pre-period employment coefficients (base 2017):
-2015: β=+0.016 (ns); 2016: β=+0.080 (p=0.001). Higher-Kaitz departments had systematically
-higher employment before the 2018 MW change. DiD not identified for Event B employment.
+### Appendix B: Event Study — Pre-Trend Violations (Table B1)
+All three events have identification problems for the event study DiD.
 
-IV first stage: π=−0.059 (SE=0.094, F=0.4). Reversed sign. IV ratio uninterpretable.
+**Event A**: No pre-period data (2015 = base year, no 2014 or earlier in our sample).
+Parallel trends assumption untestable. Post β=+0.007 (p=0.84), no employment effect,
+but cannot be claimed as causal.
 
-Event B bunching remains in main Table 2 — valid, does not require parallel trends.
+**Event B**: Joint pre-trend F-test p=0.010 (employment). Pre-period coefficients (base 2017):
+2015: β=−0.019 (ns); 2016: β=+0.051 (ns, p=0.052). Higher-Kaitz departments had
+systematically higher employment before the 2018 MW change. DiD not identified.
+IV first stage: π=−0.065 (SE=0.085, F=0.6). Reversed sign. IV ratio uninterpretable.
+
+**Event C**: Joint pre-trend F-test p=0.034 (employment). Pre-period 2019: β=+0.168 (p=0.024).
+Higher-Kaitz departments had higher employment in 2019 (pre-COVID), which by 2021 (our
+base year) collapsed disproportionately. The 2019→2021 pre-trend renders the 2021→2023
+comparison non-parallel.
+
+All bunching results remain in main text — Cengiz estimator does not require parallel trends.
 
 ### Appendix C: IV / OWE — Not Identified (Table C1)
 Instrument: $K_{d,\text{pre}} = \text{MW}_\text{old} / \text{median formal wage}_{d,\text{pre}}$.
 
 **TABLE C1: First Stage, Reduced Form, and OWE**
 
-| Event | π (FS) | SE | F | β (RF) | SE | OWE | SE |
-|-------|-------:|---:|:-:|-------:|---:|----:|---:|
-| A | +0.110 | 0.084 | 1.7 | −0.011 | 0.040 | −0.097 | 0.367 |
-| B | −0.059 | 0.094 | 0.4 | +0.171 | 0.052 | — | — |
-| C | +0.175 | 0.144 | 1.5 | +0.183 | 0.088 | +1.045 | 0.995 |
+| Event | π (FS) | SE | F | β (RF emp) | SE | OWE | SE |
+|-------|-------:|---:|:-:|----------:|---:|----:|---:|
+| A | +0.124 | 0.073 | 2.9 | +0.007 | 0.034 | +0.054 | 0.276 |
+| B | −0.065 | 0.085 | 0.6 | +0.120 | 0.044 | — | — |
+| C | +0.142 | 0.092 | 2.4 | +0.224 | 0.078 | +1.576 | 1.155 |
+| Pooled A+B+C | — | — | — | — | — | +0.114 | 0.267 |
+| Pooled A+B | — | — | — | — | — | +0.031 | 0.275 |
 
-Event B OWE not reported (reversed FS sign). F < 10 in all events. Peru has a single
-national MW across 24 departments; cross-departmental Kaitz variation does not generate
-sufficient first-stage power. We report these results in Appendix C.
+Event B OWE not reported (reversed FS sign). F < 10 in all events (Stock-Yogo threshold).
+Peru has a single national MW across 24 departments; Kaitz variation does not generate
+sufficient first-stage power even with corrected weighted-median Kaitz construction.
+Pooled A+B+C OWE = +0.114 (SE=0.267, p=0.67) — not significant, consistent with zero.
 
 ### Appendix D: EPEN CIU Annual 2023 — Lee-Saez Bunching (Table D1)
 Single-period Lee-Saez estimate (INEI code 873, N=53,316 formal urban workers).
@@ -451,4 +473,4 @@ consistent with Table 2.
 
 ---
 
-*Revised v4: 2026-03-17. Data: ENAHO 2015–2023 (Módulo 500), EPEN CIU Annual 2023, ENAHO Panel 978.*
+*Revised v5: 2026-03-17. Kaitz fix (weighted median); Event C pre-trend updated to FAIL (p=0.034); all F-stats and OWE values updated. Data: ENAHO 2015–2023 (Módulo 500), EPEN CIU Annual 2023, ENAHO Panel 978.*

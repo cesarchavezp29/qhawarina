@@ -8,8 +8,9 @@ Events (identical to mw_cengiz_bunching.py):
   B: S/850 -> S/930  (Apr 2018)  pre=2017, post=2019
   C: S/930 -> S/1025 (May 2022)  pre=2021, post=2023
 
-SAMPLE: employed dependent workers (p507 in {3,4} = empleado/obrero) with
-        monthly wage (i524a1/12) > 0, valid weight (fac500a > 0).
+SAMPLE: employed dependent workers (p507 in {3,4,6} = empleado/obrero/trab.hogar) with
+        monthly wage (p524a1 preferred, fallback i524a1/12) > 0, valid weight (fac500a > 0).
+        WAGE_MAX = 6000 (same as mw_complete_margins.py). Matches Table 2 formal_dep.
 
 SECTOR MAP (CIIU rev4 / p506r4, first 2 digits):
   01-09    Agriculture / Mining / Fishing

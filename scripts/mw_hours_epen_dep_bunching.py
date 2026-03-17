@@ -52,7 +52,7 @@ def load_enaho_formal_dep(year):
     ubigeo = df.get('ubigeo', pd.Series('', index=df.index)).astype(str).str.zfill(6)
     dept   = ubigeo.str[:2]
 
-    mask = emp & dep & formal & (wage > 0) & (wage < 15000) & wt.notna()
+    mask = emp & dep & formal & (wage > 0) & (wage < 6000) & wt.notna()
     out = pd.DataFrame({'wage': wage, 'hrs': hrs, 'wt': wt, 'dept': dept})[mask]
     return out.reset_index(drop=True)
 

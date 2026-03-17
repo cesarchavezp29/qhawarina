@@ -149,10 +149,18 @@ for year in [2015, 2016, 2017, 2018, 2019, 2021, 2022, 2023]:
 
 # ─── Compute department Kaitz (pre-period) for each event ─────────────────────
 def dept_kaitz(df_pre, mw_old):
-    """Kaitz = MW_old / median_formal_wage by department."""
-    dept_med = (df_pre.groupby('dept')
-                .apply(lambda g: np.average(g['wage'], weights=g['wt']) if len(g) > 10 else np.nan)
-                .rename('med_wage'))
+    """Kaitz = MW_old / weighted_median_formal_wage by department."""
+    def wmedian(g):
+        if len(g) <= 10:
+            return np.nan
+        wages = g['wage'].values
+        wts   = g['wt'].values
+        idx   = np.argsort(wages)
+        wages, wts = wages[idx], wts[idx]
+        cumw  = np.cumsum(wts)
+        half  = cumw[-1] / 2.0
+        return float(wages[np.searchsorted(cumw, half)])
+    dept_med = (df_pre.groupby('dept').apply(wmedian).rename('med_wage'))
     kaitz = (mw_old / dept_med).rename('kaitz')
     return kaitz.dropna()
 
