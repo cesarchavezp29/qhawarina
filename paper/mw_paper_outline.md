@@ -233,6 +233,17 @@ The compression is not driven by Kaitz-intensity (Kaitz regression: β=+0.045, p
 indicating a uniform distributional shift rather than an enforcement-intensity channel.
 This finding is descriptive, not causal.
 
+**DRAFT NOTE — mechanism framing (critical for referee)**: The compression zone workers
+[MW_new, 1.3×MW_new) were NOT directly hit by the MW increase — their wages were already
+above the new floor. The DiD being negative means their wages grew *slower* than high
+earners, not that the MW pushed their wages down. The mechanism is: floor workers at
+[0.85×MW_old, MW_new) received mandatory raises to the new MW, compressing the gap between
+them and just-above-floor workers who did not receive proportional raises. The compression
+is driven by the bottom of the distribution being lifted, not by any suppression at the
+top. The draft must state this explicitly: "Wages in the compression zone grew more slowly
+*relative to high earners*, reflecting the mechanical narrowing of the gap between the
+new floor and workers just above it — not a negative effect of the MW on above-floor wages."
+
 ---
 
 ## 6. HETEROGENEITY (≈700 words)
