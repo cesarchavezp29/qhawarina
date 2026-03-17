@@ -247,16 +247,36 @@ for ev, cfg in EVENTS.items():
         'n_depts': df_wages['dept'].nunique(),
     }
 
-# Pooled OWE (inverse-variance weighted)
+# Pooled OWE (inverse-variance weighted) — all events
 valid_owe = [(ev, r) for ev, r in owe_results.items() if r.get('owe') and r.get('owe_se')]
 if len(valid_owe) >= 2:
     owe_vals = np.array([r['owe'] for _, r in valid_owe])
     owe_ses  = np.array([r['owe_se'] for _, r in valid_owe])
     ivw = (owe_vals / owe_ses**2).sum() / (1 / owe_ses**2).sum()
     ivw_se = 1 / np.sqrt((1 / owe_ses**2).sum())
-    print(f"\n  Pooled IVW OWE = {ivw:.3f}  (SE={ivw_se:.3f})")
+    ivw_p = 2 * (1 - __import__('scipy.stats', fromlist=['norm']).norm.cdf(abs(ivw / ivw_se)))
+    print(f"\n  Pooled IVW OWE (A+B+C) = {ivw:.3f}  (SE={ivw_se:.3f})")
     print(f"  US Dube (2019) benchmark: OWE ~ -0.04")
-    owe_results['pooled'] = {'owe': round(float(ivw), 4), 'owe_se': round(float(ivw_se), 4)}
+    owe_results['pooled'] = {'owe': round(float(ivw), 4), 'owe_se': round(float(ivw_se), 4),
+                             'owe_p': round(float(ivw_p), 4)}
+
+# Pooled OWE A+B only (Event C excluded: weak instrument F=1.5)
+valid_ab = [(ev, r) for ev, r in owe_results.items()
+            if ev in ('A', 'B') and r.get('owe') and r.get('owe_se')]
+if len(valid_ab) >= 2:
+    owe_ab = np.array([r['owe'] for _, r in valid_ab])
+    ses_ab = np.array([r['owe_se'] for _, r in valid_ab])
+    ivw_ab = (owe_ab / ses_ab**2).sum() / (1 / ses_ab**2).sum()
+    ivw_ab_se = 1 / np.sqrt((1 / ses_ab**2).sum())
+    ivw_ab_p = 2 * (1 - __import__('scipy.stats', fromlist=['norm']).norm.cdf(abs(ivw_ab / ivw_ab_se)))
+    print(f"  Pooled IVW OWE (A+B only) = {ivw_ab:.3f}  (SE={ivw_ab_se:.3f}, p={ivw_ab_p:.3f})")
+    print(f"  [Event C excluded: weak first stage F=1.5]")
+    owe_results['pooled_ab'] = {
+        'owe': round(float(ivw_ab), 4),
+        'owe_se': round(float(ivw_ab_se), 4),
+        'owe_p': round(float(ivw_ab_p), 4),
+        'note': 'Events A+B only; Event C excluded (F=1.5, weak instrument)',
+    }
 
 # ─── EVENT STUDY (Pre-trends) ─────────────────────────────────────────────────
 print("\n\n" + "=" * 70)

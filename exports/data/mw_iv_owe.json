@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated": "2026-03-17T00:20:19.907628",
+    "generated": "2026-03-17T00:32:34.778793",
     "description": "IV/OWE (Dube-Lindner) + Event Study pre-trends"
   },
   "owe": {
@@ -48,7 +48,14 @@
     },
     "pooled": {
       "owe": 0.0241,
-      "owe_se": 0.3434
+      "owe_se": 0.3434,
+      "owe_p": 0.944
+    },
+    "pooled_ab": {
+      "owe": -0.1141,
+      "owe_se": 0.3658,
+      "owe_p": 0.7552,
+      "note": "Events A+B only; Event C excluded (F=1.5, weak instrument)"
     }
   },
   "event_study": {
