@@ -35,9 +35,11 @@ pre-trends hold.
    MW events across 2015–2023.
 2. Direct test for MW spillovers to informal wages using the same estimator on formal and
    informal workers simultaneously.
-3. We attempted the Dube & Lindner (2024) IV/OWE approach; first stages are uniformly
-   weak (F ≤ 3, reversed sign in Event B), and employment pre-trends fail in all testable
-   events. We document why these approaches fail in Peru and report results in Appendices B–C.
+3. We systematically test three identification strategies for employment effects (IV at
+   department level, IV at province level, within-year province IV) and document why all
+   fail in Peru's national-MW setting: the Kaitz instrument conflates MW exposure with
+   poverty gradients and seasonal wage dynamics. This is a methodological contribution for
+   researchers working with single-national-MW countries. Results in Appendices B–C.
 
 **Main findings**:
 - Formal dependent workers show clear missing mass and excess mass at the MW in all three
@@ -366,10 +368,13 @@ No DiD exceeds ±1.1h/week. No evidence of intensive-margin hours adjustment.
 
 3. No consistent informal spillover: the informal ratio exceeds 1 only in Event A (1.22).
 
-4. Employment effects are not identified by any available method. Event study pre-trends
-   fail for all testable events (B: p=0.010; C: p=0.034). The IV/OWE approach fails due
-   to weak first stages (F≤3) even with corrected weighted-median Kaitz. The data are
-   consistent with small or zero employment effects, but this cannot be established causally.
+4. Employment effects are not identified by any available method. Three IV strategies tested
+   (dept-level annual, province-level annual, within-year province) all fail validity tests:
+   pre-existing trends (F=8 in pre-period), negative signs, or seasonal confounds (placebo
+   F=12.7 with no MW change). This is not a data-quality failure but a structural feature
+   of single-national-MW countries: Kaitz variation reflects poverty gradients with
+   independent dynamics. The bunching results are consistent with small employment effects,
+   but this cannot be established causally.
 
 5. No meaningful hours adjustment.
 
@@ -420,9 +425,31 @@ comparison non-parallel.
 All bunching results remain in main text — Cengiz estimator does not require parallel trends.
 
 ### Appendix C: IV / OWE — Not Identified (Table C1)
-Instrument: $K_{d,\text{pre}} = \text{MW}_\text{old} / \text{median formal wage}_{d,\text{pre}}$.
 
-**TABLE C1: First Stage, Reduced Form, and OWE**
+**Why identification fails — three approaches tested:**
+
+**Approach 1 (main): Department-level Kaitz IV, annual data.**
+$K_{d,\text{pre}} = \text{MW}_\text{old} / \text{weighted-median formal wage}_{d,\text{pre}}$
+(24 departments). F ≤ 3 in all events. Events B and C: employment pre-trends fail.
+
+**Approach 2: Province-level Kaitz IV, annual data** (109 provinces).
+Event B first stage F=11.72 but **sign is negative** (pi=−0.499): high-Kaitz provinces
+had *slower* wage growth 2017→2019. Pre-trend test (2015→2016): F=8.07, pi=−0.74.
+Higher-Kaitz provinces are structurally poorer/more remote — pre-existing declining relative
+wages, unrelated to MW. Instrument invalid.
+
+**Approach 3: Within-year province IV** (Q1 vs Q3 2018, 48 provinces).
+Event B first stage F=16.15, pi=+0.77. Placebo test (2017 Q1→Q3, no MW change):
+F=12.71, pi=+1.16. High-Kaitz provinces *always* show faster Q1→Q3 wage growth —
+seasonal confound (harvest cycles, sector composition) correlated with Kaitz.
+Instrument invalid.
+
+**Root cause**: Peru has a single national MW. Kaitz variation across provinces reflects
+poverty gradients with independent seasonal and structural dynamics. No feasible instrument
+for a national-MW setting with 24 departments (or 109 provinces) produces F>10 with
+valid pre-trends in ENAHO cross-sections.
+
+**TABLE C1: Main Specification — Department-level Kaitz IV**
 
 | Event | π (FS) | SE | F | β (RF emp) | SE | OWE | SE |
 |-------|-------:|---:|:-:|----------:|---:|----:|---:|
@@ -430,12 +457,10 @@ Instrument: $K_{d,\text{pre}} = \text{MW}_\text{old} / \text{median formal wage}
 | B | −0.065 | 0.085 | 0.6 | +0.120 | 0.044 | — | — |
 | C | +0.142 | 0.092 | 2.4 | +0.224 | 0.078 | +1.576 | 1.155 |
 | Pooled A+B+C | — | — | — | — | — | +0.114 | 0.267 |
-| Pooled A+B | — | — | — | — | — | +0.031 | 0.275 |
 
-Event B OWE not reported (reversed FS sign). F < 10 in all events (Stock-Yogo threshold).
-Peru has a single national MW across 24 departments; Kaitz variation does not generate
-sufficient first-stage power even with corrected weighted-median Kaitz construction.
-Pooled A+B+C OWE = +0.114 (SE=0.267, p=0.67) — not significant, consistent with zero.
+Event B OWE not reported (reversed FS sign). Pooled OWE=+0.114 (SE=0.267, p=0.67) —
+consistent with zero but not identified. All alternative specifications also fail
+validity tests (see above). Employment effects not identified.
 
 ### Appendix D: EPEN CIU Annual 2023 — Lee-Saez Bunching (Table D1)
 Single-period Lee-Saez estimate (INEI code 873, N=53,316 formal urban workers).
@@ -473,4 +498,4 @@ consistent with Table 2.
 
 ---
 
-*Revised v5: 2026-03-17. Kaitz fix (weighted median); Event C pre-trend updated to FAIL (p=0.034); all F-stats and OWE values updated. Data: ENAHO 2015–2023 (Módulo 500), EPEN CIU Annual 2023, ENAHO Panel 978.*
+*Revised v6: 2026-03-17. Added feasibility checks for province-level and within-year IV approaches. Both fail validity tests — documented in Appendix C. Employment effects conclusion strengthened: not a data limitation, a structural feature of national-MW settings. Data: ENAHO 2015–2023 (Módulo 500), EPEN CIU Annual 2023, ENAHO Panel 978.*
