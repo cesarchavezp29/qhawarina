@@ -1,0 +1,53 @@
+{
+  "metadata": {
+    "description": "Table 3: Wage compression DiD decomposition into mechanical (composition) and genuine components",
+    "source_script": "Computed analytically from mw_complete_margins.py wage_compression output + new_arrivals share",
+    "method": "mechanical = DiD predicted if existing compression-zone workers grew at high-wage rate and new arrivals enter at log(MW_new). genuine = total DiD minus mechanical.",
+    "zones": {
+      "compression": "[MW_new, 1.5 x MW_new]",
+      "high_wage": "[2 x MW_new, 3 x MW_new]"
+    },
+    "total_did_source": "mw_complete_margins.json / wage_compression / compression_did (rounded)",
+    "generated": "2026-03-17"
+  },
+  "decomposition": {
+    "A": {
+      "event": "A",
+      "mw_old": 750,
+      "mw_new": 850,
+      "total_did": -0.035,
+      "mechanical": -0.028,
+      "genuine": -0.008,
+      "pct_mechanical": 78,
+      "new_arrivals_pct_of_zone": 13
+    },
+    "B": {
+      "event": "B",
+      "mw_old": 850,
+      "mw_new": 930,
+      "total_did": -0.050,
+      "mechanical": -0.021,
+      "genuine": -0.029,
+      "pct_mechanical": 41,
+      "new_arrivals_pct_of_zone": 10
+    },
+    "C": {
+      "event": "C",
+      "mw_old": 930,
+      "mw_new": 1025,
+      "total_did": -0.069,
+      "mechanical": -0.064,
+      "genuine": -0.005,
+      "pct_mechanical": 92,
+      "new_arrivals_pct_of_zone": 26
+    }
+  },
+  "cross_check": {
+    "total_did_from_mw_complete_margins": {
+      "A": -0.03546985781226564,
+      "B": -0.050190601097462206,
+      "C": -0.06883162977261481
+    },
+    "note": "Table 3 rounds to -0.035 / -0.050 / -0.069. Decomposition values (mechanical/genuine) were computed analytically and are not separately stored in mw_complete_margins.json."
+  }
+}

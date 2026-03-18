@@ -1,0 +1,692 @@
+{
+  "generated_at": "2026-03-17T23:05:02.526666",
+  "description": "Cengiz bunching by ethnicity, education, geography, employer sector",
+  "ethnicity_note": "Events A/B: mother tongue from Module 300 (p300a); Event C: ethnic self-ID from Module 500 (p558c). Indigenous = quechua+aymara+nativa for both sources.",
+  "events": {
+    "A": {
+      "name": "S/750->S/850 (May 2016)",
+      "mw_old": 750,
+      "mw_new": 850,
+      "pre_year": 2015,
+      "post_year": 2017
+    },
+    "B": {
+      "name": "S/850->S/930 (Apr 2018)",
+      "mw_old": 850,
+      "mw_new": 930,
+      "pre_year": 2017,
+      "post_year": 2019
+    },
+    "C": {
+      "name": "S/930->S/1025 (May 2022)",
+      "mw_old": 930,
+      "mw_new": 1025,
+      "pre_year": 2021,
+      "post_year": 2023
+    }
+  },
+  "subgroups": [
+    {
+      "name": "ALL",
+      "label": "TOTAL (referencia)",
+      "n_ref_2015": 9952,
+      "median_wage_2015": 1400.0,
+      "share_below_750": 0.1091,
+      "event_A": {
+        "insufficient_n": false,
+        "ratio_unreliable": false,
+        "bunching_ratio": 0.6963,
+        "missing_pp": 6.7797,
+        "excess_pp": 4.7208,
+        "n_pre_raw": 9952,
+        "n_post_raw": 10789,
+        "n_pre_weighted": 3305215,
+        "n_post_weighted": 3349235,
+        "median_wage_pre": 1400.0
+      },
+      "event_B": {
+        "insufficient_n": false,
+        "ratio_unreliable": false,
+        "bunching_ratio": 0.8286,
+        "missing_pp": 8.0317,
+        "excess_pp": 6.6551,
+        "n_pre_raw": 10789,
+        "n_post_raw": 10745,
+        "n_pre_weighted": 3349235,
+        "n_post_weighted": 3536554,
+        "median_wage_pre": 1500.0
+      },
+      "event_C": {
+        "insufficient_n": false,
+        "ratio_unreliable": false,
+        "bunching_ratio": 0.8295,
+        "missing_pp": 13.0191,
+        "excess_pp": 10.7997,
+        "n_pre_raw": 8855,
+        "n_post_raw": 9650,
+        "n_pre_weighted": 3033492,
+        "n_post_weighted": 3556704,
+        "median_wage_pre": 1800.0
+      },
+      "avg_ratio": 0.7848
+    },
+    {
+      "name": "ethn_indigenous",
+      "label": "A. Indigena (quechua/aymara/nativo)",
+      "n_ref_2015": 904,
+      "median_wage_2015": 1400.0,
+      "share_below_750": 0.0874,
+      "event_A": {
+        "insufficient_n": false,
+        "ratio_unreliable": false,
+        "bunching_ratio": 1.8038,
+        "missing_pp": 4.2435,
+        "excess_pp": 7.6545,
+        "n_pre_raw": 904,
+        "n_post_raw": 897,
+        "n_pre_weighted": 264381,
+        "n_post_weighted": 264363,
+        "median_wage_pre": 1400.0
+      },
+      "event_B": {
+        "insufficient_n": false,
+        "ratio_unreliable": false,
+        "bunching_ratio": 0.631,
+        "missing_pp": 10.636,
+        "excess_pp": 6.7116,
+        "n_pre_raw": 897,
+        "n_post_raw": 922,
+        "n_pre_weighted": 264363,
+        "n_post_weighted": 277419,
+        "median_wage_pre": 1500.0
+      },
+      "event_C": {
+        "insufficient_n": false,
+        "ratio_unreliable": false,
+        "bunching_ratio": 1.3627,
+        "missing_pp": 7.8051,
+        "excess_pp": 10.6363,
+        "n_pre_raw": 1711,
+        "n_post_raw": 1811,
+        "n_pre_weighted": 537301,
+        "n_post_weighted": 619741,
+        "median_wage_pre": 1813.0
+      },
+      "avg_ratio": 1.2658
+    },
+    {
+      "name": "ethn_afro",
+      "label": "A. Afrodescendiente (2021+ solo)",
+      "n_ref_2015": 0,
+      "median_wage_2015": null,
+      "share_below_750": null,
+      "event_A": {
+        "insufficient_n": true,
+        "n_pre": 0,
+        "n_post": 0,
+        "bunching_ratio": null
+      },
+      "event_B": {
+        "insufficient_n": true,
+        "n_pre": 0,
+        "n_post": 0,
+        "bunching_ratio": null
+      },
+      "event_C": {
+        "insufficient_n": false,
+        "ratio_unreliable": false,
+        "bunching_ratio": 0.5622,
+        "missing_pp": 13.353,
+        "excess_pp": 7.5064,
+        "n_pre_raw": 451,
+        "n_post_raw": 511,
+        "n_pre_weighted": 157804,
+        "n_post_weighted": 184716,
+        "median_wage_pre": 1264.0
+      },
+      "avg_ratio": 0.5622
+    },
+    {
+      "name": "ethn_mestizo",
+      "label": "A. Mestizo (2021+ solo)",
+      "n_ref_2015": 0,
+      "median_wage_2015": null,
+      "share_below_750": null,
+      "event_A": {
+        "insufficient_n": true,
+        "n_pre": 0,
+        "n_post": 0,
+        "bunching_ratio": null
+      },
+      "event_B": {
+        "insufficient_n": true,
+        "n_pre": 0,
+        "n_post": 0,
+        "bunching_ratio": null
+      },
+      "event_C": {
+        "insufficient_n": false,
+        "ratio_unreliable": false,
+        "bunching_ratio": 0.7314,
+        "missing_pp": 14.0361,
+        "excess_pp": 10.2658,
+        "n_pre_raw": 5898,
+        "n_post_raw": 6244,
+        "n_pre_weighted": 2026966,
+        "n_post_weighted": 2244638,
+        "median_wage_pre": 1800.0
+      },
+      "avg_ratio": 0.7314
+    },
+    {
+      "name": "ethn_blanco",
+      "label": "A. Blanco (2021+ solo)",
+      "n_ref_2015": 0,
+      "median_wage_2015": null,
+      "share_below_750": null,
+      "event_A": {
+        "insufficient_n": true,
+        "n_pre": 0,
+        "n_post": 0,
+        "bunching_ratio": null
+      },
+      "event_B": {
+        "insufficient_n": true,
+        "n_pre": 0,
+        "n_post": 0,
+        "bunching_ratio": null
+      },
+      "event_C": {
+        "insufficient_n": false,
+        "ratio_unreliable": false,
+        "bunching_ratio": 0.6458,
+        "missing_pp": 20.3087,
+        "excess_pp": 13.1155,
+        "n_pre_raw": 298,
+        "n_post_raw": 362,
+        "n_pre_weighted": 116558,
+        "n_post_weighted": 152306,
+        "median_wage_pre": 1600.0
+      },
+      "avg_ratio": 0.6458
+    },
+    {
+      "name": "ethn_spanish",
+      "label": "A. Castellanohablante (2015-19 solo)",
+      "n_ref_2015": 9033,
+      "median_wage_2015": 1400.0,
+      "share_below_750": 0.1113,
+      "event_A": {
+        "insufficient_n": false,
+        "ratio_unreliable": false,
+        "bunching_ratio": 0.6509,
+        "missing_pp": 7.0809,
+        "excess_pp": 4.609,
+        "n_pre_raw": 9033,
+        "n_post_raw": 9852,
+        "n_pre_weighted": 3034635,
+        "n_post_weighted": 3071882,
+        "median_wage_pre": 1400.0
+      },
+      "event_B": {
+        "insufficient_n": false,
+        "ratio_unreliable": false,
+        "bunching_ratio": 0.8833,
+        "missing_pp": 7.7879,
+        "excess_pp": 6.8788,
+        "n_pre_raw": 9852,
+        "n_post_raw": 9789,
+        "n_pre_weighted": 3071882,
+        "n_post_weighted": 3245725,
+        "median_wage_pre": 1500.0
+      },
+      "event_C": {
+        "insufficient_n": true,
+        "n_pre": 0,
+        "n_post": 0,
+        "bunching_ratio": null
+      },
+      "avg_ratio": 0.7671
+    },
+    {
+      "name": "ethn_non_indigenous",
+      "label": "A. No indigena (castellano/mestizo/blanco)",
+      "n_ref_2015": 9033,
+      "median_wage_2015": 1400.0,
+      "share_below_750": 0.1113,
+      "event_A": {
+        "insufficient_n": false,
+        "ratio_unreliable": false,
+        "bunching_ratio": 0.6509,
+        "missing_pp": 7.0809,
+        "excess_pp": 4.609,
+        "n_pre_raw": 9033,
+        "n_post_raw": 9852,
+        "n_pre_weighted": 3034635,
+        "n_post_weighted": 3071882,
+        "median_wage_pre": 1400.0
+      },
+      "event_B": {
+        "insufficient_n": false,
+        "ratio_unreliable": false,
+        "bunching_ratio": 0.8833,
+        "missing_pp": 7.7879,
+        "excess_pp": 6.8788,
+        "n_pre_raw": 9852,
+        "n_post_raw": 9789,
+        "n_pre_weighted": 3071882,
+        "n_post_weighted": 3245725,
+        "median_wage_pre": 1500.0
+      },
+      "event_C": {
+        "insufficient_n": false,
+        "ratio_unreliable": false,
+        "bunching_ratio": 0.7316,
+        "missing_pp": 14.2697,
+        "excess_pp": 10.4398,
+        "n_pre_raw": 6196,
+        "n_post_raw": 6606,
+        "n_pre_weighted": 2143524,
+        "n_post_weighted": 2396944,
+        "median_wage_pre": 1800.0
+      },
+      "avg_ratio": 0.7553
+    },
+    {
+      "name": "educ_primary",
+      "label": "B. Educacion: primaria o menos",
+      "n_ref_2015": 465,
+      "median_wage_2015": 840.0,
+      "share_below_750": 0.3634,
+      "event_A": {
+        "insufficient_n": false,
+        "ratio_unreliable": false,
+        "bunching_ratio": 1.2289,
+        "missing_pp": 13.229,
+        "excess_pp": 16.2574,
+        "n_pre_raw": 465,
+        "n_post_raw": 496,
+        "n_pre_weighted": 141684,
+        "n_post_weighted": 138420,
+        "median_wage_pre": 840.0
+      },
+      "event_B": {
+        "insufficient_n": false,
+        "ratio_unreliable": false,
+        "bunching_ratio": 0.506,
+        "missing_pp": 17.5421,
+        "excess_pp": 8.8771,
+        "n_pre_raw": 496,
+        "n_post_raw": 500,
+        "n_pre_weighted": 138420,
+        "n_post_weighted": 150355,
+        "median_wage_pre": 950.0
+      },
+      "event_C": {
+        "insufficient_n": false,
+        "ratio_unreliable": false,
+        "bunching_ratio": 0.8078,
+        "missing_pp": 20.7785,
+        "excess_pp": 16.7839,
+        "n_pre_raw": 415,
+        "n_post_raw": 389,
+        "n_pre_weighted": 138433,
+        "n_post_weighted": 141994,
+        "median_wage_pre": 930.0
+      },
+      "avg_ratio": 0.8476
+    },
+    {
+      "name": "educ_secondary",
+      "label": "B. Educacion: secundaria",
+      "n_ref_2015": 2876,
+      "median_wage_2015": 1100.0,
+      "share_below_750": 0.2104,
+      "event_A": {
+        "insufficient_n": false,
+        "ratio_unreliable": false,
+        "bunching_ratio": 0.8243,
+        "missing_pp": 8.9481,
+        "excess_pp": 7.3757,
+        "n_pre_raw": 2876,
+        "n_post_raw": 3000,
+        "n_pre_weighted": 1078751,
+        "n_post_weighted": 1064985,
+        "median_wage_pre": 1100.0
+      },
+      "event_B": {
+        "insufficient_n": false,
+        "ratio_unreliable": false,
+        "bunching_ratio": 0.9596,
+        "missing_pp": 11.9699,
+        "excess_pp": 11.4858,
+        "n_pre_raw": 3000,
+        "n_post_raw": 2939,
+        "n_pre_weighted": 1064985,
+        "n_post_weighted": 1058996,
+        "median_wage_pre": 1200.0
+      },
+      "event_C": {
+        "insufficient_n": false,
+        "ratio_unreliable": false,
+        "bunching_ratio": 0.7915,
+        "missing_pp": 20.4769,
+        "excess_pp": 16.2067,
+        "n_pre_raw": 2306,
+        "n_post_raw": 2698,
+        "n_pre_weighted": 937841,
+        "n_post_weighted": 1134958,
+        "median_wage_pre": 1200.0
+      },
+      "avg_ratio": 0.8585
+    },
+    {
+      "name": "educ_superior",
+      "label": "B. Educacion: superior",
+      "n_ref_2015": 6610,
+      "median_wage_2015": 1500.0,
+      "share_below_750": 0.047,
+      "event_A": {
+        "insufficient_n": false,
+        "ratio_unreliable": false,
+        "bunching_ratio": 0.7607,
+        "missing_pp": 5.3222,
+        "excess_pp": 4.0488,
+        "n_pre_raw": 6610,
+        "n_post_raw": 7291,
+        "n_pre_weighted": 2083886,
+        "n_post_weighted": 2144540,
+        "median_wage_pre": 1500.0
+      },
+      "event_B": {
+        "insufficient_n": false,
+        "ratio_unreliable": false,
+        "bunching_ratio": 0.9372,
+        "missing_pp": 5.4776,
+        "excess_pp": 5.1335,
+        "n_pre_raw": 7291,
+        "n_post_raw": 7304,
+        "n_pre_weighted": 2144540,
+        "n_post_weighted": 2325128,
+        "median_wage_pre": 1724.0
+      },
+      "event_C": {
+        "insufficient_n": false,
+        "ratio_unreliable": false,
+        "bunching_ratio": 0.8571,
+        "missing_pp": 9.068,
+        "excess_pp": 7.7718,
+        "n_pre_raw": 6133,
+        "n_post_raw": 6560,
+        "n_pre_weighted": 1956976,
+        "n_post_weighted": 2277190,
+        "median_wage_pre": 2163.0
+      },
+      "avg_ratio": 0.8517
+    },
+    {
+      "name": "geo_lima",
+      "label": "C. Lima Metropolitana",
+      "n_ref_2015": 2594,
+      "median_wage_2015": 1400.0,
+      "share_below_750": 0.1018,
+      "event_A": {
+        "insufficient_n": false,
+        "ratio_unreliable": false,
+        "bunching_ratio": 0.6183,
+        "missing_pp": 7.8074,
+        "excess_pp": 4.8273,
+        "n_pre_raw": 2594,
+        "n_post_raw": 2521,
+        "n_pre_weighted": 1696141,
+        "n_post_weighted": 1659780,
+        "median_wage_pre": 1400.0
+      },
+      "event_B": {
+        "insufficient_n": false,
+        "ratio_unreliable": false,
+        "bunching_ratio": 1.0498,
+        "missing_pp": 8.7628,
+        "excess_pp": 9.1991,
+        "n_pre_raw": 2521,
+        "n_post_raw": 2376,
+        "n_pre_weighted": 1659780,
+        "n_post_weighted": 1679539,
+        "median_wage_pre": 1500.0
+      },
+      "event_C": {
+        "insufficient_n": false,
+        "ratio_unreliable": false,
+        "bunching_ratio": 0.8171,
+        "missing_pp": 18.5252,
+        "excess_pp": 15.1369,
+        "n_pre_raw": 1829,
+        "n_post_raw": 2064,
+        "n_pre_weighted": 1463225,
+        "n_post_weighted": 1678795,
+        "median_wage_pre": 1500.0
+      },
+      "avg_ratio": 0.8284
+    },
+    {
+      "name": "geo_rest",
+      "label": "C. Resto del pais",
+      "n_ref_2015": 7358,
+      "median_wage_2015": 1400.0,
+      "share_below_750": 0.1117,
+      "event_A": {
+        "insufficient_n": false,
+        "ratio_unreliable": false,
+        "bunching_ratio": 0.8563,
+        "missing_pp": 5.8569,
+        "excess_pp": 5.0152,
+        "n_pre_raw": 7358,
+        "n_post_raw": 8268,
+        "n_pre_weighted": 1609072,
+        "n_post_weighted": 1689468,
+        "median_wage_pre": 1400.0
+      },
+      "event_B": {
+        "insufficient_n": false,
+        "ratio_unreliable": false,
+        "bunching_ratio": 0.6206,
+        "missing_pp": 7.4017,
+        "excess_pp": 4.5932,
+        "n_pre_raw": 8268,
+        "n_post_raw": 8369,
+        "n_pre_weighted": 1689468,
+        "n_post_weighted": 1857027,
+        "median_wage_pre": 1500.0
+      },
+      "event_C": {
+        "insufficient_n": false,
+        "ratio_unreliable": false,
+        "bunching_ratio": 0.8876,
+        "missing_pp": 7.9596,
+        "excess_pp": 7.0647,
+        "n_pre_raw": 7026,
+        "n_post_raw": 7586,
+        "n_pre_weighted": 1570261,
+        "n_post_weighted": 1877893,
+        "median_wage_pre": 1800.0
+      },
+      "avg_ratio": 0.7882
+    },
+    {
+      "name": "geo_urban",
+      "label": "C. Area urbana (500+ hab.)",
+      "n_ref_2015": 9286,
+      "median_wage_2015": 1400.0,
+      "share_below_750": 0.0977,
+      "event_A": {
+        "insufficient_n": false,
+        "ratio_unreliable": false,
+        "bunching_ratio": 0.7015,
+        "missing_pp": 6.8583,
+        "excess_pp": 4.8113,
+        "n_pre_raw": 9286,
+        "n_post_raw": 10088,
+        "n_pre_weighted": 3208033,
+        "n_post_weighted": 3249978,
+        "median_wage_pre": 1400.0
+      },
+      "event_B": {
+        "insufficient_n": false,
+        "ratio_unreliable": false,
+        "bunching_ratio": 0.8425,
+        "missing_pp": 8.0361,
+        "excess_pp": 6.7703,
+        "n_pre_raw": 10088,
+        "n_post_raw": 9967,
+        "n_pre_weighted": 3249978,
+        "n_post_weighted": 3421548,
+        "median_wage_pre": 1500.0
+      },
+      "event_C": {
+        "insufficient_n": false,
+        "ratio_unreliable": false,
+        "bunching_ratio": 0.828,
+        "missing_pp": 13.223,
+        "excess_pp": 10.9485,
+        "n_pre_raw": 8249,
+        "n_post_raw": 8972,
+        "n_pre_weighted": 2920820,
+        "n_post_weighted": 3427644,
+        "median_wage_pre": 1800.0
+      },
+      "avg_ratio": 0.7907
+    },
+    {
+      "name": "geo_rural",
+      "label": "C. Area rural (AER)",
+      "n_ref_2015": 666,
+      "median_wage_2015": 1200.0,
+      "share_below_750": 0.2688,
+      "event_A": {
+        "insufficient_n": false,
+        "ratio_unreliable": false,
+        "bunching_ratio": 1.0158,
+        "missing_pp": 4.8615,
+        "excess_pp": 4.9384,
+        "n_pre_raw": 666,
+        "n_post_raw": 701,
+        "n_pre_weighted": 97185,
+        "n_post_weighted": 99261,
+        "median_wage_pre": 1200.0
+      },
+      "event_B": {
+        "insufficient_n": false,
+        "ratio_unreliable": false,
+        "bunching_ratio": 0.5499,
+        "missing_pp": 8.1177,
+        "excess_pp": 4.4641,
+        "n_pre_raw": 701,
+        "n_post_raw": 778,
+        "n_pre_weighted": 99261,
+        "n_post_weighted": 115006,
+        "median_wage_pre": 1200.0
+      },
+      "event_C": {
+        "insufficient_n": false,
+        "ratio_unreliable": false,
+        "bunching_ratio": 0.9094,
+        "missing_pp": 7.8181,
+        "excess_pp": 7.11,
+        "n_pre_raw": 606,
+        "n_post_raw": 678,
+        "n_pre_weighted": 112676,
+        "n_post_weighted": 129057,
+        "median_wage_pre": 1300.0
+      },
+      "avg_ratio": 0.825
+    },
+    {
+      "name": "sector_public",
+      "label": "D. Sector publico (admin/FFAA/emp.pub.)",
+      "n_ref_2015": 4315,
+      "median_wage_2015": 1554.0,
+      "share_below_750": 0.0104,
+      "event_A": {
+        "insufficient_n": false,
+        "ratio_unreliable": false,
+        "bunching_ratio": 0.9209,
+        "missing_pp": 2.9686,
+        "excess_pp": 2.7337,
+        "n_pre_raw": 4315,
+        "n_post_raw": 4763,
+        "n_pre_weighted": 1110994,
+        "n_post_weighted": 1130654,
+        "median_wage_pre": 1554.0
+      },
+      "event_B": {
+        "insufficient_n": false,
+        "ratio_unreliable": false,
+        "bunching_ratio": 0.4558,
+        "missing_pp": 4.4323,
+        "excess_pp": 2.0204,
+        "n_pre_raw": 4763,
+        "n_post_raw": 4535,
+        "n_pre_weighted": 1130654,
+        "n_post_weighted": 1160675,
+        "median_wage_pre": 1800.0
+      },
+      "event_C": {
+        "insufficient_n": false,
+        "ratio_unreliable": false,
+        "bunching_ratio": 0.8652,
+        "missing_pp": 5.0574,
+        "excess_pp": 4.3755,
+        "n_pre_raw": 3952,
+        "n_post_raw": 3838,
+        "n_pre_weighted": 1022257,
+        "n_post_weighted": 1019616,
+        "median_wage_pre": 2400.0
+      },
+      "avg_ratio": 0.7473
+    },
+    {
+      "name": "sector_private",
+      "label": "D. Sector privado (empresa privada)",
+      "n_ref_2015": 5576,
+      "median_wage_2015": 1200.0,
+      "share_below_750": 0.1835,
+      "event_A": {
+        "insufficient_n": false,
+        "ratio_unreliable": false,
+        "bunching_ratio": 0.7657,
+        "missing_pp": 8.6086,
+        "excess_pp": 6.5919,
+        "n_pre_raw": 5576,
+        "n_post_raw": 5962,
+        "n_pre_weighted": 2164644,
+        "n_post_weighted": 2188754,
+        "median_wage_pre": 1200.0
+      },
+      "event_B": {
+        "insufficient_n": false,
+        "ratio_unreliable": false,
+        "bunching_ratio": 0.962,
+        "missing_pp": 9.7265,
+        "excess_pp": 9.357,
+        "n_pre_raw": 5962,
+        "n_post_raw": 6119,
+        "n_pre_weighted": 2188754,
+        "n_post_weighted": 2328822,
+        "median_wage_pre": 1300.0
+      },
+      "event_C": {
+        "insufficient_n": false,
+        "ratio_unreliable": false,
+        "bunching_ratio": 0.7682,
+        "missing_pp": 17.1765,
+        "excess_pp": 13.1952,
+        "n_pre_raw": 4851,
+        "n_post_raw": 5759,
+        "n_pre_weighted": 1984608,
+        "n_post_weighted": 2500892,
+        "median_wage_pre": 1300.0
+      },
+      "avg_ratio": 0.832
+    }
+  ]
+}

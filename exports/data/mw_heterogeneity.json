@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-17T11:11:59.908134",
+  "generated_at": "2026-03-17T18:34:11.114676",
   "methodology": "Cengiz et al. (2019) revised bunching estimator. Sample: empleados/obreros (p507 in {3,4}), wage = i524a1/12 (annualized deflated monthly soles), fac500a > 0. Missing mass = net outflow from affected zone [0.85*mw_old, mw_new). Excess mass = positive share changes in [mw_new, mw_new + 10*BIN]. Counterfactual: background shift from clean zone (>2*mw_new) subtracted. Bunching ratio = excess / missing_net_outflow.",
   "bin_width_soles": 25,
   "min_n_threshold": 200,
@@ -42,8 +42,8 @@
       "event_A": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 0.7136,
-        "missing_pp": 6.6158,
+        "bunching_ratio": 0.6963,
+        "missing_pp": 6.7797,
         "excess_pp": 4.7208,
         "n_pre_weighted": 3305215,
         "n_post_weighted": 3349235,
@@ -55,8 +55,8 @@
       "event_B": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 0.847,
-        "missing_pp": 7.857,
+        "bunching_ratio": 0.8286,
+        "missing_pp": 8.0317,
         "excess_pp": 6.6551,
         "n_pre_weighted": 3349235,
         "n_post_weighted": 3536554,
@@ -68,8 +68,8 @@
       "event_C": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 0.839,
-        "missing_pp": 12.8725,
+        "bunching_ratio": 0.8295,
+        "missing_pp": 13.0191,
         "excess_pp": 10.7997,
         "n_pre_weighted": 3033492,
         "n_post_weighted": 3556704,
@@ -78,54 +78,54 @@
         "median_wage_pre": 1800.0,
         "share_below_mw_old_pre": 0.1163
       },
-      "avg_ratio": 0.7999
+      "avg_ratio": 0.7848
     },
     {
       "name": "sector_agri_mining",
       "label": "Agricultura / Mineria",
-      "n_pre_2015": 939,
-      "median_wage_pre": 1107.0,
-      "share_below_mw_pre": 0.3504,
+      "n_pre_2015": 1031,
+      "median_wage_pre": 1200.0,
+      "share_below_mw_pre": 0.322,
       "event_A": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 1.8858,
-        "missing_pp": 3.1171,
-        "excess_pp": 5.8781,
-        "n_pre_weighted": 235068,
-        "n_post_weighted": 227747,
-        "n_pre_raw": 939,
-        "n_post_raw": 979,
-        "median_wage_pre": 1107.0,
-        "share_below_mw_old_pre": 0.3058
+        "bunching_ratio": 1.6414,
+        "missing_pp": 3.3622,
+        "excess_pp": 5.5187,
+        "n_pre_weighted": 259819,
+        "n_post_weighted": 248060,
+        "n_pre_raw": 1031,
+        "n_post_raw": 1069,
+        "median_wage_pre": 1200.0,
+        "share_below_mw_old_pre": 0.2783
       },
       "event_B": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 0.8008,
-        "missing_pp": 4.6645,
-        "excess_pp": 3.7354,
-        "n_pre_weighted": 227747,
-        "n_post_weighted": 264105,
-        "n_pre_raw": 979,
-        "n_post_raw": 1067,
-        "median_wage_pre": 1200.0,
-        "share_below_mw_old_pre": 0.2525
+        "bunching_ratio": 0.7647,
+        "missing_pp": 4.8753,
+        "excess_pp": 3.7281,
+        "n_pre_weighted": 248060,
+        "n_post_weighted": 287611,
+        "n_pre_raw": 1069,
+        "n_post_raw": 1153,
+        "median_wage_pre": 1230.0,
+        "share_below_mw_old_pre": 0.2376
       },
       "event_C": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 0.5703,
-        "missing_pp": 3.2364,
-        "excess_pp": 1.8458,
-        "n_pre_weighted": 267104,
-        "n_post_weighted": 323563,
-        "n_pre_raw": 880,
-        "n_post_raw": 1018,
-        "median_wage_pre": 1069.5,
-        "share_below_mw_old_pre": 0.3947
+        "bunching_ratio": 0.4069,
+        "missing_pp": 6.5445,
+        "excess_pp": 2.6628,
+        "n_pre_weighted": 303372,
+        "n_post_weighted": 354575,
+        "n_pre_raw": 976,
+        "n_post_raw": 1101,
+        "median_wage_pre": 1200.0,
+        "share_below_mw_old_pre": 0.3557
       },
-      "avg_ratio": 1.0856
+      "avg_ratio": 0.9377
     },
     {
       "name": "sector_manufacturing",
@@ -136,8 +136,8 @@
       "event_A": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 1.4487,
-        "missing_pp": 4.0633,
+        "bunching_ratio": 0.9998,
+        "missing_pp": 5.8875,
         "excess_pp": 5.8865,
         "n_pre_weighted": 397648,
         "n_post_weighted": 398401,
@@ -149,8 +149,8 @@
       "event_B": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 0.9474,
-        "missing_pp": 7.9532,
+        "bunching_ratio": 0.8686,
+        "missing_pp": 8.6742,
         "excess_pp": 7.5345,
         "n_pre_weighted": 398401,
         "n_post_weighted": 414535,
@@ -162,8 +162,8 @@
       "event_C": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 1.1335,
-        "missing_pp": 13.3915,
+        "bunching_ratio": 1.0493,
+        "missing_pp": 14.4656,
         "excess_pp": 15.1789,
         "n_pre_weighted": 388984,
         "n_post_weighted": 437116,
@@ -172,7 +172,7 @@
         "median_wage_pre": 1200.0,
         "share_below_mw_old_pre": 0.2133
       },
-      "avg_ratio": 1.1765
+      "avg_ratio": 0.9726
     },
     {
       "name": "sector_construction",
@@ -183,8 +183,8 @@
       "event_A": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 3.0555,
-        "missing_pp": 1.5738,
+        "bunching_ratio": 1.5186,
+        "missing_pp": 3.1665,
         "excess_pp": 4.8088,
         "n_pre_weighted": 183174,
         "n_post_weighted": 141057,
@@ -196,8 +196,8 @@
       "event_B": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 0.729,
-        "missing_pp": 4.2353,
+        "bunching_ratio": 0.5263,
+        "missing_pp": 5.8667,
         "excess_pp": 3.0876,
         "n_pre_weighted": 141057,
         "n_post_weighted": 154975,
@@ -209,8 +209,8 @@
       "event_C": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 8.9802,
-        "missing_pp": 0.7949,
+        "bunching_ratio": 1.5355,
+        "missing_pp": 4.6491,
         "excess_pp": 7.1387,
         "n_pre_weighted": 120449,
         "n_post_weighted": 163920,
@@ -219,7 +219,7 @@
         "median_wage_pre": 1600.0,
         "share_below_mw_old_pre": 0.1666
       },
-      "avg_ratio": 4.2549
+      "avg_ratio": 1.1935
     },
     {
       "name": "sector_commerce",
@@ -230,8 +230,8 @@
       "event_A": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 0.7933,
-        "missing_pp": 11.4893,
+        "bunching_ratio": 0.7844,
+        "missing_pp": 11.6202,
         "excess_pp": 9.1145,
         "n_pre_weighted": 394744,
         "n_post_weighted": 404984,
@@ -243,8 +243,8 @@
       "event_B": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 1.2417,
-        "missing_pp": 13.0091,
+        "bunching_ratio": 1.2093,
+        "missing_pp": 13.3578,
         "excess_pp": 16.154,
         "n_pre_weighted": 404984,
         "n_post_weighted": 446831,
@@ -266,7 +266,7 @@
         "median_wage_pre": 1155.0,
         "share_below_mw_old_pre": 0.1604
       },
-      "avg_ratio": 0.9192
+      "avg_ratio": 0.9054
     },
     {
       "name": "sector_transport_accom",
@@ -277,8 +277,8 @@
       "event_A": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 1.0603,
-        "missing_pp": 11.0917,
+        "bunching_ratio": 1.0412,
+        "missing_pp": 11.295,
         "excess_pp": 11.7608,
         "n_pre_weighted": 221572,
         "n_post_weighted": 239855,
@@ -290,8 +290,8 @@
       "event_B": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 1.0343,
-        "missing_pp": 14.3792,
+        "bunching_ratio": 1.0178,
+        "missing_pp": 14.6135,
         "excess_pp": 14.873,
         "n_pre_weighted": 239855,
         "n_post_weighted": 252137,
@@ -303,8 +303,8 @@
       "event_C": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 0.5919,
-        "missing_pp": 29.0951,
+        "bunching_ratio": 0.5852,
+        "missing_pp": 29.4264,
         "excess_pp": 17.2205,
         "n_pre_weighted": 201829,
         "n_post_weighted": 264329,
@@ -313,7 +313,7 @@
         "median_wage_pre": 1200.0,
         "share_below_mw_old_pre": 0.1296
       },
-      "avg_ratio": 0.8955
+      "avg_ratio": 0.8814
     },
     {
       "name": "sector_finance_prof",
@@ -324,8 +324,8 @@
       "event_A": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 0.8077,
-        "missing_pp": 10.7734,
+        "bunching_ratio": 0.7677,
+        "missing_pp": 11.3351,
         "excess_pp": 8.702,
         "n_pre_weighted": 451830,
         "n_post_weighted": 494141,
@@ -337,8 +337,8 @@
       "event_B": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 1.0894,
-        "missing_pp": 9.9665,
+        "bunching_ratio": 1.018,
+        "missing_pp": 10.6651,
         "excess_pp": 10.8572,
         "n_pre_weighted": 494141,
         "n_post_weighted": 511565,
@@ -360,7 +360,7 @@
         "median_wage_pre": 1500.0,
         "share_below_mw_old_pre": 0.0615
       },
-      "avg_ratio": 0.9011
+      "avg_ratio": 0.864
     },
     {
       "name": "sector_public_admin",
@@ -371,8 +371,8 @@
       "event_A": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 1.1385,
-        "missing_pp": 3.747,
+        "bunching_ratio": 1.033,
+        "missing_pp": 4.1297,
         "excess_pp": 4.266,
         "n_pre_weighted": 448498,
         "n_post_weighted": 492029,
@@ -384,8 +384,8 @@
       "event_B": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 0.5039,
-        "missing_pp": 7.0086,
+        "bunching_ratio": 0.4981,
+        "missing_pp": 7.0902,
         "excess_pp": 3.5317,
         "n_pre_weighted": 492029,
         "n_post_weighted": 460739,
@@ -397,8 +397,8 @@
       "event_C": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 0.8089,
-        "missing_pp": 8.5655,
+        "bunching_ratio": 0.8036,
+        "missing_pp": 8.6222,
         "excess_pp": 6.9288,
         "n_pre_weighted": 416807,
         "n_post_weighted": 429708,
@@ -407,7 +407,7 @@
         "median_wage_pre": 2200.0,
         "share_below_mw_old_pre": 0.0196
       },
-      "avg_ratio": 0.8171
+      "avg_ratio": 0.7782
     },
     {
       "name": "sector_edu_health",
@@ -418,8 +418,8 @@
       "event_A": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 0.6436,
-        "missing_pp": 4.0849,
+        "bunching_ratio": 0.5978,
+        "missing_pp": 4.398,
         "excess_pp": 2.6291,
         "n_pre_weighted": 818620,
         "n_post_weighted": 815445,
@@ -431,8 +431,8 @@
       "event_B": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 0.7241,
-        "missing_pp": 4.0622,
+        "bunching_ratio": 0.709,
+        "missing_pp": 4.1485,
         "excess_pp": 2.9414,
         "n_pre_weighted": 815445,
         "n_post_weighted": 882973,
@@ -444,8 +444,8 @@
       "event_C": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 0.9972,
-        "missing_pp": 4.6671,
+        "bunching_ratio": 0.9745,
+        "missing_pp": 4.7762,
         "excess_pp": 4.6542,
         "n_pre_weighted": 739428,
         "n_post_weighted": 782090,
@@ -454,7 +454,7 @@
         "median_wage_pre": 2400.0,
         "share_below_mw_old_pre": 0.0216
       },
-      "avg_ratio": 0.7883
+      "avg_ratio": 0.7604
     },
     {
       "name": "size_micro",
@@ -465,8 +465,8 @@
       "event_A": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 0.9017,
-        "missing_pp": 16.3473,
+        "bunching_ratio": 0.8989,
+        "missing_pp": 16.3983,
         "excess_pp": 14.741,
         "n_pre_weighted": 267676,
         "n_post_weighted": 292813,
@@ -478,8 +478,8 @@
       "event_B": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 0.9254,
-        "missing_pp": 15.3928,
+        "bunching_ratio": 0.909,
+        "missing_pp": 15.6708,
         "excess_pp": 14.2441,
         "n_pre_weighted": 292813,
         "n_post_weighted": 341260,
@@ -491,8 +491,8 @@
       "event_C": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 0.7073,
-        "missing_pp": 26.8112,
+        "bunching_ratio": 0.6897,
+        "missing_pp": 27.4978,
         "excess_pp": 18.9645,
         "n_pre_weighted": 305153,
         "n_post_weighted": 388914,
@@ -501,7 +501,7 @@
         "median_wage_pre": 1050.0,
         "share_below_mw_old_pre": 0.2177
       },
-      "avg_ratio": 0.8448
+      "avg_ratio": 0.8325
     },
     {
       "name": "size_small",
@@ -512,8 +512,8 @@
       "event_A": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 1.11,
-        "missing_pp": 6.5731,
+        "bunching_ratio": 0.9187,
+        "missing_pp": 7.9421,
         "excess_pp": 7.2961,
         "n_pre_weighted": 512474,
         "n_post_weighted": 522719,
@@ -525,8 +525,8 @@
       "event_B": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 0.9492,
-        "missing_pp": 11.2875,
+        "bunching_ratio": 0.9013,
+        "missing_pp": 11.8881,
         "excess_pp": 10.7144,
         "n_pre_weighted": 522719,
         "n_post_weighted": 521164,
@@ -548,7 +548,7 @@
         "median_wage_pre": 1250.0,
         "share_below_mw_old_pre": 0.139
       },
-      "avg_ratio": 0.8856
+      "avg_ratio": 0.8059
     },
     {
       "name": "size_medium_plus",
@@ -559,8 +559,8 @@
       "event_A": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 0.7001,
-        "missing_pp": 5.7236,
+        "bunching_ratio": 0.6858,
+        "missing_pp": 5.8433,
         "excess_pp": 4.0073,
         "n_pre_weighted": 2382510,
         "n_post_weighted": 2369011,
@@ -572,8 +572,8 @@
       "event_B": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 0.8144,
-        "missing_pp": 6.5968,
+        "bunching_ratio": 0.7926,
+        "missing_pp": 6.7779,
         "excess_pp": 5.3725,
         "n_pre_weighted": 2369011,
         "n_post_weighted": 2526576,
@@ -585,8 +585,8 @@
       "event_C": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 0.9191,
-        "missing_pp": 9.9546,
+        "bunching_ratio": 0.8964,
+        "missing_pp": 10.2064,
         "excess_pp": 9.1495,
         "n_pre_weighted": 2110880,
         "n_post_weighted": 2361552,
@@ -595,7 +595,7 @@
         "median_wage_pre": 2000.0,
         "share_below_mw_old_pre": 0.1013
       },
-      "avg_ratio": 0.8112
+      "avg_ratio": 0.7916
     },
     {
       "name": "age_18_24",
@@ -606,8 +606,8 @@
       "event_A": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 0.7285,
-        "missing_pp": 14.652,
+        "bunching_ratio": 0.661,
+        "missing_pp": 16.1475,
         "excess_pp": 10.6741,
         "n_pre_weighted": 358472,
         "n_post_weighted": 353562,
@@ -619,8 +619,8 @@
       "event_B": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 1.0736,
-        "missing_pp": 14.6945,
+        "bunching_ratio": 1.0101,
+        "missing_pp": 15.6195,
         "excess_pp": 15.7767,
         "n_pre_weighted": 353562,
         "n_post_weighted": 352068,
@@ -632,8 +632,8 @@
       "event_C": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 0.8478,
-        "missing_pp": 23.8697,
+        "bunching_ratio": 0.8055,
+        "missing_pp": 25.1223,
         "excess_pp": 20.2357,
         "n_pre_weighted": 263490,
         "n_post_weighted": 339630,
@@ -642,7 +642,7 @@
         "median_wage_pre": 1050.0,
         "share_below_mw_old_pre": 0.2317
       },
-      "avg_ratio": 0.8833
+      "avg_ratio": 0.8255
     },
     {
       "name": "age_25_44",
@@ -653,8 +653,8 @@
       "event_A": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 0.7738,
-        "missing_pp": 6.2953,
+        "bunching_ratio": 0.7478,
+        "missing_pp": 6.5141,
         "excess_pp": 4.8712,
         "n_pre_weighted": 1938834,
         "n_post_weighted": 1951281,
@@ -666,8 +666,8 @@
       "event_B": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 0.8126,
-        "missing_pp": 7.5296,
+        "bunching_ratio": 0.7919,
+        "missing_pp": 7.7266,
         "excess_pp": 6.1184,
         "n_pre_weighted": 1951281,
         "n_post_weighted": 2016412,
@@ -679,8 +679,8 @@
       "event_C": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 0.8213,
-        "missing_pp": 12.5096,
+        "bunching_ratio": 0.7968,
+        "missing_pp": 12.8948,
         "excess_pp": 10.2746,
         "n_pre_weighted": 1727597,
         "n_post_weighted": 2051651,
@@ -689,7 +689,7 @@
         "median_wage_pre": 1600.0,
         "share_below_mw_old_pre": 0.113
       },
-      "avg_ratio": 0.8026
+      "avg_ratio": 0.7788
     },
     {
       "name": "age_45_64",
@@ -700,8 +700,8 @@
       "event_A": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 0.7125,
-        "missing_pp": 4.4213,
+        "bunching_ratio": 0.7012,
+        "missing_pp": 4.4922,
         "excess_pp": 3.15,
         "n_pre_weighted": 956600,
         "n_post_weighted": 985074,
@@ -713,8 +713,8 @@
       "event_B": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 0.9385,
-        "missing_pp": 5.6533,
+        "bunching_ratio": 0.9273,
+        "missing_pp": 5.7216,
         "excess_pp": 5.3055,
         "n_pre_weighted": 985074,
         "n_post_weighted": 1106136,
@@ -736,7 +736,7 @@
         "median_wage_pre": 2100.0,
         "share_below_mw_old_pre": 0.0915
       },
-      "avg_ratio": 0.8348
+      "avg_ratio": 0.8273
     },
     {
       "name": "sex_male",
@@ -747,8 +747,8 @@
       "event_A": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 0.7587,
-        "missing_pp": 5.0527,
+        "bunching_ratio": 0.7264,
+        "missing_pp": 5.2774,
         "excess_pp": 3.8334,
         "n_pre_weighted": 2021371,
         "n_post_weighted": 2076628,
@@ -760,8 +760,8 @@
       "event_B": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 0.8011,
-        "missing_pp": 5.9115,
+        "bunching_ratio": 0.7885,
+        "missing_pp": 6.0059,
         "excess_pp": 4.7354,
         "n_pre_weighted": 2076628,
         "n_post_weighted": 2170708,
@@ -773,8 +773,8 @@
       "event_C": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 0.7972,
-        "missing_pp": 10.437,
+        "bunching_ratio": 0.7781,
+        "missing_pp": 10.6927,
         "excess_pp": 8.3204,
         "n_pre_weighted": 1821375,
         "n_post_weighted": 2149564,
@@ -783,7 +783,7 @@
         "median_wage_pre": 1700.0,
         "share_below_mw_old_pre": 0.1179
       },
-      "avg_ratio": 0.7857
+      "avg_ratio": 0.7643
     },
     {
       "name": "sex_female",
@@ -794,8 +794,8 @@
       "event_A": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 0.7141,
-        "missing_pp": 9.089,
+        "bunching_ratio": 0.6973,
+        "missing_pp": 9.3082,
         "excess_pp": 6.4908,
         "n_pre_weighted": 1283842,
         "n_post_weighted": 1272618,
@@ -807,8 +807,8 @@
       "event_B": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 0.9474,
-        "missing_pp": 11.0243,
+        "bunching_ratio": 0.922,
+        "missing_pp": 11.3285,
         "excess_pp": 10.4449,
         "n_pre_weighted": 1272618,
         "n_post_weighted": 1365855,
@@ -820,8 +820,8 @@
       "event_C": {
         "insufficient_n": false,
         "ratio_unreliable": false,
-        "bunching_ratio": 0.8819,
-        "missing_pp": 16.5426,
+        "bunching_ratio": 0.8766,
+        "missing_pp": 16.6432,
         "excess_pp": 14.5897,
         "n_pre_weighted": 1212110,
         "n_post_weighted": 1407126,
@@ -830,7 +830,7 @@
         "median_wage_pre": 1800.0,
         "share_below_mw_old_pre": 0.114
       },
-      "avg_ratio": 0.8478
+      "avg_ratio": 0.832
     }
   ]
 }

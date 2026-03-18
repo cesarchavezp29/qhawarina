@@ -96,7 +96,10 @@ def ciiu_sector(code):
         c = int(float(code))
     except (ValueError, TypeError):
         return 'other'
-    if 1 <= c <= 9:
+    if (1 <= c <= 9) or (34 <= c <= 40):
+        # 1-9:  Agriculture, forestry, fishing, mining (CIIU rev4 A+B)
+        # 34-40: Utilities (electricity, gas, water, waste) — CIIU rev4 D+E
+        #        In CIIU rev3 these were code 40-41; folded here for continuity.
         return 'agri_mining'
     elif 10 <= c <= 33:
         return 'manufacturing'
@@ -338,10 +341,11 @@ def cengiz_ratio(wages_pre, weights_pre, wages_post, weights_post, mw_old, mw_ne
     else:
         delta_adj = delta
 
-    # Missing mass: net outflow from directly-affected zone [0.85*mw_old, mw_new)
+    # Missing mass: neg-only bins in directly-affected zone [0.85*mw_old, mw_new)
+    # Matches mw_complete_margins.py canonical formula exactly.
     affected_lo = 0.85 * mw_old
     below_new = (bin_centers >= affected_lo) & (bin_centers < mw_new)
-    missing = float(max(-delta_adj[below_new].sum(), 0.0))
+    missing = float(-delta_adj[below_new & (delta_adj < 0)].sum())
 
     # Excess mass: positive deltas at [mw_new, mw_new + excess_bins*BIN)
     at_new = (bin_centers >= mw_new) & (bin_centers < mw_new + excess_bins * BIN_WIDTH)
@@ -429,7 +433,7 @@ def main():
 
     # Sectors
     for sname, slabel in [
-        ('agri_mining',     'Agricultura / Mineria'),
+        ('agri_mining',     'Agricultura / Mineria / Utilities'),
         ('manufacturing',   'Manufactura'),
         ('construction',    'Construccion'),
         ('commerce',        'Comercio'),

@@ -15,6 +15,13 @@ set LOGFILE=%PROJECT%\logs\daily_political.log
 set WEBSITE=D:\qhawarina\public\assets\data
 set PYTHON=C:\Users\User\AppData\Local\Python\pythoncore-3.14-64\python.exe
 
+:: Load ANTHROPIC_API_KEY from .env (required for Claude Haiku classification)
+for /f "usebackq tokens=1,* delims==" %%A in ("%PROJECT%\.env") do (
+    if "%%A"=="ANTHROPIC_API_KEY" set ANTHROPIC_API_KEY=%%B
+)
+:: Ensure Python can write box-drawing chars to log
+set PYTHONIOENCODING=utf-8
+
 if not exist "%PYTHON%" (
     set PYTHON=C:\Users\User\AppData\Local\Programs\Python\Python312\python.exe
 )

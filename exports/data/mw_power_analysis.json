@@ -1,26 +1,26 @@
 {
   "metadata": {
-    "generated": "2026-03-17T13:40:03.579793",
+    "generated": "2026-03-17T18:46:58.382976",
     "n_bootstrap": 1000
   },
   "bootstrap_cis": {
     "Event_A": {
       "formal_dep": {
-        "point_estimate": 0.6066,
-        "boot_mean": 0.6386,
-        "boot_sd": 0.0828,
-        "ci_lo": 0.4833,
-        "ci_hi": 0.7991,
+        "point_estimate": 0.7082,
+        "boot_mean": 0.7286,
+        "boot_sd": 0.0857,
+        "ci_lo": 0.5673,
+        "ci_hi": 0.8962,
         "reject_ratio_1": true,
-        "reject_ratio_05": false,
+        "reject_ratio_05": true,
         "n_boot_valid": 1000
       },
       "informal_dep": {
-        "point_estimate": 0.9732,
-        "boot_mean": 1.0028,
-        "boot_sd": 0.1201,
-        "ci_lo": 0.7887,
-        "ci_hi": 1.259,
+        "point_estimate": 1.2219,
+        "boot_mean": 1.2199,
+        "boot_sd": 0.1455,
+        "ci_lo": 0.9621,
+        "ci_hi": 1.5385,
         "reject_ratio_1": false,
         "reject_ratio_05": true,
         "n_boot_valid": 1000
@@ -28,21 +28,21 @@
     },
     "Event_B": {
       "formal_dep": {
-        "point_estimate": 0.7566,
-        "boot_mean": 0.7815,
-        "boot_sd": 0.0786,
-        "ci_lo": 0.6356,
-        "ci_hi": 0.9431,
-        "reject_ratio_1": true,
+        "point_estimate": 0.8416,
+        "boot_mean": 0.8621,
+        "boot_sd": 0.0797,
+        "ci_lo": 0.7162,
+        "ci_hi": 1.0163,
+        "reject_ratio_1": false,
         "reject_ratio_05": true,
         "n_boot_valid": 1000
       },
       "informal_dep": {
-        "point_estimate": 0.9845,
-        "boot_mean": 1.0057,
-        "boot_sd": 0.1102,
-        "ci_lo": 0.812,
-        "ci_hi": 1.2588,
+        "point_estimate": 0.9739,
+        "boot_mean": 0.9847,
+        "boot_sd": 0.1024,
+        "ci_lo": 0.8102,
+        "ci_hi": 1.1992,
         "reject_ratio_1": false,
         "reject_ratio_05": true,
         "n_boot_valid": 1000
@@ -50,22 +50,22 @@
     },
     "Event_C": {
       "formal_dep": {
-        "point_estimate": 0.8068,
-        "boot_mean": 0.8111,
-        "boot_sd": 0.0664,
-        "ci_lo": 0.6877,
-        "ci_hi": 0.9502,
+        "point_estimate": 0.8328,
+        "boot_mean": 0.8312,
+        "boot_sd": 0.0607,
+        "ci_lo": 0.7164,
+        "ci_hi": 0.9597,
         "reject_ratio_1": true,
         "reject_ratio_05": true,
         "n_boot_valid": 1000
       },
       "informal_dep": {
-        "point_estimate": 0.7495,
-        "boot_mean": 0.7683,
-        "boot_sd": 0.0939,
-        "ci_lo": 0.5992,
-        "ci_hi": 0.9617,
-        "reject_ratio_1": true,
+        "point_estimate": 0.8247,
+        "boot_mean": 0.844,
+        "boot_sd": 0.0983,
+        "ci_lo": 0.6689,
+        "ci_hi": 1.0469,
+        "reject_ratio_1": false,
         "reject_ratio_05": true,
         "n_boot_valid": 1000
       }
@@ -94,11 +94,11 @@
   "employment_loss_scenarios": {
     "0": {
       "expected_ratio": 1.0,
-      "in_95ci": false
+      "in_95ci": true
     },
     "5": {
       "expected_ratio": 0.95,
-      "in_95ci": false
+      "in_95ci": true
     },
     "10": {
       "expected_ratio": 0.9,
@@ -114,7 +114,7 @@
     },
     "30": {
       "expected_ratio": 0.7,
-      "in_95ci": true
+      "in_95ci": false
     },
     "40": {
       "expected_ratio": 0.6,

@@ -70,8 +70,13 @@ def load_enaho(year, group='formal_dep'):
 
 
 def compute_bunching_ratio(df_pre, df_post, mw_old, mw_new, bin_w=25):
-    """Cengiz bunching ratio from pre/post DataFrames."""
-    bins = np.arange(200, 4001, bin_w)
+    """Cengiz bunching ratio from pre/post DataFrames.
+    Matches mw_complete_margins.py canonical spec exactly:
+    - bins = arange(0, 6025, 25)
+    - missing = neg-only bins in affected zone (not net outflow)
+    - background = inverse-abs-weighted average of clean zone
+    """
+    bins = np.arange(0, 6000 + bin_w, bin_w)
     bc   = bins[:-1] + bin_w / 2
 
     def hist(df):
@@ -84,18 +89,20 @@ def compute_bunching_ratio(df_pre, df_post, mw_old, mw_new, bin_w=25):
     shares_post = hist(df_post)
     delta = shares_post - shares_pre
 
-    # Background correction from clean zone
+    # Background correction: inverse-abs-weighted average (matches canonical)
     clean = bc > 2 * mw_new
     if clean.sum() < 5:
         return np.nan
-    bg_shift = np.average(delta[clean])
+    bg_shift = np.average(delta[clean],
+                          weights=1.0 / (np.abs(delta[clean]) + 1e-8))
     delta_adj = delta - bg_shift
 
     aff_lo    = 0.85 * mw_old
     miss_zone = (bc >= aff_lo) & (bc < mw_new)
     exc_zone  = (bc >= mw_new) & (bc < mw_new + 10 * bin_w)
 
-    missing = float(max(-delta_adj[miss_zone].sum(), 0))
+    # Neg-only missing mass (canonical formula)
+    missing = float(-delta_adj[miss_zone & (delta_adj < 0)].sum())
     excess  = float(delta_adj[exc_zone & (delta_adj > 0)].sum())
 
     if missing < 0.001:
@@ -155,7 +162,7 @@ for ev, pre_yr, post_yr, mw_old, mw_new in EVENTS:
 
         print(f"  {ev:<6} {group_labels[grp]:<14} {point:>7.3f} {ra.mean():>10.3f} "
               f"{ra.std():>9.3f} [{lo:6.3f}, {hi:6.3f}] "
-              f"{'YES':<10} {'YES' if rej_05 else 'NO':<12}")
+              f"{'YES' if rej_1 else 'NO':<10} {'YES' if rej_05 else 'NO':<12}")
 
         boot_results[key][grp] = {
             'point_estimate': round(float(point), 4) if not np.isnan(point) else None,

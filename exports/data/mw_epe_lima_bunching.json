@@ -1,0 +1,72 @@
+{
+  "metadata": {
+    "generated": "2026-03-17T19:52:08.719637",
+    "description": "EPE Lima 6-month bunching (Cengiz canonical spec)",
+    "formality": "p222==1 (EsSalud)",
+    "bin_w": 25,
+    "n_boot": 1000
+  },
+  "results": {
+    "Event_A": {
+      "mw_old": 750,
+      "mw_new": 850,
+      "window": "Q1â†’Q3 2016",
+      "n_pre": 2622,
+      "n_post": 2599,
+      "n_near_mw_pre": 240,
+      "ratio": 1.0312,
+      "missing": 0.052519,
+      "excess": 0.054157,
+      "boot_mean": 1.0903,
+      "boot_sd": 0.232,
+      "ci_lo": 0.6959,
+      "ci_hi": 1.6299,
+      "n_boot_valid": 1000
+    },
+    "Event_B": {
+      "mw_old": 850,
+      "mw_new": 930,
+      "window": "Q1â†’Q3 2018",
+      "n_pre": 2280,
+      "n_post": 2438,
+      "n_near_mw_pre": 302,
+      "ratio": 0.7328,
+      "missing": 0.094433,
+      "excess": 0.069197,
+      "boot_mean": 0.797,
+      "boot_sd": 0.1116,
+      "ci_lo": 0.6006,
+      "ci_hi": 1.0275,
+      "n_boot_valid": 1000
+    },
+    "Event_C": {
+      "mw_old": 930,
+      "mw_new": 1025,
+      "window": "Q1â†’Q3 2022",
+      "n_pre": 1933,
+      "n_post": 1936,
+      "n_near_mw_pre": 331,
+      "ratio": 0.8846,
+      "missing": 0.118935,
+      "excess": 0.105211,
+      "boot_mean": 0.9032,
+      "boot_sd": 0.1121,
+      "ci_lo": 0.6959,
+      "ci_hi": 1.1306,
+      "n_boot_valid": 1000
+    },
+    "placebo_B_fake1100_1200": {
+      "fake_mw_old": 1100,
+      "fake_mw_new": 1200,
+      "note": "Placebo: Event B EPE data but fake threshold 1100->1200 (true MW=850->930)",
+      "ratio": 0.6657,
+      "missing": 0.012915,
+      "excess": 0.008597,
+      "boot_mean": 0.9688,
+      "boot_sd": 0.7772,
+      "ci_lo": 0.2516,
+      "ci_hi": 2.7382,
+      "n_boot_valid": 999
+    }
+  }
+}

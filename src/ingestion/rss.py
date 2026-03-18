@@ -151,11 +151,16 @@ def deduplicate_articles(df: pd.DataFrame) -> pd.DataFrame:
     df = df.drop(columns=["_path"])
 
     # Layer 3: Title similarity within same day
+    # Only applied to recent articles (last 3 days) — older articles were
+    # already deduped in prior runs and re-processing the full cache is O(n²).
+    import datetime as _dt
     df["published"] = pd.to_datetime(df["published"], utc=True)
     df["_date"] = df["published"].dt.date
-    keep = set(df.index)
+    cutoff = (_dt.datetime.now(_dt.timezone.utc) - _dt.timedelta(days=3)).date()
+    recent = df[df["_date"] >= cutoff]
+    keep = set(recent.index)
 
-    for date_val, group in df.groupby("_date"):
+    for date_val, group in recent.groupby("_date"):
         indices = list(group.index)
         titles = group["title"].tolist()
         for i in range(len(indices)):
@@ -168,9 +173,11 @@ def deduplicate_articles(df: pd.DataFrame) -> pd.DataFrame:
                 if ratio > 0.70:
                     keep.discard(indices[j])
 
+    # Keep all older articles unchanged; filter only within the recent window
+    old_indices = set(df[df["_date"] < cutoff].index)
     before = len(df)
-    df = df.loc[df.index.isin(keep)]
-    logger.info("  Title similarity dedup: %d -> %d", before, len(df))
+    df = df.loc[df.index.isin(keep | old_indices)]
+    logger.info("  Title similarity dedup: %d -> %d (checked last 3 days)", before, len(df))
     df = df.drop(columns=["_date"])
 
     return df.reset_index(drop=True)

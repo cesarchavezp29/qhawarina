@@ -107,7 +107,7 @@ def load_enaho(year, all_working_age=False):
         return out[working_age].reset_index(drop=True)
     else:
         # Formal dep employed with positive wage
-        mask = emp & dep & formal & (wage > 0) & (wage < 15000) & wt.notna()
+        mask = emp & dep & formal & (wage > 0) & (wage < 6000) & wt.notna()
         return out[working_age & mask].reset_index(drop=True)
 
 
@@ -330,7 +330,7 @@ for ev, cfg in EVENTS.items():
             df_es['log_wage'] = np.log(df_es['wage'].clip(lower=1))
             formula = ('log_wage ~ ' + ' + '.join([f'k_x_{y}' for y in non_base])
                        + ' + C(dept) + C(year) + age + age_sq + male')
-            df_use = df_es[df_es['wage'] > 0 & df_es['wt'].notna()]
+            df_use = df_es[(df_es['wage'] > 0) & df_es['wt'].notna()]
 
         res = wls_cluster(df_use, formula, 'wt', 'dept')
         if res is None:
