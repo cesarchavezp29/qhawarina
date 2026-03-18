@@ -1,0 +1,125 @@
+\ifx\undefined\bysame
+\newcommand{\bysame}{\leavevmode\hbox to\leftmargin{\hrulefill\,\,}}
+\fi
+\begin{thebibliography}{xx}
+
+\harvarditem[Jaramillo~Baanante]{Jaramillo~Baanante}{2004}{jaramillo2004}
+{\bf Baanante, Miguel~Jaramillo}, ``Minimum Wage Effects under Endogenous
+  Compliance: Evidence from {Peru},'' {\it Econ{\'o}mica (La Plata)}, 2004,
+  {\it 50} (1-2), 85--123.
+
+\harvarditem[Jaramillo~Baanante]{Jaramillo~Baanante}{2012}{jaramillo2012}
+{\bf \bysame{}}, ``Ajustes del mercado laboral peruano ante cambios en el
+  salario m{\'i}nimo: la experiencia de la d{\'e}cada del 2000,'' in Cecilia
+  Garavito and Ismael Mu{\~n}oz, eds., {\it Empleo y Protecci{\'o}n Social},
+  Fondo Editorial, Pontificia Universidad Cat{\'o}lica del Per{\'u}, 2012,
+  pp.~357--402.
+
+\harvarditem[Belman and Wolfson]{Belman and Wolfson}{2014}{belman2014}
+{\bf Belman, Dale and Paul~J. Wolfson}, {\it What Does the Minimum Wage Do?},
+  W.E. Upjohn Institute, 2014.
+
+\harvarditem[Card and Krueger]{Card and Krueger}{1994}{card1994}
+{\bf Card, David and Alan~B. Krueger}, ``Minimum Wages and Employment: A Case
+  Study of the Fast-Food Industry in New Jersey and Pennsylvania,'' {\it
+  American Economic Review}, 1994, {\it 84} (4), 772--793.
+
+\harvarditem[Cengiz et al.]{Cengiz, Dube, Lindner and
+  Zipperer}{2019}{cengiz2019}
+{\bf Cengiz, Doruk, Arindrajit Dube, Attila Lindner, and Ben Zipperer}, ``The
+  Effect of Minimum Wages on Low-Wage Jobs,'' {\it Quarterly Journal of
+  Economics}, 2019, {\it 134} (3), 1405--1454.
+
+\harvarditem[C{\'e}spedes]{C{\'e}spedes}{2006}{cespedes2006}
+{\bf C{\'e}spedes, Nikita}, ``Efectos del salario m{\'i}nimo en el mercado
+  laboral peruano,'' {\it Revista Estudios Econ{\'o}micos, Banco Central de
+  Reserva del Per{\'u}}, 2006, (13).
+
+\harvarditem[C{\'e}spedes and S{\'a}nchez]{C{\'e}spedes and
+  S{\'a}nchez}{2014}{cespedes2014}
+{\bf \bysame{} and Alan S{\'a}nchez}, ``Minimum Wage and Job Mobility,'' {\it
+  The Business and Economics Research Journal}, 2014, {\it 7} (1), 23--50.
+
+\harvarditem[Chacaltana]{Chacaltana}{2001}{chacaltana2001}
+{\bf Chacaltana, Juan}, ``Pol{\'\i}ticas activas en el mercado laboral peruano:
+  el potencial de la microempresa,'' {\it CIES Working Paper}, 2001.
+
+\harvarditem[Ch{\'a}vez]{Ch{\'a}vez}{2023}{chavez2023dv}
+{\bf Ch{\'a}vez, Carlos}, ``Domestic Violence, Labor Market, and Minimum Wage:
+  Theory and Evidence,'' {\it Review of Economics}, 2023, {\it 74} (3),
+  195--233.
+
+\harvarditem[Ch{\'a}vez]{Ch{\'a}vez}{2024}{chavez2024ethnic}
+{\bf \bysame{}}, ``Minimum Wage and Ethnic-Gaps: Who are the Winners?,'' {\it
+  Journal of Economics, Race, and Policy}, 2024, {\it 7} (2), 93--121.
+
+\harvarditem[Corcuera]{Corcuera}{2024}{corcuera2024}
+{\bf Corcuera, Paul}, ``Minimum Wages and Informal Self-Employment: Evidence
+  from {Peru},'' 2024.
+\newblock Working Paper.
+
+\harvarditem[D{\'\i}az]{D{\'\i}az}{2014}{diaz2014}
+{\bf D{\'\i}az, Juan~Jos{\'e}}, ``Formalizaci{\'o}n empresarial y laboral,''
+  {\it GRADE Working Paper}, 2014.
+
+\harvarditem[Dube]{Dube}{2019}{dube2019}
+{\bf Dube, Arindrajit}, ``Minimum Wages and the Distribution of Family
+  Incomes,'' {\it American Economic Journal: Applied Economics}, 2019, {\it 11}
+  (4), 268--304.
+
+\harvarditem[Dube et al.]{Dube, Lester and Reich}{2010}{dube2010}
+{\bf \bysame{}, T.~William Lester, and Michael Reich}, ``Minimum Wage Effects
+  Across State Borders: Estimates Using Contiguous Counties,'' {\it Review of
+  Economics and Statistics}, 2010, {\it 92} (4), 945--964.
+
+\harvarditem[Engbom and Moser]{Engbom and Moser}{2022}{engbom2022}
+{\bf Engbom, Niklas and Christian Moser}, ``Earnings Inequality and the Minimum
+  Wage: Evidence from Brazil,'' {\it American Economic Review}, 2022, {\it 112}
+  (12), 3803--3847.
+
+\harvarditem[Gindling and Terrell]{Gindling and Terrell}{2021}{gindling2021}
+{\bf Gindling, T.H. and Katherine Terrell}, ``Minimum Wages, Wages and
+  Employment in Various Sectors in Honduras,'' {\it Labour Economics}, 2021,
+  {\it 68}, 101943.
+
+\harvarditem[Harasztosi and Lindner]{Harasztosi and
+  Lindner}{2019}{harasztosi2016}
+{\bf Harasztosi, P{\'e}ter and Attila Lindner}, ``Who Pays for the Minimum
+  Wage?,'' {\it American Economic Review}, 2019, {\it 109} (8), 2693--2727.
+
+\harvarditem[Jales]{Jales}{2018}{jales2018}
+{\bf Jales, Hugo}, ``Estimating the Effects of the Minimum Wage in a Developing
+  Country: A Density Discontinuity Design Approach,'' {\it Journal of Applied
+  Econometrics}, 2018, {\it 33}, 29--51.
+
+\harvarditem[Jaramillo and L{\'o}pez]{Jaramillo and
+  L{\'o}pez}{2006}{jaramillo2006}
+{\bf Jaramillo, Miguel and Kristian L{\'o}pez}, ``{?`C{\'o}mo} se ajusta el
+  mercado de trabajo ante cambios en el salario m{\'i}nimo en el {Per{\'u}}?,''
+  Documentos de Trabajo~50, GRADE 2006.
+
+\harvarditem[Kleven and Waseem]{Kleven and Waseem}{2013}{kleven2013}
+{\bf Kleven, Henrik and Mazhar Waseem}, ``Using Notches to Uncover Optimization
+  Frictions and Structural Elasticities: Theory and Evidence from Pakistan,''
+  {\it Quarterly Journal of Economics}, 2013, {\it 128} (2), 669--723.
+
+\harvarditem[Manning]{Manning}{2021}{manning2021}
+{\bf Manning, Alan}, ``The Elusive Employment Effect of the Minimum Wage,''
+  {\it Journal of Economic Perspectives}, 2021, {\it 35} (1), 3--26.
+
+\harvarditem[Neumark and Shirley]{Neumark and Shirley}{2022}{neumark2022}
+{\bf Neumark, David and Peter Shirley}, ``Myth or Measurement: What Does the
+  New Minimum Wage Research Say about Minimum Wages and Job Loss in the United
+  States?,'' {\it Industrial Relations}, 2022, {\it 61} (4), 384--417.
+
+\harvarditem[Saltiel and Urz{\'u}a]{Saltiel and Urz{\'u}a}{2018}{saltiel2018}
+{\bf Saltiel, Fernando and Sergio Urz{\'u}a}, ``The Effect of the Minimum Wage
+  on Employment in a Developing Country,'' {\it World Development}, 2018, {\it
+  104}, 282--299.
+
+\harvarditem[Yamada]{Yamada}{1996}{yamada1996}
+{\bf Yamada, Gustavo}, ``Urban Informal Employment and Self-Employment in
+  Developing Countries: Theory and Evidence,'' {\it Economic Development and
+  Cultural Change}, 1996, {\it 44} (2), 289--314.
+
+\end{thebibliography}

@@ -1,0 +1,52 @@
+This is BibTeX, Version 0.99d
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: mw_paper.aux
+Reallocating 'name_of_file' (item size: 1) to 4 items.
+The style file: aer.bst
+Reallocating 'name_of_file' (item size: 1) to 9 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Database file #1: mw_paper.bib
+Warning--there's a number but no volume in cespedes2006
+You've used 24 entries,
+            2984 wiz_defined-function locations,
+            796 strings with 7883 characters,
+and the built_in function-call counts, 19659 in all, are:
+= -- 3229
+> -- 972
+< -- 292
++ -- 281
+- -- 158
+* -- 1172
+:= -- 4495
+add.period$ -- 25
+call.type$ -- 24
+change.case$ -- 168
+chr.to.int$ -- 24
+cite$ -- 25
+duplicate$ -- 269
+empty$ -- 635
+format.name$ -- 503
+if$ -- 4873
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 23
+newline$ -- 79
+num.names$ -- 290
+pop$ -- 353
+preamble$ -- 1
+purify$ -- 192
+quote$ -- 0
+skip$ -- 0
+stack$ -- 0
+substring$ -- 711
+swap$ -- 95
+text.length$ -- 1
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 94
+warning$ -- 1
+while$ -- 277
+width$ -- 0
+write$ -- 396
+(There was 1 warning)

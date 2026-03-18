@@ -75,6 +75,14 @@ def main():
         "--force", action="store_true",
         help="Re-classify all articles (ignore existing classifications)",
     )
+    parser.add_argument(
+        "--alpha", type=float, default=1.0,
+        help="Score exponent for GPR formula (default=1.0 linear). Use 1.3 for nonlinear amplification.",
+    )
+    parser.add_argument(
+        "--diagnostic", action="store_true",
+        help="Print diagnostic output for March 14-18 after building index.",
+    )
     args = parser.parse_args()
 
     t0 = time.time()
@@ -265,13 +273,56 @@ def main():
     logger.info("=" * 60)
     logger.info("STEP 4: Building daily index")
 
-    from src.processing.daily_index import build_daily_index_v2
+    from src.processing.daily_index import build_daily_index_v2, print_diagnostic
+
+    logger.info("  Building with alpha=%.1f (GPR formula)", args.alpha)
     daily_index = build_daily_index_v2(
         articles,
         start_date=rss_config["index"]["start_date"],
+        alpha=args.alpha,
     )
 
     save_parquet(daily_index, index_path)
+
+    # ── Diagnostic output (spec section 5) ───────────────────────────────────
+    if args.diagnostic or args.skip_claude:
+        logger.info("Running diagnostic for March 14-18...")
+        try:
+            idx13 = build_daily_index_v2(
+                articles,
+                start_date=rss_config["index"]["start_date"],
+                alpha=1.3,
+            )
+            print_diagnostic(
+                articles_df=articles,
+                index_df_10=daily_index,
+                index_df_13=idx13,
+                date_strs=["2026-03-14", "2026-03-15", "2026-03-16", "2026-03-17", "2026-03-18"],
+                start_date=rss_config["index"]["start_date"],
+            )
+
+            # Old vs new comparison
+            if index_path.exists():
+                try:
+                    old_idx = pd.read_parquet(index_path)
+                    old_idx["date"] = pd.to_datetime(old_idx["date"])
+                    new_idx = daily_index.copy()
+                    new_idx["date"] = pd.to_datetime(new_idx["date"])
+                    dates = pd.to_datetime(["2026-03-14", "2026-03-15", "2026-03-16", "2026-03-17", "2026-03-18"])
+                    print(f"\n{'Date':<14} {'OLD IRP':>8} {'NEW IRP':>8} {'OLD IRE':>8} {'NEW IRE':>8}")
+                    print("-" * 50)
+                    for d in dates:
+                        old_row = old_idx[old_idx["date"] == d]
+                        new_row = new_idx[new_idx["date"] == d]
+                        irp_old = f"{old_row['political_index'].values[0]:.1f}" if len(old_row) else "n/a"
+                        ire_old = f"{old_row['economic_index'].values[0]:.1f}" if len(old_row) else "n/a"
+                        irp_new = f"{new_row['political_index'].values[0]:.1f}" if len(new_row) else "n/a"
+                        ire_new = f"{new_row['economic_index'].values[0]:.1f}" if len(new_row) else "n/a"
+                        print(f"{d.strftime('%Y-%m-%d'):<14} {irp_old:>8} {irp_new:>8} {ire_old:>8} {ire_new:>8}")
+                except Exception as e:
+                    logger.warning("Could not load old index for comparison: %s", e)
+        except Exception as e:
+            logger.warning("Diagnostic failed: %s", e)
 
     # ── Summary ───────────────────────────────────────────────────────────
     elapsed = time.time() - t0

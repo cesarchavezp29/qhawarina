@@ -35,7 +35,7 @@ Distributional Effects of Three Minimum Wage Increases in Peru}}
   Carlos C\'esar Ch\'avez Padilla\thanks{Center for the Economics of Human Development, University of Chicago. Email: \texttt{cchavezpadilla@uchicago.edu}. I thank James J.\ Heckman for guidance and support. All errors are my own.}
 }
 
-\date{March 2026\\[6pt] \small\textit{Preliminary draft --- do not circulate}}
+\date{March 2026}
 
 \begin{document}
 
@@ -43,7 +43,7 @@ Distributional Effects of Three Minimum Wage Increases in Peru}}
 
 \begin{abstract}
 \noindent
-I study the distributional effects of three minimum wage (MW) increases in Peru---from S/750 to S/1,025 between 2016 and 2022---using a pre-post distributional estimator adapted from \citet{cengiz2019} for a national MW setting without control jurisdictions. Bunching ratios range from 0.70 to 0.83: for every 100 jobs displaced below the new minimum, 70--83 reappear above it; placebo tests at artificial thresholds produce ratios 7 times smaller, confirming the signal is MW-specific. Extending the excess window to S/500 raises $R$ to 0.94 (Event C), indicating workers disperse broadly above the new floor. The formal missing mass is accounted for in part by a 15--21 percentage point increase in the self-employment share within the affected wage range across all three events, with the absolute count of self-employed workers rising in Events A ($+8.7\%$) and B ($+5.1\%$); Event C shows a share increase ($+15.3$pp) but a slight absolute decline, consistent with post-COVID re-formalization dynamics. Together these patterns are consistent with transitions to informal self-employment rather than job destruction. Results are replicated on EPE Lima quarterly data (ratios 0.73--1.03) using independent formality definitions and tighter 6-month event windows. Employment effects cannot be identified through regression-based methods: event-study pre-trends fail for Events B and C, the Kaitz instrumental variable is weak ($F < 3$), and panel attrition exceeds 76\%. Hours show no adjustment ($\leq \pm 1.1$h/week); wage compression of 3--7 percentage points is present but 41--92\% is mechanical composition. The dominant effect of Peru's MW increases within the studied Kaitz range (0.52--0.57) is redistribution within the formal wage distribution combined with institutional reallocation from formal employment to informal self-employment, not measurable job destruction.
+I study the distributional effects of three minimum wage (MW) increases in Peru---from S/750 to S/1,025 between 2016 and 2022---using a pre-post distributional estimator adapted from \citet{cengiz2019} for a national MW setting without control jurisdictions. Bunching ratios range from 0.70 to 0.83: for every 100 jobs displaced below the new minimum, 70--83 reappear above it; placebo tests at artificial thresholds produce ratios 7 times smaller, confirming the signal is MW-specific. Extending the excess window to S/500 raises $R$ to 0.94 (Event C), indicating workers disperse broadly above the new floor. The self-employment share in the affected wage range rises 15--21 percentage points after each event, with absolute increases in Events A and B. These patterns are consistent with transitions to informal self-employment, though the cross-sectional design cannot rule out compositional changes in who occupies the affected zone. Results are replicated on EPE Lima quarterly data (ratios 0.73--1.03) using independent formality definitions and tighter 6-month event windows. Employment effects cannot be identified through regression-based methods: event-study pre-trends fail for Events B and C, the Kaitz instrumental variable is weak ($F < 3$), and panel attrition exceeds 76\%. Hours show no adjustment ($\leq \pm 1.1$h/week); wage compression of 3--7 percentage points is present but 41--92\% is mechanical composition. The dominant effect of Peru's MW increases within the studied Kaitz range (0.52--0.57) is redistribution within the formal wage distribution combined with institutional reallocation from formal employment to informal self-employment, not measurable job destruction.
 
 \medskip
 \noindent\textbf{JEL Codes}: J31, J38, O17
@@ -217,19 +217,19 @@ Table~\ref{tab:bunching} presents the bunching estimates for all three events an
 Event & Group & Missing (pp) & Excess (pp) & Ratio & 95\% CI \\
 \midrule
 \textbf{A} (750$\to$850) & Formal dep & 6.78 & 4.72 & 0.696 & [0.567, 0.896] \\
- & Informal dep & 4.45 & 5.42 & 1.218 & \\
+ & Informal dep & 4.45 & 5.42 & 1.218 & [0.965, 1.515] \\
  & All workers & 5.41 & 4.72 & 0.872 & \\[4pt]
 \textbf{B} (850$\to$930) & Formal dep & 8.03 & 6.66 & 0.829 & [0.716, 1.016] \\
- & Informal dep & 5.28 & 5.21 & 0.987 & \\
+ & Informal dep & 5.28 & 5.21 & 0.987 & [0.825, 1.209] \\
  & All workers & 6.44 & 5.81 & 0.901 & \\[4pt]
 \textbf{C} (930$\to$1,025) & Formal dep & 13.02 & 10.80 & 0.830 & [0.716, 0.960] \\
- & Informal dep & 5.50 & 4.46 & 0.811 & \\
+ & Informal dep & 5.50 & 4.46 & 0.811 & [0.651, 1.017] \\
  & All workers & 8.29 & 6.84 & 0.824 & \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}
 \small
-\item \textit{Note}: Missing (pp) = share lost from $[0.85 \times \text{MW}_\text{old}, \text{MW}_\text{new})$ using negative-only bins. Excess (pp) = share gained at $[\text{MW}_\text{new}, \text{MW}_\text{new} + 250)$ using positive-only bins. Background correction: inverse-abs-weighted mean from clean zone ($> 2 \times \text{MW}_\text{new}$). Bins: S/25, range S/0--6,000. 95\% CI from 1,000 bootstrap replications (block-bootstrap within pre/post cross-section); reported for formal dependent workers only.
+\item \textit{Note}: Missing (pp) = share lost from $[0.85 \times \text{MW}_\text{old}, \text{MW}_\text{new})$ using negative-only bins. Excess (pp) = share gained at $[\text{MW}_\text{new}, \text{MW}_\text{new} + 250)$ using positive-only bins. Background correction: inverse-abs-weighted mean from clean zone ($> 2 \times \text{MW}_\text{new}$). Bins: S/25, range S/0--6,000. 95\% CI from 1,000 bootstrap replications (block-bootstrap within pre/post cross-section); reported for formal and informal dependent workers. All-workers rows omit CIs (mixed population).
 \end{tablenotes}
 \end{threeparttable}
 \end{table}
@@ -274,7 +274,7 @@ Bootstrap 95\% confidence intervals are $[0.567, 0.896]$ (A), $[0.716, 1.016]$ (
 
 Informal workers show a ratio above 1 in Event A (1.218), approximately 1 in Event B (0.987), and below 1 in Event C (0.811). There is no consistent spillover pattern.
 
-\paragraph{Informal lighthouse effect.} Event A's informal bunching ratio of 1.218---excess mass exceeding missing mass at the formal MW threshold---is consistent with a lighthouse effect whereby the formal MW serves as a reference point for informal wage-setting \citep{jaramillo2004}. If informal employers use the MW as a focal point for wage offers, an MW increase would shift informal wages upward even without legal enforcement, generating excess mass at the new floor. This pattern weakens across events ($1.218 \to 0.987 \to 0.811$), suggesting the lighthouse effect operates at lower MW levels but fades as the MW rises relative to informal productivity. The welfare implication is nuanced: if informal workers receive MW-indexed raises via the lighthouse mechanism, the self-employment transition documented below may preserve income levels even without formal social security coverage.
+\paragraph{Informal lighthouse effect.} Event A's informal bunching ratio of 1.218---excess mass exceeding missing mass at the formal MW threshold---is consistent with a lighthouse effect whereby the formal MW serves as a reference point for informal wage-setting \citep{jaramillo2004}. If informal employers use the MW as a focal point for wage offers, an MW increase would shift informal wages upward even without legal enforcement, generating excess mass at the new floor. This pattern weakens across events ($1.218 \to 0.987 \to 0.811$), suggesting the lighthouse effect operates at lower MW levels but fades as the MW rises relative to informal productivity. The welfare implication is nuanced: if informal workers receive MW-indexed raises via the lighthouse mechanism, the self-employment transition documented below may preserve income levels even without formal social security coverage. However, bootstrap 95\% confidence intervals for the informal ratios span 1.0 in all three events ([0.965, 1.515], [0.825, 1.209], [0.651, 1.017]), meaning the data are also consistent with full redistribution or net displacement. The declining pattern across events ($1.218 \to 0.987 \to 0.811$) is suggestive but not statistically distinguishable from noise. The lighthouse interpretation remains a hypothesis, not a confirmed finding.
 
 \textbf{Where do the missing workers go?} A natural concern is that the missing formal mass simply re-emerges as informal employment near the old MW floor. This is not supported by the data. The informal wage share in the affected zone $[\text{MW}_\text{old}, \text{MW}_\text{new})$ \textit{decreases} post-reform in all three events: by 4.4 percentage points in Event A, 4.4pp in Event B, and 5.3pp in Event C. If formal workers were simply reclassified as informal, the informal share in this zone would rise. Instead, both formal \textit{and} informal employment in the affected zone contract together, suggesting the missing workers move to self-employment, reduce hours below the monthly equivalent of the MW, or exit formal labor force participation entirely. Cross-sectional designs cannot trace individuals, so this interpretation is necessarily indirect. At the department level, higher Kaitz indices are not associated with differential changes in the formality rate (OLS coefficient: $\hat{\beta} = +0.020$, $p = 0.225$, $n = 24$ departments, Event A), confirming no measurable formal-to-informal transition even in high-exposure departments. These patterns indicate the formal missing mass does not transition into informal dependent employment; instead, workers exit dependent employment arrangements altogether.
 
@@ -359,7 +359,7 @@ S/100 & N / N / N & 0.477 & 0.754 & 0.613 \\
 
 The bin-boundary alignment requirement (Section~\ref{sec:bunching}) is confirmed in Table~\ref{tab:binwidth}: at aligned configurations $R$ is stable (range of 0.009 across S/10--S/25 for Event B; 0.006 for Event C), while severely misaligned widths produce catastrophic distortions ($R = 0.079$ for Event A at S/15; $R = 0.206$ for Event B at S/50). Event B at S/25 is marginally misaligned by S/5, which does not detectably distort $R$.
 
-\textbf{Event C and COVID.} Event C's pre-period (2021) reflects post-pandemic conditions: aggregate formal employment fell 9\% in 2020 and recovered partially by 2021, with some compression of wages near the MW floor. As a robustness check, using 2019 as the pre-period (a 4-year gap) produces $R = 0.997$, compared to $R = 0.830$ with the canonical 2021 pre-period. The pre-2019 estimate reflects upward bias from economy-wide wage growth over 2019--2023 (post-pandemic recovery, headline inflation of 33\% cumulative), which shifts the entire distribution rightward and inflates measured excess mass. The canonical pre=2021 estimate is temporally proximate (8 months before the May 2022 increase) and minimizes macro confounds; the higher pre-2019 $R$ should be interpreted as an upper bound. Cumulative CPI inflation between 2019 and 2023 was approximately 20\%. A na\"ive inflation adjustment of the 2019 distribution would shift the affected zone upward by $\sim$S/150, reducing overlap with the 2023 MW zone and inflating measured excess mass. The 2021 pre-period avoids this issue because cumulative inflation over 2021--2023 was only $\sim$8\%, and the nominal MW (S/930) applies identically in both years. We therefore maintain the 2021 pre-period as canonical, with the 2019 estimate ($R = 0.997$) serving as an upper bound on the true ratio. Both estimates are consistent with the conclusion that employment effects cannot be signed. As a further validation, the formal dependent wage distribution in the affected zone $[791, 1{,}025)$ is nearly identical in 2019 (520,000 workers, 11.0\% of all formal dep, median S/930) and 2021 (511,000 workers, 12.7\%, median S/930), confirming that COVID did not compress the near-MW distribution of formal workers in a way that would bias the bunching estimator.
+\textbf{Event C and COVID.} Event C's pre-period (2021) reflects post-pandemic conditions: aggregate formal employment fell 9\% in 2020 and recovered partially by 2021, with some compression of wages near the MW floor. As a robustness check, using 2019 as the pre-period (a 4-year gap) produces $R = 0.997$, compared to $R = 0.830$ with the canonical 2021 pre-period. The pre-2019 estimate reflects upward bias from economy-wide wage growth over 2019--2023 (post-pandemic recovery, headline inflation of 33\% cumulative), which shifts the entire distribution rightward and inflates measured excess mass. The canonical pre=2021 estimate is temporally proximate (8 months before the May 2022 increase) and minimizes macro confounds; the higher pre-2019 $R$ should be interpreted as an upper bound. Cumulative CPI inflation between 2019 and 2023 was approximately 20\%. A na\"ive inflation adjustment of the 2019 distribution would shift the affected zone upward by $\sim$S/150, reducing overlap with the 2023 MW zone and inflating measured excess mass. The 2021 pre-period avoids this issue because cumulative inflation over 2021--2023 was only $\sim$8\%, and the nominal MW (S/930) applies identically in both years. We therefore maintain the 2021 pre-period as canonical, with the 2019 estimate ($R = 0.997$) serving as an upper bound on the true ratio. The 2021 estimate could conversely serve as a lower bound if post-pandemic wage compression was temporary and already partially reversing by mid-2021: faster-than-trend wage growth in the near-MW zone in 2021 would inflate measured missing mass, pushing the canonical $R$ downward. The two estimates thus bracket the plausible range: $R \in [0.830, 0.997]$ for Event C. Both endpoints are consistent with the conclusion that employment effects cannot be signed. As a further validation, the formal dependent wage distribution in the affected zone $[791, 1{,}025)$ is nearly identical in 2019 (520,000 workers, 11.0\% of all formal dep, median S/930) and 2021 (511,000 workers, 12.7\%, median S/930), confirming that COVID did not compress the near-MW distribution of formal workers in a way that would bias the bunching estimator.
 
 \subsection{Wage Compression}
 
@@ -419,94 +419,40 @@ Assumption & Mechanical & Genuine & \% Mech. \\
 \section{Heterogeneity}\label{sec:heterogeneity}
 %=============================================================
 
-\paragraph{Organizing question.} Do subgroups with higher MW exposure (lower wages, smaller firms, weaker enforcement) show systematically different bunching ratios? If enforcement drives compliance, we would expect larger firms and Lima (higher SUNAFIL presence) to show higher ratios. If market adjustment dominates, ratios should be similar across groups.
-
-Table~\ref{tab:hetero_industry} through Table~\ref{tab:hetero_geo} present bunching ratios across subgroups. In all panels, the Total row (0.696 / 0.829 / 0.830) matches Table~\ref{tab:bunching} exactly.
+The organizing question is whether subgroups with higher MW exposure show systematically different bunching ratios. Table~\ref{tab:hetero_summary} presents selected comparisons; full tables by industry, firm size, age/sex, and geography appear in Appendix~\ref{app:hetero}.
 
 \begin{table}[H]
 \centering
-\caption{Bunching Ratios by Industry Sector}
-\label{tab:hetero_industry}
-\begin{threeparttable}
-\small
-\begin{tabular}{lcccc}
-\toprule
-Sector & Event A & Event B & Event C & Average \\
-\midrule
-\textbf{Total} ($N = 9{,}952$) & \textbf{0.696} & \textbf{0.829} & \textbf{0.830} & \textbf{0.785} \\
-Agriculture/Mining/Utilities ($N = 1{,}031$) & 1.641 & 0.765 & 0.407 & 0.938 \\
-Manufacturing ($N = 904$) & 1.000 & 0.869 & 1.049 & 0.973 \\
-Commerce ($N = 937$) & 0.784 & 1.209 & 0.723 & 0.905 \\
-Transport/hospitality ($N = 556$) & 1.041 & 1.018 & 0.585 & 0.881 \\
-Finance/professional services ($N = 1{,}113$) & 0.768 & 1.018 & 0.806 & 0.864 \\
-Public administration ($N = 1{,}639$) & 1.033 & 0.498 & 0.804 & 0.778 \\
-Education and health ($N = 3{,}021$) & 0.598 & 0.709 & 0.975 & 0.760 \\
-\bottomrule
-\end{tabular}
-\begin{tablenotes}
-\small
-\item \textit{Note}: $N$ = 2015 pre-period sample. Construction excluded (sparse cells, $< 500$ obs). Agriculture/Mining includes CIIU rev4 codes 35--39 (utilities). Sector from \texttt{p506r4} (CIIU 2-digit).
-\end{tablenotes}
-\end{threeparttable}
-\end{table}
-
-\begin{table}[H]
-\centering
-\caption{Bunching Ratios by Firm Size, Age, and Sex}
-\label{tab:hetero_firm}
+\caption{Bunching Ratios by Subgroup (Selected Comparisons)}
+\label{tab:hetero_summary}
 \begin{threeparttable}
 \small
 \begin{tabular}{lcccc}
 \toprule
 Group & Event A & Event B & Event C & Average \\
 \midrule
-\multicolumn{5}{l}{\textit{Panel B: Firm size}} \\
-Micro ($\leq 10$, $N = 705$) & 0.899 & 0.909 & 0.690 & 0.833 \\
-Small (11--50, $N = 1{,}238$) & 0.919 & 0.901 & 0.598 & 0.806 \\
-Medium/Large (51+, $N = 7{,}557$) & 0.686 & 0.793 & 0.896 & 0.792 \\[6pt]
-\multicolumn{5}{l}{\textit{Panel C: Age and sex}} \\
-Age 18--24 & 0.661 & 1.010 & 0.805 & 0.826 \\
-Age 25--44 & 0.748 & 0.792 & 0.797 & 0.779 \\
-Age 45--64 & 0.701 & 0.927 & 0.853 & 0.827 \\
-Men & 0.726 & 0.788 & 0.778 & 0.764 \\
-Women & 0.697 & 0.922 & 0.877 & 0.832 \\
+\multicolumn{5}{l}{\textit{Geography}} \\
+Lima Metropolitan & 0.618 & 1.050 & 0.817 & 0.828 \\
+Rest of country & 0.856 & 0.621 & 0.888 & 0.788 \\[3pt]
+\multicolumn{5}{l}{\textit{Employer type}} \\
+Public sector & 0.921 & 0.456 & 0.865 & 0.747 \\
+Private sector & 0.766 & 0.962 & 0.768 & 0.832 \\[3pt]
+\multicolumn{5}{l}{\textit{Firm size}} \\
+Micro ($\leq 10$) & 0.899 & 0.909 & 0.690 & 0.833 \\
+Medium/Large (51+) & 0.686 & 0.793 & 0.896 & 0.792 \\[3pt]
+\multicolumn{5}{l}{\textit{Industry}} \\
+Manufacturing & 1.000 & 0.869 & 1.049 & 0.973 \\
+Education/health & 0.598 & 0.709 & 0.975 & 0.760 \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}
 \small
-\item \textit{Note}: Firm size from \texttt{p512b} (establishment worker count). Workers with missing \texttt{p512b} (4.3--5.8\% per year) are excluded from Panel B; the three rows sum to 95.5\% of the sample.
+\item \textit{Note}: Total row (0.696 / 0.829 / 0.830) matches Table~\ref{tab:bunching} exactly. Full subgroup tables in Appendix~\ref{app:hetero}.
 \end{tablenotes}
 \end{threeparttable}
 \end{table}
 
-\begin{table}[H]
-\centering
-\caption{Bunching Ratios by Geography and Employer Sector}
-\label{tab:hetero_geo}
-\begin{threeparttable}
-\small
-\begin{tabular}{lcccc}
-\toprule
-Group & Event A & Event B & Event C & Average \\
-\midrule
-Lima Metropolitan ($N = 2{,}594$) & 0.618 & 1.050 & 0.817 & 0.828 \\
-Rest of country ($N = 7{,}358$) & 0.856 & 0.621 & 0.888 & 0.788 \\
-Urban ($N = 9{,}286$) & 0.702 & 0.843 & 0.828 & 0.791 \\
-Rural ($N = 666$) & 1.016 & 0.550 & 0.909 & 0.825 \\[4pt]
-Public sector ($N = 4{,}315$) & 0.921 & 0.456 & 0.865 & 0.747 \\
-Private sector ($N = 5{,}576$) & 0.766 & 0.962 & 0.768 & 0.832 \\
-\bottomrule
-\end{tabular}
-\begin{tablenotes}
-\small
-\item \textit{Note}: Public sector identified by \texttt{p510} $\in \{1, 2, 3\}$ or CIIU $\in \{84, 85, 86\}$.
-\end{tablenotes}
-\end{threeparttable}
-\end{table}
-
-The evidence is mixed. The private sector absorbs MW increases more effectively than the public sector (0.832 vs.\ 0.747), consistent with market adjustment rather than enforcement-driven compliance. Lima shows a higher ratio than the rest of the country in Event B (1.050 vs.\ 0.621), consistent with enforcement, but the pattern reverses in Events A and C. The Lima divergence in Event B remains unexplained. Lima's higher ratio in the smallest proportional increase (9.4\%) is inconsistent with a simple ``smaller bite is easier to absorb'' story---Lima's ratio is \emph{lower} than the national average in Event A (0.618), which had a larger bite (13.3\%). This inconsistency may reflect idiosyncratic shocks to Lima's labor market in 2017--2019 (e.g., construction boom, Venezuelan migration) that are orthogonal to the MW policy. We flag this as unresolved. The absence of a consistent enforcement gradient across all events suggests that formal-sector MW compliance in Peru operates through labor market adjustment---firms that choose to formalize have already internalized the MW floor---rather than through inspection-driven enforcement. Manufacturing consistently shows the highest ratios ($\approx 0.97$); micro firms show higher ratios than large firms in Events A--B, the opposite of an enforcement prediction, consistent with the self-selection story. No subgroup shows dramatically different behavior overall.
-
-\paragraph{Interpretation caveat.}\footnote{We also examined heterogeneity by ethnicity. Among formal dependent workers, indigenous (Quechua/Aymara) and non-indigenous workers have similar wage distributions (both median S/1,400) and MW exposure (8.5\% vs.\ 10.7\% below MW). Bunching ratios by ethnicity are unstable across events (indigenous average 1.27, range 0.63--1.80) and reflect sector composition (59\% public sector) rather than differential MW compliance. The ethnic divide operates through access to formal employment: the indigenous formality rate is 5.7\% vs.\ 20.7\% for Spanish speakers \citep[see][]{chavez2024ethnic}.} The heterogeneity analysis is descriptive, not structural. There is no exogenous variation in enforcement intensity or sector-specific MW exposure to identify why ratios differ across subgroups. The firm-size pattern (micro $>$ large in Events A--B) is inconsistent with a pure enforcement story and may reflect self-selection: micro firms that choose to formalize have already internalized compliance costs, so the marginal micro formal firm is already a high-compliance unit. The public/private gap (0.75 vs.\ 0.83) likely reflects institutional rigidity in government pay scales rather than differential MW responsiveness. These interpretations are suggestive, not causal.
+The evidence does not support a consistent enforcement or exposure gradient across events. The private sector absorbs MW increases more effectively than the public sector (0.832 vs.\ 0.747), consistent with market adjustment rather than inspection-driven compliance. Lima's ratio exceeds the rest of the country in Event B (1.050 vs.\ 0.621) but is \emph{lower} in Event A (0.618 vs.\ 0.856), which had a larger MW bite; the Lima divergence in Event B remains unexplained and may reflect idiosyncratic labor market shocks (construction boom, Venezuelan migration) orthogonal to the MW. Micro firms show higher ratios than large firms in Events A--B, the \emph{opposite} of an enforcement prediction, consistent with self-selection: micro firms that formalize have already internalized compliance costs. Manufacturing consistently shows the highest average ratio (0.973); education/health the lowest (0.760), reflecting the public-sector wage-scale rigidity that constrains adjustment. No subgroup exhibits behavior dramatically different from the aggregate, and no consistent pattern supports a causal interpretation.\footnote{We also examined heterogeneity by ethnicity. Among formal dependent workers, indigenous (Quechua/Aymara) and non-indigenous workers have similar wage distributions (both median S/1,400) and MW exposure (8.5\% vs.\ 10.7\% below MW). Bunching ratios by ethnicity are unstable across events (indigenous average 1.27, range 0.63--1.80) and reflect sector composition (59\% public sector) rather than differential MW compliance. The ethnic divide operates through access to formal employment: the indigenous formality rate is 5.7\% vs.\ 20.7\% for Spanish speakers \citep[see][]{chavez2024ethnic}.}
 
 
 %=============================================================
@@ -549,7 +495,7 @@ Peru's minimum wage increases between 2016 and 2022 produced clear, placebo-veri
 
 Three points of external validity strengthen these findings. First, EPE Lima quarterly data produces ratios (0.73--1.03) consistent with the ENAHO results despite different formality definitions, event windows, and geographic scope. Second, placebo tests at artificial thresholds produce ratios 7 times smaller. Third, informal workers show partial response in Event A (1.218) but not in Events B--C, suggesting some spillover at lower MW levels.
 
-\paragraph{Policy implications.} Peru's MW increases over 2016--2022 operated within a Kaitz range of 0.52--0.57, where the evidence supports effective redistribution: 70--83\% of affected formal workers received raises, hours did not adjust, and the lighthouse evidence suggests some informal workers benefited as well. The cost was borne through institutional reallocation: some workers transitioned from formal dependent employment to informal self-employment, losing social security coverage while retaining employment and income at similar levels. Future MW adjustments that push the Kaitz index significantly above 0.60---as the 2025 increase to S/1,130 may do---enter territory where the balance between redistribution and displacement could shift, though our evidence cannot predict the threshold at which this occurs.
+\paragraph{Policy implications.} Peru's MW increases over 2016--2022 operated within a Kaitz range of 0.52--0.57, where the evidence supports effective redistribution: 70--83\% of affected formal workers received raises, hours did not adjust, and the lighthouse evidence is consistent with some informal workers benefiting as well \citep{belman2014, manning2021}. The cost was borne through institutional reallocation: some workers transitioned from formal dependent employment to informal self-employment, losing social security coverage while retaining employment and income at similar levels. Peru's 2025 increase to S/1,130 pushes the national Kaitz index to approximately 0.61 based on 2023 median formal wages. Critically, this aggregate masks substantial heterogeneity: 18 of 25 departments would exceed Kaitz 0.60 at the new floor, with departments in high-informality coastal regions---Ica, Piura, and Tumbes---facing implied Kaitz indices of 0.68 or higher \citep{manning2021}. The 2016--2022 evidence provides limited guidance for these higher-Kaitz settings; monitoring wage distributions in high-Kaitz departments before and after the 2025 adjustment is warranted to detect early signs of a shift from redistribution to net displacement.
 
 This paper's central contribution is a complete diagnostic of identification in a national-MW setting: the pre-post distributional estimator recovers a clear, placebo-verified signal where three regression-based strategies---event study, Kaitz IV, and panel DiD---systematically fail. By documenting both what the data \textit{can} and \textit{cannot} identify, the paper provides a replicable template for MW analysis in developing economies without sub-national MW variation. This is not a data-quality failure---it is a structural feature of single-national-MW settings. The cross-sectional design cannot decompose the missing mass into transitions to informality versus exit from employment---a distinction with important policy implications. The self-employment evidence in Section~\ref{sec:results} is consistent with the interpretation that the missing mass reflects transitions to informal self-employment rather than job destruction; \citet{corcuera2024} corroborates this reallocation mechanism using an independent empirical strategy. \citet{dube2010}'s border-discontinuity approach, which provides the cleanest identification in the U.S.\ context, is not feasible in Peru's national-MW setting---precisely the methodological tension this paper documents. If the 17--30\% of the missing mass that does not reappear above the new floor reflects transitions to informal self-employment rather than non-employment---as the self-employment counts in Section~\ref{sec:results} suggest---the welfare implications differ substantially: workers retain employment and income at similar levels while losing social security coverage. This extensive-margin informalization, rather than job destruction, is the likely channel through which Peru's MW increases impose costs on affected workers. Future work using administrative wage registries (SUNAT, ESSALUD) would allow this decomposition through quarterly firm-level job flows, substantially improving both the power to detect employment effects and the ability to trace where displaced workers go.
 
@@ -651,6 +597,89 @@ C & Q1$\to$Q3 2022 & 1,933 & 1,936 & 331 & 0.885 & [0.70, 1.13] & 0.830 \\
 \begin{tablenotes}
 \small
 \item \textit{Note}: All ENAHO ratios fall within EPE Lima bootstrap CIs. Event A diverges in point estimates; Lima's lower Kaitz may explain the higher absorption rate. CIs wide due to small $N$.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\section{Heterogeneity --- Full Tables}\label{app:hetero}
+
+\begin{table}[H]
+\centering
+\caption{Bunching Ratios by Industry Sector}
+\label{tab:hetero_industry}
+\begin{threeparttable}
+\small
+\begin{tabular}{lcccc}
+\toprule
+Sector & Event A & Event B & Event C & Average \\
+\midrule
+\textbf{Total} ($N = 9{,}952$) & \textbf{0.696} & \textbf{0.829} & \textbf{0.830} & \textbf{0.785} \\
+Agriculture/Mining/Utilities ($N = 1{,}031$) & 1.641 & 0.765 & 0.407 & 0.938 \\
+Manufacturing ($N = 904$) & 1.000 & 0.869 & 1.049 & 0.973 \\
+Commerce ($N = 937$) & 0.784 & 1.209 & 0.723 & 0.905 \\
+Transport/hospitality ($N = 556$) & 1.041 & 1.018 & 0.585 & 0.881 \\
+Finance/professional services ($N = 1{,}113$) & 0.768 & 1.018 & 0.806 & 0.864 \\
+Public administration ($N = 1{,}639$) & 1.033 & 0.498 & 0.804 & 0.778 \\
+Education and health ($N = 3{,}021$) & 0.598 & 0.709 & 0.975 & 0.760 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\small
+\item \textit{Note}: $N$ = 2015 pre-period sample. $N = 9{,}952$ reflects exclusion of 107 workers with missing sector classification (CIIU code); Table~\ref{tab:bunching} uses the full sample ($N = 10{,}059$). Construction excluded (sparse cells, $< 500$ obs). Agriculture/Mining includes CIIU rev4 codes 35--39 (utilities). Sector from \texttt{p506r4} (CIIU 2-digit).
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Bunching Ratios by Firm Size, Age, and Sex}
+\label{tab:hetero_firm}
+\begin{threeparttable}
+\small
+\begin{tabular}{lcccc}
+\toprule
+Group & Event A & Event B & Event C & Average \\
+\midrule
+\multicolumn{5}{l}{\textit{Panel B: Firm size}} \\
+Micro ($\leq 10$, $N = 705$) & 0.899 & 0.909 & 0.690 & 0.833 \\
+Small (11--50, $N = 1{,}238$) & 0.919 & 0.901 & 0.598 & 0.806 \\
+Medium/Large (51+, $N = 7{,}557$) & 0.686 & 0.793 & 0.896 & 0.792 \\[6pt]
+\multicolumn{5}{l}{\textit{Panel C: Age and sex}} \\
+Age 18--24 & 0.661 & 1.010 & 0.805 & 0.826 \\
+Age 25--44 & 0.748 & 0.792 & 0.797 & 0.779 \\
+Age 45--64 & 0.701 & 0.927 & 0.853 & 0.827 \\
+Men & 0.726 & 0.788 & 0.778 & 0.764 \\
+Women & 0.697 & 0.922 & 0.877 & 0.832 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\small
+\item \textit{Note}: Firm size from \texttt{p512b} (establishment worker count). Workers with missing \texttt{p512b} (4.3--5.8\% per year) are excluded from Panel B; the three rows sum to 95.5\% of the sample.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Bunching Ratios by Geography and Employer Sector}
+\label{tab:hetero_geo}
+\begin{threeparttable}
+\small
+\begin{tabular}{lcccc}
+\toprule
+Group & Event A & Event B & Event C & Average \\
+\midrule
+Lima Metropolitan ($N = 2{,}594$) & 0.618 & 1.050 & 0.817 & 0.828 \\
+Rest of country ($N = 7{,}358$) & 0.856 & 0.621 & 0.888 & 0.788 \\
+Urban ($N = 9{,}286$) & 0.702 & 0.843 & 0.828 & 0.791 \\
+Rural ($N = 666$) & 1.016 & 0.550 & 0.909 & 0.825 \\[4pt]
+Public sector ($N = 4{,}315$) & 0.921 & 0.456 & 0.865 & 0.747 \\
+Private sector ($N = 5{,}576$) & 0.766 & 0.962 & 0.768 & 0.832 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\small
+\item \textit{Note}: Public sector identified by \texttt{p510} $\in \{1, 2, 3\}$ or CIIU $\in \{84, 85, 86\}$.
 \end{tablenotes}
 \end{threeparttable}
 \end{table}

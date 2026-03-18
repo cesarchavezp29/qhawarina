@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-03-18T01:00:58.570303",
+    "generated_at": "2026-03-18T15:13:28.361393",
     "sources": {
       "spot": "PD04659MD — Compras netas spot BCRP (Mill. USD)",
       "swaps": "PD04660MD — Swaps cambiarios netos BCRP (Mill. USD)",
@@ -25,14 +25,14 @@
     "n_months_monthly": 75
   },
   "latest": {
-    "date": "2026-03-16",
-    "fx": 3.4259,
-    "spot_net_purchases": 0.0,
-    "swaps_net": 0.0,
+    "date": "2026-03-17",
+    "fx": 3.4123,
+    "spot_net_purchases": null,
+    "swaps_net": null,
     "reference_rate": 4.25,
     "bond_sol_10y": null,
     "bond_usd_10y": null,
-    "bvl": 52012.0
+    "bvl": null
   },
   "daily_series": [
     {
@@ -5496,7 +5496,7 @@
       "spot_net_purchases": null,
       "swaps_net": null,
       "total_intervention": 0.0,
-      "fx": 3.4259,
+      "fx": 3.4123,
       "reference_rate": 4.25,
       "bond_sol_10y": 6.24,
       "bond_usd_10y": 5.312,
@@ -6397,7 +6397,7 @@
       "spot_net_purchases": 0.0,
       "swaps_net": 0.0,
       "total_intervention": 0.0,
-      "fx_avg": 3.4347,
+      "fx_avg": 3.4328,
       "bond_sol_avg": 6.085,
       "bond_usd_avg": 5.134,
       "bvl_end": 52012.0,
