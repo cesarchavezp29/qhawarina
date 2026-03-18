@@ -67,11 +67,11 @@ The key challenge is that Peru has a single national MW with no sub-national var
 
 I analyze three MW events: Event A (S/750$\to$S/850, May 2016), Event B (S/850$\to$S/930, April 2018), and Event C (S/930$\to$S/1,025, May 2022). Using ENAHO household survey data from 2015--2023, covering approximately 10,000 formal dependent workers per year, I find bunching ratios of 0.696, 0.829, and 0.830 for the three events respectively. Bootstrap 95\% confidence intervals are [0.567, 0.896], [0.716, 1.016], and [0.716, 0.960]. Events A and C reject $R = 1$ (full redistribution with zero job loss); Event B does not---the data are consistent with both complete redistribution and displacement of up to 28\% of affected workers.
 
-Placebo tests at artificial thresholds (S/1,100$\to$S/1,200 and S/1,400$\to$S/1,500) produce ratios of 0.114 and 0.013, with missing mass 7 times smaller than at the true MW---confirming the bunching signal is MW-specific. Results are stable across bin widths (S/25, S/50, S/100) and across populations. An independent dataset---EPE Lima quarterly data with 6-month event windows---produces consistent ratios (0.73--1.03 vs.\ ENAHO's 0.70--0.83).
+Placebo tests at artificial thresholds (S/1,100$\to$S/1,200 and S/1,400$\to$S/1,500) produce ratios of 0.114 and 0.013, with missing mass 7 times smaller than at the true MW---confirming the bunching signal is MW-specific. Results are stable across aligned bin widths (S/10--S/25; see Section~\ref{sec:results}) and across populations. An independent dataset---EPE Lima quarterly data with 6-month event windows---produces consistent ratios (0.73--1.03 vs.\ ENAHO's 0.70--0.83).
 
 I systematically test three identification strategies for employment effects: department-level event-study DiD, Kaitz instrumental variables at department and province levels, and within-year province IV. All fail. Event-study pre-trends are violated for Events B ($p = 0.007$) and C ($p = 0.017$); Event A has no testable pre-period. The Kaitz IV produces $F$-statistics below 3 in all specifications, far below the Stock-Yogo threshold. The ENAHO panel has 76\% attrition with differential selection by treatment group. These failures are not data-quality issues but a structural feature of single-national-MW settings: Kaitz variation across departments reflects poverty gradients with independent secular and seasonal dynamics.
 
-The paper contributes to the MW literature in three ways. First, it provides the first distributional analysis of Peru's MW using three identifiable events, contributing to the growing evidence base from developing countries \citep[see][]{harasztosi2016, saltiel2018, gindling2021}. Second, it documents the systematic failure of regression-based identification in a national-MW setting, offering a methodological cautionary note for researchers working in similar institutional contexts. Third, by decomposing apparent wage compression into mechanical (composition) and genuine components, it clarifies that 41--92\% of measured compression reflects MW-induced worker sorting, not spillover wage effects.
+The paper contributes to the MW literature in three ways. First, it provides the first distributional analysis of Peru's MW using three identifiable events, contributing to the growing evidence base from developing countries \citep[see][]{harasztosi2016, saltiel2018, gindling2021, engbom2022}. The broader debate on whether MW increases reduce or merely redistribute employment has not reached consensus \citep{card1994, neumark2022, manning2021, dube2019}; \citet{belman2014} survey over 200 studies and find wide variation driven by methodology and context. This paper contributes a systematic identification of what can and cannot be learned in a national-MW setting. Second, it documents the systematic failure of regression-based identification in a national-MW setting, offering a methodological cautionary note for researchers working in similar institutional contexts. Third, by decomposing apparent wage compression into mechanical (composition) and genuine components, it clarifies that 41--92\% of measured compression reflects MW-induced worker sorting, not spillover wage effects.
 
 %=============================================================
 \section{Institutional Context}\label{sec:context}
@@ -81,7 +81,7 @@ The paper contributes to the MW literature in three ways. First, it provides the
 
 The \textit{Remuneraci\'on M\'inima Vital} (RMV) is set by executive decree and applies to all registered formal dependent workers (\textit{empleados} and \textit{obreros}). It is not indexed to inflation or productivity and changes only when the government issues a new decree. Enforcement is conducted by SUNAFIL (\textit{Superintendencia Nacional de Fiscalizaci\'on Laboral}), with inspections concentrated in Lima and large firms.
 
-Peru's labor market is characterized by high informality: approximately 72--75\% of employed workers are informal by INEI's comprehensive definition. The MW directly affects roughly 10--15\% of the workforce classified as formal dependent workers under INEI's formality variable (\texttt{ocupinf == 2}), which requires social security registration or a written employment contract.
+Peru's labor market is characterized by high informality: approximately 72--75\% of employed workers are informal by INEI's comprehensive definition \citep{chacaltana2001, jaramillo2006, diaz2014}. The MW directly affects roughly 10--15\% of the workforce classified as formal dependent workers under INEI's formality variable (\texttt{ocupinf == 2}), which requires social security registration or a written employment contract.
 
 \subsection{The Three MW Events}
 
@@ -187,7 +187,7 @@ B^\text{exc} = \sum_{\substack{b \in [\text{MW}_\text{new},\; \text{MW}_\text{ne
 
 The \textbf{bunching ratio} is $R = B^\text{exc} / B^\text{miss}$. A ratio of 1 indicates perfect redistribution: all displaced workers reappear above the new MW. A ratio below 1 indicates that some fraction of the missing mass does not reappear, consistent with job loss, informalization, or transitions beyond the S/250 excess window.
 
-This estimator does not require parallel trends and is valid for all three events.
+This estimator does not require between-unit parallel trends and is valid for all three events. It does assume that the upper tail of the distribution ($> 2 \times \text{MW}_\text{new}$) provides a valid counterfactual for background wage growth in the MW-relevant range. This assumption could be violated if high-wage and low-wage formal employment have different cyclical dynamics---for example, if recessions disproportionately contract low-wage formal employment. The placebo tests in Section~\ref{sec:results} provide a within-sample check: if the upper-tail correction were systematically biased, false-positive bunching signals would appear at artificial thresholds.
 
 \subsection{Bootstrap Inference}
 
@@ -246,6 +246,32 @@ Event & Group & Missing (pp) & Excess (pp) & Ratio \\
 
 Formal dependent workers show ratios consistently below 1 across all three events (0.696--0.830), indicating that more workers leave the affected zone than reappear at the new MW. Missing mass increases from 6.78pp (Event A) to 13.02pp (Event C), reflecting the growing MW bite as the RMV rises relative to the wage distribution.
 
+Table~\ref{tab:effective_n} reports the unweighted observation counts in the affected and excess zones, confirming that the bunching signal is not driven by sparse cells. The affected zone contains 829--1,163 observations pre-policy; the excess zone contains 1,566--1,657 observations post-policy.
+
+\begin{table}[H]
+\centering
+\caption{Effective Sample Counts in Affected and Excess Zones}
+\label{tab:effective_n}
+\begin{threeparttable}
+\small
+\begin{tabular}{lrrr}
+\toprule
+Event & $N_\text{affected}$ (pre) & $N_\text{excess}$ (post) & $N_\text{total}$ (pre) \\
+      & $[0.85\times\text{MW}_\text{old},\,\text{MW}_\text{new})$ &
+        $[\text{MW}_\text{new},\,\text{MW}_\text{new}+250)$ & \\
+\midrule
+A (750$\to$850)   & 829   & 1,657 & 10,195 \\
+B (850$\to$930)   & 1,032 & 1,566 & 11,090 \\
+C (930$\to$1,025) & 1,163 & 1,572 &  9,175 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\small
+\item \textit{Note}: Formal dependent workers. Unweighted counts. Affected zone = directly compressed zone below the new MW. Excess zone = first S/250 above the new MW (canonical excess window). $N_\text{excess} > N_\text{affected}$ because the excess zone captures both workers pushed up from the affected zone and new entrants; some excess-zone workers may have always been above the affected zone.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
 Bootstrap 95\% confidence intervals are $[0.567, 0.896]$ (A), $[0.716, 1.016]$ (B), and $[0.716, 0.960]$ (C). Events A and C reject $R = 1$ at the 95\% level; Event B does not---approximately 4.7\% of bootstrap draws produce $R \geq 1$. For Event B, the data are consistent with both full redistribution and displacement of up to 28\% of affected workers.
 
 Informal workers show a ratio above 1 in Event A (1.218), approximately 1 in Event B (0.987), and below 1 in Event C (0.811). There is no consistent spillover pattern.
@@ -265,6 +291,8 @@ Figure~\ref{fig:cumulative} shows the bunching ratio as a function of the excess
 \end{figure}
 
 Table~\ref{tab:sensitivity} presents counterfactual sensitivity for Event B under six specifications. The canonical result ($R = 0.829$) is identical under alternative clean zone thresholds ($1.5\times$ and $2.5\times$) and under no background correction---indicating the background constant is near zero for Event B (the clean zone delta averages to essentially zero). Uniform weighting yields $R = 0.773$ ($\Delta = -0.056$); a degree-4 polynomial correction yields $R = 1.054$, as the polynomial overshoots the counterfactual in the missing zone. The range across specs is 0.773--1.054, with four of six within $\pm 0.05$ of canonical.
+
+The polynomial result warrants explanation. A degree-4 polynomial is fitted to the post-period wage distribution in the clean zone ($> 2 \times \text{MW}_\text{new}$) and extrapolated into the affected zone as the counterfactual level. Because the polynomial must pass through the peak of the distribution---which typically occurs above 1.5$\times$MW---it extrapolates a high counterfactual into the missing zone, making the observed post-distribution appear to lie \textit{above} the counterfactual there. This generates artificially small missing mass (the zone that ``should'' have workers according to the polynomial actually does) and consequently inflates $R$ above 1. This is a well-known limitation of polynomial counterfactuals in bunching settings with sharp mass points \citep{kleven2013}: the polynomial cannot distinguish between the smooth background trend and the mass concentration created by the MW itself. The inverse-absolute weighting avoids this problem by assigning near-zero weight to bins near the MW spike and high weight to the flat upper tail, producing a counterfactual that reflects only smooth background drift.
 
 \begin{table}[H]
 \centering
@@ -297,22 +325,28 @@ No correction      & none                             & 7.99 & 6.62 & 0.829 \\
 \label{tab:binwidth}
 \begin{threeparttable}
 \small
-\begin{tabular}{lccc}
+\begin{tabular}{lcccc}
 \toprule
-Bin width & $R$ (Event A) & $R$ (Event B) & $R$ (Event C) \\
+Bin width & Boundary aligned? & $R$ (Event A) & $R$ (Event B) & $R$ (Event C) \\
+          & A / B / C         &               &               &               \\
 \midrule
-S/25 (canonical) & 0.697 & 0.829 & 0.829 \\
-S/50             & 0.677 & 0.206$^{\dagger}$ & 0.662 \\
-S/100            & 0.477 & 0.754 & 0.613 \\
+S/10  & Y / Y / N & 0.751 & 0.836 & 0.850 \\
+S/15  & N / Y / N & 0.079$^{\dagger}$ & 0.838 & 0.848 \\
+S/20  & N / N / N & 0.712 & 0.804 & 0.854 \\
+S/25 (canonical) & Y / N / Y & 0.697 & 0.829 & 0.829 \\
+S/50  & Y / N / N & 0.677 & 0.206$^{\dagger}$ & 0.662 \\
+S/100 & N / N / N & 0.477 & 0.754 & 0.613 \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}
 \small
-\item \textit{Note}: Canonical inv-abs background correction; excess window S/250; all three events; formal dependent workers. Coarser bins reduce the number of resolution points in the missing and excess zones, introducing noise.
-\item[$\dagger$] At S/50, $\text{MW}_\text{new} = 930$ does not fall on a bin boundary (bins span [900,950), [950,1000), \ldots). Workers bunching at S/930--S/949 are captured in bin [900,950) (center = 925), which lies below $\text{MW}_\text{new}$ and is therefore classified as part of the \textit{missing} zone rather than the excess zone. This boundary misclassification severely depresses $R$ for Event B and should not be interpreted as a genuine robustness failure. The S/25 canonical grid is preferred because it minimises boundary misclassification for all three MW thresholds.
+\item \textit{Note}: Canonical inv-abs background correction; excess window S/250; formal dependent workers. ``Boundary aligned'' = $\text{MW}_\text{new} \bmod \text{BinWidth} = 0$, so the MW threshold falls on a bin edge.
+\item[$\dagger$] Boundary misalignment: the bunching spike at $\text{MW}_\text{new}$ falls in a bin whose center lies below $\text{MW}_\text{new}$, classifying it as missing rather than excess. See text.
 \end{tablenotes}
 \end{threeparttable}
 \end{table}
+
+When the MW threshold falls on a bin boundary (aligned configurations), $R$ is stable: Event B yields 0.836 (S/10), 0.838 (S/15), and 0.829 (S/25), a range of only 0.009. Similarly, Event C gives 0.848--0.854 across aligned specifications. Misaligned configurations produce severely distorted estimates: Event A at S/15 gives $R = 0.079$ and Event B at S/50 gives $R = 0.206$, not because workers are not reappearing, but because the bunching spike at $\text{MW}_\text{new}$ lands in a bin whose center falls below the threshold, misclassifying excess as missing. At S/50, for example, $\text{MW}_\text{new} = 930$ falls in bin [900, 950) with center 925 $< 930$; workers pushed to S/930--S/949 are counted in the \textit{missing} zone rather than the excess zone. The S/25 canonical grid is the finest resolution at which both Event A (MW\textsubscript{new} = 850) and Event C (MW\textsubscript{new} = 1,025) are aligned; Event B (MW\textsubscript{new} = 930, not divisible by 25) is marginally misaligned by S/5, which does not detectably distort $R$. The narrative is therefore: $R$ stabilises at fine aligned grids (0.70--0.85) and collapses only when boundary misalignment is severe.
 
 \textbf{Event C and COVID.} Event C's pre-period (2021) reflects post-pandemic conditions: aggregate formal employment fell 9\% in 2020 and recovered partially by 2021, with some compression of wages near the MW floor. As a robustness check, using 2019 as the pre-period (a 4-year gap) produces $R = 0.997$, compared to $R = 0.830$ with the canonical 2021 pre-period. The pre-2019 estimate reflects upward bias from economy-wide wage growth over 2019--2023 (post-pandemic recovery, headline inflation of 33\% cumulative), which shifts the entire distribution rightward and inflates measured excess mass. The canonical pre=2021 estimate is temporally proximate (8 months before the May 2022 increase) and minimizes macro confounds; the higher pre-2019 $R$ should be interpreted as an upper bound. Both estimates are consistent with the conclusion that employment effects cannot be signed.
 
@@ -457,6 +491,8 @@ Private sector ($N = 5{,}576$) & 0.766 & 0.962 & 0.768 & 0.832 \\
 
 Ratios cluster near 0.80 across most subgroups. The private sector absorbs MW increases more effectively (average ratio 0.832) than the public sector (0.747), where rigid pay scales limit adjustment. Manufacturing consistently shows the highest ratios ($\approx 0.97$), likely reflecting higher enforcement density. Micro firms ($\leq 10$ workers) show higher ratios than medium/large firms ($51+$ workers) in Events A and B (0.90--0.91 vs.\ 0.69--0.79), the opposite of what an enforcement story would predict. This may reflect self-selection: micro firms that are formal have already opted into compliance, while the marginal micro firm that evades formal employment entirely is excluded from the sample. No subgroup shows dramatically different behavior.
 
+\paragraph{Interpretation caveat.} The heterogeneity analysis is descriptive, not structural. There is no exogenous variation in enforcement intensity or sector-specific MW exposure to identify why ratios differ across subgroups. The firm-size pattern (micro $>$ large in Events A--B) is inconsistent with a pure enforcement story and may reflect self-selection: micro firms that choose to formalize have already internalized compliance costs, so the marginal micro formal firm is already a high-compliance unit. The public/private gap (0.75 vs.\ 0.83) likely reflects institutional rigidity in government pay scales rather than differential MW responsiveness. These interpretations are suggestive, not causal.
+
 \paragraph{Ethnicity.} Among formal dependent workers, indigenous (Quechua/Aymara/native-language) and non-indigenous workers have similar wage distributions (both median S/1,400) and similar MW exposure (8.5\% vs.\ 10.7\% below MW). The ethnic divide operates through access to formal employment: the indigenous formality rate is 5.7\% versus 20.7\% for Spanish speakers (a 3.6$\times$ gap). The 925 indigenous formal dependent workers are predominantly public-sector employees (59\%), concentrated in highland departments. Bunching ratios by ethnicity are unstable across events and reflect sector composition rather than differential MW compliance.
 
 %=============================================================
@@ -493,9 +529,9 @@ No DiD exceeds $\pm 1.1$h/week. There is no evidence of intensive-margin hours a
 \section{Conclusion}\label{sec:conclusion}
 %=============================================================
 
-\textbf{Employment effects cannot be identified.} The event study fails pre-trends for Events B ($p = 0.007$) and C ($p = 0.017$); Event A has no testable pre-period. The IV approach fails due to weak first stages ($F < 3$ in all events). The bunching ratios (0.70--0.83, bootstrap CIs [0.57--1.02]) are consistent with both modest displacement (up to 28\% of affected workers) and full redistribution. The data cannot distinguish between these scenarios.
+Peru's minimum wage increases between 2016 and 2022 produced clear, placebo-verified redistribution of the formal wage distribution. Across three events, 70--83\% of workers displaced below the old floor reappear above the new one, rising to 94\% when the excess window is extended to S/500 (Figure~\ref{fig:cumulative}). The bunching signal is specific to the true MW threshold---7$\times$ larger than at placebo thresholds (Table~\ref{tab:bunching})---stable across counterfactual specifications (Table~\ref{tab:sensitivity}), and confirmed on an independent quarterly dataset (EPE Lima, Appendix~\ref{app:epe}). Hours show no intensive-margin adjustment ($\leq \pm 1.1$h/week). Wage compression of 3--7 percentage points is present, but 41--92\% is mechanical composition; the residual genuine compression ($-0.005$ to $-0.029$ log points) is robust to alternative assumptions about where new arrivals enter (Table~\ref{tab:comp_robust}).
 
-\textbf{What can be concluded}: Peru's MW increases produce a clear, placebo-verified redistribution of the formal wage distribution. Workers near the MW floor receive raises---the pre-post estimator documents 6.78--13.02 percentage points of missing mass below the old floor across three events, with 70--83\% reappearing as excess mass at the new floor. The intensive margin (hours) shows no adjustment. Compression of 3--7 percentage points is present but 41--92\% is mechanical composition. The residual genuine compression ($-0.005$ to $-0.029$ log points) represents modest spillover above the MW threshold; with individual controls, the compression coefficient is $-0.045$ ($p < 0.001$).
+\textbf{Employment effects remain an open question.} The event study fails pre-trends for Events B ($p = 0.007$) and C ($p = 0.017$); Event A has no testable pre-period. The IV approach fails due to weak first stages ($F < 3$ in all events). The bunching ratios (0.70--0.83, bootstrap CIs [0.57--1.02]) are consistent with both modest displacement (up to 28\% of affected workers) and full redistribution. The data cannot distinguish between these scenarios.
 
 Three points of external validity strengthen these findings. First, EPE Lima quarterly data produces ratios (0.73--1.03) consistent with the ENAHO results despite different formality definitions, event windows, and geographic scope. Second, placebo tests at artificial thresholds produce ratios 7 times smaller. Third, informal workers show partial response in Event A (1.218) but not in Events B--C, suggesting some spillover at lower MW levels.
 
