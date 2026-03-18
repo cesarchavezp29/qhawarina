@@ -153,9 +153,8 @@ for ax, (ev, pre_yr, post_yr, mw_old, mw_new, title) in zip(axes, EVENTS):
             bbox=dict(facecolor='white', edgecolor='none', alpha=0.7))
 
 plt.suptitle(
-    'Figure 2: Wage Distribution of Formal Dependent Workers — Pre and Post MW Increases\n'
-    'ENAHO Module 500. Bin width = S/25. Dashed line = polynomial counterfactual (degree 4).\n'
-    'Shaded zone = affected range [0.85×MW_old, MW_new).',
+    'Wage Distribution of Formal Dependent Workers — Pre and Post MW Increases\n'
+    'ENAHO Module 500. Bin width = S/25. Shaded zone = affected range [0.85\u00d7MW_old, MW_new).',
     fontsize=9, y=1.02
 )
 plt.tight_layout()
