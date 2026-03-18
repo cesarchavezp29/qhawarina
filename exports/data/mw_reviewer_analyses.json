@@ -1,0 +1,149 @@
+{
+  "analysis1_cumulative_excess": {
+    "A": {
+      "50": 0.626,
+      "100": 0.645,
+      "150": 0.693,
+      "200": 0.697,
+      "250": 0.697,
+      "300": 0.706,
+      "400": 0.71,
+      "500": 0.724
+    },
+    "B": {
+      "50": 0.79,
+      "100": 0.79,
+      "150": 0.815,
+      "200": 0.821,
+      "250": 0.829,
+      "300": 0.829,
+      "400": 0.834,
+      "500": 0.841
+    },
+    "C": {
+      "50": 0.623,
+      "100": 0.628,
+      "150": 0.743,
+      "200": 0.758,
+      "250": 0.829,
+      "300": 0.829,
+      "400": 0.908,
+      "500": 0.941
+    }
+  },
+  "analysis2_counterfactual_sensitivity_B": [
+    {
+      "spec": "Canonical",
+      "method": "inv-abs (>2xMW)",
+      "missing": 7.991,
+      "excess": 6.623,
+      "ratio": 0.829
+    },
+    {
+      "spec": "Uniform weights",
+      "method": "uniform (>2xMW)",
+      "missing": 8.262,
+      "excess": 6.39,
+      "ratio": 0.773
+    },
+    {
+      "spec": "Polynomial deg 4",
+      "method": "poly4 (>2xMW)",
+      "missing": 7.035,
+      "excess": 7.416,
+      "ratio": 1.054
+    },
+    {
+      "spec": "Clean at 1.5xMW",
+      "method": "inv-abs (>1.5xMW)",
+      "missing": 7.991,
+      "excess": 6.623,
+      "ratio": 0.829
+    },
+    {
+      "spec": "Clean at 2.5xMW",
+      "method": "inv-abs (>2.5xMW)",
+      "missing": 7.991,
+      "excess": 6.623,
+      "ratio": 0.829
+    },
+    {
+      "spec": "No correction",
+      "method": "none",
+      "missing": 7.991,
+      "excess": 6.623,
+      "ratio": 0.829
+    }
+  ],
+  "analysis3_covid_robustness_C": {
+    "canonical_pre2021": {
+      "R": 0.829,
+      "missing_pp": 12.957,
+      "excess_pp": 10.747,
+      "n": 9175
+    },
+    "covid_robust_pre2019": {
+      "R": 0.997,
+      "missing_pp": 10.785,
+      "excess_pp": 10.755,
+      "n": 11082
+    },
+    "n_2023": 10049,
+    "n_affected_zone_2021": 990,
+    "n_excess_zone_2023": 1572,
+    "new_entrants_pct_of_excess": 55.6
+  },
+  "analysis4_effective_N": {
+    "A": {
+      "formal_dep": {
+        "N_affected_pre": 829,
+        "N_excess_post": 1657,
+        "N_total_pre": 10195
+      },
+      "informal": {
+        "N_affected_pre": 1498,
+        "N_excess_post": 1652,
+        "N_total_pre": 14878
+      },
+      "all_dep": {
+        "N_affected_pre": 2327,
+        "N_excess_post": 3309,
+        "N_total_pre": 25073
+      }
+    },
+    "B": {
+      "formal_dep": {
+        "N_affected_pre": 1032,
+        "N_excess_post": 1566,
+        "N_total_pre": 11090
+      },
+      "informal": {
+        "N_affected_pre": 1641,
+        "N_excess_post": 1294,
+        "N_total_pre": 15409
+      },
+      "all_dep": {
+        "N_affected_pre": 2673,
+        "N_excess_post": 2860,
+        "N_total_pre": 26499
+      }
+    },
+    "C": {
+      "formal_dep": {
+        "N_affected_pre": 1163,
+        "N_excess_post": 1572,
+        "N_total_pre": 9175
+      },
+      "informal": {
+        "N_affected_pre": 1758,
+        "N_excess_post": 1288,
+        "N_total_pre": 14446
+      },
+      "all_dep": {
+        "N_affected_pre": 2921,
+        "N_excess_post": 2860,
+        "N_total_pre": 23621
+      }
+    }
+  }
+}

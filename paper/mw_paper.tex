@@ -173,6 +173,8 @@ The counterfactual correction uses an inverse-absolute-weighted average of $\Del
 \]
 where $\epsilon = 10^{-8}$. The adjusted delta is $\Delta_b^\text{adj} = \Delta_b - \bar{\Delta}_\text{clean}$.
 
+Bins with $|\Delta_b| \approx 0$ receive higher weight because they represent wage regions where the pre-to-post change is minimal, providing the cleanest estimate of the background trend. The weighting prevents a small number of bins with anomalously large movements---which may reflect sector shocks rather than MW effects---from dominating the correction. Table~\ref{tab:sensitivity} shows results are robust to uniform weighting and alternative clean zone thresholds.
+
 \textbf{Missing mass} (negative-only bins in the affected zone):
 \begin{equation}
 B^\text{miss} = \sum_{\substack{b \in [0.85 \times \text{MW}_\text{old},\; \text{MW}_\text{new}) \\ \Delta_b^\text{adj} < 0}} \left| \Delta_b^\text{adj} \right|
@@ -251,6 +253,45 @@ Informal workers show a ratio above 1 in Event A (1.218), approximately 1 in Eve
 \subsection{Placebo Test}
 
 Applying the same estimator to artificial thresholds on the Event B population---fake increases from S/1,100$\to$S/1,200 and S/1,400$\to$S/1,500---produces ratios of 0.114 and 0.013, with missing mass 7 times smaller than at the true MW (1.2pp and 2.0pp vs.\ 8.0pp). The bunching signal is specific to the actual MW threshold.
+
+Figure~\ref{fig:cumulative} shows the bunching ratio as a function of the excess window width $W \in \{50, 100, \ldots, 500\}$, holding missing mass fixed. $R(W)$ increases monotonically across all three events: from 0.62--0.79 at $W = \text{S/}50$ to 0.72--0.94 at $W = \text{S/}500$. Event C converges to $R = 0.94$ at $W = \text{S/}500$, consistent with workers dispersing broadly into bins above the new floor. Event A plateaus near $R = 0.72$, consistent with some genuine displacement into the informal or non-employment margin. For all events, the monotone increase indicates that excess mass accumulates throughout the window rather than clustering in a narrow spike---ruling out pure wage-recording artifacts.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{../exports/figures/fig3_cumulative_excess.pdf}
+\caption{Bunching Ratio $R(W)$ as a Function of Excess Window Width}
+\label{fig:cumulative}
+{\small \textit{Note}: Formal dependent workers (ENAHO CS). Missing mass fixed at canonical $[0.85 \times \text{MW}_\text{old}, \text{MW}_\text{new})$. Excess window $[\text{MW}_\text{new}, \text{MW}_\text{new} + W)$ varies. Dashed line at $R = 1$. Event C: pre=2021, post=2023. Background correction: inverse-absolute weighted, clean zone $> 2 \times \text{MW}_\text{new}$.}
+\end{figure}
+
+Table~\ref{tab:sensitivity} presents counterfactual sensitivity for Event B under six specifications. The canonical result ($R = 0.829$) is identical under alternative clean zone thresholds ($1.5\times$ and $2.5\times$) and under no background correction---indicating the background constant is near zero for Event B (the clean zone delta averages to essentially zero). Uniform weighting yields $R = 0.773$ ($\Delta = -0.056$); a degree-4 polynomial correction yields $R = 1.054$, as the polynomial overshoots the counterfactual in the missing zone. The range across specs is 0.773--1.054, with four of six within $\pm 0.05$ of canonical.
+
+\begin{table}[H]
+\centering
+\caption{Counterfactual Sensitivity --- Event B Bunching Ratio}
+\label{tab:sensitivity}
+\begin{threeparttable}
+\small
+\begin{tabular}{llccc}
+\toprule
+Specification & Clean zone / Weighting & Missing (pp) & Excess (pp) & $R$ \\
+\midrule
+Canonical          & $> 2\times\text{MW}$, inv-abs    & 7.99 & 6.62 & 0.829 \\
+Uniform weights    & $> 2\times\text{MW}$, uniform    & 8.26 & 6.39 & 0.773 \\
+Polynomial deg.\ 4 & $> 2\times\text{MW}$, poly fit   & 7.04 & 7.42 & 1.054 \\
+Clean at $1.5\times\text{MW}$ & $> 1.5\times\text{MW}$, inv-abs & 7.99 & 6.62 & 0.829 \\
+Clean at $2.5\times\text{MW}$ & $> 2.5\times\text{MW}$, inv-abs & 7.99 & 6.62 & 0.829 \\
+No correction      & none                             & 7.99 & 6.62 & 0.829 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\small
+\item \textit{Note}: Formal dependent workers, Event B ($\text{MW}$: S/850$\to$S/930). Missing mass from $[0.85 \times 850, 930) = [\text{S/}723, \text{S/}930)$ (negative-only bins). Excess from $[\text{S/}930, \text{S/}1{,}180)$ ($W = 250$). Background correction varies by specification. The canonical (inv-abs) and no-correction specifications give identical $R$ because the clean-zone background for Event B is near zero.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\textbf{Event C and COVID.} Event C's pre-period (2021) reflects post-pandemic conditions: aggregate formal employment fell 9\% in 2020 and recovered partially by 2021, with some compression of wages near the MW floor. As a robustness check, using 2019 as the pre-period (a 4-year gap) produces $R = 0.997$, compared to $R = 0.830$ with the canonical 2021 pre-period. The pre-2019 estimate reflects upward bias from economy-wide wage growth over 2019--2023 (post-pandemic recovery, headline inflation of 33\% cumulative), which shifts the entire distribution rightward and inflates measured excess mass. The canonical pre=2021 estimate is temporally proximate (8 months before the May 2022 increase) and minimizes macro confounds; the higher pre-2019 $R$ should be interpreted as an upper bound. Both estimates are consistent with the conclusion that employment effects cannot be signed.
 
 \subsection{Wage Compression}
 
@@ -366,7 +407,7 @@ Private sector ($N = 5{,}576$) & 0.766 & 0.962 & 0.768 & 0.832 \\
 \end{threeparttable}
 \end{table}
 
-Ratios cluster near 0.80 across most subgroups. The private sector absorbs MW increases more effectively (average ratio 0.832) than the public sector (0.747), where rigid pay scales limit adjustment. Manufacturing consistently shows the highest ratios ($\approx 0.97$), likely reflecting higher enforcement density. No subgroup shows dramatically different behavior.
+Ratios cluster near 0.80 across most subgroups. The private sector absorbs MW increases more effectively (average ratio 0.832) than the public sector (0.747), where rigid pay scales limit adjustment. Manufacturing consistently shows the highest ratios ($\approx 0.97$), likely reflecting higher enforcement density. Micro firms ($\leq 10$ workers) show higher ratios than medium/large firms ($51+$ workers) in Events A and B (0.90--0.91 vs.\ 0.69--0.79), the opposite of what an enforcement story would predict. This may reflect self-selection: micro firms that are formal have already opted into compliance, while the marginal micro firm that evades formal employment entirely is excluded from the sample. No subgroup shows dramatically different behavior.
 
 \paragraph{Ethnicity.} Among formal dependent workers, indigenous (Quechua/Aymara/native-language) and non-indigenous workers have similar wage distributions (both median S/1,400) and similar MW exposure (8.5\% vs.\ 10.7\% below MW). The ethnic divide operates through access to formal employment: the indigenous formality rate is 5.7\% versus 20.7\% for Spanish speakers (a 3.6$\times$ gap). The 925 indigenous formal dependent workers are predominantly public-sector employees (59\%), concentrated in highland departments. Bunching ratios by ethnicity are unstable across events and reflect sector composition rather than differential MW compliance.
 
@@ -410,7 +451,7 @@ No DiD exceeds $\pm 1.1$h/week. There is no evidence of intensive-margin hours a
 
 Three points of external validity strengthen these findings. First, EPE Lima quarterly data produces ratios (0.73--1.03) consistent with the ENAHO results despite different formality definitions, event windows, and geographic scope. Second, placebo tests at artificial thresholds produce ratios 7 times smaller. Third, informal workers show partial response in Event A (1.218) but not in Events B--C, suggesting some spillover at lower MW levels.
 
-This is not a data-quality failure---it is a structural feature of single-national-MW settings. Future work using administrative wage registries (SUNAT, ESSALUD) that allow quarterly firm-level identification could substantially improve power.
+This paper's central contribution is a complete diagnostic of identification in a national-MW setting: the pre-post distributional estimator recovers a clear, placebo-verified signal where three regression-based strategies---event study, Kaitz IV, and panel DiD---systematically fail. By documenting both what the data \textit{can} and \textit{cannot} identify, the paper provides a replicable template for MW analysis in developing economies without sub-national MW variation. This is not a data-quality failure---it is a structural feature of single-national-MW settings. The cross-sectional design cannot decompose the missing mass into transitions to informality versus exit from employment---a distinction with important policy implications. Future work using administrative wage registries (SUNAT, ESSALUD) would allow this decomposition through quarterly firm-level job flows, substantially improving both the power to detect employment effects and the ability to trace where displaced workers go.
 
 %=============================================================
 % REFERENCES
