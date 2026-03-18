@@ -291,6 +291,29 @@ No correction      & none                             & 7.99 & 6.62 & 0.829 \\
 \end{threeparttable}
 \end{table}
 
+\begin{table}[H]
+\centering
+\caption{Bin Width Sensitivity --- Bunching Ratios (Formal Dependent Workers)}
+\label{tab:binwidth}
+\begin{threeparttable}
+\small
+\begin{tabular}{lccc}
+\toprule
+Bin width & $R$ (Event A) & $R$ (Event B) & $R$ (Event C) \\
+\midrule
+S/25 (canonical) & 0.697 & 0.829 & 0.829 \\
+S/50             & 0.677 & 0.206$^{\dagger}$ & 0.662 \\
+S/100            & 0.477 & 0.754 & 0.613 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\small
+\item \textit{Note}: Canonical inv-abs background correction; excess window S/250; all three events; formal dependent workers. Coarser bins reduce the number of resolution points in the missing and excess zones, introducing noise.
+\item[$\dagger$] At S/50, $\text{MW}_\text{new} = 930$ does not fall on a bin boundary (bins span [900,950), [950,1000), \ldots). Workers bunching at S/930--S/949 are captured in bin [900,950) (center = 925), which lies below $\text{MW}_\text{new}$ and is therefore classified as part of the \textit{missing} zone rather than the excess zone. This boundary misclassification severely depresses $R$ for Event B and should not be interpreted as a genuine robustness failure. The S/25 canonical grid is preferred because it minimises boundary misclassification for all three MW thresholds.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
 \textbf{Event C and COVID.} Event C's pre-period (2021) reflects post-pandemic conditions: aggregate formal employment fell 9\% in 2020 and recovered partially by 2021, with some compression of wages near the MW floor. As a robustness check, using 2019 as the pre-period (a 4-year gap) produces $R = 0.997$, compared to $R = 0.830$ with the canonical 2021 pre-period. The pre-2019 estimate reflects upward bias from economy-wide wage growth over 2019--2023 (post-pandemic recovery, headline inflation of 33\% cumulative), which shifts the entire distribution rightward and inflates measured excess mass. The canonical pre=2021 estimate is temporally proximate (8 months before the May 2022 increase) and minimizes macro confounds; the higher pre-2019 $R$ should be interpreted as an upper bound. Both estimates are consistent with the conclusion that employment effects cannot be signed.
 
 \subsection{Wage Compression}
@@ -319,6 +342,31 @@ C (930$\to$1,025) & $-0.069$ & $-0.064$ & $-0.005$ & 92\% & 26\% of zone \\
 \end{table}
 
 For Event B, approximately 41\% of the $-0.050$ DiD reflects the composition effect---workers pushed from below the MW to the new floor entering the compression zone and diluting its mean log wage. The remaining 59\% ($-0.029$ log points) represents genuine relative wage compression. For Events A and C, the composition effect dominates (78\% and 92\%). The compression DiD is a descriptive statistic of distributional change, not a causal estimate.
+
+\textbf{Compression robustness.} The canonical mechanical decomposition assumes new arrivals enter at exactly $\log(\text{MW}_\text{new})$ and existing compression-zone workers grow at the same rate as the high-wage control group. Table~\ref{tab:comp_robust} relaxes both assumptions for Event B. Moving the assumed entry point from $\log(930)$ to $\log(980)$ or $\log(1{,}030)$ \textit{reduces} the mechanical share (from 41\% to 31\% and 21\%), increasing the genuine compression. This is because higher entry wages are less dilutive: new arrivals pull the mean down less, so more of the observed compression must reflect genuine suppression. Similarly, if existing workers grew at only 50\% of the high-wage rate, the mechanical share rises marginally to 46\%. In all four cases, genuine compression remains negative and economically meaningful ($-0.027$ to $-0.040$ log points), confirming that the compression result is not an artifact of the canonical entry-point assumption.
+
+\begin{table}[H]
+\centering
+\caption{Compression Robustness --- Mechanical vs.\ Genuine (Event B)}
+\label{tab:comp_robust}
+\begin{threeparttable}
+\small
+\begin{tabular}{lccr}
+\toprule
+Assumption & Mechanical & Genuine & \% Mech. \\
+\midrule
+1. Canonical: new arrivals at $\log(930)$     & $-0.021$ & $-0.030$ & 41\% \\
+2. New arrivals at $\log(980)$                & $-0.015$ & $-0.035$ & 31\% \\
+3. New arrivals at $\log(1{,}030)$            & $-0.010$ & $-0.040$ & 21\% \\
+4. Existing workers grow at $50\%$ of control rate & $-0.023$ & $-0.027$ & 46\% \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\small
+\item \textit{Note}: Event B (S/850$\to$S/930, pre=2017, post=2019). Formal dependent workers. Total DiD fixed at $-0.050$ (observed). New arrivals = 10\% of compression zone post-period ($n_\text{new}/n_\text{post} = 0.10$). Mechanical = predicted DiD contribution from composition change; genuine = total $-$ mechanical. The high-wage growth rate $H = +0.005$ log points (from data). Entry points in assumptions 2--3 represent workers entering above the exact MW floor.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
 
 %=============================================================
 \section{Heterogeneity}\label{sec:heterogeneity}
