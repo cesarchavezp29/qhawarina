@@ -68,7 +68,7 @@
   Carlos C\'{e}sar Ch\'{a}vez Padilla\thanks{%
     Center for the Economics of Human Development, University of Chicago.
     E-mail: \texttt{cchavezpadilla@uchicago.edu}.
-    All errors are my own.}
+    All errors are the author's own.}
 }
 
 \date{March 2026}
@@ -100,7 +100,7 @@ deviation 42.1; IRE has mean 57.8 and standard deviation 65.3,
 reflecting concentrated economic coverage.  Monthly IRE correlates
 with the PEN/USD exchange rate ($r = 0.398$), while daily and weekly
 correlations are near zero, consistent with forward-looking FX markets.
-Data are available from the author upon request.
+Data are available upon request.
 \end{abstract}
 
 \noindent\textbf{JEL codes:} C43, C82, E32, H56
@@ -276,7 +276,7 @@ Table~\ref{tab:sources} presents source-level statistics.
 \label{tab:sources}
 \begin{tabular}{lrrrrrr}
 \toprule
-Source & N articles & Days active & Mean daily & Mean pol score$^a$ & Mean eco score$^a$ & \% pol$>$20 \\
+Source & Articles & Days & Avg./day & Pol.\ score$^a$ & Eco.\ score$^a$ & \% pol$>$20 \\
 \midrule
 Gesti\'on     & 8,977 & 409 & 21.9 & 26.1 & 21.4 & 28.6 \\
 Correo        & 8,389 & 444 & 18.9 & 31.0 & 22.6 & 55.8 \\
@@ -337,7 +337,14 @@ The scoring rubric is as follows:
 \paragraph{Post-classification filtering.}
 The AI classifier makes systematic errors that require deterministic
 correction.  A \texttt{post\_filter\_scores()} function applies rule-based
-fixes after each classification run.  The rules address five failure modes:
+fixes after each classification run.  The rules fall into two conceptually
+distinct categories: \emph{error correction} (zeroing articles the
+classifier misclassifies, such as sports or celebrity content) and
+\emph{score calibration} (applying minimum floor values for known
+high-severity events).  The first category is uncontroversial; the second
+reflects researcher judgment about where known events should fall on the
+scale, and is reported fully here for transparency.  The rules address five
+failure modes:
 
 \begin{enumerate}
   \item \emph{Sports false positives}: Sports articles (Liga~1, Copa
@@ -850,7 +857,7 @@ large crisis episodes.  The IRP has positive skewness (1.63) and kurtosis
 (4.72), indicating a fat right tail.  The IRE is more extreme: skewness 2.35
 and kurtosis 7.17.  The IRE all-time maximum of 418.2 (on March~3,~2026,
 during the Camisea gas crisis) represents a day with raw economic intensity
-more than four times the 90-day average, with breadth_eco~=~0.060.  The
+more than four times the 90-day average, with $\text{breadth}_{\text{eco}} = 0.060$.  The
 large kurtosis reflects these tail events.
 
 The lag-1 autocorrelation ($\rho_1$) is moderate for IRP (0.456) and higher
@@ -930,7 +937,7 @@ extreme divergence: IRE~=~418.2 versus IRP~=~138.9 on March~3.
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.7\textwidth]{fig3_irp_ire_scatter.pdf}
-  \caption{Monthly IRP versus monthly IRE, January 2025 -- March 2026. Each point is a calendar month. The line shows the OLS fit.}
+  \caption{Monthly IRP versus monthly IRE, January 2025 -- March 2026. Each point is a calendar month. The line shows the OLS fit with 95\% confidence band. With $N = 15$ monthly observations, the regression is underpowered and the band is wide.}
   \label{fig:irp_ire_scatter}
 \end{figure}
 
@@ -939,37 +946,32 @@ extreme divergence: IRE~=~418.2 versus IRP~=~138.9 on March~3.
 \label{sec:applications}
 % ══════════════════════════════════════════════════════════════════════════════
 
-The IRP and IRE are designed with several use cases in mind:
+Three applications motivate the indices.
 
-\paragraph{Central bank monitoring.}
-The BCRP monitors political risk through financial market indicators (EMBIG,
-CDS spreads, PEN/USD).  These are forward-looking and reflect global risk
-appetite as much as domestic conditions.  The IRP/IRE provide a
-complementary text-based measure that captures domestic political content
-directly.  A sustained IRP~$\geq$~150 episode could serve as an early warning
-for the Directorio's risk assessment.
-
-\paragraph{Investment decisions.}
-Foreign investors in Peruvian mining, energy, or infrastructure assets need
-real-time measures of the policy environment.  IRP captures whether the
-Congress-Executive relationship is deteriorating (cabinet censures, voto de
-confianza tensions) before it manifests in permitting delays or contract
-disputes.  IRE captures sectoral disruptions (mining blockades, gas
-supply interruptions) before they show up in production data.
+\paragraph{Monitoring.}
+The BCRP tracks political risk through financial market indicators (EMBIG,
+CDS, PEN/USD)---forward-looking measures that reflect global risk appetite
+as much as domestic conditions.  The IRP/IRE provide a complementary
+text-based signal that captures domestic political content in real time.
+A sustained IRP~$\geq$~150 episode is a natural early-warning indicator.
+For investors in Peruvian mining, energy, or infrastructure, IRE captures
+supply disruptions (mining blockades, gas interruptions) before they appear
+in production data.
 
 \paragraph{Academic research.}
 The IRP and IRE can serve as control variables in event studies, regression
-discontinuity designs, or time series models.  For example, one could
-estimate the effect of electoral uncertainty (IRP) on formal employment
-during the April~2026 campaign period, controlling for concurrent economic
-disruption (IRE).  The daily frequency and precise measurement allow
-identification strategies that monthly measures preclude.
+discontinuity designs, or local projections.  The daily frequency and
+precise measurement allow identification strategies that monthly measures
+preclude.  An immediate application is estimating the effect of electoral
+uncertainty (IRP) on formal employment during the April~2026 campaign,
+controlling for concurrent economic disruption (IRE).
 
 \paragraph{Journalistic context.}
-The indices provide quantitative context for news coverage:
+The indices provide quantitative context for individual events:
 ``The voto de confianza on March~18 occurred on a day with IRP~=~226, the
-second-highest reading since October~2025.'' This contextualizes individual
-events within the broader uncertainty landscape.
+second-highest reading since October~2025.''  Contextualizing events within
+the uncertainty distribution is useful for both reporting and archival
+analysis.
 
 % ══════════════════════════════════════════════════════════════════════════════
 \section{Limitations and Future Work}
