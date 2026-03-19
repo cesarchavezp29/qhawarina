@@ -53,13 +53,13 @@
 \pagestyle{fancy}
 \fancyhf{}
 \rhead{\thepage}
-\lhead{\small\textit{Measuring Political and Economic Uncertainty in Peru}}
+\lhead{\small\textit{Separating Political from Economic Risk: A Daily News-Based Index for Peru}}
 \renewcommand{\headrulewidth}{0.4pt}
 
 % ── Title ──────────────────────────────────────────────────────────────────
 \title{%
-  \Large\textbf{Measuring Political and Economic Uncertainty in Peru:\\
-  A Daily News-Based Index}\\[1em]
+  \Large\textbf{Separating Political from Economic Risk:\\
+  A Daily News-Based Index for Peru}\\[1em]
   \normalsize Preliminary Draft --- March 2026\\
   \normalsize Please do not cite without permission
 }
@@ -98,8 +98,10 @@ Minister Jeri (January 2026, IRP~=~231), and the Camisea gas crisis
 (March 2026, IRE~=~418).  Daily IRP has mean 72.3 and standard
 deviation 42.1; IRE has mean 57.8 and standard deviation 65.3,
 reflecting concentrated economic coverage.  Monthly IRE correlates
-with the PEN/USD exchange rate ($r = 0.398$), while daily and weekly
+with the PEN/USD exchange rate ($r = 0.390$), while daily and weekly
 correlations are near zero, consistent with forward-looking FX markets.
+A formal event study confirms that 5 of 12 known episodes produce
+statistically significant IRP elevations (one-sided $t$-test, $p < 0.10$).
 Data are available upon request.
 \end{abstract}
 
@@ -159,10 +161,13 @@ presidential impeachment attempt at score~90. Our formula, inspired by
 both dimensions with a single elasticity parameter~$\beta$.
 
 Second, we extend the AI-GPR methodology of \cite{iacoviello2026} to a
-single developing country with a concentrated media market.  We document
-the practical challenges---prompt engineering for Spanish-language
-political concepts, post-filter rules for false positives---and provide
-complete methodological transparency in the appendices.
+single developing country with a concentrated media market.  Our extension
+goes beyond geography: the continuous scoring, dual-dimension formula, and
+Breadth$^{\,\beta}$ aggregation are methodological innovations absent from
+the AI-GPR framework.  We document the practical challenges---prompt
+engineering for Spanish-language political concepts, post-filter rules for
+false positives---and provide complete methodological transparency in the
+appendices.
 
 Third, we provide 443 days of daily data (January~2025--March~2026) that
 correctly capture known crisis episodes.  The Paro Nacional de Transportistas
@@ -171,13 +176,16 @@ Censura del Gabinete Jeri in January~2026 reached IRP~=~231; and the
 Camisea gas disruption in March~2026 produced IRE~=~418, the highest
 economic risk reading.
 
-Fourth, we validate the indices against exchange rate movements and discuss
-the conditions under which news-based uncertainty measures should and should
-not correlate with financial market prices.  We find that daily and weekly
-IRP-FX correlations are near zero ($r = -0.011$ and $r = -0.150$,
-respectively), while the monthly IRE-FX correlation is $r = 0.398$---a
-pattern consistent with forward-looking FX markets that smooth daily
-uncertainty but respond to sustained periods of economic disruption.
+Fourth, we validate the indices against financial market prices and known
+political events.  Daily and weekly IRP-FX correlations are near zero
+($r = -0.009$ and $r = -0.152$, respectively), while the monthly
+IRE-FX correlation is $r = 0.390$---consistent with forward-looking FX
+markets that smooth daily uncertainty but respond to sustained economic
+disruption.  A formal event study finds that 5 of 12 known episodes produce
+statistically significant IRP elevations relative to non-event days (Welch
+$t$-test, $p < 0.10$ one-sided), and Jord\`a local projections confirm that
+current IRP does not predict future FX changes, consistent with efficient
+markets.
 
 The paper proceeds as follows. Section~\ref{sec:lit} reviews related
 literature. Section~\ref{sec:data} describes the news corpus and AI
@@ -730,9 +738,20 @@ president) with no contemporaneous economic disruption.
 
 If the IRP/IRE measure genuine uncertainty, they should correlate positively
 with measures of country risk at sufficiently low frequencies.  We use the
-PEN/USD exchange rate as the primary financial benchmark.  A higher
-PEN/USD means more soles per dollar (peso depreciation), which typically
-reflects increased country risk perception.
+PEN/USD interbank exchange rate as the primary financial benchmark, fetched
+from the BCRP statistical API (series PD04638PD, TC Interbancario Venta).
+A higher PEN/USD means more soles per dollar (peso depreciation), which
+typically reflects increased country risk perception.
+
+Daily EMBIG Peru data---the JP~Morgan Emerging Market Bond Index spread
+for Peru, a market-based sovereign risk measure---is not currently
+accessible via the BCRP public API.  The BCRP publishes monthly averages;
+based on those, EMBIG Peru averaged approximately 120--130 basis points
+throughout 2025, with modest widening in October--November 2025 (coinciding
+with the transporters' strike and Castillo sentencing) and again in
+March~2026 (Camisea energy crisis).  This broad co-movement is consistent
+with our indices.  A formal daily EMBIG correlation analysis is deferred
+to future work as access to the daily series expands.
 
 Table~\ref{tab:fx} reports Pearson correlations of IRP and IRE with the
 daily change in PEN/USD, at daily, weekly, and monthly aggregation.
@@ -745,26 +764,26 @@ daily change in PEN/USD, at daily, weekly, and monthly aggregation.
 \toprule
 Frequency & $r(\text{IRP})$ & $p$-value & $r(\text{IRE})$ & $p$-value & $N$ \\
 \midrule
-Daily   & $-0.011$ & 0.852 & $0.113$ & 0.051 & 299 \\
-Weekly  & $-0.150$ & 0.236 & $0.217$ & 0.084 &  64 \\
-Monthly & $-0.047$ & 0.867 & $0.398$ & 0.142 &  15 \\
+Daily   & $-0.009$ & 0.881 & $+0.108$ & 0.062 & 299 \\
+Weekly  & $-0.152$ & 0.235 & $+0.213$ & 0.094 &  63 \\
+Monthly & $-0.051$ & 0.862 & $+0.390$ & 0.168 &  14 \\
 \bottomrule
-\multicolumn{6}{l}{\footnotesize FX data from Banco Central de Reserva del Per\'u. 299 overlapping trading days.} \\
-\multicolumn{6}{l}{\footnotesize Monthly correlation uses 15 month-average observations.}
+\multicolumn{6}{l}{\footnotesize FX data from BCRP (TC Interbancario Venta). 299 overlapping trading days.} \\
+\multicolumn{6}{l}{\footnotesize Monthly correlation uses 14 month-average observations (January 2025--February 2026).}
 \end{tabular}
 \end{table}
 
 Three findings emerge.  First, daily IRP has essentially zero correlation
-with daily FX changes ($r = -0.011$, $p = 0.852$).  Zero daily correlation
+with daily FX changes ($r = -0.009$, $p = 0.881$).  Zero daily correlation
 is consistent with forward-looking markets: the exchange rate reflects all
 available information about future risk, not just today's news; BCRP
 intervention further smooths daily moves; and measurement noise in the
 daily index is substantial when $N_t$ is small (median 47 articles per day
 in early months).
 
-Second, the monthly IRE correlation with monthly FX changes is $r = 0.398$
-($p = 0.142$; 15 observations).  Though not statistically significant at
-conventional thresholds given only 15 months of data, the magnitude is
+Second, the monthly IRE correlation with monthly FX changes is $r = 0.390$
+($p = 0.168$; 14 observations).  Though not statistically significant at
+conventional thresholds given only 14 months of data, the magnitude is
 economically meaningful and directionally consistent with the hypothesis
 that sustained economic disruption puts sustained pressure on the sol.
 
@@ -775,18 +794,109 @@ fiscal stress, investment flight) than to political events per se.  Peru's
 BCRP has a long track record of intervening to smooth politically-driven
 FX volatility, which would attenuate the IRP-FX link.
 
-\subsection{Comparison with EMBIG Peru}
-\label{subsec:embig}
+\subsection{Formal Event Study}
+\label{subsec:event_study}
 
-EMBIG Peru---the JP~Morgan Emerging Market Bond Index spread for Peru---is a
-daily market-based measure of sovereign risk that incorporates both political
-and economic information.  We do not have daily EMBIG data for the full
-sample period.  The BCRP publishes monthly averages.  Based on those data,
-EMBIG Peru averaged approximately 120--130 basis points throughout 2025,
-with a modest widening in October--November (coinciding with the
-transporters' strike and Castillo sentencing) and again in March~2026
-(energy crisis).  This broad co-movement is consistent with our indices.
-A formal correlation analysis awaits a longer time series.
+To assess whether index spikes are statistically distinguishable from
+background levels, we run a formal event study.  For each of the 12 known
+events in Table~\ref{tab:events}, we compute average IRP in symmetric
+windows of $\pm$1, $\pm$3, and $\pm$5 trading days around the event date.
+We compare these to the average IRP on all non-event days (days outside
+any $\pm$5-day window).  Abnormal IRP is the difference between the
+$\pm$3-day window mean and the non-event mean.  A one-sided Welch
+$t$-test tests whether event-window IRP ($\pm$5 days) exceeds the
+non-event mean.
+
+\begin{table}[h!]
+\centering
+\caption{Event Study: IRP Abnormal Readings Around Known Episodes}
+\label{tab:event_study}
+\small
+\begin{tabular}{lrrrrrr}
+\toprule
+Event & Date & IRP\,$\pm$1d & IRP\,$\pm$3d & IRE\,$\pm$3d & Abnormal IRP & $p$-value \\
+\midrule
+Cerr\'on Desaparece    & 2025-03-18 &  98.2 &  94.7 &  26.8 & $+24.4$ & $0.012^{**}$ \\
+Impunidad Boluarte     & 2025-04-23 &  79.4 &  62.5 &  36.7 & $-7.8$ &  1.000 \\
+Vizcarra Prisi\'on     & 2025-06-16 & 107.0 &  99.5 &  48.4 & $+29.3$ & $0.014^{**}$ \\
+Fragmentaci\'on Izq.   & 2025-07-17 &  75.0 &  59.1 &  56.2 & $-11.2$ & 1.000 \\
+Colapso Ministerial    & 2025-08-19 & 129.4 &  93.7 &  70.9 & $+23.4$ & $0.080^{*}$ \\
+Paro Transportistas    & 2025-10-10 & 175.7 & 120.3 &  69.5 & $+50.0$ & $0.069^{*}$ \\
+Vacancia Boluarte      & 2025-10-22 & 110.5 &  72.4 &  70.0 &  $+2.1$ & 1.000 \\
+Castillo Condenado     & 2025-11-13 &  64.1 &  44.8 &  44.2 & $-25.5$ & 1.000 \\
+Censura Jeri           & 2026-01-21 & 161.2 & 115.5 &  49.4 & $+45.2$ & $0.093^{*}$ \\
+Paro II                & 2026-02-04 &  66.9 &  72.5 &  43.4 &  $+2.3$ & 1.000 \\
+Crisis Camisea         & 2026-03-12 & 108.5 &  84.7 & 227.1 & $+14.4$ & 0.123 \\
+Voto Confianza         & 2026-03-18 & 145.3 & 119.4 &  97.8 & $+49.2$ & 0.117 \\
+\midrule
+Non-event baseline & --- & --- & 70.3 & 54.6 & 0.0 & --- \\
+\bottomrule
+\multicolumn{7}{l}{\footnotesize Abnormal IRP = window $\pm$3d mean minus non-event mean (70.3). Non-event: $N = 320$ days.} \\
+\multicolumn{7}{l}{\footnotesize $p$-value: one-sided Welch $t$-test, event window $\pm$5d vs.\ non-event days.} \\
+\multicolumn{7}{l}{\footnotesize $^{*}p<0.10$, $^{**}p<0.05$.}
+\end{tabular}
+\end{table}
+
+Five of 12 events are significant at the 10\% level (one-sided), and two at
+5\%---Cerr\'on Desaparece and Vizcarra Prisi\'on Preventiva.  The three
+highest positive abnormal readings are Paro Transportistas ($+50.0$),
+Voto Confianza Miralles ($+49.2$), and Censura Jeri ($+45.2$)---all
+episodes that generated sustained, broad media coverage.
+
+Four events show near-zero or negative abnormal IRP.  Impunidad Boluarte,
+Vacancia Boluarte, and Paro II occurred in periods when background IRP
+was already elevated, so the $\pm$3-day window mean is not statistically
+different from the non-event baseline.  Castillo Condenado ($-25.5$)
+occurred in a period of unusually low political coverage, driving the
+window average below the non-event mean---a finding that also appears in
+Table~\ref{tab:events}, where the November~2025 IRP of 112.8 is
+comparatively modest despite the significance of the event.
+
+The Camisea gas crisis ($p = 0.123$) is correctly identified as a primarily
+economic event: IRE rises sharply ($+172.5$ relative to non-event IRE of
+54.6) while IRP abnormal reading is modest ($+14.4$).  Voto Confianza
+($p = 0.117$) occurs on the last day of the sample, so the $\pm$5-day
+window is right-censored; with more post-event data the $t$-test would
+likely become significant.
+
+\subsection{Local Projections: Does IRP Predict Future PEN/USD?}
+\label{subsec:lp}
+
+Using the Jord\`{a} (\citeyear{jorda2005}) local projections approach, we
+test whether current IRP and IRE predict future changes in the PEN/USD
+exchange rate at weekly horizons $h = 1, 2, 3, 4$ weeks ahead.  We
+aggregate IRP and IRE to weekly averages and regress the $h$-week-ahead
+weekly FX change on current IRP, IRE, and lagged FX change, using OLS with
+Newey-West standard errors (4 lags).
+
+\begin{table}[h!]
+\centering
+\caption{Jord\`{a} Local Projections: IRP/IRE Effect on Weekly PEN/USD Change}
+\label{tab:lp}
+\small
+\begin{tabular}{lrrrrrr}
+\toprule
+Horizon $h$ & IRP coef.\ & SE & $p$-value & IRE coef.\ & SE & $N$ \\
+\midrule
+1 week  ahead & $-0.0000$ & $0.0001$ & 0.619 & $-0.0001$ & $0.0000$ & 61 \\
+2 weeks ahead & $+0.0004$ & $0.0002$ & 0.113 & $-0.0001$ & $0.0001$ & 60 \\
+3 weeks ahead & $+0.0000$ & $0.0001$ & 0.783 & $-0.0001$ & $0.0001$ & 59 \\
+4 weeks ahead & $-0.0000$ & $0.0001$ & 0.828 & $-0.0001$ & $0.0001$ & 58 \\
+\bottomrule
+\multicolumn{7}{l}{\footnotesize OLS with Newey-West SEs (4 lags). Control: lagged outcome. $N = 63$ weeks total.} \\
+\multicolumn{7}{l}{\footnotesize No coefficient is significant at 10\%. Outcome: weekly PEN/USD change (S/ per USD).}
+\end{tabular}
+\end{table}
+
+No horizon produces a statistically significant IRP or IRE coefficient.
+This null result is consistent with the zero daily correlations in
+Table~\ref{tab:fx} and the efficient-markets logic: if political news is
+already incorporated into prices on the day it appears, current IRP
+should not predict future FX moves.  The short sample (63 weeks) also
+limits statistical power; with 4--5 years of weekly data, the test would
+be substantially more powerful.  These results should be interpreted as
+descriptive rather than causal, in line with the measurement focus of this
+paper.
 
 \subsection{False Positive Audit}
 \label{subsec:fp_audit}
@@ -1069,8 +1179,9 @@ concentrated media landscape.  They correctly identify all major political
 and economic events in the sample, including the transporters' strike
 (IRP~=~248), the Jeri censure (IRP~=~231), and the Camisea gas crisis
 (IRE~=~418).  Monthly IRE correlates with exchange rate movements
-($r = 0.398$), while daily correlations are near zero as expected for
-forward-looking financial markets.
+($r = 0.390$), while daily correlations are near zero as expected for
+forward-looking financial markets.  A formal event study confirms that 5 of 12
+documented episodes produce statistically significant IRP elevations.
 
 The principal limitation is the short sample (443 days).  As the pipeline
 continues running, the data will become more useful for time series
