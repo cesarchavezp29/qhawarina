@@ -95,9 +95,7 @@ $\text{IRP}_t = \text{Intensity}_t \times \text{Breadth}_t^{\,\beta}$.
 The indices correctly identify known crisis episodes including the
 transporters' strike (October 2025, IRP~=~248), the censure of Cabinet
 Minister Jeri (January 2026, IRP~=~231), and the Camisea gas crisis
-(March 2026, IRE~=~418).  Daily IRP has mean 72.3 and standard
-deviation 42.1; IRE has mean 57.8 and standard deviation 65.3,
-reflecting concentrated economic coverage.  Monthly IRE correlates
+(March 2026, IRE~=~418).  Monthly IRE correlates
 with the PEN/USD exchange rate ($r = 0.390$), while daily and weekly
 correlations are near zero, consistent with forward-looking FX markets.
 A formal event study confirms that 5 of 12 known episodes produce
@@ -111,7 +109,6 @@ Data are available upon request.
 index, LLM classification, Peru, exchange rate
 
 \newpage
-\setcounter{page}{1}
 
 % ══════════════════════════════════════════════════════════════════════════════
 \section{Introduction}
@@ -836,15 +833,15 @@ non-event mean.
 Event & Date & IRP\,$\pm$1d & IRP\,$\pm$3d & IRE\,$\pm$3d & Abnormal IRP & $p$-value \\
 \midrule
 Cerr\'on Desaparece    & 2025-03-18 &  98.2 &  94.7 &  26.8 & $+24.4$ & $0.012^{**}$ \\
-Impunidad Boluarte     & 2025-04-23 &  79.4 &  62.5 &  36.7 & $-7.8$ &  1.000 \\
+Impunidad Boluarte     & 2025-04-23 &  79.4 &  62.5 &  36.7 & $-7.8$ &  $>0.999$ \\
 Vizcarra Prisi\'on     & 2025-06-16 & 107.0 &  99.5 &  48.4 & $+29.3$ & $0.014^{**}$ \\
-Fragmentaci\'on Izq.   & 2025-07-17 &  75.0 &  59.1 &  56.2 & $-11.2$ & 1.000 \\
+Fragmentaci\'on Izq.   & 2025-07-17 &  75.0 &  59.1 &  56.2 & $-11.2$ & $>0.999$ \\
 Colapso Ministerial    & 2025-08-19 & 129.4 &  93.7 &  70.9 & $+23.4$ & $0.080^{*}$ \\
 Paro Transportistas    & 2025-10-10 & 175.7 & 120.3 &  69.5 & $+50.0$ & $0.069^{*}$ \\
-Vacancia Boluarte      & 2025-10-22 & 110.5 &  72.4 &  70.0 &  $+2.1$ & 1.000 \\
-Castillo Condenado     & 2025-11-13 &  64.1 &  44.8 &  44.2 & $-25.5$ & 1.000 \\
+Vacancia Boluarte      & 2025-10-22 & 110.5 &  72.4 &  70.0 &  $+2.1$ & $>0.999$ \\
+Castillo Condenado     & 2025-11-13 &  64.1 &  44.8 &  44.2 & $-25.5$ & $>0.999$ \\
 Censura Jeri           & 2026-01-21 & 161.2 & 115.5 &  49.4 & $+45.2$ & $0.093^{*}$ \\
-Paro II                & 2026-02-04 &  66.9 &  72.5 &  43.4 &  $+2.3$ & 1.000 \\
+Paro II                & 2026-02-04 &  66.9 &  72.5 &  43.4 &  $+2.3$ & $>0.999$ \\
 Crisis Camisea         & 2026-03-12 & 108.5 &  84.7 & 227.1 & $+14.4$ & 0.123 \\
 Voto Confianza         & 2026-03-18 & 145.3 & 119.4 &  97.8 & $+49.2$ & 0.117 \\
 \midrule
@@ -852,7 +849,8 @@ Non-event baseline & --- & --- & 70.3 & 54.6 & 0.0 & --- \\
 \bottomrule
 \multicolumn{7}{l}{\footnotesize Abnormal IRP = window $\pm$3d mean minus non-event mean (70.3). Non-event: $N = 320$ days.} \\
 \multicolumn{7}{l}{\footnotesize $p$-value: one-sided Welch $t$-test, event window $\pm$5d vs.\ non-event days.} \\
-\multicolumn{7}{l}{\footnotesize $^{*}p<0.10$, $^{**}p<0.05$.}
+\multicolumn{7}{l}{\footnotesize $^{*}p<0.10$, $^{**}p<0.05$. ``$>0.999$'': one-sided $p$-value rounds to 1.000 because the event-window} \\
+\multicolumn{7}{l}{\footnotesize mean falls \emph{below} the non-event baseline, so the one-sided test is in the wrong tail.}
 \end{tabular}
 \end{table}
 
@@ -895,15 +893,16 @@ Newey-West standard errors (4 lags).
 \small
 \begin{tabular}{lrrrrrr}
 \toprule
-Horizon $h$ & IRP coef.\ & SE & $p$-value & IRE coef.\ & SE & $N$ \\
+Horizon $h$ & IRP coef.$^\dagger$ & SE$^\dagger$ & $p$ (IRP) & IRE coef.$^\dagger$ & SE$^\dagger$ & $N$ \\
 \midrule
-1 week  ahead & $-0.0000$ & $0.0001$ & 0.619 & $-0.0001$ & $0.0000$ & 61 \\
-2 weeks ahead & $+0.0004$ & $0.0002$ & 0.113 & $-0.0001$ & $0.0001$ & 60 \\
-3 weeks ahead & $+0.0000$ & $0.0001$ & 0.783 & $-0.0001$ & $0.0001$ & 59 \\
-4 weeks ahead & $-0.0000$ & $0.0001$ & 0.828 & $-0.0001$ & $0.0001$ & 58 \\
+1 week  ahead & $-0.00$ & $0.10$ & 0.619 & $-0.10$ & $0.04$ & 61 \\
+2 weeks ahead & $+0.40$ & $0.20$ & 0.113 & $-0.10$ & $0.10$ & 60 \\
+3 weeks ahead & $+0.00$ & $0.10$ & 0.783 & $-0.10$ & $0.10$ & 59 \\
+4 weeks ahead & $-0.00$ & $0.10$ & 0.828 & $-0.10$ & $0.10$ & 58 \\
 \bottomrule
 \multicolumn{7}{l}{\footnotesize OLS with Newey-West SEs (4 lags). Control: lagged outcome. $N = 63$ weeks total.} \\
-\multicolumn{7}{l}{\footnotesize No coefficient is significant at 10\%. Outcome: weekly PEN/USD change (S/ per USD).}
+\multicolumn{7}{l}{\footnotesize Outcome: weekly PEN/USD change (S/ per USD). $^\dagger$Coefficients and SEs multiplied by 1{,}000} \\
+\multicolumn{7}{l}{\footnotesize for readability. No IRP or IRE coefficient is significant at 10\%; all IRE $p$-values $> 0.10$.}
 \end{tabular}
 \end{table}
 

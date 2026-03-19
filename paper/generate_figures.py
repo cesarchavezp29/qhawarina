@@ -35,13 +35,13 @@ df['IRE_smooth'] = df['economic_smooth']
 
 # ── Event definitions (peak dates found from data) ───────────────────────────
 EVENTS_IRP = [
-    ('Paro Transportistas',      '2025-10-10', 'top'),
-    ('Censura Jeri',             '2026-01-21', 'top'),
-    ('Voto Confianza Miralles',  '2026-03-18', 'bottom'),
-    ('Castillo Sentenciado',     '2025-11-27', 'top'),
+    ('Paro Nac.',       '2025-10-10', 'top'),
+    ('Censura Jur.',    '2026-01-21', 'top'),
+    ('Voto Conf.',      '2026-03-18', 'bottom'),
+    ('Castillo Sent.',  '2025-11-27', 'top'),
 ]
 EVENTS_IRE = [
-    ('Camisea Gas Crisis',       '2026-03-12', 'top'),
+    ('Camisea Gas Cr.', '2026-03-12', 'top'),
 ]
 
 COLORS = {
@@ -88,7 +88,7 @@ ax1.plot(df['date'], df['IRP_smooth'], color=COLORS['navy'],
 ax1.axhline(150, color=COLORS['navy'], linewidth=0.9,
             linestyle=':', alpha=0.6, label='Elevated threshold (150)')
 YMAX_UNIFIED = max(df['IRP'].max(), df['IRE'].max()) * 1.15
-ax1.set_ylabel('IRP (raw)', fontsize=10)
+ax1.set_ylabel('IRP', fontsize=10)
 ax1.set_ylim(0, YMAX_UNIFIED)
 
 # event annotations on IRP using annotate with arrows; alternate left/right
@@ -98,11 +98,9 @@ for i, (name, date_str, side) in enumerate(EVENTS_IRP):
     # Get IRP value at peak
     row = df[df['date'] == x]
     y_data = float(row['IRP'].values[0]) if len(row) else df.loc[df['date'].sub(x).abs().idxmin(), 'IRP']
-    # Abbreviate label to ≤15 chars
-    short = name[:15]
     # Alternate label x-offset to avoid overlap
     x_frac = 0.15 + (i % 2) * 0.35
-    ax1.annotate(short,
+    ax1.annotate(name,
                  xy=(x, y_data),
                  xycoords='data',
                  xytext=(x_frac, 0.92 - (i // 2) * 0.12),
@@ -125,7 +123,7 @@ ax2.bar(df['date'], df['IRE'], width=1, color=COLORS['gray'],
         alpha=0.5, label='IRE daily')
 ax2.plot(df['date'], df['IRE_smooth'], color=COLORS['terra'],
          linewidth=1.5, label='IRE smoothed')
-ax2.set_ylabel('IRE (raw)', fontsize=10)
+ax2.set_ylabel('IRE', fontsize=10)
 ax2.set_ylim(0, YMAX_UNIFIED)
 
 for i, (name, date_str, side) in enumerate(EVENTS_IRE):
@@ -133,8 +131,7 @@ for i, (name, date_str, side) in enumerate(EVENTS_IRE):
     ax2.axvline(x, color='#555555', linewidth=0.8, linestyle='--', alpha=0.7)
     row = df[df['date'] == x]
     y_data = float(row['IRE'].values[0]) if len(row) else df.loc[df['date'].sub(x).abs().idxmin(), 'IRE']
-    short = name[:15]
-    ax2.annotate(short,
+    ax2.annotate(name,
                  xy=(x, y_data),
                  xycoords='data',
                  xytext=(0.75, 0.88),
