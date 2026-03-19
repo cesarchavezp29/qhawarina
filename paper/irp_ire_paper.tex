@@ -735,15 +735,7 @@ from the BCRP statistical API (series PD04638PD, TC Interbancario Venta).
 A higher PEN/USD means more soles per dollar (peso depreciation), which
 typically reflects increased country risk perception.
 
-Daily EMBIG Peru data---the JP~Morgan Emerging Market Bond Index spread
-for Peru, a market-based sovereign risk measure---is not currently
-accessible via the BCRP public API.  The BCRP publishes monthly averages;
-based on those, EMBIG Peru averaged approximately 120--130 basis points
-throughout 2025, with modest widening in October--November 2025 (coinciding
-with the transporters' strike and Castillo sentencing) and again in
-March~2026 (Camisea energy crisis).  This broad co-movement is consistent
-with our indices.  A formal daily EMBIG correlation analysis is deferred
-to future work as access to the daily series expands.
+Daily EMBIG data for Peru is not publicly accessible via the BCRP API (all daily spread series return HTTP~403 as of March~2026). Monthly EMBIG averages from BCRP publications show broad co-movement with IRP/IRE spikes in October~2025 and March~2026, consistent with the indices, but a formal correlation analysis awaits daily data access.
 
 Table~\ref{tab:fx} reports Pearson correlations of IRP and IRE with the
 daily change in PEN/USD, at daily, weekly, and monthly aggregation.
@@ -889,6 +881,50 @@ limits statistical power; with 4--5 years of weekly data, the test would
 be substantially more powerful.  These results should be interpreted as
 descriptive rather than causal, in line with the measurement focus of this
 paper.
+
+\subsection{Google Trends Validation}
+\label{subsec:trends}
+
+As an external check on whether the index tracks genuine public attention
+to political and economic risk, we correlate weekly IRP and IRE averages
+with Google Trends search interest in Peru for six crisis-related terms
+(Table~\ref{tab:trends}).  Google Trends reports a normalized weekly
+index (0--100) for each term, where 100 represents peak search interest
+over the sample period.
+
+\begin{table}[h!]
+\centering
+\caption{Correlation of IRP/IRE with Google Trends Search Interest (Peru, Weekly)}
+\label{tab:trends}
+\small
+\begin{tabular}{lrrrrrr}
+\toprule
+Search term (Google Trends, Peru) & $r(\text{IRP})$ & $p$-value & $r(\text{IRE})$ & $p$-value & $N$ \\
+\midrule
+Congreso Peru & $0.460$ & 0.000 & $0.216$ & 0.089 & 63 \\
+Vacancia & $0.397$ & 0.001 & $0.218$ & 0.086 & 63 \\
+Inestabilidad Politica & $0.188$ & 0.141 & $0.157$ & 0.219 & 63 \\
+Crisis Peru & $0.180$ & 0.158 & $0.550$ & 0.000 & 63 \\
+Paro Nacional & $0.112$ & 0.381 & $0.035$ & 0.788 & 63 \\
+Camisea & $0.050$ & 0.699 & $0.776$ & 0.000 & 63 \\
+\bottomrule
+\multicolumn{6}{l}{\footnotesize Pearson correlations over 63 weekly observations (January 2025--March 2026).} \\
+\multicolumn{6}{l}{\footnotesize Google Trends data via pytrends, geo=PE. $p$-values are two-sided.}
+\end{tabular}
+\end{table}
+
+The two strongest predictors of weekly IRP are searches for
+\emph{congreso Peru} ($r = 0.460$, $p < 0.001$) and \emph{vacancia}
+($r = 0.397$, $p = 0.001$)---terms that reflect attention to
+congressional activity and presidential removal procedures, the defining
+features of Peruvian political instability.  For IRE, the top
+predictors are \emph{camisea} ($r = 0.776$, $p < 0.001$) and
+\emph{crisis Peru} ($r = 0.550$, $p < 0.001$), both driven by the
+Camisea gas disruption of February--March 2026, the single largest
+economic shock in the sample.  These patterns confirm that the indices
+respond to the same underlying events that animate public search
+behavior, providing a source-independent cross-check on the news-based
+methodology.
 
 \subsection{False Positive Audit}
 \label{subsec:fp_audit}
@@ -1104,6 +1140,7 @@ in economic coverage means the IRE is heavily influenced by a single
 outlet's judgment about what constitutes economic risk.  Source-level
 credibility weighting (implemented but disabled in the current pipeline)
 would allow researchers to test sensitivity to this concentration.
+The Google Trends validation in Section~\ref{subsec:trends} provides an independent check: if the IRP correctly identifies high-risk weeks, those weeks should also show elevated search interest in crisis-related terms.
 
 \paragraph{3. Short history.}
 443 days of data is insufficient for many econometric applications.  A
