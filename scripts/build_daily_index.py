@@ -77,7 +77,31 @@ def main():
     )
     parser.add_argument(
         "--alpha", type=float, default=1.0,
-        help="Score exponent for GPR formula (default=1.0 linear). Use 1.3 for nonlinear amplification.",
+        help="[LEGACY] Score exponent for SWP formula (ignored unless LEGACY_SWP=True).",
+    )
+    parser.add_argument(
+        "--beta", type=float, default=None,
+        help="[LEGACY] Set both beta_pol and beta_eco to the same value.",
+    )
+    parser.add_argument(
+        "--beta-pol", type=float, default=0.5,
+        help="Breadth exponent for IRP (default=0.5).",
+    )
+    parser.add_argument(
+        "--beta-eco", type=float, default=0.3,
+        help="Breadth exponent for IRE (default=0.3, lower because eco coverage concentrated).",
+    )
+    parser.add_argument(
+        "--breadth-threshold", type=int, default=20,
+        help="Minimum score for article to count toward breadth (default=20).",
+    )
+    parser.add_argument(
+        "--baseline-window", type=int, default=90,
+        help="Rolling window in days for intensity baseline (default=90).",
+    )
+    parser.add_argument(
+        "--ema-alpha", type=float, default=0.3,
+        help="EMA persistence weight (default=0.3 → 70%% weight on today).",
     )
     parser.add_argument(
         "--diagnostic", action="store_true",
@@ -275,11 +299,23 @@ def main():
 
     from src.processing.daily_index import build_daily_index_v2, print_diagnostic
 
-    logger.info("  Building with alpha=%.1f (GPR formula)", args.alpha)
+    # --beta overrides both beta_pol and beta_eco (legacy single-value mode)
+    beta_pol = args.beta if args.beta is not None else args.beta_pol
+    beta_eco = args.beta if args.beta is not None else args.beta_eco
+
+    logger.info(
+        "  Building with beta_pol=%.1f, beta_eco=%.1f, breadth_threshold=%d, baseline_window=%d, ema_alpha=%.2f",
+        beta_pol, beta_eco, args.breadth_threshold, args.baseline_window, args.ema_alpha,
+    )
     daily_index = build_daily_index_v2(
         articles,
         start_date=rss_config["index"]["start_date"],
         alpha=args.alpha,
+        beta_pol=beta_pol,
+        beta_eco=beta_eco,
+        breadth_threshold=args.breadth_threshold,
+        baseline_window=args.baseline_window,
+        ema_alpha=args.ema_alpha,
     )
 
     save_parquet(daily_index, index_path)
@@ -288,39 +324,15 @@ def main():
     if args.diagnostic or args.skip_claude:
         logger.info("Running diagnostic for March 14-18...")
         try:
-            idx13 = build_daily_index_v2(
-                articles,
-                start_date=rss_config["index"]["start_date"],
-                alpha=1.3,
-            )
             print_diagnostic(
                 articles_df=articles,
                 index_df_10=daily_index,
-                index_df_13=idx13,
                 date_strs=["2026-03-14", "2026-03-15", "2026-03-16", "2026-03-17", "2026-03-18"],
                 start_date=rss_config["index"]["start_date"],
+                breadth_threshold=args.breadth_threshold,
+                beta_pol=beta_pol,
+                beta_eco=beta_eco,
             )
-
-            # Old vs new comparison
-            if index_path.exists():
-                try:
-                    old_idx = pd.read_parquet(index_path)
-                    old_idx["date"] = pd.to_datetime(old_idx["date"])
-                    new_idx = daily_index.copy()
-                    new_idx["date"] = pd.to_datetime(new_idx["date"])
-                    dates = pd.to_datetime(["2026-03-14", "2026-03-15", "2026-03-16", "2026-03-17", "2026-03-18"])
-                    print(f"\n{'Date':<14} {'OLD IRP':>8} {'NEW IRP':>8} {'OLD IRE':>8} {'NEW IRE':>8}")
-                    print("-" * 50)
-                    for d in dates:
-                        old_row = old_idx[old_idx["date"] == d]
-                        new_row = new_idx[new_idx["date"] == d]
-                        irp_old = f"{old_row['political_index'].values[0]:.1f}" if len(old_row) else "n/a"
-                        ire_old = f"{old_row['economic_index'].values[0]:.1f}" if len(old_row) else "n/a"
-                        irp_new = f"{new_row['political_index'].values[0]:.1f}" if len(new_row) else "n/a"
-                        ire_new = f"{new_row['economic_index'].values[0]:.1f}" if len(new_row) else "n/a"
-                        print(f"{d.strftime('%Y-%m-%d'):<14} {irp_old:>8} {irp_new:>8} {ire_old:>8} {ire_new:>8}")
-                except Exception as e:
-                    logger.warning("Could not load old index for comparison: %s", e)
         except Exception as e:
             logger.warning("Diagnostic failed: %s", e)
 

@@ -69,12 +69,29 @@ _DEFAULT_SOURCE_WEIGHT = 0.6
 
 
 # ---------------------------------------------------------------------------
-# Feature flags — set False to follow GPR methodology (Caldara & Iacoviello)
+# Feature flags
 # ---------------------------------------------------------------------------
 
 USE_CLUSTERING = False      # TF-IDF deduplication: breaks GPR volume signal
 USE_TOPK = False            # Top-K per-source filtering: breaks GPR count logic
 USE_SOURCE_WEIGHTS = False  # Source credibility tiers: all sources equal in GPR
+
+# Legacy SWP formula (Caldara & Iacoviello SWP adaptation).
+# Set True to revert to old per-source Σ(score^α)/N_articles formula.
+LEGACY_SWP = False
+
+# ---------------------------------------------------------------------------
+# Intensity + Breadth index parameters (new formula)
+# ---------------------------------------------------------------------------
+
+BASELINE_WINDOW = 90      # days for rolling baseline (expanding mean during cold start)
+BREADTH_THRESHOLD = 20    # minimum score for article to count toward breadth numerator
+BETA_POL = 0.5            # breadth exponent for political index
+BETA_ECO = 0.3            # breadth exponent for economic index (lower: eco coverage concentrated
+                           # in Gestión/ElComercio econ sections → naturally lower breadth)
+BETA = 0.5                # legacy alias (kept for call-site compat)
+EMA_ALPHA = 0.3           # EMA smoothing: smooth_t = EMA_ALPHA*smooth_{t-1} + (1-EMA_ALPHA)*raw_t
+                           # EMA_ALPHA=0.3 → 70% weight on today, 30% on history
 
 
 # ---------------------------------------------------------------------------
@@ -275,58 +292,56 @@ def build_daily_index(
 
 
 # ---------------------------------------------------------------------------
-# V2: EPU-style severity-weighted proportion index
+# V2: Intensity × Breadth^β index (new formula, LEGACY_SWP=False)
 # ---------------------------------------------------------------------------
 
 def build_daily_index_v2(
     articles_df: pd.DataFrame,
     start_date: str = "2025-07-01",
+    # Legacy SWP params (used only when LEGACY_SWP=True)
     smoothing_window: int = 7,
     alpha: float = 1.0,
+    # Intensity+breadth params
+    baseline_window: int = BASELINE_WINDOW,
+    breadth_threshold: int = BREADTH_THRESHOLD,
+    beta: float = BETA,            # legacy single-beta (overridden by beta_pol/beta_eco)
+    beta_pol: float = BETA_POL,    # breadth exponent for political index
+    beta_eco: float = BETA_ECO,    # breadth exponent for economic index
+    ema_alpha: float = EMA_ALPHA,
 ) -> pd.DataFrame:
-    """Build daily instability index using GPR methodology.
+    """Build daily instability index: IRP = INTENSITY_POL × BREADTH_POL^β_pol.
 
-    Caldara & Iacoviello (2022, AER) adapted for AI-scored articles.
+    Formula (Qhawarina final architecture):
+        RAW_INTENSITY_t = Σ(score_i)           — sum of all article scores on day t
+        BASELINE_t      = rolling_mean(RAW, N) — N-day window, expanding for cold start
+        INTENSITY_t     = (RAW_t / BASELINE_t) × 100
+        BREADTH_t       = N_articles_above_threshold / N_total
+        IRP_t           = INTENSITY_POL_t × BREADTH_POL_t ^ beta_pol
+        IRE_t           = INTENSITY_ECO_t × BREADTH_ECO_t ^ beta_eco
 
-    Formula:
-        index_t = (1/N_sources) × Σ_over_sources [ Σ(score_i^alpha) / N_articles_s ]
+    beta_pol and beta_eco are separate because economic coverage in Peruvian media
+    is structurally concentrated (Gestión, El Comercio econ sections), making
+    BREADTH_ECO naturally lower than BREADTH_POL for comparable crisis events.
+    Lower beta_eco (default 0.3) compensates for this structural concentration.
 
-    Media coverage volume IS the signal:
-    - No deduplication / clustering
-    - No top-K filtering
-    - All sources weighted equally
-    - Zero-score articles remain in denominator (0^alpha=0, contribute nothing to numerator)
+    Set LEGACY_SWP=True to revert to the old per-source SWP formula.
 
     Parameters
     ----------
-    articles_df : DataFrame
-        ALL articles (including irrelevant). Must have columns:
-        published, source, and EITHER:
-          - dual-score schema: political_score, economic_score (0-100 floats)
-          - legacy schema: article_category, article_severity (str/int)
-    start_date : str
-        First date for the index (should be when coverage is stable).
-    smoothing_window : int
-        EWM span for smoothing (days). Use 1 for no smoothing.
-    alpha : float
-        Convex transformation exponent applied to each score.
-        alpha=1.0 = linear (GPR baseline, default).
-        alpha=1.3 amplifies high-severity events nonlinearly:
-          score=80 → 80^1.3 ≈ 246  vs  score=10 → 10^1.3 ≈ 20.
-        Configurable for sensitivity analysis — change here or pass explicitly.
-
-    Returns
-    -------
-    DataFrame with columns:
-        date,
-        political_swp, political_index, political_smooth,
-        economic_swp, economic_index, economic_smooth,
-        n_articles_political, n_articles_economic, n_articles_total,
-        n_sources, low_coverage
+    articles_df : DataFrame with published, source, political_score, economic_score
+    start_date  : first date for the index
+    baseline_window  : rolling window for normalization baseline (default 90 days)
+    breadth_threshold : minimum score for breadth numerator (default 20)
+    beta_pol    : breadth exponent for IRP (default 0.5)
+    beta_eco    : breadth exponent for IRE (default 0.3)
+    ema_alpha   : EMA persistence weight (default 0.3 → 70% today, 30% history)
     """
     if articles_df.empty:
         logger.warning("No articles provided — returning empty index")
         return _empty_index_v2()
+
+    if LEGACY_SWP:
+        return _build_swp_index(articles_df, start_date, smoothing_window, alpha)
 
     df = articles_df.copy()
     df["published"] = pd.to_datetime(df["published"], utc=True)
@@ -339,84 +354,204 @@ def build_daily_index_v2(
         logger.warning("No articles after start_date %s", start_date)
         return _empty_index_v2()
 
-    # ── Schema detection ────────────────────────────────────────────────────
-    use_dual_scores = (
-        "political_score" in df.columns and "economic_score" in df.columns
-    )
-    if use_dual_scores:
+    # Schema detection
+    use_dual = "political_score" in df.columns and "economic_score" in df.columns
+    if use_dual:
         df["political_score"] = pd.to_numeric(df["political_score"], errors="coerce").fillna(0.0)
         df["economic_score"] = pd.to_numeric(df["economic_score"], errors="coerce").fillna(0.0)
         logger.info("Schema: dual-score (political_score / economic_score, 0-100)")
     else:
-        logger.info("Schema: legacy (article_category / article_severity)")
+        logger.info("Schema: legacy — intensity formula not applicable")
 
-    # ── Optional: Event clustering (USE_CLUSTERING=False by default) ────
-    # Disabled: clustering breaks GPR volume signal. If 12 newspapers cover
-    # Petroperú they should count as 12 articles, not 1 cluster.
-    if USE_CLUSTERING and use_dual_scores and "title" in df.columns:
-        df = _cluster_articles_by_day(df, threshold=0.55)
-        logger.warning("USE_CLUSTERING=True: clustering applied — this breaks GPR volume logic")
-    else:
-        df["cluster_size"] = 1
+    # Build daily aggregates over continuous date range
+    end = df["date"].max()
+    date_range = pd.date_range(start, end, freq="D")
 
-    # ── Step 1: Per-source daily SWP = Σ(score^alpha) / N_articles ─────
-    # GPR formula: all articles from source s on day t contribute score^alpha
-    # to the numerator. Zero-score articles: 0^alpha=0, contribute nothing
-    # to numerator but remain in denominator (N_articles). This is correct —
-    # they are "non-matches" in GPR terminology.
+    rows = []
+    for day in date_range:
+        day_df = df[df["date"] == day]
+        n_total = len(day_df)
+
+        if n_total == 0:
+            rows.append({
+                "date": day,
+                "raw_intensity_pol": 0.0,
+                "raw_intensity_eco": 0.0,
+                "n_articles_pol_above_threshold": 0,
+                "n_articles_eco_above_threshold": 0,
+                "n_articles_total": 0,
+                "n_articles_political": 0,
+                "n_articles_economic": 0,
+                "n_sources": 0,
+            })
+            continue
+
+        if use_dual:
+            pol = day_df["political_score"].fillna(0.0)
+            eco = day_df["economic_score"].fillna(0.0)
+            raw_pol = float(pol.sum())
+            raw_eco = float(eco.sum())
+            n_pol_above = int((pol >= breadth_threshold).sum())
+            n_eco_above = int((eco >= breadth_threshold).sum())
+            n_pol = int((pol > 0).sum())
+            n_eco = int((eco > 0).sum())
+        else:
+            raw_pol = raw_eco = 0.0
+            n_pol_above = n_eco_above = n_pol = n_eco = 0
+
+        rows.append({
+            "date": day,
+            "raw_intensity_pol": raw_pol,
+            "raw_intensity_eco": raw_eco,
+            "n_articles_pol_above_threshold": n_pol_above,
+            "n_articles_eco_above_threshold": n_eco_above,
+            "n_articles_total": n_total,
+            "n_articles_political": n_pol,
+            "n_articles_economic": n_eco,
+            "n_sources": int(day_df["source"].nunique()),
+        })
+
+    result = pd.DataFrame(rows)
+
+    # Rolling baseline (expanding mean during cold start < baseline_window)
+    result["baseline_pol"] = (
+        result["raw_intensity_pol"]
+        .rolling(window=baseline_window, min_periods=1)
+        .mean()
+    )
+    result["baseline_eco"] = (
+        result["raw_intensity_eco"]
+        .rolling(window=baseline_window, min_periods=1)
+        .mean()
+    )
+
+    # Normalized intensity: (raw / baseline) × 100
+    # 100 = normal day, 200 = twice average, 50 = unusually calm
+    result["intensity_pol"] = np.where(
+        result["baseline_pol"] > 0,
+        result["raw_intensity_pol"] / result["baseline_pol"] * 100.0,
+        0.0,
+    )
+    result["intensity_eco"] = np.where(
+        result["baseline_eco"] > 0,
+        result["raw_intensity_eco"] / result["baseline_eco"] * 100.0,
+        0.0,
+    )
+
+    # Breadth: share of articles above threshold
+    n_tot = result["n_articles_total"].astype(float)
+    result["breadth_pol"] = np.where(
+        n_tot > 0,
+        result["n_articles_pol_above_threshold"] / n_tot,
+        0.0,
+    )
+    result["breadth_eco"] = np.where(
+        n_tot > 0,
+        result["n_articles_eco_above_threshold"] / n_tot,
+        0.0,
+    )
+
+    # Combined index: intensity × breadth^β (separate exponents per dimension)
+    result["irp"] = result["intensity_pol"] * (result["breadth_pol"] ** beta_pol)
+    result["ire"] = result["intensity_eco"] * (result["breadth_eco"] ** beta_eco)
+
+    # EMA smoothing: smooth_t = ema_alpha × smooth_{t-1} + (1-ema_alpha) × raw_t
+    # pandas ewm(alpha=x) puts weight x on the most recent obs.
+    # We want today's weight = (1 - ema_alpha), so pass alpha=(1-ema_alpha).
+    ewm_alpha = 1.0 - ema_alpha  # weight on today = 0.7 when ema_alpha=0.3
+    result["irp_smooth"] = result["irp"].ewm(alpha=ewm_alpha, adjust=False, min_periods=1).mean()
+    result["ire_smooth"] = result["ire"].ewm(alpha=ewm_alpha, adjust=False, min_periods=1).mean()
+
+    # Backward-compatible column names for export pipeline
+    result["political_index"] = result["irp"]
+    result["economic_index"] = result["ire"]
+    result["political_smooth"] = result["irp_smooth"]
+    result["economic_smooth"] = result["ire_smooth"]
+    result["political_swp"] = result["raw_intensity_pol"]   # legacy compat label
+    result["economic_swp"] = result["raw_intensity_eco"]    # legacy compat label
+    result["low_coverage"] = result["n_articles_total"] < 25
+
+    output_cols = [
+        "date",
+        # New schema — all intermediate values for debugging / re-analysis
+        "raw_intensity_pol", "raw_intensity_eco",
+        "baseline_pol", "baseline_eco",
+        "intensity_pol", "intensity_eco",
+        "breadth_pol", "breadth_eco",
+        "irp_smooth", "ire_smooth",
+        "n_articles_pol_above_threshold", "n_articles_eco_above_threshold",
+        # Backward-compat aliases
+        "political_index", "economic_index",
+        "political_smooth", "economic_smooth",
+        "political_swp", "economic_swp",
+        "n_articles_political", "n_articles_economic", "n_articles_total",
+        "n_sources", "low_coverage",
+    ]
+    result = result[output_cols].copy()
+
+    valid = result[result["n_articles_total"] > 0]
+    logger.info(
+        "Intensity+Breadth index (beta_pol=%.1f beta_eco=%.1f, threshold=%d, window=%d): %d days, %d articles",
+        beta_pol, beta_eco, breadth_threshold, baseline_window,
+        len(result), int(result["n_articles_total"].sum()),
+    )
+    if len(valid) > 0:
+        logger.info(
+            "  IRP: mean=%.1f median=%.1f min=%.1f max=%.1f",
+            valid["political_index"].mean(), valid["political_index"].median(),
+            valid["political_index"].min(), valid["political_index"].max(),
+        )
+        logger.info(
+            "  IRE: mean=%.1f median=%.1f min=%.1f max=%.1f",
+            valid["economic_index"].mean(), valid["economic_index"].median(),
+            valid["economic_index"].min(), valid["economic_index"].max(),
+        )
+
+    return result
+
+
+# ---------------------------------------------------------------------------
+# Legacy SWP implementation (gated behind LEGACY_SWP=True)
+# ---------------------------------------------------------------------------
+
+def _build_swp_index(
+    articles_df: pd.DataFrame,
+    start_date: str = "2025-07-01",
+    smoothing_window: int = 7,
+    alpha: float = 1.0,
+) -> pd.DataFrame:
+    """Legacy SWP formula: index_t = (1/N_sources) × Σ_s[Σ(score^α)/N_s].
+
+    Kept for reference. Active when LEGACY_SWP=True.
+    """
+    df = articles_df.copy()
+    df["published"] = pd.to_datetime(df["published"], utc=True)
+    df["date"] = df["published"].dt.tz_convert("America/Lima").dt.normalize().dt.tz_localize(None)
+
+    start = pd.Timestamp(start_date)
+    df = df[df["date"] >= start].copy()
+
+    if df.empty:
+        return _empty_index_v2()
+
+    use_dual_scores = "political_score" in df.columns and "economic_score" in df.columns
+    if use_dual_scores:
+        df["political_score"] = pd.to_numeric(df["political_score"], errors="coerce").fillna(0.0)
+        df["economic_score"] = pd.to_numeric(df["economic_score"], errors="coerce").fillna(0.0)
 
     sources = sorted(df["source"].unique())
-    logger.info("Sources (%d): %s", len(sources), sources)
-
     source_daily: dict = {}
     for src in sources:
         src_df = df[df["source"] == src]
-
-        # Denominator: total articles per day from this source
         total = src_df.groupby("date").size().rename("total")
-
         if use_dual_scores:
-            if USE_TOPK:
-                # TOP-K DISABLED by default (USE_TOPK=False).
-                # Preserved here for comparison / sensitivity analysis only.
-                # Selecting only top K articles per source per day suppresses the
-                # volume signal that is the entire point of GPR methodology.
-                src_eco_w = SOURCE_ECO_WEIGHTS.get(src, _DEFAULT_SOURCE_WEIGHT) if USE_SOURCE_WEIGHTS else 1.0
-                src_pol_w = SOURCE_POL_WEIGHTS.get(src, _DEFAULT_SOURCE_WEIGHT) if USE_SOURCE_WEIGHTS else 1.0
-                pol_sev_by_day: dict = {}
-                eco_sev_by_day: dict = {}
-                for day, day_src_df in src_df.groupby("date"):
-                    n_events = len(day_src_df)
-                    pol_positive = day_src_df[day_src_df["political_score"] > 0].copy()
-                    if not pol_positive.empty:
-                        k_pol = min(20, max(5, n_events // 10))
-                        pol_positive["_weighted_pol"] = pol_positive["political_score"] * src_pol_w
-                        top_pol = pol_positive.nlargest(k_pol, "_weighted_pol")
-                        pol_sev_by_day[day] = (top_pol["political_score"] ** alpha).sum()
-                    else:
-                        pol_sev_by_day[day] = 0.0
-                    eco_positive = day_src_df[day_src_df["economic_score"] > 0].copy()
-                    if not eco_positive.empty:
-                        k_eco = min(20, max(5, n_events // 10))
-                        eco_positive["_weighted_eco"] = eco_positive["economic_score"] * src_eco_w
-                        top_eco = eco_positive.nlargest(k_eco, "_weighted_eco")
-                        eco_sev_by_day[day] = (top_eco["economic_score"] ** alpha).sum()
-                    else:
-                        eco_sev_by_day[day] = 0.0
-                pol_sev = pd.Series(pol_sev_by_day, name="pol_sev_sum")
-                eco_sev = pd.Series(eco_sev_by_day, name="econ_sev_sum")
-            else:
-                # GPR (default): Σ(score^alpha) over ALL articles from this source.
-                # score=0 → 0^alpha=0, contributes 0 to numerator.
-                # score=80, alpha=1.3 → 80^1.3 ≈ 246 (high-severity amplified).
-                pol_sev = src_df.groupby("date")["political_score"].apply(
-                    lambda x: (x.fillna(0.0) ** alpha).sum()
-                ).rename("pol_sev_sum")
-                eco_sev = src_df.groupby("date")["economic_score"].apply(
-                    lambda x: (x.fillna(0.0) ** alpha).sum()
-                ).rename("econ_sev_sum")
+            pol_sev = src_df.groupby("date")["political_score"].apply(
+                lambda x: (x.fillna(0.0) ** alpha).sum()
+            ).rename("pol_sev_sum")
+            eco_sev = src_df.groupby("date")["economic_score"].apply(
+                lambda x: (x.fillna(0.0) ** alpha).sum()
+            ).rename("econ_sev_sum")
         else:
-            # Legacy schema: article_category + article_severity
             pol_arts = src_df[src_df["article_category"].isin(["political", "both"])]
             pol_sev = pol_arts.groupby("date")["article_severity"].apply(
                 lambda x: (x ** alpha).sum()
@@ -425,28 +560,12 @@ def build_daily_index_v2(
             eco_sev = econ_arts.groupby("date")["article_severity"].apply(
                 lambda x: (x ** alpha).sum()
             ).rename("econ_sev_sum")
-
         combined = pd.DataFrame({"total": total}).join(pol_sev).join(eco_sev).fillna(0)
         combined["pol_swp"] = combined["pol_sev_sum"] / combined["total"]
         combined["econ_swp"] = combined["econ_sev_sum"] / combined["total"]
-        combined["source"] = src
         source_daily[src] = combined
 
-    # ── Step 2: Source standardization — DISABLED (GPR uses raw SWPs) ──
-    # In GPR methodology, sources contribute their raw SWP equally.
-    # Standardization (dividing by source-level sigma) distorts the index:
-    # it removes the absolute level information and makes a quiet day at
-    # a normally-noisy source look equivalent to a crisis at a quiet source.
-    # (Code preserved as comment for reference.)
-
-    # ── Step 3: Equal-weight aggregation across sources ─────────────────
-    # GPR formula: Z_t = (1/N_sources) × Σ_i(SWP_it)
-    # Each source present on day t contributes its raw SWP equally.
-    # This prevents high-volume sources from dominating (a source publishing
-    # 168 articles vs one publishing 10 has the same index weight).
-
-    # Build continuous date range
-    all_dates_in_data = set()
+    all_dates_in_data: set = set()
     for sd in source_daily.values():
         all_dates_in_data.update(sd.index)
     if not all_dates_in_data:
@@ -454,19 +573,12 @@ def build_daily_index_v2(
 
     end = max(all_dates_in_data)
     date_range = pd.date_range(start, end, freq="D")
-
     rows = []
     for day in date_range:
         total_vol = 0
-        sum_pol_swp = 0.0
-        sum_eco_swp = 0.0
-        raw_pol_swp = 0.0
-        raw_eco_swp = 0.0
-        n_pol = 0
-        n_econ = 0
-        n_total = 0
-        n_sources_today = 0
-
+        sum_pol_swp = sum_eco_swp = 0.0
+        raw_pol_swp = raw_eco_swp = 0.0
+        n_pol = n_econ = n_total = n_sources_today = 0
         for src in sources:
             sd = source_daily[src]
             if day not in sd.index:
@@ -475,148 +587,95 @@ def build_daily_index_v2(
             vol = int(row_src["total"])
             if vol == 0:
                 continue
-
             n_sources_today += 1
             total_vol += vol
             sum_pol_swp += row_src["pol_swp"]
             sum_eco_swp += row_src["econ_swp"]
             raw_pol_swp += vol * row_src["pol_swp"]
             raw_eco_swp += vol * row_src["econ_swp"]
-
         if n_sources_today > 0:
-            z_pol = sum_pol_swp / n_sources_today   # GPR equal-weight average
+            z_pol = sum_pol_swp / n_sources_today
             z_econ = sum_eco_swp / n_sources_today
             swp_pol = raw_pol_swp / total_vol if total_vol > 0 else 0.0
             swp_econ = raw_eco_swp / total_vol if total_vol > 0 else 0.0
         else:
-            z_pol = 0.0
-            z_econ = 0.0
-            swp_pol = 0.0
-            swp_econ = 0.0
-
-        # Count relevant articles
+            z_pol = z_econ = swp_pol = swp_econ = 0.0
         day_all = df[df["date"] == day]
         if not day_all.empty:
             n_total = len(day_all)
             if use_dual_scores:
                 n_pol = int((day_all["political_score"] > 0).sum())
                 n_econ = int((day_all["economic_score"] > 0).sum())
-            else:
-                n_pol = len(day_all[day_all["article_category"].isin(["political", "both"])])
-                n_econ = len(day_all[day_all["article_category"].isin(["economic", "both"])])
-
         rows.append({
-            "date": day,
-            "political_z": z_pol,
-            "economic_z": z_econ,
-            "political_swp": swp_pol,
-            "economic_swp": swp_econ,
-            "n_articles_political": n_pol,
-            "n_articles_economic": n_econ,
-            "n_articles_total": n_total,
-            "n_sources": n_sources_today,
+            "date": day, "political_z": z_pol, "economic_z": z_econ,
+            "political_swp": swp_pol, "economic_swp": swp_econ,
+            "n_articles_political": n_pol, "n_articles_economic": n_econ,
+            "n_articles_total": n_total, "n_sources": n_sources_today,
         })
-
     result = pd.DataFrame(rows)
-
-    # ── Step 3b: Flag and interpolate low-coverage days ─────────────────
-    # Days with fewer than MIN_ARTICLES_PER_DAY total articles are noise
-    # (typically weekends/holidays with sparse feeds). Interpolate their
-    # Z scores from adjacent valid days so they don't spike the index.
     MIN_ARTICLES_PER_DAY = 25
-    low_cov = result["n_articles_total"] < MIN_ARTICLES_PER_DAY
-    n_low = int(low_cov.sum())
-    if n_low > 0:
-        logger.info(
-            "Low-coverage interpolation: %d days with < %d articles → interpolating Z scores",
-            n_low, MIN_ARTICLES_PER_DAY,
-        )
-        for dim in ["political", "economic"]:
-            z_col = f"{dim}_z"
-            result.loc[low_cov, z_col] = np.nan
-        # Linear interpolation (fills gaps between valid days)
-        result[["political_z", "economic_z"]] = (
-            result[["political_z", "economic_z"]]
-            .interpolate(method="linear", limit_direction="both")
-        )
-
-    # ── Step 4: Normalize to mean=100 ──────────────────────────────────
-    # The baseline is the full sample. Index_t = Z_t × (100 / M).
-    # A value of 200 means twice the average instability coverage.
-
     for dim in ["political", "economic"]:
         z_col = f"{dim}_z"
         idx_col = f"{dim}_index"
         smooth_col = f"{dim}_smooth"
-
         m = result[z_col].mean()
-        if m > 0:
-            result[idx_col] = result[z_col] * (100.0 / m)
-        else:
-            result[idx_col] = 0.0
-
-        # EWM smoothing: index_smooth_t = w*index_raw_t + (1-w)*index_smooth_{t-1}
-        # ewm(span=7) → w ≈ 0.25, crises persist ~3-4 days.
-        result[smooth_col] = result[idx_col].ewm(
-            span=smoothing_window, adjust=False, min_periods=1,
-        ).mean()
-
-    # Output columns
+        result[idx_col] = result[z_col] * (100.0 / m) if m > 0 else 0.0
+        result[smooth_col] = result[idx_col].ewm(span=smoothing_window, adjust=False, min_periods=1).mean()
     result["low_coverage"] = result["n_articles_total"] < MIN_ARTICLES_PER_DAY
+    # Add new-schema columns as 0 for parquet compat
+    for col in ["raw_intensity_pol", "raw_intensity_eco", "baseline_pol", "baseline_eco",
+                "intensity_pol", "intensity_eco", "breadth_pol", "breadth_eco",
+                "irp_smooth", "ire_smooth", "n_articles_pol_above_threshold",
+                "n_articles_eco_above_threshold"]:
+        result[col] = 0.0
     output_cols = [
         "date",
-        "political_swp", "political_index", "political_smooth",
-        "economic_swp", "economic_index", "economic_smooth",
+        "raw_intensity_pol", "raw_intensity_eco",
+        "baseline_pol", "baseline_eco",
+        "intensity_pol", "intensity_eco",
+        "breadth_pol", "breadth_eco",
+        "irp_smooth", "ire_smooth",
+        "n_articles_pol_above_threshold", "n_articles_eco_above_threshold",
+        "political_index", "economic_index",
+        "political_smooth", "economic_smooth",
+        "political_swp", "economic_swp",
         "n_articles_political", "n_articles_economic", "n_articles_total",
         "n_sources", "low_coverage",
     ]
-    result = result[output_cols].copy()
-
-    # Log summary
-    logger.info(
-        "GPR index (alpha=%.1f): %d days, %d sources, %d pol articles, %d eco articles",
-        alpha, len(result), len(sources),
-        result["n_articles_political"].sum(),
-        result["n_articles_economic"].sum(),
-    )
-    logger.info(
-        "  IRP: mean=%.1f median=%.1f min=%.1f max=%.1f",
-        result["political_index"].mean(),
-        result["political_index"].median(),
-        result["political_index"].min(),
-        result["political_index"].max(),
-    )
-    logger.info(
-        "  IRE: mean=%.1f median=%.1f min=%.1f max=%.1f",
-        result["economic_index"].mean(),
-        result["economic_index"].median(),
-        result["economic_index"].min(),
-        result["economic_index"].max(),
-    )
-
-    return result
+    return result[output_cols].copy()
 
 
 # ---------------------------------------------------------------------------
-# Diagnostic output (spec section 5) — prints article-level stats per day
+# Diagnostic output — new Intensity × Breadth^β format
 # ---------------------------------------------------------------------------
 
 def print_diagnostic(
     articles_df: pd.DataFrame,
     index_df_10: pd.DataFrame,
-    index_df_13: pd.DataFrame,
-    date_strs: list[str],
+    index_df_13: pd.DataFrame = None,   # kept for call-site compat, ignored
+    date_strs: list = None,
     start_date: str = "2025-07-01",
+    breadth_threshold: int = BREADTH_THRESHOLD,
+    beta: float = BETA,
+    beta_pol: float = BETA_POL,
+    beta_eco: float = BETA_ECO,
 ) -> None:
-    """Print diagnostic output for specified dates comparing α=1.0 vs α=1.3.
+    """Print diagnostic output for specified dates.
+
+    Shows all index components (intensity, breadth, combined) and compares
+    beta=0.3 / 0.5 / 0.7. Uses intermediate columns from index_df_10.
 
     Parameters
     ----------
-    articles_df : classified articles DataFrame (political_score, economic_score, source, title)
-    index_df_10 : index built with alpha=1.0
-    index_df_13 : index built with alpha=1.3
-    date_strs : list of date strings like ["2026-03-14", ..., "2026-03-18"]
+    articles_df  : classified articles (political_score, economic_score, source, title)
+    index_df_10  : index DataFrame (must contain new-schema columns)
+    date_strs    : list of date strings like ["2026-03-14", ..., "2026-03-18"]
+    breadth_threshold : threshold used to build the index (for display)
+    beta         : beta used to build the index (for display)
     """
+    if date_strs is None:
+        date_strs = []
+
     df = articles_df.copy()
     df["published"] = pd.to_datetime(df["published"], utc=True)
     df["date"] = df["published"].dt.tz_convert("America/Lima").dt.normalize().dt.tz_localize(None)
@@ -628,57 +687,96 @@ def print_diagnostic(
         df["political_score"] = pd.to_numeric(df["political_score"], errors="coerce").fillna(0.0)
         df["economic_score"] = pd.to_numeric(df["economic_score"], errors="coerce").fillna(0.0)
 
-    idx10 = index_df_10.copy()
-    idx13 = index_df_13.copy()
-    idx10["date"] = pd.to_datetime(idx10["date"])
-    idx13["date"] = pd.to_datetime(idx13["date"])
-    idx10 = idx10.set_index("date")
-    idx13 = idx13.set_index("date")
+    idx = index_df_10.copy()
+    idx["date"] = pd.to_datetime(idx["date"])
+    idx = idx.set_index("date")
+
+    # Check if new-schema columns are available
+    has_new_schema = "intensity_pol" in idx.columns and "breadth_pol" in idx.columns
 
     for date_str in date_strs:
         day = pd.Timestamp(date_str)
         day_df = df[df["date"] == day]
-
         n_total = len(day_df)
-        if use_dual:
-            n_pol = int((day_df["political_score"] > 0).sum())
-            n_eco = int((day_df["economic_score"] > 0).sum())
-            sum_pol = day_df["political_score"].sum()
-            sum_eco = day_df["economic_score"].sum()
+
+        if use_dual and n_total > 0:
+            pol = day_df["political_score"].fillna(0.0)
+            eco = day_df["economic_score"].fillna(0.0)
+            n_pol_above = int((pol >= breadth_threshold).sum())
+            n_eco_above = int((eco >= breadth_threshold).sum())
+            sum_pol = float(pol.sum())
+            sum_eco = float(eco.sum())
+            n_pol = int((pol > 0).sum())
+            n_eco = int((eco > 0).sum())
         else:
-            n_pol = n_eco = sum_pol = sum_eco = 0
+            n_pol_above = n_eco_above = sum_pol = sum_eco = n_pol = n_eco = 0
 
         n_sources = int(day_df["source"].nunique()) if n_total > 0 else 0
 
-        # Index values
-        irp10 = idx10.loc[day, "political_index"] if day in idx10.index else float("nan")
-        ire10 = idx10.loc[day, "economic_index"] if day in idx10.index else float("nan")
-        irp13 = idx13.loc[day, "political_index"] if day in idx13.index else float("nan")
-        ire13 = idx13.loc[day, "economic_index"] if day in idx13.index else float("nan")
-        irp_sm = idx10.loc[day, "political_smooth"] if day in idx10.index else float("nan")
-        ire_sm = idx10.loc[day, "economic_smooth"] if day in idx10.index else float("nan")
+        # Retrieve pre-computed components from index
+        def _get(col, default=float("nan")):
+            if day in idx.index and col in idx.columns:
+                return float(idx.loc[day, col])
+            return default
 
-        print(f"\n{'='*60}")
+        irp = _get("political_index")
+        ire = _get("economic_index")
+        irp_sm = _get("irp_smooth", _get("political_smooth"))
+        ire_sm = _get("ire_smooth", _get("economic_smooth"))
+        raw_pol = _get("raw_intensity_pol")
+        raw_eco = _get("raw_intensity_eco")
+        baseline_pol = _get("baseline_pol")
+        baseline_eco = _get("baseline_eco")
+        intensity_pol = _get("intensity_pol")
+        intensity_eco = _get("intensity_eco")
+        breadth_pol = _get("breadth_pol")
+        breadth_eco = _get("breadth_eco")
+
+        print(f"\n{'='*66}")
         print(f"=== {day.strftime('%B %d, %Y')} ===")
-        print(f"{'='*60}")
-        print(f"Total articles:       {n_total}")
-        print(f"Articles with pol > 0: {n_pol}")
-        print(f"Articles with eco > 0: {n_eco}")
-        print(f"Sum(pol_score):       {sum_pol:.0f}")
-        print(f"Sum(eco_score):       {sum_eco:.0f}")
-        print(f"N_sources active:     {n_sources}")
-        print()
-        print(f"IRP (a=1.0): {irp10:6.1f}    IRP (a=1.3): {irp13:6.1f}")
-        print(f"IRE (a=1.0): {ire10:6.1f}    IRE (a=1.3): {ire13:6.1f}")
-        print()
-        print(f"IRP (smoothed a=1.0): {irp_sm:.1f}")
-        print(f"IRE (smoothed a=1.0): {ire_sm:.1f}")
+        print(f"{'='*66}")
+        print(f"Total articles: {n_total}")
+        print(f"Articles with pol >= threshold({breadth_threshold}): {n_pol_above}"
+              f"  |  Articles with eco >= threshold({breadth_threshold}): {n_eco_above}")
+
+        if has_new_schema:
+            print(f"\nCOMPONENT 1 -- INTENSITY:")
+            print(f"  RAW_INTENSITY_POL: {raw_pol:.0f}  (sum of all pol scores)")
+            print(f"  RAW_INTENSITY_ECO: {raw_eco:.0f}  (sum of all eco scores)")
+            print(f"  BASELINE_POL (rolling {BASELINE_WINDOW}d): {baseline_pol:.1f}")
+            print(f"  BASELINE_ECO (rolling {BASELINE_WINDOW}d): {baseline_eco:.1f}")
+            print(f"  INTENSITY_POL (normalized): {intensity_pol:.1f}")
+            print(f"  INTENSITY_ECO (normalized): {intensity_eco:.1f}")
+            print(f"\nCOMPONENT 2 -- BREADTH:")
+            print(f"  BREADTH_POL: {breadth_pol:.3f}  ({n_pol_above}/{n_total})")
+            print(f"  BREADTH_ECO: {breadth_eco:.3f}  ({n_eco_above}/{n_total})")
+            print(f"\nCOMBINED INDEX (beta_pol={beta_pol}, beta_eco={beta_eco}):")
+            print(f"  IRP = {intensity_pol:.1f} x {breadth_pol:.3f}^{beta_pol} = {irp:.1f}")
+            print(f"  IRE = {intensity_eco:.1f} x {breadth_eco:.3f}^{beta_eco} = {ire:.1f}")
+        else:
+            print(f"\n  IRP: {irp:.1f}   IRE: {ire:.1f}  (old schema — rebuild index for full breakdown)")
+
+        print(f"\nSMOOTHED (EMA alpha={EMA_ALPHA}):")
+        print(f"  IRP_smooth: {irp_sm:.1f}")
+        print(f"  IRE_smooth: {ire_sm:.1f}")
+
+        # Beta sensitivity comparison (computed from stored intermediate values)
+        if has_new_schema and not np.isnan(intensity_pol):
+            print(f"\nBeta sensitivity (IRP uses beta_pol, IRE uses beta_eco):")
+            print(f"  {'bp':>5}  {'be':>5}  {'IRP':>8}  {'IRE':>8}")
+            print(f"  {'-'*32}")
+            combos = [(0.3, 0.3), (0.5, 0.3), (0.5, 0.5), (0.7, 0.5), (0.7, 0.7)]
+            for bp, be in combos:
+                irp_b = intensity_pol * (breadth_pol ** bp) if not np.isnan(breadth_pol) else float("nan")
+                ire_b = intensity_eco * (breadth_eco ** be) if not np.isnan(breadth_eco) else float("nan")
+                marker = " <-- current" if (abs(bp - beta_pol) < 0.01 and abs(be - beta_eco) < 0.01) else ""
+                print(f"  {bp:>5.1f}  {be:>5.1f}  {irp_b:>8.1f}  {ire_b:>8.1f}{marker}")
 
         if use_dual and n_total > 0:
             # Top 10 political contributors
             pol_nonzero = day_df[day_df["political_score"] > 0].copy()
             pol_nonzero = pol_nonzero.sort_values("political_score", ascending=False).head(10)
-            print(f"\nTop 10 political contributors (of {n_pol}):")
+            print(f"\nTop 10 political contributors (of {n_pol} with pol>0):")
             for rank, (_, row) in enumerate(pol_nonzero.iterrows(), 1):
                 contrib = (row["political_score"] / sum_pol * 100) if sum_pol > 0 else 0
                 title = str(row.get("title", ""))[:60]
@@ -687,28 +785,35 @@ def print_diagnostic(
             # Top 10 economic contributors
             eco_nonzero = day_df[day_df["economic_score"] > 0].copy()
             eco_nonzero = eco_nonzero.sort_values("economic_score", ascending=False).head(10)
-            print(f"\nTop 10 economic contributors (of {n_eco}):")
+            print(f"\nTop 10 economic contributors (of {n_eco} with eco>0):")
             for rank, (_, row) in enumerate(eco_nonzero.iterrows(), 1):
                 contrib = (row["economic_score"] / sum_eco * 100) if sum_eco > 0 else 0
                 title = str(row.get("title", ""))[:60]
                 print(f"  {rank:2}. [{row['source']}] \"{title}\" eco={row['economic_score']:.0f} ({contrib:.1f}%)")
 
-            # Petroperú coverage
-            title_col = day_df["title"].fillna("").str.lower() if "title" in day_df.columns else None
-            if title_col is not None:
-                pp_mask = title_col.str.contains(r"petroper[uú]|petroperu", regex=True, na=False)
-                pp_df = day_df[pp_mask]
-                if len(pp_df) > 0:
-                    avg_eco = pp_df["economic_score"].mean()
-                    pp_eco_total = pp_df["economic_score"].sum()
-                    contrib = (pp_eco_total / sum_eco * 100) if sum_eco > 0 else 0
-                    print(f"\nPetroperú coverage: {len(pp_df)} articles, avg eco={avg_eco:.0f}, total contribution={contrib:.1f}%")
-                else:
-                    print("\nPetroperú coverage: 0 articles")
+            # Key events check
+            print(f"\nKey events check:")
+            titles_lower = day_df["title"].fillna("").str.lower()
 
-    print(f"\n{'='*60}")
-    print("OLD vs NEW index comparison (last 7 days of existing index):")
-    print(f"{'='*60}")
+            for event_name, pattern in [
+                ("Petroperu",        "petroper[u\u00fa]"),
+                ("Voto de confianza", r"voto de confianza"),
+                ("Camisea/gas",      r"camisea|gasoducto|gas natural"),
+            ]:
+                mask = titles_lower.str.contains(pattern, regex=True, na=False)
+                ev_df = day_df[mask]
+                if len(ev_df) > 0:
+                    pol_contrib = ev_df["political_score"].sum()
+                    eco_contrib = ev_df["economic_score"].sum()
+                    scores_pol = ev_df["political_score"].tolist()[:5]
+                    scores_eco = ev_df["economic_score"].tolist()[:5]
+                    pct_pol = (pol_contrib / sum_pol * 100) if sum_pol > 0 else 0
+                    pct_eco = (eco_contrib / sum_eco * 100) if sum_eco > 0 else 0
+                    print(f"  {event_name}: {len(ev_df)} articles, "
+                          f"pol scores={[f'{s:.0f}' for s in scores_pol]} (+{pct_pol:.1f}% of raw_pol), "
+                          f"eco scores={[f'{s:.0f}' for s in scores_eco]} (+{pct_eco:.1f}% of raw_eco)")
+                else:
+                    print(f"  {event_name}: 0 articles")
 
 
 # ---------------------------------------------------------------------------
@@ -740,8 +845,15 @@ def _empty_index_v2() -> pd.DataFrame:
     """Return an empty DataFrame with the v2 schema."""
     return pd.DataFrame(columns=[
         "date",
-        "political_swp", "political_index", "political_smooth",
-        "economic_swp", "economic_index", "economic_smooth",
+        "raw_intensity_pol", "raw_intensity_eco",
+        "baseline_pol", "baseline_eco",
+        "intensity_pol", "intensity_eco",
+        "breadth_pol", "breadth_eco",
+        "irp_smooth", "ire_smooth",
+        "n_articles_pol_above_threshold", "n_articles_eco_above_threshold",
+        "political_index", "economic_index",
+        "political_smooth", "economic_smooth",
+        "political_swp", "economic_swp",
         "n_articles_political", "n_articles_economic", "n_articles_total",
-        "n_sources",
+        "n_sources", "low_coverage",
     ])

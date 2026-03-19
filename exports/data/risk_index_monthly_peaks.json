@@ -1,18 +1,18 @@
 {
-  "generated_at": "2026-03-18T19:24:26.640311Z",
+  "generated_at": "2026-03-19T01:30:25.827347Z",
   "months": [
     {
       "month": "2025-01",
-      "irp_7d_peak": 117.2,
-      "irp_peak_date": "2025-01-07",
+      "irp_7d_peak": 102.0,
+      "irp_peak_date": "2025-01-13",
       "irp_event": "",
       "irp_top_articles": [
         "Fredy Hinojosa se victimiza ante acusaciones de sobornos durante su gestión en Qali Warma :  Soy un objetivo político  | Dina Boluarte | Midis | Demartini | Qali Warma | Wasi Mikuna | estado corrupción | Política",
         "Gustavo Adrianzén sobre quienes realizaron allanamiento a casa de Dina Boluarte: Se deberían tomar acciones judiciales",
         "Proyecto inmobiliario de José Arista coincide con su gestión en el Ministerio de Economía"
       ],
-      "ire_7d_peak": 0.0,
-      "ire_peak_date": "2025-01-01",
+      "ire_7d_peak": 139.7,
+      "ire_peak_date": "2025-01-10",
       "ire_event": "",
       "ire_top_articles": [
         "Si EE . UU . desconoce TLC , exportaciones tendrán problemas",
@@ -22,16 +22,16 @@
     },
     {
       "month": "2025-02",
-      "irp_7d_peak": 29.3,
-      "irp_peak_date": "2025-02-27",
+      "irp_7d_peak": 105.8,
+      "irp_peak_date": "2025-02-20",
       "irp_event": "",
       "irp_top_articles": [
         "Fredy Hinojosa se victimiza ante acusaciones de sobornos durante su gestión en Qali Warma",
         "Gustavo Adrianzén sobre quienes realizaron allanamiento a casa de Dina Boluarte: Se deberían tomar acciones judiciales",
         "Proyecto inmobiliario de José Arista coincide con su gestión en el Ministerio de Economía"
       ],
-      "ire_7d_peak": 0.0,
-      "ire_peak_date": "2025-02-01",
+      "ire_7d_peak": 123.4,
+      "ire_peak_date": "2025-02-06",
       "ire_event": "",
       "ire_top_articles": [
         "Congreso impulsa nuevo retiro de AFP : afiliados ...",
@@ -41,16 +41,16 @@
     },
     {
       "month": "2025-03",
-      "irp_7d_peak": 29.3,
-      "irp_peak_date": "2025-03-01",
-      "irp_event": "",
+      "irp_7d_peak": 152.0,
+      "irp_peak_date": "2025-03-24",
+      "irp_event": "Cerrón Desaparece",
       "irp_top_articles": [
         "Leslie Urteaga critica moción de vacancia contra Dina Boluarte (VIDEO)",
         "Ministro de Trabajo se pronunció sobre posible moción de vacancia contra Dina Boluarte: “Solo genera inestabilidad”",
         "Listas y Reintegros del Fonavi 2025 : ¿ existe alguna fecha límite para cobrar en el Banco de la Nación ? | atmp | Economía"
       ],
-      "ire_7d_peak": 0.0,
-      "ire_peak_date": "2025-03-01",
+      "ire_7d_peak": 121.6,
+      "ire_peak_date": "2025-03-29",
       "ire_event": "",
       "ire_top_articles": [
         "Dirigentes del sur anuncian nueva jornada de lucha y paro de 24 horas por Gasoducto Sur Andino y Tía María",
@@ -60,15 +60,15 @@
     },
     {
       "month": "2025-04",
-      "irp_7d_peak": 0.0,
-      "irp_peak_date": "2025-04-01",
+      "irp_7d_peak": 112.3,
+      "irp_peak_date": "2025-04-25",
       "irp_event": "",
       "irp_top_articles": [
         "Un intento de confiscación blanda , por Jaime Chincha",
         "José Domingo Pérez presenta denuncia penal contra funcionario de la Fiscalía que lo suspendió",
         "Ollanta Humala llegó al penal de Barbadillo tras recibir 15 años de prisión (VIDEO)"
       ],
-      "ire_7d_peak": 0.0,
+      "ire_7d_peak": 121.2,
       "ire_peak_date": "2025-04-01",
       "ire_event": "",
       "ire_top_articles": [
@@ -79,17 +79,17 @@
     },
     {
       "month": "2025-05",
-      "irp_7d_peak": 0.0,
-      "irp_peak_date": "2025-05-01",
-      "irp_event": "",
+      "irp_7d_peak": 127.0,
+      "irp_peak_date": "2025-05-05",
+      "irp_event": "Asilo Nadine Heredia",
       "irp_top_articles": [
         "Asilo a Nadine Heredia: Diputados de Brasil cuestionan ausencia del canciller Mauro Vieira",
         "Ministro de Trabajo, Daniel Maurate, respalda aumento de sueldo de la presidenta en accidentada audiencia (VIDEO)",
         "Dina Boluarte busca duplicarse el sueldo: MEF propone que salario de la presidenta incremente a casi S/36 mil"
       ],
-      "ire_7d_peak": 0.0,
-      "ire_peak_date": "2025-05-01",
-      "ire_event": "",
+      "ire_7d_peak": 139.5,
+      "ire_peak_date": "2025-05-19",
+      "ire_event": "Pataz + Telefónica + Petroperú",
       "ire_top_articles": [
         "Las cartas de negociación que Perú llevó a Estados Unidos para  hacerle frente  a los aranceles , entrevista con el embajador de Perú en EE . UU ., Alfredo Ferrero | ECONOMIA",
         "Petroperú registró un superávit de S/727 millones gracias a la ayuda del Estado al cierre del 2024",
@@ -98,17 +98,17 @@
     },
     {
       "month": "2025-06",
-      "irp_7d_peak": 58.6,
-      "irp_peak_date": "2025-06-10",
-      "irp_event": "",
+      "irp_7d_peak": 158.0,
+      "irp_peak_date": "2025-06-26",
+      "irp_event": "Vizcarra Prisión Preventiva",
       "irp_top_articles": [
         "Congreso: al menos 40 legisladores apoyarían que se admita moción de vacancia contra Boluarte",
         "Censo 2025 incluirá preguntas sobre tipo de vivienda y materiales de construcción",
         "Estado facilitará trámites para la realización de la “Final Conmebol Libertadores 2025”"
       ],
-      "ire_7d_peak": 0.0,
-      "ire_peak_date": "2025-06-01",
-      "ire_event": "",
+      "ire_7d_peak": 168.9,
+      "ire_peak_date": "2025-06-17",
+      "ire_event": "Paro Transportistas",
       "ire_top_articles": [
         "AFIN: iniciativa del Congreso encarecería el precio de celulares",
         "¿Qué tan lento se avanza en Lima?, así se elevan los costos logísticos",
@@ -117,17 +117,17 @@
     },
     {
       "month": "2025-07",
-      "irp_7d_peak": 0.0,
-      "irp_peak_date": "2025-07-01",
-      "irp_event": "",
+      "irp_7d_peak": 173.1,
+      "irp_peak_date": "2025-07-28",
+      "irp_event": "Fragmentación Izquierda Peruana",
       "irp_top_articles": [
         "Dina Boluarte: Subcomisión del Congreso archiva denuncia fiscal por presunto homicidio y lesiones durante protestas",
         "Pedro Castillo: Denuncia constitucional de la fiscalía alcanza a congresistas Ilich López y Carlos Zeballos que postulan a la Mesa Directiva",
         "Corte IDH exige suspensión inmediata de ley de amnistía para militares y policías"
       ],
-      "ire_7d_peak": 0.0,
-      "ire_peak_date": "2025-07-01",
-      "ire_event": "",
+      "ire_7d_peak": 181.0,
+      "ire_peak_date": "2025-07-13",
+      "ire_event": "Crisis Minería Informal",
       "ire_top_articles": [
         "Un arancel de 50% al cobre hará caer exportación de Perú: Trump anunció que sería desde el 1 de agosto",
         "Congreso aprueba en primera votación cambios a ley que regula inversiones de las AFP",
@@ -136,17 +136,17 @@
     },
     {
       "month": "2025-08",
-      "irp_7d_peak": 87.9,
-      "irp_peak_date": "2025-08-27",
-      "irp_event": "",
+      "irp_7d_peak": 155.9,
+      "irp_peak_date": "2025-08-13",
+      "irp_event": "Prisión Vizcarra",
       "irp_top_articles": [
         "Vizcarra indicó que conoció anticipadamente sobre decisión de prisión preventiva: “Ya lo sabía hace dos días”",
         "PPK sobre cuatro expresidentes presos en Perú: “Todo esto genera mucha inestabilidad”",
         "Alejandro Toledo llora en audiencia y pide traslado a clínica por grave estado de salud"
       ],
-      "ire_7d_peak": 0.0,
-      "ire_peak_date": "2025-08-01",
-      "ire_event": "",
+      "ire_7d_peak": 160.8,
+      "ire_peak_date": "2025-08-21",
+      "ire_event": "Paro Parcial Lima",
       "ire_top_articles": [
         "TC admitió demanda de inconstitucionalidad contra decreto que autorizó rescate de Petroperú",
         "Congreso insiste: activación ilegal de líneas telefónicas será castigada hasta con 8 años de cárcel",
@@ -155,17 +155,17 @@
     },
     {
       "month": "2025-09",
-      "irp_7d_peak": 29.3,
-      "irp_peak_date": "2025-09-01",
-      "irp_event": "",
+      "irp_7d_peak": 107.3,
+      "irp_peak_date": "2025-09-08",
+      "irp_event": "Pericia audios Santiváñez",
       "irp_top_articles": [
         "José Jerí sobre pericia fiscal a presuntos audios de Santiváñez: Hasta que no se pronuncie el PJ no hay nada concreto",
         "Delia Espinoza responde a pedido para suspenderla",
         "JEE archivó denuncia contra Rafael López Aliaga por neutralidad electoral"
       ],
-      "ire_7d_peak": 0.0,
-      "ire_peak_date": "2025-09-01",
-      "ire_event": "",
+      "ire_7d_peak": 262.4,
+      "ire_peak_date": "2025-09-17",
+      "ire_event": "Pensiones en Riesgo",
       "ire_top_articles": [
         "Congreso: presentan 18 proyectos de ley para derogar y modificar reforma de pensiones",
         "Empresas podrán pagar en cuotas sus deudas con EsSalud: ¿cómo funcionará?",
@@ -174,17 +174,17 @@
     },
     {
       "month": "2025-10",
-      "irp_7d_peak": 0.0,
-      "irp_peak_date": "2025-10-01",
-      "irp_event": "",
+      "irp_7d_peak": 225.0,
+      "irp_peak_date": "2025-10-10",
+      "irp_event": "Vacancia Boluarte",
       "irp_top_articles": [
         "Fuerza Popular exige activar Plan de Emergencia Nacional contra el “terrorismo urbano”",
         "Congreso: se alistan tres mociones de vacancia contra la presidenta Dina Boluarte",
         "Fuerza Popular anuncia que votará a favor de moción de vacancia contra Dina Boluarte"
       ],
-      "ire_7d_peak": 0.0,
-      "ire_peak_date": "2025-10-01",
-      "ire_event": "Petroperú + APP híbrido MEF",
+      "ire_7d_peak": 302.6,
+      "ire_peak_date": "2025-10-06",
+      "ire_event": "Paro Transportistas",
       "ire_top_articles": [
         "La australiana Ausenco apuesta por Perú: inversión, innovación y minería sostenible",
         "Presidente de Petroperú niega salvataje: desembolso estatal responde a deuda de 2022",
@@ -193,17 +193,17 @@
     },
     {
       "month": "2025-11",
-      "irp_7d_peak": 29.3,
-      "irp_peak_date": "2025-11-16",
-      "irp_event": "",
+      "irp_7d_peak": 130.6,
+      "irp_peak_date": "2025-11-27",
+      "irp_event": "Castillo Condenado",
       "irp_top_articles": [
         "EN VIVO: México responde por asilo a Betssy Chávez",
         "Jefe del INPE niega que sea su voz la que aparece en audios y descarta renunciar",
         "Paro de transportes 4 de noviembre: las empresas  que no circulan en Lima y Callao"
       ],
-      "ire_7d_peak": 0.0,
-      "ire_peak_date": "2025-11-01",
-      "ire_event": "",
+      "ire_7d_peak": 170.0,
+      "ire_peak_date": "2025-11-03",
+      "ire_event": "Minería ilegal lava $22B",
       "ire_top_articles": [
         "SBS: La minería ilegal habría lavado unos $ 22 mil millones en los últimos 10 años",
         "Renta4 SAB: Demanda interna impulsa crecimiento económico, mientras la minería se normaliza",
@@ -212,16 +212,16 @@
     },
     {
       "month": "2025-12",
-      "irp_7d_peak": 29.3,
-      "irp_peak_date": "2025-12-01",
-      "irp_event": "Castillo condenado golpe Estado",
+      "irp_7d_peak": 112.0,
+      "irp_peak_date": "2025-12-04",
+      "irp_event": "",
       "irp_top_articles": [
         "Pedro Castillo en la recta final: ¿será el primer expresidente condenado por un golpe de Estado? | Tenemos Que Hablar",
         "Indecopi rematará 58 inmuebles ubicados en ocho regiones del país: ¿Cómo participar?",
         "“Defraudó al Estado peruano”: las claves de la condena de Martín Vizcarra por pedir coimas a cambio de favorecer a constructoras"
       ],
-      "ire_7d_peak": 0.0,
-      "ire_peak_date": "2025-12-01",
+      "ire_7d_peak": 94.3,
+      "ire_peak_date": "2025-12-29",
       "ire_event": "",
       "ire_top_articles": [
         "Fernando Rospigliosi cuestiona nuevos rescates a Petroperú: Es una empresa que está en quiebra",
@@ -231,17 +231,17 @@
     },
     {
       "month": "2026-01",
-      "irp_7d_peak": 29.3,
-      "irp_peak_date": "2026-01-24",
-      "irp_event": "",
+      "irp_7d_peak": 201.9,
+      "irp_peak_date": "2026-01-21",
+      "irp_event": "Censura Jerí",
       "irp_top_articles": [
         "Perú Libre presiona para moción de vacancia contra presidente Jerí tras escándalo por ‘Chifagate’",
         "Congreso: Censura contra presidente José Jerí gana fuerza con segunda moción en trámite",
         "SNMPE expresa su preocupación por nombramientos del Minem en cargos clave para formalización minera"
       ],
-      "ire_7d_peak": 0.0,
-      "ire_peak_date": "2026-01-01",
-      "ire_event": "Petroperú Moody's + Mining",
+      "ire_7d_peak": 135.2,
+      "ire_peak_date": "2026-01-13",
+      "ire_event": "",
       "ire_top_articles": [
         "Fernando Rospigliosi cuestiona nuevos rescates a Petroperú: Es una empresa que está en quiebra",
         "Aeropuerto de Chinchero: Perú fue declarado en rebeldía en EE.UU. por no pagar indemnización por cancelar contrato con Kuntur Wasi",
@@ -250,16 +250,16 @@
     },
     {
       "month": "2026-02",
-      "irp_7d_peak": 29.3,
-      "irp_peak_date": "2026-02-01",
-      "irp_event": "",
+      "irp_7d_peak": 287.8,
+      "irp_peak_date": "2026-02-18",
+      "irp_event": "Censura Jerí",
       "irp_top_articles": [
         "Crisis política: el papel de Fuerza Popular para que el Perú tenga 8 presidentes en 10 años",
         "José Jerí EN VIVO: Congreso define sus votos a horas de que se debata la censura contra presidente",
         "Debate presidencial 2026: ¿cómo se organizará y cuándo debatirán los 36 candidatos?"
       ],
-      "ire_7d_peak": 0.0,
-      "ire_peak_date": "2026-02-01",
+      "ire_7d_peak": 118.8,
+      "ire_peak_date": "2026-02-27",
       "ire_event": "",
       "ire_top_articles": [
         "Osinergmin supervisa racionamiento de gas natural tras emergencia en Camisea",

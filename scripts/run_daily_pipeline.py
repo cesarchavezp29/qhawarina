@@ -1,20 +1,43 @@
 """
-Daily automated pipeline for Qhawarina.pe
+=============================================================================
+QHAWARINA DAILY PIPELINE — run_daily_pipeline.py
+=============================================================================
 
-Runs every day at 08:30 PET (13:30 UTC) via Windows Task Scheduler.
+FULL DOCUMENTATION: D:/nexus/nexus/PIPELINE.md  ← READ THIS FIRST
 
-Steps:
-  1. Scrape supermarket prices (Plaza Vea, Metro, Wong)
-  2. Build political instability index (RSS + GPT-4o)
-  3. Export all web data (nowcasts, political, poverty, price index)
-  4. Sync exports to qhawarina web project
-  5. Git commit + push
+Quick reference:
+  - Runs daily at 21:00 Lima (PET = UTC-5) via Windows Task Scheduler
+  - Total runtime: ~30 minutes
+  - Log: logs/daily_pipeline_YYYY-MM-DD.log
 
-Usage:
-    python scripts/run_daily_pipeline.py
-    python scripts/run_daily_pipeline.py --skip-scrape   # skip supermarket
-    python scripts/run_daily_pipeline.py --skip-political
-    python scripts/run_daily_pipeline.py --no-push
+STEPS (in order):
+  1. Supermarket scrape  — Plaza Vea, Metro, Wong (~42k products)
+  2. Political index     — RSS feeds + Claude Haiku → IRP + IRE indices
+  3. Export web data     — All JSON/CSV for website (export_web_data.py)
+  4. Sync to web         — copies exports/ → D:/qhawarina/public/assets/data/
+  5. Monthly poverty     — runs on 15th only (GBR nowcast model)
+  6. Git push            — disabled by default, use --push flag
+
+KEY OUTPUT: data/processed/daily_instability/daily_index.parquet
+  ↑ This is the IRP/IRE source of truth. Updated daily.
+  ↑ Do NOT use data/processed/daily/daily_index.parquet (legacy, stuck 2026-03-13)
+
+IRP/IRE SCALE:
+  0-50   = quiet   |  50-100 = moderate  |  100-180 = elevated
+  180-250 = high   |  250+   = very high (major political shock)
+
+USAGE:
+    python scripts/run_daily_pipeline.py                   # standard (no push)
+    python scripts/run_daily_pipeline.py --push            # + git commit/push
+    python scripts/run_daily_pipeline.py --skip-scrape     # skip supermarket
+    python scripts/run_daily_pipeline.py --skip-political  # skip RSS/Haiku
+    python scripts/run_daily_pipeline.py --no-push         # (alias for default)
+
+KNOWN BUGS (fixed):
+  - .iloc[-1] IRP/IRE partial-day UTC bleed → fixed in export_web_data.py
+    (now uses last row with n_articles_total >= 100)
+
+=============================================================================
 """
 
 import argparse

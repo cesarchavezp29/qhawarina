@@ -543,76 +543,170 @@ def classify_articles_batch(
     return df
 
 
-_POLITICAL_SYSTEM_PROMPT = """Clasificarás un artículo de prensa peruana. Evalúa ÚNICAMENTE el riesgo de inestabilidad política institucional en el Perú basándote en lo que el artículo afirma o implica directamente.
+_POLITICAL_SYSTEM_PROMPT = """Eres un analista de riesgo político peruano. Tu tarea: evaluar si este artículo de prensa señala INCERTIDUMBRE política institucional en el Perú.
 
-Riesgo político se define como: la amenaza, materialización o escalamiento de eventos adversos que afectan la estabilidad institucional del Perú, incluyendo: crisis de gobernabilidad, vacancias presidenciales, censuras ministeriales, rupturas entre poderes del Estado, protestas masivas que amenazan la continuidad del gobierno, crisis constitucionales, y conflictos sociales que escalan a nivel nacional.
+NO es riesgo político:
+- Deportes (fútbol, vóley, tenis, retiros de deportistas, resultados deportivos) → 0
+- Farándula, celebridades, entretenimiento, TV → 0
+- Clima, alertas meteorológicas, lluvias, vientos, oleajes → 0
+- Tecnología, gadgets, aplicaciones, dispositivos médicos → 0
+- Noticias internacionales sin impacto directo en la política peruana → 0
+- Recetas, turismo, estilo de vida, salud general → 0
+- Obituarios de personas no políticas → 0
 
-Asigna un puntaje entero de 0 a 100:
+SÍ es riesgo político (y debe puntuar ALTO):
+- Vacancia presidencial, moción de vacancia → 75-90
+- Voto de confianza (cualquier mención) → 65-80
+- Interpelación o censura de ministros → 55-70
+- Cambio de gabinete bajo presión → 60-75
+- Conflicto entre Ejecutivo y Congreso → 55-70
+- Detención, arresto, orden de captura de presidente o ex-presidente → 80+
+- Corrupción de funcionarios activos, allanamientos, casos judiciales → 55-70
+- Asesinato de figura política, funcionario, asesor → 65-80
+- Crimen organizado infiltrado en instituciones políticas → 70+
+- Fallos del Tribunal Constitucional sobre temas políticos → 55-65
+- Protestas masivas que amenazan continuidad del gobierno → 65-80
+- Estado de emergencia por conflicto social → 60-70
 
-0:      Sin relevancia política. Deportes, farándula, clima, recetas, tecnología, noticias internacionales sin impacto en Perú, obituarios, efemérides.
-1-20:   Tensión menor. Declaraciones políticas rutinarias, sesiones legislativas ordinarias, nombramientos menores.
-21-40:  Inestabilidad baja-moderada. Investigaciones parlamentarias, huelgas sectoriales, protestas locales, disputas partidarias.
-41-60:  Inestabilidad significativa. Mociones de interpelación, cambios de gabinete bajo presión, protestas regionales que se expanden, conflictos entre poderes del Estado.
-61-80:  Crisis mayor. Intentos de vacancia con firmas suficientes, censuras ministeriales aprobadas, protestas masivas nacionales, estados de emergencia.
-81-100: Emergencia. Vacancia consumada, renuncia presidencial, ruptura constitucional, violencia política masiva, golpe de estado.
+MODERADO (campañas electorales 2026):
+- Candidatos presidenciales haciendo propuestas de campaña → 15-25
+- Debates, foros de candidatos → 20-30
+- Encuestas electorales → 15-25
+- Candidato con problemas judiciales activos → 55-70
 
-PUNTAJE 0 OBLIGATORIO para:
-- Noticias internacionales sin impacto directo en la política peruana
-- Eventos económicos puros (sin maniobra política)
-- Deportes, farándula, entretenimiento, gastronomía
-- Artículos sobre política de otros países
-- Reportes climáticos o de desastres naturales (salvo que generen crisis política)
+EJEMPLOS (estudia estos antes de responder):
 
-EJEMPLOS DE PUNTAJE 0 POLÍTICO:
-- "Ruptura del gasoducto Camisea" → pol=0 (evento económico/industrial, no político)
-- "BCR mantiene tasa de referencia" → pol=0 (política monetaria técnica)
-- "Precio del dólar hoy" → pol=0
-- "Trump anuncia aranceles" → pol=0 (política exterior extranjera — salvo que artículo describa crisis política interna peruana por ello)
+Título: "Chiquito Romero se retiró como futbolista profesional"
+→ pol=0 (deportes, completamente irrelevante)
+
+Título: "Alerta amarilla por fuertes vientos en la costa sur"
+→ pol=0 (clima, irrelevante)
+
+Título: "Pastillero inteligente: dispositivo electrónico para tratamientos médicos"
+→ pol=0 (tecnología/salud, irrelevante)
+
+Título: "Hinchas celebran gol del Once Caldas desde el cable aéreo de Manizales"
+→ pol=0 (deportes extranjeros, irrelevante)
+
+Título: "Trump dice a la OTAN que EEUU no necesita ayuda de nadie"
+→ pol=0 (internacional sin impacto directo en política peruana)
+
+Título: "Denisse Miralles no tiene seguro el voto de confianza"
+→ pol=72 (crisis institucional: gabinete puede caer)
+
+Título: "Keiko Fujimori considera poco probable que FP otorgue voto de confianza"
+→ pol=70 (principal fuerza parlamentaria amenaza con negar confianza al gabinete)
+
+Título: "Sigue en suspenso decisión del TC sobre Vladimir Cerrón"
+→ pol=70 (TC decidiendo sobre líder prófugo sentenciado)
+
+Título: "Gobierno inyectará más de S/500 millones a Petroperú"
+→ pol=15 (decisión fiscal, no crisis política directa)
+
+Título: "Keiko Fujimori propone bono a comedores populares"
+→ pol=20 (propuesta de campaña, no crisis)
+
+Título: "Capturan a implicado en asesinato de asesora del Congreso Andrea Vidal"
+→ pol=70 (asesinato vinculado a institución política)
+
+Título: "Forsyth propone gobernar desde regiones"
+→ pol=20 (propuesta genérica de campaña)
+
+Título: "Candidatos al Congreso registran multas de tránsito impagadas"
+→ pol=10 (nota menor sobre candidatos, no genera incertidumbre)
+
+Título: "Reniec amplía vigencia de DNI para adultos mayores"
+→ pol=0 (servicio estatal rutinario)
+
+Escala:
+0 = Sin relevancia política
+1-20 = Señal política débil (campaña rutinaria, burocracia menor)
+21-40 = Tensión baja-moderada (investigaciones, huelgas locales)
+41-60 = Inestabilidad significativa (interpelaciones, conflictos entre poderes)
+61-80 = Crisis mayor (vacancia, censuras, protestas nacionales)
+81-100 = Emergencia (vacancia consumada, golpe, renuncia presidencial)
 
 REGLA: Si un artículo usa una crisis económica como CONTEXTO para una maniobra política (ej: "oposición condiciona voto de confianza por crisis energética"), el puntaje POLÍTICO debe ser alto. Lo que importa es la ACCIÓN política, no el tema económico."""
 
-_ECONOMIC_SYSTEM_PROMPT = """Clasificarás un artículo de prensa peruana. Evalúa ÚNICAMENTE el riesgo de disrupción económica en el Perú basándote en lo que el artículo afirma o implica directamente.
+_ECONOMIC_SYSTEM_PROMPT = """Eres un analista de riesgo económico peruano. Tu tarea: evaluar si este artículo señala INCERTIDUMBRE sobre la actividad económica del Perú.
 
-Riesgo económico se define como: la amenaza, materialización o escalamiento de eventos adversos que DISRUMPEN la actividad económica normal del Perú, incluyendo: crisis financieras, colapso de sectores productivos, interrupciones en cadenas de suministro (energía, gas, minería), shocks de precios que afectan a la población, riesgo fiscal grave, paralizaciones económicas por conflictos, y amenazas comerciales externas (aranceles, sanciones).
+NO es riesgo económico:
+- Deportes (fútbol, vóley, retiros de deportistas, resultados) → 0
+- Farándula, celebridades, entretenimiento → 0
+- Clima rutinario (alertas de viento, lluvia, oleaje) → 0
+- Tecnología, gadgets, apps, dispositivos → 0
+- Desastres internacionales sin conexión a Perú (terremoto en X, tornado en Y) → 0
+- Noticias internacionales sin impacto en economía peruana → 0
+- Datos económicos POSITIVOS o RUTINARIOS (crecimiento normal, inversión anunciada, récords de exportación) → 0
+- Noticias de candidatos sobre temas NO económicos → 0
+- Crimen común sin impacto económico sistémico → 0
 
-Asigna un puntaje entero de 0 a 100:
+SÍ es riesgo económico (y debe puntuar ALTO):
+- Petroperú: rescate, inyección fiscal, quiebra, deuda, crisis → 75-90
+- Camisea / gas natural: interrupción, escasez, corte de suministro → 75-90
+- Conflictos mineros (Las Bambas, Tía María, Cuajone, Southern, Quellaveco) → 55-70
+- Paro nacional / huelga general → 60-70
+- Bloqueo de carreteras / interrupción de cadena de suministro → 40-55
+- Consejo Fiscal advierte sobre gasto excesivo → 50-60
+- Gasto público excesivo aprobado por Congreso / MEF → 55-65
+- Escasez de productos básicos / desabastecimiento → 60-70
+- Inflación acelerando / BCRP subiendo tasa → 45-55
+- Tipo de cambio bajo presión / sol depreciándose fuerte → 45-55
+- Fuga de capitales / salida de inversión extranjera → 65-75
+- Interpelación a ministro de Economía / Energía → 50-60
+- Inversión cancelada por conflicto social → 50-60
 
-0:      Sin relevancia económica O noticia económica sin elemento de RIESGO/DISRUPCIÓN. Deportes, farándula, clima sin impacto productivo, noticias positivas (crecimiento, inversión nueva, récords de exportación).
-1-20:   Riesgo menor. Presiones sectoriales modestas, volatilidad cambiaria dentro de rangos normales, advertencias de analistas sin impacto inmediato.
-21-40:  Estrés moderado. Deterioro de indicadores clave, conflictos laborales en sectores medianos, alzas de precios que afectan canasta básica.
-41-60:  Vulnerabilidad significativa. Disrupciones en minería, gas o exportaciones principales, bloqueos de carreteras que afectan suministro, reformas que amenazan estabilidad fiscal.
-61-80:  Crisis severa. Colapso sectorial, paralización energética nacional, fuga de capitales, downgrade crediticio.
-81-100: Emergencia. Default soberano, colapso del sistema financiero, hiperinflación, paralización económica generalizada.
+EJEMPLOS (estudia estos antes de responder):
 
-PUNTAJE 0 OBLIGATORIO para:
-- Noticias económicas POSITIVAS (crecimiento, inversión, inauguraciones, premios empresariales, récords)
-- Reportes RUTINARIOS sin shock (dólar hoy, tipo de cambio cierra en X, cotización de metales sin contexto de crisis)
-- Tendencias ESTRUCTURALES crónicas (desempleo juvenil alto, informalidad laboral, brecha salarial — son problemas de largo plazo, NO disrupción aguda)
-- Especulación sobre tecnología/futuro (IA reemplazará empleos, criptomonedas, tendencias globales)
-- Consumo y estilo de vida (perfumería crece, turismo aumenta, nuevo restaurante, moda)
-- Convocatorias laborales, ofertas de empleo, becas
-- Maniobras POLÍTICAS que usan temas económicos como pretexto (ej: "Congreso bloquea reforma de pensiones" = político, no económico — el riesgo es la inestabilidad institucional)
+Título: "Chiquito Romero se retiró como futbolista profesional"
+→ eco=0 (deportes, irrelevante)
 
-EJEMPLOS DE PUNTAJE 0 (memoriza estos patrones — estos artículos deben recibir eco=0):
-- "Roberto Chiabra será candidato presidencial" → eco=0 (candidatura política, no disrupción económica)
-- "Eduardo Arana: Gobierno hará prevalecer autoridad" → eco=0 (declaración política)
-- "Congreso aprueba cambios a ley de inversiones" → eco=0 (legislación, no disrupción — salvo que el artículo indique que causa fuga de capitales o rechazo de mercados)
-- "MTC modifica reglamento portuario" → eco=0 (regulación rutinaria)
-- "Sunafil: qué tipo de denuncias laborales se pueden realizar" → eco=0 (información al consumidor)
-- "Desempleo en EEUU sube a 4.2%" → eco=0 (dato extranjero sin impacto directo en Perú)
-- "Wall Street cae 2%" → eco=0 (mercado extranjero — salvo que artículo conecte con efecto en BVL o economía peruana con datos)
-- "CAF firma acuerdos de cooperación" → eco=0 (noticia positiva/institucional)
-- "Juliana Oxenford critica gestión ministerial" → eco=0 (opinión televisiva)
-- "Indecopi multa a universidad" → eco=0 (regulación puntual, no disrupción sistémica)
-- "SBS: cómo acceder a tu pensión" → eco=0 (información al consumidor)
-- "Mujeres ocupan 4 de cada 10 puestos altos" → eco=0 (estadística social, no riesgo económico)
+Título: "India: tornado deja dos muertos y cientos de heridos"
+→ eco=0 (desastre extranjero sin conexión a Perú)
 
-EJEMPLOS DE PUNTAJE ALTO (para contraste — solo estos tipos merecen eco≥40):
-- "Ruptura del gasoducto Camisea paraliza suministro de gas al 64% del país" → eco=80 (disrupción energética nacional)
-- "Trump anuncia arancel de 50% al cobre peruano" → eco=70 (amenaza directa a exportaciones)
-- "Bloqueo de carreteras impide suministro de oxígeno a hospitales del sur" → eco=60 (disrupción de cadena de suministro con impacto en vidas)
-- "BCR: expectativas empresariales caen a zona pesimista" → eco=45 (deterioro de indicadores macro)
-- "Petroperú reporta pérdidas de S/2,000 millones" → eco=55 (crisis fiscal en empresa estatal)
+Título: "Trump dice a la OTAN que EEUU no necesita ayuda de nadie"
+→ eco=0 (geopolítica sin impacto directo en economía peruana)
+
+Título: "Reniec amplía vigencia de DNI"
+→ eco=0 (servicio estatal rutinario)
+
+Título: "PBI creció 3.2% en enero, superando expectativas"
+→ eco=0 (dato positivo, no genera incertidumbre)
+
+Título: "Gobierno inyectará más de S/500 millones a Petroperú para reactivar operaciones"
+→ eco=80 (rescate fiscal masivo a empresa estatal en crisis)
+
+Título: "Este ha sido el costo de 13 días sin gas natural"
+→ eco=80 (crisis energética prolongada con impacto en producción)
+
+Título: "Alonso Segura, presidente del Consejo Fiscal: Lo recientemente aprobado hipotecará las finanzas públicas"
+→ eco=60 (advertencia fiscal institucional sobre sostenibilidad)
+
+Título: "Transportistas anuncian paro nacional por precio del combustible"
+→ eco=65 (paralización nacional afecta cadenas de suministro)
+
+Título: "Comunidades bloquean acceso a mina Las Bambas por tercer día"
+→ eco=60 (paralización minera, principal sector exportador)
+
+Título: "Plantean interpelar al ministro de Economía por crisis energética"
+→ eco=60 (interpelación sobre crisis sectorial, señal institucional)
+
+Título: "Keiko Fujimori propone bono a comedores populares"
+→ eco=0 (propuesta de campaña, no genera incertidumbre económica)
+
+Título: "Rafael Belaunde promete gas natural para el sur"
+→ eco=0 (promesa de campaña, no crisis actual)
+
+Título: "Sicario asesina a conductor de combi en el Callao"
+→ eco=0 (crimen común, sin impacto económico sistémico)
+
+Escala:
+0 = Sin riesgo económico O noticia económica positiva/rutinaria
+1-20 = Señal débil (volatilidad normal, advertencias menores)
+21-40 = Estrés moderado (indicadores deteriorándose, alzas en canasta básica)
+41-60 = Vulnerabilidad significativa (disrupciones sectoriales, bloqueos, reformas fiscales)
+61-80 = Crisis severa (colapso sectorial, paralización energética, rescate fiscal)
+81-100 = Emergencia (default soberano, colapso financiero, hiperinflación)
 
 REGLA: Riesgo económico = DISRUPCIÓN o AMENAZA ACTIVA a la actividad económica. NO es lo mismo que "noticia sobre economía". Si no hay disrupción, amenaza o shock, el puntaje es 0."""
 
@@ -2340,6 +2434,122 @@ def post_filter_scores(df: pd.DataFrame) -> pd.DataFrame:
     if n_f5_pol + n_f5_eco > 0:
         logger.info("post_filter_scores: F5 foreign military/geopolitics pol zeroed=%d eco capped=%d", n_f5_pol, n_f5_eco)
 
+    # F6. Traffic accidents (tráiler vuelca, choque vehicular, colisión) → pol=0, eco=0
+    # These are accident news, not political/economic disruption events.
+    # Exception: if paro/bloqueo/huelga is also present, it may be a supply-chain disruption.
+    _traffic_accident = (
+        r"tr[aá]iler.{0,60}(vuelca|volc[oó]|choca|accidente)|"
+        r"(vuelca|volc[oó]).{0,60}tr[aá]iler|"
+        r"(choque|colisi[oó]n|chocaron|colisionaron).{0,60}"
+        r"(v[eé]hiculos?|autos?|camion|bus\b|camioneta|moto\b|tren)|"
+        r"(v[eé]hiculos?|autos?|camion|bus\b|camioneta).{0,60}"
+        r"(chocaron|colisionaron|se impact|impact[oó])"
+    )
+    _blockade_exc = r"(paro|huelga|bloqueo|bloquearon|manifestantes|protesta)"
+    mask_f6 = (
+        nt.str.contains(_traffic_accident, regex=True, na=False) &
+        ~nt.str.contains(_blockade_exc, regex=True, na=False)
+    )
+    n_f6_pol = int((mask_f6 & (df["political_score"].fillna(0) > 0)).sum())
+    n_f6_eco = int((mask_f6 & (df["economic_score"].fillna(0) > 0)).sum())
+    df.loc[mask_f6, "political_score"] = 0
+    df.loc[mask_f6, "economic_score"] = 0
+    if n_f6_pol + n_f6_eco > 0:
+        logger.info("post_filter_scores: F6 traffic accident zeroed pol=%d eco=%d", n_f6_pol, n_f6_eco)
+
+    # F7. Traffic congestion / routine road closures → pol=0, eco=0
+    # Congestión vehicular, conos, cierre de vía por obras: not political/economic events.
+    _traffic_congestion = (
+        r"congesti[oó]n vehicular.{0,60}(conos|obra|cierre|desvio|av\.|avenida)|"
+        r"(conos|desvio|cierre de via).{0,60}congesti[oó]n vehicular|"
+        r"conductores?.{0,40}reportan?.{0,40}(congesti[oó]n|tr[aá]fico)|"
+        r"(colocaci[oó]n de conos|conos de seguridad).{0,60}"
+        r"(avenida|av\.|via|congesti[oó]n|tr[aá]fico)|"
+        r"tr[aá]fico.{0,40}(lento|pesado|caos|colapso).{0,40}(avenida|av\.|carretera|via)"
+    )
+    mask_f7 = (
+        nt.str.contains(_traffic_congestion, regex=True, na=False) &
+        ~nt.str.contains(_blockade_exc, regex=True, na=False)
+    )
+    n_f7_pol = int((mask_f7 & (df["political_score"].fillna(0) > 0)).sum())
+    n_f7_eco = int((mask_f7 & (df["economic_score"].fillna(0) > 0)).sum())
+    df.loc[mask_f7, "political_score"] = 0
+    df.loc[mask_f7, "economic_score"] = 0
+    if n_f7_pol + n_f7_eco > 0:
+        logger.info("post_filter_scores: F7 traffic congestion zeroed pol=%d eco=%d", n_f7_pol, n_f7_eco)
+
+    # F8. Community lifestyle / free workshops → pol=0, eco=0
+    # "Talleres gratuitos beneficiaron a vecinos", craft workshops, cooking classes
+    _lifestyle_workshop = (
+        r"talleres? gratuitos?.{0,60}(vecinos?|beneficiar|comunidad|barrio)|"
+        r"(vecinos?|comunidad).{0,60}talleres? gratuitos?|"
+        r"talleres? (de cocina|de tejido|de pintura|de manualidades|libre[s]?).{0,40}"
+        r"(vecinos?|comunidad|beneficiar|gratuitos?)"
+    )
+    mask_f8 = nt.str.contains(_lifestyle_workshop, regex=True, na=False)
+    n_f8 = int((mask_f8 & ((df["political_score"].fillna(0) > 0) | (df["economic_score"].fillna(0) > 0))).sum())
+    df.loc[mask_f8, "political_score"] = 0
+    df.loc[mask_f8, "economic_score"] = 0
+    if n_f8 > 0:
+        logger.info("post_filter_scores: F8 lifestyle workshop zeroed on %d articles", n_f8)
+
+    # F9. US consumer/lifestyle articles (shopping tips, spending habits) → pol=0, eco=0
+    # "Lista de compras impulsivas que están vaciando la cuenta de los estadounidenses"
+    _us_consumer = (
+        r"compras? impulsivas?.{0,80}(estadounidenses?|americanos?|cuenta[s]?)|"
+        r"(estadounidenses?|americanos?).{0,80}compras? impulsivas?|"
+        r"lista de compras.{0,60}(vacian?|gastan?|estadounidenses?|americanos?)|"
+        r"(vacian?|gastan?).{0,60}cuenta[s]?.{0,40}(estadounidenses?|americanos?)"
+    )
+    _has_peru_f9 = r"peru|peruana?|peruanos?"
+    mask_f9 = (
+        nt.str.contains(_us_consumer, regex=True, na=False) &
+        ~nt.str.contains(_has_peru_f9, regex=True, na=False)
+    )
+    n_f9 = int((mask_f9 & ((df["political_score"].fillna(0) > 0) | (df["economic_score"].fillna(0) > 0))).sum())
+    df.loc[mask_f9, "political_score"] = 0
+    df.loc[mask_f9, "economic_score"] = 0
+    if n_f9 > 0:
+        logger.info("post_filter_scores: F9 US consumer zeroed on %d articles", n_f9)
+
+    # F10. Foreign electoral politics (US Latino voters, Trump, etc.) → pol=0
+    # "Votantes latinos se alejan de Trump, y su política para Venezuela y Cuba"
+    _foreign_electoral = (
+        r"votantes? latinos?.{0,60}(trump|biden|harris|demócrata|republican|eeuu|estados unidos)|"
+        r"(trump|biden|harris).{0,60}votantes? latinos?|"
+        r"latinos?.{0,40}(se alejan?|apoyan?|rechazan?).{0,40}(trump|biden|harris|partido)"
+    )
+    _has_peru_f10 = r"peru|peruanos?|candidato peruano"
+    mask_f10 = (
+        nt.str.contains(_foreign_electoral, regex=True, na=False) &
+        ~nt.str.contains(_has_peru_f10, regex=True, na=False)
+    )
+    n_f10 = int((mask_f10 & (df["political_score"].fillna(0) > 0)).sum())
+    df.loc[mask_f10, "political_score"] = 0
+    df.loc[mask_f10 & (df["economic_score"].fillna(0) > 15), "economic_score"] = 15
+    if n_f10 > 0:
+        logger.info("post_filter_scores: F10 foreign electoral zeroed pol=%d articles", n_f10)
+
+    # F11. Digital data privacy (comercialización de datos, privacidad digital) → pol≤15, eco=0
+    # Not a political crisis unless it involves a government agency breach.
+    _data_privacy = (
+        r"comercializaci[oó]n ilegal de datos|"
+        r"venta de datos (personales|privados|ilegales?)|"
+        r"(hackeo|phishing|ciberataque).{0,60}(datos|privacidad|cuenta[s]?)|"
+        r"tus datos (personales|privados|en internet)"
+    )
+    _govt_breach_exc = r"gobierno|estado|ministerio|congres|sunat|reniec|onp"
+    mask_f11 = (
+        nt.str.contains(_data_privacy, regex=True, na=False) &
+        ~nt.str.contains(_govt_breach_exc, regex=True, na=False)
+    )
+    n_f11_pol = int((mask_f11 & (df["political_score"].fillna(0) > 15)).sum())
+    n_f11_eco = int((mask_f11 & (df["economic_score"].fillna(0) > 0)).sum())
+    df.loc[mask_f11 & (df["political_score"].fillna(0) > 15), "political_score"] = 15
+    df.loc[mask_f11, "economic_score"] = 0
+    if n_f11_pol + n_f11_eco > 0:
+        logger.info("post_filter_scores: F11 data privacy capped pol=%d eco=0 on %d", n_f11_pol, n_f11_eco)
+
     # ── BOOST RULES (B1–B14) — applied BEFORE whitelist cap ─────────────────────
 
     # B1. New cabinet / toma de juramento → pol≥65
@@ -2354,42 +2564,17 @@ def post_filter_scores(df: pd.DataFrame) -> pd.DataFrame:
     if n_b1 > 0:
         logger.info("post_filter_scores: B1 new cabinet/juramento pol>=65 on %d articles", n_b1)
 
-    # B2. Voto de confianza en riesgo → pol≥72
-    # Tier 1 (high risk language): pol≥72
-    _confianza_riesgo = (
-        r"voto de confianza.{0,80}"
-        r"(no tiene|en riesgo|condiciona|negaran|negar[aá]n|niega|nieg[oa]|"
-        r"bancadas|congreso define|define su voto|poco probable|amenaza|rechaz|"
-        r"no otorgar[aá]|no (lo |le )?dar[aá]|no apoyar[aá]|cuestionan|dudas sobre|"
-        r"en suspenso|en duda|sin apoyo|sin votos|votos falt)|"
-        r"(poco probable|amenaza|niega|rechaz|negar|no otorgar|no apoyar|sin votos?"
-        r"|votos? falt|en suspenso|no dar[aá]).{0,80}voto de confianza"
-    )
-    mask_b2 = nt.str.contains(_confianza_riesgo, regex=True, na=False)
-    n_b2 = int((mask_b2 & (df["political_score"].fillna(0) < 72)).sum())
-    df.loc[mask_b2 & (df["political_score"].fillna(0) < 72), "political_score"] = 72
-    if n_b2 > 0:
-        logger.info("post_filter_scores: B2 voto de confianza en riesgo pol>=72 on %d articles", n_b2)
-
-    # B2b. Any voto de confianza article (informational/process) → pol≥35
-    # Even routine "Gabinete X buscará el voto de confianza" signals political activity
-    # Also catches "decidirá sobre el voto de confianza" (uncertainty → pol≥50)
-    _confianza_decision = (
-        r"voto de confianza.{0,80}(decid|eval[uú]a|analiza|pesar|determinar)|"
-        r"(decid|eval[uú]a|analiza|determinar).{0,80}voto de confianza"
-    )
-    mask_b2_decision = nt.str.contains(_confianza_decision, regex=True, na=False) & ~mask_b2
-    n_b2d = int((mask_b2_decision & (df["political_score"].fillna(0) < 50)).sum())
-    df.loc[mask_b2_decision & (df["political_score"].fillna(0) < 50), "political_score"] = 50
-    if n_b2d > 0:
-        logger.info("post_filter_scores: B2b voto de confianza decision pol>=50 on %d", n_b2d)
-
+    # B2. Voto de confianza (any mention) → pol≥70
+    # Per spec section D: ANY article containing "voto de confianza" is a top-priority
+    # institutional crisis signal. Flat floor — no tiering.
+    # Crisis context overrides candidate floors: "Keiko says FP won't give voto de confianza"
+    # is a voto de confianza article (pol=70), not a candidate article (pol=15-25).
     _confianza_any = r"voto de confianza"
-    mask_b2b = nt.str.contains(_confianza_any, regex=True, na=False) & ~mask_b2 & ~mask_b2_decision
-    n_b2b = int((mask_b2b & (df["political_score"].fillna(0) < 35)).sum())
-    df.loc[mask_b2b & (df["political_score"].fillna(0) < 35), "political_score"] = 35
-    if n_b2b > 0:
-        logger.info("post_filter_scores: B2b voto de confianza informational pol>=35 on %d", n_b2b)
+    mask_b2 = nt.str.contains(_confianza_any, regex=True, na=False)
+    n_b2 = int((mask_b2 & (df["political_score"].fillna(0) < 70)).sum())
+    df.loc[mask_b2 & (df["political_score"].fillna(0) < 70), "political_score"] = 70
+    if n_b2 > 0:
+        logger.info("post_filter_scores: B2 voto de confianza pol>=70 on %d articles", n_b2)
 
     # B3. Assassination of political/public figure → pol≥70, eco≥20
     _assassination = (
@@ -3484,13 +3669,9 @@ def classify_articles_dual(
     mask_b1_inline = titles.str.contains(_toma_juramento_inline, regex=True, na=False)
     df.loc[mask_b1_inline & (df["political_score"].fillna(0) < 65), "political_score"] = 65
 
-    # 35. B2: Voto de confianza en riesgo → pol≥72
-    _confianza_riesgo_inline = (
-        r"voto de confianza.{0,60}"
-        r"(no tiene|en riesgo|condiciona|negaran|bancadas|congreso define|define su voto)"
-    )
-    mask_b2_inline = titles.str.contains(_confianza_riesgo_inline, regex=True, na=False)
-    df.loc[mask_b2_inline & (df["political_score"].fillna(0) < 72), "political_score"] = 72
+    # 35. B2: Voto de confianza (any mention in title) → pol≥70
+    mask_b2_inline = titles.str.contains(r"voto de confianza", regex=True, na=False)
+    df.loc[mask_b2_inline & (df["political_score"].fillna(0) < 70), "political_score"] = 70
 
     # 36. B3: Assassination of political/public figure → pol≥70, eco≥20
     _assassination_inline = (
@@ -3608,6 +3789,87 @@ def classify_articles_dual(
     mask_b14_inline = titles.str.contains(_mining_blockage_inline, regex=True, na=False)
     df.loc[mask_b14_inline & (df["economic_score"].fillna(0) < 55), "economic_score"] = 55
 
+    # 48. Traffic accidents / vehicle crashes → pol=0, eco=0
+    # Tráiler vuelca, choque vehicular, colisión, etc. are not political/economic events.
+    # Exception: if the title also mentions paro/bloqueo/huelga (could be a blockade context).
+    _traffic_accident_inline = (
+        r"tr[aá]iler.{0,60}(vuelca|volc[oó]|choca|crash|accidente)|"
+        r"(vuelca|volc[oó]).{0,60}tr[aá]iler|"
+        r"(choque|colisi[oó]n|chocaron|colisionaron).{0,60}"
+        r"(v[eé]hiculos?|autos?|camion|bus\b|camioneta|moto\b|tren)|"
+        r"(v[eé]hiculos?|autos?|camion|bus\b|camioneta).{0,60}"
+        r"(chocaron|colisionaron|se impact|impact[oó])"
+    )
+    _traffic_blockade_exc = r"(paro|huelga|bloqueo|bloquearon|manifestantes|protesta)"
+    mask_traffic_acc_inline = (
+        titles.str.contains(_traffic_accident_inline, regex=True, na=False) &
+        ~titles.str.contains(_traffic_blockade_exc, regex=True, na=False)
+    )
+    df.loc[mask_traffic_acc_inline, "political_score"] = 0
+    df.loc[mask_traffic_acc_inline, "economic_score"] = 0
+
+    # 49. Traffic congestion / routine road incidents → pol=0, eco=0
+    # Congestión vehicular, colocación de conos, cierre de vías por obra, etc.
+    _traffic_congestion_inline = (
+        r"congesti[oó]n vehicular.{0,60}(conos|obra|cierre|desvio|av\.|avenida)|"
+        r"(conos|desvio|cierre de via).{0,60}congesti[oó]n vehicular|"
+        r"conductores?.{0,40}reportan?.{0,40}(congesti[oó]n|tr[aá]fico)|"
+        r"(colocaci[oó]n de conos|conos de seguridad).{0,60}"
+        r"(avenida|av\.|via|congesti[oó]n|tr[aá]fico)|"
+        r"tr[aá]fico.{0,40}(lento|pesado|caos|colapso).{0,40}(avenida|av\.|carretera|via)"
+    )
+    mask_traffic_cong_inline = (
+        titles.str.contains(_traffic_congestion_inline, regex=True, na=False) &
+        ~titles.str.contains(_traffic_blockade_exc, regex=True, na=False)
+    )
+    df.loc[mask_traffic_cong_inline, "political_score"] = 0
+    df.loc[mask_traffic_cong_inline, "economic_score"] = 0
+
+    # 50. F8: Lifestyle workshops (talleres gratuitos a vecinos) → pol=0, eco=0
+    _workshop_inline = (
+        r"talleres? gratuitos?.{0,60}(vecinos?|beneficiar|comunidad)|"
+        r"(vecinos?|comunidad).{0,60}talleres? gratuitos?"
+    )
+    mask_workshop_inline = titles.str.contains(_workshop_inline, regex=True, na=False)
+    df.loc[mask_workshop_inline, "political_score"] = 0
+    df.loc[mask_workshop_inline, "economic_score"] = 0
+
+    # 51. F9: US consumer lifestyle (compras impulsivas, estadounidenses) → pol=0, eco=0
+    _us_consumer_inline = (
+        r"compras? impulsivas?.{0,80}(estadounidenses?|americanos?)|"
+        r"lista de compras.{0,60}(vacian?|estadounidenses?)"
+    )
+    _has_peru_inline2 = r"peru|peruana?|peruanos?"
+    mask_us_consumer_inline = (
+        titles.str.contains(_us_consumer_inline, regex=True, na=False) &
+        ~titles.str.contains(_has_peru_inline2, regex=True, na=False)
+    )
+    df.loc[mask_us_consumer_inline, "political_score"] = 0
+    df.loc[mask_us_consumer_inline, "economic_score"] = 0
+
+    # 52. F10: Foreign electoral (votantes latinos, Trump) → pol=0
+    _foreign_elect_inline = (
+        r"votantes? latinos?.{0,60}(trump|biden|harris|eeuu|estados unidos)|"
+        r"(trump|biden|harris).{0,60}votantes? latinos?"
+    )
+    _has_peru_inline3 = r"peru|peruanos?"
+    mask_foreign_elect_inline = (
+        titles.str.contains(_foreign_elect_inline, regex=True, na=False) &
+        ~titles.str.contains(_has_peru_inline3, regex=True, na=False)
+    )
+    df.loc[mask_foreign_elect_inline, "political_score"] = 0
+    df.loc[mask_foreign_elect_inline & (df["economic_score"].fillna(0) > 15), "economic_score"] = 15
+
+    # 53. F11: Data privacy non-govt (comercialización ilegal de datos) → pol≤15
+    _data_priv_inline = r"comercializaci[oó]n ilegal de datos|venta de datos (personales|privados)"
+    _govt_exc_inline = r"gobierno|estado|ministerio|congres|sunat|reniec"
+    mask_data_priv_inline = (
+        titles.str.contains(_data_priv_inline, regex=True, na=False) &
+        ~titles.str.contains(_govt_exc_inline, regex=True, na=False)
+    )
+    df.loc[mask_data_priv_inline & (df["political_score"].fillna(0) > 15), "political_score"] = 15
+    df.loc[mask_data_priv_inline, "economic_score"] = 0
+
     masks = [mask_farandula, mask_sports, mask_fx_routine, mask_sismo, mask_weather,
              mask_inhab, mask_pol_action, mask_electoral, mask_mercados, mask_gastro,
              mask_horoscope, mask_lottery, mask_reality, mask_lifestyle, mask_personal_fin,
@@ -3617,7 +3879,9 @@ def classify_articles_dual(
              mask_f1_inline, mask_f2_inline, mask_f3_inline, mask_f4_inline, mask_f5_inline,
              mask_b1_inline, mask_b2_inline, mask_b3_inline, mask_b4_inline, mask_b5_inline,
              mask_b6_inline, mask_b7_inline, mask_b8_inline, mask_b9_inline, mask_b10_inline,
-             mask_b11_inline, mask_b12_inline, mask_b13_inline, mask_b14_inline]
+             mask_b11_inline, mask_b12_inline, mask_b13_inline, mask_b14_inline,
+             mask_traffic_acc_inline, mask_traffic_cong_inline,
+             mask_workshop_inline, mask_us_consumer_inline, mask_foreign_elect_inline, mask_data_priv_inline]
     labels = ["farándula", "sports", "fx_routine", "sismo", "weather",
               "inhabilitacion", "pol_action", "electoral", "mercados", "gastro",
               "horoscope", "lottery", "reality", "lifestyle_tips", "personal_finance",
@@ -3627,7 +3891,9 @@ def classify_articles_dual(
               "F1_foreign_disaster", "F2_gadget_health", "F3_routine_alert", "F4_candidate_fines", "F5_foreign_mil",
               "B1_new_cabinet", "B2_confianza_riesgo", "B3_assassination", "B4_corrupt_arrest", "B5_destitucion",
               "B6_campaign_foro", "B7_camisea", "B8_fiscal_congress", "B9_petroperu_loan", "B10_pbi_shock",
-              "B11_inflation", "B12_transport_strike", "B13_roads_cut", "B14_mining_blockage"]
+              "B11_inflation", "B12_transport_strike", "B13_roads_cut", "B14_mining_blockage",
+              "traffic_accident", "traffic_congestion",
+              "workshop_fp", "us_consumer_fp", "foreign_electoral_fp", "data_privacy_fp"]
     n_filtered = masks[0].copy()
     for m in masks[1:]:
         n_filtered = n_filtered | m
@@ -3758,7 +4024,16 @@ def classify_articles_dual(
     df.loc[mask_co_i & (df["political_score"].fillna(0) < 62), "political_score"] = 62
 
     # ── END IMPROVEMENTS 4 & 5 inline ────────────────────────────────────────
-    # ─────────────────────────────────────────────────────────────────────────
+
+    # ── J. NaN scores → 0 ─────────────────────────────────────────────────────
+    # Articles never classified get NaN political_score or economic_score.
+    # Must be set to 0 to avoid contaminating the intensity sum in the index formula.
+    n_nan_pol = int(df["political_score"].isna().sum())
+    n_nan_eco = int(df["economic_score"].isna().sum())
+    if n_nan_pol > 0 or n_nan_eco > 0:
+        df["political_score"] = df["political_score"].fillna(0.0)
+        df["economic_score"] = df["economic_score"].fillna(0.0)
+        logger.info("post_filter_scores: J NaN->0 pol=%d eco=%d", n_nan_pol, n_nan_eco)
 
     # Summary
     pol_nonzero = (df["political_score"].fillna(0) > 0).sum()

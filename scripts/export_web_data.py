@@ -782,7 +782,8 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series, skip_h
 
     political_df = political_df.copy()
 
-    # ── Load articles cache (AI-GPR computation + Haiku summaries) ───────────
+    # ── Load articles cache (for Haiku justifications + driver phrases only) ─
+    # Index values come from daily_index.parquet — NOT recomputed here.
     from config.settings import RAW_RSS_DIR
     articles_cache_path = RAW_RSS_DIR / "articles_classified.parquet"
     articles_cache = None
@@ -794,243 +795,73 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series, skip_h
         except Exception as e:
             logger.warning("Could not load articles cache: %s", e)
 
-    # ── AI-GPR dual index (Iacoviello & Tong 2026) ───────────────────────────
-    # Normalized formula (Iacoviello & Tong eq. 1, footnote 4):
-    #   IRP_t = (Σ political_score_i / N_articles_t) / S_bar_political × 100
-    #   IRE_t = (Σ economic_score_i / N_articles_t) / S_bar_economic × 100
-    #
-    # Where N_articles_t = TOTAL articles on day t (including irrelevant ones).
-    # This eliminates volume bias: a day with 150 articles and 15 political ones
-    # scores the same as a day with 50 articles and 5 political ones (same proportion
-    # and same average intensity). Makes the index stationary by construction.
+    # ── Read IRP/IRE from daily_index.parquet (source of truth) ──────────────
+    # The parquet was built by build_daily_index.py using the Intensity×Breadth^β
+    # formula. Do NOT recompute here — the parquet is the single source of truth.
+    political_df["irp"] = pd.to_numeric(
+        political_df["political_index"] if "political_index" in political_df.columns else 0.0,
+        errors="coerce",
+    ).fillna(0.0)
+    political_df["ire"] = pd.to_numeric(
+        political_df["economic_index"] if "economic_index" in political_df.columns else 0.0,
+        errors="coerce",
+    ).fillna(0.0)
+    if "n_articles_total" not in political_df.columns:
+        political_df["n_articles_total"] = 0
+    political_df["instability_index"] = political_df["irp"]
 
-    if articles_cache is not None and len(articles_cache) > 0:
-        art = articles_cache.copy()
-        art["day"] = pd.to_datetime(art["date"]).dt.normalize()
+    # Low-coverage interpolation: days with < 25 articles are noise spikes.
+    MIN_ARTICLES = 25
+    political_df = political_df.sort_values("date").reset_index(drop=True)
+    low_cov_mask = political_df["n_articles_total"] < MIN_ARTICLES
+    political_df.loc[low_cov_mask, ["irp", "ire"]] = float("nan")
+    political_df[["irp", "ire"]] = (
+        political_df[["irp", "ire"]]
+        .interpolate(method="linear", limit_direction="both")
+    )
 
-        # Apply deterministic post-filter rules (zeroes false positives, boosts underscored).
-        # This runs on the in-memory copy only — does NOT modify the parquet on disk.
-        try:
-            from src.nlp.classifier import post_filter_scores
-            art = post_filter_scores(art)
-            logger.info("post_filter_scores applied to in-memory article frame (%d rows)", len(art))
-        except Exception as _pf_err:
-            logger.warning("post_filter_scores failed (skipping): %s", _pf_err)
+    # Use the last COMPLETE day, not .iloc[-1].
+    # The pipeline runs at 21:00 Lima (02:00 UTC next day), so by export time
+    # the RSS fetcher has already bucketed a handful of articles into "tomorrow",
+    # creating a partial row with n_articles_total ~50-100 and artificially low
+    # IRP/IRE values.  We skip any trailing rows below the complete-day threshold.
+    MIN_COMPLETE_ARTICLES = 100
+    complete_df = political_df[political_df["n_articles_total"] >= MIN_COMPLETE_ARTICLES]
+    today_vals = complete_df.iloc[-1] if not complete_df.empty else (political_df.iloc[-1] if not political_df.empty else None)
+    if today_vals is not None:
+        print(f"[AI-GPR] IRP today = {today_vals['irp']:.1f}  IRE today = {today_vals['ire']:.1f}  (date: {str(today_vals['date'])[:10]}, articles: {int(today_vals['n_articles_total'])})")
 
-        # LEVEL 3 SAFETY NET: exclude GDELT and non-Peru aggregator feeds.
-        # Direct Peru feeds (elcomercio, gestion, larepublica, andina, rpp, correo)
-        # are the only valid signal sources. GDELT adds ~12k global noise articles.
-        if "feed_name" in art.columns:
-            n_before = len(art)
-            art = art[~art["feed_name"].str.contains("gdelt", case=False, na=False)]
-            n_excluded = n_before - len(art)
-            if n_excluded > 0:
-                logger.info("Excluded %d GDELT articles from index computation", n_excluded)
-
-        # ── Heuristic eco-leak fix ────────────────────────────────────────────
-        # When pol_score > eco_score AND eco_score < 40, the economic score is
-        # almost always political content leaking through Haiku's eco prompt.
-        # Zero it out here so it never enters the daily aggregation.
-        # This does NOT touch the parquet — index computation only.
-        if "political_score" in art.columns and "economic_score" in art.columns:
-            _eco_leak = (
-                art["political_score"].fillna(0) > art["economic_score"].fillna(0)
-            ) & (
-                art["economic_score"].fillna(0) < 40
-            ) & (
-                art["economic_score"].fillna(0) > 0
-            )
-            n_eco_leak = int(_eco_leak.sum())
-            if n_eco_leak > 0:
-                art.loc[_eco_leak, "economic_score"] = 0
-                logger.info("Eco-leak heuristic zeroed eco on %d articles (pol>eco, eco<40)", n_eco_leak)
-
-        has_dual = "political_score" in art.columns and "economic_score" in art.columns
-
-        if has_dual and "feed_name" in art.columns:
-            # Per-feed mean normalization (EPU-style, composition-bias-resistant):
-            #   Step 1: SWP_it = Σ(score) / N_it  (severity-weighted proportion per feed)
-            #   Step 2: Y_it = SWP_it / mean_i(SWP_i)  → each feed's sample mean = 1.0
-            #           Grouping by feed_name separates "gestion-peru (archive)" from
-            #           "gestion-economia (archive)" — they have very different political signals
-            #   Step 3: Z_t = Σ(N_it × Y_it) / N_total_t  (volume-weighted across feeds)
-            #   Step 4: IRP_t = Z_t / mean_2025(Z) × 100  (normalize to 2025 baseline)
-            src_grp = art.groupby(["feed_name", "day"])
-            src_n   = src_grp.size().rename("n")
-            src_pol = src_grp["political_score"].sum().rename("pol_sum")
-            src_eco = src_grp["economic_score"].sum().rename("eco_sum")
-
-            src_df = pd.concat([src_n, src_pol, src_eco], axis=1).fillna(0).reset_index()
-            src_df["pol_swp"] = src_df["pol_sum"] / src_df["n"].clip(lower=1)
-            src_df["eco_swp"] = src_df["eco_sum"] / src_df["n"].clip(lower=1)
-
-            # Each feed normalized to its FROZEN 2025-baseline mean.
-            # Using 2025-only (days with pol_swp > 1, i.e. meaningful classification)
-            # prevents retroactive drift: corrections or additions to 2026 data do NOT
-            # shift historical IRP values.
-            # Fallback: feeds with < 5 meaningful 2025 days use their all-time active mean.
-            _src_2025 = src_df[
-                (pd.to_datetime(src_df["day"]).dt.year == 2025) &
-                (src_df["pol_swp"] > 1)
-            ]
-            _src_2025_counts = _src_2025.groupby("feed_name").size()
-            _feeds_stable = _src_2025_counts[_src_2025_counts >= 5].index
-            _means_2025 = _src_2025[_src_2025["feed_name"].isin(_feeds_stable)].groupby("feed_name")[["pol_swp", "eco_swp"]].mean()
-            _means_active = src_df[src_df["pol_swp"] > 0].groupby("feed_name")[["pol_swp", "eco_swp"]].mean()
-            src_means = _means_2025.combine_first(_means_active)
-            src_df = src_df.merge(
-                src_means.rename(columns={"pol_swp": "pol_mean", "eco_swp": "eco_mean"}),
-                on="feed_name",
-                how="left",
-            )
-            src_df["pol_mean"] = src_df["pol_mean"].fillna(1.0)
-            src_df["eco_mean"] = src_df["eco_mean"].fillna(1.0)
-            src_df["pol_y"] = src_df["pol_swp"] / src_df["pol_mean"].clip(lower=1e-8)
-            src_df["eco_y"] = src_df["eco_swp"] / src_df["eco_mean"].clip(lower=1e-8)
-
-            src_df["w_pol"] = src_df["n"] * src_df["pol_y"]
-            src_df["w_eco"] = src_df["n"] * src_df["eco_y"]
-
-            daily_agg = src_df.groupby("day").agg(
-                w_pol=("w_pol", "sum"),
-                w_eco=("w_eco", "sum"),
-                n_total=("n", "sum"),
-            ).reset_index().rename(columns={"day": "date"})
-
-            daily_sums = daily_agg.copy()
-            daily_sums["pol_norm"] = daily_sums["w_pol"] / daily_sums["n_total"].clip(lower=1)
-            daily_sums["eco_norm"] = daily_sums["w_eco"] / daily_sums["n_total"].clip(lower=1)
-
-        elif has_dual:
-            # Fallback (no feed_name column): simple volume normalization
-            n_total_s = art.groupby("day").size().rename("n_total")
-            pol_sum_s = art.groupby("day")["political_score"].sum().fillna(0).rename("pol_sum")
-            eco_sum_s = art.groupby("day")["economic_score"].sum().fillna(0).rename("eco_sum")
-            daily_sums = pd.concat([n_total_s, pol_sum_s, eco_sum_s], axis=1).fillna(0).reset_index()
-            daily_sums.columns = ["date", "n_total", "pol_sum", "eco_sum"]
-            daily_sums["pol_norm"] = daily_sums["pol_sum"] / daily_sums["n_total"].clip(lower=1)
-            daily_sums["eco_norm"] = daily_sums["eco_sum"] / daily_sums["n_total"].clip(lower=1)
-
-        else:
-            # Legacy fallback: map article_severity to scores
-            _INT_TO_FLOAT = {0: 0.0, 1: 0.2, 2: 0.5, 3: 0.9}
-            art["sev_float"] = art["article_severity"].map(_INT_TO_FLOAT).fillna(0.0)
-            n_total_s = art.groupby("day").size().rename("n_total")
-            pol_sum_s = (
-                art[art["article_category"].isin(["political", "both"])]
-                .groupby("day")["sev_float"].sum() * 60
-            ).rename("pol_sum")
-            eco_sum_s = (
-                art[art["article_category"].isin(["economic", "both"])]
-                .groupby("day")["sev_float"].sum() * 40
-            ).rename("eco_sum")
-            daily_sums = pd.concat([n_total_s, pol_sum_s, eco_sum_s], axis=1).fillna(0).reset_index()
-            daily_sums.columns = ["date", "n_total", "pol_sum", "eco_sum"]
-            daily_sums["pol_norm"] = daily_sums["pol_sum"]
-            daily_sums["eco_norm"] = daily_sums["eco_sum"]
-
-        # Baseline: stable feed regime Jun 2025 – Mar 8 2026 (feed expansion on Mar 9 2026).
-        # Early 2025 (<Jun) had only 5 feeds / ~20 arts/day → not representative.
-        # Mar 9+ expanded to 42 feeds / 250+ arts/day → different regime, excluded.
-        # Using Jun 2025–Mar 8 2026 (248 days, 7–14 feeds, 31–96 arts/day) as the
-        # frozen "normal" reference so IRP/IRE 100 = average of that stable period.
-        import datetime as _dt
-        _REGIME_START = _dt.date(2025, 6, 1)
-        _REGIME_END   = _dt.date(2026, 3, 9)   # exclusive (feed expansion day)
-        _dates = pd.to_datetime(daily_sums["date"]).dt.date
-        ref = daily_sums[(_dates >= _REGIME_START) & (_dates < _REGIME_END)]
-        if len(ref) >= 30:
-            s_bar_pol = ref["pol_norm"].mean() or 1.0
-            s_bar_eco = ref["eco_norm"].mean() or 1.0
-            logger.info("S_bar reference: %s – %s (%d days)  pol=%.4f  eco=%.4f",
-                        _REGIME_START, _REGIME_END, len(ref), s_bar_pol, s_bar_eco)
-        else:
-            s_bar_pol = daily_sums["pol_norm"].mean() or 1.0
-            s_bar_eco = daily_sums["eco_norm"].mean() or 1.0
-            logger.warning("Fewer than 30 days in regime window — using full-history mean")
-
-        daily_sums["irp"] = (daily_sums["pol_norm"] / s_bar_pol) * 100.0
-        daily_sums["ire"] = (daily_sums["eco_norm"] / s_bar_eco) * 100.0
-
-        # Drop today's partial data — early-morning exports capture only a few hours.
-        # The 9 PM pipeline run includes the full day, so today is kept when running at 9 PM.
-        from datetime import date as _date_today, timezone as _tz_lima, timedelta as _td_lima
-        _lima_today = (datetime.now(_tz_lima.utc) + _td_lima(hours=-5)).date()
-
-        # Check pipeline_status.json NOW (before filtering) so the 9 PM run keeps today.
-        _pipeline_running_today_early = False
-        try:
-            _status_path_early = Path(__file__).parent.parent / "data" / "pipeline_status.json"
-            if _status_path_early.exists():
-                import json as _json2
-                _status_early = _json2.loads(_status_path_early.read_text(encoding="utf-8"))
-                _pipeline_running_today_early = (_status_early.get("date", "") == str(_lima_today))
-        except Exception:
-            pass
-
-        # Keep today when the 9 PM pipeline is running; drop otherwise (partial morning data).
-        _cutoff_op = "<=" if _pipeline_running_today_early else "<"
-        if _pipeline_running_today_early:
-            logger.info("9 PM pipeline active — keeping today (%s) in daily_sums", _lima_today)
-            daily_sums = daily_sums[pd.to_datetime(daily_sums["date"]).dt.date <= _lima_today]
-            political_df = political_df[pd.to_datetime(political_df["date"]).dt.date <= _lima_today]
-        else:
-            daily_sums = daily_sums[pd.to_datetime(daily_sums["date"]).dt.date < _lima_today]
-            political_df = political_df[pd.to_datetime(political_df["date"]).dt.date < _lima_today]
-        daily_sums = daily_sums.reset_index(drop=True)
-
-        # Low-coverage interpolation: days with < 25 articles are noise spikes
-        # (weekends, holidays). Set to NaN and interpolate from neighbours.
-        MIN_ARTICLES = 25
-        daily_sums = daily_sums.sort_values("date").reset_index(drop=True)
-        low_cov_mask = daily_sums["n_total"] < MIN_ARTICLES
-        daily_sums.loc[low_cov_mask, ["irp", "ire"]] = float("nan")
-        daily_sums[["irp", "ire"]] = (
-            daily_sums[["irp", "ire"]]
-            .interpolate(method="linear", limit_direction="both")
-        )
-
-        today_vals = daily_sums.iloc[-1] if not daily_sums.empty else None
-        if today_vals is not None:
-            print(f"[AI-GPR] IRP today = {today_vals['irp']:.1f}  IRE today = {today_vals['ire']:.1f}")
-
-        political_df = political_df.merge(
-            daily_sums[["date", "irp", "ire", "n_total"]], on="date", how="left"
-        )
-        political_df["irp"] = political_df["irp"].fillna(0.0)
-        political_df["ire"] = political_df["ire"].fillna(0.0)
-        # Use clean article count (no GDELT) for display — overwrite old parquet's n_articles_total
-        political_df["n_articles_total"] = political_df["n_total"].fillna(0).astype(int)
-        # NOTE: do NOT override irp/ire with old parquet political_index/economic_index.
-        # Those were computed with the old S_bar (2025 full-year, incompatible with the
-        # expanded feed regime). The freshly computed daily_sums irp/ire (new S_bar,
-        # Jun 2025 – Mar 8 2026) are always preferred.
-        # Keep instability_index as political IRP for backward compat with smoothing below
-        political_df["instability_index"] = political_df["irp"]
-    else:
-        political_df["irp"] = 0.0
-        political_df["ire"] = 0.0
-        political_df["instability_index"] = 0.0
-
-    # ── Smoothing (7-day centered rolling average) ────────────────────────────
-    # Documented methodology (Iacoviello & Tong 2026, applied to Peru):
-    #   IRPt_smooth = (1/7) × Σ IRPt+k,  k ∈ [-3, +3]
-    # center=True implements this symmetric window.
+    # ── Smoothing ─────────────────────────────────────────────────────────────
+    # Prefer the parquet's pre-computed irp_smooth / ire_smooth columns
+    # (trailing EMA, alpha=0.30, from build_daily_index.py).  These avoid the
+    # centered-window boundary truncation that under-reports risk on the most
+    # recent day. Fall back to a 7-day trailing rolling mean if absent.
     MIN_ARTICLES = 5
     SMOOTH_WINDOW = 7
 
     political_df["low_coverage"] = political_df["n_articles_total"] < MIN_ARTICLES
 
-    political_df["irp_7d"] = (
-        political_df["irp"]
-        .rolling(window=SMOOTH_WINDOW, center=True, min_periods=2)
-        .mean().round(1).fillna(political_df["irp"])
-    )
-    political_df["ire_7d"] = (
-        political_df["ire"]
-        .rolling(window=SMOOTH_WINDOW, center=True, min_periods=2)
-        .mean().round(1).fillna(political_df["ire"])
-    )
+    if "irp_smooth" in political_df.columns:
+        political_df["irp_7d"] = pd.to_numeric(
+            political_df["irp_smooth"], errors="coerce"
+        ).fillna(political_df["irp"]).round(1)
+    else:
+        political_df["irp_7d"] = (
+            political_df["irp"]
+            .rolling(window=SMOOTH_WINDOW, min_periods=2)
+            .mean().round(1).fillna(political_df["irp"])
+        )
+
+    if "ire_smooth" in political_df.columns:
+        political_df["ire_7d"] = pd.to_numeric(
+            political_df["ire_smooth"], errors="coerce"
+        ).fillna(political_df["ire"]).round(1)
+    else:
+        political_df["ire_7d"] = (
+            political_df["ire"]
+            .rolling(window=SMOOTH_WINDOW, min_periods=2)
+            .mean().round(1).fillna(political_df["ire"])
+        )
     # Backward compat
     political_df["instability_index"] = political_df["irp"]
     political_df["score_smooth"] = political_df["irp_7d"]
@@ -1251,6 +1082,7 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series, skip_h
     economic_justification  = None
     top_political_drivers: list = []
     top_economic_drivers:  list = []
+    eco_sector_titles:     list = []
     today_all = pd.DataFrame()  # initialized here so it's always in scope
 
     if articles_cache is not None:
@@ -1321,7 +1153,7 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series, skip_h
                     today_all["political_score"] >= today_all["economic_score"]
                 ] if "economic_score" in today_all.columns else today_all
                 pol_primary = _exclude_sports(pol_primary)
-                top_pol = pol_primary.nlargest(5, "political_score")[
+                top_pol = pol_primary.nlargest(10, "political_score")[
                     ["title", "source", "political_score"]
                 ]
                 if not top_pol.empty and irp_today > 0:
@@ -1359,7 +1191,7 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series, skip_h
                     today_all["economic_score"] > today_all["political_score"] * 1.3
                 ] if "political_score" in today_all.columns else today_all
                 eco_primary = _exclude_sports(eco_primary)
-                top_eco = eco_primary.nlargest(5, "economic_score")[
+                top_eco = eco_primary.nlargest(10, "economic_score")[
                     ["title", "source", "economic_score"]
                 ]
                 eco_meaningful = top_eco[top_eco["economic_score"] > 15]
@@ -1390,6 +1222,11 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series, skip_h
                     {"title": r.title, "source": r.source, "score": int(r.economic_score)}
                     for _, r in eco_meaningful.iterrows()
                 ] if len(eco_meaningful) >= 2 else []
+
+                # All eco>20 titles for frontend sector classification (not limited to top 10)
+                eco_all = today_all[today_all["economic_score"] > 20] if "economic_score" in today_all.columns else pd.DataFrame()
+                eco_all = _exclude_sports(eco_all)
+                eco_sector_titles = eco_all.nlargest(50, "economic_score")["title"].tolist()
             except Exception as e:
                 logger.warning("Haiku justification failed: %s", e)
     # ─────────────────────────────────────────────────────────────────────────
@@ -1557,6 +1394,7 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series, skip_h
             "economic_justification":  economic_justification,
             "top_political_drivers":   top_political_drivers,
             "top_economic_drivers":    top_economic_drivers,
+            "eco_sector_titles":       eco_sector_titles,
             # Legacy
             "justification": political_justification,
             "top_drivers":   top_political_drivers,

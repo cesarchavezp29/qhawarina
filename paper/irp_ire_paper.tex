@@ -1,0 +1,1397 @@
+\documentclass[12pt,a4paper]{article}
+
+% ── Packages ───────────────────────────────────────────────────────────────
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{natbib}
+\usepackage{xcolor}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{url}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{abstract}
+\usepackage{titlesec}
+\usepackage{footnote}
+
+\geometry{
+  top=2.5cm, bottom=2.5cm,
+  left=3.0cm, right=3.0cm,
+  headheight=15pt
+}
+
+\doublespacing
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=black,
+  citecolor=black,
+  urlcolor=blue
+}
+
+\lstset{
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  frame=none,
+  xleftmargin=1em
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\thepage}
+\lhead{\small\textit{Measuring Political and Economic Uncertainty in Peru}}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ── Title ──────────────────────────────────────────────────────────────────
+\title{%
+  \Large\textbf{Measuring Political and Economic Uncertainty in Peru:\\
+  A Daily News-Based Index}\\[1em]
+  \normalsize Preliminary Draft --- March 2026\\
+  \normalsize Please do not cite without permission
+}
+
+\author{%
+  Carlos C\'{e}sar Ch\'{a}vez Padilla\thanks{%
+    Center for the Economics of Human Development, University of Chicago.
+    E-mail: \texttt{cchavezpadilla@uchicago.edu}.
+    I thank the team at Qhawarina.pe for data infrastructure support.
+    All errors are my own.}
+}
+
+\date{March 2026}
+
+% ── Document ───────────────────────────────────────────────────────────────
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+
+% ── Abstract ───────────────────────────────────────────────────────────────
+\begin{abstract}
+\noindent
+We construct two daily indices of political and economic uncertainty for
+Peru---the \emph{\'Indice de Riesgo Pol\'itico} (IRP) and the
+\emph{\'Indice de Riesgo Econ\'omico} (IRE)---covering January~1,~2025
+through March~18,~2026 (443 days). Each day, 28,364 articles from 16
+Peruvian media outlets are classified by Claude Haiku (Anthropic) on a
+continuous 0--100 scale for both political and economic uncertainty.  The
+indices combine a normalized intensity component---today's aggregate score
+relative to a 90-day rolling baseline---with a breadth component---the
+fraction of articles exceeding a threshold---using the formula
+$\text{IRP}_t = \text{Intensity}_t \times \text{Breadth}_t^{\,\beta}$.
+The indices correctly identify known crisis episodes including the
+transporters' strike (October 2025, IRP~=~248), the censure of Cabinet
+Minister Jeri (January 2026, IRP~=~231), and the Camisea gas crisis
+(March 2026, IRE~=~418).  Daily IRP has mean 72.3 and standard
+deviation 42.1; IRE has mean 57.8 and standard deviation 65.3,
+reflecting concentrated economic coverage.  Monthly IRE correlates
+with the PEN/USD exchange rate ($r = 0.398$), while daily and weekly
+correlations are near zero, consistent with forward-looking FX markets.
+Data are publicly available via the Qhawarina.pe platform.
+\end{abstract}
+
+\noindent\textbf{JEL codes:} C43, C82, E32, H56
+
+\noindent\textbf{Keywords:} political uncertainty, economic uncertainty, news-based
+index, LLM classification, Peru, exchange rate
+
+\newpage
+\setcounter{page}{1}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Introduction}
+\label{sec:intro}
+% ══════════════════════════════════════════════════════════════════════════════
+
+Peru presents a distinctive challenge for researchers studying political
+economy: the country has experienced extraordinary political instability
+while maintaining broadly stable macroeconomic fundamentals.  Between 2016
+and 2026, Peru had eight presidents, multiple congressional dissolutions,
+three presidential impeachment attempts, and the arrest of three
+ex-presidents---yet GDP growth remained positive in most years and sovereign
+spreads stayed comparatively low.  Understanding when and why political
+turmoil translates into economic disruption requires a precise, real-time
+measurement of both types of uncertainty separately.
+
+No existing measure satisfies these requirements.  The Caldara and
+Iacoviello~(\citeyear{caldara2022}) Geopolitical Risk (GPR) index is global
+in scope and misses Peru's highly domestic political conflicts.  The Baker,
+Bloom, and Davis~(\citeyear{baker2016}) Economic Policy Uncertainty (EPU)
+index does not cover Peru.  The International Country Risk Guide (ICRG) is
+monthly, subjectively compiled, and published with a lag.  The Banco Central
+de Reserva del Per\'u (BCRP) tracks country risk through the JP~Morgan
+EMBIG~Peru spread and CDS spreads---financial market measures that are
+forward-looking and reflect global risk appetite as much as domestic
+conditions.
+
+This paper presents the \emph{\'Indice de Riesgo Pol\'itico} (IRP) and
+\emph{\'Indice de Riesgo Econ\'omico} (IRE) for Peru: two daily,
+automated, Peru-specific indices constructed from the near-universe of
+Peruvian media output.  The indices are built using a four-step pipeline:
+(1) RSS feeds from 16 Peruvian outlets are fetched daily; (2) each
+article is classified by an AI language model (Claude Haiku, Anthropic)
+on two continuous 0--100 scales measuring political and economic
+uncertainty; (3) deterministic post-filter rules correct systematic AI
+errors; and (4) the indices are computed using an Intensity~$\times$
+Breadth$^{\,\beta}$ formula, combining the severity-weighted aggregate
+score with the fraction of media attention devoted to risk topics.
+
+The paper makes four contributions. First, we propose and implement a
+two-component index formula that separates the \emph{intensity} of risk
+coverage from its \emph{breadth} across the media landscape. This
+distinction matters: a single newspaper covering a minor cabinet reshuffle
+at score~30 is qualitatively different from all~16 outlets covering a
+presidential impeachment attempt at score~90. Our formula, inspired by
+\cite{caldara2022} but extended to allow continuous AI scoring, captures
+both dimensions with a single elasticity parameter~$\beta$.
+
+Second, we extend the AI-GPR methodology of \cite{iacoviello2026} to a
+single developing country with a concentrated media market.  We document
+the practical challenges---prompt engineering for Spanish-language
+political concepts, post-filter rules for false positives---and provide
+complete methodological transparency in the appendices.
+
+Third, we provide 443 days of daily data (January~2025--March~2026) that
+correctly capture known crisis episodes.  The Paro Nacional de Transportistas
+in October~2025 produced the highest IRP spike in the sample (248.2); the
+Censura del Gabinete Jeri in January~2026 reached IRP~=~231; and the
+Camisea gas disruption in March~2026 produced IRE~=~418, the highest
+economic risk reading.
+
+Fourth, we validate the indices against exchange rate movements and discuss
+the conditions under which news-based uncertainty measures should and should
+not correlate with financial market prices.  We find that daily and weekly
+IRP-FX correlations are near zero ($r = -0.011$ and $r = -0.150$,
+respectively), while the monthly IRE-FX correlation is $r = 0.398$---a
+pattern consistent with forward-looking FX markets that smooth daily
+uncertainty but respond to sustained periods of economic disruption.
+
+The paper proceeds as follows. Section~\ref{sec:lit} reviews related
+literature. Section~\ref{sec:data} describes the news corpus and AI
+classification. Section~\ref{sec:construction} presents the index
+construction methodology. Section~\ref{sec:validation} validates the
+indices against known events and financial markets.
+Section~\ref{sec:properties} describes index properties.
+Section~\ref{sec:applications} discusses applications.
+Section~\ref{sec:limitations} discusses limitations.
+Section~\ref{sec:conclusion} concludes.
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Related Literature}
+\label{sec:lit}
+% ══════════════════════════════════════════════════════════════════════════════
+
+\paragraph{News-based uncertainty indices.}
+The foundational contribution is \cite{baker2016}, who construct an
+Economic Policy Uncertainty (EPU) index from newspaper keyword counts,
+forecast disagreement, and tax code expiration data. Their approach has been
+replicated for many countries but has not, to our knowledge, been applied to
+Peru. \cite{caldara2022} construct the Geopolitical Risk (GPR) index using
+keyword frequency across 10 English-language newspapers; their monthly
+index covers global geopolitical risk but is not disaggregated to individual
+countries. Our approach follows the same news-based logic but replaces
+binary keyword matching with continuous AI scoring, and is explicitly
+designed for one country's domestic political landscape.
+
+\paragraph{Text analysis in economics.}
+\cite{gentzkow2019} survey the use of text as economic data, discussing
+dictionary methods, supervised classification, and unsupervised topic
+modeling. They emphasize that the choice of representation matters as
+much as the choice of method. \cite{manela2017} use front-page newspaper
+articles to construct implied volatility measures. \cite{shapiro2022} build
+daily news sentiment indices using supervised classification. We follow
+these approaches but use a large language model (LLM) rather than a
+pre-specified dictionary or human-labeled training set, following the AI-GPR
+methodology proposed by \cite{iacoviello2026}.
+
+\paragraph{Firm-level political risk.}
+\cite{hassan2019} measure political risk at the firm level using
+earnings call transcripts, constructing measures from bigram counts
+associated with political topics. Their continuous scoring approach---assigning
+intensity to individual documents rather than binary matches---is
+conceptually close to ours, though their setting (US firms, English text)
+differs substantially from ours (Peruvian political news, Spanish text).
+
+\paragraph{Political uncertainty and financial markets.}
+\cite{pastor2013} develop a theoretical model in which political uncertainty
+commands a risk premium. Empirically, \cite{julio2012} find that investment
+falls sharply in election years, even controlling for aggregate conditions.
+\cite{bloom2009} and \cite{ludvigson2021} study uncertainty shocks more
+broadly. Our contribution is to provide a daily empirical proxy for
+political uncertainty in Peru that can serve as an input to such analyses.
+
+\paragraph{Peru-specific context.}
+The BCRP publishes monthly analyses of country risk through the EMBIG spread,
+but no daily news-based political or economic uncertainty measure exists for
+Peru.  The volatility of Peruvian politics---seven presidents in seven
+years, the self-coup attempt of Pedro Castillo in December~2022, continued
+confrontation between executive and legislative branches---makes Peru an
+especially interesting case study for the political-economic risk literature.
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Data}
+\label{sec:data}
+% ══════════════════════════════════════════════════════════════════════════════
+
+\subsection{News Sources}
+\label{subsec:sources}
+
+The index is built from 16 Peruvian media outlets monitored via RSS feeds
+and historical archives.  The outlets span a range of editorial orientations
+and geographic coverage:
+
+\begin{itemize}
+  \item \emph{National generalist}: El Comercio, La Rep\'ublica, RPP,
+        Correo, Per\'u21
+  \item \emph{Business and financial}: Gesti\'on
+  \item \emph{Political and analytical}: Caretas, Canal~N
+  \item \emph{Official government}: Andina
+  \item \emph{Regional}: El B\'uho, Inforegi\'on
+  \item \emph{Popular}: Trome, Diario Uno
+  \item \emph{Broadcast}: ATV, Panamericana
+  \item \emph{Other}: La Raz\'on
+\end{itemize}
+
+The sample covers January~1,~2025 through March~18,~2026 (443 days), with
+28,364 total articles. Coverage is highest from mid-2025 onward as the
+automated ingestion pipeline reached its full set of sources.
+Table~\ref{tab:sources} presents source-level statistics.
+
+\begin{table}[h!]
+\centering
+\caption{Summary Statistics by Source}
+\label{tab:sources}
+\begin{tabular}{lrrrrrr}
+\toprule
+Source & N articles & Days active & Mean daily & Mean pol score$^a$ & Mean eco score$^a$ & \% pol$>$20 \\
+\midrule
+Gesti\'on     & 8,977 & 409 & 21.9 & 26.1 & 21.4 & 28.6 \\
+Correo        & 8,389 & 444 & 18.9 & 31.0 & 22.6 & 55.8 \\
+El Comercio   & 5,021 & 319 & 15.7 & 28.4 & 22.9 & 26.6 \\
+La Rep\'ublica & 2,523 & 126 & 20.0 & 29.4 & 25.3 & 34.6 \\
+RPP           & 1,159 & 125 &  9.3 & 27.9 & 18.9 & 13.5 \\
+Andina        &   663 &  13 & 51.0 & 13.5 & 22.4 &  6.0 \\
+Per\'u21      &   502 &  76 &  6.6 & 26.2 & 23.2 & 25.5 \\
+Caretas       &   255 &   7 & 36.4 & 22.2 & 26.6 & 24.3 \\
+Canal~N       &   189 &  43 &  4.4 & 27.2 & 25.2 & 37.6 \\
+El B\'uho     &   176 &  38 &  4.6 & 26.8 & 24.6 & 41.5 \\
+La Raz\'on    &   129 &  56 &  2.3 & 30.0 & 15.3 & 39.5 \\
+Panamericana  &   105 &  48 &  2.2 & 27.9 & 22.4 & 40.0 \\
+ATV           &    99 &  16 &  6.2 & 15.1 & 16.6 &  6.1 \\
+Diario Uno    &    80 &   8 & 10.0 & 17.4 & 17.5 & 16.2 \\
+Inforegi\'on  &    76 &  28 &  2.7 & 28.5 & 18.2 & 22.4 \\
+Trome         &    21 &  16 &  1.3 & 28.9 & 25.0 & 33.3 \\
+\bottomrule
+\multicolumn{7}{l}{\footnotesize $^a$ Mean score among articles with score $>0$.}
+\end{tabular}
+\end{table}
+
+Three sources---Gesti\'on (31.6\% of articles), Correo (29.6\%), and El
+Comercio (17.7\%)---together account for 79\% of the corpus.  This
+concentration is a structural feature of the Peruvian media market
+(Gesti\'on is the only dedicated economic daily) rather than a sampling
+choice.  Section~\ref{subsec:limitations_sources} discusses the implications
+for index interpretation.
+
+\subsection{AI Classification}
+\label{subsec:classification}
+
+Each article is classified by Claude Haiku (model version
+\texttt{claude-haiku-4-5}) using two independent calls---one for
+political risk and one for economic risk---each with a dedicated system
+prompt designed to elicit a 0--100 continuous severity score.  The full
+prompts are reproduced in Appendix~\ref{app:prompts}.
+
+The political risk prompt instructs the model to assess whether the
+article ``signals that Peru's political institutional trajectory is harder
+to predict.'' The economic risk prompt asks whether the article indicates
+``active disruption or threat to Peru's economic activity.''  Both prompts
+include explicit examples of zero-score articles (sports, weather,
+entertainment, irrelevant foreign news) and calibrated examples of
+high-score articles (presidential vacancy motions at 80--90; Camisea gas
+crisis at 80--90).  The model responds with a single integer score.
+
+The scoring rubric is as follows:
+\begin{itemize}
+  \item 0: No political (or economic) risk signal
+  \item 1--20: Weak signal (routine campaign news, minor bureaucratic friction)
+  \item 21--40: Moderate tension (ongoing investigations, sectoral disputes)
+  \item 41--60: Significant instability (interpellations, power confrontations)
+  \item 61--80: Major crisis (vacancia, censures, national protests)
+  \item 81--100: Emergency (consummated vacancy, coup, presidential arrest)
+\end{itemize}
+
+\paragraph{Post-classification filtering.}
+The AI classifier makes systematic errors that require deterministic
+correction.  A \texttt{post\_filter\_scores()} function applies rule-based
+fixes after each classification run.  The rules address five failure modes:
+
+\begin{enumerate}
+  \item \emph{Sports false positives}: Sports articles (Liga~1, Copa
+    Libertadores, NBA, Formula~1, Olympics) receive non-zero political
+    scores. The post-filter applies a regex covering all
+    Peruvian Liga~1 clubs, European leagues, and international competitions,
+    zeroing both scores.
+
+  \item \emph{Entertainment/celebrity}: Tabloid content, music concerts,
+    awards ceremonies, and reality TV shows receive false economic signals.
+    These are zeroed unconditionally.
+
+  \item \emph{Foreign domestic politics}: Coverage of Argentine, Colombian,
+    or US domestic political events that lack direct Peru relevance is
+    zeroed. A crisis guard prevents over-aggressive zeroing when a foreign
+    event has explicit Peru economic consequences (e.g., US tariffs on
+    Peruvian exports).
+
+  \item \emph{Political inversion}: Articles about judicial proceedings
+    against political figures are systematically assigned high economic
+    scores (eco~=~60--70) and zero political scores by the classifier. The
+    post-filter zeros the economic score and sets a minimum political floor
+    of 65 for articles matching judicial/political confrontation patterns.
+
+  \item \emph{Score calibration}: Key events known to be systematically
+    under-scored are given minimum floor values: presidential vacancy
+    motions (pol~$\geq$~90), premier removal (pol~$\geq$~65), minister
+    censure (pol~$\geq$~55), Camisea gas crisis (eco~$\geq$~80), and
+    Petroper\'u bailout events (eco~$\geq$~75).
+\end{enumerate}
+
+The complete list of rules with all regex patterns is in
+Appendix~\ref{app:postfilter}.
+
+\paragraph{Classification outcomes.}
+Of the 28,364 articles in the corpus, 45.0\% receive a political score of
+exactly zero; 84.9\% receive an economic score of exactly zero.  This
+asymmetry reflects two facts: Peruvian media covers political news more
+broadly than economic instability news, and the economic classifier is
+intentionally strict---routine growth statistics, positive economic
+announcements, and corporate earnings are scored zero.  Among articles
+with non-zero scores, 30.6\% of articles have political score~$>$~20 and
+5.9\% have economic score~$>$~20.  Table~\ref{tab:score_dist} shows the
+full score distribution.
+
+\begin{table}[h!]
+\centering
+\caption{Distribution of AI-Assigned Scores}
+\label{tab:score_dist}
+\small
+\begin{tabular}{lrrrr}
+\toprule
+Score bin & N (political) & \% (political) & N (economic) & \% (economic) \\
+\midrule
+0         & 12,763 & 45.0 & 24,067 & 84.9 \\
+1--10     &  3,685 & 13.0 &  1,176 &  4.1 \\
+11--20    &  3,229 & 11.4 &  1,451 &  5.1 \\
+21--30    &  2,682 &  9.5 &    778 &  2.7 \\
+31--40    &  2,362 &  8.3 &    306 &  1.1 \\
+41--50    &  1,472 &  5.2 &    191 &  0.7 \\
+51--60    &    793 &  2.8 &    212 &  0.7 \\
+61--70    &  1,125 &  4.0 &     99 &  0.3 \\
+71--80    &    121 &  0.4 &     84 &  0.3 \\
+81--90    &    131 &  0.5 &      0 &  0.0 \\
+91--100   &      1 &  0.0 &      0 &  0.0 \\
+\midrule
+Total     & 28,364 & 100.0 & 28,364 & 100.0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The score distributions show a clear right-skew with mass at zero: most
+articles are irrelevant to political or economic risk, and genuinely
+high-risk articles (score~$>$~60) are rare.  The economic distribution is
+more concentrated at zero, reflecting the narrower scope of economic
+instability news relative to general political coverage.
+
+\subsection{Comparison with Keyword Approaches}
+\label{subsec:keyword_comparison}
+
+The Caldara and Iacoviello (\citeyear{caldara2022}) GPR index uses binary
+keyword matching: an article either matches one of their risk-associated
+keywords or it does not.  Our approach differs in three ways.
+
+First, AI scoring provides context-sensitivity that keyword matching
+cannot.  The word ``crisis'' appears in sports articles (``crisis of
+confidence in the attacking line''), economic opinion columns (``the
+fiscal framework is in crisis''), and in descriptions of genuine political
+emergencies.  A keyword counter cannot distinguish these; a language model,
+given appropriate prompting, can.  Similarly, Peru-specific institutional
+concepts---\emph{voto de confianza}, \emph{vacancia presidencial},
+\emph{paro nacional}---require prompts calibrated to the Peruvian context,
+not a generic Spanish political vocabulary.
+
+Second, continuous scoring (0--100) captures intensity, not just
+occurrence.  A day when 40 articles each score 30 is qualitatively
+different from a day when 4 articles each score 90.  The keyword approach
+treats both as equivalent counts.  Our formula uses the sum of scores
+(raw intensity) as the numerator, so higher-severity articles contribute
+proportionally more.
+
+Third, and most honestly, AI scoring introduces new failure modes absent
+from keyword matching.  The classifier makes systematic errors---sports
+false positives, political inversion---that require post-hoc rules to
+correct.  Keyword matching has more predictable failure modes.  We do not
+claim that AI scoring is universally superior; we claim it is better suited
+to the specific problem of measuring uncertainty in a single country's
+Spanish-language media.
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Index Construction}
+\label{sec:construction}
+% ══════════════════════════════════════════════════════════════════════════════
+
+\subsection{Two-Component Formula}
+\label{subsec:formula}
+
+The index construction follows a four-step procedure for each day~$t$.
+
+\paragraph{Step 1: Raw intensity.}
+Let $s_{it}^{\text{pol}} \in [0, 100]$ denote the political score of article $i$
+on day $t$, and let $N_t$ denote the total number of articles on day $t$.  The
+raw political intensity is:
+\begin{equation}
+  \text{Raw}_t^{\text{pol}} = \sum_{i=1}^{N_t} s_{it}^{\text{pol}}
+  \label{eq:raw}
+\end{equation}
+and analogously for $\text{Raw}_t^{\text{eco}}$.  This is the sum---not the
+mean---of all article scores.  A day with 12 outlets each covering a major
+crisis at score~80 produces a raw intensity of $12 \times 80 = 960$,
+correctly reflecting the uniformity of media attention.  This mirrors the
+GPR approach, where the aggregate count of matching articles is the
+numerator.
+
+\paragraph{Step 2: Normalized intensity.}
+Raw intensity is normalized by a rolling baseline to produce a
+mean-100 index:
+\begin{equation}
+  I_t^{\text{pol}} = \frac{\text{Raw}_t^{\text{pol}}}{\bar{B}_t^{\text{pol}}} \times 100
+  \label{eq:intensity}
+\end{equation}
+where the baseline is a rolling mean over the past $W$ days:
+\begin{equation}
+  \bar{B}_t^{\text{pol}} = \frac{1}{\min(W, t)} \sum_{j=1}^{\min(W, t)} \text{Raw}_{t-j}^{\text{pol}}
+  \label{eq:baseline}
+\end{equation}
+with $W = 90$ (the default baseline window).  During the first 90 days of
+the sample, the baseline is an expanding mean over all available history
+(\texttt{min\_periods=1}).  After 90 days, the baseline is a fixed 90-day
+rolling mean.  The baseline normalization means $I_t^{\text{pol}} = 100$
+on a typical day, $I_t^{\text{pol}} = 200$ on a day twice as intense as
+the average, and so on.
+
+\paragraph{Step 3: Breadth.}
+The breadth component measures the fraction of all media articles that
+are devoted to political uncertainty:
+\begin{equation}
+  D_t^{\text{pol}} = \frac{\#\{i : s_{it}^{\text{pol}} \geq \tau\}}{N_t}
+  \label{eq:breadth}
+\end{equation}
+where $\tau = 20$ is the threshold score for an article to ``count'' as a
+political risk article.  Articles below this threshold are treated as
+background noise: routine political coverage that does not signal
+instability.  This component is directly analogous to the GPR breadth
+measure---the share of media attention devoted to the topic of interest.
+
+\paragraph{Step 4: Combined index.}
+The IRP and IRE are:
+\begin{equation}
+  \text{IRP}_t = I_t^{\text{pol}} \times \left(D_t^{\text{pol}}\right)^{\beta_{\text{pol}}}
+  \label{eq:irp}
+\end{equation}
+\begin{equation}
+  \text{IRE}_t = I_t^{\text{eco}} \times \left(D_t^{\text{eco}}\right)^{\beta_{\text{eco}}}
+  \label{eq:ire}
+\end{equation}
+with $\beta_{\text{pol}} = 0.5$ and $\beta_{\text{eco}} = 0.3$.
+
+The exponent $\beta$ governs how strongly breadth amplifies or dampens the
+intensity signal.  With $\beta = 0.5$: breadth~=~0.25 gives multiplier
+$0.25^{0.5} = 0.50$; breadth~=~0.50 gives multiplier $0.50^{0.5} = 0.71$.
+The exponent is set below 1 so that breadth scales the index without
+dominating it: a genuine high-intensity day with moderate breadth should
+still produce a spike.
+
+The rationale for $\beta_{\text{eco}} < \beta_{\text{pol}}$ is structural:
+economic news in Peru is concentrated in specialized outlets (Gesti\'on,
+the economics section of El Comercio).  Even on major economic crisis days,
+$D_t^{\text{eco}}$ rarely exceeds 10--15\% of all articles, while
+$D_t^{\text{pol}}$ can reach 30--40\% during political crises.  A lower
+$\beta_{\text{eco}}$ prevents the breadth multiplier from systematically
+suppressing the economic index.  Empirically, the mean political breadth in
+the sample is 20.3\% while the mean economic breadth is 3.5\%.
+
+\subsection{Temporal Smoothing}
+\label{subsec:smoothing}
+
+A crisis does not disappear from the information environment the day after
+a major event: follow-up reporting, analysis, and political responses
+continue for several days.  To capture this persistence, we apply
+exponential moving average (EMA) smoothing:
+\begin{equation}
+  \text{IRP}_t^{\text{smooth}} = \alpha \cdot \text{IRP}_{t-1}^{\text{smooth}}
+    + (1 - \alpha) \cdot \text{IRP}_t
+  \label{eq:ema}
+\end{equation}
+with $\alpha = 0.3$, giving 70\% weight on the current day and 30\%
+persistence from recent history.  In the pandas implementation, this
+corresponds to \texttt{ewm(alpha=0.7, adjust=False)}.  The smoothed
+series is reported alongside the raw series for all analyses.
+
+\subsection{Parameter Sensitivity}
+\label{subsec:sensitivity}
+
+Table~\ref{tab:sensitivity} reports the average IRP and IRE for the week of
+March~14--18,~2026 under alternative parameter choices.  This week is
+informative because it contains both a political event (voto de confianza,
+March~18) and ongoing economic disruption (Camisea gas crisis), so both
+indices are above their sample averages.
+
+\begin{table}[h!]
+\centering
+\caption{Parameter Sensitivity Analysis: Average IRP and IRE, March~14--18, 2026}
+\label{tab:sensitivity}
+\small
+\begin{tabular}{ccccc}
+\toprule
+$\beta_{\text{pol}}$ & $\beta_{\text{eco}}$ & Window $W$ (days) & Avg.\ IRP & Avg.\ IRE \\
+\midrule
+\multicolumn{5}{l}{\textit{Varying $\beta_{\text{pol}}$ (baseline: $\beta_{\text{eco}}=0.3$, $W=90$)}} \\
+0.3 & 0.3 & 90 & 183.8 & 120.2 \\
+\textbf{0.5} & \textbf{0.3} & \textbf{90} & \textbf{129.2} & \textbf{120.2} \\
+0.7 & 0.3 & 90 &  91.0 & 120.2 \\
+\midrule
+\multicolumn{5}{l}{\textit{Varying $\beta_{\text{eco}}$ (baseline: $\beta_{\text{pol}}=0.5$, $W=90$)}} \\
+0.5 & 0.2 & 90 & 129.2 & 163.2 \\
+0.5 & \textbf{0.3} & 90 & 129.2 & \textbf{120.2} \\
+0.5 & 0.5 & 90 & 129.2 &  65.3 \\
+\midrule
+\multicolumn{5}{l}{\textit{Varying baseline window $W$ (baseline: $\beta_{\text{pol}}=0.5$, $\beta_{\text{eco}}=0.3$)}} \\
+0.5 & 0.3 &  60 & 104.0 &  94.9 \\
+0.5 & 0.3 & \textbf{90}  & \textbf{129.2} & \textbf{120.2} \\
+0.5 & 0.3 & 120 & 138.5 & 143.4 \\
+\bottomrule
+\multicolumn{5}{l}{\footnotesize Bold row is the baseline specification.}\\
+\multicolumn{5}{l}{\footnotesize Daily detail (baseline): Mar-14: IRP=61.1 IRE=121.4; Mar-15: IRP=37.5 IRE=30.2;}\\
+\multicolumn{5}{l}{\footnotesize Mar-16: IRP=123.8 IRE=169.8; Mar-17: IRP=197.2 IRE=116.7; Mar-18: IRP=226.2 IRE=163.0.}
+\end{tabular}
+\end{table}
+
+Three observations from Table~\ref{tab:sensitivity}.  First, IRP is
+monotonically decreasing in $\beta_{\text{pol}}$: a higher exponent
+amplifies the breadth penalty, compressing the index toward zero on days
+with moderate breadth.  Second, IRE is highly sensitive to $\beta_{\text{eco}}$:
+because economic breadth is structurally low, increasing $\beta_{\text{eco}}$
+from 0.3 to 0.5 cuts the average IRE nearly in half.  This confirms the
+choice of a lower $\beta$ for the economic dimension.  Third, a longer
+baseline window $W$ raises both indices on this particular week---because
+the baseline is computed over a calmer period, so the same raw intensity
+appears larger relative to history.  The qualitative pattern (IRP rising
+toward the March~18 voto de confianza, IRE elevated throughout by the energy
+crisis) is robust to all parameter choices.
+
+\subsection{Relationship to Caldara and Iacoviello (2022)}
+\label{subsec:ci_comparison}
+
+Table~\ref{tab:comparison} summarizes the methodological relationship
+between the GPR and the IRP/IRE.
+
+\begin{table}[h!]
+\centering
+\caption{Comparison of GPR (Caldara \& Iacoviello, 2022) and IRP/IRE (this paper)}
+\label{tab:comparison}
+\small
+\begin{tabularx}{\textwidth}{lXX}
+\toprule
+Feature & GPR (C\&I 2022) & IRP/IRE (this paper) \\
+\midrule
+Scope & Global geopolitical & Peru domestic \\
+Frequency & Monthly (daily available) & Daily \\
+Classification method & Binary keyword match & Continuous AI score (0--100) \\
+Formula & Share of matching articles & Intensity $\times$ Breadth$^{\,\beta}$ \\
+Risk dimensions & Single (geopolitical) & Two (political + economic) \\
+Sources & 10 English newspapers & 16 Peruvian Spanish outlets \\
+Normalization & Mean = 100 (1985--2019 baseline) & Mean = 100 (90-day rolling baseline) \\
+Backward coverage & From 1899 (newspaper archives) & January 2025 onward \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Our approach differs from \cite{caldara2022} in three important ways.
+We use a rolling 90-day baseline rather than a fixed historical baseline,
+so the index reflects \emph{current} conditions relative to recent history
+rather than relative to a 30-year normal.  We use separate dimensions for
+political and economic risk, capturing the common finding that political
+and economic disruptions in Peru often have different causes and different
+transmission mechanisms.  And we use AI classification, which allows
+context-sensitive scoring of Spanish-language political concepts that have
+no direct English keyword equivalent.
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Validation}
+\label{sec:validation}
+% ══════════════════════════════════════════════════════════════════════════════
+
+\subsection{Event Detection}
+\label{subsec:events}
+
+The most direct validation is to check whether the indices spike around
+known political and economic events.  Table~\ref{tab:events} reports, for
+each major event in the sample period, the date with the highest IRP within
+a $\pm$3-day window, together with the index values and coverage statistics
+on that date.
+
+\begin{table}[h!]
+\centering
+\caption{Known Events and Index Response}
+\label{tab:events}
+\small
+\begin{tabular}{lrrrrrrr}
+\toprule
+Event & Date & IRP & IRP$_s$ & IRE & IRE$_s$ & Articles & $D^{\text{pol}}$ \\
+\midrule
+Cerr\'on Desaparece (pr\'ofugo) & Mar-18, 2025 & 127.6 & 115.5 & 16.9 & 26.8 & 32 & 0.719 \\
+Impunidad Boluarte & Apr-23, 2025 & 82.6 & 66.7 & 9.1 & 11.5 & 28 & 0.714 \\
+Vizcarra Prisi\'on Preventiva & Jun-16, 2025 & 137.8 & 119.4 & 0.0 & 5.1 & 47 & 0.532 \\
+Fragmentaci\'on Izquierda & Jul-17, 2025 & 88.8 & 78.2 & 96.1 & 88.6 & 39 & 0.615 \\
+Colapso Ministerial Boluarte & Aug-19, 2025 & 145.5 & 127.0 & 112.6 & 80.5 & 57 & 0.596 \\
+Paro Transportistas & Oct-10, 2025 & 248.2 & 225.0 & 150.2 & 128.0 & 74 & 0.730 \\
+Vacancia Boluarte & Oct-22, 2025 & 153.2 & 131.5 & 73.6 & 84.2 & 83 & 0.542 \\
+Castillo Condenado & Nov-13, 2025 & 112.8 & 89.4 & 147.6 & 115.2 & 66 & 0.530 \\
+Censura Gabinete Jeri & Jan-21, 2026 & 231.1 & 201.9 & 66.3 & 66.3 & 127 & 0.504 \\
+Paro Transportistas II & Feb-04, 2026 & 91.5 & 84.9 & 37.1 & 43.8 & 111 & 0.351 \\
+Crisis Energ\'etica Camisea & Mar-12, 2026 & 138.9 & 118.9 & 315.3 & 292.7 & 551 & 0.176 \\
+Voto Confianza Miralles & Mar-18, 2026 & 226.2 & 208.9 & 163.0 & 151.4 & 932 & 0.186 \\
+\bottomrule
+\multicolumn{8}{l}{\footnotesize IRP$_s$, IRE$_s$ = EMA-smoothed values. $D^{\text{pol}}$ = political breadth.}
+\end{tabular}
+\end{table}
+
+The indices correctly identify all 12 events listed.  Several patterns
+merit discussion.  First, the Paro Nacional de Transportistas in October~2025
+produced the highest IRP reading in the sample (IRP~=~248.2), with 73\% of
+articles on that day scoring above the threshold---the highest breadth
+recorded.  This was a genuine national crisis: road blockades nationwide,
+supply chain disruption, and a government that nearly fell.  Second, the
+Censura Jeri episode (January~2026) reached IRP~=~231.1 with 50.4\% breadth,
+reflecting broad coverage of a ministerial censure that threatened the
+cabinet's survival.  Third, the Camisea gas crisis in March~2026 produced
+the highest single-day IRE reading (IRE~=~418.2 on March~3, with the
+event table showing 315.3 on March~12), reflecting the catastrophic economic
+impact of 13 consecutive days without natural gas to industry and households.
+The March~12 Camisea reading has lower political breadth (0.176)
+than the political events, confirming that the two indices measure distinct
+phenomena.
+
+Fourth, the voto de confianza for Cabinet Miralles (March~18,~2026) appears
+simultaneously in both indices: IRP~=~226.2 and IRE~=~163.0, with 932 total
+articles on that single day---the largest single-day article volume in the
+sample.  This confirms that political uncertainty can spillover into
+economic uncertainty when the political event involves fiscal or energy policy.
+
+Fifth, note the clear IRP/IRE divergence for the Vizcarra Prisi\'on
+Preventiva event (June~2025): IRP~=~137.8 but IRE~=~0.0, correctly
+identifying this as a purely political event (the imprisonment of a former
+president) with no contemporaneous economic disruption.
+
+\subsection{Correlation with Financial Markets}
+\label{subsec:fx}
+
+If the IRP/IRE measure genuine uncertainty, they should correlate positively
+with measures of country risk at sufficiently low frequencies.  We use the
+PEN/USD exchange rate as the primary financial benchmark.  A higher
+PEN/USD means more soles per dollar (peso depreciation), which typically
+reflects increased country risk perception.
+
+Table~\ref{tab:fx} reports Pearson correlations of IRP and IRE with the
+daily change in PEN/USD, at daily, weekly, and monthly aggregation.
+
+\begin{table}[h!]
+\centering
+\caption{Correlation of IRP/IRE with PEN/USD Daily Change}
+\label{tab:fx}
+\begin{tabular}{lrrrrrr}
+\toprule
+Frequency & $r(\text{IRP})$ & $p$-value & $r(\text{IRE})$ & $p$-value & $N$ \\
+\midrule
+Daily   & $-0.011$ & 0.852 & $0.113$ & 0.051 & 299 \\
+Weekly  & $-0.150$ & 0.236 & $0.217$ & 0.084 &  64 \\
+Monthly & $-0.047$ & 0.867 & $0.398$ & 0.142 &  15 \\
+\bottomrule
+\multicolumn{6}{l}{\footnotesize FX data from Banco Central de Reserva del Per\'u. 299 overlapping trading days.} \\
+\multicolumn{6}{l}{\footnotesize Monthly correlation uses 15 month-average observations.}
+\end{tabular}
+\end{table}
+
+Three findings emerge.  First, daily IRP has essentially zero correlation
+with daily FX changes ($r = -0.011$, $p = 0.852$).  This is expected and
+does not invalidate the index.  The exchange rate reflects all available
+information about future risk, not just today's news; BCRP intervention
+further smooths daily moves; and measurement noise in the daily index is
+substantial when $N_t$ is small (median 47 articles per day in early
+months).
+
+Second, the monthly IRE correlation with monthly FX changes is $r = 0.398$
+($p = 0.142$; 15 observations).  Though not statistically significant at
+conventional thresholds given only 15 months of data, the magnitude is
+economically meaningful and directionally consistent with the hypothesis
+that sustained economic disruption puts sustained pressure on the sol.
+
+Third, the IRE-FX correlation is uniformly higher than the IRP-FX
+correlation across all frequencies.  This is plausible: the exchange rate
+is more directly linked to economic disruption (supply chain interruptions,
+fiscal stress, investment flight) than to political events per se.  Peru's
+BCRP has a long track record of intervening to smooth politically-driven
+FX volatility, which would attenuate the IRP-FX link.
+
+\subsection{Comparison with EMBIG Peru}
+\label{subsec:embig}
+
+EMBIG Peru---the JP~Morgan Emerging Market Bond Index spread for Peru---is a
+daily market-based measure of sovereign risk that incorporates both political
+and economic information.  We do not have daily EMBIG data for the full
+sample period.  The BCRP publishes monthly averages.  Based on those data,
+EMBIG Peru averaged approximately 120--130 basis points throughout 2025,
+with a modest widening in October--November (coinciding with the
+transporters' strike and Castillo sentencing) and again in March~2026
+(energy crisis).  This broad co-movement is consistent with our indices.
+A formal correlation analysis awaits a longer time series.
+
+\subsection{False Positive Audit}
+\label{subsec:fp_audit}
+
+A formal false positive audit (randomly sampling 100 articles per score
+quintile and comparing AI scores to human judgment) has not yet been
+conducted.  Based on qualitative review of index spikes and contributing
+articles, the most common false positive types are:
+
+\begin{enumerate}
+  \item \emph{Electoral coverage misclassified as crisis}: Articles about
+    campaign announcements, opinion polls, or candidate debates
+    occasionally receive political scores of 50--70 when the appropriate
+    score is 15--25.  The post-filter applies a 15--25 floor for campaign
+    news, partially addressing this.
+
+  \item \emph{Foreign economic news affecting Peru-adjacent sectors}:
+    Articles about US trade policy or commodity price movements sometimes
+    receive high economic scores when the Peru-specific impact is unclear.
+    The post-filter crisis guard preserves these when explicit Peru impact
+    is mentioned.
+
+  \item \emph{Opinion column inflation}: Economic analyst opinion columns
+    receive scores of 40--60 when the appropriate score for ``one economist's
+    view'' is 15--20.  The post-filter caps named-economist opinion columns
+    at 20.
+\end{enumerate}
+
+A formal audit is planned for future work; see Section~\ref{sec:limitations}.
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Properties of the Index}
+\label{sec:properties}
+% ══════════════════════════════════════════════════════════════════════════════
+
+\subsection{Descriptive Statistics}
+\label{subsec:descriptive}
+
+Table~\ref{tab:summary} reports summary statistics for daily IRP and IRE
+over the full 443-day sample.
+
+\begin{table}[h!]
+\centering
+\caption{Summary Statistics of Daily IRP and IRE (January 2025--March 2026)}
+\label{tab:summary}
+\begin{tabular}{lrrrrrrrrrr}
+\toprule
+Series & Mean & Median & Std & Min & Max & Skew & Kurt & $\rho_1$ & $\rho_7$ & $\rho_{30}$ \\
+\midrule
+IRP (raw)      & 72.3 & 65.4 & 42.1 &  7.8 & 302.6 & 1.63 & 4.72 & 0.456 & 0.240 & $-0.060$ \\
+IRP (smoothed) & 72.3 & 67.6 & 35.4 & 18.4 & 287.8 & 1.76 & 5.81 & 0.656 & 0.249 & $-0.021$ \\
+IRE (raw)      & 57.8 & 38.7 & 65.3 &  0.0 & 418.2 & 2.35 & 7.17 & 0.510 & 0.347 & $-0.015$ \\
+IRE (smoothed) & 57.8 & 41.4 & 56.6 &  0.0 & 355.3 & 2.41 & 7.40 & 0.730 & 0.415 & $-0.018$ \\
+\bottomrule
+\multicolumn{11}{l}{\footnotesize $\rho_k$ = sample autocorrelation at lag $k$ days. $N = 443$ days.}
+\end{tabular}
+\end{table}
+
+Both series are right-skewed with excess kurtosis, consistent with rare but
+large crisis episodes.  The IRP has positive skewness (1.63) and kurtosis
+(4.72), indicating a fat right tail.  The IRE is more extreme: skewness 2.35
+and kurtosis 7.17.  The IRE all-time maximum of 418.2 (on March~3,~2026,
+during the Camisea gas crisis) represents a day with raw economic intensity
+more than four times the 90-day average, with breadth_eco~=~0.060.  The
+large kurtosis reflects these tail events.
+
+The lag-1 autocorrelation ($\rho_1$) is moderate for IRP (0.456) and higher
+for IRE (0.510), suggesting that risk episodes persist for a few days.
+The lag-7 autocorrelation drops substantially ($\rho_7^{\text{IRP}} = 0.240$,
+$\rho_7^{\text{IRE}} = 0.347$), and lag-30 autocorrelation is near zero.
+This pattern is consistent with crises that last days to weeks rather than
+months.  The smoothed series has higher $\rho_1$ by construction (EMA
+introduces mechanical persistence) and similar $\rho_7$.
+
+The IRP mean of 72.3 is below 100.  This reflects the rolling
+baseline normalization during the early sample months: the baseline window
+was short (expanding mean over fewer than 90 days), so as the sample grew
+and more high-risk days were added to the rolling history, the baseline
+rose, compressing recent index values.  As the sample extends, the mean
+will converge toward 100 by construction.
+
+\subsection{Persistence of High-Risk Episodes}
+\label{subsec:persistence}
+
+We define a high-risk episode as a period of consecutive days with
+IRP~$\geq$~150.  Over the 443-day sample, there are 21 days with
+IRP~$\geq$~150, spanning 14 distinct episodes with average duration 1.5
+days.  The longest episode was 4 consecutive days.  This is brief: political
+crises in Peru resolve quickly (through cabinet reshuffles, Congressional
+votes, or simply news fatigue) or escalate further.
+
+For IRE, there are 33 days above 150 in 22 distinct episodes, also
+averaging 1.5 days.  The energy crisis of February--March 2026 produced the
+most sustained elevated IRE: multiple days above 200 during the Camisea
+disruption.
+
+\subsection{Seasonality and Periodicity}
+\label{subsec:seasonality}
+
+IRP shows a clear day-of-week pattern.  Wednesday has the highest average
+IRP (91.3), followed by Thursday (85.9) and Monday (78.8); Saturday has the
+lowest (36.3), followed by Sunday (60.4).  This reflects two facts: fewer
+articles are published on weekends (the breadth component falls), and
+political events (Congressional sessions, cabinet votes, press conferences)
+concentrate in weekdays.
+
+IRP does not show a strong intra-year seasonal pattern given our 15-month
+sample---too short to identify annual seasonality reliably.  The January~2026
+and March~2026 spikes reflect specific political and economic events rather
+than calendar effects.
+
+As Peru approaches its April~2026 presidential elections, IRP has trended
+upward since January~2026.  Average IRP in the first quarter of 2026
+(through March~18) is 85.6, compared to a monthly range of 50--90 during
+most of 2025.  Whether this reflects genuine electoral uncertainty or
+mechanical effects from increased political news volume requires more data.
+
+\subsection{Political vs.\ Economic Correlation}
+\label{subsec:irp_ire_corr}
+
+The daily correlation between IRP and IRE is $r = 0.181$ ($p < 0.001$),
+indicating a positive but weak association.  The monthly correlation is
+$r = 0.242$ ($p = 0.386$; 15 observations), which is not statistically
+significant given the short sample.
+
+The two indices co-move during events that generate both political and
+economic uncertainty simultaneously---general strikes (where supply
+disruption is economic, but the decision to strike is political),
+and the March 2026 energy-political crisis (where the Camisea gas disruption
+was economic, but the political management and voto de confianza created
+concurrent political uncertainty).
+
+The indices diverge in the more common case where one type of uncertainty
+dominates.  The Vizcarra imprisonment (June~2025) is purely political
+(IRP~=~138, IRE~=~0).  The Castillo sentencing (November~2025) has moderate
+IRP (112.8) but higher IRE (147.6)---because the sentencing reopened
+questions about the social programs Castillo had promised, creating economic
+uncertainty about redistribution.  The Camisea gas crisis has the most
+extreme divergence: IRE~=~418.2 versus IRP~=~138.9 on March~3.
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Applications}
+\label{sec:applications}
+% ══════════════════════════════════════════════════════════════════════════════
+
+The IRP and IRE are designed with several use cases in mind:
+
+\paragraph{Central bank monitoring.}
+The BCRP monitors political risk through financial market indicators (EMBIG,
+CDS spreads, PEN/USD).  These are forward-looking and reflect global risk
+appetite as much as domestic conditions.  The IRP/IRE provide a
+complementary text-based measure that captures domestic political content
+directly.  A sustained IRP~$\geq$~150 episode could serve as an early warning
+for the Directorio's risk assessment.
+
+\paragraph{Investment decisions.}
+Foreign investors in Peruvian mining, energy, or infrastructure assets need
+real-time measures of the policy environment.  IRP captures whether the
+Congress-Executive relationship is deteriorating (cabinet censures, voto de
+confianza tensions) before it manifests in permitting delays or contract
+disputes.  IRE captures sectoral disruptions (mining blockades, gas
+supply interruptions) before they show up in production data.
+
+\paragraph{Academic research.}
+The IRP and IRE can serve as control variables in event studies, regression
+discontinuity designs, or time series models.  For example, one could
+estimate the effect of electoral uncertainty (IRP) on formal employment
+during the April~2026 campaign period, controlling for concurrent economic
+disruption (IRE).  The daily frequency and precise measurement allow
+identification strategies that monthly measures preclude.
+
+\paragraph{Journalistic context.}
+The indices provide quantitative context for news coverage:
+``The voto de confianza on March~18 occurred on a day with IRP~=~226, the
+second-highest reading since October~2025.'' This contextualizes individual
+events within the broader uncertainty landscape.
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Limitations and Future Work}
+\label{sec:limitations}
+% ══════════════════════════════════════════════════════════════════════════════
+
+We discuss six limitations honestly.
+
+\paragraph{1. AI classification quality.}
+Claude Haiku makes systematic errors that the post-filter rules address
+only partially.  Sports articles, celebrity news, and foreign domestic
+politics were the most common false positives identified during qualitative
+review.  The post-filter regex patterns are necessarily incomplete: they
+cover known failure modes but will miss novel patterns.  A more robust
+solution---either a fine-tuned model trained on human-labeled Peruvian
+news, or a two-stage filter that screens for relevance before scoring
+severity---would improve quality.  We have not conducted a formal false
+positive audit to quantify error rates by score quintile.
+
+\label{subsec:limitations_sources}
+\paragraph{2. Source concentration.}
+Three outlets---Gesti\'on (31.6\%), Correo (29.6\%), and El Comercio
+(17.7\%)---account for 79\% of the corpus.  The index is thus most sensitive
+to the editorial choices of these three outlets.  If, for example, Correo
+systematically amplifies political conflict relative to other outlets, the
+IRP will be biased upward.  More concerning is that Gesti\'on's dominance
+in economic coverage means the IRE is heavily influenced by a single
+outlet's judgment about what constitutes economic risk.  Source-level
+credibility weighting (implemented but disabled in the current pipeline)
+would allow researchers to test sensitivity to this concentration.
+
+\paragraph{3. Short history.}
+443 days of data is insufficient for many econometric applications.  A
+reliable autocorrelation function requires several hundred lags; business
+cycle analysis requires multiple cycles; electoral analysis requires
+multiple electoral cycles.  Backward extension to 2000 (or earlier) using
+keyword-based classification of digitized newspaper archives is planned but
+requires access to historical archives not yet integrated into the pipeline.
+
+\paragraph{4. No causal identification.}
+The IRP and IRE measure \emph{media-reported} uncertainty, not
+\emph{objective} political or economic risk.  Media can amplify genuine
+uncertainty, underreport suppressed crises, or create uncertainty through
+framing.  We do not estimate the causal effect of IRP on any outcome.
+With only 443 days and 4 quarters of economic data, credible
+identification of IRP's macroeconomic effects is not possible.
+This paper is a measurement contribution, not a causal one.
+
+\paragraph{5. Parameter sensitivity.}
+The breadth exponents ($\beta_{\text{pol}} = 0.5$, $\beta_{\text{eco}} = 0.3$),
+threshold ($\tau = 20$), and baseline window ($W = 90$) are chosen based on
+qualitative assessment and robustness to known events.  They are not
+estimated from data.  Table~\ref{tab:sensitivity} shows qualitative
+robustness, but different parameter choices produce index levels that differ
+by a factor of two in some configurations.  Researchers using the indices
+for specific applications should assess sensitivity to the parameters relevant
+for their application.
+
+\paragraph{6. LLM model drift.}
+Claude Haiku's behavior may change across API versions as Anthropic releases
+model updates.  Classification consistency over time is not guaranteed if
+the underlying model weights change.  We do not have access to version
+control over the model used for historical classifications.  If the model's
+calibration changes, the index levels pre- and post-change would not be
+comparable.  Recording the exact model version with each classification
+run, and periodically re-classifying a fixed reference set of articles to
+detect drift, are best practices we recommend for future implementation.
+
+\paragraph{Future work.}
+Several extensions are planned:
+\begin{enumerate}
+  \item Backward extension to 2000 using keyword-based proxies applied to
+    digitized archives of El Comercio and La Rep\'ublica.
+  \item Formal false positive audit: random sample of 100 articles per score
+    quintile, human labeling, and precision/recall by quintile.
+  \item Sectoral economic sub-indices: separate IRE components for
+    mining, energy, fiscal, and trade.
+  \item Cross-country comparison: applying the same methodology to
+    Colombia, Chile, and Mexico to benchmark Peru's political volatility.
+  \item Formal causal analysis: once the index has sufficient history, local
+    projections (\citealt{jorda2005}) to estimate dynamic effects of IRP
+    shocks on investment and employment.
+\end{enumerate}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Conclusion}
+\label{sec:conclusion}
+% ══════════════════════════════════════════════════════════════════════════════
+
+We have constructed and validated two daily indices---the IRP (political
+risk) and IRE (economic risk)---for Peru, covering January~2025 through
+March~2026.  The indices combine AI-assigned severity scores with a
+breadth measure of media attention into a formula calibrated to Peru's
+concentrated media landscape.  They correctly identify all major political
+and economic events in the sample, including the transporters' strike
+(IRP~=~248), the Jeri censure (IRP~=~231), and the Camisea gas crisis
+(IRE~=~418).  Monthly IRE correlates with exchange rate movements
+($r = 0.398$), while daily correlations are near zero as expected for
+forward-looking financial markets.
+
+The principal limitation is the short sample (443 days).  As the pipeline
+continues running, the data will become more useful for time series
+analysis, event studies, and eventually causal identification.  The data
+are publicly available via the Qhawarina.pe platform and the statistics
+are fully reproducible from the script \texttt{paper/compute\_paper\_stats.py}
+in the repository.
+
+Our broader contribution is methodological: we document the practical steps
+required to adapt the AI-GPR methodology (\citealt{iacoviello2026}) to a
+single developing country with a concentrated, Spanish-language media
+market.  The post-filter rules, the dual-dimension formula, and the
+calibration choices are all fully transparent in the appendices.
+Researchers applying similar methods to other countries can build on
+or depart from these choices as appropriate for their context.
+
+% ══════════════════════════════════════════════════════════════════════════════
+% References
+% ══════════════════════════════════════════════════════════════════════════════
+
+\clearpage
+\bibliographystyle{agsm}
+\bibliography{references}
+
+% ══════════════════════════════════════════════════════════════════════════════
+% Appendices
+% ══════════════════════════════════════════════════════════════════════════════
+
+\clearpage
+\appendix
+\titleformat{\section}[block]{\large\bfseries}{Appendix \thesection:}{0.5em}{}
+
+\section{Full Classification Prompts}
+\label{app:prompts}
+
+This appendix reproduces the complete system prompts sent to Claude Haiku
+for political and economic risk classification.  Both prompts are sent as
+\texttt{system} messages; the user message lists the articles to classify
+using the template in Section~\ref{app:user_template}.
+
+\subsection*{Political Risk Classification Prompt}
+
+The following prompt is sent as the \texttt{system} message for IRP scoring:
+
+\begin{lstlisting}
+Eres un analista de riesgo politico peruano. Tu tarea: evaluar si este
+articulo de prensa senala INCERTIDUMBRE politica institucional en el Peru.
+
+NO es riesgo politico:
+- Deportes (futbol, voley, tenis, retiros de deportistas, resultados
+  deportivos) -> 0
+- Farandula, celebridades, entretenimiento, TV -> 0
+- Clima, alertas meteorologicas, lluvias, vientos, oleajes -> 0
+- Tecnologia, gadgets, aplicaciones, dispositivos medicos -> 0
+- Noticias internacionales sin impacto directo en la politica peruana -> 0
+- Recetas, turismo, estilo de vida, salud general -> 0
+- Obituarios de personas no politicas -> 0
+
+SI es riesgo politico (y debe puntuar ALTO):
+- Vacancia presidencial, mocion de vacancia -> 75-90
+- Voto de confianza (cualquier mencion) -> 65-80
+- Interpelacion o censura de ministros -> 55-70
+- Cambio de gabinete bajo presion -> 60-75
+- Conflicto entre Ejecutivo y Congreso -> 55-70
+- Detencion, arresto, orden de captura de presidente o ex-presidente -> 80+
+- Corrupcion de funcionarios activos, allanamientos, casos judiciales -> 55-70
+- Asesinato de figura politica, funcionario, asesor -> 65-80
+- Crimen organizado infiltrado en instituciones politicas -> 70+
+- Fallos del Tribunal Constitucional sobre temas politicos -> 55-65
+- Protestas masivas que amenazan continuidad del gobierno -> 65-80
+- Estado de emergencia por conflicto social -> 60-70
+
+MODERADO (campanas electorales 2026):
+- Candidatos presidenciales haciendo propuestas de campana -> 15-25
+- Debates, foros de candidatos -> 20-30
+- Encuestas electorales -> 15-25
+- Candidato con problemas judiciales activos -> 55-70
+
+Escala:
+0 = Sin relevancia politica
+1-20 = Senal politica debil (campana rutinaria, burocracia menor)
+21-40 = Tension baja-moderada (investigaciones, huelgas locales)
+41-60 = Inestabilidad significativa (interpelaciones, conflictos entre poderes)
+61-80 = Crisis mayor (vacancia, censuras, protestas nacionales)
+81-100 = Emergencia (vacancia consumada, golpe, renuncia presidencial)
+
+REGLA: Si un articulo usa una crisis economica como CONTEXTO para una
+maniobra politica, el puntaje POLITICO debe ser alto.
+\end{lstlisting}
+
+\subsection*{Economic Risk Classification Prompt}
+
+The following prompt is sent as the \texttt{system} message for IRE scoring:
+
+\begin{lstlisting}
+Eres un analista de riesgo economico peruano. Tu tarea: evaluar si este
+articulo senala INCERTIDUMBRE sobre la actividad economica del Peru.
+
+NO es riesgo economico:
+- Deportes, farandula, entretenimiento -> 0
+- Clima rutinario -> 0
+- Tecnologia, gadgets, apps -> 0
+- Desastres internacionales sin conexion a Peru -> 0
+- Datos economicos POSITIVOS o RUTINARIOS (crecimiento normal, inversion
+  anunciada, records de exportacion) -> 0
+- Noticias de candidatos sobre temas NO economicos -> 0
+- Crimen comun sin impacto economico sistemico -> 0
+
+SI es riesgo economico (y debe puntuar ALTO):
+- Petroperu: rescate, inyeccion fiscal, quiebra, deuda, crisis -> 75-90
+- Camisea / gas natural: interrupcion, escasez, corte de suministro -> 75-90
+- Conflictos mineros (Las Bambas, Tia Maria, Cuajone, Southern,
+  Quellaveco) -> 55-70
+- Paro nacional / huelga general -> 60-70
+- Bloqueo de carreteras / interrupcion de cadena de suministro -> 40-55
+- Consejo Fiscal advierte sobre gasto excesivo -> 50-60
+- Gasto publico excesivo aprobado por Congreso / MEF -> 55-65
+- Escasez de productos basicos / desabastecimiento -> 60-70
+- Inflacion acelerando / BCRP subiendo tasa -> 45-55
+- Tipo de cambio bajo presion / sol depreciandose fuerte -> 45-55
+- Fuga de capitales / salida de inversion extranjera -> 65-75
+- Inversion cancelada por conflicto social -> 50-60
+
+Escala:
+0 = Sin riesgo economico O noticia economica positiva/rutinaria
+1-20 = Senal debil (volatilidad normal, advertencias menores)
+21-40 = Estres moderado (indicadores deteriorandose, alzas en canasta
+        basica)
+41-60 = Vulnerabilidad significativa (disrupciones sectoriales, bloqueos)
+61-80 = Crisis severa (colapso sectorial, paralisis energetica, rescate
+        fiscal)
+81-100 = Emergencia (default soberano, colapso financiero, hiperinflacion)
+
+REGLA: Riesgo economico = DISRUPCION o AMENAZA ACTIVA a la actividad
+economica. NO es lo mismo que "noticia sobre economia". Si no hay
+disrupcion, amenaza o shock, el puntaje es 0.
+\end{lstlisting}
+
+\subsection*{User Message Template}
+\label{app:user_template}
+
+The user message is formatted as follows for a batch of $n$ articles:
+
+\begin{lstlisting}
+Evalua los siguientes {n} articulos. Para CADA articulo, responde con
+un JSON en una linea separada. EXACTAMENTE {n} lineas, una por articulo,
+en orden.
+
+Articulo 1:
+Titulo: {title_1}
+Fuente: {source_1}
+{summary_1[:300]}
+
+Articulo 2:
+...
+
+Responde EXACTAMENTE {n} lineas JSON, una por articulo, en orden:
+{"score": <0-100>}
+{"score": <0-100>}
+...
+\end{lstlisting}
+
+% ──────────────────────────────────────────────────────────────────────────────
+\section{Post-Filter Rules}
+\label{app:postfilter}
+
+This appendix summarizes the deterministic post-filter rules applied after
+AI classification.  All rules are implemented in the
+\texttt{post\_filter\_scores()} function in
+\texttt{src/nlp/classifier.py}.  Rules are applied in the order listed.
+A ``crisis guard'' pattern prevents over-zeroing: articles containing
+terms such as \textit{crisis, emergencia, bloqueo, paro, huelga,
+desabastecimiento, escasez} are exempt from most zeroing rules.
+
+\subsection*{Zeroing Rules (set both scores to 0)}
+
+\begin{enumerate}
+  \item \textbf{Sports}: Regex covering Liga~1 clubs,
+    Copa Libertadores, UEFA, NBA, NFL, MLB, F1, Olympics, major athletes
+    (Messi, Ronaldo, etc.) and match vocabulary (tabla de posiciones,
+    jornada, fase de grupos).
+
+  \item \textbf{Celebrity/tabloid}: Personal life news, entertainment
+    shows (Esto es Guerra, Gran Hermano), music celebrities (Taylor Swift,
+    Bad Bunny), and street crime (asaltos, accidentes de transito).
+
+  \item \textbf{Foreign leader health}: Health/medical news about
+    ex-presidents from Brazil, Argentina, Colombia, etc.\ (unless the
+    title contains crisis vocabulary).
+
+  \item \textbf{Cultural/arts events}: Theater festivals, ballet
+    premieres, gallery openings, FAE Lima.
+
+  \item \textbf{Intellectual/cultural deaths}: Obituaries of
+    philosophers, writers, poets, musicians, and other cultural figures.
+
+  \item \textbf{Foreign weather/local news}: Weather alerts in US
+    cities, Argentine or Chilean local disasters.
+
+  \item \textbf{Foreign domestic politics}: Elections or legislative
+    debates in Colombia, Argentina, Brazil, USA, UK, EU (crisis exception
+    preserved for tariff or trade news explicitly mentioning Peru).
+
+  \item \textbf{Entertainment extras}: Concerts in Lima, new album
+    releases, Oscar/Grammy ceremonies, box office records.
+
+  \item \textbf{Individual petty crime}: Single muggings, bus thefts
+    (distinct from organized crime, extortion, and crime rates which
+    retain scores).
+\end{enumerate}
+
+\subsection*{Economic Score Zeroing Rules}
+
+\begin{enumerate}
+  \item \textbf{Foreign stock markets}: Wall Street, Dow Jones, Nikkei,
+    Asian/European market summaries.
+  \item \textbf{Foreign economic statistics}: US/EU/China unemployment,
+    GDP, inflation.
+  \item \textbf{Daily market summary columns}: ``Mercados e indicadores''
+    routine reports.
+  \item \textbf{Corporate positive growth}: Record sales, earnings growth,
+    revenue increases.
+  \item \textbf{Consumer/regulatory information}: SBS rule publications,
+    Indecopi consumer sanctions, Sunafil guidance.
+  \item \textbf{Health information}: Routine medical awareness articles.
+  \item \textbf{Foreign IMF/World Bank loans to non-Peru countries}.
+  \item \textbf{Vehicle recalls/product withdrawals}.
+  \item \textbf{Gender diversity/talent features}.
+  \item \textbf{Marketing/promotional content}: Sales, discounts,
+    store openings.
+  \item \textbf{Elections administrative procedures}: ONPE logistics,
+    JNE candidate registration, RENIEC.
+  \item \textbf{BCRP routine communications}: New banknote designs,
+    reserve statistics.
+  \item \textbf{Commercial chain openings}: Restaurant/gym expansions.
+  \item \textbf{Economist opinion cap}: Named economist opinion columns
+    capped at eco~=~20.
+\end{enumerate}
+
+\subsection*{Score Boost Rules (minimum floors)}
+
+\begin{enumerate}
+  \item \textbf{Political inversion correction}: Judicial/political
+    confrontation articles with eco~$>$~0 and pol~$<$~65: set eco~=~0,
+    pol~$\geq$~65.
+  \item \textbf{Voter guide correction}: Ballot/voting guide articles:
+    eco~=~0, pol~$\geq$~60.
+  \item \textbf{Presidential vacancy}: Articles mentioning mocion de
+    vacancia: pol~$\geq$~90, eco~$\geq$~40.
+  \item \textbf{Presidential censure/removal}: pol~$\geq$~85, eco~$\geq$~40.
+  \item \textbf{Premier removal/censure}: pol~$\geq$~65.
+  \item \textbf{Minister removal/interpelacion}: pol~$\geq$~55.
+  \item \textbf{Interpelacion + energy/economic crisis}: eco~$\geq$~55.
+  \item \textbf{Camisea/gas crisis}: Corte, restriccion, emergencia
+    related to Camisea or GNV: eco~$\geq$~80.
+  \item \textbf{Petroperu crisis}: Rescate, inyeccion, quiebra,
+    crisis related to Petroperu: eco~$\geq$~75.
+\end{enumerate}
+
+% ──────────────────────────────────────────────────────────────────────────────
+\section{Extended Parameter Sensitivity}
+\label{app:sensitivity_extended}
+
+Table~\ref{tab:sensitivity_full} reports the full parameter sensitivity
+grid for the week of March~14--18,~2026, covering all 27 combinations of
+$\beta_{\text{pol}} \in \{0.3, 0.5, 0.7\}$,
+$\beta_{\text{eco}} \in \{0.2, 0.3, 0.5\}$, and
+$W \in \{60, 90, 120\}$.
+
+\begin{table}[h!]
+\centering
+\caption{Full Parameter Sensitivity Grid: Week-Average IRP and IRE, March 14--18, 2026}
+\label{tab:sensitivity_full}
+\small
+\begin{tabular}{ccccc}
+\toprule
+$\beta_{\text{pol}}$ & $\beta_{\text{eco}}$ & Window & Avg.\ IRP & Avg.\ IRE \\
+\midrule
+0.3 & 0.2 &  60 & 148.0 & 128.8 \\
+0.3 & 0.2 &  90 & 183.8 & 163.2 \\
+0.3 & 0.2 & 120 & 197.1 & 194.6 \\
+0.3 & 0.3 &  60 & 148.0 &  94.9 \\
+0.3 & 0.3 &  90 & 183.8 & 120.2 \\
+0.3 & 0.3 & 120 & 197.1 & 143.4 \\
+0.3 & 0.5 &  60 & 148.0 &  51.6 \\
+0.3 & 0.5 &  90 & 183.8 &  65.3 \\
+0.3 & 0.5 & 120 & 197.1 &  77.9 \\
+\textbf{0.5} & 0.2 &  60 & 104.0 & 128.8 \\
+\textbf{0.5} & 0.2 &  90 & 129.2 & 163.2 \\
+\textbf{0.5} & 0.2 & 120 & 138.5 & 194.6 \\
+\textbf{0.5} & \textbf{0.3} &  60 & 104.0 &  94.9 \\
+\textbf{0.5} & \textbf{0.3} & \textbf{90}  & \textbf{129.2} & \textbf{120.2} \\
+\textbf{0.5} & \textbf{0.3} & 120 & 138.5 & 143.4 \\
+\textbf{0.5} & 0.5 &  60 & 104.0 &  51.6 \\
+\textbf{0.5} & 0.5 &  90 & 129.2 &  65.3 \\
+\textbf{0.5} & 0.5 & 120 & 138.5 &  77.9 \\
+0.7 & 0.2 &  60 &  73.2 & 128.8 \\
+0.7 & 0.2 &  90 &  91.0 & 163.2 \\
+0.7 & 0.2 & 120 &  97.6 & 194.6 \\
+0.7 & 0.3 &  60 &  73.2 &  94.9 \\
+0.7 & 0.3 &  90 &  91.0 & 120.2 \\
+0.7 & 0.3 & 120 &  97.6 & 143.4 \\
+0.7 & 0.5 &  60 &  73.2 &  51.6 \\
+0.7 & 0.5 &  90 &  91.0 &  65.3 \\
+0.7 & 0.5 & 120 &  97.6 &  77.9 \\
+\bottomrule
+\multicolumn{5}{l}{\footnotesize Bold row is the baseline specification.}
+\end{tabular}
+\end{table}
+
+% ──────────────────────────────────────────────────────────────────────────────
+\section{Source-Level Monthly Statistics}
+\label{app:source_monthly}
+
+Table~\ref{tab:sources_monthly} provides monthly IRP and IRE averages for
+the full 443-day sample.
+
+\begin{table}[h!]
+\centering
+\caption{Monthly Average IRP, IRE, and Article Volume}
+\label{tab:sources_monthly}
+\begin{tabular}{lrrr}
+\toprule
+Month & Avg.\ IRP & Avg.\ IRE & Mean daily articles \\
+\midrule
+2025-01 & 73.2 &  61.3 &  50.8 \\
+2025-02 & 50.8 &  33.4 &  38.6 \\
+2025-03 & 86.9 &  38.2 &  43.0 \\
+2025-04 & 62.9 &  47.0 &  35.4 \\
+2025-05 & 64.1 &  45.8 &  30.4 \\
+2025-06 & 89.7 &  26.5 &  31.8 \\
+2025-07 & 77.5 &  47.4 &  39.4 \\
+2025-08 & 81.3 &  31.7 &  39.5 \\
+2025-09 & 65.5 &  90.1 &  47.7 \\
+2025-10 & 76.2 &  82.7 &  61.2 \\
+2025-11 & 61.0 &  48.5 &  62.0 \\
+2025-12 & 50.3 &  36.7 &  67.3 \\
+2026-01 & 67.5 &  61.1 &  79.9 \\
+2026-02 & 97.5 &  60.7 &  98.7 \\
+2026-03 & 85.6 & 213.7 & 337.6 \\
+\bottomrule
+\multicolumn{4}{l}{\footnotesize March 2026 reflects elevated article volume from multiple concurrent crises.}
+\end{tabular}
+\end{table}
+
+The dramatic increase in mean daily articles from 30--50 (early 2025) to
+337.6 (March 2026) reflects expanded pipeline coverage: by early 2026,
+all 16 sources were contributing daily, while in early 2025 only a subset
+were active (see Table~\ref{tab:sources}, column ``Days active'').  The
+March 2026 IRE average of 213.7 is nearly three times any prior month,
+driven by the Camisea gas crisis.
+
+\end{document}
