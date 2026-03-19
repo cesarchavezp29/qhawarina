@@ -735,8 +735,6 @@ from the BCRP statistical API (series PD04638PD, TC Interbancario Venta).
 A higher PEN/USD means more soles per dollar (peso depreciation), which
 typically reflects increased country risk perception.
 
-Daily EMBIG data for Peru is not publicly accessible via the BCRP API (all daily spread series return HTTP~403 as of March~2026). Monthly EMBIG averages from BCRP publications show broad co-movement with IRP/IRE spikes in October~2025 and March~2026, consistent with the indices, but a formal correlation analysis awaits daily data access.
-
 Table~\ref{tab:fx} reports Pearson correlations of IRP and IRE with the
 daily change in PEN/USD, at daily, weekly, and monthly aggregation.
 
@@ -777,6 +775,43 @@ is more directly linked to economic disruption (supply chain interruptions,
 fiscal stress, investment flight) than to political events per se.  Peru's
 BCRP has a long track record of intervening to smooth politically-driven
 FX volatility, which would attenuate the IRP-FX link.
+
+\subsection{Comparison with EMBIG Peru}
+\label{subsec:embig}
+
+Table~\ref{tab:embig} reports correlations of monthly IRP and IRE with the
+EMBIG Peru spread (BCRP series PN01129XM, ``Diferencial de Rendimientos del
+\'Indice de Bonos de Mercados Emergentes --- Per\'u''), available monthly
+from the BCRP public portal.  Daily EMBIG data (series PD04709XD) are
+not accessible via the public API.  We have 14 monthly observations
+(January~2025--February~2026).
+
+\begin{table}[h!]
+\centering
+\caption{Correlation of IRP/IRE with EMBIG Peru Spread (Monthly, Jan 2025--Feb 2026)}
+\label{tab:embig}
+\small
+\begin{tabular}{lrrrrrr}
+\toprule
+Specification & $r(\text{IRP})$ & $p$-value & $r(\text{IRE})$ & $p$-value & $N$ \\
+\midrule
+EMBIG level vs.\ index level & $0.023$ & $0.939$ & $-0.459$ & $0.099$ & 14 \\
+EMBIG change vs.\ index level & $-0.072$ & $0.814$ & $-0.046$ & $0.881$ & 13 \\
+\bottomrule
+\multicolumn{6}{l}{\footnotesize EMBIG in basis points. Source: BCRP (PN01129XM).}
+\end{tabular}
+\end{table}
+
+The near-zero IRP-EMBIG correlation is consistent with the FX results.
+More informative is the negative EMBIG-IRE association ($r = -0.459$,
+$p = 0.099$): EMBIG Peru compressed steadily from a peak of 177~bps in
+April~2025 to a trough of 124~bps in October~2025, tracking the global
+emerging market spread compression, while domestic IRE was elevated in
+September--October~2025 by mining conflicts and pre-crisis Camisea
+supply concerns.  The divergence illustrates why domestic text-based
+measures complement rather than replicate sovereign spread data: global
+risk appetite can compress EMBIG even as domestic uncertainty rises,
+and local news-based indices capture what the spread misses.
 
 \subsection{Formal Event Study}
 \label{subsec:event_study}

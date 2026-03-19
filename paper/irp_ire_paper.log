@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.4) (preloaded format=pdflatex 2023.9.6)  19 MAR 2026 00:00
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.4) (preloaded format=pdflatex 2023.9.6)  19 MAR 2026 00:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -816,7 +816,7 @@ Overfull \hbox (3.33626pt too wide) in paragraph at lines 285--308
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [7] [8] [9{C:/Program Files/MiKTeX/fonts/enc/dvips/lm/lm-mathex.enc}]
-<figures//fig4_decomposition.pdf, id=251, 484.5938pt x 388.09041pt>
+<figures//fig4_decomposition.pdf, id=259, 484.5938pt x 388.09041pt>
 File: figures//fig4_decomposition.pdf Graphic file (type pdf)
 <use figures//fig4_decomposition.pdf>
 Package pdftex.def Info: figures//fig4_decomposition.pdf  used on input line 54
@@ -837,64 +837,77 @@ Underfull \hbox (badness 10000) in paragraph at lines 642--642
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<figures//fig2_event_zoom.pdf, id=306, 1003.85857pt x 587.72546pt>
+<figures//fig2_event_zoom.pdf, id=314, 1003.85857pt x 587.72546pt>
 File: figures//fig2_event_zoom.pdf Graphic file (type pdf)
 <use figures//fig2_event_zoom.pdf>
 Package pdftex.def Info: figures//fig2_event_zoom.pdf  used on input line 697.
 (pdftex.def)             Requested size: 426.79135pt x 249.87418pt.
-[13] [14] [15 <./figures//fig2_event_zoom.pdf>] [16]
-Overfull \hbox (34.15678pt too wide) in paragraph at lines 807--830
- [][] 
- []
+[13] [14]
 
-[17] [18]
-Overfull \hbox (64.15034pt too wide) in paragraph at lines 937--948
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[15 <./figures//fig2_event_zoom.pdf>]
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[16]
+Overfull \hbox (34.15678pt too wide) in paragraph at lines 834--857
  [][] 
  []
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<figures//fig1_full_series.pdf, id=363, 614.44559pt x 386.55917pt>
+[17]
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[18] [19]
+Overfull \hbox (64.15034pt too wide) in paragraph at lines 1008--1019
+ [][] 
+ []
+
+[20]
+<figures//fig1_full_series.pdf, id=386, 614.44559pt x 386.55917pt>
 File: figures//fig1_full_series.pdf Graphic file (type pdf)
 <use figures//fig1_full_series.pdf>
-Package pdftex.def Info: figures//fig1_full_series.pdf  used on input line 952.
-
+Package pdftex.def Info: figures//fig1_full_series.pdf  used on input line 1023
+.
 (pdftex.def)             Requested size: 426.79135pt x 268.50154pt.
-[19] [20 <./figures//fig1_full_series.pdf>] [21]
-<figures//fig3_irp_ire_scatter.pdf, id=389, 425.49434pt x 354.35487pt>
+ [21 <./figures//fig1_full_series.pdf>] [22]
+<figures//fig3_irp_ire_scatter.pdf, id=405, 425.49434pt x 354.35487pt>
 File: figures//fig3_irp_ire_scatter.pdf Graphic file (type pdf)
 <use figures//fig3_irp_ire_scatter.pdf>
 Package pdftex.def Info: figures//fig3_irp_ire_scatter.pdf  used on input line 
-1041.
+1112.
 (pdftex.def)             Requested size: 298.75264pt x 248.81451pt.
- [22] [23 <./figures//fig3_irp_ire_scatter.pdf>] [24] [25]
-Overfull \hbox (15.85495pt too wide) in paragraph at lines 1178--1184
+ [23] [24 <./figures//fig3_irp_ire_scatter.pdf>] [25] [26]
+Overfull \hbox (15.85495pt too wide) in paragraph at lines 1250--1256
 \T1/lmr/m/n/12 (-20) and the statis-tics are fully re-pro-ducible from the scri
 pt \T1/lmtt/m/n/12 paper/compute_paper_stats.py
  []
 
-[26] (irp_ire_paper.bbl) [27
+[27] [28] (irp_ire_paper.bbl) [29
 
-] [28
+] [30
 
-] [29] [30] [31] [32] [33] [34]
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
+] [31] [32] [33] [34] [35] [36]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[35] [36] [37] (irp_ire_paper.aux)
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[37] [38] [39] (irp_ire_paper.aux)
 Package rerunfilecheck Info: File `irp_ire_paper.out' has not changed.
-(rerunfilecheck)             Checksum: 5AC2E6EDAADB86E0976661B0722E7BE1;4959.
+(rerunfilecheck)             Checksum: 1C5D533BFDB84A9FC0DF8C4D4C3BCE13;5340.
  ) 
 Here is how much of TeX's memory you used:
- 19319 strings out of 476331
- 306801 string characters out of 5797584
+ 19333 strings out of 476331
+ 306981 string characters out of 5797584
  2015660 words of memory out of 5000000
- 38928 multiletter control sequences out of 15000+600000
- 619374 words of font info for 234 fonts, out of 8000000 for 9000
+ 38934 multiletter control sequences out of 15000+600000
+ 619465 words of font info for 235 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,13n,76p,1012b,1977s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Program Files/MiKTeX/fonts/type1/public/lm/lmbx10.pfb><C:/Program Files/M
@@ -913,9 +926,9 @@ ram Files/MiKTeX/fonts/type1/public/lm/lmri8.pfb><C:/Program Files/MiKTeX/fonts
 7.pfb><C:/Program Files/MiKTeX/fonts/type1/public/lm/lmsy8.pfb><C:/Program File
 s/MiKTeX/fonts/type1/public/lm/lmtt10.pfb><C:/Program Files/MiKTeX/fonts/type1/
 public/lm/lmtt12.pfb>
-Output written on irp_ire_paper.pdf (39 pages, 665964 bytes).
+Output written on irp_ire_paper.pdf (41 pages, 673704 bytes).
 PDF statistics:
- 792 PDF objects out of 1000 (max. 8388607)
- 249 named destinations out of 1000 (max. 500000)
- 61181 words of extra memory for PDF output out of 61914 (max. 10000000)
+ 815 PDF objects out of 1000 (max. 8388607)
+ 255 named destinations out of 1000 (max. 500000)
+ 61197 words of extra memory for PDF output out of 61914 (max. 10000000)
 
