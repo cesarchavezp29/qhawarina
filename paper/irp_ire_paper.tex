@@ -836,11 +836,13 @@ To assess whether index spikes are statistically distinguishable from
 background levels, we run a formal event study.  For each of the 12 known
 events in Table~\ref{tab:events}, we compute average IRP in symmetric
 windows of $\pm$1, $\pm$3, and $\pm$5 trading days around the event date.
-We compare these to the average IRP on all non-event days (days outside
-any $\pm$5-day window).  Abnormal IRP is the difference between the
-$\pm$3-day window mean and the non-event mean.  A one-sided Welch
-$t$-test tests whether event-window IRP ($\pm$5 days) exceeds the
-non-event mean.
+We compare these to the average IRP on all non-event days (days that fall
+outside every event's $\pm$5-day window; overlapping windows are merged
+into a single exclusion zone, so adjacent events such as Paro Transportistas
+and Vacancia Boluarte share excluded days rather than being excluded twice).
+Abnormal IRP is the difference between the $\pm$3-day window mean and the
+non-event mean.  A one-sided Welch $t$-test tests whether event-window IRP
+($\pm$5 days) exceeds the non-event mean.
 
 \begin{table}[h!]
 \centering
@@ -945,9 +947,14 @@ Censura Jeri is \emph{more} significant in the pre-filter specification
 already captured the censure intensity before floors were applied and the
 higher pre-filter baseline variance reduces the post-filter t-statistic.
 Voto Confianza shows a larger post-filter abnormal reading ($+49.2$ vs.\
-$+10.5$), confirming that the post-filter did boost that event meaningfully;
-we note this explicitly as a limitation.  For the remaining six non-floored
-events, pre- and post-filter results are directionally consistent.
+$+10.5$), confirming that the post-filter did substantially amplify that
+event.  The honest interpretation is that the floor inflated the level but
+did not manufacture statistical significance: Voto Confianza remains
+insignificant in both specifications ($p = 0.117$ post-filter, $p = 0.306$
+pre-filter).  The binding constraint is that the event falls on the last day
+of the sample, right-censoring the $\pm$5-day window---not the floor rule.
+For the remaining six non-floored events, pre- and post-filter results are
+directionally consistent.
 
 \subsection{Local Projections: Does IRP Predict Future PEN/USD?}
 \label{subsec:lp}
@@ -1153,7 +1160,7 @@ IRE (smoothed) & 57.8 & 41.4 & 56.6 &  0.0 & 355.3 & 2.41 & 7.40 & 0.730 & 0.415
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=\textwidth]{fig1_full_series.pdf}
-  \caption{Daily IRP and IRE, January 2025 -- March 2026. Gray bars show daily raw values; colored lines show the EMA-smoothed series ($\alpha = 0.30$). Dashed vertical lines mark major political and economic events. The horizontal reference line at IRP = 150 indicates the elevated-risk threshold.}
+  \caption{Daily IRP and IRE, January 2025 -- March 2026. Gray bars show daily raw values; colored lines show the EMA-smoothed series ($\alpha = 0.70$, weight on current day). Dashed vertical lines mark major political and economic events. The horizontal reference line at IRP = 150 indicates the elevated-risk threshold.}
   \label{fig:full_series}
 \end{figure}
 
@@ -1194,7 +1201,9 @@ as a robustness check, we compute a source-normalized IRP that divides raw
 intensity by the number of active sources before computing the rolling
 baseline.  The source-normalized index correlates with the primary index
 at $r = 0.909$, confirming that the main results are not driven by
-pipeline expansion.  The residual 9\% divergence reflects genuine
+pipeline expansion.\footnote{The source-normalized series and the
+comparison code are available in \texttt{paper/run\_audit.py} in the
+replication repository.}  The residual 9\% divergence reflects genuine
 differences in political intensity across sources and is a subject of
 ongoing data collection work.
 
@@ -1264,7 +1273,7 @@ extreme divergence: IRE~=~418.2 versus IRP~=~138.9 on March~3.
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.7\textwidth]{fig3_irp_ire_scatter.pdf}
-  \caption{Monthly IRP versus monthly IRE, January 2025 -- March 2026. Each point is a calendar month. The line shows the OLS fit with 95\% confidence band. With $N = 15$ monthly observations, the regression is underpowered and the band is wide.}
+  \caption{Monthly IRP versus monthly IRE, January 2025 -- March 2026 ($N = 15$ months). Each point is a calendar month. The OLS fit includes March 2026, whereas the FX correlation in Table~6 uses $N = 14$ months (January 2025 -- February 2026) because the BCRP monthly FX average for March 2026 was not yet available at time of writing. The regression is underpowered and the confidence band is correspondingly wide.}
   \label{fig:irp_ire_scatter}
 \end{figure}
 
@@ -1323,8 +1332,14 @@ review.  The post-filter regex patterns are necessarily incomplete: they
 cover known failure modes but will miss novel patterns.  A more robust
 solution---either a fine-tuned model trained on human-labeled Peruvian
 news, or a two-stage filter that screens for relevance before scoring
-severity---would improve quality.  We have not conducted a formal false
-positive audit to quantify error rates by score quintile.
+severity---would improve quality.  Section~\ref{subsec:fp_audit} reports a formal false positive audit
+covering 500 stratified articles across five political-score quintiles,
+finding an 8.5\% false positive rate among high-scoring articles and
+64.2\% overall agreement within $\pm$20 points.  The remaining limitation
+is scope: the audit covers \emph{political} scores only.  A separate
+economic-dimension audit is warranted, particularly given the IRE
+classifier's 84.9\% zero-score rate, where misclassification is harder to
+detect but potentially more consequential for IRE interpretation.
 
 \label{subsec:limitations_sources}
 \paragraph{2. Source concentration.}
@@ -1379,6 +1394,12 @@ detect drift, are best practices we recommend for future implementation.
 \paragraph{Future work.}
 Several extensions are planned:
 \begin{enumerate}
+  \item Economic-dimension false positive audit: a stratified sample of
+    articles with non-zero economic scores, reviewed by human coders, to
+    quantify IRE classifier error rates.  Section~\ref{subsec:fp_audit}
+    covers political scores only; given the IRE classifier's 84.9\%
+    zero-score rate, errors in the non-zero tail are harder to detect but
+    consequential for IRE interpretation.
   \item Backward extension to 2000 using keyword-based proxies applied to
     digitized archives of El Comercio and La Rep\'ublica.
   \item Sectoral economic sub-indices: separate IRE components for
