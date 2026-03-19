@@ -332,15 +332,7 @@ entertainment, irrelevant foreign news) and calibrated examples of
 high-score articles (presidential vacancy motions at 80--90; Camisea gas
 crisis at 80--90).  The model responds with a single integer score.
 
-The scoring rubric is as follows:
-\begin{itemize}
-  \item 0: No political (or economic) risk signal
-  \item 1--20: Weak signal (routine campaign news, minor bureaucratic friction)
-  \item 21--40: Moderate tension (ongoing investigations, sectoral disputes)
-  \item 41--60: Significant instability (interpellations, power confrontations)
-  \item 61--80: Major crisis (vacancia, censures, national protests)
-  \item 81--100: Emergency (consummated vacancy, coup, presidential arrest)
-\end{itemize}
+The rubric assigns~0 to irrelevant articles (sports, entertainment, foreign news), 1--40 to weak-to-moderate signals, 41--80 to significant instability and major crises, and 81--100 to emergencies such as a consummated vacancy or coup; the full scale with examples is in Appendix~\ref{app:prompts}.
 
 \paragraph{Post-classification filtering.}
 The AI classifier makes systematic errors that require deterministic
@@ -679,24 +671,24 @@ on that date.
 \caption{Known Events and Index Response}
 \label{tab:events}
 \small
-\begin{tabular}{lrrrrrrr}
+\begin{tabular}{lrrrrrr}
 \toprule
-Event & Date & IRP & IRP$_s$ & IRE & IRE$_s$ & Articles & $D^{\text{pol}}$ \\
+Event & Date & IRP & IRE & Articles & $D^{\text{pol}}$ \\
 \midrule
-Cerr\'on Desaparece (pr\'ofugo) & Mar-18, 2025 & 127.6 & 115.5 & 16.9 & 26.8 & 32 & 0.719 \\
-Impunidad Boluarte & Apr-23, 2025 & 82.6 & 66.7 & 9.1 & 11.5 & 28 & 0.714 \\
-Vizcarra Prisi\'on Preventiva & Jun-16, 2025 & 137.8 & 119.4 & 0.0 & 5.1 & 47 & 0.532 \\
-Fragmentaci\'on Izquierda & Jul-17, 2025 & 88.8 & 78.2 & 96.1 & 88.6 & 39 & 0.615 \\
-Colapso Ministerial Boluarte & Aug-19, 2025 & 145.5 & 127.0 & 112.6 & 80.5 & 57 & 0.596 \\
-Paro Transportistas & Oct-10, 2025 & 248.2 & 225.0 & 150.2 & 128.0 & 74 & 0.730 \\
-Vacancia Boluarte & Oct-22, 2025 & 153.2 & 131.5 & 73.6 & 84.2 & 83 & 0.542 \\
-Castillo Condenado & Nov-13, 2025 & 112.8 & 89.4 & 147.6 & 115.2 & 66 & 0.530 \\
-Censura Gabinete Jeri & Jan-21, 2026 & 231.1 & 201.9 & 66.3 & 66.3 & 127 & 0.504 \\
-Paro Transportistas II & Feb-04, 2026 & 91.5 & 84.9 & 37.1 & 43.8 & 111 & 0.351 \\
-Crisis Energ\'etica Camisea & Mar-12, 2026 & 138.9 & 118.9 & 315.3 & 292.7 & 551 & 0.176 \\
-Voto Confianza Miralles & Mar-18, 2026 & 226.2 & 208.9 & 163.0 & 151.4 & 932 & 0.186 \\
+Cerr\'on Desaparece (pr\'ofugo) & Mar-18, 2025 & 127.6 & 16.9 & 32 & 0.719 \\
+Impunidad Boluarte & Apr-23, 2025 & 82.6 & 9.1 & 28 & 0.714 \\
+Vizcarra Prisi\'on Preventiva & Jun-16, 2025 & 137.8 & 0.0 & 47 & 0.532 \\
+Fragmentaci\'on Izquierda & Jul-17, 2025 & 88.8 & 96.1 & 39 & 0.615 \\
+Colapso Ministerial Boluarte & Aug-19, 2025 & 145.5 & 112.6 & 57 & 0.596 \\
+Paro Transportistas & Oct-10, 2025 & 248.2 & 150.2 & 74 & 0.730 \\
+Vacancia Boluarte & Oct-22, 2025 & 153.2 & 73.6 & 83 & 0.542 \\
+Castillo Condenado & Nov-13, 2025 & 112.8 & 147.6 & 66 & 0.530 \\
+Censura Gabinete Jeri & Jan-21, 2026 & 231.1 & 66.3 & 127 & 0.504 \\
+Paro Transportistas II & Feb-04, 2026 & 91.5 & 37.1 & 111 & 0.351 \\
+Crisis Energ\'etica Camisea & Mar-12, 2026 & 138.9 & 315.3 & 551 & 0.176 \\
+Voto Confianza Miralles & Mar-18, 2026 & 226.2 & 163.0 & 932 & 0.186 \\
 \bottomrule
-\multicolumn{8}{l}{\footnotesize IRP$_s$, IRE$_s$ = EMA-smoothed values. $D^{\text{pol}}$ = political breadth.}
+\multicolumn{6}{l}{\footnotesize $D^{\text{pol}}$ = political breadth. EMA-smoothed values available on request.}
 \end{tabular}
 \end{table}
 
@@ -1523,7 +1515,8 @@ Month & Avg.\ IRP & Avg.\ IRE & Mean daily articles \\
 2026-02 & 97.5 &  60.7 &  98.7 \\
 2026-03 & 85.6 & 213.7 & 337.6 \\
 \bottomrule
-\multicolumn{4}{l}{\footnotesize March 2026 reflects elevated article volume from multiple concurrent crises.}
+\multicolumn{4}{l}{\footnotesize $^a$ Article volume rose from $\sim$40--50/day (early 2025) to 337.6/day (March 2026)} \\
+\multicolumn{4}{l}{\footnotesize as additional RSS sources came online. March 2026 IRE reflects the Camisea gas crisis.}
 \end{tabular}
 \end{table}
 

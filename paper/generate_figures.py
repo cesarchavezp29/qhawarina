@@ -87,17 +87,29 @@ ax1.plot(df['date'], df['IRP_smooth'], color=COLORS['navy'],
          linewidth=1.5, label='IRP smoothed')
 ax1.axhline(150, color=COLORS['navy'], linewidth=0.9,
             linestyle=':', alpha=0.6, label='Elevated threshold (150)')
-ax1.set_ylabel('IRP', fontsize=10)
-ax1.set_ylim(0, df['IRP'].max() * 1.15)
+YMAX_UNIFIED = max(df['IRP'].max(), df['IRE'].max()) * 1.15
+ax1.set_ylabel('IRP (raw)', fontsize=10)
+ax1.set_ylim(0, YMAX_UNIFIED)
 
-# event lines on IRP
-for (name, date_str, side) in EVENTS_IRP:
+# event annotations on IRP using annotate with arrows; alternate left/right
+for i, (name, date_str, side) in enumerate(EVENTS_IRP):
     x = pd.Timestamp(date_str)
     ax1.axvline(x, color='#555555', linewidth=0.8, linestyle='--', alpha=0.7)
-    yref = ax1.get_ylim()[1]
-    y_pos = yref * (0.92 if side == 'top' else 0.12)
-    ax1.text(x, y_pos, name, fontsize=7, rotation=90,
-             ha='right', va='top', color='#333333')
+    # Get IRP value at peak
+    row = df[df['date'] == x]
+    y_data = float(row['IRP'].values[0]) if len(row) else df.loc[df['date'].sub(x).abs().idxmin(), 'IRP']
+    # Abbreviate label to ≤15 chars
+    short = name[:15]
+    # Alternate label x-offset to avoid overlap
+    x_frac = 0.15 + (i % 2) * 0.35
+    ax1.annotate(short,
+                 xy=(x, y_data),
+                 xycoords='data',
+                 xytext=(x_frac, 0.92 - (i // 2) * 0.12),
+                 textcoords='axes fraction',
+                 fontsize=7, color='#333333',
+                 arrowprops=dict(arrowstyle='->', color='#777777', lw=0.8),
+                 ha='center', va='bottom')
 
 legend_elements = [
     Line2D([0], [0], color=COLORS['gray'], linewidth=6, alpha=0.5, label='Daily raw'),
@@ -113,16 +125,23 @@ ax2.bar(df['date'], df['IRE'], width=1, color=COLORS['gray'],
         alpha=0.5, label='IRE daily')
 ax2.plot(df['date'], df['IRE_smooth'], color=COLORS['terra'],
          linewidth=1.5, label='IRE smoothed')
-ax2.set_ylabel('IRE', fontsize=10)
-ax2.set_ylim(0, df['IRE'].max() * 1.15)
+ax2.set_ylabel('IRE (raw)', fontsize=10)
+ax2.set_ylim(0, YMAX_UNIFIED)
 
-for (name, date_str, side) in EVENTS_IRE:
+for i, (name, date_str, side) in enumerate(EVENTS_IRE):
     x = pd.Timestamp(date_str)
     ax2.axvline(x, color='#555555', linewidth=0.8, linestyle='--', alpha=0.7)
-    yref = ax2.get_ylim()[1]
-    y_pos = yref * 0.88
-    ax2.text(x, y_pos, name, fontsize=7, rotation=90,
-             ha='right', va='top', color='#333333')
+    row = df[df['date'] == x]
+    y_data = float(row['IRE'].values[0]) if len(row) else df.loc[df['date'].sub(x).abs().idxmin(), 'IRE']
+    short = name[:15]
+    ax2.annotate(short,
+                 xy=(x, y_data),
+                 xycoords='data',
+                 xytext=(0.75, 0.88),
+                 textcoords='axes fraction',
+                 fontsize=7, color='#333333',
+                 arrowprops=dict(arrowstyle='->', color='#777777', lw=0.8),
+                 ha='center', va='bottom')
 
 legend_elements2 = [
     Line2D([0], [0], color=COLORS['gray'], linewidth=6, alpha=0.5, label='Daily raw'),
@@ -152,9 +171,13 @@ episodes = [
     ('Voto Confianza Miralles Mar-2026',    '2026-03-18'),
 ]
 
-fig2, axes = plt.subplots(1, 5, figsize=(15, 4), sharey=False)
+fig2, axes2d = plt.subplots(2, 3, figsize=(14, 8), sharey=False)
 
-for ax, (event_name, peak_str) in zip(axes, episodes):
+# Flatten the 2×3 grid; last cell is empty
+flat_axes = axes2d.flatten()
+
+for idx, (event_name, peak_str) in enumerate(episodes):
+    ax = flat_axes[idx]
     peak = pd.Timestamp(peak_str)
     mask = (df['date'] >= peak - pd.Timedelta(days=10)) & \
            (df['date'] <= peak + pd.Timedelta(days=10))
@@ -168,13 +191,17 @@ for ax, (event_name, peak_str) in zip(axes, episodes):
 
     ax.set_title(f'{event_name}\n(peak IRP = {peak_val:.0f})',
                  fontsize=7.5, pad=4)
-    ax.set_ylabel('IRP' if ax is axes[0] else '', fontsize=9)
+    # Show y-axis label for leftmost panels in each row (indices 0 and 3)
+    ax.set_ylabel('IRP' if idx in (0, 3) else '', fontsize=9)
     ax.xaxis.set_major_locator(mdates.WeekdayLocator(byweekday=0))
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%b %d'))
     ax.tick_params(axis='x', labelsize=6.5, rotation=45)
     ax.tick_params(axis='y', labelsize=7)
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
+
+# Hide the 6th (empty) cell
+flat_axes[5].set_visible(False)
 
 fig2.suptitle('IRP Around the Five Highest-IRP Episodes ($\\pm$10 Days)',
               fontsize=11, y=1.01)
@@ -248,10 +275,11 @@ print('Generating Figure 4 …')
 
 fig4, ax4 = plt.subplots(figsize=(7, 5.5))
 
+irp_vmax = max(df['IRP'].max(), 300)
 sc = ax4.scatter(df['intensity_pol'], df['breadth_pol'],
                  c=df['IRP'], cmap='YlOrRd',
                  s=18, alpha=0.7, zorder=3,
-                 norm=mcolors.Normalize(vmin=0, vmax=df['IRP'].quantile(0.97)))
+                 norm=mcolors.Normalize(vmin=0, vmax=irp_vmax))
 
 cb = plt.colorbar(sc, ax=ax4, pad=0.02)
 cb.set_label('IRP value', fontsize=9)
@@ -259,15 +287,32 @@ cb.set_label('IRP value', fontsize=9)
 # Iso-IRP contours: IRP = Intensity * Breadth^0.5
 # => Breadth = (IRP / Intensity)^2
 x_range = np.linspace(0.5, df['intensity_pol'].quantile(0.98), 300)
-for irp_level, ls in [(100, ':'), (150, '--'), (200, '-')]:
+iso_styles = [
+    (100, '-',   1.2),
+    (150, '--',  1.5),
+    (200, '-.', 2.0),
+]
+for irp_level, ls, lw in iso_styles:
     y_iso = (irp_level / x_range) ** 2
     # Only plot where breadth is in plausible range [0, 1]
     mask_iso = (y_iso > 0) & (y_iso <= 1.0)
     ax4.plot(x_range[mask_iso], y_iso[mask_iso],
-             color='#2255aa', linewidth=1.2, linestyle=ls, alpha=0.7,
-             label=f'IRP = {irp_level}')
+             color='#2255aa', linewidth=lw, linestyle=ls, alpha=0.7)
+    # Inline label at the right end of each curve
+    x_masked = x_range[mask_iso]
+    y_masked = y_iso[mask_iso]
+    if len(x_masked) > 0:
+        ax4.text(x_masked[-1], y_masked[-1], f' IRP={irp_level}',
+                 fontsize=7, color='#2255aa', va='center')
 
-ax4.legend(fontsize=8, frameon=False, title='Iso-IRP curves', title_fontsize=8)
+ax4.legend(
+    handles=[
+        plt.Line2D([0], [0], color='#2255aa', lw=1.2, ls='-',  label='IRP = 100'),
+        plt.Line2D([0], [0], color='#2255aa', lw=1.5, ls='--', label='IRP = 150'),
+        plt.Line2D([0], [0], color='#2255aa', lw=2.0, ls='-.', label='IRP = 200'),
+    ],
+    fontsize=8, frameon=False, title='Iso-IRP curves', title_fontsize=8
+)
 ax4.set_xlabel('Normalized Political Intensity ($I_t^{\\mathrm{pol}}$)', fontsize=10)
 ax4.set_ylabel('Political Breadth ($D_t^{\\mathrm{pol}}$)', fontsize=10)
 ax4.set_title('Intensity–Breadth Decomposition of IRP\n(all 443 days)', fontsize=11)
