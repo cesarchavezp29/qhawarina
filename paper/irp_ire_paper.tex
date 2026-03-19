@@ -10,6 +10,7 @@
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{graphicx}
+\graphicspath{{figures/}}
 \usepackage{hyperref}
 \usepackage{natbib}
 \usepackage{xcolor}
@@ -67,7 +68,6 @@
   Carlos C\'{e}sar Ch\'{a}vez Padilla\thanks{%
     Center for the Economics of Human Development, University of Chicago.
     E-mail: \texttt{cchavezpadilla@uchicago.edu}.
-    I thank the team at Qhawarina.pe for data infrastructure support.
     All errors are my own.}
 }
 
@@ -100,7 +100,7 @@ deviation 42.1; IRE has mean 57.8 and standard deviation 65.3,
 reflecting concentrated economic coverage.  Monthly IRE correlates
 with the PEN/USD exchange rate ($r = 0.398$), while daily and weekly
 correlations are near zero, consistent with forward-looking FX markets.
-Data are publicly available via the Qhawarina.pe platform.
+Data are available from the author upon request.
 \end{abstract}
 
 \noindent\textbf{JEL codes:} C43, C82, E32, H56
@@ -439,13 +439,13 @@ treats both as equivalent counts.  Our formula uses the sum of scores
 (raw intensity) as the numerator, so higher-severity articles contribute
 proportionally more.
 
-Third, and most honestly, AI scoring introduces new failure modes absent
-from keyword matching.  The classifier makes systematic errors---sports
-false positives, political inversion---that require post-hoc rules to
-correct.  Keyword matching has more predictable failure modes.  We do not
-claim that AI scoring is universally superior; we claim it is better suited
+Third, AI scoring introduces new failure modes absent from keyword
+matching.  The classifier makes systematic errors---sports false positives,
+political inversion---that require post-hoc rules to correct.  Keyword
+matching has more predictable failure modes.  AI scoring is better suited
 to the specific problem of measuring uncertainty in a single country's
-Spanish-language media.
+Spanish-language media, but at the cost of less transparent error
+structure.
 
 % ══════════════════════════════════════════════════════════════════════════════
 \section{Index Construction}
@@ -531,6 +531,13 @@ $D_t^{\text{pol}}$ can reach 30--40\% during political crises.  A lower
 $\beta_{\text{eco}}$ prevents the breadth multiplier from systematically
 suppressing the economic index.  Empirically, the mean political breadth in
 the sample is 20.3\% while the mean economic breadth is 3.5\%.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.8\textwidth]{fig4_decomposition.pdf}
+  \caption{Intensity and breadth components for all days in the sample. Each point is one day; color indicates the resulting IRP value. Curves show iso-IRP contours at IRP = 100, 150, and 200.}
+  \label{fig:decomposition}
+\end{figure}
 
 \subsection{Temporal Smoothing}
 \label{subsec:smoothing}
@@ -628,7 +635,7 @@ Backward coverage & From 1899 (newspaper archives) & January 2025 onward \\
 \end{tabularx}
 \end{table}
 
-Our approach differs from \cite{caldara2022} in three important ways.
+Our approach differs from \cite{caldara2022} in three ways.
 We use a rolling 90-day baseline rather than a fixed historical baseline,
 so the index reflects \emph{current} conditions relative to recent history
 rather than relative to a 30-year normal.  We use separate dimensions for
@@ -678,8 +685,14 @@ Voto Confianza Miralles & Mar-18, 2026 & 226.2 & 208.9 & 163.0 & 151.4 & 932 & 0
 \end{tabular}
 \end{table}
 
-The indices correctly identify all 12 events listed.  Several patterns
-merit discussion.  First, the Paro Nacional de Transportistas in October~2025
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{fig2_event_zoom.pdf}
+  \caption{IRP around the five highest-IRP episodes. Each panel shows a $\pm$10-day window centered on the episode peak. Bars show daily IRP; the line shows the smoothed series.}
+  \label{fig:event_zoom}
+\end{figure}
+
+The indices correctly identify all 12 events listed.  First, the Paro Nacional de Transportistas in October~2025
 produced the highest IRP reading in the sample (IRP~=~248.2), with 73\% of
 articles on that day scoring above the threshold---the highest breadth
 recorded.  This was a genuine national crisis: road blockades nationwide,
@@ -735,12 +748,12 @@ Monthly & $-0.047$ & 0.867 & $0.398$ & 0.142 &  15 \\
 \end{table}
 
 Three findings emerge.  First, daily IRP has essentially zero correlation
-with daily FX changes ($r = -0.011$, $p = 0.852$).  This is expected and
-does not invalidate the index.  The exchange rate reflects all available
-information about future risk, not just today's news; BCRP intervention
-further smooths daily moves; and measurement noise in the daily index is
-substantial when $N_t$ is small (median 47 articles per day in early
-months).
+with daily FX changes ($r = -0.011$, $p = 0.852$).  Zero daily correlation
+is consistent with forward-looking markets: the exchange rate reflects all
+available information about future risk, not just today's news; BCRP
+intervention further smooths daily moves; and measurement noise in the
+daily index is substantial when $N_t$ is small (median 47 articles per day
+in early months).
 
 Second, the monthly IRE correlation with monthly FX changes is $r = 0.398$
 ($p = 0.142$; 15 observations).  Though not statistically significant at
@@ -825,6 +838,13 @@ IRE (smoothed) & 57.8 & 41.4 & 56.6 &  0.0 & 355.3 & 2.41 & 7.40 & 0.730 & 0.415
 \end{tabular}
 \end{table}
 
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{fig1_full_series.pdf}
+  \caption{Daily IRP and IRE, January 2025 -- March 2026. Gray bars show daily raw values; colored lines show the EMA-smoothed series ($\alpha = 0.30$). Dashed vertical lines mark major political and economic events. The horizontal reference line at IRP = 150 indicates the elevated-risk threshold.}
+  \label{fig:full_series}
+\end{figure}
+
 Both series are right-skewed with excess kurtosis, consistent with rare but
 large crisis episodes.  The IRP has positive skewness (1.63) and kurtosis
 (4.72), indicating a fat right tail.  The IRE is more extreme: skewness 2.35
@@ -907,6 +927,13 @@ questions about the social programs Castillo had promised, creating economic
 uncertainty about redistribution.  The Camisea gas crisis has the most
 extreme divergence: IRE~=~418.2 versus IRP~=~138.9 on March~3.
 
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.7\textwidth]{fig3_irp_ire_scatter.pdf}
+  \caption{Monthly IRP versus monthly IRE, January 2025 -- March 2026. Each point is a calendar month. The line shows the OLS fit.}
+  \label{fig:irp_ire_scatter}
+\end{figure}
+
 % ══════════════════════════════════════════════════════════════════════════════
 \section{Applications}
 \label{sec:applications}
@@ -949,7 +976,7 @@ events within the broader uncertainty landscape.
 \label{sec:limitations}
 % ══════════════════════════════════════════════════════════════════════════════
 
-We discuss six limitations honestly.
+Six limitations follow.
 
 \paragraph{1. AI classification quality.}
 Claude Haiku makes systematic errors that the post-filter rules address
@@ -1046,7 +1073,7 @@ forward-looking financial markets.
 The principal limitation is the short sample (443 days).  As the pipeline
 continues running, the data will become more useful for time series
 analysis, event studies, and eventually causal identification.  The data
-are publicly available via the Qhawarina.pe platform and the statistics
+are available from the author upon request and the statistics
 are fully reproducible from the script \texttt{paper/compute\_paper\_stats.py}
 in the repository.
 
