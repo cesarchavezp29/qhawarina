@@ -1129,6 +1129,65 @@ applications that use the index as a threshold alarm (e.g., ``flag days above
 IRP~$= 150$''), the false positive risk is low; for applications that use daily
 levels continuously, the conservative bias in quiet periods should be noted.
 
+\paragraph{Economic-dimension audit.}
+We repeat the audit for the IRE classifier, sampling 100 articles per
+economic-score quintile from the 4{,}297 articles with non-zero economic scores
+(15.1\% of the corpus).  The quintile boundaries differ from the political
+audit: Q1 covers scores 1--10, Q2 = 15, Q3 = 20, Q4 = 21--35, and Q5 = 36--80.
+Results are in Table~\ref{tab:econ_fp_audit}.
+
+\begin{table}[h]
+\centering
+\small
+\caption{Economic False Positive Audit: Agreement by Quintile}
+\label{tab:econ_fp_audit}
+\begin{tabular}{lcccccc}
+\toprule
+Quintile & $N$ & Score range & Mean orig. & Mean audit & Agree $\pm 20$ & Mean $\Delta$ \\
+\midrule
+Q1 (low)   & 100 & 1--10   &  6.9 & 19.7 & 65\% & $+12.8$ \\
+Q2         & 100 & 15      & 15.0 & 18.3 & 89\% & $+3.3$  \\
+Q3         & 100 & 20      & 20.0 & 22.0 & 92\% & $+2.0$  \\
+Q4 (high)  & 100 & 21--35  & 28.7 & 26.0 & 87\% & $-2.7$  \\
+Q5 (top)   & 100 & 36--80  & 57.2 & 37.7 & 65\% & $-19.5$ \\
+\midrule
+All        & 499 & 1--80   & 25.5 & 24.7 & 80\% & $-0.8$  \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Overall agreement (within $\pm 20$ points) is 79.6\%---higher than the
+political audit's 64.2\%---reflecting that economic risk language in
+Peruvian news is more standardized and less context-dependent.  The mean
+discrepancy is near zero ($-0.83$ points), indicating no systematic
+directional bias.
+
+The economic audit reveals a different error pattern from the political
+audit.  \emph{Overscoring} is the dominant failure mode at high scores:
+44 of 499 articles (8.8\%) received audit scores more than 20 points
+below the original, concentrated in Q5.  The most common overscored
+categories are sectoral news (9 cases, avg.\ $\Delta = -35$), articles the
+auditor classified as having no economic risk (10 cases, avg.\ $\Delta = -35$),
+and policy-fiscal articles (6 cases, avg.\ $\Delta = -30$).  Inspection of
+the 28 false positives (original $\geq 25$, audit $< 10$) reveals two main
+patterns: (1)~political articles that received incidental economic scores
+from the classifier (e.g., political party filings, court proceedings, road
+accidents); and (2)~Venezuelan or US economic news that was scored as
+Peru-relevant when it was not.  The post-filter's crisis-guard partially
+addresses case (2), but case (1) reflects classifier leakage that the
+post-filter does not fully correct.
+
+The false positive rate among high-scoring economic articles (original
+$\geq 25$, audit $< 10$) is \textbf{14.1\%}---higher than the political
+audit's 8.5\%.  This aligns with the expectation that economic risk
+classification is harder at moderate scores where the Peru-relevance
+threshold is ambiguous.  The Q5 mean delta of $-19.5$ (auditor consistently
+scores top-quintile articles $\sim 20$ points lower) indicates that the
+classifier tends to overstate crisis severity for genuinely significant but
+not extreme economic events.  Users of IRE for threshold applications should
+apply a conservative discount of approximately 10--15 points to high-end
+IRE readings.
+
 % ══════════════════════════════════════════════════════════════════════════════
 \section{Properties of the Index}
 \label{sec:properties}
@@ -1332,14 +1391,15 @@ review.  The post-filter regex patterns are necessarily incomplete: they
 cover known failure modes but will miss novel patterns.  A more robust
 solution---either a fine-tuned model trained on human-labeled Peruvian
 news, or a two-stage filter that screens for relevance before scoring
-severity---would improve quality.  Section~\ref{subsec:fp_audit} reports a formal false positive audit
-covering 500 stratified articles across five political-score quintiles,
-finding an 8.5\% false positive rate among high-scoring articles and
-64.2\% overall agreement within $\pm$20 points.  The remaining limitation
-is scope: the audit covers \emph{political} scores only.  A separate
-economic-dimension audit is warranted, particularly given the IRE
-classifier's 84.9\% zero-score rate, where misclassification is harder to
-detect but potentially more consequential for IRE interpretation.
+severity---would improve quality.  Section~\ref{subsec:fp_audit} reports formal false positive audits for
+both dimensions.  The political audit (500 articles, five quintiles) finds
+an 8.5\% false positive rate among high-scoring articles and 64.2\%
+overall agreement within $\pm$20 points.  The economic audit (499 articles)
+finds a higher false positive rate of 14.1\% among high-scoring articles
+and identifies a Q5 overscoring bias of approximately $-19.5$ points.
+The remaining limitation is that both audits use a second LLM call as the
+``human'' reference rather than trained human annotators; inter-rater
+reliability with domain experts has not been measured.
 
 \label{subsec:limitations_sources}
 \paragraph{2. Source concentration.}
@@ -1394,12 +1454,6 @@ detect drift, are best practices we recommend for future implementation.
 \paragraph{Future work.}
 Several extensions are planned:
 \begin{enumerate}
-  \item Economic-dimension false positive audit: a stratified sample of
-    articles with non-zero economic scores, reviewed by human coders, to
-    quantify IRE classifier error rates.  Section~\ref{subsec:fp_audit}
-    covers political scores only; given the IRE classifier's 84.9\%
-    zero-score rate, errors in the non-zero tail are harder to detect but
-    consequential for IRE interpretation.
   \item Backward extension to 2000 using keyword-based proxies applied to
     digitized archives of El Comercio and La Rep\'ublica.
   \item Sectoral economic sub-indices: separate IRE components for
