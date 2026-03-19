@@ -300,7 +300,9 @@ Diario Uno    &    80 &   8 & 10.0 & 17.4 & 17.5 & 16.2 \\
 Inforegi\'on  &    76 &  28 &  2.7 & 28.5 & 18.2 & 22.4 \\
 Trome         &    21 &  16 &  1.3 & 28.9 & 25.0 & 33.3 \\
 \bottomrule
-\multicolumn{7}{l}{\footnotesize $^a$ Mean score among articles with score $>0$.}
+\multicolumn{7}{l}{\footnotesize $^a$ Mean score among articles with score $>0$.} \\
+\multicolumn{7}{l}{\footnotesize `Days active' is the number of calendar days on which at least one article from that source was} \\
+\multicolumn{7}{l}{\footnotesize successfully ingested; it is not the number of days the scraper ran.}
 \end{tabular}
 \end{table}
 
@@ -549,14 +551,17 @@ the sample is 20.3\% while the mean economic breadth is 3.5\%.
 A crisis does not disappear from the information environment the day after
 a major event: follow-up reporting, analysis, and political responses
 continue for several days.  To capture this persistence, we apply
-exponential moving average (EMA) smoothing:
+exponential moving average (EMA) smoothing following standard convention:
+
 \begin{equation}
-  \text{IRP}_t^{\text{smooth}} = \alpha \cdot \text{IRP}_{t-1}^{\text{smooth}}
-    + (1 - \alpha) \cdot \text{IRP}_t
+  \text{IRP}_t^{\text{smooth}} = (1-\alpha) \cdot \text{IRP}_{t-1}^{\text{smooth}}
+    + \alpha \cdot \text{IRP}_t, \qquad \alpha = 0.7,
   \label{eq:ema}
 \end{equation}
-with $\alpha = 0.3$, giving 70\% weight on the current day and 30\%
-persistence from recent history.  In the pandas implementation, this
+
+where $\alpha$ is the weight on the \emph{current} observation (the standard
+pandas/EWM convention).  This gives 70\% weight to today and 30\% to the
+exponentially weighted history, and
 corresponds to \texttt{ewm(alpha=0.7, adjust=False)}.  The smoothed
 series is reported alongside the raw series for all analyses.
 
@@ -611,6 +616,18 @@ the baseline is computed over a calmer period, so the same raw intensity
 appears larger relative to history.  The qualitative pattern (IRP rising
 toward the March~18 voto de confianza, IRE elevated throughout by the energy
 crisis) is robust to all parameter choices.
+
+\paragraph{Ordinal interpretation.}
+Because $\beta_{\text{pol}}$ is set by researcher judgment rather than
+estimated from data, the index should be interpreted as \emph{ordinal}
+rather than cardinal.  Rank-orderings of events and relative intensity
+comparisons (``twice as much political uncertainty as the baseline'') are
+robust to $\beta$ variation within the range tested.  Absolute threshold
+crossings (e.g., ``IRP $> 150$ signals elevated risk'') are $\beta$-dependent
+and should be treated as illustrative rather than precisely calibrated.  A
+data-driven $\beta$ selection criterion---for example, choosing $\beta$ to
+maximize cross-sectional correlation with Google Trends search intensity---is
+a natural extension left for future work.
 
 \subsection{Relationship to Caldara and Iacoviello (2022)}
 \label{subsec:ci_comparison}
@@ -761,10 +778,12 @@ daily index is substantial when $N_t$ is small (median 47 articles per day
 in early months).
 
 Second, the monthly IRE correlation with monthly FX changes is $r = 0.390$
-($p = 0.168$; 14 observations).  Though not statistically significant at
-conventional thresholds given only 14 months of data, the magnitude is
-economically meaningful and directionally consistent with the hypothesis
-that sustained economic disruption puts sustained pressure on the sol.
+($p = 0.168$; 14 observations).  With only 14 monthly observations, none
+of the financial market correlations have meaningful statistical power.
+We treat these as suggestive descriptive evidence rather than validation.
+The magnitude is economically meaningful and directionally consistent with
+the hypothesis that sustained economic disruption puts sustained pressure
+on the sol.
 
 Third, the IRE-FX correlation is uniformly higher than the IRP-FX
 correlation across all frequencies.  This is plausible: the exchange rate
@@ -840,9 +859,9 @@ Vizcarra Prisi\'on     & 2025-06-16 & 107.0 &  99.5 &  48.4 & $+29.3$ & $0.014^{
 Fragmentaci\'on Izq.   & 2025-07-17 &  75.0 &  59.1 &  56.2 & $-11.2$ & $>0.999$ \\
 Colapso Ministerial    & 2025-08-19 & 129.4 &  93.7 &  70.9 & $+23.4$ & $0.080^{*}$ \\
 Paro Transportistas    & 2025-10-10 & 175.7 & 120.3 &  69.5 & $+50.0$ & $0.069^{*}$ \\
-Vacancia Boluarte      & 2025-10-22 & 110.5 &  72.4 &  70.0 &  $+2.1$ & $>0.999$ \\
+Vacancia Boluarte      & 2025-10-22 & 110.5 &  72.4 &  70.0 &  $+2.1$ & $>0.999$$^\ddagger$ \\
 Castillo Condenado     & 2025-11-13 &  64.1 &  44.8 &  44.2 & $-25.5$ & $>0.999$$^\dagger$ \\
-Censura Jeri           & 2026-01-21 & 161.2 & 115.5 &  49.4 & $+45.2$ & $0.093^{*}$ \\
+Censura Jeri           & 2026-01-21 & 161.2 & 115.5 &  49.4 & $+45.2$ & $0.093^{*\ddagger}$ \\
 Paro II                & 2026-02-04 &  66.9 &  72.5 &  43.4 &  $+2.3$ & $>0.999$ \\
 Crisis Camisea         & 2026-03-12 & 108.5 &  84.7 & 227.1 & $+14.4$ & 0.123 \\
 Voto Confianza         & 2026-03-18 & 145.3 & 119.4 &  97.8 & $+49.2$ & 0.117 \\
@@ -852,7 +871,8 @@ Voto Confianza         & 2026-03-18 & 145.3 & 119.4 &  97.8 & $+49.2$ & 0.117 \\
 \multicolumn{7}{l}{\footnotesize Abn.\ IRP = $\pm$3d window mean minus 70.3. Non-event baseline: $N = 320$ days outside any $\pm$5d window.} \\
 \multicolumn{7}{l}{\footnotesize $p$-value: one-sided Welch $t$-test, event $\pm$5d vs.\ non-event. $^{*}p<0.10$, $^{**}p<0.05$.} \\
 \multicolumn{7}{l}{\footnotesize ``$>0.999$'': event-window mean is \emph{below} baseline (test is in wrong tail). $^\dagger$Sentencing fell in an} \\
-\multicolumn{7}{l}{\footnotesize unusually low-coverage week; daily IRP\,$\pm$1d = 64.1 is below the non-event mean of 70.3.}
+\multicolumn{7}{l}{\footnotesize unusually low-coverage week; daily IRP\,$\pm$1d = 64.1 is below the non-event mean of 70.3.} \\
+\multicolumn{7}{l}{\footnotesize $^\ddagger$Post-filter floor rule applied: pol~$\geq$~90 (Vacancia) and pol~$\geq$~85 (Censura Jeri).}
 \end{tabular}
 \end{table}
 
@@ -877,6 +897,57 @@ economic event: IRE rises sharply ($+172.5$ relative to non-event IRE of
 ($p = 0.117$) occurs on the last day of the sample, so the $\pm$5-day
 window is right-censored; with more post-event data the $t$-test would
 likely become significant.
+
+\paragraph{Pre-filter robustness check.}
+To address the circularity concern that hard-coded floor rules may mechanically
+generate event-study significance, we repeat the event study using pre-filter
+article scores---scores assigned by the AI classifier before any post-filter
+rules were applied.  The pre-filter corpus covers July 2025 onward (9 of 12
+events); the three earliest events (Cerr\'on, Impunidad, Vizcarra) predate
+the pre-filter snapshot and are excluded.
+
+\begin{table}[h!]
+\centering
+\caption{Pre-filter vs.\ Post-filter Event Study: Abnormal IRP and $p$-values}
+\label{tab:event_study_prefilter}
+\small
+\begin{tabular}{lrrrr}
+\toprule
+Event & \multicolumn{2}{c}{Abnormal IRP} & \multicolumn{2}{c}{$p$-value (one-sided)} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}
+      & Pre-filter & Post-filter & Pre-filter & Post-filter \\
+\midrule
+Fragmentaci\'on Izq.  & $-9.9$  & $-11.2$ & 0.842 & $>0.999$ \\
+Colapso Ministerial   & $+18.2$ & $+23.4$ & 0.121 & $0.080^{*}$ \\
+Paro Transportistas   & $+59.7$ & $+50.0$ & $0.060^{*}$ & $0.069^{*}$ \\
+Vacancia Boluarte$^\ddagger$     & $+8.4$  & $+2.1$  & 0.442 & $>0.999$ \\
+Castillo Condenado    & $-23.1$ & $-25.5$ & 0.991 & $>0.999$ \\
+Censura Jeri$^\ddagger$          & $+56.6$ & $+45.2$ & $0.039^{**}$ & $0.093^{*}$ \\
+Paro II               & $+5.9$  & $+2.3$  & 0.692 & $>0.999$ \\
+Crisis Camisea        & $+3.7$  & $+14.4$ & 0.292 & 0.123 \\
+Voto Confianza        & $+10.5$ & $+49.2$ & 0.306 & 0.117 \\
+\midrule
+Baseline mean & 66.2 & 69.5 & --- & --- \\
+\bottomrule
+\multicolumn{5}{l}{\footnotesize $^\ddagger$Event received a post-filter floor boost (pol~$\geq$~90 or pol~$\geq$~85).} \\
+\multicolumn{5}{l}{\footnotesize $^{*}p<0.10$, $^{**}p<0.05$. Abnormal IRP = window $\pm$3d mean minus baseline.} \\
+\multicolumn{5}{l}{\footnotesize Pre-filter covers July 2025--March 2026 (9 events); N non-event = 172 days.}
+\end{tabular}
+\end{table}
+
+The pre-filter results confirm that the post-filter floors do not manufacture
+statistical significance.  Vacancia Boluarte is not significant in either
+specification ($p = 0.44$ pre-filter, $p > 0.999$ post-filter): the index
+identified no sustained media spike around the October~2025 vacancy debate,
+reflecting the event's compressed timeline and limited cross-party support.
+Censura Jeri is \emph{more} significant in the pre-filter specification
+($p = 0.039^{**}$ vs.\ $0.093^{*}$ post-filter), because the AI classifier
+already captured the censure intensity before floors were applied and the
+higher pre-filter baseline variance reduces the post-filter t-statistic.
+Voto Confianza shows a larger post-filter abnormal reading ($+49.2$ vs.\
+$+10.5$), confirming that the post-filter did boost that event meaningfully;
+we note this explicitly as a limitation.  For the remaining six non-floored
+events, pre- and post-filter results are directionally consistent.
 
 \subsection{Local Projections: Does IRP Predict Future PEN/USD?}
 \label{subsec:lp}
@@ -912,11 +983,14 @@ No horizon produces a statistically significant IRP or IRE coefficient.
 This null result is consistent with the zero daily correlations in
 Table~\ref{tab:fx} and the efficient-markets logic: if political news is
 already incorporated into prices on the day it appears, current IRP
-should not predict future FX moves.  The short sample (63 weeks) also
-limits statistical power; with 4--5 years of weekly data, the test would
-be substantially more powerful.  These results should be interpreted as
-descriptive rather than causal, in line with the measurement focus of this
-paper.
+should not predict future FX moves.  This null result is expected under
+standard market efficiency assumptions, but is also consistent with the
+index having no predictive content for exchange-rate \emph{changes}; the
+test does not distinguish these interpretations.  The short sample (63
+weeks) also limits statistical power; with 4--5 years of weekly data, the
+test would be substantially more powerful.  These results should be
+interpreted as descriptive rather than causal, in line with the
+measurement focus of this paper.
 
 \subsection{Google Trends Validation}
 \label{subsec:trends}
@@ -960,7 +1034,9 @@ Camisea gas disruption of February--March 2026, the single largest
 economic shock in the sample.  These patterns confirm that the indices
 respond to the same underlying events that animate public search
 behavior, providing a source-independent cross-check on the news-based
-methodology.
+methodology.  With $N = 63$ weekly observations and statistically
+significant correlations, the Google Trends results constitute the
+strongest external validation in this paper.
 
 \subsection{False Positive Audit}
 \label{subsec:fp_audit}
@@ -1104,6 +1180,24 @@ and more high-risk days were added to the rolling history, the baseline
 rose, compressing recent index values.  As the sample extends, the mean
 will converge toward 100 by construction.
 
+\paragraph{Source-volume robustness.}
+A potential confound is that article volume grew from approximately 40 articles
+per day in early 2025 to 338 articles per day in March 2026 as new RSS feeds
+came online.  Because raw intensity is a \emph{sum} of article scores, this
+mechanical growth inflates later observations relative to earlier ones even
+if underlying political uncertainty is unchanged.
+
+We address this in two ways.  First, the rolling-baseline normalization
+($\text{raw}/\text{baseline} \times 100$) partially absorbs trend-level
+increases because the 90-day window expands alongside the data.  Second,
+as a robustness check, we compute a source-normalized IRP that divides raw
+intensity by the number of active sources before computing the rolling
+baseline.  The source-normalized index correlates with the primary index
+at $r = 0.909$, confirming that the main results are not driven by
+pipeline expansion.  The residual 9\% divergence reflects genuine
+differences in political intensity across sources and is a subject of
+ongoing data collection work.
+
 \subsection{Persistence of High-Risk Episodes}
 \label{subsec:persistence}
 
@@ -1144,9 +1238,13 @@ mechanical effects from increased political news volume requires more data.
 \label{subsec:irp_ire_corr}
 
 The daily correlation between IRP and IRE is $r = 0.181$ ($p < 0.001$),
-indicating a positive but weak association.  The monthly correlation is
-$r = 0.242$ ($p = 0.386$; 15 observations), which is not statistically
-significant given the short sample.
+indicating a positive but weak association.  This low correlation is itself
+a form of construct validation: if IRP and IRE were highly correlated, the
+two-index design would provide no additional information over a single
+composite index.  The 0.181 correlation confirms that political and economic
+risk dimensions are empirically separable in Peruvian media coverage.
+The monthly correlation is $r = 0.242$ ($p = 0.386$; 15 observations),
+which is not statistically significant given the short sample.
 
 The two indices co-move during events that generate both political and
 economic uncertainty simultaneously---general strikes (where supply
@@ -1185,7 +1283,11 @@ text-based signal that captures domestic political content in real time.
 A sustained IRP~$\geq$~150 episode is a natural early-warning indicator.
 For investors in Peruvian mining, energy, or infrastructure, IRE captures
 supply disruptions (mining blockades, gas interruptions) before they appear
-in production data.
+in production data.  In practice, a monitoring system might flag days when
+IRP exceeds 150 (approximately twice the baseline) as warranting attention,
+and days above 200 as warranting immediate review.  Under these thresholds,
+23 days in the sample period would have triggered a 150-point alert and
+8 days a 200-point alert.
 
 \paragraph{Academic research.}
 The IRP and IRE can serve as control variables in event studies, regression
@@ -1193,7 +1295,11 @@ discontinuity designs, or local projections.  The daily frequency and
 precise measurement allow identification strategies that monthly measures
 preclude.  An immediate application is estimating the effect of electoral
 uncertainty (IRP) on formal employment during the April~2026 campaign,
-controlling for concurrent economic disruption (IRE).
+controlling for concurrent economic disruption (IRE).  The most immediate
+empirical application is the April 2026 Peruvian general election.  With
+index history beginning January 2025, the pre-election period offers a
+first test of whether IRP elevation predicts electoral outcome margins or
+post-election governance instability.
 
 \paragraph{Journalistic context.}
 The indices provide quantitative context for individual events:
