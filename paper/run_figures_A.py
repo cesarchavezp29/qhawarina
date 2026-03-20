@@ -600,61 +600,61 @@ def figure_A6(res_base):
 def figure_A7():
     print('Generating Figure A7...')
 
-    # Circular layout: ToT(top-left), Rate(top-right), GDP(top-center),
-    # CPI(bottom-right), FX(bottom-left)
     import math
-    angles = {'ToT': 126, 'GDP': 90, 'Rate': 54, 'CPI': 18, 'FX': 162}
-    R = 0.32; cx, cy = 0.5, 0.50
+    # Pentagon layout with more vertical space: GDP top, Rate upper-right,
+    # CPI lower-right, FX lower-left, ToT upper-left
+    angles = {'GDP': 90, 'Rate': 18, 'CPI': 306, 'FX': 234, 'ToT': 162}
+    R = 0.30; cx, cy = 0.5, 0.52
     nodes = {n: (cx + R*math.cos(math.radians(a)),
                  cy + R*math.sin(math.radians(a)))
              for n, a in angles.items()}
 
-    # (from, to, F-stat, p<0.05, label_offset_dx, label_offset_dy)
+    # (from, to, F-stat, label, arc-rad, label_dx, label_dy)
+    # Opposite arc signs for bidirectional GDP<->Rate to separate the two arcs
     sig_edges = [
-        ('GDP',  'Rate', 14.6, '<0.001',  0.04, 0.04),
-        ('Rate', 'CPI',   7.5, '=0.007',  0.04, 0.04),
-        ('ToT',  'FX',    8.0, '=0.005',  0.04,-0.04),
+        ('GDP',  'Rate', 14.6, 'F=14.6***', +0.20,  0.07, -0.03),
+        ('Rate', 'CPI',   7.5, 'F=7.5**',   +0.20,  0.08,  0.02),
+        ('ToT',  'FX',    8.0, 'F=8.0**',   +0.20, -0.08, -0.01),
     ]
-    # Tested but not significant at 5%
     fail_edges = [
-        ('ToT',  'CPI',   3.47, '=0.069', -0.06, 0.04),
-        ('Rate', 'GDP',   1.82, '=0.183',  0.04, 0.04),
-        ('ToT',  'GDP',   2.11, '=0.151',  0.04, 0.04),
+        ('Rate', 'GDP',  1.82, -0.20),   # reverse of GDP→Rate, curves other way
+        ('ToT',  'CPI',  3.47, +0.20),
+        ('ToT',  'GDP',  2.11, +0.20),
     ]
 
-    fig, ax = plt.subplots(figsize=SZ["single_sq"])
-    ax.set_xlim(0, 1); ax.set_ylim(0.05, 0.95); ax.axis('off')
+    fig, ax = plt.subplots(figsize=(5.5, 5.0))
+    ax.set_xlim(0, 1); ax.set_ylim(0.02, 0.98); ax.axis('off')
 
-    # Failed edges — thin gray dashed (tested, p>0.05)
-    for from_n, to_n, F, p_str, dx, dy in fail_edges:
+    # Failed edges first (drawn underneath, no labels)
+    for from_n, to_n, F, rad in fail_edges:
         x0, y0 = nodes[from_n]; x1, y1 = nodes[to_n]
         ax.annotate('', xy=(x1, y1), xytext=(x0, y0),
-                    arrowprops=dict(arrowstyle='->', color=C["ci_dark"], lw=0.8,
+                    arrowprops=dict(arrowstyle='->', color=C["ci_dark"], lw=0.9,
                                    linestyle='dashed',
-                                   connectionstyle='arc3,rad=0.15'),
+                                   connectionstyle=f'arc3,rad={rad}'),
                     annotation_clip=False)
-        mx, my = (x0+x1)/2 + dx, (y0+y1)/2 + dy
-        ax.text(mx, my, f'F={F:.1f}\n(p{p_str})', fontsize=6,
-                color=C["ci_dark"], ha='center', va='center')
 
-    # Significant edges — solid, thickness ∝ sqrt(F)
-    for from_n, to_n, F, p_str, dx, dy in sig_edges:
+    # Significant edges — solid, thickness ∝ sqrt(F), labelled
+    for from_n, to_n, F, label, rad, dx, dy in sig_edges:
         x0, y0 = nodes[from_n]; x1, y1 = nodes[to_n]
-        lw = max(1.2, np.sqrt(F) / 1.8)
+        lw = max(1.5, np.sqrt(F) / 1.6)
         ax.annotate('', xy=(x1, y1), xytext=(x0, y0),
                     arrowprops=dict(arrowstyle='->', color=C["main"], lw=lw,
-                                   connectionstyle='arc3,rad=0.15'),
+                                   connectionstyle=f'arc3,rad={rad}'),
                     annotation_clip=False)
-        mx, my = (x0+x1)/2 + dx, (y0+y1)/2 + dy
-        ax.text(mx, my, f'F={F:.1f}\n(p{p_str})', fontsize=7,
-                color=C["main"], ha='center', va='center', fontweight='bold')
+        mx = (x0 + x1) / 2 + dx
+        my = (y0 + y1) / 2 + dy
+        ax.text(mx, my, label, fontsize=7.5, color=C["main"],
+                ha='center', va='center', fontweight='bold',
+                bbox=dict(fc='white', ec='none', pad=1.5))
 
-    # Node circles
+    # Node circles (drawn on top of edges)
     node_colors = {'Rate': C["accent1"], 'GDP': C["accent2"]}
+    node_r = 0.080
     for name, (x, y) in nodes.items():
         fc = node_colors.get(name, 'white')
         ec = C["accent1"] if name == 'Rate' else C["main"]
-        circle = plt.Circle((x, y), 0.085, color=fc, ec=ec, lw=1.8, zorder=5)
+        circle = plt.Circle((x, y), node_r, color=fc, ec=ec, lw=2.0, zorder=5)
         ax.add_patch(circle)
         txt_color = 'white' if name in node_colors else C["main"]
         ax.text(x, y, name, ha='center', va='center', fontsize=9,
@@ -663,11 +663,11 @@ def figure_A7():
     # Legend
     from matplotlib.lines import Line2D
     legend_elements = [
-        Line2D([0],[0], color=C["main"],    lw=2,   label='p < 0.05'),
-        Line2D([0],[0], color=C["ci_dark"], lw=1, ls='--', label='p > 0.05 (not significant)'),
+        Line2D([0],[0], color=C["main"],    lw=2.5, label='Granger-causes (p<0.05)'),
+        Line2D([0],[0], color=C["ci_dark"], lw=1.0, ls='--', label='Not significant (p>0.05)'),
     ]
     ax.legend(handles=legend_elements, loc='lower center',
-              bbox_to_anchor=(0.5, -0.02), ncol=2, fontsize=7.5, frameon=True)
+              bbox_to_anchor=(0.5, 0.00), ncol=2, fontsize=7.5, frameon=True)
 
     savefig(fig, 'fig_A7_granger_network')
     shutil.copy(OUTDIR / 'fig_A7_granger_network.pdf', Path('D:/Nexus/nexus/paper/figures/fig19_granger_network.pdf'))
