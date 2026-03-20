@@ -92,7 +92,7 @@ def compute_cholesky_irf(var_result, shock_var_idx=4, horizon=9, n_boot=500,
     if n_boot == 0:
         return irf_pt, irf_pt * np.nan, irf_pt * np.nan, irf_pt * np.nan, irf_pt * np.nan
 
-    boot = np.zeros((n_boot, horizon)); T_d = resids.shape[0]
+    boot_draws = []; T_d = resids.shape[0]
     for b in range(n_boot):
         idx = np.random.randint(0, T_d, size=T_d)
         br = resids.values[idx]; Y = np.zeros((T_d+lags, K))
@@ -108,8 +108,11 @@ def compute_cholesky_irf(var_result, shock_var_idx=4, horizon=9, n_boot=500,
             except: Pb = np.linalg.cholesky(Sb + np.eye(K)*1e-8)
             nb = Pb[shock_var_idx, shock_var_idx]
             if abs(nb)<1e-10: nb=1.0
-            boot[b] = irf_calc(rb.coefs, Pb, horizon, shock_var_idx, response_idx)/nb
-        except: boot[b] = irf_pt
+            boot_draws.append(irf_calc(rb.coefs, Pb, horizon, shock_var_idx, response_idx)/nb)
+        except: pass
+    if len(boot_draws) < 30:
+        return irf_pt, irf_pt*np.nan, irf_pt*np.nan, irf_pt*np.nan, irf_pt*np.nan
+    boot = np.array(boot_draws)
     return (irf_pt,
             np.percentile(boot, 5, axis=0), np.percentile(boot, 95, axis=0),
             np.percentile(boot, 16, axis=0), np.percentile(boot, 84, axis=0))
@@ -476,14 +479,13 @@ def figure_A5(var_df):
 
     dates = [d.to_pydatetime() for d in end_dates]
 
-    # Interpolate NaN values from failed windows (singular VAR at endpoints)
+    # Interpolate NaN values from failed/degenerate windows.
+    # pd.Series.interpolate handles interior gaps; ffill/bfill handles boundaries.
     def _interp_nan(arr):
-        a = np.array(arr, dtype=float)
-        x = np.arange(len(a))
-        ok = ~np.isnan(a)
-        if ok.sum() < 2:
-            return a
-        return np.interp(x, x[ok], a[ok])
+        s = pd.Series(np.array(arr, dtype=float))
+        if s.notna().sum() < 2:
+            return s.values
+        return s.interpolate(method='linear').ffill().bfill().values
 
     peaks_p  = _interp_nan(peaks)
     ci_lo_p  = _interp_nan(ci_lo)
