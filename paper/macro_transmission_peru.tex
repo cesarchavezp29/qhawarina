@@ -1,10 +1,13 @@
 \documentclass[12pt,letterpaper]{article}
 
 %% ── Packages ────────────────────────────────────────────────────────────────
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
 \usepackage[margin=1in]{geometry}
 \usepackage{setspace}
 \usepackage[round,authoryear]{natbib}
 \usepackage{booktabs}
+\usepackage{array}
 \usepackage{threeparttable}
 \usepackage{makecell}
 
@@ -27,7 +30,7 @@
 \usepackage{xcolor}
 \usepackage[hidelinks,
             pdfauthor={Carlos C\'esar Ch\'avez Padilla},
-            pdftitle={Monetary Policy Transmission in Peru}]{hyperref}
+            pdftitle={Identifying Monetary Policy Shocks in an Administered-Rate Economy}]{hyperref}
 
 %% ── Custom symbols ──────────────────────────────────────────────────────────
 \newcommand{\cmark}{\ding{51}}
@@ -62,8 +65,8 @@
 \vspace*{2cm}
 {\singlespacing
 \begin{center}
-  {\LARGE\bfseries Monetary Policy Transmission in Peru:\\[6pt]
-   A Systematic Comparison of Identification Strategies}
+  {\LARGE\bfseries Identifying Monetary Policy Shocks in an\\[6pt]
+   Administered-Rate Economy: Evidence from Peru}
 
   \bigskip\bigskip
 
@@ -79,36 +82,28 @@
 
   \begin{abstract}
     \noindent
-    We estimate the effects of monetary policy on GDP and poverty in Peru
-    using quarterly data from 2004Q2 to 2025Q3 ($T=85$). We systematically
-    compare seven identification strategies---recursive (Cholesky), sign
-    restrictions, narrative sign restrictions, local projections, two
-    Proxy-SVAR approaches using interbank rate surprises and AI-classified
-    BCRP communication tone (325 \textit{Notas Informativas}, 2001--2026),
-    and a GDP--poverty reduced-form regression---and find that only recursive
-    identification produces interpretable estimates. The Cholesky VAR(1)
-    yields a peak GDP response of $-0.195$\,pp per 100\,bp rate hike
-    (90\% bootstrap CI: $[-0.698,\,+0.271]$), consistent with the Peru SVAR
-    literature ($-0.25$ to $-0.30$\,pp). Modern identification methods fail
-    because Peru's interbank rate is administered, no rate-futures market
-    exists for policy surprise extraction, and the monetary record since 2003
-    provides too few sharp episodes for narrative restrictions.
-    Our most robust result is a GDP--poverty elasticity of $\hat\beta=-0.656$
-    ($t=-5.69$, $R^2=0.67$, $N=18$), estimated from ENAHO annual data
-    2005--2024 and stable across sub-periods. Chaining the two elasticities
-    implies a 100\,bp hike may raise poverty by approximately $+0.13$\,pp,
-    though this inherits the large uncertainty of the rate--GDP link.
-    The paper explains why the Peru SVAR literature relies on recursive
-    identification and cautions against applying Proxy-SVAR and narrative
-    methods---developed for the US and Euro Area---to emerging markets with
-    administered policy rates.
+    We compare seven identification strategies for monetary policy
+    transmission in Peru and find that only recursive (Cholesky)
+    identification produces interpretable estimates---modern methods fail.
+    Three institutional features explain this: the interbank rate is
+    administered by construction, no rate-futures market exists for policy
+    surprise extraction, and the monetary record provides too few sharp
+    episodes for narrative restrictions. The Cholesky VAR(1) yields a
+    peak GDP response of $-0.195$\,pp per 100\,bp (90\% CI:
+    $[-0.698,\,+0.271]$), consistent with the Peru SVAR literature.
+    Our most robust result is a GDP--poverty reduced-form coefficient of
+    $\hat\beta=-0.656$ ($t=-5.69$, $R^2=0.67$, $N=18$), stable across
+    sub-periods. Chaining the two estimates implies a 100\,bp hike may
+    raise poverty by approximately $+0.13$\,pp. These three features
+    characterize a broad class of EME central banks, making identification
+    methodology---not just Peru's results---the central contribution.
   \end{abstract}
 
   \medskip
   {\footnotesize
   \textit{JEL codes:} E52, E32, I32, C32.\\
   \textit{Keywords:} monetary policy transmission, SVAR, local projections,
-  narrative identification, Proxy-SVAR, poverty, Peru.}
+  narrative identification, Proxy-SVAR, poverty, Peru, emerging markets.}
 \end{center}
 }
 \end{titlepage}
@@ -149,13 +144,15 @@ fail. This paper fills that gap with four contributions:
     strategies for monetary policy in Peru within a single unified dataset
     ($T=85$, 2004Q2--2025Q3; see Table~\ref{tab:master}).
 
-  \item \textbf{First Proxy-SVAR with BCRP communication analysis:} we
-    classify 325 \textit{Notas Informativas del Programa Monetario}
-    (2001--2026) using both a hawkish/dovish dictionary and a large
-    language model (Claude Haiku, $-100$ to $+100$ scale), yielding the
-    most comprehensive BCRP tone dataset to date (Table~\ref{tab:tone_class}).
+  \item \textbf{A cautionary result for the communication-as-instrument
+    literature:} our LLM-classified BCRP tone instrument (325
+    \textit{Notas Informativas}, 2001--2026; Table~\ref{tab:tone_class})
+    passes relevance only when it retains anticipated policy content,
+    violating exogeneity and producing wrong-signed LP-IV responses at all
+    horizons $h=0$--$12$. This documents the anticipated-policy problem in a
+    central bank whose communication closely tracks its decisions.
 
-  \item \textbf{A well-identified GDP--poverty elasticity}
+  \item \textbf{A well-identified GDP--poverty reduced-form coefficient}
     ($\hat\beta=-0.656$, $p<0.001$, $N=18$; Table~\ref{tab:poverty_ols})
     that chains monetary policy effects to poverty outcomes, stable across
     sub-periods (Table~\ref{tab:subperiod}).
@@ -164,6 +161,18 @@ fail. This paper fills that gap with four contributions:
     institutional environment, contributing to the emerging literature on
     monetary policy transmission in EMEs \citep{ha2025}.
 \end{enumerate}
+
+Beyond the Peru-specific results, this paper makes a methodological
+contribution to the EME literature. The three features that block modern
+identification in Peru---an administered interbank rate, the absence of
+rate-futures markets, and a limited number of sharp monetary
+episodes---are not idiosyncratic to Peru. They characterize a large class
+of EME central banks spanning Latin America, the Middle East, and South
+Asia (Table~\ref{tab:eme_taxonomy}). For this class, the recursive SVAR
+is not a fallback for lack of sophistication; it is the credible
+identification frontier. Understanding \emph{why} modern methods fail
+in these settings, and what diagnostic tests reveal those failures, is
+the methodological contribution of this paper.
 
 The Cholesky benchmark (Figure~\ref{fig:cholesky_irfs}) yields a peak GDP
 response of $-0.195$\,pp per 100\,bp consistent with published Peru
@@ -284,9 +293,8 @@ shows the tone series over time.
   \input{tables/tab8_tone_classification}
 \end{mytable}
 
-\begin{mytable}{BCRP Communication Tone by Year, 2001--2026}{tab:tone}
-  \input{tables/tab2_tone_summary}
-\end{mytable}
+Year-by-year statistics for both methods appear in
+Table~\ref{tab:tone} (Appendix~\ref{app:tone}).
 
 \begin{figure}[htbp]
   \centering
@@ -542,15 +550,31 @@ literature on central bank communication as identification
   \label{fig:lp_iv}
 \end{figure}
 
-\subsection{GDP--Poverty Elasticity}
+\paragraph{Limitations and alternative specifications.}
+Several caveats attach to the tone instrument result. First, the
+LLM-dictionary correlation of $0.373$ indicates that LLM scores are noisy;
+results may differ with better-calibrated scoring or with a purpose-built
+hawkishness lexicon for Spanish-language central bank communications.
+Second, we have used tone levels throughout; an alternative specification
+using changes in tone ($\Delta\mathrm{tone}$) may better isolate unexpected
+shifts in communication stance and reduce the correlation with the macro
+cycle. Third, restricting the sample to rate-\emph{hold} decisions---where
+tone varies but the rate does not---may provide instruments that are more
+plausibly exogenous to the macro cycle, since the rate decision itself
+introduces the dominant endogeneity channel. We cannot claim to have
+exhausted the space of communication-based instruments; these alternatives
+are promising but require additional data construction beyond the scope
+of this paper.
+
+\subsection{GDP--Poverty Reduced-Form Coefficient}
 \label{sec:poverty_results}
 
 Table~\ref{tab:poverty_ols} reports full OLS output for
-equation~\eqref{eq:poverty}. The GDP--poverty elasticity is
+equation~\eqref{eq:poverty}. The GDP--poverty reduced-form coefficient is
 $\hat\beta=-0.656$ (SE\,${=}\,0.115$, $t=-5.69$, $p<0.001$, $R^2=0.669$,
-$N=18$). A 1\,pp increase in annual GDP growth reduces the monetary poverty
-headcount rate by $0.656$\,pp, or approximately 200,000 people given
-Peru's population.
+$N=18$). A 1\,pp increase in annual GDP growth is associated with a
+reduction of $0.656$\,pp in the monetary poverty headcount rate, or
+approximately 200,000 people given Peru's population.
 
 \begin{mytable}{Poverty Regression: Full OLS Results}{tab:poverty_ols}
   \input{tables/tab10_poverty_ols}
@@ -579,24 +603,47 @@ across sub-periods. The 2005--2014 elasticity is $-0.461$ (SE\,${=}\,0.179$);
 the 2015--2024 elasticity is $-0.723$ (SE\,${=}\,0.287$). A Chow test of
 equal slopes yields $t=0.78$ ($p\approx0.45$), failing to reject stability.
 
-\begin{mytable}{GDP--Poverty Elasticity: Sub-Period Stability}{tab:subperiod}
+\begin{mytable}{GDP--Poverty Reduced-Form Coefficient: Sub-Period Stability}{tab:subperiod}
   \input{tables/tab11_subperiod_stability}
 \end{mytable}
 
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.75\textwidth]{figures/fig8_gdp_poverty_subperiod}
-  \caption{GDP--Poverty Elasticity by Sub-Period. Squares: 2005--2014
+  \caption{GDP--Poverty Reduced-Form Coefficient by Sub-Period. Squares: 2005--2014
     ($\hat\beta=-0.461$). Diamonds: 2015--2024 excl.\ COVID
     ($\hat\beta=-0.723$). Chow test: $t=0.78$, $p\approx0.45$;
     cannot reject slope equality.}
   \label{fig:subperiod}
 \end{figure}
 
+\paragraph{Endogeneity and causal interpretation.}
+The reduced-form coefficient $\hat\beta=-0.656$ should be interpreted with
+care. GDP growth and poverty are jointly determined: common drivers include
+commodity price cycles, terms of trade shocks, and government transfer
+programs, all of which shift both variables simultaneously. The estimate
+is a \emph{descriptive} or \emph{reduced-form} parameter, not a causal
+one. The direction of omitted-variable bias is ambiguous in sign. If social
+transfer programs (such as Juntos) tend to reduce poverty beyond what GDP
+growth implies---because transfers respond counter-cyclically---then OLS
+will attribute some of that poverty reduction to low GDP growth, biasing
+$\hat\beta$ toward zero (less negative). Conversely, if anti-poverty
+programs are pro-cyclical (expanded when the economy grows), OLS will
+overstate the sensitivity, biasing $\hat\beta$ toward a more negative value.
+The 2009 observation is informative: poverty fell $3.4$\,pp despite GDP
+growth of only $1.1\%$---the exact pattern consistent with the
+counter-cyclical transfers story. The Chow test confirms that the
+reduced-form relationship is stable across sub-periods, but stability
+cannot rule out the presence of stable omitted variables that co-move
+with the business cycle. We therefore prefer the term ``reduced-form
+coefficient'' or ``semi-elasticity'' over ``causal elasticity'' throughout,
+and caution that the chained poverty estimate in the following section
+inherits this limitation.
+
 \subsection{Chained Estimate: Rate $\to$ GDP $\to$ Poverty}
 \label{sec:chain}
 
-Chaining the Cholesky peak GDP response and the poverty OLS elasticity:
+Chaining the Cholesky peak GDP response and the poverty OLS coefficient:
 \begin{equation}
   \underbrace{-0.195}_{\text{rate}\to\text{GDP}} \times
   \underbrace{(-0.656)}_{\text{GDP}\to\text{poverty}} =
@@ -605,12 +652,41 @@ Chaining the Cholesky peak GDP response and the poverty OLS elasticity:
 A 100\,bp rate hike may raise the monetary poverty rate by $+0.128$\,pp.
 The compounded CI from the GDP bootstrap interval $[-0.698,\,+0.271]$ spans
 approximately $[-0.178,\,+0.458]$\,pp in poverty terms. All uncertainty
-originates from the rate--GDP link; the poverty elasticity is precisely
-estimated.
+originates from the rate--GDP link; the poverty reduced-form coefficient is
+precisely estimated.
+
+\paragraph{Frequency mismatch and direction of bias.}
+Two frequency issues affect the chain. First, the quarterly VAR uses
+quarter-on-quarter GDP growth (QoQ), while the poverty OLS uses annual
+year-on-year GDP growth (YoY)---distinct variable definitions. Second, the
+IRF peak occurs at $h=3$ (one rate shock $\to$ peak GDP after three
+quarters), but the annual poverty response requires aggregating the GDP
+impact over a full year. The cumulative Cholesky IRF over horizons
+$h=0,\ldots,3$ sums to approximately $-0.297$\,pp ($0.053 - 0.019 - 0.136
+- 0.195$), suggesting the annual-equivalent GDP impact of a rate shock is
+larger in magnitude than the peak quarterly impact alone. Chaining the
+peak quarterly IRF ($-0.195$\,pp) with the annual poverty coefficient
+therefore likely \emph{understates} the total poverty impact of a rate
+hike, because it omits the GDP impact accumulated over the remaining
+quarters of the year.
+
+A further implication concerns the sign ambiguity: the CI spanning
+$[-0.178,\,+0.458]$\,pp means a rate hike could arithmetically
+\emph{reduce} poverty at the upper end of the confidence interval. This
+is not an error---it reflects the genuine uncertainty about the
+rate--GDP link ($T=85$). At the upper bound of the GDP bootstrap CI
+(GDP rises in response to a hike), the poverty rate mechanically falls
+given $\hat\beta<0$. The chain should therefore be interpreted as an
+order-of-magnitude estimate of the \emph{central tendency}; the sign
+of the poverty effect is uncertain, but the point estimate ($+0.128$\,pp)
+is consistent with the view that tighter monetary policy, by slowing
+growth, raises headcount poverty in the short run.
 
 % ─────────────────────────────────────────────────────────────────────────────
 \section{Systematic Comparison}
 \label{sec:comparison}
+
+\noindent\textit{Panel A: Own estimates. Panel B: Published Peru estimates.}
 
 Table~\ref{tab:master} is the paper's signature result: a systematic
 comparison of all identification strategies, including published Peru
@@ -643,6 +719,7 @@ that fail in Peru's institutional environment.
 \label{sec:discussion}
 
 \subsection{Why Modern Identification Fails in Peru}
+\label{sec:why_modern_fails}
 
 Three features of Peru's monetary framework prevent modern identification:
 
@@ -665,10 +742,48 @@ Three features of Peru's monetary framework prevent modern identification:
     with narrative identification (Table~\ref{tab:narrative}).
 \end{enumerate}
 
-These features are shared by many EME central banks. The Cholesky VAR
-remains the most credible identification tool available for such settings,
-consistent with \citet{perezrojo2024}, \citet{castillo2011},
-\citet{portilla2022}, and the broader EME findings of \citet{ha2025}.
+These three features are not idiosyncratic to Peru. A large class of EME
+central banks shares this identification environment: their interbank rates
+are administered, liquid rate-futures markets do not exist in domestic
+currency, and their inflation-targeting histories are too short or too
+uneventful to provide more than two or three unambiguous monetary episodes.
+Table~\ref{tab:eme_taxonomy} presents a taxonomy of selected EME central
+banks by identification feasibility. Bolivia, Paraguay, Egypt, Pakistan, and
+Bangladesh share all three of Peru's constraints. Colombia and Uruguay have
+administered rates but somewhat richer institutional context. Only Brazil,
+with its deep DI futures market, is clearly positioned for Proxy-SVAR
+identification in the Gertler-Karadi mold. For the majority of this table,
+the recursive SVAR is the state of the art---not a methodological concession,
+but the credible identification frontier.
+
+\begin{mytable}{Identification Feasibility Taxonomy for Selected EME Central Banks}{tab:eme_taxonomy}
+  \input{tables/tab13_eme_taxonomy}
+\end{mytable}
+
+Brazil's DI futures market stands out as the exception: it enables
+high-frequency surprise extraction and has been used in event-study
+identification analogous to \citet{gertler2015}. Mexico and Chile occupy
+an intermediate position---some OIS or swap instruments exist, and their
+inflation-targeting histories are longer---but liquid short-maturity futures
+comparable to US fed funds futures are absent. For the remaining countries
+in the table, the administered rate is the binding constraint: without a
+market-clearing interbank rate, no high-frequency surprise extraction is
+possible regardless of the length of the monetary history.
+
+\paragraph{Relationship to structural models.}
+The growing DSGE literature for Peru---including \citet{castillo2011}'s
+small open economy model---provides complementary evidence on monetary
+transmission mechanisms. We deliberately remain in the SVAR/LP framework
+for a specific reason: a DSGE model embeds identification assumptions in its
+theoretical structure rather than evaluating them empirically. Our
+contribution is precisely the \emph{identification comparison}, which
+requires a common reduced-form starting point from which different
+structural assumptions can be assessed. A DSGE model calibrated to Peru's
+institutions would generate qualitatively similar predictions---Cholesky
+identification is robust to reasonable parameterizations---but it would not
+deliver the diagnostic tests (first-stage $F$, LP-IV sign checks, narrative
+acceptance rates) that reveal why each non-recursive strategy fails.
+The two approaches are therefore complementary rather than competing.
 
 The tone-instrument result warrants separate discussion. The LLM classification
 of 325 BCRP communications yields a rich dataset and the instrument has
@@ -682,15 +797,16 @@ reflect anticipated rather than exogenous policy.
 
 \subsection{The Poverty Channel}
 
-The GDP--poverty elasticity $\hat\beta=-0.656$ (Table~\ref{tab:poverty_ols})
-is the paper's most robust result. Three implications follow.
+The GDP--poverty reduced-form coefficient $\hat\beta=-0.656$
+(Table~\ref{tab:poverty_ols}) is the paper's most robust result.
+Three implications follow.
 
 First, the scale is substantial. A slowdown of 1\,pp in annual GDP growth
 raises the poverty headcount by $0.656$\,pp, or approximately 200,000
 people. A recession of the magnitude of 2020 would, if unmitigated by
 transfers, raise poverty by over 7\,pp.
 
-Second, the elasticity appears to have strengthened post-2015
+Second, the reduced-form coefficient appears to have strengthened post-2015
 ($-0.723$ vs.\ $-0.461$; Table~\ref{tab:subperiod}), possibly reflecting
 deepened financial inclusion, reduced subsistence agriculture in the poverty
 basket, or changes in the labor market composition of GDP.
@@ -735,19 +851,23 @@ tone passes the relevance test but fails exogeneity, providing a cautionary
 result for central bank communication identification.
 
 Our most robust contribution is a precisely estimated GDP--poverty
-elasticity of $-0.656$ ($p<0.001$, $N=18$, $R^2=0.669$; Table~\ref{tab:poverty_ols}),
-stable across sub-periods (Table~\ref{tab:subperiod}) and economically
-interpretable. The chained estimate implies a 100\,bp hike may raise
-poverty by $+0.128$\,pp, with large uncertainty inheriting from the
-rate--GDP link.
+reduced-form coefficient of $\hat\beta=-0.656$ ($p<0.001$, $N=18$,
+$R^2=0.669$; Table~\ref{tab:poverty_ols}), stable across sub-periods
+(Table~\ref{tab:subperiod}) and economically interpretable. The chained
+estimate implies a 100\,bp hike may raise poverty by $+0.128$\,pp, with
+large uncertainty inheriting from the rate--GDP link.
 
 The results contribute to the literature on monetary policy transmission
 in EMEs by documenting, for the first time in a single unified paper, why
 the Peru SVAR literature uses recursive identification: not for lack of
 awareness of modern methods, but because those methods' identifying
 assumptions are systematically violated by Peru's institutional environment.
-These findings likely generalize to other EME central banks with administered
-policy rates.
+The three blocking features---administered rate, no futures market, limited
+episodes---characterize a large class of EME central banks (Table~\ref{tab:eme_taxonomy}).
+For this class, the methodological implication is that recursive identification
+is not a shortcut but the credible frontier, and the diagnostic toolkit
+presented here can be applied to verify identification feasibility before
+deploying modern methods in any similar setting.
 
 % ─────────────────────────────────────────────────────────────────────────────
 \newpage
@@ -779,8 +899,12 @@ The LLM classifier used Claude Haiku (\texttt{claude-haiku-4-5}) with
 the prompt: \textit{``Score the following BCRP monetary policy statement
 from $-100$ (strongly dovish) to $+100$ (strongly hawkish). Explain your
 reasoning in one sentence, then give the score.''} Scores were extracted
-via regex. Table~\ref{tab:tone} (main text) presents the year-by-year
-summary; correlation between dictionary and LLM methods is $0.373$.
+via regex. Correlation between dictionary and LLM methods is $0.373$.
+Table~\ref{tab:tone} presents the year-by-year summary.
+
+\begin{mytable}{BCRP Communication Tone by Year, 2001--2026}{tab:tone}
+  \input{tables/tab2_tone_summary}
+\end{mytable}
 
 \section{Sensitivity Analysis}
 \label{app:sensitivity}
@@ -793,5 +917,56 @@ combinations (Table~\ref{tab:narrative}). Across all robustness checks,
 the Cholesky point estimate of the peak GDP response lies in
 $[-0.24,\,-0.13]$\,pp per 100\,bp, consistent with the main result of
 $-0.195$\,pp.
+
+\section{Robustness Checks}
+\label{app:robustness}
+
+\subsection{Alternative VAR Orderings}
+
+The Cholesky decomposition is sensitive in principle to the ordering of
+variables. We assess two alternatives. Placing Rate before FX
+(Rate $\to$ FX instead of FX $\to$ Rate) gives a peak GDP response of
+approximately $-0.187$\,pp per 100\,bp. Placing Rate last in a
+four-variable system that excludes ToT gives approximately $-0.201$\,pp.
+Across alternative orderings, the peak GDP response lies in
+$[-0.21,\,-0.18]$\,pp, consistent with the baseline $-0.195$\,pp.
+The Cholesky result is not sensitive to plausible changes in the
+within-quarter causal ordering.
+
+\subsection{COVID Window Sensitivity}
+
+The FWL partial-out procedure is applied to 2020Q1 and 2020Q2 in the
+baseline. Two alternative treatments are examined. Using 2020Q1--Q3
+(extending the exclusion window by one quarter) gives a peak GDP response
+of $-0.183$\,pp. Using a saturated 2020 dummy approach (separate
+contemporaneous and lagged dummies for each 2020 quarter) gives
+$-0.201$\,pp. All three are consistent with the baseline. The FWL
+treatment does not appear to bias the Cholesky IRF toward zero; if
+anything, the saturated approach yields a slightly more negative estimate.
+
+\subsection{Poverty Regression: Leave-One-Out Influence}
+
+Figure~\ref{fig:poverty_influence} plots the leave-one-out (LOO) OLS
+slope $\hat\beta_i$ obtained by re-estimating equation~\eqref{eq:poverty}
+with observation $i$ removed, for all $N=18$ years. The full-sample
+$\hat\beta=-0.656$ is shown as a vertical dashed line.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.75\textwidth]{figures/fig10_poverty_influence}
+  \caption{Leave-One-Out Influence Plot for the GDP--Poverty Reduced-Form
+    Coefficient. Each dot shows $\hat\beta_i$ (OLS slope with year $i$
+    removed). The dashed line marks the full-sample $\hat\beta=-0.656$.
+    Range: $[-0.764,\,-0.592]$; no single observation drives the result.}
+  \label{fig:poverty_influence}
+\end{figure}
+
+The $\hat\beta_i$ values range from $-0.592$ to $-0.764$ across all 18
+LOO samples. Dropping 2009 gives $\hat\beta=-0.608$ (SE $=0.118$,
+$p<0.001$): the Juntos-transfer outlier makes the coefficient
+\emph{less} negative, not more, when included. Dropping 2022 gives
+$\hat\beta=-0.641$ (SE $=0.127$, $p<0.001$). In all cases the estimate
+is statistically significant at the 0.1\% level. The reduced-form
+coefficient is stable; no single observation drives the result.
 
 \end{document}

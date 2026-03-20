@@ -1,0 +1,34 @@
+
+\begin{tabular}{lcccp{3.8cm}}
+\toprule
+Country & Administered & No rate & Limited & Notes \\
+        & interbank & futures & episodes & \\
+\midrule
+\textit{Same identification constraints as Peru} & & & & \\
+\quad Bolivia & \cmark & \cmark & \cmark & Fixed exchange rate \\
+\quad Paraguay & \cmark & \cmark & \cmark & Recent IT adopter (2011) \\
+\quad Egypt & \cmark & \cmark & \cmark & Managed float, dollarized \\
+\quad Pakistan & \cmark & \cmark & \cmark & Administered corridor \\
+\quad Bangladesh & \cmark & \cmark & \cmark & Rate-based corridor \\
+\midrule
+\textit{Administered rate but some market info} & & & & \\
+\quad Colombia & \cmark & \warnmark & \warnmark & Some futures; IT since 1999 \\
+\quad Uruguay & \cmark & \cmark & \warnmark & Longer IT history \\
+\quad Costa Rica & \cmark & \cmark & \warnmark & IT since 2018 only \\
+\midrule
+\textit{Rate futures exist (Proxy-SVAR feasible)} & & & & \\
+\quad Brazil & $\times$ & $\times$ & $\times$ & Deep DI futures market \\
+\quad Mexico & $\times$ & $\times$ & \warnmark & TIIE swaps; Banxico surprises \\
+\quad Chile & $\times$ & \warnmark & \warnmark & Some OIS; longer IT \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\small \cmark = feature present (identification constraint active);
+\warnmark = partial; $\times$ = absent (Proxy-SVAR may be feasible).
+``Administered interbank'' means the central bank sets the interbank rate
+by construction. ``No rate futures'' means no liquid OIS or exchange-traded
+rate futures exist in domestic currency. ``Limited episodes'' means fewer than
+5 unambiguous monetary policy shocks in the inflation-targeting era.
+Brazil's DI futures market is the most developed in Latin America and
+enables Gertler-Karadi style identification \citep{caldara2019}.
+\end{tablenotes}

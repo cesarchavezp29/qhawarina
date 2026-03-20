@@ -393,28 +393,34 @@ cutting = [('2008-09-01', '2010-03-01'), ('2014-09-01', '2017-03-01'),
 
 fig, axes = plt.subplots(2, 1, figsize=(6.5, 4.2), sharex=True)
 
+from matplotlib.patches import Patch
+_first = True
 for ax, col, ylabel, ylims in zip(
     axes,
     ['dict_tone', 'llm_tone'],
-    ['Dictionary tone\n(−1 to +1)', 'LLM tone\n(−100 to +100)'],
+    ['Dictionary tone\n(\u22121 to +1)', 'LLM tone\n(\u2212100 to +100)'],
     [(-1.2, 1.2), (-80, 80)]
 ):
     for s, e in hiking:
-        ax.axvspan(pd.Timestamp(s), pd.Timestamp(e), color='#f0e0e0', alpha=0.6, zorder=0)
+        ax.axvspan(pd.Timestamp(s), pd.Timestamp(e),
+                   facecolor='none', edgecolor=C_DARK, hatch='///', lw=0,
+                   alpha=0.5, zorder=0)
     for s, e in cutting:
-        ax.axvspan(pd.Timestamp(s), pd.Timestamp(e), color='#e0e0f0', alpha=0.4, zorder=0)
+        ax.axvspan(pd.Timestamp(s), pd.Timestamp(e),
+                   facecolor='none', edgecolor=C_MED, hatch='...', lw=0,
+                   alpha=0.5, zorder=0)
 
     ax.axhline(0, color=C_MED, lw=0.6, ls='--', zorder=1)
     ax.plot(tone_m['date'], tone_m[col], color=C_BLACK, lw=0.9, zorder=2)
     ax.set_ylabel(ylabel, labelpad=4)
     ax.set_ylim(*ylims)
     ax.set_xlim(pd.Timestamp('2001-01-01'), pd.Timestamp('2026-06-01'))
+    _first = False
 
 # Legend patches
-from matplotlib.patches import Patch
 legend_elements = [
-    Patch(facecolor='#f0e0e0', alpha=0.6, label='Hiking episode'),
-    Patch(facecolor='#e0e0f0', alpha=0.4, label='Cutting episode'),
+    Patch(facecolor='none', edgecolor=C_DARK, hatch='///', label='Hiking episode'),
+    Patch(facecolor='none', edgecolor=C_MED,  hatch='...', label='Cutting episode'),
 ]
 axes[0].legend(handles=legend_elements, loc='upper left', frameon=False, fontsize=8)
 
@@ -553,23 +559,31 @@ ax.axhline(6.5, color=C_LIGHT, lw=0.6, ls='-')
 ax.annotate('Literature', xy=(0.01, 7.0), xycoords=('axes fraction', 'data'),
             fontsize=8, color=C_MED, style='italic')
 
+XLIM_LO = -8.5
 for i, (label, point, lo, hi, feasible) in enumerate(STRATEGIES):
     y = len(STRATEGIES) - 1 - i  # top-to-bottom
 
     if point is None:
-        # Not identified — show X marker
-        ax.plot(-0.001, y, 'x', color=C_MED, ms=7, mew=1.5, zorder=3)
-        ax.annotate('Not identified', xy=(0.15, y), fontsize=8,
+        # Not identified — shaded row + × marker
+        ax.axhspan(y - 0.45, y + 0.45, color='#f0f0f0', zorder=0)
+        ax.plot(XLIM_LO + 0.3, y, 'x', color=C_MED, ms=7, mew=1.5, zorder=3)
+        ax.annotate('not identified', xy=(XLIM_LO + 0.7, y), fontsize=7.5,
                     color=C_MED, va='center', style='italic')
     else:
         if lo is not None and hi is not None:
-            ci_lo_plot = max(lo, -8.0)  # clip for readability
-            ci_hi_plot = min(hi,  5.0)
-            ax.plot([ci_lo_plot, ci_hi_plot], [y, y], color=C_MED, lw=1.2, zorder=2)
-            if lo < -8.0:
-                ax.annotate(f'{lo:.1f}', xy=(ci_lo_plot, y), xytext=(-3, 0),
-                            textcoords='offset points', fontsize=7, ha='right',
-                            va='center', color=C_DARK)
+            ci_lo_clipped = max(lo, XLIM_LO + 0.2)
+            ci_hi_clipped = min(hi,  5.0)
+            ax.plot([ci_lo_clipped, ci_hi_clipped], [y, y],
+                    color=C_MED, lw=1.2, zorder=2)
+            if lo < XLIM_LO + 0.2:
+                # Arrow pointing left to indicate truncation
+                ax.annotate('', xy=(XLIM_LO + 0.05, y),
+                            xytext=(ci_lo_clipped, y),
+                            arrowprops=dict(arrowstyle='->', color=C_DARK,
+                                            lw=1.0, shrinkA=0, shrinkB=0))
+                ax.annotate(f'{lo:.1f}', xy=(XLIM_LO + 0.05, y),
+                            xytext=(-4, 0), textcoords='offset points',
+                            fontsize=7, ha='right', va='center', color=C_DARK)
         marker = 'D' if i >= 7 else 'o'
         msize  = 4.5 if i >= 7 else 5
         color  = C_MED if i >= 7 else C_BLACK
@@ -578,7 +592,7 @@ for i, (label, point, lo, hi, feasible) in enumerate(STRATEGIES):
 ax.set_yticks(list(range(len(STRATEGIES))))
 ax.set_yticklabels(list(reversed(y_labels)), fontsize=8.5)
 ax.set_xlabel('Peak GDP response to 100bp rate hike (pp)', labelpad=5)
-ax.set_xlim(-8.5, 2.0)
+ax.set_xlim(XLIM_LO, 2.0)
 ax.set_ylim(-0.6, len(STRATEGIES) - 0.4)
 
 handles, labs = ax.get_legend_handles_labels()
@@ -604,7 +618,7 @@ print('\nTable 1: Summary statistics...')
 summary_rows = [
     ('GDP (qoq, pp)',        0.013, 2.810, -10.890,  4.851, '-4.80', '0.000'),
     ('CPI (qoq, pp)',        0.527, 0.574,  -0.680,  2.510, '-5.66', '0.000'),
-    ('FX (qoq, \\%\\Delta)', 0.085, 2.104,  -6.502,  5.900, '-6.50', '0.000'),
+    ('FX (qoq, $\\%\\Delta$)', 0.085, 2.104,  -6.502,  5.900, '-6.50', '0.000'),
     ('Rate ($\\Delta$ pp)',   0.009, 0.503,  -1.250,  1.250, '-5.90', '0.000'),
     ('ToT (qoq, pp)',        0.170, 4.050, -16.010,  9.220, '-7.51', '0.000'),
 ]
@@ -665,14 +679,27 @@ Dict.: dictionary method (Lahura \& Vega 2020 adaptation).
 
 # ── Table 3: Poverty and GDP Data ─────────────────────────────────────────────
 print('Table 3: Poverty data...')
+def _dpov_fmt(dp):
+    if dp == 0.0:
+        return r'$\phantom{-}0.0$'
+    elif dp > 0:
+        return f'$+{dp:.1f}$'
+    else:
+        return f'${dp:.1f}$'
+
+def _gdp_fmt(g):
+    if g < 0:
+        return f'$-{abs(g):.3f}$'
+    return f'{g:.3f}'
+
 pov_tex_rows = '\n'.join(
-    f'    {yr} & {g:+.3f} & --- & {dp:+.1f} \\\\'
+    f'    {yr} & {_gdp_fmt(g)} & {_dpov_fmt(dp)} \\\\'
     for yr, g, dp in POV_DATA
 )
 write_tex('tab3_poverty_data', rf"""
-\begin{{tabular}}{{lrrc}}
+\begin{{tabular}}{{lrr}}
 \toprule
-Year & GDP growth (\%) & Poverty rate (\%) & $\Delta$Poverty (pp) \\
+Year & GDP growth (\%) & $\Delta$Poverty (pp) \\
 \midrule
 {pov_tex_rows}
 \bottomrule
@@ -909,7 +936,8 @@ cushioned poverty during GFC) and 2022 (K-shaped post-COVID recovery).
 # ── Table 12: Master Comparison ───────────────────────────────────────────────
 print('Table 12: Master comparison...')
 write_tex('tab12_master_comparison', r"""
-\begin{tabular}{llcccc}
+\small
+\begin{tabular}{@{}llccc>{\raggedright\arraybackslash}p{2.8cm}@{}}
 \toprule
 Method & Type & Peak GDP (pp) & 90\% CI & Feasible & Reason \\
 \midrule
@@ -924,7 +952,7 @@ Method & Type & Peak GDP (pp) & 90\% CI & Feasible & Reason \\
     Proxy-SVAR (tone, B) & IV & $+4.32^*$ & --- & \xmark & Exogeneity fails \\
 \midrule
 \multicolumn{6}{l}{\textit{Published estimates for Peru}} \\
-    P\'{e}rez Rojo \& Rodr\'{\i}guez (2024) & Recursive & $-0.28$ & --- & \cmark & --- \\
+    P\'{e}rez Rojo \& Rodr\'iguez (2024) & Recursive & $-0.28$ & --- & \cmark & --- \\
     Castillo et al.\ (2016) & Recursive & $-0.30$ & --- & \cmark & --- \\
     Portilla et al.\ (2022) & Recursive & $-0.25$ & --- & \cmark & --- \\
 \bottomrule
@@ -936,6 +964,99 @@ all LP-IV horizons $h=0$--$12$ are positive (exogeneity failure).
 Literature range for Peru: $[-0.30, -0.25]$pp per 100bp (recursive VARs).
 Our Cholesky estimate $-0.195$pp is consistent (slightly below range) but
 the 90\% bootstrap CI includes zero.
+\end{tablenotes}
+""")
+
+# ── Figure 10: Poverty OLS Leave-One-Out Influence Plot ──────────────────────
+print('\nFigure 10: Poverty leave-one-out influence plot...')
+
+POV_DATA_LOO = [
+    (2005, 6.282, -2.7), (2006, 7.555, -5.0), (2007, 8.470, -6.3),
+    (2008, 9.185, -5.0), (2009, 1.123, -3.4), (2010, 8.283, -4.5),
+    (2011, 6.380, -3.5), (2012, 6.145, -2.3), (2013, 5.827, -1.7),
+    (2014, 2.453, -0.4), (2015, 3.249, -0.1), (2016, 4.017, -1.2),
+    (2017, 2.534, 0.2),  (2018, 4.019, -1.2), (2019, 2.172, -1.2),
+    (2022, 2.681, -0.7), (2023, -0.6,  1.7), (2024, 3.1,   -0.4),
+]
+
+BETA_FULL_LOO = -0.656  # full-sample OLS slope
+
+def ols_slope(gdp_v, pov_v):
+    """Return OLS slope (no intercept extraction needed)."""
+    gdp_a = np.array(gdp_v)
+    pov_a = np.array(pov_v)
+    xbar = gdp_a.mean()
+    ybar = pov_a.mean()
+    beta = np.sum((gdp_a - xbar) * (pov_a - ybar)) / np.sum((gdp_a - xbar) ** 2)
+    return beta
+
+loo_years = []
+loo_betas = []
+for i, (yr, g, dp) in enumerate(POV_DATA_LOO):
+    subset = [obs for j, obs in enumerate(POV_DATA_LOO) if j != i]
+    gdp_sub = [s[1] for s in subset]
+    pov_sub = [s[2] for s in subset]
+    beta_i = ols_slope(gdp_sub, pov_sub)
+    loo_years.append(yr)
+    loo_betas.append(beta_i)
+
+fig, ax = plt.subplots(figsize=(5.5, 4.5))
+
+n_loo = len(loo_years)
+y_pos = list(range(n_loo))
+
+ax.scatter(loo_betas, y_pos, color=C_BLACK, s=30, zorder=3)
+ax.axvline(BETA_FULL_LOO, color=C_DARK, lw=1.2, ls='--', zorder=2,
+           label=r'Full-sample $\hat{\beta}=-0.656$')
+
+ax.set_yticks(y_pos)
+ax.set_yticklabels([str(yr) for yr in loo_years], fontsize=8)
+ax.set_xlabel(r'Leave-one-out OLS slope $\hat{\beta}_i$', labelpad=5)
+ax.set_xlim(min(loo_betas) - 0.05, max(loo_betas) + 0.05)
+
+ax.legend(loc='lower right', frameon=False, fontsize=8)
+ax.annotate('Each dot: $\\hat{\\beta}$ with that year removed',
+            xy=(0.97, 0.97), xycoords='axes fraction',
+            fontsize=8, ha='right', va='top', color=C_DARK, style='italic')
+
+fig.tight_layout()
+savefig(fig, 'fig10_poverty_influence')
+
+# ── Table 13: EME Taxonomy ────────────────────────────────────────────────────
+print('Table 13: EME taxonomy...')
+write_tex('tab13_eme_taxonomy', r"""
+\begin{tabular}{lcccp{3.8cm}}
+\toprule
+Country & Administered & No rate & Limited & Notes \\
+        & interbank & futures & episodes & \\
+\midrule
+\textit{Same identification constraints as Peru} & & & & \\
+\quad Bolivia & \cmark & \cmark & \cmark & Fixed exchange rate \\
+\quad Paraguay & \cmark & \cmark & \cmark & Recent IT adopter (2011) \\
+\quad Egypt & \cmark & \cmark & \cmark & Managed float, dollarized \\
+\quad Pakistan & \cmark & \cmark & \cmark & Administered corridor \\
+\quad Bangladesh & \cmark & \cmark & \cmark & Rate-based corridor \\
+\midrule
+\textit{Administered rate but some market info} & & & & \\
+\quad Colombia & \cmark & \warnmark & \warnmark & Some futures; IT since 1999 \\
+\quad Uruguay & \cmark & \cmark & \warnmark & Longer IT history \\
+\quad Costa Rica & \cmark & \cmark & \warnmark & IT since 2018 only \\
+\midrule
+\textit{Rate futures exist (Proxy-SVAR feasible)} & & & & \\
+\quad Brazil & $\times$ & $\times$ & $\times$ & Deep DI futures market \\
+\quad Mexico & $\times$ & $\times$ & \warnmark & TIIE swaps; Banxico surprises \\
+\quad Chile & $\times$ & \warnmark & \warnmark & Some OIS; longer IT \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\small \cmark = feature present (identification constraint active);
+\warnmark = partial; $\times$ = absent (Proxy-SVAR may be feasible).
+``Administered interbank'' means the central bank sets the interbank rate
+by construction. ``No rate futures'' means no liquid OIS or exchange-traded
+rate futures exist in domestic currency. ``Limited episodes'' means fewer than
+5 unambiguous monetary policy shocks in the inflation-targeting era.
+Brazil's DI futures market is the most developed in Latin America and
+enables Gertler-Karadi style identification \citep{caldara2019}.
 \end{tablenotes}
 """)
 
