@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """run_figures_A.py -- Publication figures A1-A7 (VAR-based)"""
-import sys, io, warnings
+import sys, io, warnings, shutil
 import numpy as np
 import pandas as pd
 import matplotlib
@@ -214,6 +214,7 @@ def figure_A1(var_df, res_base):
                 fontsize=7, color=C["gray_line"])
 
     savefig(fig, 'fig_A1_ordering_fan')
+    shutil.copy(OUTDIR / 'fig_A1_ordering_fan.pdf', Path('D:/Nexus/nexus/paper/figures/fig11_ordering_fan.pdf'))
 
 
 # ---------------------------------------------------------------------------
@@ -365,6 +366,7 @@ def figure_A3(res_base):
     legend_outside(ax)
 
     savefig(fig, 'fig_A3_fevd')
+    shutil.copy(OUTDIR / 'fig_A3_fevd.pdf', Path('D:/Nexus/nexus/paper/figures/fig13_fevd.pdf'))
 
 
 # ---------------------------------------------------------------------------
@@ -439,6 +441,7 @@ def figure_A4(res_base, var_df):
     plt.setp(ax.xaxis.get_majorticklabels(), rotation=45, ha='right')
 
     savefig(fig, 'fig_A4_hist_decomp')
+    shutil.copy(OUTDIR / 'fig_A4_hist_decomp.pdf', Path('D:/Nexus/nexus/paper/figures/fig12_hist_decomp.pdf'))
 
 
 # ---------------------------------------------------------------------------
@@ -483,6 +486,7 @@ def figure_A5(var_df):
     plt.setp(ax.xaxis.get_majorticklabels(), rotation=45, ha='right')
 
     savefig(fig, 'fig_A5_rolling_irf')
+    shutil.copy(OUTDIR / 'fig_A5_rolling_irf.pdf', Path('D:/Nexus/nexus/paper/figures/fig14_rolling_irf.pdf'))
 
 
 # ---------------------------------------------------------------------------
@@ -612,6 +616,7 @@ def figure_A7():
     ax.set_title('')
 
     savefig(fig, 'fig_A7_granger_network')
+    shutil.copy(OUTDIR / 'fig_A7_granger_network.pdf', Path('D:/Nexus/nexus/paper/figures/fig19_granger_network.pdf'))
 
 
 # ---------------------------------------------------------------------------

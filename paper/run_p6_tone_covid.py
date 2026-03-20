@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import sys, io, warnings
+import sys, io, warnings, shutil
 import numpy as np
 import pandas as pd
 import matplotlib
@@ -384,6 +384,7 @@ try:
         plt.colorbar(im, ax=axes_a[1], shrink=0.8)
 
     fig_a.savefig(OUT_DIR / 'p6a_tone_validation.pdf')
+    shutil.copy(OUT_DIR / 'p6a_tone_validation.pdf', ROOT / 'paper' / 'figures' / 'fig17_tone_validation.pdf')
     plt.close(fig_a)
     log("\nSaved: p6a_tone_validation.pdf")
 

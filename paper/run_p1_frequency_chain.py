@@ -7,7 +7,7 @@ Three methods:
   B — Re-estimate poverty regression using annual-avg-of-QoQ GDP measure
   C — Direct annual rate→poverty regression with GDP control
 """
-import sys, io, warnings
+import sys, io, warnings, shutil
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 import numpy as np
@@ -468,6 +468,8 @@ def main():
 
     out_fig = OUT_DIR / 'p1_frequency_chain.pdf'
     fig.savefig(out_fig)
+    PAPER_FIGS = ROOT / 'paper' / 'figures'
+    shutil.copy(out_fig, PAPER_FIGS / 'fig15_chain_comparison.pdf')
     print(f"\nFigure saved: {out_fig}")
     plt.close(fig)
 

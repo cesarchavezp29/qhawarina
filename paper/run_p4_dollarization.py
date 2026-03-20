@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import sys, io, warnings
+import sys, io, warnings, shutil
 import numpy as np
 import pandas as pd
 import matplotlib
@@ -343,6 +343,7 @@ def step2_channel_decomposition(A1, P, var_names, output_lines):
 
     fig_path = OUT_DIR / 'p4_channel_decomp.pdf'
     fig.savefig(fig_path)
+    shutil.copy(fig_path, ROOT / 'paper' / 'figures' / 'fig18_fx_channel.pdf')
     plt.close(fig)
     print(f"\n  Figure saved to: {fig_path}")
 

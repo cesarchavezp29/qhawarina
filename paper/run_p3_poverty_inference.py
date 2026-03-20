@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import sys, io, warnings
+import sys, io, warnings, shutil
 import numpy as np
 import pandas as pd
 import matplotlib
@@ -383,6 +383,7 @@ def main():
 
     fig_path = OUT_DIR / 'p3_poverty_inference.pdf'
     fig.savefig(fig_path)
+    shutil.copy(fig_path, ROOT / 'paper' / 'figures' / 'fig16_small_sample.pdf')
     plt.close(fig)
     print(f"Figure saved to: {fig_path}")
 

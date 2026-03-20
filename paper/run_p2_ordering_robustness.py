@@ -5,7 +5,7 @@ identified GDP response to a monetary policy shock.
 
 6 orderings tested + GIRF (ordering-invariant) for comparison.
 """
-import sys, io, warnings
+import sys, io, warnings, shutil
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 import numpy as np
@@ -387,6 +387,8 @@ def main():
 
     out_fig = OUT_DIR / 'p2_ordering_robustness.pdf'
     fig.savefig(out_fig)
+    PAPER_FIGS = ROOT / 'paper' / 'figures'
+    shutil.copy(out_fig, PAPER_FIGS / 'fig11_ordering_fan.pdf')
     print(f"\nFigure saved: {out_fig}")
     plt.close(fig)
 
