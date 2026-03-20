@@ -347,31 +347,33 @@ b_plot  = lp_beta[mask]
 lo_plot = lp_lo90[mask]
 hi_plot = lp_hi90[mask]
 
-fig, ax = plt.subplots(figsize=(7.0, 4.0))
+fig, ax = plt.subplots(figsize=(7.5, 4.5))
 
-# Light red background (wrong sign zone)
-ax.axhspan(0, 14, color='#fce8e8', alpha=0.4, zorder=0)
+# Light red background (wrong sign zone, above 0)
+ax.axhspan(0, 16, color='#fce8e8', alpha=0.35, zorder=0)
 ax.axhline(0, color=C_DARK, lw=0.8, ls='--', zorder=2)
 
 for h, b, lo, hi in zip(hs_plot, b_plot, lo_plot, hi_plot):
     ax.plot([h, h], [lo, hi], color=C_MED, lw=0.9, zorder=2)
-    # Cap ticks — narrow
-    ax.plot([h - 0.15, h + 0.15], [lo, lo], color=C_MED, lw=0.9, zorder=2)
-    ax.plot([h - 0.15, h + 0.15], [hi, hi], color=C_MED, lw=0.9, zorder=2)
+    ax.plot([h - 0.12, h + 0.12], [lo, lo], color=C_MED, lw=0.9, zorder=2)
+    ax.plot([h - 0.12, h + 0.12], [hi, hi], color=C_MED, lw=0.9, zorder=2)
     ax.plot(h, b, 'o', color=C_BLACK, ms=4, zorder=3)
 
 ax.set_xlabel('Horizon (quarters)', labelpad=4)
 ax.set_ylabel('GDP response (pp)', labelpad=4)
 ax.set_xlim(-0.5, 12.5)
 ax.set_xticks(range(13))
-ax.set_ylim(-4, 14)
-ax.annotate('All estimates are positive (wrong sign)\n\u2192 tone instrument fails exogeneity',
-            xy=(0.03, 0.97), xycoords='axes fraction',
-            fontsize=8, ha='left', va='top', color='#800000', style='italic',
-            bbox=dict(boxstyle='round,pad=0.3', fc='white', ec='none', alpha=0.85))
-ax.annotate('Bars: 90% CI \u00b7 Dot: point estimate',
-            xy=(0.97, 0.04), xycoords='axes fraction',
-            fontsize=8, ha='right', va='bottom', color=C_DARK)
+ax.set_ylim(-5, 16)
+
+# Annotation in the NEGATIVE region (below zero line) — never overlaps CI bars
+# which are all positive
+ax.annotate('All estimates positive (wrong sign)\n\u2192 tone instrument fails exogeneity',
+            xy=(6, -2.5), xycoords='data',
+            fontsize=8.5, ha='center', va='center', color='#800000', style='italic',
+            bbox=dict(boxstyle='round,pad=0.4', fc='white', ec='#ccaaaa', alpha=0.95, lw=0.8))
+ax.annotate('Bars: 90% CI  \u00b7  Dot: point estimate',
+            xy=(0.97, 0.97), xycoords='axes fraction',
+            fontsize=7.5, ha='right', va='top', color=C_DARK)
 
 fig.tight_layout()
 savefig(fig, 'fig5_lpiv_tone_wrong_sign')
@@ -426,7 +428,8 @@ legend_elements = [
     Patch(facecolor='none', edgecolor=C_DARK, hatch='/', label='Hiking episode'),
     Patch(facecolor='none', edgecolor=C_MED,  hatch='..', label='Cutting episode'),
 ]
-axes[0].legend(handles=legend_elements, loc='upper left', frameon=False, fontsize=8)
+leg = axes[0].legend(handles=legend_elements, loc='lower left', frameon=True,
+                     fontsize=8, framealpha=0.95, edgecolor='none')
 
 axes[1].xaxis.set_major_locator(matplotlib.dates.YearLocator(2))
 axes[1].xaxis.set_major_formatter(matplotlib.dates.DateFormatter('%Y'))
@@ -548,77 +551,90 @@ STRATEGIES = [
     ('Portilla et al. (2022)',         -0.25,  None, None, True),
 ]
 
-Y_MULT = 1.6   # vertical spacing multiplier between rows
+Y_MULT = 2.2   # generous vertical spacing — no row crowding
 N = len(STRATEGIES)
-fig, ax = plt.subplots(figsize=(7.5, 5.8))
+
+# Shorten long labels so they fit the y-axis without crowding
+SHORT_LABELS = [
+    'Cholesky VAR(1)',
+    'Sign restrictions',
+    'Narrative SR (full)',
+    'Narrative SR (2022)',
+    'LP (endogenous)',
+    'Proxy-SVAR: IB rate',
+    'Proxy-SVAR: tone',
+    'Pérez Rojo & Rdz. (2024)',
+    'Castillo et al. (2016)',
+    'Portilla et al. (2022)',
+]
+
+fig, ax = plt.subplots(figsize=(9.0, 7.0))
+fig.subplots_adjust(left=0.26, right=0.88, top=0.96, bottom=0.09)
 
 y_positions = [i * Y_MULT for i in range(N)]
-y_labels    = [s[0] for s in STRATEGIES]
 
-# Literature range reference band — labelled at bottom via annotation, not legend
+# Literature range reference band
 ax.axvspan(-0.30, -0.25, color='#e8e8f8', alpha=0.8, zorder=0)
 ax.axvline(0, color=C_MED, lw=0.7, ls='--', zorder=1)
 
-# Divider between own estimates and literature (between row index 6 and 7)
-divider_y = (y_positions[6] + y_positions[7]) / 2 if N > 7 else y_positions[6] - Y_MULT / 2
-ax.axhline(divider_y, color=C_LIGHT, lw=0.7, ls='-')
+# Divider between own estimates and literature
+divider_y = (y_positions[6] + y_positions[7]) / 2
+ax.axhline(divider_y, color=C_LIGHT, lw=0.8, ls='-')
+# "Literature estimates" label — far right, anchored to divider, clear of data
+ax.annotate('Literature\nestimates \u2193',
+            xy=(0.91, divider_y), xycoords=('axes fraction', 'data'),
+            fontsize=7.5, ha='left', va='top', color=C_MED, style='italic',
+            annotation_clip=False)
 
-XLIM_LO = -9.5
+XLIM_LO = -11.0
+XLIM_HI =  3.5
 for i, (label, point, lo, hi, feasible) in enumerate(STRATEGIES):
     y = y_positions[N - 1 - i]   # top-to-bottom
 
     if point is None:
-        # Not identified — shaded row + × marker
-        ax.axhspan(y - 0.55, y + 0.55, color='#f0f0f0', zorder=0)
-        ax.plot(XLIM_LO + 0.4, y, 'x', color=C_MED, ms=7, mew=1.5, zorder=3)
-        ax.annotate('not identified', xy=(XLIM_LO + 1.1, y), fontsize=7.5,
-                    color=C_MED, va='center', style='italic')
+        # Not identified — shaded row + × marker + text with bbox
+        ax.axhspan(y - 0.7, y + 0.7, color='#f0f0f0', zorder=0)
+        ax.plot(XLIM_LO + 0.6, y, 'x', color=C_MED, ms=8, mew=1.8, zorder=3)
+        ax.annotate('not identified',
+                    xy=(XLIM_LO + 1.5, y), fontsize=7.5,
+                    color=C_MED, va='center', style='italic',
+                    bbox=dict(boxstyle='round,pad=0.2', fc='#f0f0f0', ec='none', alpha=0.9))
     else:
         if lo is not None and hi is not None:
-            ci_lo_clipped = max(lo, XLIM_LO + 0.3)
-            ci_hi_clipped = min(hi, 4.5)
+            ci_lo_clipped = max(lo, XLIM_LO + 0.5)
+            ci_hi_clipped = min(hi, XLIM_HI - 0.2)
             ax.plot([ci_lo_clipped, ci_hi_clipped], [y, y],
-                    color=C_MED, lw=1.4, zorder=2)
-            if lo < XLIM_LO + 0.3:
-                # Arrow pointing left to indicate truncation
-                ax.annotate('', xy=(XLIM_LO + 0.1, y),
+                    color=C_MED, lw=1.5, zorder=2)
+            if lo < XLIM_LO + 0.5:
+                ax.annotate('', xy=(XLIM_LO + 0.2, y),
                             xytext=(ci_lo_clipped, y),
                             arrowprops=dict(arrowstyle='->', color=C_DARK,
-                                            lw=1.1, shrinkA=0, shrinkB=0))
-                ax.annotate(f'{lo:.1f}', xy=(XLIM_LO + 0.1, y),
-                            xytext=(-5, 0), textcoords='offset points',
+                                            lw=1.2, shrinkA=0, shrinkB=0))
+                ax.annotate(f'{lo:.1f}',
+                            xy=(XLIM_LO + 0.15, y), xytext=(-6, 0),
+                            textcoords='offset points',
                             fontsize=7, ha='right', va='center', color=C_DARK)
         is_lit = (i >= 7)
         marker = 'D' if is_lit else 'o'
-        msize  = 6 if is_lit else 6
         color  = C_DARK if is_lit else C_BLACK
-        ax.plot(point, y, marker, color=color, ms=msize, zorder=4,
-                markerfacecolor=('none' if is_lit else color),
-                markeredgewidth=1.5 if is_lit else 1.0)
+        ax.plot(point, y, marker, color=color, ms=6.5, zorder=4,
+                markerfacecolor='none' if is_lit else color,
+                markeredgewidth=1.8 if is_lit else 1.0)
 
 ax.set_yticks(y_positions)
-ax.set_yticklabels(list(reversed(y_labels)), fontsize=8.5)
-ax.set_xlabel('Peak GDP response to 100bp rate hike (pp)', labelpad=5)
-ax.set_xlim(XLIM_LO, 2.5)
-ax.set_ylim(-Y_MULT * 0.6, y_positions[-1] + Y_MULT * 0.6)
+ax.set_yticklabels(list(reversed(SHORT_LABELS)), fontsize=9)
+ax.set_xlabel('Peak GDP response to 100bp rate hike (pp)', labelpad=6)
+ax.set_xlim(XLIM_LO, XLIM_HI)
+ax.set_ylim(-Y_MULT * 0.7, y_positions[-1] + Y_MULT * 0.7)
 
-# "Literature" label placed in bottom-right corner, clearly away from data rows
-ax.annotate('Shaded band: published Peru literature\nrange [\u22120.30, \u22120.25] pp',
-            xy=(0.98, 0.02), xycoords='axes fraction',
-            fontsize=7.5, ha='right', va='bottom', color=C_MED, style='italic',
-            bbox=dict(boxstyle='round,pad=0.3', fc='white', ec='none', alpha=0.85))
+# Shaded band label — below the bottom row, in empty space, left-anchored
+ax.annotate('Shaded band: literature range [\u22120.30, \u22120.25] pp',
+            xy=(0.02, 0.01), xycoords='axes fraction',
+            fontsize=7.5, ha='left', va='bottom', color=C_MED, style='italic')
 
-# "Literature estimates" label near divider line, right side
-ax.annotate('Literature estimates \u2193', xy=(1.01, divider_y),
-            xycoords=('axes fraction', 'data'),
-            fontsize=7.5, ha='left', va='top', color=C_MED, style='italic',
-            annotation_clip=False)
-
-handles, labs = ax.get_legend_handles_labels()
-ax.legend(handles, labs, loc='upper right', frameon=False, fontsize=8)
-
-fig.tight_layout()
-savefig(fig, 'fig9_forest_plot')
+fig.savefig(str(FIG_DIR / 'fig9_forest_plot.pdf'), bbox_inches='tight')
+plt.close(fig)
+print('  Saved fig9_forest_plot.pdf')
 
 
 # =============================================================================
