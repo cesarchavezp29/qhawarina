@@ -654,8 +654,8 @@ tone_by_year = tone_by_year[(tone_by_year['year'] >= 2001) &
                              (tone_by_year['year'] <= 2025)]
 
 tone_tex_rows = '\n'.join(
-    f'    {int(r.year)} & {int(r.n)} & {r.dict_mean:+.2f} & ({r.dict_sd:.2f}) '
-    f'& {r.llm_mean:+.1f} & ({r.llm_sd:.1f}) \\\\'
+    f'    {int(r.year)} & {int(r.n)} & {r.dict_mean:.2f} & ({r.dict_sd:.2f}) '
+    f'& {r.llm_mean:.1f} & ({r.llm_sd:.1f}) \\\\'
     for r in tone_by_year.itertuples()
 )
 write_tex('tab2_tone_summary', rf"""
@@ -666,8 +666,8 @@ Year & $N$ & Dict. mean & (SD) & LLM mean & (SD) \\
 {tone_tex_rows}
 \midrule
     Overall & {int(tone_by_year['n'].sum())} &
-    {tone_by_year['dict_mean'].mean():+.3f} & ({tone_by_year['dict_sd'].mean():.3f}) &
-    {tone_by_year['llm_mean'].mean():+.1f} & ({tone_by_year['llm_sd'].mean():.1f}) \\
+    {tone_by_year['dict_mean'].mean():.3f} & ({tone_by_year['dict_sd'].mean():.3f}) &
+    {tone_by_year['llm_mean'].mean():.1f} & ({tone_by_year['llm_sd'].mean():.1f}) \\
 \bottomrule
 \end{{tabular}}
 \begin{{tablenotes}}
@@ -683,7 +683,7 @@ def _dpov_fmt(dp):
     if dp == 0.0:
         return r'$\phantom{-}0.0$'
     elif dp > 0:
-        return f'$+{dp:.1f}$'
+        return f'${dp:.1f}$'
     else:
         return f'${dp:.1f}$'
 
@@ -725,7 +725,7 @@ var_coef = {
 }
 hdr = '\\thead{ToT$_{t-1}$} & \\thead{GDP$_{t-1}$} & \\thead{CPI$_{t-1}$} & \\thead{FX$_{t-1}$} & \\thead{Rate$_{t-1}$}'
 tab4_rows = '\n'.join(
-    f'    {eq} & ' + ' & '.join(f'{v:+.3f}' for v in coeffs) + ' \\\\'
+    f'    {eq} & ' + ' & '.join(f'{v:.3f}' for v in coeffs) + ' \\\\'
     for eq, coeffs in var_coef.items()
 )
 write_tex('tab4_var_coefs', rf"""
@@ -782,7 +782,7 @@ lp_rows = [
     (8, -1.074,  1.579, -0.681, 0.496, 0.409, 76),
 ]
 lp_tex_rows = '\n'.join(
-    f'    {h} & {b:+.3f} & {se:.3f} & {t:+.3f} & {p:.3f} & {r2:.3f} & {n} \\\\'
+    f'    {h} & {b:.3f} & {se:.3f} & {t:.3f} & {p:.3f} & {r2:.3f} & {n} \\\\'
     for h, b, se, t, p, r2, n in lp_rows
 )
 write_tex('tab6_lp_results', rf"""
@@ -812,7 +812,7 @@ write_tex('tab7_proxy_svar_ib', r"""
 Diagnostic & Value \\
 \midrule
     Rate-change events (2004--2025) & 72 \\
-    Interbank surprise: mean (pp) & $+0.040$ \\
+    Interbank surprise: mean (pp) & $0.040$ \\
     Interbank surprise: SD (pp) & $0.640$ \\
     Correlation surprise--reference rate change & $0.614$ \\
     First-stage $F$-statistic (AR form) & $4.73$ \\
@@ -840,7 +840,7 @@ Statistic & Dictionary & LLM (Claude Haiku) \\
 \midrule
     Corpus size (notes) & \multicolumn{{2}}{{c}}{{{n_total}}} \\
     Date range & \multicolumn{{2}}{{c}}{{2001--2026}} \\
-    Mean score & {df_tone['dict_tone'].mean():+.3f} & {df_tone['llm_tone'].mean():+.1f} \\
+    Mean score & {df_tone['dict_tone'].mean():.3f} & {df_tone['llm_tone'].mean():.1f} \\
     SD & {df_tone['dict_tone'].std():.3f} & {df_tone['llm_tone'].std():.1f} \\
     Min & {df_tone['dict_tone'].min():.1f} & {df_tone['llm_tone'].min():.0f} \\
     Max & {df_tone['dict_tone'].max():.1f} & {df_tone['llm_tone'].max():.0f} \\
@@ -891,7 +891,7 @@ write_tex('tab10_poverty_ols', r"""
 \toprule
 Variable & Coeff. & SE & $t$ & $p$ & 95\% CI \\
 \midrule
-    Constant & $+0.888$ & $0.617$ & $+1.44$ & $0.169$ & $[-0.385,\;+2.161]$ \\
+    Constant & $0.888$ & $0.617$ & $1.44$ & $0.169$ & $[-0.385,\;2.161]$ \\
     GDP growth & $-0.656$ & $0.115$ & $-5.69$ & $<0.001$ & $[-0.895,\;-0.417]$ \\
 \midrule
     $R^2$ & \multicolumn{5}{l}{$0.669$} \\
@@ -936,20 +936,21 @@ cushioned poverty during GFC) and 2022 (K-shaped post-COVID recovery).
 # ── Table 12: Master Comparison ───────────────────────────────────────────────
 print('Table 12: Master comparison...')
 write_tex('tab12_master_comparison', r"""
-\small
-\begin{tabular}{@{}llccc>{\raggedright\arraybackslash}p{2.8cm}@{}}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{llccc>{\raggedright\arraybackslash}p{2.8cm}}
 \toprule
 Method & Type & Peak GDP (pp) & 90\% CI & Feasible & Reason \\
 \midrule
 \multicolumn{6}{l}{\textit{Own estimates, this paper}} \\
-    Cholesky VAR(1) & Recursive & $-0.195$ & $[-0.70,+0.27]$ & \cmark & Standard timing \\
-    Sign restrictions & Set ID & $-2.30$ & $[-35.9,+19.7]$ & \warnmark & Set too wide \\
+    Cholesky VAR(1) & Recursive & $-0.195$ & $[-0.70, 0.27]$ & \cmark & Standard timing \\
+    Sign restrictions & Set ID & $-2.30$ & $[-35.9, 19.7]$ & \warnmark & Set too wide \\
     Narrative SR (full) & Set ID & $-0.74$ & $[-1.06,-0.41]$ & \warnmark & COVID tension \\
     Narrative SR (2022) & Set ID & $-3.57$ & $[-30.0,-0.29]$ & \warnmark & Single episode \\
     LP (endogenous) & None & $-0.541$ & $[-0.96,-0.12]$ & \warnmark & Endogenous \\
     Proxy-SVAR (IB rate) & IV & --- & --- & \xmark & $F=4.73<10$ \\
     Proxy-SVAR (tone, A) & IV & --- & --- & \xmark & Lacks relevance \\
-    Proxy-SVAR (tone, B) & IV & $+4.32^*$ & --- & \xmark & Exogeneity fails \\
+    Proxy-SVAR (tone, B) & IV & $4.32^*$ & --- & \xmark & Exogeneity fails \\
 \midrule
 \multicolumn{6}{l}{\textit{Published estimates for Peru}} \\
     P\'{e}rez Rojo \& Rodr\'iguez (2024) & Recursive & $-0.28$ & --- & \cmark & --- \\
@@ -958,12 +959,9 @@ Method & Type & Peak GDP (pp) & 90\% CI & Feasible & Reason \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}
-\small \cmark = identified and interpretable; \warnmark = technically feasible but
-with important caveats; \xmark = not identified. ${}^*$Wrong sign at $h=0$;
-all LP-IV horizons $h=0$--$12$ are positive (exogeneity failure).
-Literature range for Peru: $[-0.30, -0.25]$pp per 100bp (recursive VARs).
-Our Cholesky estimate $-0.195$pp is consistent (slightly below range) but
-the 90\% bootstrap CI includes zero.
+\small \cmark\ = identified; \warnmark\ = feasible with caveats; \xmark\ = not
+identified. ${}^*$All LP-IV horizons $h=0$--$12$ positive (exogeneity failure).
+Literature: $[-0.30, -0.25]$pp per 100bp. Cholesky CI includes zero.
 \end{tablenotes}
 """)
 
@@ -1025,7 +1023,7 @@ savefig(fig, 'fig10_poverty_influence')
 # ── Table 13: EME Taxonomy ────────────────────────────────────────────────────
 print('Table 13: EME taxonomy...')
 write_tex('tab13_eme_taxonomy', r"""
-\begin{tabular}{lcccp{3.8cm}}
+\resizebox{\linewidth}{!}{\begin{tabular}{lcccp{3.8cm}}
 \toprule
 Country & Administered & No rate & Limited & Notes \\
         & interbank & futures & episodes & \\
@@ -1047,16 +1045,13 @@ Country & Administered & No rate & Limited & Notes \\
 \quad Mexico & $\times$ & $\times$ & \warnmark & TIIE swaps; Banxico surprises \\
 \quad Chile & $\times$ & \warnmark & \warnmark & Some OIS; longer IT \\
 \bottomrule
-\end{tabular}
+\end{tabular}}
 \begin{tablenotes}
-\small \cmark = feature present (identification constraint active);
-\warnmark = partial; $\times$ = absent (Proxy-SVAR may be feasible).
-``Administered interbank'' means the central bank sets the interbank rate
-by construction. ``No rate futures'' means no liquid OIS or exchange-traded
-rate futures exist in domestic currency. ``Limited episodes'' means fewer than
-5 unambiguous monetary policy shocks in the inflation-targeting era.
-Brazil's DI futures market is the most developed in Latin America and
-enables Gertler-Karadi style identification \citep{caldara2019}.
+\small \cmark\ = constraint active; \warnmark\ = partial; $\times$ = absent.
+``Administered'' = BCRP sets interbank rate by construction.
+``No futures'' = no liquid OIS/exchange-traded rate futures.
+``Limited'' = fewer than 5 unambiguous IT-era shocks.
+Brazil's deep DI futures market enables Proxy-SVAR \citep{caldara2019}.
 \end{tablenotes}
 """)
 
