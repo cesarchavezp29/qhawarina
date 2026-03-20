@@ -1,0 +1,20 @@
+
+\begin{tabular}{lrrrrc}
+\toprule
+Variable & Coeff. & SE & $t$ & $p$ & 95\% CI \\
+\midrule
+    Constant & $+0.888$ & $0.617$ & $+1.44$ & $0.169$ & $[-0.385,\;+2.161]$ \\
+    GDP growth & $-0.656$ & $0.115$ & $-5.69$ & $<0.001$ & $[-0.895,\;-0.417]$ \\
+\midrule
+    $R^2$ & \multicolumn{5}{l}{$0.669$} \\
+    Adj.\ $R^2$ & \multicolumn{5}{l}{$0.648$} \\
+    RMSE & \multicolumn{5}{l}{$1.296$ pp} \\
+    $N$ & \multicolumn{5}{l}{$18$ (ENAHO 2005--2024, excl.\ 2020--2021)} \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\small OLS. Dependent variable: annual change in monetary poverty rate (pp).
+Independent variable: annual mean of quarterly YoY real GDP growth (\%).
+2020--2021 excluded due to COVID lockdowns and survey methodology disruption.
+Heteroskedasticity-robust inference (HC3) gives $p<0.001$ for GDP coefficient.
+\end{tablenotes}

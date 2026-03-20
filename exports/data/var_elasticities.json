@@ -3,7 +3,7 @@
   "sample": "2004-Q2 – 2025-Q3",
   "n_obs_total": 85,
   "covid_treatment": "FWL partial-out Q1+Q2 2020 for VAR; excluded 2020-2021 for poverty regression",
-  "audit_output": "D:/Nexus/nexus/estimation/full_audit_output.txt",
+  "audit_output": "full_audit_output.txt (see project GitHub repository)",
   "gdp_1pp": {
     "poverty_pp": -0.656,
     "se": 0.115,
@@ -32,9 +32,11 @@
   },
   "fx_10pct": {
     "cpi_pp": 0.237,
+    "se": 0.125,
+    "ci90": [0.030, 0.443],
     "significant": true,
-    "source": "LP OLS h=1 HAC, T=85",
-    "note": "Significant. 10% FX depreciation → +0.237pp CPI impact at h=1 quarter."
+    "source": "LP OLS h=1 HAC, T=82, lp_elasticities.json",
+    "note": "Significant at 90% level. 10% FX depreciation → +0.237pp CPI impact at h=1 quarter. CI excludes zero: [+0.030, +0.443]."
   },
   "commodity_10pct": {
     "gdp_pp": 0.089,
@@ -45,7 +47,8 @@
   },
   "confidence_tiers": {
     "tier1_high_confidence": ["gdp_1pp"],
-    "tier2_point_defensible_not_significant": ["rate_100bp", "fx_10pct"],
+    "tier2a_significant_partial": ["fx_10pct"],
+    "tier2b_not_significant": ["rate_100bp"],
     "tier3_attempted_not_identified": ["narrative_sr", "proxy_svar_tone", "commodity_10pct"]
   }
 }

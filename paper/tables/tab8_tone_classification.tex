@@ -1,0 +1,19 @@
+
+\begin{tabular}{lcc}
+\toprule
+Statistic & Dictionary & LLM (Claude Haiku) \\
+\midrule
+    Corpus size (notes) & \multicolumn{2}{c}{325} \\
+    Date range & \multicolumn{2}{c}{2001--2026} \\
+    Mean score & -0.062 & -7.7 \\
+    SD & 0.512 & 40.2 \\
+    Min & -1.0 & -85 \\
+    Max & 1.0 & 75 \\
+    Correlation (dict vs LLM) & \multicolumn{2}{c}{0.373} \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\small Dictionary: hawkish/dovish lexicon adapted from Lahura \& Vega (2020 CEMLA).
+LLM: Claude Haiku (\texttt{claude-haiku-4-5-20251001}), prompt scored each
+Nota Informativa on $[-100, +100]$ with chain-of-thought rationale.
+\end{tablenotes}

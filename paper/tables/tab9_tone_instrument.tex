@@ -1,0 +1,23 @@
+
+\begin{tabular}{lcc}
+\toprule
+& Construction A & Construction B \\
+& (residualize on $\Delta r_t$ + lags) & (residualize on lags only) \\
+\midrule
+    First-stage $F$ & $4.75$ & $33.7$ \\
+    Stock--Yogo threshold & \textbf{Fails} & \textbf{Passes} \\
+    GDP response $h=0$ & --- & $+4.32$ (wrong sign) \\
+    GDP response $h=1$ & --- & $+7.36$ (wrong sign) \\
+    GDP responses $h=0..12$ & --- & All positive \\
+    Diagnosis & Lacks relevance & Fails exogeneity \\
+\midrule
+    Conclusion & \multicolumn{2}{c}{Instrument not valid for identification} \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\small Construction A: After projecting out the rate decision ($\Delta r_t$),
+residual tone has near-zero information about monetary shocks.
+Construction B: Tone predicts the rate decision itself (high $F$) but this
+represents anticipated policy, violating the exogeneity condition
+$E[z_t \varepsilon^j_t]=0$ for $j\neq mp$.
+\end{tablenotes}

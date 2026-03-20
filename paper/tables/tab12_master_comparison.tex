@@ -1,0 +1,29 @@
+
+\begin{tabular}{llcccc}
+\toprule
+Method & Type & Peak GDP (pp) & 90\% CI & Feasible & Reason \\
+\midrule
+\multicolumn{6}{l}{\textit{Own estimates, this paper}} \\
+    Cholesky VAR(1) & Recursive & $-0.195$ & $[-0.70,+0.27]$ & \cmark & Standard timing \\
+    Sign restrictions & Set ID & $-2.30$ & $[-35.9,+19.7]$ & \warnmark & Set too wide \\
+    Narrative SR (full) & Set ID & $-0.74$ & $[-1.06,-0.41]$ & \warnmark & COVID tension \\
+    Narrative SR (2022) & Set ID & $-3.57$ & $[-30.0,-0.29]$ & \warnmark & Single episode \\
+    LP (endogenous) & None & $-0.541$ & $[-0.96,-0.12]$ & \warnmark & Endogenous \\
+    Proxy-SVAR (IB rate) & IV & --- & --- & \xmark & $F=4.73<10$ \\
+    Proxy-SVAR (tone, A) & IV & --- & --- & \xmark & Lacks relevance \\
+    Proxy-SVAR (tone, B) & IV & $+4.32^*$ & --- & \xmark & Exogeneity fails \\
+\midrule
+\multicolumn{6}{l}{\textit{Published estimates for Peru}} \\
+    P\'{e}rez Rojo \& Rodr\'{\i}guez (2024) & Recursive & $-0.28$ & --- & \cmark & --- \\
+    Castillo et al.\ (2016) & Recursive & $-0.30$ & --- & \cmark & --- \\
+    Portilla et al.\ (2022) & Recursive & $-0.25$ & --- & \cmark & --- \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\small \cmark = identified and interpretable; \warnmark = technically feasible but
+with important caveats; \xmark = not identified. ${}^*$Wrong sign at $h=0$;
+all LP-IV horizons $h=0$--$12$ are positive (exogeneity failure).
+Literature range for Peru: $[-0.30, -0.25]$pp per 100bp (recursive VARs).
+Our Cholesky estimate $-0.195$pp is consistent (slightly below range) but
+the 90\% bootstrap CI includes zero.
+\end{tablenotes}

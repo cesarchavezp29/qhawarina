@@ -1,0 +1,21 @@
+
+\begin{tabular}{lc}
+\toprule
+Diagnostic & Value \\
+\midrule
+    Rate-change events (2004--2025) & 72 \\
+    Interbank surprise: mean (pp) & $+0.040$ \\
+    Interbank surprise: SD (pp) & $0.640$ \\
+    Correlation surprise--reference rate change & $0.614$ \\
+    First-stage $F$-statistic (AR form) & $4.73$ \\
+    First-stage $F$-statistic (VAR form) & $4.73$ \\
+    Stock--Yogo threshold ($F>10$) & \textbf{Fails} \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\small Instrument: $z_t = \text{interbank}_{d+1} - \text{interbank}_{d-1}$
+around announcement date $d$, aggregated to quarters.
+Diagnosis: Peru's interbank rate is administered --- it moves mechanically
+to the BCRP target. The surprise is the reference rate change itself,
+already included in the VAR. The instrument is endogenous and lacks relevance.
+\end{tablenotes}
