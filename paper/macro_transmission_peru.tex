@@ -328,6 +328,16 @@ Table~\ref{tab:tone} (Appendix~\ref{app:tables}).
   \label{fig:tone_validation}
 \end{figure}
 
+Figure~\ref{fig:tone_validation} confirms that the LLM tone measure aligns
+well with actual policy decisions: the scatter plot (panel~a) shows a
+positive slope ($R^2=0.459$) between tone scores and rate changes, and
+the confusion matrix (panel~b) records 98.2\% accuracy for hawkish
+episodes and 97.4\% for dovish ones. Despite this predictive accuracy,
+the tone measure captures \emph{anticipated} policy and therefore fails
+as an exogenous instrument. Figure~\ref{fig:tone} presents the full
+historical time series of both tone measures, illustrating how hiking
+and cutting cycles are reflected in real time in BCRP communications.
+
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=\textwidth]{figures/fig6_bcrp_tone_series}
@@ -463,6 +473,17 @@ observations---and consistent with the existing Peru literature
     Ordering: ToT $\to$ GDP $\to$ CPI $\to$ FX $\to$ Rate.}
   \label{fig:cholesky_irfs}
 \end{figure}
+
+Figure~\ref{fig:cholesky_irfs} shows that the GDP response peaks at
+$h=3$ quarters and reverts toward zero by $h=8$, following the
+standard hump-shaped profile. The wide confidence bands reflect the
+short sample ($T=85$) rather than an inherently imprecise identification
+strategy: the BVAR robustness check (Appendix~\ref{app:rob:bvar})
+confirms the negative direction under an informative Minnesota prior.
+Figure~\ref{fig:hist_decomp} complements the IRF by decomposing the
+realized quarterly GDP growth path into shock contributions from each
+VAR variable, confirming that monetary policy shocks are quantitatively
+small relative to terms-of-trade and demand shocks throughout the sample.
 
 \begin{figure}[htbp]
   \centering
@@ -976,6 +997,16 @@ Figure~\ref{fig:granger_network} displays the Granger causality network.
   \label{fig:fx_channel}
 \end{figure}
 
+Figure~\ref{fig:fx_channel} documents that blocking the exchange rate
+equation from the monetary shock reduces the peak GDP impact by only
+$-11.2\%$ (from $-0.195$ to $-0.217$\,pp), consistent with high-frequency
+hedging and partial de-dollarization. Figure~\ref{fig:fevd} provides a
+complementary long-horizon view: the forecast error variance decomposition
+confirms that the rate shock explains at most $0.2\%$ of GDP forecast
+error variance at all horizons, implying that the transmission is real
+but quantitatively small relative to external demand and terms-of-trade
+shocks that dominate Peru's business cycle.
+
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.75\textwidth]{figures/fig13_fevd}
@@ -985,6 +1016,15 @@ Figure~\ref{fig:granger_network} displays the Granger causality network.
     shock is small in variance terms relative to terms-of-trade shocks.}
   \label{fig:fevd}
 \end{figure}
+
+The variance decomposition confirms that ToT shocks dominate GDP forecast
+errors, explaining roughly 60\% of variance at $h=5$. Figure~\ref{fig:granger_network}
+maps the Granger causality structure underlying these patterns: GDP
+Granger-causes the reference rate ($F=14.6$, $p<0.001$), validating the
+endogenous policy concern behind the LP bias; the rate Granger-causes CPI
+($F=7.5$, $p=0.007$), confirming the price channel; and ToT
+Granger-causes FX ($F=8.0$, $p=0.005$), consistent with the commodity-exchange
+rate nexus documented in the broader Latin American literature.
 
 \begin{figure}[htbp]
   \centering
