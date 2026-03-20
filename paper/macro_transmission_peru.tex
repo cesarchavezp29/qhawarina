@@ -314,8 +314,19 @@ properties, the tone-based Proxy-SVAR fails the exogeneity condition
 (Section~\ref{sec:proxy_tone}), as tone captures anticipated policy
 decisions rather than orthogonal surprises.
 
+Figure~\ref{fig:tone_validation} displays these validation results.
 Year-by-year statistics for both methods appear in
 Table~\ref{tab:tone} (Appendix~\ref{app:tables}).
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{figures/fig17_tone_validation}
+  \caption{LLM Tone Classification Validation. (a)~LLM tone score vs.\
+    contemporaneous rate change ($R^2 = 0.459$). (b)~Confusion matrix:
+    LLM classification vs.\ actual decision (98.2\% accuracy for
+    hawkish $\to$ hike, 97.4\% for dovish $\to$ cut).}
+  \label{fig:tone_validation}
+\end{figure}
 
 \begin{figure}[htbp]
   \centering
@@ -453,6 +464,17 @@ observations---and consistent with the existing Peru literature
   \label{fig:cholesky_irfs}
 \end{figure}
 
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{figures/fig12_hist_decomp}
+  \caption{Historical Decomposition of Quarterly GDP Growth, 2004Q2--2025Q3.
+    Stacked contributions of structural shocks from the Cholesky VAR(1).
+    Monetary policy contributions (dark) are visible during the 2009 cutting
+    cycle and 2021--2023 hiking cycle but small relative to ToT and demand
+    shocks.}
+  \label{fig:hist_decomp}
+\end{figure}
+
 \paragraph{Ordering robustness.}
 The Cholesky identifying assumption is that the monetary policy rate is
 ordered last among contemporaneous variables. We test sensitivity to this
@@ -463,6 +485,17 @@ ranges from $-0.195$\,pp (baseline and CPI-first) to $-1.079$\,pp
 The ordering-invariant GIRF 90\% CI $[-3.51,\,-0.13]$ excludes zero,
 confirming that the negative direction does not depend on the specific
 causal ordering chosen (Appendix~\ref{app:rob:order}).
+Figure~\ref{fig:ordering_fan} plots the full IRF paths for all orderings.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{figures/fig11_ordering_fan}
+  \caption{Cholesky Ordering Robustness: GDP Response to 100\,bp Rate Shock.
+    Six alternative orderings (gray) and the GIRF (red) against the baseline
+    (black). All orderings produce negative peak responses. The GIRF 90\%
+    CI $[-3.51,\,-0.13]$ excludes zero.}
+  \label{fig:ordering_fan}
+\end{figure}
 
 \subsection{Sign Restrictions}
 \label{sec:sign}
@@ -708,6 +741,16 @@ are precisely estimated. Bootstrapping the full Method~B chain (2,000 VAR
 replications $\times$ parametric $\hat\beta_B$ draws) yields a 90\% CI of
 $[+0.379,\,+0.608]$\,pp, confirming the positive sign is robust to sampling
 uncertainty in the VAR (Appendix~\ref{app:rob:chain}).
+Figure~\ref{fig:chain_comparison} summarises the three estimates side-by-side.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.85\textwidth]{figures/fig15_chain_comparison}
+  \caption{Frequency-Consistent Chain Estimates: Poverty Effect per 100\,bp
+    Rate Hike. Method~B (matched GDP units) is the preferred specification;
+    its 90\% CI $[+0.379,\,+0.608]$ excludes zero.}
+  \label{fig:chain_comparison}
+\end{figure}
 
 % ─────────────────────────────────────────────────────────────────────────────
 \subsection{Systematic Comparison}
@@ -919,6 +962,38 @@ confirms that rate shocks explain only $0.2\%$ of GDP variance at all
 horizons ($h=1,\ldots,8$), consistent with the view that external
 demand shocks (captured by ToT) dominate the business cycle in a
 commodity-dependent economy.
+Figures~\ref{fig:fx_channel} and \ref{fig:fevd} illustrate the
+channel decomposition and variance decomposition, respectively.
+Figure~\ref{fig:granger_network} displays the Granger causality network.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.75\textwidth]{figures/fig18_fx_channel}
+  \caption{Exchange Rate Channel Decomposition. Total peak GDP response
+    $-0.195$\,pp decomposes into a direct channel ($-0.217$\,pp) and an
+    offsetting FX channel ($+0.022$\,pp, $-11.2\%$). The exchange rate
+    channel is quantitatively negligible despite partial dollarization.}
+  \label{fig:fx_channel}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.75\textwidth]{figures/fig13_fevd}
+  \caption{Forecast Error Variance Decomposition of GDP, $h=1,\ldots,20$
+    quarters. Monetary policy shocks explain approximately 0.2\% of GDP
+    forecast error variance, typical for Cholesky SVARs where the policy
+    shock is small in variance terms relative to terms-of-trade shocks.}
+  \label{fig:fevd}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.75\textwidth]{figures/fig19_granger_network}
+  \caption{Granger Causality Network ($p<0.05$). Arrow thickness proportional
+    to $F$-statistic. GDP $\to$ Rate ($F=14.6$) confirms endogenous policy;
+    Rate $\to$ CPI ($F=7.5$) confirms the price channel.}
+  \label{fig:granger_network}
+\end{figure}
 
 The results contribute to the literature on monetary policy transmission
 in EMEs by documenting, for the first time in a single unified paper, why
@@ -1002,8 +1077,19 @@ Replication code is available at the same repository.\footnote{\url{https://gith
   Bayesian posterior $P(\hat\beta<0)=1.000$ under conjugate
   normal--inverse-gamma prior. Jackknife SE$\,=0.139$ and HC3
   SE$\,=0.143$ are both similar to the OLS SE$\,=0.115$.
-  See Appendix~\ref{app:rob:smallsample} for full results.
+  See Appendix~\ref{app:rob:smallsample} for full results and
+  Figure~\ref{fig:small_sample} for a visual comparison of all methods.
 \end{mytable}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.85\textwidth]{figures/fig16_small_sample}
+  \caption{Small-Sample Inference for the GDP--Poverty Coefficient ($N=18$).
+    Point estimates and 95\% CIs from five methods. All methods reject
+    $H_0:\beta=0$ except the sign test (which tests residual symmetry,
+    not the coefficient magnitude).}
+  \label{fig:small_sample}
+\end{figure}
 
 \begin{mytable}{GDP--Poverty Reduced-Form Coefficient: Sub-Period Stability}{tab:subperiod}
   \input{tables/tab11_subperiod_stability}
@@ -1381,5 +1467,16 @@ reliable VAR(1) inference and the result should be interpreted
 cautiously. Rolling-window IRFs (40-quarter windows) show the peak
 response varied between $-0.03$\,pp and $-0.32$\,pp across windows,
 with no structural discontinuity at the COVID episode.
+Figure~\ref{fig:rolling_window} plots these rolling-window estimates.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{figures/fig14_rolling_irf}
+  \caption{Rolling-Window Cholesky Peak GDP Response (40-quarter windows).
+    Point estimate (solid) and 90\% bootstrap CI (shaded). Vertical dashed
+    line: 2020Q1. The peak is consistently negative across windows with no
+    structural discontinuity at the COVID episode.}
+  \label{fig:rolling_window}
+\end{figure}
 
 \end{document}
