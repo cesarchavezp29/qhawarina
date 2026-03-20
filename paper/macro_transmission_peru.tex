@@ -269,10 +269,6 @@ estimation. This is preferred to a contemporaneous dummy in the VAR because
 a dummy in $Y_t$ but not the lags creates inconsistency in VAR($p\geq2$)
 systems by contaminating lagged regressors.
 
-\begin{mytable}{Summary Statistics, 2004Q2--2025Q3}{tab:sumstats}
-  \input{tables/tab1_summary_stats}
-\end{mytable}
-
 \subsection{BCRP Communications Corpus}
 
 We construct a dataset of 325 \textit{Notas Informativas del Programa
@@ -288,10 +284,6 @@ presents classification statistics. The correlation between dictionary and
 LLM scores is $0.373$, indicating moderate agreement. Both methods
 correctly flag 2009 as dovish and 2022 as hawkish. Figure~\ref{fig:tone}
 shows the tone series over time.
-
-\begin{mytable}{BCRP Communication Tone: Summary Statistics}{tab:tone_class}
-  \input{tables/tab8_tone_classification}
-\end{mytable}
 
 Year-by-year statistics for both methods appear in
 Table~\ref{tab:tone} (Appendix~\ref{app:tone}).
@@ -314,10 +306,6 @@ from INEI\slash ENAHO household surveys, 2005--2024. COVID years 2020--2021
 are excluded due to lockdown disruptions and INEI methodology changes.
 The regression sample contains $N=18$ annual observations.
 Table~\ref{tab:poverty} lists the full dataset.
-
-\begin{mytable}{Annual GDP Growth and Poverty Data, 2005--2024}{tab:poverty}
-  \input{tables/tab3_poverty_data}
-\end{mytable}
 
 % ─────────────────────────────────────────────────────────────────────────────
 \section{Econometric Framework}
@@ -407,6 +395,8 @@ poverty transmission.
 \section{Results}
 \label{sec:results}
 
+\textit{All tables are collected in Appendix~\ref{app:tables}; figures appear inline.}
+
 \subsection{Cholesky VAR(1): Benchmark}
 \label{sec:cholesky}
 
@@ -414,10 +404,6 @@ Table~\ref{tab:var_coefs} reports the estimated $\hat A_1$ matrix. The
 largest own-lag is the reference rate ($0.614$), reflecting rate smoothing.
 GDP has a negative own-lag ($-0.264$), consistent with mean reversion in
 quarterly growth.
-
-\begin{mytable}{VAR(1) Companion Matrix $\hat{A}_1$}{tab:var_coefs}
-  \input{tables/tab4_var_coefs}
-\end{mytable}
 
 Figure~\ref{fig:cholesky_irfs} plots impulse responses of GDP, CPI, and
 the exchange rate to a 100\,bp monetary policy shock, with 90\% bootstrap
@@ -478,10 +464,6 @@ demonstrate, single-episode narrative restrictions are insufficient for
 robust identification even in the US; two episodes are insufficient for
 Peru.
 
-\begin{mytable}{Narrative Sign Restrictions: Results by Specification}{tab:narrative}
-  \input{tables/tab5_narrative_sr}
-\end{mytable}
-
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=\textwidth]{figures/fig4_narrative_sr_irfs}
@@ -503,10 +485,6 @@ problem: the BCRP raises rates when GDP is strong. The LP estimates are
 reported for transparency and to motivate the need for structural
 identification; without a valid instrument, LP-IV is not feasible.
 
-\begin{mytable}{Local Projections: Rate $\to$ GDP at $h=0,\ldots,8$}{tab:lp}
-  \input{tables/tab6_lp_results}
-\end{mytable}
-
 \subsection{Proxy-SVAR: Interbank Rate}
 \label{sec:proxy_ib}
 
@@ -516,10 +494,6 @@ below the $F>10$ threshold of \citet{stock2018}. Peru's interbank rate
 equals the reference rate by construction, so the ``surprise'' is
 mechanically collinear with the reference rate change already in the VAR.
 The relevance condition fails.
-
-\begin{mytable}{Proxy-SVAR Feasibility: Interbank Rate Instrument}{tab:proxy_ib}
-  \input{tables/tab7_proxy_svar_ib}
-\end{mytable}
 
 \subsection{Proxy-SVAR: BCRP Communication Tone}
 \label{sec:proxy_tone}
@@ -536,10 +510,6 @@ the BCRP communicates hawkishly because the economy is booming, violating
 the exogeneity condition. This is a cautionary result for the growing
 literature on central bank communication as identification
 \citep{wolf2020}: high $F$ does not guarantee exogeneity.
-
-\begin{mytable}{Tone Surprise Instrument Validity}{tab:tone_iv}
-  \input{tables/tab9_tone_instrument}
-\end{mytable}
 
 \begin{figure}[htbp]
   \centering
@@ -577,10 +547,6 @@ $N=18$). A 1\,pp increase in annual GDP growth is associated with a
 reduction of $0.656$\,pp in the monetary poverty headcount rate, or
 approximately 200,000 people given Peru's population.
 
-\begin{mytable}{Poverty Regression: Full OLS Results}{tab:poverty_ols}
-  \input{tables/tab10_poverty_ols}
-\end{mytable}
-
 Figure~\ref{fig:scatter} shows the scatter plot with OLS fit and 90\%
 prediction interval. Two observations stand out: 2009 (GDP growth slowed
 to $+1.1\%$ but poverty fell $3.4$\,pp due to the Juntos conditional
@@ -603,10 +569,6 @@ Table~\ref{tab:subperiod} and Figure~\ref{fig:subperiod} confirm stability
 across sub-periods. The 2005--2014 elasticity is $-0.461$ (SE\,${=}\,0.179$);
 the 2015--2024 elasticity is $-0.723$ (SE\,${=}\,0.287$). A Chow test of
 equal slopes yields $t=0.78$ ($p\approx0.45$), failing to reject stability.
-
-\begin{mytable}{GDP--Poverty Reduced-Form Coefficient: Sub-Period Stability}{tab:subperiod}
-  \input{tables/tab11_subperiod_stability}
-\end{mytable}
 
 \begin{figure}[htbp]
   \centering
@@ -677,10 +639,6 @@ comparison of all identification strategies, including published Peru
 estimates. Figure~\ref{fig:forest} displays a forest plot of peak GDP
 responses with confidence/credible intervals.
 
-\begin{mytable}{Systematic Comparison of Identification Strategies}{tab:master}
-  \input{tables/tab12_master_comparison}
-\end{mytable}
-
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=\textwidth]{figures/fig9_forest_plot}
@@ -739,10 +697,6 @@ with its deep DI futures market, is clearly positioned for Proxy-SVAR
 identification in the Gertler-Karadi mold. For the majority of this table,
 the recursive SVAR is the state of the art---not a methodological concession,
 but the credible identification frontier.
-
-\begin{mytable}{Identification Feasibility Taxonomy for Selected EME Central Banks}{tab:eme_taxonomy}
-  \input{tables/tab13_eme_taxonomy}
-\end{mytable}
 
 Brazil's DI futures market stands out as the exception: it enables
 high-frequency surprise extraction and has been used in event-study
@@ -861,10 +815,71 @@ deploying modern methods in any similar setting.
 % ─────────────────────────────────────────────────────────────────────────────
 \appendix
 
+\section{Tables}
+\label{app:tables}
+
+\subsection*{Data and Summary Statistics}
+
+\begin{mytable}{Summary Statistics, 2004Q2--2025Q3}{tab:sumstats}
+  \input{tables/tab1_summary_stats}
+\end{mytable}
+
+\begin{mytable}{Annual GDP Growth and Poverty Data, 2005--2024}{tab:poverty}
+  \input{tables/tab3_poverty_data}
+\end{mytable}
+
+\begin{mytable}{BCRP Communication Tone: Summary Statistics}{tab:tone_class}
+  \input{tables/tab8_tone_classification}
+\end{mytable}
+
+\begin{mytable}{BCRP Communication Tone by Year, 2001--2026}{tab:tone}
+  \input{tables/tab2_tone_summary}
+\end{mytable}
+
+\subsection*{Estimation Results}
+
+\begin{mytable}{VAR(1) Companion Matrix $\hat{A}_1$}{tab:var_coefs}
+  \input{tables/tab4_var_coefs}
+\end{mytable}
+
+\begin{mytable}{Narrative Sign Restrictions: Results by Specification}{tab:narrative}
+  \input{tables/tab5_narrative_sr}
+\end{mytable}
+
+\begin{mytable}{Local Projections: Rate $\to$ GDP at $h=0,\ldots,8$}{tab:lp}
+  \input{tables/tab6_lp_results}
+\end{mytable}
+
+\begin{mytable}{Proxy-SVAR Feasibility: Interbank Rate Instrument}{tab:proxy_ib}
+  \input{tables/tab7_proxy_svar_ib}
+\end{mytable}
+
+\begin{mytable}{Tone Surprise Instrument Validity}{tab:tone_iv}
+  \input{tables/tab9_tone_instrument}
+\end{mytable}
+
+\begin{mytable}{Poverty Regression: Full OLS Results}{tab:poverty_ols}
+  \input{tables/tab10_poverty_ols}
+\end{mytable}
+
+\begin{mytable}{GDP--Poverty Reduced-Form Coefficient: Sub-Period Stability}{tab:subperiod}
+  \input{tables/tab11_subperiod_stability}
+\end{mytable}
+
+\subsection*{Systematic Comparison and Taxonomy}
+
+\begin{mytable}{Systematic Comparison of Identification Strategies}{tab:master}
+  \input{tables/tab12_master_comparison}
+\end{mytable}
+
+\begin{mytable}{Identification Feasibility Taxonomy for Selected EME Central Banks}{tab:eme_taxonomy}
+  \input{tables/tab13_eme_taxonomy}
+\end{mytable}
+
 \section{VAR Coefficient Matrix and Diagnostics}
 \label{app:var}
 
-The full VAR(1) companion matrix is in Table~\ref{tab:var_coefs} (main text).
+The full VAR(1) companion matrix is in Table~\ref{tab:var_coefs} (Appendix~\ref{app:tables}).
 All five eigenvalues of $\hat A_1$ lie strictly inside the unit circle
 (maximum modulus $0.62$). Residual variance diagonal (quarterly pp$^2$):
 ToT $=14.17$, GDP $=3.91$, CPI $=0.18$, FX $=2.64$, Rate $=0.11$.
@@ -885,10 +900,6 @@ from $-100$ (strongly dovish) to $+100$ (strongly hawkish). Explain your
 reasoning in one sentence, then give the score.''} Scores were extracted
 via regex. Correlation between dictionary and LLM methods is $0.373$.
 Table~\ref{tab:tone} presents the year-by-year summary.
-
-\begin{mytable}{BCRP Communication Tone by Year, 2001--2026}{tab:tone}
-  \input{tables/tab2_tone_summary}
-\end{mytable}
 
 \section{Sensitivity Analysis}
 \label{app:sensitivity}
