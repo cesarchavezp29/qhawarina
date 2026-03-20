@@ -193,16 +193,61 @@ the interbank rate fails relevance, and Proxy-SVAR with tone passes
 relevance only when the instrument retains anticipated policy, violating
 exogeneity.
 
-Section~\ref{sec:background} describes Peru's monetary framework.
-Section~\ref{sec:data} presents the data. Section~\ref{sec:framework}
-develops the econometric framework. Section~\ref{sec:results} reports
-results (Section~\ref{sec:comparison} provides the systematic comparison).
-Section~\ref{sec:discussion} discusses implications.
+Section~\ref{sec:litreview} reviews the literature and describes Peru's
+monetary policy framework. Section~\ref{sec:data} presents the data.
+Section~\ref{sec:methods} develops the identification methods.
+Section~\ref{sec:results} reports results and discusses implications.
 Section~\ref{sec:conclusion} concludes.
 
 % ─────────────────────────────────────────────────────────────────────────────
-\section{Institutional Background}
-\label{sec:background}
+\section{Literature Review}
+\label{sec:litreview}
+
+\subsection{Monetary Policy Transmission and Identification}
+\label{sec:litreview_methods}
+
+The empirical literature on monetary policy transmission has converged on
+structural identification as the methodological standard. \citet{sims1980}
+introduced the recursive (Cholesky) VAR, identifying monetary shocks as
+residuals from a policy equation ordered last. \citet{uhlig2005} proposed
+sign restrictions as a theory-motivated alternative that avoids imposing
+a specific causal ordering. External-instrument Proxy-SVARs were developed
+by \citet{stock2018} and \citet{gertler2015}, using high-frequency financial
+market movements around FOMC announcements to extract exogenous monetary
+variation. Narrative sign restrictions \citep{antolin2018} combine the
+flexibility of sign restrictions with the informativeness of major monetary
+episodes. Local projections \citep{jorda2005} provide a semi-parametric
+alternative that avoids the lag-selection sensitivity of VAR-based IRFs.
+
+Application of this toolkit to emerging-market economies has proceeded more
+cautiously. \citet{ha2025} document that monetary transmission in EMEs is
+generally weaker and more uncertain than in advanced economies, attributed
+to financial dollarization, commodity dependence, and weaker transmission
+through the credit channel. For Latin America specifically, \citet{castillo2011}
+estimate a small open economy DSGE model for Peru; \citet{portilla2022} and
+\citet{perezrojo2024} apply recursive VARs without evaluating why modern
+alternatives are infeasible. The broader Latin American literature confirms
+that Cholesky identification remains the empirical workhorse in
+commodity-dependent open economies, with the notable exception of Brazil,
+where DI futures markets enable high-frequency surprise extraction
+comparable to \citet{gertler2015}.
+
+The growing literature on central bank communication as identification
+offers a potential route around the administered-rate problem.
+\citet{mirandaagrippino2021} show that purging anticipated policy content
+is essential for correct Proxy-SVAR identification. \citet{wolf2020}
+formalizes conditions under which communication-based instruments satisfy
+the exogeneity requirement. \citet{lahura2020} applies dictionary-based
+tone classification to BCRP communications; we extend this to LLM
+classification and formally test exogeneity, finding that tone captures
+anticipated rather than exogenous policy variation---a cautionary result
+for the communication-as-instrument approach in administered-rate settings.
+
+This paper's contribution is to provide the first systematic identification
+comparison for Peru and to formalize the blocking conditions under which
+Peru's institutional environment renders non-recursive methods infeasible---conditions
+shared by a large class of EME central banks, as documented in
+Table~\ref{tab:eme_taxonomy}.
 
 \subsection{BCRP Monetary Policy Framework}
 
@@ -363,8 +408,8 @@ The regression sample contains $N=18$ annual observations.
 Table~\ref{tab:poverty} lists the full dataset.
 
 % ─────────────────────────────────────────────────────────────────────────────
-\section{Econometric Framework}
-\label{sec:framework}
+\section{Methods}
+\label{sec:methods}
 
 \subsection{Reduced-Form VAR}
 
@@ -839,9 +884,6 @@ Cholesky interpretation.
 \FloatBarrier
 
 % ─────────────────────────────────────────────────────────────────────────────
-\section{Discussion}
-\label{sec:discussion}
-
 \subsection{Why Modern Identification Fails in Peru}
 \label{sec:why_modern_fails}
 
@@ -961,7 +1003,28 @@ extraction and unlock the full modern identification toolkit for Peru
 and similarly administered EME rates.
 
 % ─────────────────────────────────────────────────────────────────────────────
-\section{Conclusion}
+\subsection{Transmission Channels}
+\label{sec:channels}
+
+Granger causality tests confirm the expected transmission chain: GDP growth
+Granger-causes the reference rate ($F=14.6$, $p<0.001$), the rate
+Granger-causes CPI ($F=7.49$, $p=0.007$), and ToT Granger-causes FX
+($F=8.0$, $p=0.005$). The dollarization channel is economically negligible:
+blocking the FX equation from the rate shock alters the peak GDP response by
+only $-11.2\%$ (from $-0.195$ to $-0.217$\,pp), and historical decomposition
+attributes $81.8\%$ of FX variance to FX's own shocks. The credit channel
+cannot be tested with available BCRP series. Forecast-error variance
+decomposition confirms that rate shocks explain only $0.2\%$ of GDP variance
+at all horizons ($h=1,\ldots,8$), consistent with external demand shocks
+dominating Peru's business cycle.
+Figures~\ref{fig:fx_channel} and \ref{fig:fevd} illustrate the channel
+decomposition and variance decomposition, respectively.
+Figure~\ref{fig:granger_network} displays the Granger causality network.
+
+
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Conclusions}
 \label{sec:conclusion}
 
 We have systematically compared seven identification strategies for monetary
@@ -986,24 +1049,7 @@ $[-0.13,\,-0.29]$\,pp, bracketing the published Peru literature estimates
 of $[-0.25,\,-0.30]$\,pp and supporting the reliability of the baseline
 result.
 
-\paragraph{Transmission channels.}
-Granger causality tests (Section~\ref{sec:cholesky}) confirm the expected
-chain: GDP growth Granger-causes the reference rate ($F=14.6$, $p<0.001$),
-the rate Granger-causes CPI ($F=7.49$, $p=0.007$), and ToT
-Granger-causes FX ($F=8.0$, $p=0.005$). The dollarization channel is
-economically negligible: blocking the FX equation from the rate shock
-alters the peak GDP response by only $-11.2\%$ (from $-0.195$ to
-$-0.217$\,pp), and historical decomposition attributes $81.8\%$ of FX
-variance to FX's own shocks. The credit channel cannot be tested with
-available BCRP series, as quarterly lending data are not publicly
-accessible at the required frequency. Forecast-error variance decomposition
-confirms that rate shocks explain only $0.2\%$ of GDP variance at all
-horizons ($h=1,\ldots,8$), consistent with the view that external
-demand shocks (captured by ToT) dominate the business cycle in a
-commodity-dependent economy.
-Figures~\ref{fig:fx_channel} and \ref{fig:fevd} illustrate the
-channel decomposition and variance decomposition, respectively.
-Figure~\ref{fig:granger_network} displays the Granger causality network.
+
 
 \begin{figure}[H]
   \centering
