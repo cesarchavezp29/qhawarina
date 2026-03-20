@@ -1023,34 +1023,6 @@ Figure~\ref{fig:granger_network} displays the Granger causality network.
 
 
 
-% ─────────────────────────────────────────────────────────────────────────────
-\section{Conclusions}
-\label{sec:conclusion}
-
-We have systematically compared seven identification strategies for monetary
-policy in Peru and found that only Cholesky recursive identification
-produces a credible, literature-consistent estimate: $-0.195$\,pp per
-100\,bp peak GDP response (Figure~\ref{fig:forest}).
-Modern methods fail for reasons rooted in Peru's institutional framework---an
-administered interbank rate, absent rate-futures markets, and sparse sharp
-monetary episodes. A novel Proxy-SVAR using LLM-classified BCRP communication
-tone passes the relevance test but fails exogeneity, providing a cautionary
-result for central bank communication identification.
-
-Our most robust contribution is a precisely estimated GDP--poverty
-reduced-form coefficient, stable across sub-periods and economically
-interpretable. Chaining this through the frequency-consistent GDP
-response (Section~\ref{sec:chain}) implies the 2021--2023 hiking
-cycle may have raised the monetary poverty rate by roughly 2--4\,pp.
-
-Across all Cholesky robustness variants---alternative variable orderings,
-lag orders, and COVID window treatments---the peak GDP response lies in
-$[-0.13,\,-0.29]$\,pp, bracketing the published Peru literature estimates
-of $[-0.25,\,-0.30]$\,pp and supporting the reliability of the baseline
-result.
-
-
-
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.75\textwidth]{figures/fig18_fx_channel}
@@ -1113,6 +1085,34 @@ For this class, the methodological implication is that recursive identification
 is not a shortcut but the credible frontier, and the diagnostic toolkit
 presented here can be applied to verify identification feasibility before
 deploying modern methods in any similar setting.
+
+
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Conclusions}
+\label{sec:conclusion}
+
+We have systematically compared seven identification strategies for monetary
+policy in Peru and found that only Cholesky recursive identification
+produces a credible, literature-consistent estimate: $-0.195$\,pp per
+100\,bp peak GDP response (Figure~\ref{fig:forest}).
+Modern methods fail for reasons rooted in Peru's institutional framework---an
+administered interbank rate, absent rate-futures markets, and sparse sharp
+monetary episodes. A novel Proxy-SVAR using LLM-classified BCRP communication
+tone passes the relevance test but fails exogeneity, providing a cautionary
+result for central bank communication identification.
+
+Our most robust contribution is a precisely estimated GDP--poverty
+reduced-form coefficient, stable across sub-periods and economically
+interpretable. Chaining this through the frequency-consistent GDP
+response (Section~\ref{sec:chain}) implies the 2021--2023 hiking
+cycle may have raised the monetary poverty rate by roughly 2--4\,pp.
+
+Across all Cholesky robustness variants---alternative variable orderings,
+lag orders, and COVID window treatments---the peak GDP response lies in
+$[-0.13,\,-0.29]$\,pp, bracketing the published Peru literature estimates
+of $[-0.25,\,-0.30]$\,pp and supporting the reliability of the baseline
+result.
 
 % ─────────────────────────────────────────────────────────────────────────────
 \subsection*{Data Availability Statement}
