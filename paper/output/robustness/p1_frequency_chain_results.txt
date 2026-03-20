@@ -1,0 +1,47 @@
+P1: FREQUENCY-CHAIN ROBUSTNESS CHECK
+======================================================================
+
+MOTIVATION
+  Baseline chain: peak QoQ IRF x annual ΔPoverty/GDP elasticity
+  Baseline peak GDP IRF (h=3): -0.195 pp (QoQ)
+  Poverty elasticity β̂: -0.656  SE: 0.115
+  Baseline chain estimate: 0.1279 pp poverty reduction per 100bp hike
+
+METHOD A — Cumulate QoQ IRF to YoY-equivalent
+  GDP IRF path (h=0..8): [0.0, -0.0549, -0.194, -0.1952, -0.172, -0.1381, -0.1044, -0.0762, -0.0544]
+  Cumulative 1yr (h=0..3): -0.4442 pp
+  Cumulative 2yr (h=0..7): -0.9349 pp
+  Chain A (1yr): 0.2914 pp  90% CI: [-0.9233, 1.9238]
+  Chain A (2yr): 0.6133 pp  90% CI: [-1.1836, 2.7089]
+  Bootstrap draws: 2000 (VAR) x 2000 (β ~ N)
+
+METHOD B — Re-estimate poverty regression using annual-avg-of-QoQ GDP
+  Matched years: [2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2022, 2023, 2024]
+  β̂_B = -2.5536  SE = 0.4148  R² = 0.7031
+  Chain B: -0.195 x -2.5536 = 0.4979 pp
+  90% CI: [0.3791, 0.6083]
+
+METHOD C — Direct annual rate → poverty (with GDP control)
+  Dataset years: [2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2022, 2023, 2024]
+  ΔPoverty = α + β_gdp×GDP_yoy + β_rate×stance + ε
+  β_gdp  = -0.6423  SE = 0.1184
+  β_rate = 0.1831  SE = 0.2398
+  t_rate = 0.763  p_rate = 0.4570
+  R² = 0.6817
+  Rate has independent power beyond GDP: NO (p>=0.10)
+
+COMPARISON TABLE
+  Method                               Chain Est     CI Lo     CI Hi
+  ----------------------------------------------------------------
+  Baseline (QoQ x annual β)               0.1279         -         -
+  Method A — 1yr cumul                    0.2914   -0.9233    1.9238
+  Method A — 2yr cumul                    0.6133   -1.1836    2.7089
+  Method B — re-est β                     0.4979    0.3791    0.6083
+
+INTERPRETATION
+  The baseline chain estimate conflates QoQ and annual frequencies.
+  Corrected estimates (Method A) use cumulated IRF in YoY-equivalent units,
+  which is the appropriate operand for the annual poverty elasticity β.
+  Method B provides a fully frequency-consistent regression.
+  Method C tests whether monetary policy has independent direct effects on
+  poverty beyond the GDP transmission channel.

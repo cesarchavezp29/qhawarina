@@ -14,9 +14,6 @@ Method & Type & Peak GDP (pp) & 90\% CI & Feasible & Reason \\
     Proxy-SVAR (IB rate) & IV & --- & --- & \xmark & $F=4.73<10$ \\
     Proxy-SVAR (tone, A) & IV & --- & --- & \xmark & Lacks relevance \\
     Proxy-SVAR (tone, B) & IV & $4.32^*$ & --- & \xmark & Exogeneity fails \\
-    GIRF$^\dagger$ & Reduced form & $-0.917$ & $[-3.51,-0.13]$ & \warnmark & Not structural \\
-    BVAR (Minnesota) & Bayesian & $-0.209$ & $[-0.653,-0.032]$ & \cmark & 68\% CI excludes zero \\
-    Taylor-rule residual & IV & --- & --- & \xmark & $F=80.5$ relevant; exogeneity fails \\
 \midrule
 \multicolumn{6}{l}{\textit{Published estimates for Peru}} \\
     P\'{e}rez Rojo \& Rodr\'iguez (2024) & Recursive & $-0.28$ & --- & \cmark & --- \\
@@ -27,9 +24,6 @@ Method & Type & Peak GDP (pp) & 90\% CI & Feasible & Reason \\
 \begin{tablenotes}
 \small \cmark\ = identified; \warnmark\ = feasible with caveats; \xmark\ = not
 identified. ${}^*$All LP-IV horizons $h=0$--$8$ positive (exogeneity failure).
-${}^\dagger$GIRF (\citealt{pesaran1998}) is ordering-invariant but not structural;
-CI reported for a one-standard-deviation rate innovation, not a 100\,bp shock.
 Literature: $[-0.30, -0.25]$\,pp per 100\,bp. Cholesky robustness range
 $[-0.13, -0.29]$\,pp brackets published estimates. Cholesky CI includes zero.
-BVAR posterior median based on Minnesota prior ($\lambda=0.2$), Gibbs sampling.
 \end{tablenotes}

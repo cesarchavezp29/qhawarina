@@ -429,38 +429,53 @@ def main():
     # =========================================================================
     # Figure: side-by-side bar chart
     # =========================================================================
-    labels  = ['Baseline\n(QoQ×annual β)', 'Method A\n1yr cumul', 'Method A\n2yr cumul']
-    centers = [baseline_chain, chain_A_1yr, chain_A_2yr]
-    lo_errs = [0, chain_A_1yr - ci_A_1yr[0], chain_A_2yr - ci_A_2yr[0]]
-    hi_errs = [0, ci_A_1yr[1] - chain_A_1yr, ci_A_2yr[1] - chain_A_2yr]
-
+    # Method B is the preferred spec — put it first (leftmost), highlighted in red
     if not np.isnan(chain_B):
-        labels.append('Method B\nre-est β')
-        centers.append(chain_B)
-        lo_errs.append(chain_B - ci_B[0])
-        hi_errs.append(ci_B[1] - chain_B)
-
-    colors = [C["ci_light"]] + [C["main"]] * (len(labels) - 1)
+        labels  = ['Method B \u2605\n(preferred)',
+                   'Method A\n2yr cumul', 'Method A\n1yr cumul',
+                   'Baseline\n(naive)']
+        centers = [chain_B, chain_A_2yr, chain_A_1yr, baseline_chain]
+        lo_errs = [chain_B - ci_B[0],
+                   chain_A_2yr - ci_A_2yr[0],
+                   chain_A_1yr - ci_A_1yr[0], 0]
+        hi_errs = [ci_B[1] - chain_B,
+                   ci_A_2yr[1] - chain_A_2yr,
+                   ci_A_1yr[1] - chain_A_1yr, 0]
+        colors  = [C["accent1"], C["main"], C["main"], C["ci_light"]]
+        edge_colors = [C["accent1"], C["main"], C["main"], C["ci_dark"]]
+        err_indices = list(range(3))   # first three bars have error bars
+    else:
+        labels  = ['Method A\n2yr cumul', 'Method A\n1yr cumul', 'Baseline\n(naive)']
+        centers = [chain_A_2yr, chain_A_1yr, baseline_chain]
+        lo_errs = [chain_A_2yr - ci_A_2yr[0], chain_A_1yr - ci_A_1yr[0], 0]
+        hi_errs = [ci_A_2yr[1] - chain_A_2yr, ci_A_1yr[1] - chain_A_1yr, 0]
+        colors  = [C["main"], C["main"], C["ci_light"]]
+        edge_colors = [C["main"], C["main"], C["ci_dark"]]
+        err_indices = [0, 1]
 
     fig, ax = plt.subplots(figsize=SZ["wide"])
     x = np.arange(len(labels))
-    bars = ax.bar(x, centers, width=0.5, color=colors, edgecolor=C["main"], linewidth=0.7)
+    bars = ax.bar(x, centers, width=0.5, color=colors,
+                  edgecolor=edge_colors, linewidth=[2.0 if c == C["accent1"] else 0.7
+                                                    for c in colors])
     ax.errorbar(
-        x[1:], centers[1:],
-        yerr=[lo_errs[1:], hi_errs[1:]],
+        x[err_indices], [centers[i] for i in err_indices],
+        yerr=[[lo_errs[i] for i in err_indices], [hi_errs[i] for i in err_indices]],
         fmt='none', color=C["main"], capsize=5, linewidth=1.2
     )
     zero_line(ax)
     ax.set_xticks(x)
     ax.set_xticklabels(labels, fontsize=9)
-    ax.set_ylabel('Poverty rate change (pp per 100bp shock)')
+    ax.set_ylabel('Poverty rate change (pp per 100 bp shock)')
     ax.set_title('')
-    # Annotate bars with values — place above the error bar cap (or above bar if no error bar)
+    # Annotate bars with values
     for i, (b_val, rect) in enumerate(zip(centers, bars)):
-        cap_top = b_val + hi_errs[i] if i > 0 else b_val
+        cap_top = b_val + hi_errs[i] if hi_errs[i] > 0 else b_val
         ypos = cap_top + 0.04 if cap_top >= 0 else b_val - 0.06
         ax.text(rect.get_x() + rect.get_width()/2, ypos,
-                f'{b_val:.3f}', ha='center', va='bottom', fontsize=8)
+                f'{b_val:.3f}', ha='center', va='bottom', fontsize=8,
+                fontweight='bold' if i == 0 else 'normal',
+                color=C["accent1"] if i == 0 else 'black')
 
     out_fig = OUT_DIR / 'p1_frequency_chain.pdf'
     fig.savefig(out_fig)

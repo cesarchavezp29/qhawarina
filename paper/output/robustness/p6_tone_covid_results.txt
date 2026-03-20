@@ -1,0 +1,151 @@
+======================================================================
+SCRIPT 6: TONE VALIDATION & COVID STRUCTURAL BREAK
+======================================================================
+
+======================================================================
+PART A: LLM TONE VALIDATION
+======================================================================
+Tone data loaded from: D:\Nexus\nexus\data\raw\bcrp\notas_informativas\tone_scores.csv
+Tone data shape: (325, 12)
+Columns: ['key', 'year', 'month', 'date', 'filename', 'n_chars', 'dict_tone', 'dict_hawkish', 'dict_dovish', 'dict_neutral', 'llm_tone', 'llm_reason']
+                                         key  year  month        date                                       filename  n_chars  dict_tone  dict_hawkish  dict_dovish  dict_neutral  llm_tone                                                             llm_reason
+0             Nota-Informativa-002-2001-BCRP  2001      2  2001-02-01             Nota-Informativa-002-2001-BCRP.pdf     2732        0.0             0            0             0       -35  Recent rate cuts, lower corridor rates, accommodative stance signaled
+1             Nota-Informativa-003-2001-BCRP  2001      3  2001-03-01             Nota-Informativa-003-2001-BCRP.pdf     3302        0.0             0            0             0       -45             Rate cuts, increased monetary liquidity, stimulus signals.
+2  Nota-Informativa-004-2001-BCRP-Modificado  2001      4  2001-04-01  Nota-Informativa-004-2001-BCRP-Modificado.pdf     1175       -1.0             0            1             0       -45     Liquidity target reduced due to financial turbulence, easing bias.
+
+Column mapping: date=date, dict=dict_tone, llm=llm_tone, length=n_chars
+
+Merged tone+rate rows: 325
+Non-zero rate changes: 97
+
+Descriptive statistics:
+       dict_tone  llm_tone  d_rate_m
+count   325.0000  325.0000  325.0000
+mean     -0.0622   -7.7231    0.0031
+std       0.5124   40.1584    0.2316
+min      -1.0000  -85.0000   -1.0000
+25%      -0.4000  -35.0000    0.0000
+50%       0.0000  -15.0000    0.0000
+75%       0.2000    5.0000    0.0000
+max       1.0000   75.0000    0.5000
+
+Correlation (dict_tone, llm_tone): 0.3726
+
+--- 1. Predictive Validity Regressions ---
+
+  LLM → Δrate (contemporaneous):
+    β = 0.00390  p = 0.0000  R² = 0.4586  N = 325
+  LLM → Δrate(t+1) (forward-looking):
+    β = 0.00296  p = 0.0000  R² = 0.2635  N = 324
+
+  Dict → Δrate (contemporaneous):
+    β = 0.14704  p = 0.0000  R² = 0.1059  N = 325
+  Dict → Δrate(t+1) (forward-looking):
+    β = 0.11261  p = 0.0001  R² = 0.0615  N = 324
+
+--- 2. Confusion Matrix: Tone vs Rate Decision ---
+
+Cross-tabulation (rows=tone, cols=decision):
+rate_class  cut  hike  hold  Total
+tone_class                        
+dovish       38     1    79    118
+hawkish       1    55    16     72
+neutral       1     1   133    135
+Total        40    57   228    325
+
+On non-zero rate changes (N=97):
+  Hawkish→Hike accuracy: 55/56 = 98.21%
+  Dovish→Cut accuracy:   38/39 = 97.44%
+
+--- 3. Text Length Confound ---
+Correlation (n_chars/word_count, LLM score): 0.1315
+Pearson r = 0.1315, p = 0.0177
+Low correlation with text length — confound unlikely.
+
+--- 4. Spot-Check: Largest Dict vs LLM Disagreements ---
+
+Top 10 dict vs LLM disagreements (z-score normalized):
+      date  dict_tone  llm_tone  d_rate_m    dict_z     llm_z  disagreement
+2001-07-01        1.0       -75      0.00  2.073001 -1.675287      3.748288
+2019-11-07        1.0       -65     -0.25  2.073001 -1.426273      3.499274
+2001-12-01        1.0       -45      0.00  2.073001 -0.928246      3.001247
+2002-01-01        1.0       -45      0.00  2.073001 -0.928246      3.001247
+2002-03-01        1.0       -45      0.00  2.073001 -0.928246      3.001247
+2015-09-01       -1.0        35      0.25 -1.830397  1.063863      2.894259
+2015-09-10       -1.0        35      0.25 -1.830397  1.063863      2.894259
+2002-02-01        1.0       -35      0.00  2.073001 -0.679233      2.752233
+2009-08-01       -1.0        25     -0.75 -1.830397  0.814849      2.645246
+2010-05-01       -1.0        25      0.25 -1.830397  0.814849      2.645246
+
+Saved: p6a_tone_validation.pdf
+
+======================================================================
+PART B: COVID STRUCTURAL BREAK ANALYSIS
+======================================================================
+
+Baseline VAR(1): T=86
+
+--- 1. Split-Sample VAR ---
+Pre-COVID sample:  2004-06-30 to 2019-12-31  T=63
+Post-COVID sample: 2021-03-31 to 2025-09-30  T=19
+
+Pre-COVID VAR(1):
+  Peak GDP IRF: -0.3229 at h=1
+  90% CI: [-1.1103, 0.3143]
+
+WARNING: Post-COVID T=19 is very short for a VAR(1). Estimates will be unreliable. Interpret with extreme caution.
+
+Post-COVID VAR(1):
+  Peak GDP IRF: -0.4909 at h=2
+  90% CI: [-1.7288, 0.5192]
+
+--- 2. Rolling Window Analysis (40-quarter window) ---
+Rolling windows computed: 47 / 47
+Peak GDP IRF range: [-0.4653, 0.0000]
+Saved: p6b_rolling_irf.pdf
+
+--- 3. Chow-Type Likelihood Ratio Test ---
+Log-likelihood (full sample):  -722.7753
+Log-likelihood (pre-COVID):    -466.9778
+Log-likelihood (post-COVID):   -107.6385
+
+LR statistic: 296.3180
+Degrees of freedom: 30
+p-value: 0.0000
+Significance: ***
+
+CAVEAT: Post-COVID sub-sample T=19 makes this test unreliable.
+Low power; LR test result should be interpreted cautiously.
+
+--- 4. Interacted VAR (COVID Regime Switching) ---
+D_post = 1 for 19 quarters (2021Q1 onward)
+Interacted VAR dataset T=85
+
+Interaction term p-values (A1* = 0 tests, per equation):
+Equation          tot_post      gdp_post      cpi_post       fx_post     rate_post
+  tot              0.648         0.866         0.037 *       0.992         0.433  
+  gdp              0.251         0.289         0.280         0.642         0.928  
+  cpi              0.461         0.945         0.204         0.314         0.021 *
+  fx               0.223         0.991         0.797         0.750         0.537  
+  rate             0.525         0.563         0.920         0.440         0.722  
+
+Joint F-test (GDP equation, all interaction terms = 0):
+  F = 1.3717  df_num = 5.0  p = 0.2449
+
+Interacted VAR IRFs (simplified, unit shock to rate):
+  Pre-COVID  peak GDP: -0.1212
+  Post-COVID peak GDP: -0.4820
+Saved: p6b_split_irf.pdf
+
+======================================================================
+SUMMARY: COVID STRUCTURAL BREAK
+======================================================================
+Full-sample baseline peak GDP IRF: -0.1950
+Pre-COVID split-sample peak:       -0.3229
+Post-COVID split-sample peak:      -0.4909  (T=19, UNRELIABLE)
+Interacted VAR pre-COVID peak:     -0.1212
+Interacted VAR post-COVID peak:    -0.4820
+
+Rolling window peak range: [-0.4653, 0.0000]
+Interpretation: stability assessed via rolling windows and interacted VAR.
+Post-COVID split subsample (T~19) is too short for reliable inference.

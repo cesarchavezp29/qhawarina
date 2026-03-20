@@ -1,0 +1,14 @@
+BVAR posterior median peak GDP response: -0.2090723229604534 at h=1
+BVAR posterior mean peak GDP response: -0.32287379187732423
+BVAR 68% credible interval: [-0.6525850973207508, -0.03237633479609213]
+BVAR 90% credible interval: [-1.0152611018874342, -0.00034595357158822995]
+BVAR 95% credible interval: [-1.2170203357650102, 0.0]
+Number of posterior draws used: 5000 of 5000 attempted
+Prior tightness lambda1=0.2, lambda2=0.5
+Sensitivity lambda1=0.1: median=-0.17682832071419521, mean=-0.28739768247262143, n_draws=5000
+Sensitivity lambda1=0.5: median=-0.24750549872135502, mean=-0.3422623917794007, n_draws=5000
+Frequentist Cholesky peak for comparison: -0.19523508588614993 at h=3
+Prior mean: all coefficients = 0 (white noise / stationary prior)
+Prior IW: S0=diag(sigma_sq_OLS), nu0=7
+Posterior IW: nu_post=92
+NOTE: equation-by-equation Minnesota prior, independent Normal draws given Sigma

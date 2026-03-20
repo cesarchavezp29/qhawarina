@@ -1,0 +1,112 @@
+======================================================================
+SCRIPT 5: CREDIT CHANNEL, FEVD, GRANGER, STABILITY
+======================================================================
+VAR data: T=86
+
+======================================================================
+STEP 0: SERIES AVAILABILITY IN PANEL
+======================================================================
+Total series: 84
+  PN00*: ['PN00027MM', 'PN00178MM', 'PN00518MM']
+  PN01*: ['PN01013MM', 'PN01246PM', 'PN01271PM', 'PN01273PM', 'PN01286PM', 'PN01287PM', 'PN01383PM', 'PN01652XM', 'PN01654XM', 'PN01655XM', 'PN01657XM', 'PN01660XM', 'PN01713AM', 'PN01716AM', 'PN01717AM']
+  PN02*: ['PN02204FM', 'PN02409FM']
+  PN07*: ['PN07807NM', 'PN07816NM']
+  PN08*: ['PN08515EM', 'PN08519EM', 'PN08521EM']
+  PD04*: ['PD04722MM']
+  PN00661MM: not found
+  PN00662MM: not found
+  PN02069MM: not found
+  PD04718MM: not found
+  PD04719MM: not found
+  PD04720MM: not found
+  PD04721MM: not found
+  PD04723MM: not found
+  PD04724MM: not found
+
+======================================================================
+STEP 1: BASELINE VAR(1) — GRANGER CAUSALITY
+======================================================================
+VAR(1) estimated. T=85, K=5
+
+Pairwise Granger causality (H0: X does not Granger-cause Y):
+  Causing  Caused    F-stat    p-value
+  ---------------------------------------------
+  tot      → gdp          0.764    0.3827  
+  tot      → cpi          3.468    0.0633  *
+  tot      → fx           7.999    0.0049  ***
+  tot      → rate         0.584    0.4452  
+  gdp      → tot          1.548    0.2141  
+  gdp      → cpi          2.165    0.1420  
+  gdp      → fx           1.746    0.1872  
+  gdp      → rate        14.615    0.0002  ***
+  cpi      → tot          0.920    0.3380  
+  cpi      → gdp          0.247    0.6194  
+  cpi      → fx           0.496    0.4816  
+  cpi      → rate         3.444    0.0642  *
+  fx       → tot          0.650    0.4206  
+  fx       → gdp          0.725    0.3950  
+  fx       → cpi          0.394    0.5308  
+  fx       → rate         0.427    0.5139  
+  rate     → tot          1.431    0.2323  
+  rate     → gdp          0.008    0.9298  
+  rate     → cpi          7.494    0.0065  ***
+  rate     → fx           0.181    0.6708  
+
+======================================================================
+STEP 2: FORECAST ERROR VARIANCE DECOMPOSITION (FEVD)
+======================================================================
+
+FEVD for GDP (% variance explained by each shock):
+    h       tot       gdp       cpi        fx      rate
+    1      0.0%    100.0%      0.0%      0.0%      0.0%
+    2      1.8%     97.2%      0.3%      0.7%      0.0%
+    3      2.6%     96.1%      0.4%      0.8%      0.1%
+    4      2.9%     95.8%      0.4%      0.8%      0.1%
+    5      2.9%     95.7%      0.5%      0.8%      0.2%
+    6      2.9%     95.6%      0.5%      0.8%      0.2%
+    7      2.9%     95.6%      0.5%      0.8%      0.2%
+    8      2.9%     95.5%      0.5%      0.8%      0.2%
+   10      2.9%     95.5%      0.5%      0.8%      0.2%
+   12      2.9%     95.5%      0.5%      0.8%      0.2%
+   16      2.9%     95.5%      0.5%      0.8%      0.2%
+   20      2.9%     95.5%      0.5%      0.8%      0.2%
+
+Share of GDP variance explained by RATE shock:
+  h= 1: 0.0%
+  h= 4: 0.1%
+  h= 8: 0.2%
+  h=12: 0.2%
+  h=20: 0.2%
+
+Figure saved: D:\Nexus\nexus\paper\output\robustness\p5_fevd.pdf
+
+======================================================================
+STEP 3: LENDING RATE / SPREAD (CONDITIONAL)
+======================================================================
+No lending rate series found in panel.
+To add: download TAMN (PD04718MM) from BCRP estadísticas.
+Falling back to baseline 5-var analysis only.
+
+======================================================================
+STEP 4: CREDIT CHANNEL VAR (CONDITIONAL)
+======================================================================
+Credit series not found in panel — augmented VAR skipped.
+Download: PN00661MM (MN credit), PN00662MM (ME credit) from BCRP.
+
+======================================================================
+STEP 5: VAR STABILITY & RECURSIVE IRF
+======================================================================
+Eigenvalue moduli of A1: [0.6865, 0.4703, 0.2142, 0.2142, 0.0577]
+Max modulus: 0.6865 (< 1 → stationary)
+Stability plot saved: D:\Nexus\nexus\paper\output\robustness\p5_stability.pdf
+
+Recursive expanding-window peak GDP IRF:
+  T_end         Peak    h*
+  T=60       -0.3168  h=1
+  T=65       -0.0301  h=4
+  T=70       -0.1174  h=3
+  T=75       -0.1715  h=3
+  T=80       -0.2131  h=2
+  T=85       -0.1936  h=2
+  T=86       -0.1952  h=3
+Recursive IRF plot saved: D:\Nexus\nexus\paper\output\robustness\p5_recursive_irf.pdf

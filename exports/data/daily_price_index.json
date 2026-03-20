@@ -4,8 +4,8 @@
     "methodology_note": "index_all uses INEI IPC expenditure weights via weighted geometric mean of category-level Jevons ratios. index_all_unweighted is the simple geometric mean across all matched products.",
     "base_date": "2026-02-10",
     "base_value": 100,
-    "last_date": "2026-03-18",
-    "n_days": 37,
+    "last_date": "2026-03-20",
+    "n_days": 39,
     "stores": [
       "Plaza Vea",
       "Metro",
@@ -1090,85 +1090,139 @@
       "index_limpieza": 98.6688,
       "index_cuidado_personal": 98.1884,
       "index_other": 100.8035
+    },
+    {
+      "date": "2026-03-19",
+      "index_all": 99.1547,
+      "index_all_unweighted": 99.4489,
+      "index_food": 99.4482,
+      "index_nonfood": 99.4627,
+      "var_all": 0.0442,
+      "var_food": 0.0851,
+      "cum_pct": -0.8453,
+      "yoy_inflation": null,
+      "mom_inflation": -0.1402,
+      "interpolated": false,
+      "n_matched": 39469,
+      "index_arroz_cereales": 99.3625,
+      "index_pan_harinas": 99.5161,
+      "index_carnes": 99.367,
+      "index_pescados_mariscos": 98.684,
+      "index_lacteos": 98.8976,
+      "index_frutas": 100.0255,
+      "index_verduras": 98.3962,
+      "index_aceites_grasas": 98.4991,
+      "index_azucar_dulces": 102.8037,
+      "index_bebidas": 98.9677,
+      "index_limpieza": 98.6452,
+      "index_cuidado_personal": 98.0885,
+      "index_other": 100.5597
+    },
+    {
+      "date": "2026-03-20",
+      "index_all": 99.1554,
+      "index_all_unweighted": 99.4509,
+      "index_food": 99.4507,
+      "index_nonfood": 99.4631,
+      "var_all": 0.0007,
+      "var_food": 0.0025,
+      "cum_pct": -0.8446,
+      "yoy_inflation": null,
+      "mom_inflation": -0.1622,
+      "interpolated": false,
+      "n_matched": 40051,
+      "index_arroz_cereales": 99.3533,
+      "index_pan_harinas": 99.5273,
+      "index_carnes": 99.3657,
+      "index_pescados_mariscos": 98.684,
+      "index_lacteos": 98.8976,
+      "index_frutas": 100.0421,
+      "index_verduras": 98.3962,
+      "index_aceites_grasas": 98.4991,
+      "index_azucar_dulces": 102.8037,
+      "index_bebidas": 98.9677,
+      "index_limpieza": 98.6452,
+      "index_cuidado_personal": 98.0885,
+      "index_other": 100.5606
     }
   ],
   "latest": {
-    "date": "2026-03-18",
-    "index_all": 99.1109,
-    "index_food": 99.3636,
-    "cum_pct": -0.8891,
-    "var_all": -0.2588,
+    "date": "2026-03-20",
+    "index_all": 99.1554,
+    "index_food": 99.4507,
+    "cum_pct": -0.8446,
+    "var_all": 0.0007,
     "yoy_inflation": null,
-    "mom_inflation": -0.1016,
-    "n_products_today": 39724,
+    "mom_inflation": -0.1622,
+    "n_products_today": 40051,
     "top_movers": [
-      {
-        "category": "verduras",
-        "label_es": "Verduras",
-        "label_en": "Vegetables",
-        "var": -0.45
-      },
       {
         "category": "frutas",
         "label_es": "Frutas",
         "label_en": "Fruits",
-        "var": -0.42
+        "var": 0.02
       },
       {
-        "category": "lacteos",
-        "label_es": "Lácteos y Huevos",
-        "label_en": "Dairy & Eggs",
-        "var": -0.38
+        "category": "arroz_cereales",
+        "label_es": "Arroz y Cereales",
+        "label_en": "Rice & Cereals",
+        "var": -0.01
       },
       {
-        "category": "cuidado_personal",
-        "label_es": "Cuidado Personal",
-        "label_en": "Personal Care",
-        "var": -0.37
+        "category": "pan_harinas",
+        "label_es": "Pan y Harinas",
+        "label_en": "Bread & Flour",
+        "var": 0.01
+      },
+      {
+        "category": "carnes",
+        "label_es": "Carnes",
+        "label_en": "Meat",
+        "var": -0.0
       }
     ],
     "product_movers": [
       {
-        "name": "Lechuga Hidropónica Don Miguel x unid",
-        "store": "metro",
-        "category": "frutas",
-        "var": 95.45
-      },
-      {
-        "name": "Champiñón Picado Paccu 100g",
-        "store": "metro",
-        "category": "frutas",
-        "var": 95.0
-      },
-      {
-        "name": "Ají Amarillo x kg",
+        "name": "Rocoto x kg",
         "store": "wong",
         "category": "frutas",
-        "var": 77.86
+        "var": 45.05
       },
       {
-        "name": "Berenjena x un",
+        "name": "Torta Helada de Fresa 10 Porciones",
         "store": "metro",
-        "category": "frutas",
-        "var": 75.47
+        "category": "pan_harinas",
+        "var": 43.01
+      },
+      {
+        "name": "Pan Multigrano Victorsdou 750g",
+        "store": "wong",
+        "category": "pan_harinas",
+        "var": 23.26
+      },
+      {
+        "name": "Pan Brioche Victorsdou 600g",
+        "store": "wong",
+        "category": "pan_harinas",
+        "var": 18.87
       }
     ],
     "stores_coverage": {
-      "metro": 12447,
-      "plazavea": 13451,
-      "wong": 14915
+      "metro": 12471,
+      "plazavea": 13548,
+      "wong": 14923
     },
     "categories_coverage": {
-      "aceites_grasas": 697,
-      "arroz_cereales": 1370,
-      "azucar_dulces": 995,
-      "bebidas": 969,
-      "carnes": 14672,
-      "cuidado_personal": 2888,
-      "frutas": 1942,
-      "lacteos": 3001,
-      "limpieza": 2995,
-      "pan_harinas": 6578,
+      "aceites_grasas": 708,
+      "arroz_cereales": 1375,
+      "azucar_dulces": 996,
+      "bebidas": 974,
+      "carnes": 14736,
+      "cuidado_personal": 2884,
+      "frutas": 1933,
+      "lacteos": 3014,
+      "limpieza": 3007,
+      "pan_harinas": 6596,
       "pescados_mariscos": 235,
       "verduras": 310
     }

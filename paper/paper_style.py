@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 # ── Dimensions ─────────────────────────────────────────────────────────────────
 STYLE = {
     "font.family":  "serif",
-    "font.serif":   ["Computer Modern Roman", "Palatino", "Times New Roman", "DejaVu Serif"],
+    "font.serif":   ["Palatino Linotype", "Palatino", "Times New Roman", "DejaVu Serif"],
     "font.size":    10,
     "axes.titlesize": 11,
     "axes.labelsize": 10,

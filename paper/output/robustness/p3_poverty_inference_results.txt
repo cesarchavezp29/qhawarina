@@ -1,0 +1,19 @@
+================================================================================
+SMALL-SAMPLE INFERENCE SUMMARY — Poverty Regression (N=18)
+Dependent variable: Annual change in poverty headcount ratio (pp)
+Regressor: Annual real GDP growth (%)
+================================================================================
+METHOD                       | beta/Median |     SE/SD |   p-value | 95% CI
+--------------------------------------------------------------------------------
+OLS (baseline)               |     -0.6565 |    0.1153 |    <0.001 | [-0.9010, -0.4120]
+Wild bootstrap               |     -0.6565 |    0.1219 |    0.0030 | [-0.8725, -0.4406]
+Permutation test             |     -0.6565 |         — |    <0.001 | —
+Sign test                    |           — |         — |    0.4807 | —
+Jackknife                    |     -0.6565 |    0.1390 |    <0.001 | [-0.9512, -0.3618]
+HC3                          |     -0.6565 |    0.1431 |    <0.001 | [-0.9369, -0.3761]
+Bayesian (posterior)         |     -0.6563 |    0.1221 | P<0=1.0000 | [-0.8972, -0.4150]
+================================================================================
+
+CONCLUSION:
+  Not all methods significant at 5%. Check individual p-values above.
+  Bayesian P(beta<0) = 1.0000.

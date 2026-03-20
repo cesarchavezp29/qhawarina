@@ -274,6 +274,23 @@ ax.annotate('$-$0.195\u2009pp\n(Cholesky)',
             ha='center')
 stat_box(ax, '80,000 draws · 63,743 accepted (79.7%)', loc='upper right', fontsize=7.5)
 legend_below(ax, ncol=2)
+
+# ── Zoomed inset: Cholesky range [-0.8, 0.5] pp ─────────────────────────────
+ax_in = ax.inset_axes([0.07, 0.10, 0.40, 0.42])
+if lo16 and hi84:
+    ax_in.fill_between(h_sr, lo16, hi84, alpha=0.55, color=C["ci_dark"])
+ax_in.plot(h_sr, med, color=C["main"], lw=1.5)
+ax_in.plot(H8, GDP_POINT, color=C["accent1"], lw=2, ls='--')
+ax_in.axhline(0, color=C["gray_line"], lw=0.5, ls='--')
+ax_in.set_ylim(-0.8, 0.5)
+ax_in.set_xlim(-0.3, 8.3)
+ax_in.set_yticks([-0.6, -0.3, 0, 0.3])
+ax_in.set_xticks([0, 2, 4, 6, 8])
+ax_in.tick_params(labelsize=6)
+ax_in.set_title('Zoom: Cholesky range', fontsize=6.5, pad=2)
+ax_in.spines['top'].set_visible(True)
+ax_in.spines['right'].set_visible(True)
+
 savefig(fig, 'fig3_sign_restriction_set')
 
 
@@ -366,7 +383,7 @@ cutting = [('2008-09-01', '2010-03-01'), ('2014-09-01', '2017-03-01'),
 from matplotlib.patches import Patch as _Patch
 
 fig, axes = plt.subplots(2, 1, figsize=SZ["wide_tall"], sharex=True,
-                          gridspec_kw={'hspace': 0.08})
+                          gridspec_kw={'hspace': 0})
 
 for ax, col, ylabel, ylims in zip(
     axes,
@@ -603,7 +620,7 @@ for (label, point, lo, hi, is_lit), y in zip(ALL_FOREST, all_y):
                     markeredgewidth=0.8, zorder=4)
 
 ax.set_yticks(all_y)
-ax.set_yticklabels([r[0] for r in ALL_FOREST], fontsize=8.5)
+ax.set_yticklabels([r[0] for r in ALL_FOREST], fontsize=8.5, fontfamily='DejaVu Serif')
 ax.set_xlabel('Peak GDP response to 100 bp rate hike (pp)', labelpad=6)
 ax.set_xlim(XLIM_LO, XLIM_HI)
 ax.set_ylim(y_lit[-1] - 0.8, y_own[0] + 0.8)
@@ -1033,27 +1050,28 @@ savefig(fig, 'fig10_poverty_influence')
 # ── Table 13: EME Taxonomy ────────────────────────────────────────────────────
 print('Table 13: EME taxonomy...')
 write_tex('tab13_eme_taxonomy', r"""
-\resizebox{\linewidth}{!}{\begin{tabular}{lcccp{5.2cm}}
+\resizebox{\linewidth}{!}{\begin{tabular}{lccccp{4cm}p{3cm}}
 \toprule
-Country & Administered & No rate & Limited & Notes \\
-        & interbank & futures & episodes & \\
+Country & Administered & No rate & Limited & Published SVAR & Key \\
+        & interbank & futures & episodes & strategy & reference \\
 \midrule
-\textit{Same identification constraints as Peru} & & & & \\
-\quad Bolivia & \cmark & \cmark & \cmark & Fixed exchange rate \\
-\quad Paraguay & \cmark & \cmark & \cmark & Recent IT adopter (2011) \\
-\quad Egypt & \cmark & \cmark & \cmark & Managed float, dollarized \\
-\quad Pakistan & \cmark & \cmark & \cmark & Administered corridor \\
-\quad Bangladesh & \cmark & \cmark & \cmark & Rate-based corridor \\
+\textit{Same identification constraints as Peru} & & & & & \\
+\quad Peru & \cmark & \cmark & \cmark & Recursive/Cholesky & \citet{perezrojo2024} \\
+\quad Bolivia & \cmark & \cmark & \cmark & No published SVAR & --- \\
+\quad Paraguay & \cmark & \cmark & \cmark & No published SVAR & --- \\
+\quad Egypt & \cmark & \cmark & \cmark & Recursive/Cholesky & \citet{ha2025} \\
+\quad Pakistan & \cmark & \cmark & \cmark & Recursive/Cholesky & \citet{ha2025} \\
+\quad Bangladesh & \cmark & \cmark & \cmark & No published SVAR & --- \\
 \midrule
-\textit{Administered rate but some market info} & & & & \\
-\quad Colombia & \cmark & \warnmark & \warnmark & Some futures; IT since 1999 \\
-\quad Uruguay & \cmark & \cmark & \warnmark & Longer IT history \\
-\quad Costa Rica & \cmark & \cmark & \warnmark & IT since 2018 only \\
+\textit{Administered rate but some market info} & & & & & \\
+\quad Colombia & \cmark & \warnmark & \warnmark & Recursive/Cholesky & \citet{ha2025} \\
+\quad Uruguay & \cmark & \cmark & \warnmark & Recursive/Cholesky & \citet{ha2025} \\
+\quad Costa Rica & \cmark & \cmark & \warnmark & No published SVAR & --- \\
 \midrule
-\textit{Rate futures exist (Proxy-SVAR feasible)} & & & & \\
-\quad Brazil & $\times$ & $\times$ & $\times$ & Deep DI futures market \\
-\quad Mexico & $\times$ & $\times$ & \warnmark & TIIE swaps; Banxico surprises \\
-\quad Chile & $\times$ & \warnmark & \warnmark & Some OIS; longer IT \\
+\textit{Rate futures exist (Proxy-SVAR feasible)} & & & & & \\
+\quad Brazil & $\times$ & $\times$ & $\times$ & Proxy-SVAR (DI futures) & \citet{caldara2019} \\
+\quad Mexico & $\times$ & $\times$ & \warnmark & Recursive/Cholesky & \citet{ha2025} \\
+\quad Chile & $\times$ & \warnmark & \warnmark & Recursive/Cholesky & \citet{ha2025} \\
 \bottomrule
 \end{tabular}}
 \begin{tablenotes}
@@ -1061,7 +1079,11 @@ Country & Administered & No rate & Limited & Notes \\
 ``Administered'' = central bank enforces interbank rate via active liquidity management.
 ``No futures'' = no liquid OIS/exchange-traded rate futures.
 ``Limited'' = fewer than 5 unambiguous IT-era shocks.
-Brazil's deep DI futures market enables Proxy-SVAR \citep{caldara2019}.
+``Published SVAR strategy'' refers to the identification method used in the
+most-cited monetary SVAR paper for each country.
+Brazil's deep DI futures market uniquely enables Proxy-SVAR identification
+comparable to \citet{gertler2015}; \citet{caldara2019} provides the canonical
+Proxy-SVAR methodology applied to a comparable setting.
 \end{tablenotes}
 """)
 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.4) (preloaded format=pdflatex 2023.9.6)  20 MAR 2026 01:11
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.4) (preloaded format=pdflatex 2023.9.6)  20 MAR 2026 17:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -296,6 +296,14 @@ Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1374.
 Package xcolor Info: Model `Gray' substituted by `gray' on input line 1375.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1376.
 )
+(C:\Users\User\AppData\Roaming\MiKTeX\tex/latex/float\float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count287
+\float@exts=\toks29
+\float@box=\box57
+\@float@everytoks=\toks30
+\@floatcapt=\box58
+)
 (C:\Users\User\AppData\Roaming\MiKTeX\tex/latex/placeins\placeins.sty
 Package: placeins 2005/04/18  v 2.2
 )
@@ -345,11 +353,11 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
  (C:\Users\User\AppData\Roaming\MiKTeX\tex/latex/kvoptions\kvoptions.sty
 Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
 ))
-\c@section@level=\count287
+\c@section@level=\count288
 )
 \@linkdim=\dimen185
-\Hy@linkcounter=\count288
-\Hy@pagecounter=\count289
+\Hy@linkcounter=\count289
+\Hy@pagecounter=\count290
 (C:\Program Files\MiKTeX\tex/latex/hyperref\pd1enc.def
 File: pd1enc.def 2023-02-07 v7.00v Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
@@ -361,7 +369,7 @@ Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 (C:\Users\User\AppData\Roaming\MiKTeX\tex/generic/etexcmds\etexcmds.sty
 Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
 )
-\Hy@SavedSpaceFactor=\count290
+\Hy@SavedSpaceFactor=\count291
 
 (C:\Program Files\MiKTeX\tex/latex/hyperref\puenc.def
 File: puenc.def 2023-02-07 v7.00v Hyperref: PDF Unicode definition (HO)
@@ -375,7 +383,7 @@ Package hyperref Info: Plain pages OFF on input line 4192.
 Package hyperref Info: Backreferencing OFF on input line 4197.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4425.
-\c@Hy@tempcnt=\count291
+\c@Hy@tempcnt=\count292
 
 (C:\Program Files\MiKTeX\tex/latex/url\url.sty
 \Urlmuskip=\muskip17
@@ -391,7 +399,7 @@ Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
 Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
 )
 ))
-\Fld@menulength=\count292
+\Fld@menulength=\count293
 \Field@Width=\dimen187
 \Fld@charsize=\dimen188
 Package hyperref Info: Hyper figures OFF on input line 6042.
@@ -406,9 +414,9 @@ Package hyperref Info: PDF/A mode OFF on input line 6072.
 Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
 package with kernel methods
 )
-\Hy@abspage=\count293
-\c@Item=\count294
-\c@Hfootnote=\count295
+\Hy@abspage=\count294
+\c@Item=\count295
+\c@Hfootnote=\count296
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
 
@@ -420,8 +428,8 @@ Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend pac
 kage
 with kernel methods
 )
-\Fld@listcount=\count296
-\c@bookmark@seq@number=\count297
+\Fld@listcount=\count297
+\c@bookmark@seq@number=\count298
 
 (C:\Users\User\AppData\Roaming\MiKTeX\tex/latex/rerunfilecheck\rerunfilecheck.s
 ty
@@ -437,30 +445,30 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 \Hy@SectionHShift=\skip58
 ) (C:\Program Files\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
 File: l3backend-pdftex.def 2023-03-30 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count298
-\l__pdf_internal_box=\box57
+\l__color_backend_stack_int=\count299
+\l__pdf_internal_box=\box59
 )
 (macro_transmission_peru.aux)
 \openout1 = `macro_transmission_peru.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 62.
-LaTeX Font Info:    ... okay on input line 62.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 62.
-LaTeX Font Info:    ... okay on input line 62.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 62.
-LaTeX Font Info:    ... okay on input line 62.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 62.
-LaTeX Font Info:    ... okay on input line 62.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 62.
-LaTeX Font Info:    ... okay on input line 62.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 62.
-LaTeX Font Info:    ... okay on input line 62.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 62.
-LaTeX Font Info:    ... okay on input line 62.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 62.
-LaTeX Font Info:    ... okay on input line 62.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 62.
-LaTeX Font Info:    ... okay on input line 62.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 63.
+LaTeX Font Info:    ... okay on input line 63.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 63.
+LaTeX Font Info:    ... okay on input line 63.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 63.
+LaTeX Font Info:    ... okay on input line 63.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 63.
+LaTeX Font Info:    ... okay on input line 63.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 63.
+LaTeX Font Info:    ... okay on input line 63.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 63.
+LaTeX Font Info:    ... okay on input line 63.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 63.
+LaTeX Font Info:    ... okay on input line 63.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 63.
+LaTeX Font Info:    ... okay on input line 63.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 63.
+LaTeX Font Info:    ... okay on input line 63.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -498,17 +506,17 @@ LaTeX Font Info:    ... okay on input line 62.
 
 (C:\Program Files\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count299
+\scratchcounter=\count300
 \scratchdimen=\dimen189
-\scratchbox=\box58
-\nofMPsegments=\count300
-\nofMParguments=\count301
-\everyMPshowfont=\toks29
-\MPscratchCnt=\count302
+\scratchbox=\box60
+\nofMPsegments=\count301
+\nofMParguments=\count302
+\everyMPshowfont=\toks31
+\MPscratchCnt=\count303
 \MPscratchDim=\dimen190
-\MPnumerator=\count303
-\makeMPintoPDFobject=\count304
-\everyMPtoPDFconversion=\toks30
+\MPnumerator=\count304
+\makeMPintoPDFobject=\count305
+\everyMPtoPDFconversion=\toks32
 ) (C:\Program Files\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
@@ -517,19 +525,19 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 (C:\Program Files\MiKTeX\tex/latex/00miktex\epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
-LaTeX Info: Redefining \microtypecontext on input line 62.
-Package microtype Info: Applying patch `item' on input line 62.
-Package microtype Info: Applying patch `toc' on input line 62.
-Package microtype Info: Applying patch `eqnum' on input line 62.
-Package microtype Info: Applying patch `footnote' on input line 62.
-Package microtype Info: Applying patch `verbatim' on input line 62.
+LaTeX Info: Redefining \microtypecontext on input line 63.
+Package microtype Info: Applying patch `item' on input line 63.
+Package microtype Info: Applying patch `toc' on input line 63.
+Package microtype Info: Applying patch `eqnum' on input line 63.
+Package microtype Info: Applying patch `footnote' on input line 63.
+Package microtype Info: Applying patch `verbatim' on input line 63.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
 Package microtype Info: Using default expansion set `alltext-nott'.
-LaTeX Info: Redefining \showhyphens on input line 62.
+LaTeX Info: Redefining \showhyphens on input line 63.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
@@ -539,15 +547,16 @@ File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman
 (RS)
 )
 Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: float package is loaded.
 Package caption Info: hyperref package is loaded.
 Package caption Info: End \AtBeginDocument code.
-Package hyperref Info: Link coloring OFF on input line 62.
+Package hyperref Info: Link coloring OFF on input line 63.
 
 (macro_transmission_peru.out) (macro_transmission_peru.out)
 \@outlinefile=\write3
 \openout3 = `macro_transmission_peru.out'.
 
-LaTeX Font Info:    Trying to load font information for U+msa on input line 93.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 97.
 
 
 (C:\Program Files\MiKTeX\tex/latex/amsfonts\umsa.fd
@@ -556,7 +565,7 @@ File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 (C:\Users\User\AppData\Roaming\MiKTeX\tex/latex/microtype\mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 93.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 97.
 
 
 (C:\Program Files\MiKTeX\tex/latex/amsfonts\umsb.fd
@@ -572,17 +581,17 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.155 
-       [1] [2] [3]
-<figures/fig1_bcrp_rate_path.pdf, id=244, 454.83739pt x 201.88612pt>
+l.161 
+       [1] [2] [3] [4]
+<figures/fig1_bcrp_rate_path.pdf, id=310, 398.68903pt x 275.83003pt>
 File: figures/fig1_bcrp_rate_path.pdf Graphic file (type pdf)
 <use figures/fig1_bcrp_rate_path.pdf>
-Package pdftex.def Info: figures/fig1_bcrp_rate_path.pdf  used on input line 24
-5.
-(pdftex.def)             Requested size: 469.75502pt x 208.51799pt.
- [4 <./figures/fig1_bcrp_rate_path.pdf>]
-LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 2
-78.
+Package pdftex.def Info: figures/fig1_bcrp_rate_path.pdf  used on input line 30
+1.
+(pdftex.def)             Requested size: 469.75502pt x 324.9968pt.
+ [5] [6 <./figures/fig1_bcrp_rate_path.pdf>]
+LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 3
+35.
 
 (C:\Program Files\MiKTeX\tex/latex/base\t1cmtt.fd
 File: t1cmtt.fd 2022/07/10 v2.5l Standard LaTeX font definitions
@@ -591,121 +600,197 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `cmtt' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-<figures/fig6_bcrp_tone_series.pdf, id=272, 453.67003pt x 288.6101pt>
+ [7]
+<figures/fig17_tone_validation.pdf, id=361, 542.92847pt x 326.27621pt>
+File: figures/fig17_tone_validation.pdf Graphic file (type pdf)
+<use figures/fig17_tone_validation.pdf>
+Package pdftex.def Info: figures/fig17_tone_validation.pdf  used on input line 
+368.
+(pdftex.def)             Requested size: 469.75502pt x 282.30966pt.
+<figures/fig6_bcrp_tone_series.pdf, id=364, 543.20776pt x 326.25667pt>
 File: figures/fig6_bcrp_tone_series.pdf Graphic file (type pdf)
 <use figures/fig6_bcrp_tone_series.pdf>
 Package pdftex.def Info: figures/fig6_bcrp_tone_series.pdf  used on input line 
-294.
-(pdftex.def)             Requested size: 469.75502pt x 298.84828pt.
- [5] [6 <./figures/fig6_bcrp_tone_series.pdf>] [7] [8]
-<figures/fig2_cholesky_irfs.pdf, id=342, 454.68745pt x 172.41666pt>
+389.
+(pdftex.def)             Requested size: 469.75502pt x 282.14839pt.
+ [8 <./figures/fig17_tone_validation.pdf>] [9 <./figures/fig6_bcrp_tone_series.
+pdf>] [10] [11]
+<figures/fig2_cholesky_irfs.pdf, id=445, 398.68903pt x 470.95216pt>
 File: figures/fig2_cholesky_irfs.pdf Graphic file (type pdf)
 <use figures/fig2_cholesky_irfs.pdf>
-Package pdftex.def Info: figures/fig2_cholesky_irfs.pdf  used on input line 419
+Package pdftex.def Info: figures/fig2_cholesky_irfs.pdf  used on input line 526
 .
-(pdftex.def)             Requested size: 469.75502pt x 178.14096pt.
- [9 <./figures/fig2_cholesky_irfs.pdf>]
-<figures/fig3_sign_restriction_set.pdf, id=358, 310.11734pt x 201.32465pt>
+(pdftex.def)             Requested size: 469.75502pt x 554.8995pt.
+ [12]
+[13 <./figures/fig2_cholesky_irfs.pdf>]
+<figures/fig12_hist_decomp.pdf, id=484, 543.24477pt x 290.28279pt>
+File: figures/fig12_hist_decomp.pdf Graphic file (type pdf)
+<use figures/fig12_hist_decomp.pdf>
+Package pdftex.def Info: figures/fig12_hist_decomp.pdf  used on input line 576.
+
+(pdftex.def)             Requested size: 469.75502pt x 251.0247pt.
+ [14]
+<figures/fig11_ordering_fan.pdf, id=496, 543.25966pt x 290.28403pt>
+File: figures/fig11_ordering_fan.pdf Graphic file (type pdf)
+<use figures/fig11_ordering_fan.pdf>
+Package pdftex.def Info: figures/fig11_ordering_fan.pdf  used on input line 600
+.
+(pdftex.def)             Requested size: 469.75502pt x 251.00806pt.
+ [15 <./figures/fig12_hist_decomp.pdf>]
+<figures/fig3_sign_restriction_set.pdf, id=514, 398.68903pt x 276.3289pt>
 File: figures/fig3_sign_restriction_set.pdf Graphic file (type pdf)
 <use figures/fig3_sign_restriction_set.pdf>
 Package pdftex.def Info: figures/fig3_sign_restriction_set.pdf  used on input l
-ine 440.
-(pdftex.def)             Requested size: 469.75502pt x 304.98137pt.
- [10 <./figures/fig3_sign_restriction_set.pdf>]
-<figures/fig4_narrative_sr_irfs.pdf, id=383, 310.14745pt x 201.32465pt>
+ine 621.
+(pdftex.def)             Requested size: 469.75502pt x 325.5846pt.
+ [16 <./figures/fig11_ordering_fan.pdf>] [17 <./figures/fig3_sign_restriction_s
+et.pdf>]
+<figures/fig4_narrative_sr_irfs.pdf, id=551, 398.68903pt x 276.2979pt>
 File: figures/fig4_narrative_sr_irfs.pdf Graphic file (type pdf)
 <use figures/fig4_narrative_sr_irfs.pdf>
 Package pdftex.def Info: figures/fig4_narrative_sr_irfs.pdf  used on input line
- 470.
-(pdftex.def)             Requested size: 469.75502pt x 304.95065pt.
- [11 <./figures/fig4_narrative_sr_irfs.pdf>]
-<figures/fig5_lpiv_tone_wrong_sign.pdf, id=414, 526.89725pt x 309.72966pt>
+ 664.
+(pdftex.def)             Requested size: 469.75502pt x 325.54808pt.
+ [18 <./figures/fig4_narrative_sr_irfs.pdf>]
+<figures/fig5_lpiv_tone_wrong_sign.pdf, id=575, 398.68903pt x 275.83003pt>
 File: figures/fig5_lpiv_tone_wrong_sign.pdf Graphic file (type pdf)
 <use figures/fig5_lpiv_tone_wrong_sign.pdf>
 Package pdftex.def Info: figures/fig5_lpiv_tone_wrong_sign.pdf  used on input l
-ine 517.
-(pdftex.def)             Requested size: 469.75502pt x 276.15004pt.
-
-[12] [13 <./figures/fig5_lpiv_tone_wrong_sign.pdf>]
-<figures/fig7_gdp_poverty_scatter.pdf, id=446, 310.19324pt x 244.70233pt>
+ine 712.
+(pdftex.def)             Requested size: 469.75502pt x 324.9968pt.
+ [19] [20 <./figures/fig5_lpiv_tone_wrong_sign.pdf>]
+<figures/fig7_gdp_poverty_scatter.pdf, id=617, 398.68903pt x 290.27667pt>
 File: figures/fig7_gdp_poverty_scatter.pdf Graphic file (type pdf)
 <use figures/fig7_gdp_poverty_scatter.pdf>
 Package pdftex.def Info: figures/fig7_gdp_poverty_scatter.pdf  used on input li
-ne 560.
-(pdftex.def)             Requested size: 352.31625pt x 277.933pt.
-<figures/fig8_gdp_poverty_subperiod.pdf, id=449, 310.19324pt x 244.70233pt>
+ne 770.
+(pdftex.def)             Requested size: 352.31625pt x 256.5117pt.
+ [21]
+<figures/fig8_gdp_poverty_subperiod.pdf, id=629, 398.68903pt x 290.43776pt>
 File: figures/fig8_gdp_poverty_subperiod.pdf Graphic file (type pdf)
 <use figures/fig8_gdp_poverty_subperiod.pdf>
 Package pdftex.def Info: figures/fig8_gdp_poverty_subperiod.pdf  used on input 
-line 576.
-(pdftex.def)             Requested size: 352.31625pt x 277.933pt.
- [14 <./figures/fig7_gdp_poverty_scatter.pdf>]
+line 787.
+(pdftex.def)             Requested size: 352.31625pt x 256.65405pt.
+ [22 <./figures/fig7_gdp_poverty_scatter.pdf>]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 594.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\to' on input line 594.
+(hyperref)                removing `math shift' on input line 806.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 594.
+(hyperref)                removing `\to' on input line 806.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 594.
+(hyperref)                removing `math shift' on input line 806.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\to' on input line 594.
+(hyperref)                removing `math shift' on input line 806.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 594.
+(hyperref)                removing `\to' on input line 806.
 
-[15 <./figures/fig8_gdp_poverty_subperiod.pdf>] [16]
-<figures/fig9_forest_plot.pdf, id=510, 512.62515pt x 478.2166pt>
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 806.
+
+[23 <./figures/fig8_gdp_poverty_subperiod.pdf>]
+<figures/fig15_chain_comparison.pdf, id=708, 543.22902pt x 290.28403pt>
+File: figures/fig15_chain_comparison.pdf Graphic file (type pdf)
+<use figures/fig15_chain_comparison.pdf>
+Package pdftex.def Info: figures/fig15_chain_comparison.pdf  used on input line
+ 855.
+(pdftex.def)             Requested size: 399.29463pt x 213.37169pt.
+ [24] [25 <./figures/fig15_chain_comparison.pdf>]
+<figures/fig9_forest_plot.pdf, id=743, 406.52937pt x 470.41663pt>
 File: figures/fig9_forest_plot.pdf Graphic file (type pdf)
 <use figures/fig9_forest_plot.pdf>
-Package pdftex.def Info: figures/fig9_forest_plot.pdf  used on input line 654.
-(pdftex.def)             Requested size: 469.75502pt x 438.24251pt.
- [17] [18 <./figures/fig9_forest_plot.pdf>] [19] [20] [21] (macro_transmission_
-peru.bbl [22])
-(tables/tab1_summary_stats.tex) (tables/tab3_poverty_data.tex)
-(tables/tab8_tone_classification.tex) (tables/tab2_tone_summary.tex)
-(tables/tab4_var_coefs.tex) (tables/tab5_narrative_sr.tex)
-(tables/tab6_lp_results.tex) (tables/tab7_proxy_svar_ib.tex)
-(tables/tab9_tone_instrument.tex) (tables/tab10_poverty_ols.tex)
-(tables/tab11_subperiod_stability.tex) (tables/tab12_master_comparison.tex)
-(tables/tab13_eme_taxonomy.tex
-Underfull \hbox (badness 1394) in paragraph at lines 24--24
-[]|\T1/cmr/m/n/12 (+20) TIIE swaps; Banx-ico sur-
+Package pdftex.def Info: figures/fig9_forest_plot.pdf  used on input line 896.
+(pdftex.def)             Requested size: 469.75502pt x 543.60922pt.
+ [26] [27 <./figures/fig9_forest_plot.pdf>] [28] [29]
+<figures/fig18_fx_channel.pdf, id=799, 398.68903pt x 291.08311pt>
+File: figures/fig18_fx_channel.pdf Graphic file (type pdf)
+<use figures/fig18_fx_channel.pdf>
+Package pdftex.def Info: figures/fig18_fx_channel.pdf  used on input line 1031.
+
+(pdftex.def)             Requested size: 352.31625pt x 257.22433pt.
+ [30]
+<figures/fig13_fevd.pdf, id=810, 398.71687pt x 290.28403pt>
+File: figures/fig13_fevd.pdf Graphic file (type pdf)
+<use figures/fig13_fevd.pdf>
+Package pdftex.def Info: figures/fig13_fevd.pdf  used on input line 1052.
+(pdftex.def)             Requested size: 352.31625pt x 256.5182pt.
+
+[31 <./figures/fig18_fx_channel.pdf>]
+<figures/fig19_granger_network.pdf, id=833, 398.68903pt x 290.2601pt>
+File: figures/fig19_granger_network.pdf Graphic file (type pdf)
+<use figures/fig19_granger_network.pdf>
+Package pdftex.def Info: figures/fig19_granger_network.pdf  used on input line 
+1072.
+(pdftex.def)             Requested size: 352.31625pt x 256.49706pt.
+ [32 <./figures/fig13_fevd.pdf>] [33 <./figures/fig19_granger_network.pdf>]
+Underfull \hbox (badness 10000) in paragraph at lines 1127--1127
+[][][][]$\T1/cmtt/m/n/10 https : / / github . com / cesarchavezp29 / qhawarina 
+/ blob / master / paper / output / bcrp _ tone _
  []
 
-) [23] [24] [25] [26] [27] [28] [29] [30] [31
+[34] (macro_transmission_peru.bbl [35] [36]) (tables/tab1_summary_stats.tex)
+(tables/tab3_poverty_data.tex) [37] (tables/tab8_tone_classification.tex)
+[38] (tables/tab2_tone_summary.tex) [39]
+Overfull \vbox (76.94792pt too high) has occurred while \output is active []
 
-]
-<figures/fig10_poverty_influence.pdf, id=647, 381.79958pt x 309.63869pt>
+
+[40] (tables/tab4_var_coefs.tex) (tables/tab5_narrative_sr.tex) [41]
+(tables/tab6_lp_results.tex) (tables/tab7_proxy_svar_ib.tex) [42]
+(tables/tab9_tone_instrument.tex) [43] (tables/tab10_poverty_ols.tex)
+Underfull \hbox (badness 10000) in paragraph at lines 15--1230
+
+ []
+
+[44]
+<figures/fig16_small_sample.pdf, id=964, 543.08119pt x 327.08417pt>
+File: figures/fig16_small_sample.pdf Graphic file (type pdf)
+<use figures/fig16_small_sample.pdf>
+Package pdftex.def Info: figures/fig16_small_sample.pdf  used on input line 124
+9.
+(pdftex.def)             Requested size: 399.29463pt x 240.4913pt.
+ [45] (tables/tab11_subperiod_stability.tex)
+(tables/tab12_master_comparison.tex) [46 <./figures/fig16_small_sample.pdf>]
+(tables/tab13_eme_taxonomy.tex
+Underfull \hbox (badness 2042) in paragraph at lines 25--25
+[]|[]\T1/cmr/m/n/12 (+20) Caldara and Herbst[]
+ []
+
+) [47] [48] [49] (tables/tab_lag_selection.tex) [50] [51] [52]
+<figures/fig10_poverty_influence.pdf, id=1066, 398.68903pt x 326.41902pt>
 File: figures/fig10_poverty_influence.pdf Graphic file (type pdf)
 <use figures/fig10_poverty_influence.pdf>
 Package pdftex.def Info: figures/fig10_poverty_influence.pdf  used on input lin
-e 959.
-(pdftex.def)             Requested size: 352.31625pt x 285.74039pt.
- [32] [33 <./figures/fig10_poverty_influence.pdf>] [34] (macro_transmission_per
-u.aux)
+e 1451.
+(pdftex.def)             Requested size: 352.31625pt x 288.44997pt.
+ [53 <./figures/fig10_poverty_influence.pdf>] [54] [55] [56] [57]
+<figures/fig14_rolling_irf.pdf, id=1134, 396.91727pt x 290.7091pt>
+File: figures/fig14_rolling_irf.pdf Graphic file (type pdf)
+<use figures/fig14_rolling_irf.pdf>
+Package pdftex.def Info: figures/fig14_rolling_irf.pdf  used on input line 1664
+.
+(pdftex.def)             Requested size: 469.75502pt x 344.06288pt.
+ [58] [59 <./figures/fig14_rolling_irf.pdf>] (macro_transmission_peru.aux)
 Package rerunfilecheck Info: File `macro_transmission_peru.out' has not changed
 .
-(rerunfilecheck)             Checksum: 218920E218B804E3D454EC07DBFC1C7F;6229.
+(rerunfilecheck)             Checksum: 209C9D2FC75513F198BAA519DE13EB24;9452.
  ) 
 Here is how much of TeX's memory you used:
- 15903 strings out of 476331
- 255814 string characters out of 5797584
- 1908660 words of memory out of 5000000
- 35595 multiletter control sequences out of 15000+600000
- 545826 words of font info for 248 fonts, out of 8000000 for 9000
+ 16257 strings out of 476331
+ 262604 string characters out of 5797584
+ 1871660 words of memory out of 5000000
+ 35798 multiletter control sequences out of 15000+600000
+ 548914 words of font info for 279 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,20n,76p,1022b,583s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,20n,76p,1022b,605s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Progra
 m Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKT
 eX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiKTeX/fonts/typ
@@ -721,7 +806,8 @@ fonts/cm/cmsy7.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy
 0.pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sfbx144
 0.pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sfbx172
 8.pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sfbx207
-4.pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sfrm080
+4.pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sfrm070
+0.pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sfrm080
 0.pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sfrm100
 0.pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sfrm109
 5.pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sfrm120
@@ -729,12 +815,13 @@ fonts/cm/cmsy7.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy
 0.pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sfti100
 0.pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sfti109
 5.pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sfti120
+0.pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sftt100
 0.pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sftt109
 5.pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sftt120
 0.pfb><C:/Program Files/MiKTeX/fonts/type1/urw/zapfding/uzdr.pfb>
-Output written on macro_transmission_peru.pdf (35 pages, 1112224 bytes).
+Output written on macro_transmission_peru.pdf (60 pages, 1784060 bytes).
 PDF statistics:
- 840 PDF objects out of 1000 (max. 8388607)
- 155 named destinations out of 1000 (max. 500000)
- 50507 words of extra memory for PDF output out of 51595 (max. 10000000)
+ 1330 PDF objects out of 1440 (max. 8388607)
+ 230 named destinations out of 1000 (max. 500000)
+ 53216 words of extra memory for PDF output out of 61914 (max. 10000000)
 

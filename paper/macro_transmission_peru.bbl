@@ -28,10 +28,20 @@ Ha, J., Kose, M.~A., and Ohnsorge, F. (2025).
   markets.
 \newblock {\em European Economic Review}, 163:104667.
 
+\bibitem[Hanson, 2004]{hanson2004}
+Hanson, M.~S. (2004).
+\newblock The ``price puzzle'' reconsidered.
+\newblock {\em Journal of Monetary Economics}, 51(7):1385--1413.
+
 \bibitem[Jord\`a, 2005]{jorda2005}
 Jord\`a, {\`O}. (2005).
 \newblock Estimation and inference of impulse responses by local projections.
 \newblock {\em American Economic Review}, 95(1):161--182.
+
+\bibitem[Kilian, 1998]{kilian1998}
+Kilian, L. (1998).
+\newblock Small-sample confidence intervals for impulse response functions.
+\newblock {\em The Review of Economics and Statistics}, 80(2):218--230.
 
 \bibitem[Lahura and Vega, 2020]{lahura2020}
 Lahura, E. and Vega, M. (2020).
@@ -39,6 +49,12 @@ Lahura, E. and Vega, M. (2020).
   statements.
 \newblock Technical report, Centro de Estudios Monetarios Latinoamericanos /
   {BCRP}.
+
+\bibitem[Litterman, 1986]{litterman1986}
+Litterman, R.~B. (1986).
+\newblock Forecasting with {Bayesian} vector autoregressions---five years of
+  experience.
+\newblock {\em Journal of Business \& Economic Statistics}, 4(1):25--38.
 
 \bibitem[Miranda-Agrippino and Ricco, 2021]{mirandaagrippino2021}
 Miranda-Agrippino, S. and Ricco, G. (2021).
@@ -50,10 +66,21 @@ Montiel~Olea, J.~L., Stock, J.~H., and Watson, M.~W. (2021).
 \newblock Inference in {SVARs} identified with an external instrument.
 \newblock {\em Journal of Econometrics}, 225(1):74--87.
 
+\bibitem[Nakamura and Steinsson, 2018]{nakamura2018}
+Nakamura, E. and Steinsson, J. (2018).
+\newblock High-frequency identification of monetary non-neutrality: The
+  information effect.
+\newblock {\em The Quarterly Journal of Economics}, 133(3):1283--1330.
+
 \bibitem[P\'erez~Rojo and Rodr\'iguez, 2024]{perezrojo2024}
 P\'erez~Rojo, F. and Rodr\'iguez, G. (2024).
 \newblock Impact of monetary policy shocks in the {Peruvian} economy over time.
 \newblock {\em Structural Change and Economic Dynamics}, 69:40--54.
+
+\bibitem[Pesaran and Shin, 1998]{pesaran1998}
+Pesaran, M.~H. and Shin, Y. (1998).
+\newblock Generalized impulse response analysis in linear multivariate models.
+\newblock {\em Economics Letters}, 58(1):17--29.
 
 \bibitem[Portilla et~al., 2022]{portilla2022}
 Portilla, J., Rodr\'iguez, G., and Castillo, P. (2022).
@@ -71,6 +98,22 @@ Rubio-Ram\'irez, J.~F., Waggoner, D.~F., and Zha, T. (2010).
 \newblock Structural vector autoregressions: Theory of identification and
   algorithms for inference.
 \newblock {\em Review of Economic Studies}, 77(2):665--696.
+
+\bibitem[Sims, 1980]{sims1980}
+Sims, C.~A. (1980).
+\newblock Macroeconomics and reality.
+\newblock {\em Econometrica}, 48(1):1--48.
+
+\bibitem[Sims, 1992]{sims1992}
+Sims, C.~A. (1992).
+\newblock Interpreting the macroeconomic time series facts: The effects of
+  monetary policy.
+\newblock {\em European Economic Review}, 36(5):975--1000.
+
+\bibitem[Sims et~al., 1990]{sims1990}
+Sims, C.~A., Stock, J.~H., and Watson, M.~W. (1990).
+\newblock Inference in linear time series models with some unit roots.
+\newblock {\em Econometrica}, 58(1):113--144.
 
 \bibitem[Stock and Watson, 2018]{stock2018}
 Stock, J.~H. and Watson, M.~W. (2018).

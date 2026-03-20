@@ -1,25 +1,26 @@
 
-\resizebox{\linewidth}{!}{\begin{tabular}{lcccp{5.2cm}}
+\resizebox{\linewidth}{!}{\begin{tabular}{lccccp{4cm}p{3cm}}
 \toprule
-Country & Administered & No rate & Limited & Notes \\
-        & interbank & futures & episodes & \\
+Country & Administered & No rate & Limited & Published SVAR & Key \\
+        & interbank & futures & episodes & strategy & reference \\
 \midrule
-\textit{Same identification constraints as Peru} & & & & \\
-\quad Bolivia & \cmark & \cmark & \cmark & Fixed exchange rate \\
-\quad Paraguay & \cmark & \cmark & \cmark & Recent IT adopter (2011) \\
-\quad Egypt & \cmark & \cmark & \cmark & Managed float, dollarized \\
-\quad Pakistan & \cmark & \cmark & \cmark & Administered corridor \\
-\quad Bangladesh & \cmark & \cmark & \cmark & Rate-based corridor \\
+\textit{Same identification constraints as Peru} & & & & & \\
+\quad Peru & \cmark & \cmark & \cmark & Recursive/Cholesky & \citet{perezrojo2024} \\
+\quad Bolivia & \cmark & \cmark & \cmark & No published SVAR & --- \\
+\quad Paraguay & \cmark & \cmark & \cmark & No published SVAR & --- \\
+\quad Egypt & \cmark & \cmark & \cmark & Recursive/Cholesky & \citet{ha2025} \\
+\quad Pakistan & \cmark & \cmark & \cmark & Recursive/Cholesky & \citet{ha2025} \\
+\quad Bangladesh & \cmark & \cmark & \cmark & No published SVAR & --- \\
 \midrule
-\textit{Administered rate but some market info} & & & & \\
-\quad Colombia & \cmark & \warnmark & \warnmark & Some futures; IT since 1999 \\
-\quad Uruguay & \cmark & \cmark & \warnmark & Longer IT history \\
-\quad Costa Rica & \cmark & \cmark & \warnmark & IT since 2018 only \\
+\textit{Administered rate but some market info} & & & & & \\
+\quad Colombia & \cmark & \warnmark & \warnmark & Recursive/Cholesky & \citet{ha2025} \\
+\quad Uruguay & \cmark & \cmark & \warnmark & Recursive/Cholesky & \citet{ha2025} \\
+\quad Costa Rica & \cmark & \cmark & \warnmark & No published SVAR & --- \\
 \midrule
-\textit{Rate futures exist (Proxy-SVAR feasible)} & & & & \\
-\quad Brazil & $\times$ & $\times$ & $\times$ & Deep DI futures market \\
-\quad Mexico & $\times$ & $\times$ & \warnmark & TIIE swaps; Banxico surprises \\
-\quad Chile & $\times$ & \warnmark & \warnmark & Some OIS; longer IT \\
+\textit{Rate futures exist (Proxy-SVAR feasible)} & & & & & \\
+\quad Brazil & $\times$ & $\times$ & $\times$ & Proxy-SVAR (DI futures) & \citet{caldara2019} \\
+\quad Mexico & $\times$ & $\times$ & \warnmark & Recursive/Cholesky & \citet{ha2025} \\
+\quad Chile & $\times$ & \warnmark & \warnmark & Recursive/Cholesky & \citet{ha2025} \\
 \bottomrule
 \end{tabular}}
 \begin{tablenotes}
@@ -27,5 +28,9 @@ Country & Administered & No rate & Limited & Notes \\
 ``Administered'' = central bank enforces interbank rate via active liquidity management.
 ``No futures'' = no liquid OIS/exchange-traded rate futures.
 ``Limited'' = fewer than 5 unambiguous IT-era shocks.
-Brazil's deep DI futures market enables Proxy-SVAR \citep{caldara2019}.
+``Published SVAR strategy'' refers to the identification method used in the
+most-cited monetary SVAR paper for each country.
+Brazil's deep DI futures market uniquely enables Proxy-SVAR identification
+comparable to \citet{gertler2015}; \citet{caldara2019} provides the canonical
+Proxy-SVAR methodology applied to a comparable setting.
 \end{tablenotes}

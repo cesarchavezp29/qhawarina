@@ -85,27 +85,24 @@
   \begin{abstract}
     \noindent
     Modern identification strategies for monetary policy---sign restrictions,
-    Proxy-SVARs, narrative approaches---rest on assumptions that fail in
-    emerging markets where institutional features differ fundamentally from
-    those of the United States or Euro Area.
-    We document these failures systematically for Peru, where three features
-    block modern identification: the interbank rate is administered, no
-    rate-futures market exists, and the monetary record offers too few sharp
-    episodes for narrative restrictions.
-    Using 85 quarterly observations (2004Q2--2025Q3), we compare all seven
-    major identification strategies within a single unified framework.
+    Proxy-SVARs, narrative approaches---rest on assumptions that fail
+    when the interbank rate is administered, no rate-futures market exists,
+    and the monetary record contains too few sharp episodes.
+    These three features, present in Peru and a broad class of EME central banks,
+    render non-recursive identification infeasible.
+    We document this systematically using 85 quarterly observations
+    (2004Q2--2025Q3), comparing seven identification strategies in a single
+    unified framework.
     Only Cholesky recursive identification survives; the peak GDP response
-    to a 100\,bp hike is $-0.195$\,pp, consistent with the published
-    Peru SVAR literature.
-    A precisely estimated GDP--poverty reduced-form coefficient chains this
-    to distributional outcomes: a 100\,bp hike raises the poverty headcount
-    rate by roughly 0.5\,pp.
-    The 2021--2023 hiking cycle ($\approx$750\,bp) therefore implies a
-    poverty increase of roughly 2--4\,pp---a magnitude consistent with the
-    pronounced poverty reversal observed after 2021.
-    The three blocking features characterize a broad class of EME central
-    banks, making the diagnostic toolkit for identification feasibility
-    the paper's primary methodological contribution.
+    to a 100\,bp hike is $-0.195$\,pp.
+    A novel LLM-classified BCRP tone instrument passes relevance but fails
+    exogeneity, providing a cautionary result for communication-based
+    identification in administered-rate settings.
+    Chaining the Cholesky estimate through a reduced-form GDP--poverty
+    coefficient, the estimated effect on the poverty headcount is approximately
+    $+0.5$\,pp per 100\,bp---a correlation, not a causal claim.
+    The diagnostic toolkit for identification feasibility is the paper's
+    primary methodological contribution.
   \end{abstract}
 
   \medskip
@@ -464,6 +461,7 @@ Following \citet{jorda2005}:
     + \gamma_{1h}\,y_{t-1} + \gamma_{2h}\,y_{t-2}
     + \delta_{1h}\,\Delta r_{t-1} + \delta_{2h}\,\Delta r_{t-2}
     + \lambda\,\mathrm{covid}_t + \varepsilon_{t,h},
+  \label{eq:lp}
 \end{equation}
 with HC3 standard errors. Without a valid external instrument, LP
 estimates are subject to upward endogeneity bias.
@@ -490,6 +488,18 @@ first-stage $F$-statistics \citep{montiellolea2021} and LP-IV sign checks.
 OLS on $N=18$ annual observations. This is a reduced-form relationship,
 chained with the Cholesky IRF to compute the full rate $\to$ GDP $\to$
 poverty transmission.
+
+\paragraph{Notation.}
+Throughout, $\hat{\beta}_h^{LP}$ denotes the local projection coefficient
+at horizon $h$ (equation~\eqref{eq:lp});
+$\hat{\beta}^{OLS}$ denotes the GDP--poverty reduced-form slope estimated
+on annual year-on-year GDP growth (equation~\eqref{eq:poverty});
+$\hat{\beta}^{QoQ}$ denotes the same slope re-estimated with the
+calendar-year average of quarterly QoQ GDP growth (Section~\ref{sec:chain});
+and $\hat{\beta}^{IV}$ denotes the 2SLS estimate using terms of trade as
+instrument (footnote~2).
+The Cholesky IRF peak response to a 100\,bp rate shock is denoted
+$\hat{\theta}_{peak}$.
 
 % ─────────────────────────────────────────────────────────────────────────────
 \section{Results}
@@ -537,6 +547,25 @@ exchange rate, both amplified by the wide bands that accompany a
 short-sample quarterly VAR. The 90\% CI is wide enough that the
 positive point estimate is not statistically distinguishable from zero
 beyond $h=1$.
+
+The positive CPI response is a well-documented feature of short-sample
+Cholesky VARs, commonly termed the ``price puzzle'' \citep{sims1992}.
+In US data, augmenting the VAR with a commodity price index typically
+resolves the puzzle by controlling for supply-side cost pressures that
+the central bank observes but that CPI does not immediately capture
+\citep{hanson2004}.
+In our specification, terms of trade already serve this role: ToT is ordered
+first in the Cholesky decomposition precisely because it captures
+commodity-driven cost shocks contemporaneously.
+Replacing ToT with a broader commodity price index (World Bank Pink Sheet
+metals and energy series, quarterly) does not resolve the positive CPI
+response---the puzzle persists, suggesting it reflects cost-channel
+transmission (tighter credit raises firms' financing costs, passing through
+to prices) rather than an omitted-variable problem.
+The 90\% CI includes zero beyond $h=1$, so the puzzle is not statistically
+robust; it is better interpreted as an artifact of the short sample
+($T=85$ quarters) than as a structural feature of Peruvian inflation dynamics.
+
 Figure~\ref{fig:hist_decomp} complements the IRF by decomposing the
 realized quarterly GDP growth path into shock contributions from each
 VAR variable, confirming that monetary policy shocks are quantitatively
@@ -688,6 +717,19 @@ literature on central bank communication as identification
 \end{figure}
 \FloatBarrier
 
+This result is consistent with the information effects channel documented
+by \citet{nakamura2018} and \citet{mirandaagrippino2021}: hawkish
+communication may reveal the central bank's private information about
+inflationary pressures or output strength, rather than constituting an
+exogenous policy surprise.
+In Peru's administered-rate setting, this channel is particularly acute
+because the BCRP's \textit{Notas Informativas} are published after the
+rate decision, making them explanations of an already-observed action
+rather than independent signals.
+The tone instrument therefore captures the BCRP's assessment of economic
+conditions---precisely the endogenous variation that exogeneity requires
+excluding.
+
 \paragraph{Rate-hold subsample.}
 We implement the rate-hold restriction directly: the tone instrument is
 constructed using only months in which $\Delta r_t=0$. Under both
@@ -792,34 +834,14 @@ people given Peru's population of approximately 34~million. The sign is
 corroborated by Bayesian inference: $P(\hat\beta_B < 0) = 1.000$ under a
 conjugate normal--inverse-gamma prior (Appendix~\ref{app:rob:smallsample}).
 
-\paragraph{Method~A (lower bound): cumulated QoQ IRF with annual poverty slope.}
-A frequency-improved lower bound applies the cumulative QoQ IRF over the
-first year ($h=0,\ldots,3$), which sums to $-0.444$\,pp and approximates
-the annual GDP loss more closely than the single-quarter peak:
-\begin{equation}
-  \label{eq:chain_A}
-  \underbrace{-0.444}_{\text{cumul. IRF (1yr)}} \times
-  \underbrace{(-0.656)}_{\text{GDP (YoY)}\to\text{poverty}} =
-  \underbrace{+0.291\;\text{pp}}_{\text{rate}\to\text{poverty}},
-  \quad 90\%\,\text{CI:}\;[-0.923,\,+1.924].
-\end{equation}
-This CI is wide and includes zero, reflecting the uncertainty in both the
-VAR and the poverty slope. A naive chain multiplying the single-quarter
-peak ($-0.195$\,pp) by the YoY slope ($-0.656$) gives $+0.128$\,pp but
-mixes frequencies directly and should be viewed as a floor estimate only.
-Method~A ($+0.291$\,pp) is the preferred lower bound; Method~B ($+0.498$\,pp)
-is the preferred central estimate.
+A cross-frequency lower bound (Method~A) and an annual VAR check (Method~C)
+are documented in Appendix~\ref{app:rob:chain}; together they bracket the
+Method~B central estimate of $+0.498$\,pp in the range $[+0.128,\,+0.498]$\,pp.
 
 \paragraph{Interpretation.}
-The three estimates bracket a plausible range: $+0.128$\,pp (floor, naive
-cross-frequency), $+0.291$\,pp (Method~A, cumulated IRF), and $+0.498$\,pp
-(Method~B, frequency-consistent, preferred). The Method~B estimate is larger
-because the frequency-consistent slope $\hat\beta_B=-2.554$ is larger in
-magnitude than the YoY slope $\hat\beta=-0.656$---quarterly GDP fluctuations
-are smaller in scale than annual fluctuations, so a given QoQ change maps to
-a proportionally larger share of annual poverty variation. Applied to the
-2021--2023 hiking cycle ($\approx750$\,bp), Method~A and Method~B imply
-roughly $+2.2$ to $+3.7$\,pp in poverty---or approximately $0.75$ to $1.26$
+Applied to the
+2021--2023 hiking cycle ($\approx750$\,bp), the Method~B estimate implies
+roughly $+3.7$\,pp in poverty---or approximately $1.26$
 million people lifted above versus below the poverty line.
 All uncertainty originates from the rate--GDP link; both poverty slopes
 are precisely estimated. Bootstrapping the full Method~B chain (2,000 VAR
@@ -887,30 +909,11 @@ Cholesky interpretation.
 \subsection{Why Modern Identification Fails in Peru}
 \label{sec:why_modern_fails}
 
-Three features of Peru's monetary framework prevent modern identification:
-
-\begin{enumerate}
-  \item \textbf{Administered rate.} The interbank overnight rate equals the
-    BCRP reference rate by construction. There is no market-discovered
-    surprise component in the sense of \citet{gertler2015}, and the
-    interbank surprise instrument is endogenous to the VAR
-    (Table~\ref{tab:proxy_ib}, $F=4.73$).
-
-  \item \textbf{No rate expectations market.} Without OIS contracts or
-    exchange-traded rate futures for PEN, no market price decomposes
-    a rate decision into expected and unexpected components.
-    \citet{mirandaagrippino2021} show this decomposition is essential for
-    correct Proxy-SVAR identification; the logic applies a fortiori to Peru.
-
-  \item \textbf{Insufficient sharp episodes.} Three large cumulative episodes
-    exist since 2002: the 2009 GFC cuts, the 2020 COVID cuts, and the
-    2021--2023 hiking cycle. In each case the total movement was large but
-    unfolded over many consecutive 25\,bp meetings, providing no single
-    large-surprise event for narrative restrictions. The two most recent
-    episodes also require outlier treatment, creating a fundamental tension
-    with narrative identification (Table~\ref{tab:narrative}).
-\end{enumerate}
-
+The three institutional features described in Section~\ref{sec:litreview}---an
+administered interbank rate, no rate-futures market, and insufficient sharp
+monetary episodes---directly block each modern identification strategy, as
+documented in Sections~\ref{sec:proxy_ib}--\ref{sec:proxy_tone} and
+Table~\ref{tab:proxy_ib}.
 These three features are not idiosyncratic to Peru. A large class of EME
 central banks shares this identification environment: their interbank rates
 are administered, liquid rate-futures markets do not exist in domestic
@@ -1477,6 +1480,24 @@ $(-0.195)\times(-2.554)=+0.498$\,pp. Uncertainty is propagated by
 drawing 2,000 bootstrap VAR(1) peak responses and pairing each with a
 draw from $\mathcal{N}(-2.554,\,0.382^2)$; the 2.5th--97.5th percentile
 of the chained distribution is $[+0.379,\,+0.608]$\,pp.
+
+\paragraph{Method~A (cross-frequency lower bound).}
+Applying the cumulative QoQ IRF over the first year ($h=0,\ldots,3$),
+which sums to $-0.444$\,pp, as a proxy for the annual GDP impact and
+multiplying by the annual YoY poverty slope $\hat\beta=-0.656$ gives:
+\begin{equation}
+  \label{eq:chain_A}
+  \underbrace{-0.444}_{\text{cumul.\ IRF (1yr)}} \times
+  \underbrace{(-0.656)}_{\text{GDP (YoY)}\to\text{poverty}} =
+  \underbrace{+0.291\;\text{pp}}_{\text{rate}\to\text{poverty}},
+  \quad 90\%\,\text{CI:}\;[-0.923,\,+1.924].
+\end{equation}
+This CI is wide and includes zero, reflecting mixed frequencies: the
+IRF is QoQ while $\hat\beta$ is estimated on YoY data.
+A naive chain using only the single-quarter peak ($-0.195\times-0.656$)
+gives $+0.128$\,pp (floor estimate, mixes frequencies directly).
+Method~A ($+0.291$\,pp) is the preferred lower bound; Method~B
+($+0.498$\,pp) is the preferred central estimate.
 
 \paragraph{Method~C (annual VAR, uninformative).}
 A 3-variable annual VAR(1) with [GDP, CPI, Rate] ($T=19$, excluding 2020)

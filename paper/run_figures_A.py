@@ -190,18 +190,18 @@ def figure_A1(var_df, res_base):
     ax.fill_between(h, ci_lo90, ci_hi90, color=C["ci_light"], alpha=0.25, label='Baseline 90% CI')
     ax.fill_between(h, ci_lo68, ci_hi68, color=C["ci_dark"],  alpha=0.50, label='Baseline 68% CI')
 
-    # Alt orderings
+    # Alt orderings — thin so they don't compete with baseline/GIRF
     for irf_r, label, ls in alt_irfs:
         if ls == 'dashed':
-            ax.plot(h, irf_r, color=C["gray_line"], lw=1.2, ls='--', label=label)
+            ax.plot(h, irf_r, color=C["gray_line"], lw=0.8, ls='--', label=label)
         else:
-            ax.plot(h, irf_r, color=C["gray_line"], lw=1.2, ls=':', label=label)
+            ax.plot(h, irf_r, color=C["gray_line"], lw=0.8, ls=':', label=label)
 
-    # Baseline
-    ax.plot(h, irf_base, color=C["main"], lw=2, label='Baseline [ToT,GDP,CPI,FX,Rate]')
+    # Baseline — bold
+    ax.plot(h, irf_base, color=C["main"], lw=2.5, label='Baseline [ToT,GDP,CPI,FX,Rate]')
 
-    # GIRF
-    ax.plot(h, girf_pt, color=C["accent1"], lw=1.5, label='GIRF (ordering-invariant)')
+    # GIRF — bold red
+    ax.plot(h, girf_pt, color=C["accent1"], lw=2.5, label='GIRF (ordering-invariant)')
 
     zero_line(ax)
     ax.set_xlabel('Horizon (quarters)')
@@ -401,45 +401,46 @@ def figure_A4(res_base, var_df):
     dates = res_base.resid.index
     actual_gdp = var_df['gdp'].loc[dates]
 
-    fig, ax = plt.subplots(figsize=SZ["wide"])
-    colors = [C["ci_light"], C["ci_dark"], C["gray_line"], C["accent2"], C["accent1"]]
-    shock_labels = ['ToT shock','GDP shock','CPI shock','FX shock','Rate shock']
+    area_colors = ['#D5D8DC', '#95A5A6', '#7F8C8D', '#2980B9', '#C0392B']
+    shock_labels = ['ToT shock', 'GDP shock', 'CPI shock', 'FX shock', 'Rate shock (monetary)']
 
-    # Stacked bars -- positive and negative separately
-    pos = np.zeros(T_nobs)
-    neg = np.zeros(T_nobs)
-    bar_handles = []
+    # Stacked area chart: positive and negative bands fill_between
+    fig, ax = plt.subplots(figsize=SZ["wide"])
+    date_vals = dates.to_pydatetime()
+
+    pos_stack = np.zeros(T_nobs)
+    neg_stack = np.zeros(T_nobs)
     for k in range(K):
         c = contrib[:, k]
-        pos_c = np.where(c > 0, c, 0)
-        neg_c = np.where(c < 0, c, 0)
-        b_pos = ax.bar(dates, pos_c, bottom=pos, color=colors[k], alpha=0.8,
-                       label=shock_labels[k], width=60)
-        ax.bar(dates, neg_c, bottom=neg, color=colors[k], alpha=0.8, width=60)
-        pos += pos_c
-        neg += neg_c
-        bar_handles.append(b_pos)
+        pos_c = np.maximum(c, 0)
+        neg_c = np.minimum(c, 0)
+        ax.fill_between(date_vals, pos_stack, pos_stack + pos_c,
+                        color=area_colors[k], alpha=0.85, label=shock_labels[k], lw=0)
+        ax.fill_between(date_vals, neg_stack + neg_c, neg_stack,
+                        color=area_colors[k], alpha=0.85, lw=0)
+        pos_stack = pos_stack + pos_c
+        neg_stack = neg_stack + neg_c
 
     # Actual GDP overlay
-    ax.plot(dates, actual_gdp.values, color=C["main"], lw=1.5, label='Actual GDP growth', zorder=5)
+    ax.plot(date_vals, actual_gdp.values, color=C["main"], lw=1.8,
+            label='Actual GDP growth', zorder=5)
+    zero_line(ax)
 
     # Annotations for key periods
-    gfc = pd.Timestamp('2009-01-01')
-    covid_ts = pd.Timestamp('2020-03-31')
-    hiking = pd.Timestamp('2021-01-01')
+    for ts, lbl in [('2009-01-01', 'GFC'), ('2020-03-31', 'COVID'), ('2021-07-01', 'Hiking cycle')]:
+        ts_dt = pd.Timestamp(ts).to_pydatetime()
+        ax.axvline(ts_dt, color=C["gray_line"], lw=0.7, ls=':', alpha=0.7)
+        ax.text(ts_dt, ax.get_ylim()[1] if ax.get_ylim()[1] > 0 else 3,
+                lbl, fontsize=7, color=C["gray_line"], ha='left', rotation=0,
+                va='bottom', clip_on=True)
 
-    for ts, lbl in [(gfc, 'GFC'), (covid_ts, 'COVID'), (hiking, 'Hiking')]:
-        ax.axvline(ts, color=C["gray_line"], lw=0.7, ls=':', alpha=0.6)
-        ax.text(ts, ax.get_ylim()[1]*0.9, lbl, fontsize=7, color=C["gray_line"],
-                ha='center', rotation=90)
-
-    ax.set_xlabel('Quarter')
+    ax.set_xlabel('')
     ax.set_ylabel('GDP growth contribution (pp)')
     ax.set_title('')
     legend_outside(ax)
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
     ax.xaxis.set_major_locator(mdates.YearLocator(3))
-    plt.setp(ax.xaxis.get_majorticklabels(), rotation=45, ha='right')
+    plt.setp(ax.xaxis.get_majorticklabels(), rotation=0, ha='center')
 
     savefig(fig, 'fig_A4_hist_decomp')
     shutil.copy(OUTDIR / 'fig_A4_hist_decomp.pdf', Path('D:/Nexus/nexus/paper/figures/fig12_hist_decomp.pdf'))
@@ -475,10 +476,27 @@ def figure_A5(var_df):
 
     dates = [d.to_pydatetime() for d in end_dates]
 
+    # Interpolate NaN values from failed windows (singular VAR at endpoints)
+    def _interp_nan(arr):
+        a = np.array(arr, dtype=float)
+        x = np.arange(len(a))
+        ok = ~np.isnan(a)
+        if ok.sum() < 2:
+            return a
+        return np.interp(x, x[ok], a[ok])
+
+    peaks_p  = _interp_nan(peaks)
+    ci_lo_p  = _interp_nan(ci_lo)
+    ci_hi_p  = _interp_nan(ci_hi)
+    ci_lo68_p = _interp_nan(ci_lo68)
+    ci_hi68_p = _interp_nan(ci_hi68)
+
     fig, ax = plt.subplots(figsize=SZ["single_sq"])
-    ax.fill_between(dates, ci_lo,   ci_hi,   color=C["ci_light"], alpha=0.25, label='90% CI')
-    ax.fill_between(dates, ci_lo68, ci_hi68, color=C["ci_dark"],  alpha=0.50, label='68% CI')
-    ax.plot(dates, peaks, color=C["main"], lw=1.5, label='Peak GDP response')
+    ax.fill_between(dates, ci_lo_p,   ci_hi_p,   color=C["ci_light"], alpha=0.25,
+                    label='90% CI', interpolate=True)
+    ax.fill_between(dates, ci_lo68_p, ci_hi68_p, color=C["ci_dark"],  alpha=0.50,
+                    label='68% CI', interpolate=True)
+    ax.plot(dates, peaks_p, color=C["main"], lw=1.5, label='Peak GDP response')
     ax.axhline(-0.195, color=C["accent1"], ls='--', lw=1, label='Full-sample: -0.195')
     ax.axvline(pd.Timestamp('2020-03-31'), color=C["gray_line"], ls=':', lw=1, label='COVID (2020Q1)')
 
@@ -582,43 +600,74 @@ def figure_A6(res_base):
 def figure_A7():
     print('Generating Figure A7...')
 
-    nodes = {
-        'ToT':  (0.2, 0.8),
-        'GDP':  (0.5, 0.8),
-        'CPI':  (0.8, 0.5),
-        'FX':   (0.2, 0.2),
-        'Rate': (0.8, 0.8),
-    }
-    edges = [
-        ('GDP', 'Rate', 14.6, True),
-        ('Rate', 'CPI', 7.49, True),
-        ('ToT', 'FX', 8.0, True),
-        ('ToT', 'CPI', 3.47, False),
+    # Circular layout: ToT(top-left), Rate(top-right), GDP(top-center),
+    # CPI(bottom-right), FX(bottom-left)
+    import math
+    angles = {'ToT': 126, 'GDP': 90, 'Rate': 54, 'CPI': 18, 'FX': 162}
+    R = 0.32; cx, cy = 0.5, 0.50
+    nodes = {n: (cx + R*math.cos(math.radians(a)),
+                 cy + R*math.sin(math.radians(a)))
+             for n, a in angles.items()}
+
+    # (from, to, F-stat, p<0.05, label_offset_dx, label_offset_dy)
+    sig_edges = [
+        ('GDP',  'Rate', 14.6, '<0.001',  0.04, 0.04),
+        ('Rate', 'CPI',   7.5, '=0.007',  0.04, 0.04),
+        ('ToT',  'FX',    8.0, '=0.005',  0.04,-0.04),
+    ]
+    # Tested but not significant at 5%
+    fail_edges = [
+        ('ToT',  'CPI',   3.47, '=0.069', -0.06, 0.04),
+        ('Rate', 'GDP',   1.82, '=0.183',  0.04, 0.04),
+        ('ToT',  'GDP',   2.11, '=0.151',  0.04, 0.04),
     ]
 
     fig, ax = plt.subplots(figsize=SZ["single_sq"])
-    ax.set_xlim(0, 1); ax.set_ylim(0, 1); ax.axis('off')
+    ax.set_xlim(0, 1); ax.set_ylim(0.05, 0.95); ax.axis('off')
 
-    # Draw edges
-    for from_n, to_n, F, sig in edges:
+    # Failed edges — thin gray dashed (tested, p>0.05)
+    for from_n, to_n, F, p_str, dx, dy in fail_edges:
         x0, y0 = nodes[from_n]; x1, y1 = nodes[to_n]
-        lw = max(0.8, np.sqrt(F)/2.5)
-        color = C["main"] if sig else C["gray_line"]
-        ls = '-' if sig else '--'
         ax.annotate('', xy=(x1, y1), xytext=(x0, y0),
-                    arrowprops=dict(arrowstyle='->', color=color, lw=lw, ls=ls,
-                                   connectionstyle='arc3,rad=0.1'))
-        mx, my = (x0+x1)/2, (y0+y1)/2
-        ax.text(mx+0.03, my+0.03, f'F={F:.1f}', fontsize=7, color=color)
+                    arrowprops=dict(arrowstyle='->', color=C["ci_dark"], lw=0.8,
+                                   linestyle='dashed',
+                                   connectionstyle='arc3,rad=0.15'),
+                    annotation_clip=False)
+        mx, my = (x0+x1)/2 + dx, (y0+y1)/2 + dy
+        ax.text(mx, my, f'F={F:.1f}\n(p{p_str})', fontsize=6,
+                color=C["ci_dark"], ha='center', va='center')
 
-    # Draw nodes
+    # Significant edges — solid, thickness ∝ sqrt(F)
+    for from_n, to_n, F, p_str, dx, dy in sig_edges:
+        x0, y0 = nodes[from_n]; x1, y1 = nodes[to_n]
+        lw = max(1.2, np.sqrt(F) / 1.8)
+        ax.annotate('', xy=(x1, y1), xytext=(x0, y0),
+                    arrowprops=dict(arrowstyle='->', color=C["main"], lw=lw,
+                                   connectionstyle='arc3,rad=0.15'),
+                    annotation_clip=False)
+        mx, my = (x0+x1)/2 + dx, (y0+y1)/2 + dy
+        ax.text(mx, my, f'F={F:.1f}\n(p{p_str})', fontsize=7,
+                color=C["main"], ha='center', va='center', fontweight='bold')
+
+    # Node circles
+    node_colors = {'Rate': C["accent1"], 'GDP': C["accent2"]}
     for name, (x, y) in nodes.items():
-        circle = plt.Circle((x, y), 0.08, color='white', ec=C["main"], lw=1.5, zorder=5)
+        fc = node_colors.get(name, 'white')
+        ec = C["accent1"] if name == 'Rate' else C["main"]
+        circle = plt.Circle((x, y), 0.085, color=fc, ec=ec, lw=1.8, zorder=5)
         ax.add_patch(circle)
+        txt_color = 'white' if name in node_colors else C["main"]
         ax.text(x, y, name, ha='center', va='center', fontsize=9,
-                fontweight='bold' if name=='Rate' else 'normal', zorder=6)
+                fontweight='bold', color=txt_color, zorder=6)
 
-    ax.set_title('')
+    # Legend
+    from matplotlib.lines import Line2D
+    legend_elements = [
+        Line2D([0],[0], color=C["main"],    lw=2,   label='p < 0.05'),
+        Line2D([0],[0], color=C["ci_dark"], lw=1, ls='--', label='p > 0.05 (not significant)'),
+    ]
+    ax.legend(handles=legend_elements, loc='lower center',
+              bbox_to_anchor=(0.5, -0.02), ncol=2, fontsize=7.5, frameon=True)
 
     savefig(fig, 'fig_A7_granger_network')
     shutil.copy(OUTDIR / 'fig_A7_granger_network.pdf', Path('D:/Nexus/nexus/paper/figures/fig19_granger_network.pdf'))

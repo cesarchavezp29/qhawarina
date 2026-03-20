@@ -65,7 +65,10 @@ _SPORTS_PATTERN = (
     r"partidos de hoy.*copa|copa.*partidos de hoy|horarios.*liga|"
     r"tabla de posiciones|tabla acumulada|"
     r"copa conmebol|fase de grupos.*copa|copa.*fase de grupos|"
-    r"jornada \d+.*liga|liga.*jornada \d+"
+    r"jornada \d+.*liga|liga.*jornada \d+|"
+    # ── Rally motorsport / boxing (false-positive audit Feb 2026) ─────────────
+    r"rally mobil|rally dakar|rally peru|motocross|"
+    r"boxeador|combate de box|pelea de box|nocaut|k\.o\.\b|peso (pluma|gallo|ligero|mediano|semipesado|pesado) (mundial|peruano|titulo)"
 )
 
 # Binning: 1-5 → ordinal 1-3
@@ -799,7 +802,7 @@ def post_filter_scores(df: pd.DataFrame) -> pd.DataFrame:
         r"crisis|emergencia|desastre|destruy|colapso|perdida.*millones|"
         r"inunda|sequia|helada.*produccion|nino costero|fenomeno.*nino|"
         r"bloqueo|paro|huelga|protesta|desabastecimiento|escasez|"
-        r"huaico|desborde|damnificados|alud|lluvias.*deja|lluvias.*afect"
+        r"huaico|desborde|damnificados|\balud\b|lluvias.*deja|lluvias.*afect"
     )
     mask_crisis = nt.str.contains(_crisis_guard, regex=True, na=False)
 
@@ -1178,6 +1181,513 @@ def post_filter_scores(df: pd.DataFrame) -> pd.DataFrame:
     if n_pw_eco > 0:
         logger.info("post_filter_scores: routine weather zeroed eco=%d articles", n_pw_eco)
 
+    # ── ADDITIONAL FALSE POSITIVE FILTERS (March 2026 systematic audit) ────────
+
+    # Venezuela/Cuba internal politics → BOTH 0
+    # Cabinet reshuffles, minister dismissals, domestic US-Cuba diplomacy
+    _vzla_cuba_internal = (
+        # Venezuela starts title: "Venezuela: Rodríguez destituye al ministro..."
+        r"venezuela\s*:.{0,100}(destituye|destituy[oó]|destituido|nombra?|reemplaza).{0,60}"
+        r"(ministro|defensa|canciller|gabinete)\b|"
+        # Venezuela ends: "...destituye al ministro de Defensa en Venezuela"
+        r"(destituye|destituy[oó]|destituido).{0,80}(ministro|defensa|canciller).{0,50}venezuela\b|"
+        # Named Venezuelan leaders do cabinet reshuffles
+        r"(rodr[ií]guez|maduro|padrino|delcy|gonzalez lopez).{0,60}"
+        r"(destituye|destituy[oó]|destituido|nombra?|reemplaza).{0,40}"
+        r"(ministro|defensa|canciller|gabinete)\b|"
+        # Cuba/Díaz-Canel domestic coverage
+        r"(diaz.canel|d[ií]az.canel).{0,80}(cuba|habana)\b|"
+        r"(casa blanca|rubio|blinken|pompeo).{0,60}(cuba|d[ií]az.canel)\b|"
+        r"cuba.{0,60}(d[ií]az.canel|salida del poder|regimen).{0,60}"
+        r"(eeuu|estados unidos|casa blanca|rubio)\b"
+    )
+    mask_vzla_cuba = nt.str.contains(_vzla_cuba_internal, regex=True, na=False) & ~mask_crisis
+    n_vc_pol = int((mask_vzla_cuba & (df["political_score"].fillna(0) > 0)).sum())
+    n_vc_eco = int((mask_vzla_cuba & (df["economic_score"].fillna(0) > 0)).sum())
+    df.loc[mask_vzla_cuba, "political_score"] = 0
+    df.loc[mask_vzla_cuba, "economic_score"] = 0
+    if n_vc_pol + n_vc_eco > 0:
+        logger.info("post_filter_scores: Venezuela/Cuba internal zeroed pol=%d eco=%d articles", n_vc_pol, n_vc_eco)
+
+    # US Federal Reserve / monetary policy news → pol=0 (eco kept if relevant)
+    # Fed decisions affect Peru only through FX/rates channel → not political instability
+    _us_fed_policy = (
+        r"(powell|jerome powell).{0,60}(fed|reserva federal|tasas|inflacion|eeuu)\b|"
+        r"(fed|reserva federal).{0,40}(descarta|mantiene|sube|baja|recorta).{0,40}(tasa|tasas)\b|"
+        r"(fed|reserva federal).{0,40}(estanflacion|recesion|inflacion).{0,40}(eeuu|estados unidos)\b|"
+        r"(reserva federal|banco central).{0,30}(eeuu|estados unidos).{0,60}(tasa|tasas|decision)\b"
+    )
+    mask_fed_pol = nt.str.contains(_us_fed_policy, regex=True, na=False) & ~mask_crisis
+    n_fp = int((mask_fed_pol & (df["political_score"].fillna(0) > 0)).sum())
+    df.loc[mask_fed_pol, "political_score"] = 0
+    if n_fp > 0:
+        logger.info("post_filter_scores: US Fed policy zeroed pol=%d articles", n_fp)
+
+    # US equity markets (Wall Street) → pol=0, eco capped at 30
+    _wall_street = (
+        r"wall street.{0,60}(rojo|alza|baja|sube|cierra|abre|cae|rebota)\b|"
+        r"(bolsa|mercado).{0,30}nueva york.{0,60}(rojo|alza|baja|cierra|abre)\b|"
+        r"(dow jones|nasdaq|s.?p 500).{0,60}(cierra|cae|sube|baja|rojo|verde)\b"
+    )
+    mask_ws = nt.str.contains(_wall_street, regex=True, na=False) & ~mask_crisis
+    n_ws_pol = int((mask_ws & (df["political_score"].fillna(0) > 0)).sum())
+    df.loc[mask_ws, "political_score"] = 0
+    df.loc[mask_ws & (df["economic_score"].fillna(0) > 30), "economic_score"] = 30
+    if n_ws_pol > 0:
+        logger.info("post_filter_scores: Wall Street zeroed pol=%d articles", n_ws_pol)
+
+    # Middle East military conflict (Iran/Israel) → pol=0, eco capped at 20
+    # Affects oil prices but is not Peru political instability
+    _mideast_conflict = (
+        r"(ir[aá]n|ir[áa]n[ií]|irani).{0,60}(lanz[oó]|dispara|ataca|bombardea).{0,60}"
+        r"(misil|cohete|dron|ataque).{0,40}(israel|tel aviv|haifa)\b|"
+        r"(israel|tel aviv|haifa).{0,60}(ataque|bombardeo|misil).{0,40}(ir[aá]n|tehran|teher[aá]n)\b|"
+        r"(hamas|hezbol[aá]|hezbola).{0,60}(lanza|dispara|ataca|bombardea).{0,40}"
+        r"(misil|cohete|dron|israel|israel[ií])\b|"
+        r"ir[aá]n.{0,40}(misiles|cohetes|drones).{0,40}(israel|tel aviv)\b"
+    )
+    mask_mideast = nt.str.contains(_mideast_conflict, regex=True, na=False) & ~mask_crisis
+    n_me_pol = int((mask_mideast & (df["political_score"].fillna(0) > 15)).sum())
+    # Global political shock: cap pol at 15 (not zero — major wars affect Peru indirectly)
+    df.loc[mask_mideast & (df["political_score"].fillna(0) > 15), "political_score"] = 15
+    df.loc[mask_mideast & (df["economic_score"].fillna(0) > 25), "economic_score"] = 25
+    if n_me_pol > 0:
+        logger.info("post_filter_scores: Middle East conflict zeroed pol=%d articles", n_me_pol)
+
+    # Foreign crime / operations in Brazil, Mexico, Colombia → pol=0, eco=0
+    _foreign_crime = (
+        r"(favelas?|comunidad[aeéo]s?).{0,30}(r[ií]o de janeiro|sao paulo|brasil|brasileno)\b|"
+        r"r[ií]o de janeiro.{0,60}(muertos?|heridos?|operaci[oó]n|policia|narco)\b|"
+        r"comando vermelho|traficantes.{0,30}r[ií]o\b|"
+        r"(capturan|detienen|arrestan).{0,40}(m[eé]xico|mexicano).{0,60}"
+        r"(l[ií]der|jefe|capo|cartel|banda|los lobos|los zetas|sinaloa|jalisco)\b|"
+        r"(cartel|banda criminal).{0,40}(m[eé]xico|mexicano|guadalajara|monterrey|tijuana)\b"
+    )
+    mask_fcrime = nt.str.contains(_foreign_crime, regex=True, na=False) & ~mask_crisis
+    n_fc_pol = int((mask_fcrime & (df["political_score"].fillna(0) > 0)).sum())
+    n_fc_eco = int((mask_fcrime & (df["economic_score"].fillna(0) > 0)).sum())
+    df.loc[mask_fcrime, "political_score"] = 0
+    df.loc[mask_fcrime, "economic_score"] = 0
+    if n_fc_pol + n_fc_eco > 0:
+        logger.info("post_filter_scores: foreign crime (Brazil/Mexico) zeroed pol=%d eco=%d articles", n_fc_pol, n_fc_eco)
+
+    # Traffic accidents / road blockages (non-political) → BOTH 0
+    # Keep if protest/paro-related (crisis exception handles those)
+    _traffic_accident = (
+        r"(cami[oó]n|auto|bus|microbus|mototaxi|vehiculo).{0,30}"
+        r"(se despist[oó]|se despista|vuelc[oó]|vuelca|choc[oó]|choca|cay[oó]|cae|accidente).{0,60}"
+        r"(panamericana|carretera central|v[ií]a|autopista|puente|av\.|avenida)\b|"
+        r"(accidente.{0,20}tr[aá]fico|tr[aá]fico.{0,20}accidente|"
+        r"choque.{0,30}(fatal|m[uú]ltiple|frontal|contra|aparatoso))\b.{0,30}"
+        r"(muertos?|heridos?|v[ií]ctimas?|fallecidos?)\b"
+    )
+    mask_tracc = nt.str.contains(_traffic_accident, regex=True, na=False) & ~mask_crisis
+    n_ta_pol = int((mask_tracc & (df["political_score"].fillna(0) > 0)).sum())
+    n_ta_eco = int((mask_tracc & (df["economic_score"].fillna(0) > 0)).sum())
+    df.loc[mask_tracc, "political_score"] = 0
+    df.loc[mask_tracc, "economic_score"] = 0
+    if n_ta_pol + n_ta_eco > 0:
+        logger.info("post_filter_scores: traffic accident zeroed pol=%d eco=%d articles", n_ta_pol, n_ta_eco)
+
+    # Structure fires in non-critical facilities → BOTH 0
+    # (excludes market/factory fires that could have economic signal)
+    _structure_fire = (
+        r"incendio.{0,40}(consumi[oó]|destruy[oó]|arras[oó]).{0,60}"
+        r"(almac[eé]n|dep[oó]sito|galpn|reciclaje|cochera|vivienda|"
+        r"casa abandonada|choza|terreno|matorral)\b|"
+        r"incendio.{0,20}(forestal|pastizal|matorral).{0,40}"
+        r"(extinguido|sofocado|controlado|bajo control)\b"
+    )
+    mask_sfire = nt.str.contains(_structure_fire, regex=True, na=False) & ~mask_crisis
+    n_sf_pol = int((mask_sfire & (df["political_score"].fillna(0) > 0)).sum())
+    n_sf_eco = int((mask_sfire & (df["economic_score"].fillna(0) > 0)).sum())
+    df.loc[mask_sfire, "political_score"] = 0
+    df.loc[mask_sfire, "economic_score"] = 0
+    if n_sf_pol + n_sf_eco > 0:
+        logger.info("post_filter_scores: structure fire zeroed pol=%d eco=%d articles", n_sf_pol, n_sf_eco)
+
+    # Foreign lottery results → BOTH 0
+    _foreign_lottery = (
+        r"(loter[ií]a|bonoloto|euromillones|quiniela|euro jackpot|primitiva)"
+        r".{0,30}(espa[ñn]a|espa[ñn]ol[ae]?|europea?|italiana?|francesa?|"
+        r"inglesa?|alemania|estados unidos|eeuu)\b|"
+        r"(espa[ñn]a|reino unido|eeuu).{0,30}(loter[ií]a|bonoloto|euromillones|quiniela)\b"
+    )
+    mask_flot = nt.str.contains(_foreign_lottery, regex=True, na=False)
+    n_fl_pol = int((mask_flot & (df["political_score"].fillna(0) > 0)).sum())
+    n_fl_eco = int((mask_flot & (df["economic_score"].fillna(0) > 0)).sum())
+    df.loc[mask_flot, "political_score"] = 0
+    df.loc[mask_flot, "economic_score"] = 0
+    if n_fl_pol + n_fl_eco > 0:
+        logger.info("post_filter_scores: foreign lottery zeroed pol=%d eco=%d articles", n_fl_pol, n_fl_eco)
+
+    # Theater / live performance events → BOTH 0
+    _theater_event = (
+        r"obra de teatro.{0,60}(llega|se presenta|se estrena|temporada).{0,40}"
+        r"(arequipa|lima|cusco|trujillo|per[uú]|miraflores|barranco)\b|"
+        r"(llega a|se presenta en).{0,30}(arequipa|lima|cusco|trujillo).{0,30}"
+        r"(obra|teatro|musical|espect[aá]culo|comedia|drama)\b|"
+        r"(teatro|musical|comedia).{0,30}(temporada|estreno|funciones?).{0,30}"
+        r"(lima|arequipa|cusco|miraflores|barranco)\b"
+    )
+    mask_theater = nt.str.contains(_theater_event, regex=True, na=False) & ~mask_crisis
+    n_th_pol = int((mask_theater & (df["political_score"].fillna(0) > 0)).sum())
+    n_th_eco = int((mask_theater & (df["economic_score"].fillna(0) > 0)).sum())
+    df.loc[mask_theater, "political_score"] = 0
+    df.loc[mask_theater, "economic_score"] = 0
+    if n_th_pol + n_th_eco > 0:
+        logger.info("post_filter_scores: theater/performance zeroed pol=%d eco=%d articles", n_th_pol, n_th_eco)
+
+    # AI / technology opinion pieces → pol=0, eco capped at 15
+    _tech_opinion = (
+        r"(paradoja|dilema|debate|futuro).{0,30}(inteligencia artificial|ia\b|machine learning|"
+        r"chatgpt|gpt|llm|deepseek).{0,80}(dominar|revolucion|amenaza|oportunidad|perder|ganar)\b|"
+        r"(inteligencia artificial|ia\b|machine learning).{0,60}"
+        r"(paradoja|dilema|crecer perdiendo|dominar el mercado)\b"
+    )
+    mask_tech_op = nt.str.contains(_tech_opinion, regex=True, na=False) & ~mask_crisis
+    n_to_pol = int((mask_tech_op & (df["political_score"].fillna(0) > 0)).sum())
+    df.loc[mask_tech_op, "political_score"] = 0
+    df.loc[mask_tech_op & (df["economic_score"].fillna(0) > 15), "economic_score"] = 15
+    if n_to_pol > 0:
+        logger.info("post_filter_scores: tech opinion zeroed pol=%d articles", n_to_pol)
+
+    # Wildlife / animal rescue → BOTH 0
+    _wildlife_rescue = (
+        r"rescatan?.{0,30}(mono|puma|oso|cóndor|condor|loro|guanaco|vicuna|vicuña|"
+        r"caimán|caiman|delfin|ballena|tortuga|felino|fauna silvestre|animal salvaje)\b|"
+        r"(mono|puma|condor|cóndor|vicuna|vicuña|fauna).{0,30}"
+        r"(rescate|rescatado|en estado critico|en peligro|herido|liberado)\b"
+    )
+    mask_wild = nt.str.contains(_wildlife_rescue, regex=True, na=False) & ~mask_crisis
+    n_wl_pol = int((mask_wild & (df["political_score"].fillna(0) > 0)).sum())
+    n_wl_eco = int((mask_wild & (df["economic_score"].fillna(0) > 0)).sum())
+    df.loc[mask_wild, "political_score"] = 0
+    df.loc[mask_wild, "economic_score"] = 0
+    if n_wl_pol + n_wl_eco > 0:
+        logger.info("post_filter_scores: wildlife rescue zeroed pol=%d eco=%d articles", n_wl_pol, n_wl_eco)
+
+    # Celebrity gossip / entertainment personalities → BOTH 0
+    # (complements _celeb pattern; catches actors/athletes/influencers)
+    _celeb_extra = (
+        r"(tom holland|zendaya|shakira|bad bunny|maluma|taylor swift|"
+        r"cristiano ronaldo|messi|neymar|beyonce|rihanna|lady gaga|"
+        r"elon musk).{0,60}"
+        r"(sorprende|reacciona|responde|mensaje|declaraci[oó]n|rompe|"
+        r"anuncia|confiesa|romper|ruptura|romance|novia|novio|pareja)\b|"
+        r"(mensaje emotivo|mensaje de apoyo).{0,40}"
+        r"(tom holland|zendaya|shakira|actor|actriz|futbolista|cantante)\b"
+    )
+    mask_celeb_x = nt.str.contains(_celeb_extra, regex=True, na=False) & ~mask_crisis
+    n_cx_pol = int((mask_celeb_x & (df["political_score"].fillna(0) > 0)).sum())
+    n_cx_eco = int((mask_celeb_x & (df["economic_score"].fillna(0) > 0)).sum())
+    df.loc[mask_celeb_x, "political_score"] = 0
+    df.loc[mask_celeb_x, "economic_score"] = 0
+    if n_cx_pol + n_cx_eco > 0:
+        logger.info("post_filter_scores: celebrity extra zeroed pol=%d eco=%d articles", n_cx_pol, n_cx_eco)
+
+    # Bilateral cultural / diplomatic events → BOTH 0
+    # (confraternidad, día de la amistad, intercambio cultural)
+    _bilateral_cultural = (
+        r"(d[ií]a|aniversario|semana|mes).{0,20}"
+        r"(confraternidad|amistad|hermandad|cultura|diplomat).{0,40}"
+        r"peruano.?(corean[ao]|japon[eé]s[ae]?|chin[ao]|alem[aá]n[ae]?|franc[eé]s[ae]?|"
+        r"brasile[ñn][ao]|brit[aá]nic[ao]|italian[ao]|indi[ao]|israel[ií]|cuban[ao])\b|"
+        r"intercambio.{0,30}(cultural|gastron[oó]mico|art[ií]stico).{0,40}"
+        r"(per[uú]|peruano).{0,40}(corea|jap[oó]n|china|alemania|brasil)\b"
+    )
+    mask_bilat = nt.str.contains(_bilateral_cultural, regex=True, na=False) & ~mask_crisis
+    n_bi_pol = int((mask_bilat & (df["political_score"].fillna(0) > 0)).sum())
+    n_bi_eco = int((mask_bilat & (df["economic_score"].fillna(0) > 0)).sum())
+    df.loc[mask_bilat, "political_score"] = 0
+    df.loc[mask_bilat, "economic_score"] = 0
+    if n_bi_pol + n_bi_eco > 0:
+        logger.info("post_filter_scores: bilateral cultural zeroed pol=%d eco=%d articles", n_bi_pol, n_bi_eco)
+
+    # Food / gastronomy / lifestyle experience articles → BOTH 0
+    _gastro_lifestyle = (
+        r"(vive|descubre|disfruta).{0,30}"
+        r"(una experiencia|el sabor|la tradici[oó]n|la cultura).{0,60}"
+        r"(gastron[oó]mic|culinari|sabor|tradici[oó]n|cultura|arte)\b|"
+        r"(ra[ií]ces).{0,20}(del alma|de la ciudad|del per[uú]).{0,60}"
+        r"(exposici[oó]n|muestra|evento|arte|museo|galeria)\b|"
+        r"(festival|feria).{0,30}gastron[oó]mic.{0,60}"
+        r"(llega|se realiza|se celebra|en lima|en cusco|en arequipa)\b"
+    )
+    mask_gastro = nt.str.contains(_gastro_lifestyle, regex=True, na=False) & ~mask_crisis
+    n_ga_pol = int((mask_gastro & (df["political_score"].fillna(0) > 0)).sum())
+    n_ga_eco = int((mask_gastro & (df["economic_score"].fillna(0) > 0)).sum())
+    df.loc[mask_gastro, "political_score"] = 0
+    df.loc[mask_gastro, "economic_score"] = 0
+    if n_ga_pol + n_ga_eco > 0:
+        logger.info("post_filter_scores: gastro/lifestyle zeroed pol=%d eco=%d articles", n_ga_pol, n_ga_eco)
+
+    # Commercial expansion / business launches (not economic crisis) → BOTH 0
+    _commercial_launch = (
+        r"(busca|planea|espera|anuncia).{0,30}(duplicar|triplicar|expandir|crecer).{0,40}"
+        r"(negocio|operaciones|presencia|ventas).{0,30}(per[uú]|lima)\b|"
+        r"(duracell|samsung|apple|coca.cola|pepsi|nestle|unilever|procter|p.g|"
+        r"zegel|tecsup|senati|certus|idat)\b"
+        r".{0,60}(lanza|estrena|presenta|inaugura|duplicar|expansi[oó]n|becas?).{0,40}(per[uú]|lima)?\b|"
+        r"(empresa|marca|grupo).{0,30}(lanza|anuncia).{0,30}"
+        r"(becas?.{0,30}(para estudiar|de estudio)|programa de becas)\b"
+    )
+    mask_comm_launch = nt.str.contains(_commercial_launch, regex=True, na=False) & ~mask_crisis
+    n_cl_pol = int((mask_comm_launch & (df["political_score"].fillna(0) > 0)).sum())
+    n_cl_eco = int((mask_comm_launch & (df["economic_score"].fillna(0) > 0)).sum())
+    df.loc[mask_comm_launch, "political_score"] = 0
+    df.loc[mask_comm_launch, "economic_score"] = 0
+    if n_cl_pol + n_cl_eco > 0:
+        logger.info("post_filter_scores: commercial launch zeroed pol=%d eco=%d articles", n_cl_pol, n_cl_eco)
+
+    # Senamhi / weather forecast routine (non-disaster) → BOTH 0
+    # Extends _peru_weather_routine to pol score as well
+    _senamhi_routine = (
+        # senamhi/igp appears anywhere alongside weather forecast words
+        r"(senamhi|igp).{0,120}"
+        r"(lluvias?.{0,20}(bajar[aá]n|disminuir[aá]n|cesar[aá]n|amain|intensidad)|"
+        r"pronostic|prevision|alerta amarilla|alerta verde|"
+        r"olas? de calor|heladas?|friaje)\b|"
+        # or weather forecast words followed by senamhi at the end
+        r"lluvias?.{0,60}(bajar[aá]n|disminuir[aá]n|cesar[aá]n|amainan?r[aá]n?|"
+        r"intensidad|pronos?tico).{0,80}(senamhi|igp|meteorolog)\b"
+    )
+    mask_senamhi = nt.str.contains(_senamhi_routine, regex=True, na=False) & ~mask_crisis
+    n_sn_pol = int((mask_senamhi & (df["political_score"].fillna(0) > 0)).sum())
+    n_sn_eco = int((mask_senamhi & (df["economic_score"].fillna(0) > 0)).sum())
+    df.loc[mask_senamhi, "political_score"] = 0
+    df.loc[mask_senamhi, "economic_score"] = 0
+    if n_sn_pol + n_sn_eco > 0:
+        logger.info("post_filter_scores: Senamhi/IGP routine zeroed pol=%d eco=%d articles", n_sn_pol, n_sn_eco)
+
+    # ── EXTENDED FP FILTERS (March 2026 full-month audit) ───────────────────────
+
+    # Foreign oil/energy price movement → pol=0, eco capped at 25
+    # Oil price by itself is not Peru political instability (affects economy globally)
+    _foreign_oil_price = (
+        r"petr[oó]leo.{0,60}(sube|baja|roza|cae|alza|llega|supera).{0,40}"
+        r"(us\$|d[oó]lares|100|110|120|por barril)\b|"
+        r"(wti|crude|brent).{0,60}(sube|baja|roza|alza|cae).{0,40}"
+        r"(us\$|d[oó]lares|por barril|barril)\b|"
+        r"(precio.{0,20}petr[oó]leo|petr[oó]leo.{0,20}precio).{0,60}"
+        r"(mayor alza|mayor baja|record|m[aá]xim|m[ií]nim).{0,30}(a[ñn]os?|d[eé]cadas?)\b|"
+        r"shock petrolero.{0,80}(combustible|diesel|gasolina|avion|kerosene)\b|"
+        r"(goldman sachs|jpmorgan|citibank|barclays).{0,60}"
+        r"(petr[oó]leo|precio del petr[oó]leo|wti|brent|crudo)\b"
+    )
+    mask_oil = nt.str.contains(_foreign_oil_price, regex=True, na=False) & ~mask_crisis
+    n_oil_pol = int((mask_oil & (df["political_score"].fillna(0) > 0)).sum())
+    df.loc[mask_oil, "political_score"] = 0
+    df.loc[mask_oil & (df["economic_score"].fillna(0) > 25), "economic_score"] = 25
+    if n_oil_pol > 0:
+        logger.info("post_filter_scores: foreign oil price zeroed pol=%d articles", n_oil_pol)
+
+    # Extended Middle East / foreign war coverage → pol=0, eco capped at 15
+    _mideast_ext = (
+        r"(ir[aá]n|israel[ií]?|gaza|cisjordania|l[ií]bano|siria|irak).{0,60}"
+        r"(intensifica|bombardea|ataca|lanza|destruye|yacimiento|energ[ií]a|gas)\b|"
+        r"(trump|eeuu|estados unidos).{0,60}(destruir|atacar|bombardear).{0,60}"
+        r"(ir[aá]n|siria|irak|gaza|yacimiento)\b|"
+        r"ataque.{0,20}drones?.{0,60}(embajada|eeuu|israel|ir[aá]n|bagdad)\b|"
+        r"(ormuz|hormuz|mar rojo|canal de suez).{0,60}"
+        r"(ataque|bloqueo|hundimiento|minas|conflicto|tensi[oó]n)\b"
+    )
+    mask_mideast_ext = nt.str.contains(_mideast_ext, regex=True, na=False) & ~mask_crisis
+    n_mex_pol = int((mask_mideast_ext & (df["political_score"].fillna(0) > 15)).sum())
+    # Global political shock (extended): cap pol at 15, eco at 20
+    df.loc[mask_mideast_ext & (df["political_score"].fillna(0) > 15), "political_score"] = 15
+    df.loc[mask_mideast_ext & (df["economic_score"].fillna(0) > 20), "economic_score"] = 20
+    if n_mex_pol > 0:
+        logger.info("post_filter_scores: Middle East ext zeroed pol=%d articles", n_mex_pol)
+
+    # Additional foreign domestic politics → BOTH 0
+    # Venezuela human rights/torture, Argentina/Milei OMS, Bolsonaro health, Colombia-Ecuador
+    _foreign_dom_ext = (
+        r"venezuela.{0,80}(torturas?|malos tratos|presos pol[ií]ticos|ley de amnist[ií]a|"
+        r"onu.{0,30}confirm|presos.{0,30}venezolan)\b|"
+        r"(milei|argentina).{0,60}(oms|organizaci[oó]n mundial de la salud|"
+        r"salida.{0,20}argentina|formaliza.{0,20}salida)\b|"
+        r"(gobierno de milei|milei formaliza).{0,80}"
+        r"(organizaci[oó]n mundial|oms|salud mundial|unicef|unesco|onu)\b|"
+        r"(bolsonaro).{0,60}(uci|bronconeumon[ií]a|hospital|intern[ao]|fiebre|"
+        r"salud|operaci[oó]n|ciruj[ií]a)\b|"
+        r"(ecuador|colombia).{0,60}trump.{0,60}"
+        r"(influencia|injerencia|interv[ei]nci[oó]n|am[eé]rica latina)\b|"
+        r"papa.{0,60}(le[oó]n xiv|francisco|vaticano).{0,60}"
+        r"(periodista|opus dei|religi[oó]n|iglesia)\b|"
+        r"trump.{0,60}(cuba|nicolás maduro|maduro).{0,60}"
+        r"(sanci[oó]n|presión|régimen|salida del poder|negaci[oó]n)\b"
+    )
+    mask_fdom_ext = nt.str.contains(_foreign_dom_ext, regex=True, na=False) & ~mask_crisis
+    n_fde_pol = int((mask_fdom_ext & (df["political_score"].fillna(0) > 0)).sum())
+    n_fde_eco = int((mask_fdom_ext & (df["economic_score"].fillna(0) > 0)).sum())
+    df.loc[mask_fdom_ext, "political_score"] = 0
+    df.loc[mask_fdom_ext, "economic_score"] = 0
+    if n_fde_pol + n_fde_eco > 0:
+        logger.info("post_filter_scores: extended foreign domestic zeroed pol=%d eco=%d", n_fde_pol, n_fde_eco)
+
+    # Foreign sports (not involving Peru or corruption) → BOTH 0
+    _foreign_sports = (
+        # Copa Africana — any order
+        r"(copa africana|copa africa|can\b).{0,60}"
+        r"(senegal|nigeria|marruecos|ghana|costa de marfil|camerun|egipto)\b|"
+        r"(senegal|nigeria|marruecos|ghana|costa de marfil|camerun|egipto).{0,60}"
+        r"(copa africana|copa africa|can\b|tas\b.{0,30}titulo)\b|"
+        # ATP/WTA Masters abroad
+        r"(masters?.{0,10}(1000|miami|roma|madrid|montecarlo|toronto|cincinnati|paris|shanghai))"
+        r".{0,80}(finalista|semifinal|final|campe[oó]n|gana|pierde|derrota|qualy|qualifier)\b|"
+        r"(buse|echargui|tunecino|finalista.{0,20}qualy|qualy.{0,20}masters?)\b|"
+        # Colombian soccer teams
+        r"(once caldas|manizales|deportivo cali|atl[eé]tico nacional|junior barranquilla|"
+        r"millonarios fc|santa fe|bucaramanga).{0,80}(gol|partido|victoria|derrota|viral|festej)\b|"
+        r"(cable a[eé]reo|medellin|bogota|cali).{0,60}(hinchas?|barra|celebran?|festej)\b"
+    )
+    mask_fsports = nt.str.contains(_foreign_sports, regex=True, na=False) & ~mask_crisis
+    n_fs_pol = int((mask_fsports & (df["political_score"].fillna(0) > 0)).sum())
+    n_fs_eco = int((mask_fsports & (df["economic_score"].fillna(0) > 0)).sum())
+    df.loc[mask_fsports, "political_score"] = 0
+    df.loc[mask_fsports, "economic_score"] = 0
+    if n_fs_pol + n_fs_eco > 0:
+        logger.info("post_filter_scores: foreign sports zeroed pol=%d eco=%d articles", n_fs_pol, n_fs_eco)
+
+    # Extended celebrity / entertainment gossip → BOTH 0
+    _celeb_gossip_ext = (
+        r"(said palao|alejandra baigorria|suheyn cipriani|macarius|"
+        r"la bella luz|scarlet\b|peaky blinders|tunantada|semana santa.{0,30}(escénico|espectáculo)|"
+        r"valentina valiente.{0,30}(llega|megaplaza|fans))\b|"
+        r"(estrena|lanza|presenta).{0,30}(cumbia|salsa|reggaeton|bachata|huayno|marinera).{0,60}"
+        r"(cantante|artista|grupo|banda)\b|"
+        r"(netflix|hbo|disney|amazon prime|apple tv).{0,60}"
+        r"(estrena|lanza|presenta|nueva serie|nueva pel[ií]cula|temporada)\b"
+    )
+    mask_celeb_ext = nt.str.contains(_celeb_gossip_ext, regex=True, na=False) & ~mask_crisis
+    n_ce_pol = int((mask_celeb_ext & (df["political_score"].fillna(0) > 0)).sum())
+    n_ce_eco = int((mask_celeb_ext & (df["economic_score"].fillna(0) > 0)).sum())
+    df.loc[mask_celeb_ext, "political_score"] = 0
+    df.loc[mask_celeb_ext, "economic_score"] = 0
+    if n_ce_pol + n_ce_eco > 0:
+        logger.info("post_filter_scores: extended celeb/entertainment zeroed pol=%d eco=%d", n_ce_pol, n_ce_eco)
+
+    # Senamhi daily weather forecast headlines → BOTH 0
+    _senamhi_forecast_hdr = (
+        r"senamhi\s*[:\.]\s*(pron[oó]stico del clima hoy|alerta|"
+        r"temperatura|lluvias?.{0,30}(hoy|ma[ñn]ana|esta semana|semana)|"
+        r"clima.{0,30}(hoy|ma[ñn]ana|esta semana))\b|"
+        r"pron[oó]stico del clima hoy.{0,30}(senamhi|igp|meteorolog)\b"
+    )
+    mask_snh = nt.str.contains(_senamhi_forecast_hdr, regex=True, na=False) & ~mask_crisis
+    n_snh_pol = int((mask_snh & (df["political_score"].fillna(0) > 0)).sum())
+    n_snh_eco = int((mask_snh & (df["economic_score"].fillna(0) > 0)).sum())
+    df.loc[mask_snh, "political_score"] = 0
+    df.loc[mask_snh, "economic_score"] = 0
+    if n_snh_pol + n_snh_eco > 0:
+        logger.info("post_filter_scores: Senamhi forecast headlines zeroed pol=%d eco=%d", n_snh_pol, n_snh_eco)
+
+    # Commercial / brand / corporate PR → BOTH 0
+    # Auto/tech/consumer brands announcing products, HR/leadership opinion
+    _brand_pr = (
+        r"(geely|toyota|volkswagen|stellantis|bmw|mercedes|kia|hyundai|"
+        r"indian motors|bajaj|yamaha|honda\b).{0,60}"
+        r"(lanza|presenta|estrena|supera|lidera|apuesta|posiciona).{0,40}"
+        r"(per[uú]|lima|mercado|ventas|modelo|suv|moto)\b|"
+        r"(bravecto|msd animal health|pfizer animal|boehringer|zoetis).{0,60}"
+        r"(mascotas?|veterinari|prevencion|tendencia)\b|"
+        r"(liderman|prosegur|g4s|securitas).{0,60}"
+        r"(vigilancia|seguridad privada|tecnolog[ií]a|ahorrar|eficiencia)\b|"
+        r"(transvida|peruplast|yobel|ajegroup|alicorp|backus).{0,60}"
+        r"(residuos|reciclaje|sostenib|oportunidad|tendencia|crecimiento)\b|"
+        r"(quieres ser ceo|como ser ceo|4 preguntas.{0,30}ceo|liderazgo.{0,30}empresarial.{0,50}"
+        r"(consejo|clave|secreto|tip))\b"
+    )
+    mask_brand = nt.str.contains(_brand_pr, regex=True, na=False) & ~mask_crisis
+    n_br_pol = int((mask_brand & (df["political_score"].fillna(0) > 0)).sum())
+    n_br_eco = int((mask_brand & (df["economic_score"].fillna(0) > 0)).sum())
+    df.loc[mask_brand, "political_score"] = 0
+    df.loc[mask_brand, "economic_score"] = 0
+    if n_br_pol + n_br_eco > 0:
+        logger.info("post_filter_scores: brand/corporate PR zeroed pol=%d eco=%d articles", n_br_pol, n_br_eco)
+
+    # US domestic policy / foreign tech & finance → pol=0, eco capped at 20
+    _us_domestic_foreign_tech = (
+        r"(impuestos|exenci[oó]n fiscal|prorroga.{0,20}irs|irs.{0,20}prorroga)"
+        r".{0,30}(texas|florida|california|estados unidos|eeuu)\b|"
+        r"(nvidia|intel|qualcomm|amd|tsmc).{0,60}"
+        r"(chips?|semiconductores?|produccion|clientes chinos|exportar|"
+        r"vender a china|restricciones)\b|"
+        r"(general electric|apple|amazon|google|meta\b|microsoft|tesla).{0,60}"
+        r"(renacer|herederas?|segun the economist|transformaci[oó]n|restructuraci[oó]n)\b|"
+        r"(the economist|financial times|bloomberg|wall street journal|wsj)"
+        r".{0,60}(ge\b|general electric|boeing|ford|gm\b|exxon|chevron)\b"
+    )
+    mask_us_tech = nt.str.contains(_us_domestic_foreign_tech, regex=True, na=False) & ~mask_crisis
+    n_ut_pol = int((mask_us_tech & (df["political_score"].fillna(0) > 0)).sum())
+    df.loc[mask_us_tech, "political_score"] = 0
+    df.loc[mask_us_tech & (df["economic_score"].fillna(0) > 20), "economic_score"] = 20
+    if n_ut_pol > 0:
+        logger.info("post_filter_scores: US domestic/foreign tech zeroed pol=%d articles", n_ut_pol)
+
+    # Health/science/lifestyle opinion pieces (no Peru political connection) → BOTH 0
+    _health_science_op = (
+        r"(salud bucal|caries|enfermedades? periodontal|higiene bucal).{0,80}"
+        r"(infarto|alzh[eé]imer|enfermedad card[ií]aca|embarazo|vincul|cancer|diabetes)\b|"
+        r"(mala salud bucal|salud dental|periodontitis).{0,60}(vincul|relacion|asocia)\b|"
+        r"china construye.{0,60}(megapuente|puente.{0,20}km|infraestructura.{0,30}extrema)\b|"
+        r"(riesgo silencioso|amenaza oculta).{0,40}"
+        r"(empresa familiar|sucesi[oó]n|herencia|patrimonio)\b|"
+        r"(hostigamiento sexual|acoso laboral).{0,30}(crecieron?|aumentaron?).{0,20}%|"
+        r"(nueva generaci[oó]n femenina|mujeres.{0,30}m[aá]s preparadas).{0,40}"
+        r"(brecha|desigualdad|techo de cristal)\b"
+    )
+    mask_health_op = nt.str.contains(_health_science_op, regex=True, na=False) & ~mask_crisis
+    n_ho_pol = int((mask_health_op & (df["political_score"].fillna(0) > 0)).sum())
+    n_ho_eco = int((mask_health_op & (df["economic_score"].fillna(0) > 0)).sum())
+    df.loc[mask_health_op, "political_score"] = 0
+    df.loc[mask_health_op, "economic_score"] = 0
+    if n_ho_pol + n_ho_eco > 0:
+        logger.info("post_filter_scores: health/science opinion zeroed pol=%d eco=%d", n_ho_pol, n_ho_eco)
+
+    # Cultural tourism / book launches / religious celebrations → BOTH 0
+    _cultural_tourism = (
+        r"(presenta|lanza).{0,30}(novela|libro|ensayo|poemario|autobiograf[ií]a).{0,60}"
+        r"(en lima|en miraflores|en el centro|en arequipa|en cusco)\b|"
+        r"(restricciones|visitas limitadas|aforo).{0,40}"
+        r"(machu picchu|llaqta|santuario|sitio arqueol[oó]gico).{0,60}"
+        r"(turismo|visitantes?|promover|destinos?)\b|"
+        r"(semana santa|corpus christi|navidad|a[ñn]o nuevo).{0,60}"
+        r"(centro hist[oó]rico|visitantes?|turistas?|actividades|"
+        r"celebraci[oó]n religiosa|procesion)\b.{0,60}(esperan?|recibir[aá]n?|espera)\b"
+    )
+    mask_cult_tour = nt.str.contains(_cultural_tourism, regex=True, na=False) & ~mask_crisis
+    n_ct_pol = int((mask_cult_tour & (df["political_score"].fillna(0) > 0)).sum())
+    n_ct_eco = int((mask_cult_tour & (df["economic_score"].fillna(0) > 0)).sum())
+    df.loc[mask_cult_tour, "political_score"] = 0
+    df.loc[mask_cult_tour, "economic_score"] = 0
+    if n_ct_pol + n_ct_eco > 0:
+        logger.info("post_filter_scores: cultural tourism zeroed pol=%d eco=%d articles", n_ct_pol, n_ct_eco)
+
+    # Mountain/rural road accidents (bus/truck crashes not caused by protests) → BOTH 0
+    _mountain_accident = (
+        r"(ca[ií]da|ca[eé]|cay[oó]).{0,20}(camioneta|bus|cami[oó]n|auto|mototaxi)"
+        r".{0,30}(abismo|precipicio|ba[rr]anco|quebrada|r[ií]o)\b|"
+        r"despiste y volcadura|volcadura de bus|"
+        r"(despiste|volcadura|vuelco).{0,10}(y|de).{0,10}(volcadura|despiste|vuelco|bus|cami[oó]n|combi)\b"
+        r".{0,60}(muertos?|heridos?|fallecidos?|v[ií]ctimas?)\b|"
+        r"(despiste|volcadura|vuelco|choque).{0,40}(bus|cami[oó]n|combi)"
+        r".{0,50}(carretera|v[ií]a|curva|pendiente|talud)\b.{0,30}"
+        r"(muertos?|heridos?|fallecidos?|v[ií]ctimas?)\b|"
+        r"tren.{0,40}(descarrila|descarrilamiento|descarril[oó]).{0,40}"
+        r"(rocas?|derrumbe|huaico|lluvia)\b|"
+        r"puente.{0,40}(colapsa|colapso|cay[oó]|destruy[oó]|derrumb).{0,50}"
+        r"(lluvias?|huaico|crecida|desborde|inundaci[oó]n)\b"
+    )
+    mask_mtn_acc = nt.str.contains(_mountain_accident, regex=True, na=False) & ~mask_crisis
+    n_ma_pol = int((mask_mtn_acc & (df["political_score"].fillna(0) > 0)).sum())
+    n_ma_eco = int((mask_mtn_acc & (df["economic_score"].fillna(0) > 0)).sum())
+    df.loc[mask_mtn_acc, "political_score"] = 0
+    df.loc[mask_mtn_acc, "economic_score"] = 0
+    if n_ma_pol + n_ma_eco > 0:
+        logger.info("post_filter_scores: mountain/road accident zeroed pol=%d eco=%d articles", n_ma_pol, n_ma_eco)
+
     # ── SCORE CORRECTIONS (boost where classifier under-scored) ─────────────────
 
     # Elections voter guide → eco=0, pol=max(pol,60)
@@ -1511,6 +2021,51 @@ def post_filter_scores(df: pd.DataFrame) -> pd.DataFrame:
     if mask_tt.sum() > 0:
         logger.info("post_filter_scores: Trump Peru tariffs eco>=70 on %d", int(mask_tt.sum()))
 
+    # Global tariff/trade war NOT specifically targeting Peru → eco cap 30, pol cap 8
+    # US-China tariffs, Trump universal tariffs, etc. affect Peru indirectly via commodity prices
+    # and export demand — moderate eco signal, minimal pol signal
+    _global_tariff_war = (
+        r"(trump|eeuu|estados unidos).{0,60}(arancel|tarifa|impuesto.{0,10}importaci[oó]n).{0,60}"
+        r"(china|europa|mundo|global|pa[ií]ses|todas las importaciones|universal)\b|"
+        r"guerra (comercial|arancelaria).{0,80}(eeuu|estados unidos|china|europa)\b|"
+        r"(china|europa).{0,60}(contramedida|represalia|retali|tarifa reciproca).{0,60}"
+        r"(eeuu|estados unidos|trump)\b"
+    )
+    # Exclude: if Peru/copper/minerals already mentioned → _trump_tariffs_peru handles it
+    mask_gtw = (
+        nt.str.contains(_global_tariff_war, regex=True, na=False) &
+        ~mask_tt &  # not already handled by direct Peru tariff rule
+        ~mask_crisis
+    )
+    n_gtw_eco = int((mask_gtw & (df["economic_score"].fillna(0) > 30)).sum())
+    n_gtw_pol = int((mask_gtw & (df["political_score"].fillna(0) > 8)).sum())
+    df.loc[mask_gtw & (df["economic_score"].fillna(0) > 30), "economic_score"] = 30
+    df.loc[mask_gtw & (df["political_score"].fillna(0) > 8), "political_score"] = 8
+    if n_gtw_eco + n_gtw_pol > 0:
+        logger.info("post_filter_scores: global tariff war capped eco<=30 pol<=8 on %d eco / %d pol", n_gtw_eco, n_gtw_pol)
+
+    # China/global economic slowdown → eco cap 25, pol cap 5
+    # Affects Peru via commodity prices (copper, zinc, gold) — economic-only channel, minimal pol
+    _global_econ_slowdown = (
+        r"(china|economia mundial|economia global).{0,60}"
+        r"(desacelera|recesi[oó]n|contraccion|enfriamiento|debilita).{0,60}"
+        r"(crecimiento|economia|pbi|pib|demanda|exportaciones?)\b|"
+        r"(recesi[oó]n|desaceleraci[oó]n).{0,40}(mundial|global|china|eeuu|europa)\b"
+    )
+    # Exclude if Peru explicitly mentioned (Haiku already scored that correctly)
+    _peru_explicit = r"\bper[uú]\b"
+    mask_ges = (
+        nt.str.contains(_global_econ_slowdown, regex=True, na=False) &
+        ~nt.str.contains(_peru_explicit, regex=True, na=False) &
+        ~mask_crisis
+    )
+    n_ges_eco = int((mask_ges & (df["economic_score"].fillna(0) > 25)).sum())
+    n_ges_pol = int((mask_ges & (df["political_score"].fillna(0) > 5)).sum())
+    df.loc[mask_ges & (df["economic_score"].fillna(0) > 25), "economic_score"] = 25
+    df.loc[mask_ges & (df["political_score"].fillna(0) > 5), "political_score"] = 5
+    if n_ges_eco + n_ges_pol > 0:
+        logger.info("post_filter_scores: global econ slowdown capped eco<=25 pol<=5 on %d eco / %d pol", n_ges_eco, n_ges_pol)
+
     # Road blockage cutting critical supplies (oxygen, medicine, food) → eco≥55
     _supply_blockage = (
         r"bloqueo.{0,50}(ox[ií]geno|medicamentos?|insumos? m[eé]dicos?|f[aá]rmacos?|alimentos?|"
@@ -1522,6 +2077,31 @@ def post_filter_scores(df: pd.DataFrame) -> pd.DataFrame:
     df.loc[mask_sb & (df["economic_score"].fillna(0) < 55), "economic_score"] = 55
     if mask_sb.sum() > 0:
         logger.info("post_filter_scores: supply blockage eco>=55 on %d", int(mask_sb.sum()))
+
+    # Key highway blockades (supply chain impact) → eco≥42
+    _highway_blockade = (
+        r"(bloquearan|bloquean|bloqueo|bloquear).{0,60}"
+        r"(carretera central|panamericana|via los libertadores|carretera.*lima|acceso a lima)\b|"
+        r"(carretera central|panamericana).{0,40}(cortada|bloqueada|interrumpida|cerrada)\b.{0,30}"
+        r"(horas|dias|protesta|paro|huelga)\b"
+    )
+    mask_hb = nt.str.contains(_highway_blockade, regex=True, na=False)
+    df.loc[mask_hb & (df["economic_score"].fillna(0) < 42), "economic_score"] = 42
+    n_hb = int(mask_hb.sum())
+    if n_hb > 0:
+        logger.info("post_filter_scores: highway blockade eco>=42 on %d articles", n_hb)
+
+    # MEF fiscal gap / unfunded works alert → eco≥42
+    _mef_fiscal_gap = (
+        r"mef.{0,60}(alerta|advierte|reporta|identifica).{0,80}"
+        r"(obras sin financiamiento|deficit|brechas|proyectos paralizados|gasto sin cubrir)\b|"
+        r"(obras sin financiamiento|brecha de infraestructura).{0,60}(mef|millones|miles de millones)\b"
+    )
+    mask_mfg = nt.str.contains(_mef_fiscal_gap, regex=True, na=False)
+    df.loc[mask_mfg & (df["economic_score"].fillna(0) < 42), "economic_score"] = 42
+    n_mfg = int(mask_mfg.sum())
+    if n_mfg > 0:
+        logger.info("post_filter_scores: MEF fiscal gap eco>=42 on %d articles", n_mfg)
 
     # ── JULY 2025 FALSE-POSITIVE CLEANUP ─────────────────────────────────────────
 
@@ -2566,6 +3146,73 @@ def post_filter_scores(df: pd.DataFrame) -> pd.DataFrame:
     if n_f11_pol + n_f11_eco > 0:
         logger.info("post_filter_scores: F11 data privacy capped pol=%d eco=0 on %d", n_f11_pol, n_f11_eco)
 
+    # F12. Tribunal Fiscal (tax court rulings) — NOT a political crisis
+    _tribunal_fiscal = r"tribunal fiscal.{0,80}(sunat|impuesto|contribuyente|renta|igv|buzón sol|comprobante|deuda tributaria|criterio)"
+    mask_tf = nt.str.contains(_tribunal_fiscal, regex=True, na=False)
+    df.loc[mask_tf, "political_score"] = df.loc[mask_tf, "political_score"].clip(upper=10)
+    df.loc[mask_tf, "economic_score"] = df.loc[mask_tf, "economic_score"].clip(upper=10)
+    n_tf = int(mask_tf.sum())
+    if n_tf > 0:
+        logger.info("post_filter_scores: F12 Tribunal Fiscal capped pol<=10 eco<=10 on %d articles", n_tf)
+
+    # F13. Routine corporate growth projections / positive business news → eco=0
+    # Positive economic data is NOT an instability signal
+    _corp_growth_positive = (
+        r"(proyecta crecer|proyecta crecimiento|proyecta facturar).{0,80}(2026|este ano|proximo ano)\b|"
+        r"(crecio|registro crecimiento|aumento).{0,20}\d+[,\.]?\d*\s*%.{0,60}(diciembre|enero|noviembre|octubre|trimestre|mes)\b|"
+        r"(nueva planta|nueva sede|nueva tienda|nuevo local).{0,60}(chiclayo|lima|arequipa|trujillo|cusco|ica)\b|"
+        r"(startup|empresa|compania|grupo).{0,50}(se expandira|expansion|abre operaciones).{0,50}(chile|colombia|mexico|brasil)\b"
+    )
+    _not_disruption = r"(paraliz|quiebre|cierre|bancarrota|crisis|deuda|impago|rescate|quiebra)"
+    mask_cgp = (
+        nt.str.contains(_corp_growth_positive, regex=True, na=False) &
+        ~nt.str.contains(_not_disruption, regex=True, na=False) &
+        ~mask_crisis
+    )
+    n_cgp = int((mask_cgp & (df["economic_score"].fillna(0) > 0)).sum())
+    df.loc[mask_cgp, "economic_score"] = 0
+    if n_cgp > 0:
+        logger.info("post_filter_scores: corp growth positive eco=0 on %d articles", n_cgp)
+
+    # F14. Lifestyle/tech feature content with no Peru instability signal → both 0
+    _lifestyle_tech_feature = (
+        r"(ia|inteligencia artificial).{0,60}(genero|ahorro|ahorra|reduce|optimiz|mejora).{0,60}(horas|tiempo|minutos|costos)\b|"
+        r"(pagos digitales|billetera digital|fintech).{0,60}(mejorar ventas|como usar|consejos|tips)\b|"
+        r"cuantos (peruanos?|personas?).{0,40}(enamoraron|conocieron|trabajo|oficina)\b|"
+        r"(rally mobil|rally dakar|rally peru).{0,80}(espectadores?|aficionados?|inscripciones?|proyecta)\b"
+    )
+    mask_ltf = nt.str.contains(_lifestyle_tech_feature, regex=True, na=False) & ~mask_crisis
+    n_ltf_pol = int((mask_ltf & (df["political_score"].fillna(0) > 0)).sum())
+    n_ltf_eco = int((mask_ltf & (df["economic_score"].fillna(0) > 0)).sum())
+    df.loc[mask_ltf, "political_score"] = 0
+    df.loc[mask_ltf, "economic_score"] = 0
+    if n_ltf_pol + n_ltf_eco > 0:
+        logger.info("post_filter_scores: lifestyle/tech feature zeroed pol=%d eco=%d", n_ltf_pol, n_ltf_eco)
+
+    # F15. Global grain / commodity prices (not oil) → eco cap 20, pol=0
+    _global_grain_price = (
+        r"(precio de (los )?granos?|precio del (trigo|maiz|arroz|soja|cacao)).{0,60}(global|mundial|internacional|inicia|registra)\b|"
+        r"(trigo|maiz|soja|arroz).{0,30}(sube|baja|cae|alza|cotiz).{0,50}(bushel|tonelada|chicago|cbot)\b"
+    )
+    mask_ggp = nt.str.contains(_global_grain_price, regex=True, na=False) & ~mask_crisis
+    df.loc[mask_ggp & (df["political_score"].fillna(0) > 0), "political_score"] = 0
+    df.loc[mask_ggp & (df["economic_score"].fillna(0) > 20), "economic_score"] = 20
+    n_ggp = int(mask_ggp.sum())
+    if n_ggp > 0:
+        logger.info("post_filter_scores: global grain prices capped eco<=20 pol=0 on %d", n_ggp)
+
+    # F16. ONPE electoral logistics (overseas voting coordination) → routine admin
+    _onpe_logistics = (
+        r"(onpe|cancilleria).{0,60}(coordina|organiza|supervisa|prepara).{0,60}(votacion|eleccion|padron|sufragio)\b|"
+        r"votacion.{0,40}(paises|exterior|extranjero).{0,40}(onpe|cancilleria|embajada)\b"
+    )
+    mask_onpe = nt.str.contains(_onpe_logistics, regex=True, na=False) & ~mask_crisis
+    df.loc[mask_onpe & (df["political_score"].fillna(0) > 10), "political_score"] = 10
+    df.loc[mask_onpe, "economic_score"] = 0
+    n_onpe = int(mask_onpe.sum())
+    if n_onpe > 0:
+        logger.info("post_filter_scores: ONPE logistics capped pol<=10 eco=0 on %d", n_onpe)
+
     # ── BOOST RULES (B1–B14) — applied BEFORE whitelist cap ─────────────────────
 
     # B1. New cabinet / toma de juramento → pol≥65
@@ -2623,12 +3270,13 @@ def post_filter_scores(df: pd.DataFrame) -> pd.DataFrame:
         logger.info("post_filter_scores: B4 corruption arrest pol>=60 on %d articles", n_b4)
 
     # B5. Destitución / suspensión / remoción of official → pol≥60
+    # Guard: skip if already identified as foreign domestic (Venezuela/Cuba internal)
     _destitucion = (
         r"(destituy|destituido|destituida|suspendido|suspendida|removido|removida|"
         r"inhabilitado|inhabilitada).{0,60}"
         r"(ministro|fiscal|juez|congresista|gobernador|alcalde|funcionario|director)"
     )
-    mask_b5 = nt.str.contains(_destitucion, regex=True, na=False)
+    mask_b5 = nt.str.contains(_destitucion, regex=True, na=False) & ~mask_vzla_cuba
     n_b5 = int((mask_b5 & (df["political_score"].fillna(0) < 60)).sum())
     df.loc[mask_b5 & (df["political_score"].fillna(0) < 60), "political_score"] = 60
     if n_b5 > 0:
@@ -2747,6 +3395,104 @@ def post_filter_scores(df: pd.DataFrame) -> pd.DataFrame:
     df.loc[mask_b14 & (df["economic_score"].fillna(0) < 55), "economic_score"] = 55
     if n_b14 > 0:
         logger.info("post_filter_scores: B14 mining blockage eco>=55 on %d articles", n_b14)
+
+    # B15. Congress overrides fiscal advice to approve major spending → pol≥45, eco≥55
+    # Electoral populism + institutional dysfunction signal (Congress ignoring MEF/Consejo Fiscal)
+    _congress_fiscal_override = (
+        r"congreso aprueba.{0,150}(pese a.{0,50}(alerta|observaci[oó]n|advert)|alerta fiscal|consejo fiscal)\b|"
+        r"congreso aprueba.{0,60}(leyes?|normas?).{0,60}"
+        r"(suman|representan|comprometen|afectan).{0,40}(millones|miles de millones).{0,40}(gasto|fiscal)\b|"
+        r"congreso aprueba.{0,60}(para captar votos|en plena campa[nñ]a|contexto electoral).{0,60}"
+        r"(gasto|norma|ley|presupuesto)\b"
+    )
+    mask_b15 = nt.str.contains(_congress_fiscal_override, regex=True, na=False)
+    n_b15_pol = int((mask_b15 & (df["political_score"].fillna(0) < 45)).sum())
+    n_b15_eco = int((mask_b15 & (df["economic_score"].fillna(0) < 55)).sum())
+    df.loc[mask_b15 & (df["political_score"].fillna(0) < 45), "political_score"] = 45
+    df.loc[mask_b15 & (df["economic_score"].fillna(0) < 55), "economic_score"] = 55
+    if n_b15_pol + n_b15_eco > 0:
+        logger.info("post_filter_scores: B15 congress fiscal override pol>=45 on %d eco>=55 on %d", n_b15_pol, n_b15_eco)
+
+    # B16. Petroperú presidential/directorial rotation / institutional chaos → pol≥38, eco≥42
+    # 12 presidents in 5 years = institutional instability + state enterprise management crisis
+    _petroperu_rotation = (
+        r"petroperu.{0,80}(cambia|nuevo|reemplaz|sale|renuncia|nombra|designa).{0,50}"
+        r"(presidente|director|directorio|gerente general)\b|"
+        r"petroperu.{0,80}suma \d+.{0,30}(presidentes?|directores? ejecutivos?|cambios)\b|"
+        r"(12|once|diez|nueve|ocho).{0,20}(presidentes?|directores? ejecutivos?).{0,40}"
+        r"(petroperu|5 a[nñ]os|en cinco)"
+    )
+    mask_b16 = nt.str.contains(_petroperu_rotation, regex=True, na=False)
+    n_b16_pol = int((mask_b16 & (df["political_score"].fillna(0) < 38)).sum())
+    n_b16_eco = int((mask_b16 & (df["economic_score"].fillna(0) < 42)).sum())
+    df.loc[mask_b16 & (df["political_score"].fillna(0) < 38), "political_score"] = 38
+    df.loc[mask_b16 & (df["economic_score"].fillna(0) < 42), "economic_score"] = 42
+    if n_b16_pol + n_b16_eco > 0:
+        logger.info("post_filter_scores: B16 Petroperu rotation pol>=38 on %d eco>=42 on %d", n_b16_pol, n_b16_eco)
+
+    # B17. Government snubs major foreign investors → eco≥52, pol≥32
+    # State no-show with bonistas/gestoras = credibility crisis → investment risk signal
+    _govt_snubs_investors = (
+        r"(gobierno|ejecutivo|per[uú]).{0,60}(planta a|deja.{0,10}plantad|no se present|cancela reuni[oó]n con|no asisti[oó]).{0,100}"
+        r"(inversores?|bonistas?|inversionist|gestoras?|fondos?|bonos?|acreedores?)|"
+        r"(inversor|bonista|gestora|fondo).{0,60}(llega|arriba|viaja|que arribo).{0,100}"
+        r"(gobierno|ejecutivo|per[uú]).{0,40}(no se present|plant[ao]|cancel)\b"
+    )
+    mask_b17 = nt.str.contains(_govt_snubs_investors, regex=True, na=False)
+    n_b17_eco = int((mask_b17 & (df["economic_score"].fillna(0) < 52)).sum())
+    n_b17_pol = int((mask_b17 & (df["political_score"].fillna(0) < 32)).sum())
+    df.loc[mask_b17 & (df["economic_score"].fillna(0) < 52), "economic_score"] = 52
+    df.loc[mask_b17 & (df["political_score"].fillna(0) < 32), "political_score"] = 32
+    if n_b17_eco + n_b17_pol > 0:
+        logger.info("post_filter_scores: B17 govt snubs investors eco>=52 on %d pol>=32 on %d", n_b17_eco, n_b17_pol)
+
+    # B18. Presidential censure/vacancia process articles → pol≥68
+    # Vote confirmations, quorum achievements, congressional sessions to discuss removal
+    # These are EQUALLY important as the main censure event articles
+    _censure_process = (
+        r"(vacancia|censura|mociones? de censura).{0,80}(jeri|presidente|mandatario)\b|"
+        r"(jeri|mandatario|presidente).{0,80}(vacancia|censura|mociones? de censura)\b|"
+        r"(bancada|partido|app|acuna|fujimori|luna galvez|podemos).{0,60}"
+        r"(votara|apoyara|firmara|confirma|asegura).{0,60}(vacancia|censura|mocion)\b|"
+        r"pleno (extraordinario|del congreso).{0,60}(vacancia|censura|mocion|debatir|votar)\b|"
+        r"(firmas|votos).{0,30}(vacancia|censura|mocion de censura|pleno extraordinario)\b|"
+        r"jeri.{0,30}(deja|sale|abandona|dejo).{0,30}(palacio|cargo|presidencia)\b"
+    )
+    # Guard: don't apply if it's a historical/analytical article (not active crisis)
+    _censure_historical = r"(recuerda|historia de|aniversario|perfil de|fue censurado hace)"
+    mask_b18 = (
+        nt.str.contains(_censure_process, regex=True, na=False) &
+        ~nt.str.contains(_censure_historical, regex=True, na=False)
+    )
+    n_b18 = int((mask_b18 & (df["political_score"].fillna(0) < 68)).sum())
+    df.loc[mask_b18 & (df["political_score"].fillna(0) < 68), "political_score"] = 68
+    if n_b18 > 0:
+        logger.info("post_filter_scores: B18 censure process pol>=68 on %d articles", n_b18)
+
+    # B19. Regional governor or mayor arrested/killed → pol≥50
+    _regional_official_crisis = (
+        r"(gobernador|alcalde).{0,60}(detenido|arrestado|capturado|intervenido).{0,60}"
+        r"(lavado|corrupcion|coima|peculado|narcotraf|extorsion|banda)\b|"
+        r"(alcalde|gobernador|regidor).{0,60}(muere|fallece|murio|mato|asesinad|baleado).{0,60}"
+        r"(disparo|atentado|sicario|balacera|herido)\b"
+    )
+    mask_b19 = nt.str.contains(_regional_official_crisis, regex=True, na=False)
+    n_b19 = int((mask_b19 & (df["political_score"].fillna(0) < 50)).sum())
+    df.loc[mask_b19 & (df["political_score"].fillna(0) < 50), "political_score"] = 50
+    if n_b19 > 0:
+        logger.info("post_filter_scores: B19 regional official crisis pol>=50 on %d articles", n_b19)
+
+    # B20. Sitting cabinet minister formally accused/investigated for serious crime → pol≥52
+    _minister_criminal = (
+        r"ministro.{0,60}(denunciado|acusado|investigado|imputado|formalizado).{0,60}"
+        r"(violacion|corrupcion|lavado|peculado|coima|narcotraf|extorsion|feminicidio|agresion sexual)\b|"
+        r"(violacion|corrupcion|lavado|peculado).{0,60}ministro.{0,40}(denunciado|acusado|investigado)\b"
+    )
+    mask_b20 = nt.str.contains(_minister_criminal, regex=True, na=False)
+    n_b20 = int((mask_b20 & (df["political_score"].fillna(0) < 52)).sum())
+    df.loc[mask_b20 & (df["political_score"].fillna(0) < 52), "political_score"] = 52
+    if n_b20 > 0:
+        logger.info("post_filter_scores: B20 minister criminal accusation pol>=52 on %d articles", n_b20)
 
     # ── END BOOST RULES ──────────────────────────────────────────────────────────
 
@@ -3151,10 +3897,33 @@ def post_filter_scores(df: pd.DataFrame) -> pd.DataFrame:
         logger.info("post_filter_scores: minor local gov pol=10 on %d articles", n_mlg)
 
     # ── FINAL OVERRIDE: re-zero foreign domestic articles ─────────────────────
-    # Some boost rules later in this function (e.g. arrest/removal patterns) can
-    # re-boost articles that were already zeroed by mask_foreign_dom.
-    # Re-apply the foreign domestic mask unconditionally at the end.
-    mask_fd_recheck = nt.str.contains(_foreign_domestic, regex=True, na=False) & ~mask_crisis
+    # Some boost rules later in this function (e.g. B4/B5 arrest/removal patterns) can
+    # re-boost articles that were already zeroed by earlier foreign filters.
+    # Re-apply ALL foreign-domestic masks unconditionally at the end.
+    # Re-cap global political shocks if downstream boost rules re-boosted them
+    df.loc[mask_mideast & (df["political_score"].fillna(0) > 15), "political_score"] = 15
+    df.loc[mask_mideast & (df["economic_score"].fillna(0) > 25), "economic_score"] = 25
+    df.loc[mask_mideast_ext & (df["political_score"].fillna(0) > 15), "political_score"] = 15
+    df.loc[mask_mideast_ext & (df["economic_score"].fillna(0) > 20), "economic_score"] = 20
+    # Re-cap global tariff war and global slowdown caps (boost rules can't re-exceed these)
+    df.loc[mask_gtw & (df["economic_score"].fillna(0) > 30), "economic_score"] = 30
+    df.loc[mask_gtw & (df["political_score"].fillna(0) > 8), "political_score"] = 8
+    df.loc[mask_ges & (df["economic_score"].fillna(0) > 25), "economic_score"] = 25
+    df.loc[mask_ges & (df["political_score"].fillna(0) > 5), "political_score"] = 5
+
+    # Final override: re-zero PURELY DOMESTIC foreign articles (mideast/global shocks keep
+    # small scores from earlier caps — only zero if they were re-boosted ABOVE cap)
+    mask_fd_recheck = (
+        nt.str.contains(_foreign_domestic, regex=True, na=False) |
+        mask_vzla_cuba |
+        mask_fcrime |
+        mask_flot |
+        mask_bilat |
+        mask_fdom_ext |
+        mask_fsports |
+        mask_health_op |
+        mask_mtn_acc
+    ) & ~mask_crisis
     n_fd_recheck = int((mask_fd_recheck & (
         (df["political_score"].fillna(0) > 0) | (df["economic_score"].fillna(0) > 0)
     )).sum())

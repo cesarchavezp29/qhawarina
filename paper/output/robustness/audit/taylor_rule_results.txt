@@ -1,0 +1,11 @@
+Taylor rule R²: 0.659483923672102
+Taylor rule coefficients: alpha=0.2397428282464689, beta_cpi=0.25080832815294296, beta_gap=-0.017503478416496708, beta_lag_rate=-0.11088848084405388, rho=0.5955996523062784
+Taylor rule p-values: alpha=0.03174026866498271, beta_cpi=0.00010224746396427143, beta_gap=0.21928837022174769, beta_lag_rate=6.62621189831251e-06, rho=1.9310980770927433e-12
+Taylor residual first-stage F-statistic: 80.51745431792999
+Taylor residual correlation with Cholesky VAR rate shock: 0.7017185529536534
+First-stage R²: 0.4924089275593688
+Common dates for first-stage: N=85
+Inflation expectations data used: NO — used contemporaneous CPI growth
+F >= 10: instrument potentially relevant. LP-IV could be estimated.
+Taylor rule sample T: 85
+NOTE: FWL-adjusted data used (same as VAR baseline)

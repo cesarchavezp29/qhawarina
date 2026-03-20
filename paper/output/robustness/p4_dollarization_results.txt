@@ -1,0 +1,64 @@
+P4 DOLLARIZATION AND EXCHANGE RATE CHANNELS
+Peru Monetary Policy Paper — Robustness Analysis
+Run date: 2026-03-20
+
+======================================================================
+STEP 1 — Historical Decomposition of FX
+======================================================================
+  Reconstruction check: corr(actual, reconstructed) = 0.9999
+  ToT shock      :  17.76% of FX variance
+  GDP shock      :   3.84% of FX variance
+  CPI shock      :   0.92% of FX variance
+  FX shock       :  81.80% of FX variance
+  Rate shock     :   0.21% of FX variance
+
+
+======================================================================
+STEP 2 — Channel Decomposition (FX blocking)
+======================================================================
+  Baseline peak GDP response: -0.1952 at h=3
+  Blocked FX peak GDP response: -0.2171 at h=2
+  FX channel contribution to peak: -11.2%
+  (Baseline BCRP paper estimate: -0.1950)
+  FX channel: 0.7% of cumulative squared GDP IRF
+
+
+======================================================================
+STEP 3 — Augmented Poverty Regression with FX
+======================================================================
+  Matched observations: 18 (out of 18)
+
+  Augmented regression: DPoverty = a + b_gdp*GDP + b_fx*FX
+  N = 18
+  b_gdp  = -0.6483  (SE=0.1136, p=0.0000)
+  b_fx   = 0.2874  (SE=0.2317, p=0.2340)
+  R² (augmented) = 0.7001  (adj. R² = 0.6601)
+  R² (univariate GDP, same sample) = 0.6694
+  Baseline R² (full N=18) = 0.669
+  Delta R² from adding FX = 0.0307
+
+======================================================================
+STEP 4 — Credit Channel VAR
+======================================================================
+  Credit series not found in panel — augmented VAR skipped.
+  To add this analysis, download the following BCRP series:
+  - PN00661MM: Credit in domestic currency (MN), monthly
+  - PN00662MM: Credit in foreign currency (ME), monthly
+  Then re-run this script.
+
+======================================================================
+SUMMARY
+======================================================================
+1. Historical decomposition of FX:
+   Dominant shock: FX shock (81.8% of FX variance)
+
+2. Channel decomposition:
+   Baseline peak GDP response: -0.1952
+   FX-blocked peak GDP response: -0.2171
+   FX channel contributes ~-11.2% of peak GDP effect
+
+3. Augmented poverty regression (N=18):
+   GDP coefficient: -0.6483 (SE=0.1136)
+   FX coefficient:  0.2874 (SE=0.2317)
+   R² = 0.7001 vs. univariate R² = 0.6694
+   Adding FX raises R² by 0.0307
