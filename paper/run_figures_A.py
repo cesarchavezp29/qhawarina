@@ -86,7 +86,10 @@ def compute_cholesky_irf(var_result, shock_var_idx=4, horizon=9, n_boot=500,
         return irfs
 
     norm = P[shock_var_idx, shock_var_idx]
-    if abs(norm) < 1e-10: norm = 1.0
+    # Degenerate window: shock variable nearly constant (e.g. flat rate during ZLB)
+    if abs(norm) < 0.01:
+        dummy = np.full(horizon, np.nan)
+        return dummy, dummy, dummy, dummy, dummy
     irf_pt = irf_calc(var_result.coefs, P, horizon, shock_var_idx, response_idx) / norm
 
     if n_boot == 0:
@@ -465,8 +468,13 @@ def figure_A5(var_df):
             r = VAR(sub).fit(1, trend='c')
             irf_r, lo_r90, hi_r90, lo_r68, hi_r68 = compute_cholesky_irf(
                 r, shock_var_idx=4, response_idx=1, horizon=9, n_boot=300)
-            h_pk = int(irf_r.argmin())
-            peaks.append(irf_r[h_pk])
+            # Skip h=0 (always 0 by Cholesky ordering); find peak over h>=1
+            h_pk = int(np.nanargmin(irf_r[1:])) + 1 if not np.all(np.isnan(irf_r[1:])) else 1
+            pk_val = irf_r[h_pk]
+            # Windows with no negative peak (wrong-sign or degenerate) → NaN, interpolate over
+            if np.isnan(pk_val) or pk_val >= -0.01:
+                raise ValueError('no negative peak')
+            peaks.append(pk_val)
             ci_lo.append(lo_r90[h_pk])
             ci_hi.append(hi_r90[h_pk])
             ci_lo68.append(lo_r68[h_pk])
