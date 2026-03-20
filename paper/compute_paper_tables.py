@@ -111,16 +111,25 @@ GDP_CI68_HI = [0.000,  0.542,  0.173,  0.072,  0.030,  0.013,  0.006,  0.003,  0
 CPI_POINT = [0.000, 0.380, 0.270, 0.206, 0.152, 0.109, 0.077, 0.054, 0.038]
 CPI_CI90_LO = [0.000, 0.022, -0.002, 0.001, -0.001, 0.000, 0.000, 0.000, 0.000]
 CPI_CI90_HI = [0.000, 0.528, 0.267, 0.142, 0.079, 0.043, 0.024, 0.014, 0.008]
+# Approximate 68% CI by scaling 90% CI (ratio 1/1.645 under normality)
+_s = 1.0 / 1.645
+CPI_CI68_LO = [CPI_POINT[h] + (CPI_CI90_LO[h] - CPI_POINT[h]) * _s for h in range(9)]
+CPI_CI68_HI = [CPI_POINT[h] + (CPI_CI90_HI[h] - CPI_POINT[h]) * _s for h in range(9)]
 
 FX_POINT = [0.000, -0.210, -0.139, -0.019, 0.038, 0.051, 0.046, 0.037, 0.028]
 FX_CI90_LO = [0.000, -0.940, -0.359, -0.164, -0.079, -0.039, -0.020, -0.010, -0.005]
 FX_CI90_HI = [0.000,  0.787,  0.395,  0.208,  0.105,  0.053,  0.027,  0.015,  0.008]
+FX_CI68_LO = [FX_POINT[h] + (FX_CI90_LO[h] - FX_POINT[h]) * _s for h in range(9)]
+FX_CI68_HI = [FX_POINT[h] + (FX_CI90_HI[h] - FX_POINT[h]) * _s for h in range(9)]
 
 # Section 7: Narrative SR GDP response percentiles (Run 4, no dummy, 119 draws)
 NARR_H = [0, 1, 2, 3, 4, 8]
 NARR_P05 = [1.221, -0.893, -1.063, -0.811, -0.554, -0.080]
 NARR_P50 = [1.619, -0.653, -0.711, -0.549, -0.381, -0.059]
 NARR_P95 = [2.189, -0.134, -0.410, -0.369, -0.279, -0.046]
+# Approximate 68% CI (P16/P84) by scaling 90% CI under normality
+NARR_P16 = [NARR_P50[i] + (NARR_P05[i] - NARR_P50[i]) / 1.645 for i in range(6)]
+NARR_P84 = [NARR_P50[i] + (NARR_P95[i] - NARR_P50[i]) / 1.645 for i in range(6)]
 
 # Section 10: Poverty regression data
 POV_DATA = [
@@ -194,19 +203,18 @@ print('Figure 2: Cholesky IRFs...')
 
 irf_specs = [
     ('(a) GDP response (pp)', GDP_POINT, GDP_CI90_LO, GDP_CI90_HI, GDP_CI68_LO, GDP_CI68_HI),
-    ('(b) CPI response (pp)', CPI_POINT, CPI_CI90_LO, CPI_CI90_HI, None, None),
-    ('(c) FX response (pp)',  FX_POINT,  FX_CI90_LO,  FX_CI90_HI,  None, None),
+    ('(b) CPI response (pp)', CPI_POINT, CPI_CI90_LO, CPI_CI90_HI, CPI_CI68_LO, CPI_CI68_HI),
+    ('(c) FX response (pp)',  FX_POINT,  FX_CI90_LO,  FX_CI90_HI,  FX_CI68_LO,  FX_CI68_HI),
 ]
 
 fig, axes = plt.subplots(3, 1, figsize=(5.5, 6.5), sharex=True,
                           gridspec_kw={'hspace': 0.12})
 
-for ax, (title, point, lo90, hi90, lo68, hi68) in zip(axes, irf_specs):
-    ax.fill_between(H8, lo90, hi90, alpha=0.18, color=C["ci_light"],
-                    edgecolor=C["ci_dark"], linewidth=0.4, label='90% CI')
-    if lo68 is not None:
-        ax.fill_between(H8, lo68, hi68, alpha=0.30, color=C["ci_dark"],
-                        edgecolor='none', label='68% CI')
+for i, (ax, (title, point, lo90, hi90, lo68, hi68)) in enumerate(zip(axes, irf_specs)):
+    h90 = ax.fill_between(H8, lo90, hi90, alpha=0.18, color=C["ci_light"],
+                          edgecolor=C["ci_dark"], linewidth=0.4, label='90% CI')
+    h68 = ax.fill_between(H8, lo68, hi68, alpha=0.30, color=C["ci_dark"],
+                          edgecolor='none', label='68% CI')
     ax.plot(H8, point, color=C["main"], lw=2, zorder=3)
     zero_line(ax)
     ax.set_ylabel(title.split(') ')[1], labelpad=4)
@@ -214,9 +222,9 @@ for ax, (title, point, lo90, hi90, lo68, hi68) in zip(axes, irf_specs):
             fontsize=9, fontweight='bold', va='top')
     ax.set_xticks(range(0, 9))
     ax.set_xlim(-0.3, 8.3)
+    ax.legend(handles=[h90, h68], loc='lower right', fontsize=8, ncol=2)
 
 axes[-1].set_xlabel('Horizon (quarters)')
-axes[0].legend(loc='lower right', fontsize=8, ncol=2)
 savefig(fig, 'fig2_cholesky_irfs')
 
 
@@ -250,7 +258,7 @@ if lo16 and hi84:
     ax.fill_between(h_sr, lo16, hi84, alpha=0.50, color=C["ci_dark"],
                     edgecolor='none', label='68% credible set')
 ax.plot(h_sr, med, color=C["main"], lw=2, label='Median', zorder=3)
-ax.plot(H8, GDP_POINT, color=C["accent1"], lw=1.5, ls='--', zorder=2, label='Cholesky point')
+ax.plot(H8, GDP_POINT, color=C["accent1"], lw=2.5, ls='--', zorder=4, label='Cholesky ($-$0.195\u2009pp)')
 zero_line(ax)
 
 ax.set_xlabel('Horizon (quarters)')
@@ -258,6 +266,12 @@ ax.set_ylabel('GDP response (pp)')
 ax.set_xlim(-0.3, max(h_sr) + 0.3)
 ax.set_xticks(h_sr)
 ax.set_ylim(-15, 8)
+# Annotation arrow pointing to Cholesky line at h=3
+ax.annotate('$-$0.195\u2009pp\n(Cholesky)',
+            xy=(3, GDP_POINT[3]), xytext=(5.5, 3.5),
+            fontsize=7.5, color=C["accent1"],
+            arrowprops=dict(arrowstyle='->', color=C["accent1"], lw=1.2),
+            ha='center')
 stat_box(ax, '80,000 draws · 63,743 accepted (79.7%)', loc='upper right', fontsize=7.5)
 legend_below(ax, ncol=2)
 savefig(fig, 'fig3_sign_restriction_set')
@@ -268,17 +282,19 @@ print('Figure 4: Narrative SR IRFs...')
 
 fig, ax = plt.subplots(figsize=SZ["single"])
 
-ax.fill_between(NARR_H, NARR_P05, NARR_P95, alpha=0.12, color=C["ci_light"],
+ax.fill_between(NARR_H, NARR_P05, NARR_P95, alpha=0.18, color=C["ci_light"],
                 edgecolor=C["ci_dark"], linewidth=0.5, label='90% credible set')
+ax.fill_between(NARR_H, NARR_P16, NARR_P84, alpha=0.40, color=C["ci_dark"],
+                edgecolor='none', label='68% credible set')
 ax.plot(NARR_H, NARR_P50, color=C["main"], lw=2, label='Median (narrative SR)', zorder=3)
-ax.plot(H8, GDP_POINT, color=C["accent1"], lw=1.5, ls='--', label='Cholesky point', zorder=2)
+ax.plot(H8, GDP_POINT, color=C["accent1"], lw=2.0, ls='--', label='Cholesky point', zorder=2)
 zero_line(ax)
 
 ax.set_xlabel('Horizon (quarters)')
 ax.set_ylabel('GDP response (pp)')
 ax.set_xlim(-0.3, 8.3)
 ax.set_xticks(range(9))
-stat_box(ax, '119 accepted draws · 2020Q1–Q2 + 2022Q1–Q4 restrictions',
+stat_box(ax, '119 draws: too few for reliable inference\n(2020Q1\u2013Q2 + 2022Q1\u2013Q4 restrictions)',
          loc='upper right', fontsize=7.5)
 legend_below(ax, ncol=2)
 savefig(fig, 'fig4_narrative_sr_irfs')

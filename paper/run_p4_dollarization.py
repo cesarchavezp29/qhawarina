@@ -315,31 +315,21 @@ def step2_channel_decomposition(A1, P, var_names, output_lines):
     output_lines.append(msg)
     output_lines.append("")
 
-    # Figure: IRF comparison
+    # Figure: single-panel IRF comparison (FX channel negligible)
     h_range = np.arange(n_ahead + 1)
-    fig, axes = plt.subplots(1, 2, figsize=SZ["wide_tall"])
+    fig, ax = plt.subplots(1, 1, figsize=SZ["single_sq"])
 
-    ax = axes[0]
     ax.plot(h_range, irf_baseline, color=C["accent2"], marker='o', ms=4, lw=2, label='Baseline VAR')
     ax.plot(h_range, irf_blocked, color=C["accent1"], marker='s', ms=4, lw=2, ls='--', label='FX channel blocked')
     ax.fill_between(h_range, irf_blocked, irf_baseline,
-                    alpha=0.15, color=C["accent3"], label='FX channel contribution')
+                    alpha=0.25, color=C["accent3"], label=f'FX channel ($\\pm${max(abs(irf_fx_channel)):.3f}\u2009pp max)')
     zero_line(ax)
     ax.set_xlabel('Quarters after rate shock')
     ax.set_ylabel('GDP response (pp)')
     ax.set_title('')
-    legend_below(ax, ncol=3)
+    legend_below(ax, ncol=1)
     stat_box(ax, f'FX channel: {fx_share_peak:.1f}% of peak\n({fx_var_share:.1f}% of cum. variance)',
              loc='lower right')
-
-    ax2 = axes[1]
-    ax2.bar(h_range[1:], irf_fx_channel[1:], color=C["accent3"], alpha=0.8,
-            edgecolor=C["accent3"], label='FX channel (baseline - blocked)')
-    zero_line(ax2)
-    ax2.set_xlabel('Quarters after rate shock')
-    ax2.set_ylabel('GDP response attributable to FX (pp)')
-    ax2.set_title('')
-    legend_below(ax2, ncol=1)
 
     fig_path = OUT_DIR / 'p4_channel_decomp.pdf'
     fig.savefig(fig_path)

@@ -341,30 +341,28 @@ def figure_A3(res_base):
     horizons = np.arange(1, 21)
 
     fig, ax = plt.subplots(figsize=SZ["single_sq"])
-    bottom = np.zeros(20)
-    colors = [C["ci_light"], C["ci_dark"], C["gray_line"], C["accent2"], C["accent1"]]
-    labels = ['ToT shock','GDP shock','CPI shock','FX shock','Rate shock (monetary)']
+    line_colors = [C["ci_light"], C["gray_line"], C["accent2"], C["accent3"], C["accent1"]]
+    line_styles = ['-', '--', '-', '--', '-']
+    line_widths = [2.0, 1.5, 1.5, 1.5, 2.5]
+    labels = ['ToT shock', 'GDP shock', 'CPI shock', 'FX shock', 'Rate shock (monetary)']
 
     for k in range(5):
-        # fevd.decomp is (K, H, K): [variable, horizon, shock]
         vals = np.array([fevd.decomp[gdp_idx, h, k]*100 for h in range(20)])
-        ax.fill_between(horizons, bottom, bottom+vals, color=colors[k],
-                        alpha=0.85, label=labels[k], step='pre')
-        bottom += vals
+        ax.plot(horizons, vals, color=line_colors[k], ls=line_styles[k],
+                lw=line_widths[k], label=labels[k])
 
     # Annotate rate share at h=8
     rate_h8 = fevd.decomp[gdp_idx, 7, 4] * 100
-    base_y8 = sum(fevd.decomp[gdp_idx, 7, k]*100 for k in range(4))
     ax.annotate(f'Rate: {rate_h8:.1f}%',
-                xy=(8, base_y8 + rate_h8/2),
-                xytext=(12, 70),
-                arrowprops=dict(arrowstyle='->', color='white', lw=0.8),
-                fontsize=7, color='white')
+                xy=(8, rate_h8),
+                xytext=(12, rate_h8 + 5),
+                arrowprops=dict(arrowstyle='->', color=C["accent1"], lw=0.8),
+                fontsize=7, color=C["accent1"])
 
-    ax.set_ylim(0, 100)
+    ax.set_ylim(0, None)
     ax.set_xlim(1, 20)
     ax.set_xlabel('Horizon (quarters)')
-    ax.set_ylabel('Share of GDP forecast\nerror variance (%)')
+    ax.set_ylabel('Share of GDP FEVD (%)')
     ax.set_title('')
     legend_outside(ax)
 
