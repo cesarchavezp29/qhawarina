@@ -943,11 +943,11 @@ $-0.195$\,pp.
 Table~\ref{tab:lag_selection} reports AIC, BIC, and Hannan-Quinn for
 VAR(1), VAR(2), and VAR(3). All three criteria select $p=1$, with BIC
 penalising the additional parameters most heavily. Estimating VAR(2) with
-the same FWL COVID treatment gives a peak GDP response of $-0.179$\,pp,
-closely matching the baseline $-0.195$\,pp. The 90\% bootstrap confidence
-interval from VAR(2) is $[-0.71,\,+0.30]$\,pp, slightly wider than the
-baseline owing to the additional parameters but qualitatively identical.
-Lag order uncertainty does not alter the substantive conclusion.
+the same FWL COVID treatment gives a peak GDP response of $-0.288$\,pp,
+more negative than the baseline $-0.195$\,pp but consistent in sign and
+order of magnitude. The bootstrap CI widens modestly relative to VAR(1)
+owing to the additional parameters. Lag order uncertainty does not alter
+the substantive conclusion.
 
 \begin{mytable}{VAR Lag Selection: Information Criteria}{tab:lag_selection}
   \input{tables/tab_lag_selection}
@@ -961,13 +961,18 @@ baseline order [ToT, GDP, CPI, FX, Rate] reflects the standard assumption
 that commodity terms of trade are predetermined, the central bank reacts
 to current macro conditions, and FX adjusts after the rate decision.
 Placing CPI before GDP (order [ToT, CPI, GDP, FX, Rate]) gives a peak GDP
-response of $-0.187$\,pp per 100\,bp. Restricting to a four-variable
-system that excludes ToT gives $-0.201$\,pp. Re-estimating with the level
-of the reference rate instead of first differences gives $-0.226$\,pp; the
-ADF test for the level series confirms near-unit-root behaviour, but
-estimation in levels remains valid under \citet{sims1990}. Across all
-ordering variants, peak GDP responses lie in $[-0.13,\,-0.29]$\,pp, each
-consistent with the baseline.
+response of $-0.195$\,pp per 100\,bp, numerically identical to the
+baseline. Restricting to a four-variable system that excludes ToT gives
+approximately $-0.201$\,pp. Re-estimating with the \textit{level} of the
+reference rate instead of first differences gives a peak of $-0.005$\,pp;
+the ADF test rejects a unit root ($p=0.001$), confirming the series is
+stationary, but the near-zero IRF reflects that a 100\,bp level shock
+from an already-stationary rate carries different dynamic content than a
+100\,bp change shock. Under \citet{sims1990}, estimation in levels is
+valid regardless of integration order. Across all ordering and
+specification variants, the peak GDP response is negative in all cases
+except the level specification; the range across Cholesky variants with
+first-differenced rate lies in $[-0.13,\,-0.29]$\,pp.
 
 \subsection{COVID Treatment Equivalence}
 \label{app:rob:covid}
@@ -1019,7 +1024,7 @@ Three additional tone instrument constructions are examined.
 lags of $\Delta r_t$, and one lag of tone; the first-stage $F$ falls
 further, confirming that additional lags do not recover relevance.
 Substituting the \textit{dictionary score} for the LLM score,
-Construction A yields $F=2.1$ and Construction B yields $F=18.4$;
+Construction A yields $F=0.0$ and Construction B yields $F=15.3$;
 Construction B still passes relevance under the dictionary score, but the
 LP-IV responses remain positive at all horizons, consistent with the LLM
 result. The \textit{rate-hold subsample} (months in which $\Delta r_t=0$)
@@ -1074,14 +1079,20 @@ $[-0.59,\,-0.76]$ confirms no single observation drives the result.
 \label{app:rob:chain}
 
 The chain estimate multiplies a quarterly VAR peak-response by an annual
-GDP--poverty coefficient, mixing frequencies. As a consistency check, we
-estimate a 3-variable annual VAR(1) with [GDP, CPI, Rate], $T=19$
-(excluding 2020), Cholesky ordered GDP $\to$ CPI $\to$ Rate. The annual
-peak GDP response to a 100\,bp rate shock is $-0.51$\,pp at $h=1$ year.
-Multiplying by $\hat\beta=-0.656$ gives a chained annual effect of
-$+0.33$\,pp on poverty---within the range implied by the quarterly chain.
-To propagate uncertainty jointly, we draw 2,000 bootstrap VAR replicates,
-extract the peak GDP response at $h=3$ quarters, and draw $\hat\beta$ from
+GDP--poverty coefficient, mixing frequencies. A 3-variable annual VAR(1)
+with [GDP, CPI, Rate] ($T=19$, excluding 2020) yields a peak GDP response
+of $+1.32$\,pp at $h=1$---wrong-signed relative to the quarterly result.
+The sign reversal is an artefact of the rate aggregation: the quarterly
+VAR uses $\Delta r_t$ (first difference of the reference rate), and
+averaging these quarterly changes over a calendar year produces a
+near-zero, noisy annual rate series whose shock has a different economic
+interpretation than a 100\,bp \textit{change} shock in the quarterly
+system. The annual VAR frequency check is therefore uninformative, and no
+annual chain estimate is reported.
+
+To propagate uncertainty in the quarterly chain, we instead draw 2,000
+bootstrap VAR(1) replicates, extract the peak GDP response at $h=3$
+quarters from each, and draw $\hat\beta$ from
 $\mathcal{N}(-0.656,\,0.115^2)$. The 5th--95th percentile of the chained
 distribution is $[-0.18,\,+0.46]$\,pp, essentially identical to the
 hand-calculated interval reported in the paper.
