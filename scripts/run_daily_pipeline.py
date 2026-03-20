@@ -69,9 +69,13 @@ SCRIPTS = PROJECT_ROOT / "scripts"
 WEB_DIR = Path("D:/qhawarina")
 
 
-def run(label: str, cmd: list, cwd=PROJECT_ROOT) -> bool:
+def run(label: str, cmd: list, cwd=PROJECT_ROOT, timeout: int = None) -> bool:
     logger.info("── %s ──────────────────────────────────", label)
-    result = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True)
+    try:
+        result = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, timeout=timeout)
+    except subprocess.TimeoutExpired:
+        logger.error("TIMEOUT after %ds: %s — skipping, pipeline continues", timeout, label)
+        return False
     if result.stdout:
         for line in result.stdout.strip().splitlines():
             logger.info("  %s", line)
@@ -105,6 +109,7 @@ else:
     return run(
         "Supermarket scrape",
         [PYTHON, "-c", script],
+        timeout=1800,  # 30 min max — never block the rest of the pipeline
     )
 
 
