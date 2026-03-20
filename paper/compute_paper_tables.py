@@ -1000,7 +1000,7 @@ Method & Type & Peak GDP (pp) & 90\% CI & Feasible & Reason \\
 \end{tabular}
 \begin{tablenotes}
 \small \cmark\ = identified; \warnmark\ = feasible with caveats; \xmark\ = not
-identified. ${}^*$All LP-IV horizons $h=0$--$12$ positive (exogeneity failure).
+identified. ${}^*$All LP-IV horizons $h=0$--$8$ positive (exogeneity failure).
 Literature: $[-0.30, -0.25]$\,pp per 100\,bp. Cholesky robustness range
 $[-0.13, -0.29]$\,pp brackets published estimates. Cholesky CI includes zero.
 \end{tablenotes}

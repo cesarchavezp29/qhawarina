@@ -90,14 +90,16 @@
     administered by construction, no rate-futures market exists for policy
     surprise extraction, and the monetary record provides too few sharp
     episodes for narrative restrictions. The Cholesky VAR(1) yields a
-    peak GDP response of $-0.195$\,pp per 100\,bp (90\% CI:
-    $[-0.698,\,+0.271]$), consistent with the Peru SVAR literature.
-    Our most robust result is a GDP--poverty reduced-form coefficient of
-    $\hat\beta=-0.656$ ($t=-5.69$, $R^2=0.67$, $N=18$), stable across
-    sub-periods. Chaining the two estimates implies a 100\,bp hike may
-    raise poverty by approximately $+0.13$\,pp. These three features
-    characterize a broad class of EME central banks, making identification
-    methodology---not just Peru's results---the central contribution.
+    peak GDP response of minus 0.195 percentage points per 100 basis
+    points (90 percent confidence interval: minus 0.70 to plus 0.27),
+    consistent with the Peru SVAR literature. Our most robust result is
+    a GDP--poverty reduced-form coefficient of minus 0.656
+    (t-statistic minus 5.69, R-squared 0.67, 18 annual observations),
+    stable across sub-periods. Chaining the two estimates implies a
+    100 basis point hike may raise poverty by approximately 0.13
+    percentage points. These three features characterize a broad class
+    of EME central banks, making identification methodology---not just
+    Peru's results---the central contribution.
   \end{abstract}
 
   \medskip
@@ -150,7 +152,7 @@ fail. This paper fills that gap with four contributions:
     \textit{Notas Informativas}, 2001--2026; Table~\ref{tab:tone_class})
     passes relevance only when it retains anticipated policy content,
     violating exogeneity and producing wrong-signed LP-IV responses at all
-    horizons $h=0$--$12$. This documents the anticipated-policy problem in a
+    horizons $h=0$--$8$. This documents the anticipated-policy problem in a
     central bank whose communication closely tracks its decisions.
 
   \item \textbf{A well-identified GDP--poverty reduced-form coefficient}
@@ -224,12 +226,17 @@ on PEN rates, it is impossible to separate the expected from the unexpected
 component of a rate decision, as is standard in the US literature
 \citep{mirandaagrippino2021}.
 
-\paragraph{Limited sharp monetary episodes.} Since 2002, BCRP changes have
-been small and gradual, with only two exceptions: the emergency COVID cuts of
-2020 (2.25\% to 0.25\%) and the 2021--2022 hiking cycle (0.25\% to 7.75\%).
-As \citet{read2023} demonstrate, even the US narrative identification
-literature struggles with fewer than a handful of clear episodes; two
-episodes are insufficient for Peru.
+\paragraph{Limited sharp monetary episodes.} Since 2002, individual BCRP
+decisions have been small and gradual, typically 25\,bp. Three large
+cumulative episodes exist: the GFC cutting cycle of 2009 (6.5\% to
+1.25\%), the emergency COVID cuts of 2020 (2.25\% to 0.25\%), and the
+2021--2023 hiking cycle (0.25\% to 7.75\%). In each case the total
+movement was large but unfolded over many consecutive meetings in small
+increments, providing no single large-surprise meeting of the kind that
+narrative restrictions require. As \citet{read2023} demonstrate, even
+the US narrative identification literature struggles with fewer than a
+handful of clear episodes; three gradual cumulative episodes are
+insufficient for Peru.
 
 \subsection{BCRP Reference Rate History}
 
@@ -237,15 +244,15 @@ Figure~\ref{fig:bcrp_rate} shows the BCRP reference rate from 2003 to
 2025Q3, with key episodes annotated: the GFC cutting cycle (2008--2009,
 from 6.5\% to 1.25\%), the 2010--2011 hiking cycle (to 4.25\%), gradual
 cuts in 2014--2015, the COVID emergency cuts to 0.25\% in 2020, the
-aggressive 2021--2022 hiking cycle to 7.75\%, and subsequent easing to
+aggressive 2021--2023 hiking cycle to 7.75\%, and subsequent easing to
 4.25\% by end-2025.
 
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=\textwidth]{figures/fig1_bcrp_rate_path}
   \caption{BCRP Reference Rate, 2003--2025. Key episodes: GFC cuts
-    (2008--2009), 2010--2011 hiking cycle, COVID emergency cuts to
-    0.25\% (2020), aggressive hiking to 7.75\% (2021--2022), and
+    (2009, 6.5\%$\to$1.25\%), 2010--2011 hiking cycle, COVID emergency
+    cuts to 0.25\% (2020), hiking to 7.75\% (2021--2023), and
     gradual easing (2023--2025). Source: BCRP series PD04722MM.}
   \label{fig:bcrp_rate}
 \end{figure}
@@ -558,8 +565,9 @@ approximately 200,000 people given Peru's population.
 Figure~\ref{fig:scatter} shows the scatter plot with OLS fit and 90\%
 prediction interval. Two observations stand out: 2009 (GDP growth slowed
 to $+1.1\%$ but poverty fell $3.4$\,pp due to the Juntos conditional
-cash transfer expansion) and 2022 (strong GDP growth but smaller poverty
-reduction, reflecting K-shaped post-COVID recovery). Both are economically
+cash transfer expansion) and 2022 (modest GDP growth of 2.9\% yet poverty rose by 1.5\,pp,
+reflecting K-shaped post-COVID recovery in which aggregate growth
+did not reach the poor). Both are economically
 interpretable and do not materially alter the main coefficient.
 
 \begin{figure}[htbp]
@@ -691,9 +699,12 @@ Three features of Peru's monetary framework prevent modern identification:
     \citet{mirandaagrippino2021} show this decomposition is essential for
     correct Proxy-SVAR identification; the logic applies a fortiori to Peru.
 
-  \item \textbf{Insufficient sharp episodes.} Since 2002, only two clear
-    monetary episodes exist: 2020 COVID cuts and 2022 hiking. These are the
-    same events that require outlier treatment, creating a fundamental tension
+  \item \textbf{Insufficient sharp episodes.} Three large cumulative episodes
+    exist since 2002: the 2009 GFC cuts, the 2020 COVID cuts, and the
+    2021--2023 hiking cycle. In each case the total movement was large but
+    unfolded over many consecutive 25\,bp meetings, providing no single
+    large-surprise event for narrative restrictions. The two most recent
+    episodes also require outlier treatment, creating a fundamental tension
     with narrative identification (Table~\ref{tab:narrative}).
 \end{enumerate}
 
@@ -776,7 +787,7 @@ For the BCRP, monetary--GDP transmission exists (point estimate $-0.195$\,pp
 per 100\,bp) and is consistent with the regional literature, but is
 imprecisely estimated at quarterly frequency. The chained poverty effect
 ($+0.128$\,pp per 100\,bp hike) is small relative to direct growth shocks
-but non-trivial over a full hiking cycle: the 2021--2022 hiking of $+750$\,bp
+but non-trivial over a full hiking cycle: the 2021--2023 hiking of $+750$\,bp
 may have contributed $\approx+1$\,pp to poverty through the GDP channel.
 
 For future research, three directions are promising. Building OIS or rate
@@ -794,7 +805,7 @@ trail by days) may yield a tone instrument with better timing properties.
 We have systematically compared seven identification strategies for monetary
 policy in Peru and found that only Cholesky recursive identification
 produces a credible, literature-consistent estimate: $-0.195$\,pp per
-100\,bp peak GDP response (Table~\ref{tab:master}, Figure~\ref{fig:forest}).
+100\,bp peak GDP response (Figure~\ref{fig:forest}).
 Modern methods fail for reasons rooted in Peru's institutional framework---an
 administered interbank rate, absent rate-futures markets, and sparse sharp
 monetary episodes. A novel Proxy-SVAR using LLM-classified BCRP communication
@@ -803,8 +814,7 @@ result for central bank communication identification.
 
 Our most robust contribution is a precisely estimated GDP--poverty
 reduced-form coefficient of $\hat\beta=-0.656$ ($p<0.001$, $N=18$,
-$R^2=0.669$; Table~\ref{tab:poverty_ols}), stable across sub-periods
-(Table~\ref{tab:subperiod}) and economically interpretable. The chained
+$R^2=0.669$), stable across sub-periods and economically interpretable. The chained
 estimate implies a 100\,bp hike may raise poverty by $+0.128$\,pp, with
 large uncertainty inheriting from the rate--GDP link.
 
