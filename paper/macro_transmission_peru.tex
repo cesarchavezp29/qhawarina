@@ -28,6 +28,7 @@
 \usepackage{subcaption}
 \usepackage{pifont}
 \usepackage{xcolor}
+\usepackage{float}
 \usepackage{placeins}
 \usepackage[hidelinks,
             pdfauthor={Carlos C\'esar Ch\'avez Padilla},
@@ -46,7 +47,7 @@
 
 %% ── Convenience environment for floated tables ──────────────────────────────
 \newenvironment{mytable}[2]{%
-  \begin{table}[htbp]
+  \begin{table}[H]
   \centering
   \caption{#1}
   \label{#2}
@@ -128,7 +129,7 @@ limited monetary history---has received far less systematic attention.
 
 Peru offers a particularly instructive case. The Banco Central de Reserva del
 Per\'{u} (BCRP) has operated a credible inflation-targeting framework since
-2002, with a target of $2\%\pm1$\,pp. Yet Peru's monetary implementation
+2002, with a target of 2 percent plus or minus 1 percentage point. Yet Peru's monetary implementation
 differs fundamentally from the US Federal Reserve: the interbank overnight
 rate is \emph{administered}---the BCRP ensures the interbank rate equals
 the reference rate by construction, leaving no market-determined component
@@ -145,20 +146,20 @@ fail. This paper fills that gap with four contributions:
 \begin{enumerate}
   \item \textbf{First systematic comparison} of seven identification
     strategies for monetary policy in Peru within a single unified dataset
-    ($T=85$, 2004Q2--2025Q3; see Table~\ref{tab:master}).
+    covering 85 quarterly observations (2004Q2--2025Q3).
 
   \item \textbf{A cautionary result for the communication-as-instrument
     literature:} our LLM-classified BCRP tone instrument (325
-    \textit{Notas Informativas}, 2001--2026; Table~\ref{tab:tone_class})
-    passes relevance only when it retains anticipated policy content,
-    violating exogeneity and producing wrong-signed LP-IV responses at all
-    horizons $h=0$--$8$. This documents the anticipated-policy problem in a
-    central bank whose communication closely tracks its decisions.
+    \textit{Notas Informativas}, 2001--2026) passes relevance only when it
+    retains anticipated policy content, violating exogeneity and producing
+    wrong-signed LP-IV responses at all horizons. This documents the
+    anticipated-policy problem in a central bank whose communication
+    closely tracks its decisions.
 
   \item \textbf{A well-identified GDP--poverty reduced-form coefficient}
-    ($\hat\beta=-0.656$, $p<0.001$, $N=18$; Table~\ref{tab:poverty_ols})
-    that chains monetary policy effects to poverty outcomes, stable across
-    sub-periods (Table~\ref{tab:subperiod}).
+    (minus 0.656, significant at the 0.1 percent level, 18 annual
+    observations) that chains monetary policy effects to poverty outcomes,
+    stable across sub-periods.
 
   \item \textbf{An explanation of why modern identification fails} in Peru's
     institutional environment, contributing to the emerging literature on
@@ -171,20 +172,20 @@ identification in Peru---an administered interbank rate, the absence of
 rate-futures markets, and a limited number of sharp monetary
 episodes---are not idiosyncratic to Peru. They characterize a large class
 of EME central banks spanning Latin America, the Middle East, and South
-Asia (Table~\ref{tab:eme_taxonomy}). For this class, the recursive SVAR
-is not a fallback for lack of sophistication; it is the credible
-identification frontier. Understanding \emph{why} modern methods fail
-in these settings, and what diagnostic tests reveal those failures, is
-the methodological contribution of this paper.
+Asia. For this class, the recursive SVAR is not a fallback for lack of
+sophistication; it is the credible identification frontier. Understanding
+\emph{why} modern methods fail in these settings, and what diagnostic
+tests reveal those failures, is the methodological contribution of this
+paper.
 
-The Cholesky benchmark (Figure~\ref{fig:cholesky_irfs}) yields a peak GDP
-response of $-0.195$\,pp per 100\,bp consistent with published Peru
+The Cholesky benchmark yields a peak GDP response of minus 0.195
+percentage points per 100 basis points, consistent with published Peru
 estimates. Sign restrictions produce an identified set too wide for
-inference. Narrative restrictions are blocked by a fundamental
-COVID-dummy--narrative tension. Proxy-SVAR with the interbank rate fails
-relevance ($F=4.73$; Table~\ref{tab:proxy_ib}), and Proxy-SVAR with tone
-passes relevance only when the instrument retains anticipated policy (violating
-exogeneity; Table~\ref{tab:tone_iv}).
+inference. Narrative restrictions are blocked by a fundamental tension
+between outlier treatment and narrative identification. Proxy-SVAR with
+the interbank rate fails relevance, and Proxy-SVAR with tone passes
+relevance only when the instrument retains anticipated policy, violating
+exogeneity.
 
 Section~\ref{sec:background} describes Peru's monetary framework.
 Section~\ref{sec:data} presents the data. Section~\ref{sec:framework}
@@ -536,8 +537,7 @@ literature on central bank communication as identification
   \includegraphics[width=\textwidth]{figures/fig5_lpiv_tone_wrong_sign}
   \caption{LP-IV IRFs with Tone Instrument (Construction B, $F=33.7$).
     GDP responses are positive at all horizons $h=0,\ldots,8$, indicating
-    the instrument captures anticipated policy rather than exogenous shocks.
-    This is a failure of the exogeneity condition.}
+    the instrument captures anticipated policy rather than exogenous shocks.}
   \label{fig:lp_iv}
 \end{figure}
 
@@ -843,7 +843,8 @@ All macroeconomic data are publicly available from the BCRP statistical
 portal (\url{www.bcrp.gob.pe/estadisticas}). Poverty data are from
 INEI/ENAHO. The classified BCRP communication tone dataset (325
 \textit{Notas Informativas}, 2001--2026, with dictionary and LLM scores)
-and replication code are available at [URL].
+is available at the project repository.\footnote{\url{https://github.com/cesarchavezp29/qhawarina/blob/master/paper/output/bcrp_tone_dataset.csv}}
+Replication code is available at the same repository.\footnote{\url{https://github.com/cesarchavezp29/qhawarina/tree/master/paper}}
 
 % ─────────────────────────────────────────────────────────────────────────────
 \newpage

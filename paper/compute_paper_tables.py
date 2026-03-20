@@ -365,12 +365,6 @@ ax.set_xlim(-0.5, 12.5)
 ax.set_xticks(range(13))
 ax.set_ylim(-5, 16)
 
-# Annotation in the NEGATIVE region (below zero line) — never overlaps CI bars
-# which are all positive
-ax.annotate('All estimates positive (wrong sign)\n\u2192 tone instrument fails exogeneity',
-            xy=(6, -2.5), xycoords='data',
-            fontsize=8.5, ha='center', va='center', color='#800000', style='italic',
-            bbox=dict(boxstyle='round,pad=0.4', fc='white', ec='#ccaaaa', alpha=0.95, lw=0.8))
 ax.annotate('Bars: 90% CI  \u00b7  Dot: point estimate',
             xy=(0.97, 0.97), xycoords='axes fraction',
             fontsize=7.5, ha='right', va='top', color=C_DARK)
