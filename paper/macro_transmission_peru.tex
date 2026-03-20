@@ -252,7 +252,7 @@ cuts in 2014--2015, the COVID emergency cuts to 0.25\% in 2020, the
 aggressive 2021--2023 hiking cycle to 7.75\%, and subsequent easing to
 4.25\% by end-2025.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{figures/fig1_bcrp_rate_path}
   \caption{BCRP Reference Rate, 2003--2025. Key episodes: GFC cuts
@@ -261,6 +261,7 @@ aggressive 2021--2023 hiking cycle to 7.75\%, and subsequent easing to
     gradual easing (2023--2025). Source: BCRP series PD04722MM.}
   \label{fig:bcrp_rate}
 \end{figure}
+\FloatBarrier
 
 % ─────────────────────────────────────────────────────────────────────────────
 \section{Data}
@@ -318,7 +319,7 @@ Figure~\ref{fig:tone_validation} displays these validation results.
 Year-by-year statistics for both methods appear in
 Table~\ref{tab:tone} (Appendix~\ref{app:tables}).
 
-\begin{figure}[htbp]
+\begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{figures/fig17_tone_validation}
   \caption{LLM Tone Classification Validation. (a)~LLM tone score vs.\
@@ -327,6 +328,7 @@ Table~\ref{tab:tone} (Appendix~\ref{app:tables}).
     hawkish $\to$ hike, 97.4\% for dovish $\to$ cut).}
   \label{fig:tone_validation}
 \end{figure}
+\FloatBarrier
 
 Figure~\ref{fig:tone_validation} confirms that the LLM tone measure aligns
 well with actual policy decisions: the scatter plot (panel~a) shows a
@@ -338,7 +340,7 @@ as an exogenous instrument. Figure~\ref{fig:tone} presents the full
 historical time series of both tone measures, illustrating how hiking
 and cutting cycles are reflected in real time in BCRP communications.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{figures/fig6_bcrp_tone_series}
   \caption{BCRP Communication Tone, 2001--2026. \textit{Top panel:}
@@ -348,6 +350,7 @@ and cutting cycles are reflected in real time in BCRP communications.
     2022 (hiking cycle) as hawkish. Dictionary--LLM correlation: $r=0.373$.}
   \label{fig:tone}
 \end{figure}
+\FloatBarrier
 
 \subsection{Poverty Data}
 
@@ -463,7 +466,7 @@ $[-0.698,\,+0.271]$, including zero---expected given $T=85$ quarterly
 observations---and consistent with the existing Peru literature
 ($-0.25$ to $-0.30$\,pp; Table~\ref{tab:master}).
 
-\begin{figure}[htbp]
+\begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{figures/fig2_cholesky_irfs}
   \caption{Cholesky VAR(1): Impulse Responses to a 100\,bp Rate Shock
@@ -473,6 +476,7 @@ observations---and consistent with the existing Peru literature
     Ordering: ToT $\to$ GDP $\to$ CPI $\to$ FX $\to$ Rate.}
   \label{fig:cholesky_irfs}
 \end{figure}
+\FloatBarrier
 
 Figure~\ref{fig:cholesky_irfs} shows that the GDP response peaks at
 $h=3$ quarters and reverts toward zero by $h=8$, following the
@@ -485,7 +489,7 @@ realized quarterly GDP growth path into shock contributions from each
 VAR variable, confirming that monetary policy shocks are quantitatively
 small relative to terms-of-trade and demand shocks throughout the sample.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{figures/fig12_hist_decomp}
   \caption{Historical Decomposition of Quarterly GDP Growth, 2004Q2--2025Q3.
@@ -495,6 +499,7 @@ small relative to terms-of-trade and demand shocks throughout the sample.
     shocks.}
   \label{fig:hist_decomp}
 \end{figure}
+\FloatBarrier
 
 \paragraph{Ordering robustness.}
 The Cholesky identifying assumption is that the monetary policy rate is
@@ -508,7 +513,7 @@ confirming that the negative direction does not depend on the specific
 causal ordering chosen (Appendix~\ref{app:rob:order}).
 Figure~\ref{fig:ordering_fan} plots the full IRF paths for all orderings.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{figures/fig11_ordering_fan}
   \caption{Cholesky Ordering Robustness: GDP Response to 100\,bp Rate Shock.
@@ -517,6 +522,7 @@ Figure~\ref{fig:ordering_fan} plots the full IRF paths for all orderings.
     CI $[-3.51,\,-0.13]$ excludes zero.}
   \label{fig:ordering_fan}
 \end{figure}
+\FloatBarrier
 
 \subsection{Sign Restrictions}
 \label{sec:sign}
@@ -528,7 +534,7 @@ to the data. The median peak GDP response is $-2.30$\,pp with a 68\%
 credible set of $[-12.8,\,+5.4]$\,pp. The identified set is too wide
 to support point inference. Additional restrictions are required.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{figures/fig3_sign_restriction_set}
   \caption{Sign-Restricted Identified Set for the Peak GDP Response.
@@ -537,6 +543,7 @@ to support point inference. Additional restrictions are required.
     and straddles zero, making point estimation infeasible.}
   \label{fig:sign_set}
 \end{figure}
+\FloatBarrier
 
 Extending the GDP sign restriction to include $h=0$ (requiring
 $\partial\text{GDP}/\partial\varepsilon^{mp}\leq 0$ contemporaneously)
@@ -570,7 +577,7 @@ demonstrate, single-episode narrative restrictions are insufficient for
 robust identification even in the US; two episodes are insufficient for
 Peru.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{figures/fig4_narrative_sr_irfs}
   \caption{Narrative Sign Restriction IRFs (Best Specification:
@@ -580,6 +587,7 @@ Peru.
     the sparse identification.}
   \label{fig:narrative_irfs}
 \end{figure}
+\FloatBarrier
 
 \subsection{Local Projections}
 \label{sec:lp}
@@ -617,7 +625,7 @@ the exogeneity condition. This is a cautionary result for the growing
 literature on central bank communication as identification
 \citep{wolf2020}: high $F$ does not guarantee exogeneity.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{figures/fig5_lpiv_tone_wrong_sign}
   \caption{LP-IV IRFs with Tone Instrument (Construction B, $F=33.7$).
@@ -625,6 +633,7 @@ literature on central bank communication as identification
     the instrument captures anticipated policy rather than exogenous shocks.}
   \label{fig:lp_iv}
 \end{figure}
+\FloatBarrier
 
 \paragraph{Rate-hold subsample.}
 We implement the rate-hold restriction directly: the tone instrument is
@@ -661,7 +670,7 @@ reflecting K-shaped post-COVID recovery in which aggregate growth
 did not reach the poor). Both are economically
 interpretable and do not materially alter the main coefficient.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
   \centering
   \includegraphics[width=0.75\textwidth]{figures/fig7_gdp_poverty_scatter}
   \caption{GDP Growth and Change in Poverty Rate, 2005--2024
@@ -671,13 +680,14 @@ interpretable and do not materially alter the main coefficient.
     $R^2=0.669$, $N=18$.}
   \label{fig:scatter}
 \end{figure}
+\FloatBarrier
 
 Table~\ref{tab:subperiod} and Figure~\ref{fig:subperiod} confirm stability
 across sub-periods. The 2005--2014 elasticity is $-0.461$ (SE\,${=}\,0.179$);
 the 2015--2024 elasticity is $-0.723$ (SE\,${=}\,0.287$). A Chow test of
 equal slopes yields $t=0.78$ ($p\approx0.45$), failing to reject stability.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
   \centering
   \includegraphics[width=0.75\textwidth]{figures/fig8_gdp_poverty_subperiod}
   \caption{GDP--Poverty Reduced-Form Coefficient by Sub-Period. Squares: 2005--2014
@@ -686,6 +696,7 @@ equal slopes yields $t=0.78$ ($p\approx0.45$), failing to reject stability.
     cannot reject slope equality.}
   \label{fig:subperiod}
 \end{figure}
+\FloatBarrier
 
 \paragraph{Endogeneity and causal interpretation.}
 The coefficient $\hat\beta=-0.656$ is a \emph{reduced-form} parameter, not
@@ -764,7 +775,7 @@ $[+0.379,\,+0.608]$\,pp, confirming the positive sign is robust to sampling
 uncertainty in the VAR (Appendix~\ref{app:rob:chain}).
 Figure~\ref{fig:chain_comparison} summarises the three estimates side-by-side.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
   \centering
   \includegraphics[width=0.85\textwidth]{figures/fig15_chain_comparison}
   \caption{Frequency-Consistent Chain Estimates: Poverty Effect per 100\,bp
@@ -772,6 +783,7 @@ Figure~\ref{fig:chain_comparison} summarises the three estimates side-by-side.
     its 90\% CI $[+0.379,\,+0.608]$ excludes zero.}
   \label{fig:chain_comparison}
 \end{figure}
+\FloatBarrier
 
 % ─────────────────────────────────────────────────────────────────────────────
 \subsection{Systematic Comparison}
@@ -804,7 +816,7 @@ association between rate innovations and GDP is negative and
 statistically distinguishable from zero, consistent with the structural
 Cholesky interpretation.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{figures/fig9_forest_plot}
   \caption{Forest Plot of Peak GDP Response to a 100\,bp Rate Hike.
@@ -816,6 +828,7 @@ Cholesky interpretation.
     (2022) CI $[-30.0,\,-0.29]$ are truncated; arrows indicate direction.}
   \label{fig:forest}
 \end{figure}
+\FloatBarrier
 
 % ─────────────────────────────────────────────────────────────────────────────
 \section{Discussion}
@@ -987,7 +1000,7 @@ Figures~\ref{fig:fx_channel} and \ref{fig:fevd} illustrate the
 channel decomposition and variance decomposition, respectively.
 Figure~\ref{fig:granger_network} displays the Granger causality network.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
   \centering
   \includegraphics[width=0.75\textwidth]{figures/fig18_fx_channel}
   \caption{Exchange Rate Channel Decomposition. Total peak GDP response
@@ -996,6 +1009,7 @@ Figure~\ref{fig:granger_network} displays the Granger causality network.
     channel is quantitatively negligible despite partial dollarization.}
   \label{fig:fx_channel}
 \end{figure}
+\FloatBarrier
 
 Figure~\ref{fig:fx_channel} documents that blocking the exchange rate
 equation from the monetary shock reduces the peak GDP impact by only
@@ -1007,7 +1021,7 @@ error variance at all horizons, implying that the transmission is real
 but quantitatively small relative to external demand and terms-of-trade
 shocks that dominate Peru's business cycle.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
   \centering
   \includegraphics[width=0.75\textwidth]{figures/fig13_fevd}
   \caption{Forecast Error Variance Decomposition of GDP, $h=1,\ldots,20$
@@ -1016,6 +1030,7 @@ shocks that dominate Peru's business cycle.
     shock is small in variance terms relative to terms-of-trade shocks.}
   \label{fig:fevd}
 \end{figure}
+\FloatBarrier
 
 The variance decomposition confirms that ToT shocks dominate GDP forecast
 errors, explaining roughly 60\% of variance at $h=5$. Figure~\ref{fig:granger_network}
@@ -1026,7 +1041,7 @@ endogenous policy concern behind the LP bias; the rate Granger-causes CPI
 Granger-causes FX ($F=8.0$, $p=0.005$), consistent with the commodity-exchange
 rate nexus documented in the broader Latin American literature.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
   \centering
   \includegraphics[width=0.75\textwidth]{figures/fig19_granger_network}
   \caption{Granger Causality Network ($p<0.05$). Arrow thickness proportional
@@ -1034,6 +1049,7 @@ rate nexus documented in the broader Latin American literature.
     Rate $\to$ CPI ($F=7.5$) confirms the price channel.}
   \label{fig:granger_network}
 \end{figure}
+\FloatBarrier
 
 The results contribute to the literature on monetary policy transmission
 in EMEs by documenting, for the first time in a single unified paper, why
@@ -1174,7 +1190,7 @@ artefact of asymptotic approximations: every method that tests the magnitude
 of $\hat\beta$ rejects $H_0:\beta=0$ at $p\leq0.003$, and the Bayesian
 posterior places $P(\hat\beta<0)=1.000$.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
   \centering
   \includegraphics[width=0.85\textwidth]{figures/fig16_small_sample}
   \caption{Small-Sample Inference for the GDP--Poverty Coefficient ($N=18$).
@@ -1183,6 +1199,7 @@ posterior places $P(\hat\beta<0)=1.000$.
     not the coefficient magnitude).}
   \label{fig:small_sample}
 \end{figure}
+\FloatBarrier
 
 Figure~\ref{fig:small_sample} shows that only the sign test (which tests
 residual symmetry rather than the coefficient magnitude) fails to reject
@@ -1375,7 +1392,7 @@ coefficient remains significant at $p<0.001$ under both OLS and HC3.
 Figure~\ref{fig:poverty_influence} plots leave-one-out slopes: the range
 $[-0.59,\,-0.76]$ confirms no single observation drives the result.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
   \centering
   \includegraphics[width=0.75\textwidth]{figures/fig10_poverty_influence}
   \caption{Leave-One-Out Influence Plot for the GDP--Poverty Reduced-Form
@@ -1384,6 +1401,7 @@ $[-0.59,\,-0.76]$ confirms no single observation drives the result.
     Range: $[-0.764,\,-0.592]$; no single observation drives the result.}
   \label{fig:poverty_influence}
 \end{figure}
+\FloatBarrier
 
 \subsection{Frequency-Consistent Chain Inference}
 \label{app:rob:chain}
@@ -1569,7 +1587,7 @@ response varied between $-0.03$\,pp and $-0.32$\,pp across windows,
 with no structural discontinuity at the COVID episode.
 Figure~\ref{fig:rolling_window} plots these rolling-window estimates.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{figures/fig14_rolling_irf}
   \caption{Rolling-Window Cholesky Peak GDP Response (40-quarter windows).
@@ -1578,5 +1596,6 @@ Figure~\ref{fig:rolling_window} plots these rolling-window estimates.
     structural discontinuity at the COVID episode.}
   \label{fig:rolling_window}
 \end{figure}
+\FloatBarrier
 
 \end{document}
