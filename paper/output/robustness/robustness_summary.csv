@@ -1,0 +1,22 @@
+Check,Description,Baseline,Robustness,Change,Verdict
+1,Lag Selection,VAR(1),BIC selects VAR(1); AIC selects VAR(1),AIC/HQIC may favor higher lag,Supports VAR(1) via BIC
+2,VAR(2) Specification,Peak=-0.195 at h=3,Peak=-0.288 at h=3,Δ=-0.093,Consistent
+3,Rate Level vs. Δ Rate,"Δrate, Peak=-0.195","Level rate (ADF p=0.001, Stationary), Peak=-0.005",Δ=+0.190,Qualitatively similar
+4,FWL vs. Contemporaneous Dummy,FWL Peak=-0.195,"Dummy Peak=-0.197, max A1 diff=0.035742",Δ peak=-0.002,Small differences
+5,"Alt. Ordering [ToT,CPI,GDP,FX,Rate]",Peak=-0.195,Peak=-0.195,Δ=-0.000,Robust
+6,Kilian (1998) Bias-Corrected Bootstrap,"Peak=-0.195, CI=[-0.698,0.271]","Peak=-0.134, CI=[-0.771,0.377]",Δpeak=+0.061,Robust to small-sample bias
+7,Sign Restrictions with h=0 GDP constraint,Cholesky Peak=-0.195,"SR median=-0.087, 90th=[-0.142,-0.026], accept=11.63%",Δ median=+0.108,Consistent with negative GDP effect
+8,LP with Newey-West HAC SEs,VAR Chol. Peak=-0.195,"LP NW=-0.327 (SE=0.554), LP HC3=-0.327",LP vs VAR Δ=-0.132,Sign consistent
+9,LP with Contemporaneous Controls,LP NW peak=-0.327,LP+controls peak=0.087 (SE=0.701),Δ=+0.414,Robust to macro controls
+10,Proxy-SVAR Residual Correlation,N/A (new diagnostic),"corr=0.657, R²=0.431, 1st-F=62.9",See explanation,High corr confirms d_rate proxies u_rate well
+11,LLM Tone Construction Variants,AR(1)=0.725,"F_A=0.00, F_B=30.37, F_C=0.00",First-stage relevance check,At least one construction has F>10
+12,Dictionary Score Tone Instrument,LLM tone (CHECK 11),"Dict F_A=0.00, F_B=15.26",F_A diff=+0.00,Dict instrument weak F<10). F_B>10: dict tone corr with macro suggests exogeneity concern
+13,Rate-Hold Subsample Tone,Full-sample F_A=0.00,"Hold subsample F_A=0.00, F_B=0.10",Relevance in hold-month subsample,Tone not predictive in hold months (expected)
+14,Poverty Regression with ToT Control,"β_GDP=-0.656 (SE=0.115), R²=0.79","β_GDP=-0.729 (SE=0.105), β_ToT=-0.052, R²=0.763, N=18",Δβ_GDP=-0.073,Robust
+15,Asymmetric Poverty (GDP+ vs GDP-),β=-0.656 (symmetric),"β_pos=-0.636, β_neg=-2.131, Wald p=0.743",|β_pos - β_neg|=1.495,No asymmetry (fail to reject H0)
+16,Durbin-Watson / Prais-Winsten,OLS β=-0.656 (SE=0.115),DW=1.811. DW in acceptable range; PW not needed,Δβ=-0.000,No serial correlation
+17,Breusch-Pagan Heteroskedasticity Test,OLS SE=0.115,BP LM=1.541 (p=0.215); HC3 SE=0.143,ΔSE=+0.028,Homoskedastic (BP p>10%)
+18,Annual VAR Frequency-Consistent Chain,Quarterly peak=-0.195 pp (h=3),"Annual peak=1.321 pp (h=1), T=19",Scale approx. ×4 expected,Annual result diverges in sign
+19,Joint Bootstrap Chained CI,"Paper CI=[-0.178, +0.458]","Bootstrap 90% CI=[-0.182,0.458], median=0.121",Width: 0.639 vs paper 0.636,Consistent with paper
+20,FWL Residual Magnitudes for 2020Q1-Q2,Raw GDP 2020Q1: -6.29σ (extreme outlier),Post-FWL: avg|z| at Q1 drops from 1.60σ to 1.176σ (27% absorbed). FWL residuals = within-COVID deviation only.,Group COVID shift absorbed; residuals reflect within-COVID noise only,Narrative restrictions on 2020Q1-Q2 after FWL are vacuous (constrain only ±within-dev)
+21,Table 13 Cross-Country Framework Verification,Manual expert review,Flagged Brazil/Mexico price stability as most debatable,See check21_table13_notes.txt,Brazil IT credibility and Mexico post-2020 stability are contestable entries

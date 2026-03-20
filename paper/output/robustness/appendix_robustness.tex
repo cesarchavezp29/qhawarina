@@ -1,0 +1,195 @@
+\appendix
+\section{Robustness Checks}
+\label{sec:robustness}
+
+This appendix documents 21 robustness checks for the main VAR-based estimates
+in the paper. Each check is described briefly with the baseline and alternative
+result. All figures are saved as separate PDF files.
+
+
+\subsection{Lag Selection Criteria}
+\label{sec:lagsel}
+\begin{table}
+\caption{VAR Lag Selection Information Criteria}
+\label{tab:lag_sel_app}
+\begin{tabular}{lrrrr}
+\toprule
+ & AIC & BIC & HQIC & LogL \\
+Lags &  &  &  &  \\
+\midrule
+1 & 3.5230 & 4.3851 & 3.8697 & -722.7800 \\
+2 & 3.5444 & 5.1360 & 4.1842 & -689.8200 \\
+3 & 3.8645 & 6.1959 & 4.8011 & -669.2300 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+
+\subsection{Summary of All Robustness Checks}
+\label{sec:robustsum}
+\begin{small}
+\begin{longtable}{llp{3.2cm}p{3.2cm}p{1.5cm}p{3cm}}
+\caption{Summary of Robustness Checks}\label{tab:robustness_summary}\\
+\toprule
+Check & Description & Baseline & Robustness & Change & Verdict \\
+\midrule
+\endfirsthead
+\multicolumn{6}{c}{\textit{(continued)}}\\
+\toprule
+Check & Description & Baseline & Robustness & Change & Verdict \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+1 & Lag Selection & VAR(1) & BIC selects VAR(1); AIC selects VAR(1) & AIC/HQIC may favor higher lag & Supports VAR(1) via BIC \\
+2 & VAR(2) Specification & Peak=-0.195 at h=3 & Peak=-0.288 at h=3 & Δ=-0.093 & Consistent \\
+3 & Rate Level vs. Δ Rate & Δrate, Peak=-0.195 & Level rate (ADF p=0.001, Stationary), Peak=-0.005 & Δ=+0.190 & Qualitatively similar \\
+4 & FWL vs. Contemporaneous Dummy & FWL Peak=-0.195 & Dummy Peak=-0.197, max A1 diff=0.035742 & Δ peak=-0.002 & Small differences \\
+5 & Alt. Ordering [ToT,CPI,GDP,FX,Rate] & Peak=-0.195 & Peak=-0.195 & Δ=-0.000 & Robust \\
+6 & Kilian (1998) Bias-Corrected Bootstrap & Peak=-0.195, CI=[-0.698,0.271] & Peak=-0.134, CI=[-0.771,0.377] & Δpeak=+0.061 & Robust to small-sample bias \\
+7 & Sign Restrictions with h=0 GDP constraint & Cholesky Peak=-0.195 & SR median=-0.087, 90th=[-0.142,-0.026], accept=11.63\% & Δ median=+0.108 & Consistent with negative GDP effect \\
+8 & LP with Newey-West HAC SEs & VAR Chol. Peak=-0.195 & LP NW=-0.327 (SE=0.554), LP HC3=-0.327 & LP vs VAR Δ=-0.132 & Sign consistent \\
+9 & LP with Contemporaneous Controls & LP NW peak=-0.327 & LP+controls peak=0.087 (SE=0.701) & Δ=+0.414 & Robust to macro controls \\
+10 & Proxy-SVAR Residual Correlation & N/A (new diagnostic) & corr=0.657, R²=0.431, 1st-F=62.9 & See explanation & High corr confirms d\_rate proxies u\_rate well \\
+11 & LLM Tone Construction Variants & AR(1)=0.725 & F\_A=0.00, F\_B=30.37, F\_C=0.00 & First-stage relevance check & At least one construction has F$>$10 \\
+12 & Dictionary Score Tone Instrument & LLM tone (CHECK 11) & Dict F\_A=0.00, F\_B=15.26 & F\_A diff=+0.00 & Dict instrument weak F$<$10). F\_B$>$10: dict tone corr with macro suggests exogeneity concern \\
+13 & Rate-Hold Subsample Tone & Full-sample F\_A=0.00 & Hold subsample F\_A=0.00, F\_B=0.10 & Relevance in hold-month subsample & Tone not predictive in hold months (expected) \\
+14 & Poverty Regression with ToT Control & β\_GDP=-0.656 (SE=0.115), R²=0.79 & β\_GDP=-0.729 (SE=0.105), β\_ToT=-0.052, R²=0.763, N=18 & Δβ\_GDP=-0.073 & Robust \\
+15 & Asymmetric Poverty (GDP+ vs GDP-) & β=-0.656 (symmetric) & β\_pos=-0.636, β\_neg=-2.131, Wald p=0.743 & |β\_pos - β\_neg|=1.495 & No asymmetry (fail to reject H0) \\
+16 & Durbin-Watson / Prais-Winsten & OLS β=-0.656 (SE=0.115) & DW=1.811. DW in acceptable range; PW not needed & Δβ=-0.000 & No serial correlation \\
+17 & Breusch-Pagan Heteroskedasticity Test & OLS SE=0.115 & BP LM=1.541 (p=0.215); HC3 SE=0.143 & ΔSE=+0.028 & Homoskedastic (BP p$>$10\%) \\
+18 & Annual VAR Frequency-Consistent Chain & Quarterly peak=-0.195 pp (h=3) & Annual peak=1.321 pp (h=1), T=19 & Scale approx. ×4 expected & Annual result diverges in sign \\
+19 & Joint Bootstrap Chained CI & Paper CI=[-0.178, +0.458] & Bootstrap 90\% CI=[-0.182,0.458], median=0.121 & Width: 0.639 vs paper 0.636 & Consistent with paper \\
+20 & FWL Residual Magnitudes for 2020Q1-Q2 & Raw GDP 2020Q1: -6.29σ (extreme outlier) & Post-FWL: avg|z| at Q1 drops from 1.60σ to 1.176σ (27\% absorbed). FWL residuals = within-COVID deviation only. & Group COVID shift absorbed; residuals reflect within-COVID noise only & Narrative restrictions on 2020Q1-Q2 after FWL are vacuous (constrain only ±within-dev) \\
+21 & Table 13 Cross-Country Framework Verification & Manual expert review & Flagged Brazil/Mexico price stability as most debatable & See check21\_table13\_notes.txt & Brazil IT credibility and Mexico post-2020 stability are contestable entries \\
+\end{longtable}
+\end{small}
+
+
+\subsection{Check-by-Check Notes}
+\subsubsection{Check 1: Lag Selection}
+VAR model information criteria across lags 1--3.
+
+\textbf{Verdict:} Supports VAR(1) via BIC
+
+
+\subsubsection{Check 2: VAR(2) Specification}
+GDP IRF with two lags; tests sensitivity to lag length.
+
+\textbf{Verdict:} Consistent
+
+
+\subsubsection{Check 3: Rate Level vs.\ First-Difference}
+Replaces $\Delta r$ with rate level; ADF confirms persistence.
+
+\textbf{Verdict:} Qualitatively similar
+
+
+\subsubsection{Check 4: FWL vs.\ Contemporaneous Dummy}
+Algebraic equivalence between FWL and dummy-augmented VAR.
+
+\textbf{Verdict:} Small differences
+
+
+\subsubsection{Check 5: Alternative VAR Ordering}
+Swap GDP and CPI in Cholesky ordering.
+
+\textbf{Verdict:} Robust
+
+
+\subsubsection{Check 6: Kilian Bias-Corrected Bootstrap}
+Corrects small-sample upward bias in VAR coefficients.
+
+\textbf{Verdict:} Robust to small-sample bias
+
+
+\subsubsection{Check 7: Sign Restrictions with $h=0$ Added}
+Adds GDP impact restriction; tests robustness of sign ID.
+
+\textbf{Verdict:} Consistent with negative GDP effect
+
+
+\subsubsection{Check 8: LP with Newey--West HAC SEs}
+Local projections provide model-free alternative to VAR IRFs.
+
+\textbf{Verdict:} Sign consistent
+
+
+\subsubsection{Check 9: LP with Contemporaneous Controls}
+Adds CPI, ToT, FX as contemporaneous regressors.
+
+\textbf{Verdict:} Robust to macro controls
+
+
+\subsubsection{Check 10: Proxy-SVAR Residual Correlation}
+Diagnostic: residual correlation explains low first-stage F.
+
+\textbf{Verdict:} High corr confirms d_rate proxies u_rate well
+
+
+\subsubsection{Check 11: LLM Tone Construction Variants}
+Three residualization schemes for LLM-based tone score.
+
+\textbf{Verdict:} At least one construction has F>10
+
+
+\subsubsection{Check 12: Dictionary Tone Instrument}
+Dictionary-based tone as alternative instrument.
+
+\textbf{Verdict:} Dict instrument weak F<10). F_B>10: dict tone corr with macro suggests exogeneity concern
+
+
+\subsubsection{Check 13: Rate-Hold Subsample Tone}
+Tone computed only from months with no rate change.
+
+\textbf{Verdict:} Tone not predictive in hold months (expected)
+
+
+\subsubsection{Check 14: Poverty with ToT Control}
+Tests whether GDP--poverty link is confounded by terms of trade.
+
+\textbf{Verdict:} Robust
+
+
+\subsubsection{Check 15: Asymmetric Poverty Specification}
+Separate coefficients for GDP expansions and contractions.
+
+\textbf{Verdict:} No asymmetry (fail to reject H0)
+
+
+\subsubsection{Check 16: Durbin--Watson / Prais--Winsten}
+Serial correlation test and AR-GLS correction.
+
+\textbf{Verdict:} No serial correlation
+
+
+\subsubsection{Check 17: Breusch--Pagan Heteroskedasticity}
+Heteroskedasticity test on poverty OLS residuals.
+
+\textbf{Verdict:} Homoskedastic (BP p>10%)
+
+
+\subsubsection{Check 18: Annual VAR Frequency Chain}
+VAR at annual frequency for frequency-consistent poverty chain.
+
+\textbf{Verdict:} Annual result diverges in sign
+
+
+\subsubsection{Check 19: Joint Bootstrap Chained CI}
+Joint uncertainty in VAR peak and poverty elasticity.
+
+\textbf{Verdict:} Consistent with paper
+
+
+\subsubsection{Check 20: FWL Residual Magnitudes}
+Verifies FWL exactly zeros out 2020Q1--Q2 observations.
+
+\textbf{Verdict:} Narrative restrictions on 2020Q1-Q2 after FWL are vacuous (constrain only ±within-dev)
+
+
+\subsubsection{Check 21: Table 13 Framework Verification}
+Country-level IT framework entries reviewed for accuracy.
+
+\textbf{Verdict:} Brazil IT credibility and Mexico post-2020 stability are contestable entries
+

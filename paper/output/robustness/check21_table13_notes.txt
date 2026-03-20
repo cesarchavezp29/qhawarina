@@ -1,0 +1,62 @@
+
+TABLE 13 VERIFICATION NOTES — Cross-Country Monetary Policy Framework Comparison
+================================================================================
+Country | Column            | Justification                                    | Debatable?
+--------|-------------------|--------------------------------------------------|----------
+Peru    | Explicit IT       | BCRP adopted inflation targeting in 2002 with    | No
+        |                   | 2.0±1pp band; anchor is well-established.        |
+--------|-------------------|--------------------------------------------------|----------
+Peru    | Price stable      | Average CPI 2004-2023: ~2.8%, within band most  | No
+        |                   | of the sample; satisfies stability criterion.    |
+--------|-------------------|--------------------------------------------------|----------
+Peru    | Financial stable  | S/. broadly stable; no systemic banking crisis   | Slightly:
+        |                   | in sample period; reserve requirements used.     | 2008 contagion|
+--------|-------------------|--------------------------------------------------|----------
+Chile   | Explicit IT       | Banco Central de Chile adopted IT in 1999;       | No
+        |                   | 3.0±1pp band; mature framework.                  |
+--------|-------------------|--------------------------------------------------|----------
+Chile   | Price stable      | CPI largely within band except 2007-08 spike     | No
+        |                   | and 2021-22 global inflation episode.             |
+--------|-------------------|--------------------------------------------------|----------
+Colombia| Explicit IT       | Banco de la Republica adopted IT in 1999;        | No
+        |                   | 3.0±1pp band; transparent communication.         |
+--------|-------------------|--------------------------------------------------|----------
+Colombia| Price stable      | Moderate: 2021-22 overshoot; long-run avg ~4%.  | Slightly:
+        |                   | Generally maintained within ±2pp of target.      | 2021-22 period|
+--------|-------------------|--------------------------------------------------|----------
+Mexico  | Explicit IT       | Banxico adopted IT in 2001; 3.0±1pp target.      | No
+        |                   |                                                  |
+--------|-------------------|--------------------------------------------------|----------
+Mexico  | Price stable      | Mixed: long deinflation succeeded but 2021-22   | YES:
+        |                   | overshoot was severe; 2023 still above band.     | Debatable post-2020|
+--------|-------------------|--------------------------------------------------|----------
+Brazil  | Explicit IT       | BCB adopted IT in 1999; one of EM pioneers;     | No
+        |                   | center currently 3.0pp.                          |
+--------|-------------------|--------------------------------------------------|----------
+Brazil  | Price stable      | WEAK: frequent target misses; avg CPI ~6-7%;    | YES:
+        |                   | credibility concerns; large escape-clause use.   | Clearly debatable|
+--------|-------------------|--------------------------------------------------|----------
+Bolivia | Implicit/none     | BCB targets exchange rate (crawling peg);        | No
+        |                   | no formal inflation target announced.            |
+--------|-------------------|--------------------------------------------------|----------
+Bolivia | Exchange rate     | Maintains fixed/crawling peg to USD;            | No
+        | anchor            | FX stability is primary nominal anchor.          |
+--------|-------------------|--------------------------------------------------|----------
+Ecuador | Dollarized        | Officially dollarized since 2000; no independent | No
+        |                   | monetary policy; no exchange rate instrument.    |
+--------|-------------------|--------------------------------------------------|----------
+Paraguay| Explicit IT       | BCP adopted IT formally in 2011; 4.0±2pp band;  | Slightly:
+        |                   | relatively newer framework vs. neighbors.        | communication|
+--------|-------------------|--------------------------------------------------|----------
+Uruguay | Explicit IT       | BCU adopted IT in 2007; recently tightened      | Slightly:
+        |                   | to 4.5±1.5pp; credibility improving.             | early period|
+================================================================================
+Flagged debatable entries:
+  1. Mexico post-2020 price stability: Severe 2021-23 overshoot makes "price stable"
+     contestable for the recent subsample.
+  2. Brazil price stability: With median CPI around 6-7% and frequent misses,
+     classifying Brazil as "price stable" would be inaccurate; the framework is IT
+     but credibility is imperfect.
+  3. Colombia 2021-22: Similar to Mexico but less severe; borderline.
+  4. Peru financial stability: The 2008-09 global crisis caused some stress but
+     no systemic crisis; classification as "stable" seems defensible.

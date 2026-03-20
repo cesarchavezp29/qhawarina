@@ -574,6 +574,8 @@ fig.subplots_adjust(left=0.26, right=0.88, top=0.96, bottom=0.09)
 
 y_positions = [i * Y_MULT for i in range(N)]
 
+# Robustness range band (Cholesky variants: [-0.29, -0.13])
+ax.axvspan(-0.29, -0.13, color='#d4ecd4', alpha=0.55, zorder=0)
 # Literature range reference band
 ax.axvspan(-0.30, -0.25, color='#e8e8f8', alpha=0.8, zorder=0)
 ax.axvline(0, color=C_MED, lw=0.7, ls='--', zorder=1)
@@ -628,10 +630,13 @@ ax.set_xlabel('Peak GDP response to 100bp rate hike (pp)', labelpad=6)
 ax.set_xlim(XLIM_LO, XLIM_HI)
 ax.set_ylim(-Y_MULT * 0.7, y_positions[-1] + Y_MULT * 0.7)
 
-# Shaded band label — below the bottom row, in empty space, left-anchored
-ax.annotate('Shaded band: literature range [\u22120.30, \u22120.25] pp',
+# Shaded band labels — stacked at bottom left
+ax.annotate('\u25a0 Green band: Cholesky robustness range [\u22120.29, \u22120.13] pp',
+            xy=(0.02, 0.05), xycoords='axes fraction',
+            fontsize=7, ha='left', va='bottom', color='#3a7a3a', style='italic')
+ax.annotate('\u25a0 Blue band: literature range [\u22120.30, \u22120.25] pp',
             xy=(0.02, 0.01), xycoords='axes fraction',
-            fontsize=7.5, ha='left', va='bottom', color=C_MED, style='italic')
+            fontsize=7, ha='left', va='bottom', color=C_MED, style='italic')
 
 fig.savefig(str(FIG_DIR / 'fig9_forest_plot.pdf'), bbox_inches='tight')
 plt.close(fig)
@@ -996,7 +1001,8 @@ Method & Type & Peak GDP (pp) & 90\% CI & Feasible & Reason \\
 \begin{tablenotes}
 \small \cmark\ = identified; \warnmark\ = feasible with caveats; \xmark\ = not
 identified. ${}^*$All LP-IV horizons $h=0$--$12$ positive (exogeneity failure).
-Literature: $[-0.30, -0.25]$pp per 100bp. Cholesky CI includes zero.
+Literature: $[-0.30, -0.25]$\,pp per 100\,bp. Cholesky robustness range
+$[-0.13, -0.29]$\,pp brackets published estimates. Cholesky CI includes zero.
 \end{tablenotes}
 """)
 

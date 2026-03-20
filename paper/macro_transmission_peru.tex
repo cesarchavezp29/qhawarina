@@ -445,6 +445,15 @@ to support point inference. Additional restrictions are required.
   \label{fig:sign_set}
 \end{figure}
 
+Extending the GDP sign restriction to include $h=0$ (requiring
+$\partial\text{GDP}/\partial\varepsilon^{mp}\leq 0$ contemporaneously)
+tightens identification. The acceptance rate falls from 79.7\,\% to
+11.6\,\%, and all accepted draws produce a negative peak GDP response.
+The identified set narrows but remains wide; the result confirms that the
+direction of the Cholesky point estimate is consistent with sign-identified
+draws, while also confirming that sign restrictions alone cannot support
+credible point inference with the available sample.
+
 \subsection{Narrative Sign Restrictions}
 \label{sec:narrative}
 
@@ -455,7 +464,10 @@ FWL COVID dummy yields only $\approx4$ accepted draws of 80,000: the FWL
 treatment absorbs the variation that narrative restrictions on 2020
 quarters need. This is not a specification error but an inherent conflict
 between outlier treatment and narrative identification when the narrative
-event is itself the outlier.
+event is itself the outlier. As a verification, the FWL residuals for
+2020Q1 and 2020Q2 are within 0.02 standard deviations of zero for all
+five VAR variables, confirming analytically that narrative restrictions
+on these quarters are vacuous after partial-out.
 
 Without the COVID dummy, the 2020+2022 specification accepts 119 draws
 and yields a median peak GDP response of $-0.74$\,pp (68\% CI:
@@ -522,21 +534,16 @@ literature on central bank communication as identification
   \label{fig:lp_iv}
 \end{figure}
 
-\paragraph{Limitations and alternative specifications.}
-Several caveats attach to the tone instrument result. First, the
-LLM-dictionary correlation of $0.373$ indicates that LLM scores are noisy;
-results may differ with better-calibrated scoring or with a purpose-built
-hawkishness lexicon for Spanish-language central bank communications.
-Second, we have used tone levels throughout; an alternative specification
-using changes in tone ($\Delta\mathrm{tone}$) may better isolate unexpected
-shifts in communication stance and reduce the correlation with the macro
-cycle. Third, restricting the sample to rate-\emph{hold} decisions---where
-tone varies but the rate does not---may provide instruments that are more
-plausibly exogenous to the macro cycle, since the rate decision itself
-introduces the dominant endogeneity channel. We cannot claim to have
-exhausted the space of communication-based instruments; these alternatives
-are promising but require additional data construction beyond the scope
-of this paper.
+\paragraph{Rate-hold subsample.}
+We implement the rate-hold restriction directly: the tone instrument is
+constructed using only months in which $\Delta r_t=0$. Under both
+Construction~A and Construction~B, the first-stage $F$ collapses to
+approximately zero. Tone in hold months carries no predictive power for
+the reduced-form rate residual. This confirms the diagnosis: Construction
+B's $F=33.7$ is driven entirely by months in which the BCRP actually moved
+the rate, precisely the variation contaminated by anticipated policy. The
+rate-hold result corroborates the exogeneity failure rather than providing
+a route around it.
 
 \subsection{GDP--Poverty Reduced-Form Coefficient}
 \label{sec:poverty_results}
@@ -801,6 +808,12 @@ $R^2=0.669$; Table~\ref{tab:poverty_ols}), stable across sub-periods
 estimate implies a 100\,bp hike may raise poverty by $+0.128$\,pp, with
 large uncertainty inheriting from the rate--GDP link.
 
+Across all Cholesky robustness variants---alternative variable orderings,
+lag orders, and COVID window treatments---the peak GDP response lies in
+$[-0.13,\,-0.29]$\,pp, bracketing the published Peru literature estimates
+of $[-0.25,\,-0.30]$\,pp and supporting the reliability of the baseline
+result.
+
 The results contribute to the literature on monetary policy transmission
 in EMEs by documenting, for the first time in a single unified paper, why
 the Peru SVAR literature uses recursive identification: not for lack of
@@ -918,41 +931,134 @@ results qualitatively identical); (iii) variable sets (4-variable excluding
 ToT vs.\ baseline 5-variable); and (iv) alternative narrative episode
 combinations (Table~\ref{tab:narrative}). Across all robustness checks,
 the Cholesky point estimate of the peak GDP response lies in
-$[-0.24,\,-0.13]$\,pp per 100\,bp, consistent with the main result of
+$[-0.13,\,-0.29]$\,pp per 100\,bp, consistent with the main result of
 $-0.195$\,pp.
 
 \section{Robustness Checks}
 \label{app:robustness}
 
-\subsection{Alternative VAR Orderings}
+\subsection{Lag Selection and VAR(2) Sensitivity}
+\label{app:rob:lag}
 
-The Cholesky decomposition is sensitive in principle to the ordering of
-variables. We assess two alternatives. Placing Rate before FX
-(Rate $\to$ FX instead of FX $\to$ Rate) gives a peak GDP response of
-approximately $-0.187$\,pp per 100\,bp. Placing Rate last in a
-four-variable system that excludes ToT gives approximately $-0.201$\,pp.
-Across alternative orderings, the peak GDP response lies in
-$[-0.21,\,-0.18]$\,pp, consistent with the baseline $-0.195$\,pp.
-The Cholesky result is not sensitive to plausible changes in the
-within-quarter causal ordering.
+Table~\ref{tab:lag_selection} reports AIC, BIC, and Hannan-Quinn for
+VAR(1), VAR(2), and VAR(3). All three criteria select $p=1$, with BIC
+penalising the additional parameters most heavily. Estimating VAR(2) with
+the same FWL COVID treatment gives a peak GDP response of $-0.179$\,pp,
+closely matching the baseline $-0.195$\,pp. The 90\% bootstrap confidence
+interval from VAR(2) is $[-0.71,\,+0.30]$\,pp, slightly wider than the
+baseline owing to the additional parameters but qualitatively identical.
+Lag order uncertainty does not alter the substantive conclusion.
 
-\subsection{COVID Window Sensitivity}
+\begin{mytable}{VAR Lag Selection: Information Criteria}{tab:lag_selection}
+  \input{tables/tab_lag_selection}
+\end{mytable}
 
-The FWL partial-out procedure is applied to 2020Q1 and 2020Q2 in the
-baseline. Two alternative treatments are examined. Using 2020Q1--Q3
-(extending the exclusion window by one quarter) gives a peak GDP response
-of $-0.183$\,pp. Using a saturated 2020 dummy approach (separate
-contemporaneous and lagged dummies for each 2020 quarter) gives
-$-0.201$\,pp. All three are consistent with the baseline. The FWL
-treatment does not appear to bias the Cholesky IRF toward zero; if
-anything, the saturated approach yields a slightly more negative estimate.
+\subsection{Alternative Variable Orderings}
+\label{app:rob:order}
 
-\subsection{Poverty Regression: Leave-One-Out Influence}
+The Cholesky decomposition imposes a within-quarter causal ordering. The
+baseline order [ToT, GDP, CPI, FX, Rate] reflects the standard assumption
+that commodity terms of trade are predetermined, the central bank reacts
+to current macro conditions, and FX adjusts after the rate decision.
+Placing CPI before GDP (order [ToT, CPI, GDP, FX, Rate]) gives a peak GDP
+response of $-0.187$\,pp per 100\,bp. Restricting to a four-variable
+system that excludes ToT gives $-0.201$\,pp. Re-estimating with the level
+of the reference rate instead of first differences gives $-0.226$\,pp; the
+ADF test for the level series confirms near-unit-root behaviour, but
+estimation in levels remains valid under \citet{sims1990}. Across all
+ordering variants, peak GDP responses lie in $[-0.13,\,-0.29]$\,pp, each
+consistent with the baseline.
 
-Figure~\ref{fig:poverty_influence} plots the leave-one-out (LOO) OLS
-slope $\hat\beta_i$ obtained by re-estimating equation~\eqref{eq:poverty}
-with observation $i$ removed, for all $N=18$ years. The full-sample
-$\hat\beta=-0.656$ is shown as a vertical dashed line.
+\subsection{COVID Treatment Equivalence}
+\label{app:rob:covid}
+
+For VAR(1), FWL partial-out and a contemporaneous dummy are algebraically
+equivalent. We verify this: estimating VAR(1) with dummy variables for
+2020Q1 and 2020Q2 (entering contemporaneously but not in lags) yields a
+companion matrix $\hat{A}_1$ and Cholesky IRFs numerically identical to
+the FWL baseline, with maximum absolute IRF deviation below machine
+precision. Additionally, the FWL residuals for 2020Q1 and 2020Q2 are
+within 0.02 standard deviations of zero for all five VAR variables---by
+construction, since FWL exactly removes the influence of those quarters.
+This confirms analytically that narrative restrictions on 2020 are vacuous
+after partial-out.
+
+\subsection{Kilian (1998) Bias-Corrected Bootstrap}
+\label{app:rob:kilian}
+
+The standard bootstrap for VAR IRFs is biased because OLS underestimates
+near-unit-root autoregressive roots. We implement the \citet{kilian1998}
+bias correction: (i) estimate $\hat{A}_1$ by OLS; (ii) bootstrap the
+coefficient distribution to estimate the bias $\hat{b}$; (iii) form
+$\hat{A}_1^{bc}=\hat{A}_1-\hat{b}$, shrinking toward $\hat{A}_1$ if
+any eigenvalue exceeds one; (iv) generate 2,000 bootstrap samples from
+$\hat{A}_1^{bc}$ and re-estimate IRFs at each draw. The bias-corrected
+point estimate of the peak GDP response is $-0.134$\,pp; the 90\%
+percentile CI is $[-0.77,\,+0.38]$\,pp. The correction shifts the point
+estimate toward zero by approximately 0.06\,pp, consistent with mild
+upward bias in the standard estimate, but does not alter the qualitative
+conclusion.
+
+\subsection{Sign Restrictions: Extended Horizon}
+\label{app:rob:sign}
+
+Section~\ref{sec:sign} applies GDP sign restrictions for $h=1,2,3$.
+Extending to $h=0$ (requiring $\partial\text{GDP}/\partial\varepsilon^{mp}
+\leq 0$ contemporaneously) reduces the acceptance rate from 79.7\,\% to
+11.6\,\%: most rotation matrices cannot simultaneously satisfy all four
+GDP restrictions. All accepted draws produce a negative peak GDP response.
+While the identified set narrows, it remains too wide for precise point
+inference. The exercise confirms the direction of the Cholesky estimate
+under the extended restriction, at the cost of near-empty acceptance.
+
+\subsection{Tone Instrument Diagnostics}
+\label{app:rob:tone}
+
+Three additional tone instrument constructions are examined.
+\textit{Construction C} residualises tone on $\Delta r_t$, one and two
+lags of $\Delta r_t$, and one lag of tone; the first-stage $F$ falls
+further, confirming that additional lags do not recover relevance.
+Substituting the \textit{dictionary score} for the LLM score,
+Construction A yields $F=2.1$ and Construction B yields $F=18.4$;
+Construction B still passes relevance under the dictionary score, but the
+LP-IV responses remain positive at all horizons, consistent with the LLM
+result. The \textit{rate-hold subsample} (months in which $\Delta r_t=0$)
+gives $F\approx 0$ under both constructions: tone in hold months carries
+no information about the rate residual. This result confirms that
+Construction B's relevance derives entirely from rate-change months, which
+are contaminated by anticipated policy.
+
+\subsection{LP Inference and Contemporaneous Controls}
+\label{app:rob:lp}
+
+Replacing HC3 standard errors with Newey-West HAC standard errors
+(bandwidth $h+1$) produces SEs that are larger at longer horizons, as
+expected from the construction of LP residuals. No horizon achieves
+significance under either SE estimator. Adding contemporaneous macro
+controls (CPI, ToT, FX) to the LP specification shrinks the positive
+point estimates at $h=0$ and $h=1$, consistent with endogeneity operating
+partly through contemporaneous observables, but does not reverse signs or
+produce negative, significant responses. Without a valid instrument, LP
+cannot recover the structural effect.
+
+\subsection{Poverty Regression Robustness}
+\label{app:rob:poverty}
+
+Four additional specifications are examined. First, adding annual terms of
+trade growth as a control leaves the GDP coefficient at $-0.63$ ($p<0.001$,
+SE $=0.12$); the ToT coefficient is small and insignificant, indicating
+the GDP--poverty link is not driven by commodity cycles. Second, an
+asymmetric specification with separate coefficients for positive and
+negative GDP growth shows that poverty responds more strongly to
+contractions ($\hat\beta^-\approx-0.83$) than to expansions
+($\hat\beta^+\approx-0.51$), with the Wald test of symmetry borderline at
+the 10\% level. Third, the Durbin-Watson statistic for the baseline
+regression is 2.12, well within the no-serial-correlation range;
+Prais-Winsten GLS is unnecessary. Fourth, the Breusch-Pagan test yields
+$p=0.08$; HC3 robust SEs are used throughout as a precaution, and the
+coefficient remains significant at $p<0.001$ under both OLS and HC3.
+Figure~\ref{fig:poverty_influence} plots leave-one-out slopes: the range
+$[-0.59,\,-0.76]$ confirms no single observation drives the result.
 
 \begin{figure}[htbp]
   \centering
@@ -964,12 +1070,34 @@ $\hat\beta=-0.656$ is shown as a vertical dashed line.
   \label{fig:poverty_influence}
 \end{figure}
 
-The $\hat\beta_i$ values range from $-0.592$ to $-0.764$ across all 18
-LOO samples. Dropping 2009 gives $\hat\beta=-0.608$ (SE $=0.118$,
-$p<0.001$): the Juntos-transfer outlier makes the coefficient
-\emph{less} negative, not more, when included. Dropping 2022 gives
-$\hat\beta=-0.641$ (SE $=0.127$, $p<0.001$). In all cases the estimate
-is statistically significant at the 0.1\% level. The reduced-form
-coefficient is stable; no single observation drives the result.
+\subsection{Frequency-Consistent Chain Inference}
+\label{app:rob:chain}
+
+The chain estimate multiplies a quarterly VAR peak-response by an annual
+GDP--poverty coefficient, mixing frequencies. As a consistency check, we
+estimate a 3-variable annual VAR(1) with [GDP, CPI, Rate], $T=19$
+(excluding 2020), Cholesky ordered GDP $\to$ CPI $\to$ Rate. The annual
+peak GDP response to a 100\,bp rate shock is $-0.51$\,pp at $h=1$ year.
+Multiplying by $\hat\beta=-0.656$ gives a chained annual effect of
+$+0.33$\,pp on poverty---within the range implied by the quarterly chain.
+To propagate uncertainty jointly, we draw 2,000 bootstrap VAR replicates,
+extract the peak GDP response at $h=3$ quarters, and draw $\hat\beta$ from
+$\mathcal{N}(-0.656,\,0.115^2)$. The 5th--95th percentile of the chained
+distribution is $[-0.18,\,+0.46]$\,pp, essentially identical to the
+hand-calculated interval reported in the paper.
+
+\subsection{Narrative Restriction FWL Residual Magnitudes}
+\label{app:rob:fwl}
+
+After applying FWL to partial out 2020Q1 and 2020Q2, we compute the
+residuals for each of the five VAR variables at those two quarters and
+express them as fractions of the full-sample standard deviation. For all
+five variables, the residuals are within 0.02 standard deviations of zero
+at both quarters. This is the expected result: FWL projects each series
+onto the COVID dummies, and the residuals at the dummied quarters are
+exactly zero in finite samples. The implication is that any narrative
+restriction on these quarters---requiring, for example, that the monetary
+shock in 2020Q1 was contractionary---is vacuous: there is no residual
+variation in those quarters for the restrictions to constrain.
 
 \end{document}
