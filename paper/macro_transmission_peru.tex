@@ -1074,13 +1074,30 @@ Replication code is available at the same repository.\footnote{\url{https://gith
   \input{tables/tab1_summary_stats}
 \end{mytable}
 
+Table~\ref{tab:sumstats} confirms that all five VAR variables are stationary
+at conventional significance levels, validating the VAR in levels.
+Table~\ref{tab:poverty} lists the annual GDP growth and poverty observations
+used in the reduced-form regression, including the two interpretable outliers
+(2009: Juntos transfers; 2022: K-shaped recovery) discussed in the main text.
+
 \begin{mytable}{Annual GDP Growth and Poverty Data, 2005--2024}{tab:poverty}
   \input{tables/tab3_poverty_data}
 \end{mytable}
 
+Table~\ref{tab:poverty} provides the raw data underlying Figure~\ref{fig:scatter}.
+Table~\ref{tab:tone_class} summarises the aggregate tone classification
+statistics across both the dictionary and LLM methods over the full 2001--2026
+corpus of 325 BCRP \textit{Notas Informativas}.
+
 \begin{mytable}{BCRP Communication Tone: Summary Statistics}{tab:tone_class}
   \input{tables/tab8_tone_classification}
 \end{mytable}
+
+Table~\ref{tab:tone_class} shows that both methods assign similar mean scores
+(dictionary: $-0.021$; LLM: near zero), with the LLM exhibiting higher
+variance across years. Table~\ref{tab:tone} provides the year-by-year
+breakdown, allowing inspection of how tone co-moves with the hiking and
+cutting cycles visible in Figure~\ref{fig:tone}.
 
 \begin{mytable}{BCRP Communication Tone by Year, 2001--2026}{tab:tone}
   \input{tables/tab2_tone_summary}
@@ -1092,21 +1109,51 @@ Replication code is available at the same repository.\footnote{\url{https://gith
   \input{tables/tab4_var_coefs}
 \end{mytable}
 
+Table~\ref{tab:var_coefs} reveals a high rate persistence coefficient of $0.614$
+and a negative GDP own-lag of $-0.264$, consistent with quarterly mean reversion.
+Table~\ref{tab:narrative} reports acceptance rates and median peak GDP responses
+across the five narrative sign restriction specifications, documenting the
+COVID--FWL tension that renders the tightest restriction nearly infeasible.
+
 \begin{mytable}{Narrative Sign Restrictions: Results by Specification}{tab:narrative}
   \input{tables/tab5_narrative_sr}
 \end{mytable}
+
+Table~\ref{tab:narrative} shows that the ``no-FWL, 2020+2022'' specification
+produces only 119 accepted draws (0.15\% acceptance), the only feasible
+narrative variant. Table~\ref{tab:lp} turns to the local projection
+approach, reporting the GDP coefficient and HC3 standard error at each
+horizon $h=0,\ldots,8$, all of which are positive---confirming the
+endogeneity bias diagnosed in the main text.
 
 \begin{mytable}{Local Projections: Rate $\to$ GDP at $h=0,\ldots,8$}{tab:lp}
   \input{tables/tab6_lp_results}
 \end{mytable}
 
+Table~\ref{tab:lp} shows that the LP estimates are positive at all horizons
+with declining $R^2$, consistent with a misspecified endogenous regressor.
+Table~\ref{tab:proxy_ib} then reports the interbank rate instrument
+diagnostics that rule out the first Proxy-SVAR strategy on the grounds of
+weak first-stage relevance.
+
 \begin{mytable}{Proxy-SVAR Feasibility: Interbank Rate Instrument}{tab:proxy_ib}
   \input{tables/tab7_proxy_svar_ib}
 \end{mytable}
 
+Table~\ref{tab:proxy_ib} confirms that the first-stage $F=4.73$ fails the
+Stock-Yogo threshold of 10, ruling out the interbank rate as a valid instrument.
+Table~\ref{tab:tone_iv} contrasts the two tone instrument constructions, showing
+that the one construction that passes relevance ($F=33.7$) fails exogeneity,
+while the other fails relevance.
+
 \begin{mytable}{Tone Surprise Instrument Validity}{tab:tone_iv}
   \input{tables/tab9_tone_instrument}
 \end{mytable}
+
+Table~\ref{tab:tone_iv} establishes that no valid tone-based instrument exists:
+both constructions violate at least one of the two identification conditions.
+Table~\ref{tab:poverty_ols} provides the full OLS output for the GDP--poverty
+reduced-form regression that anchors the chained transmission estimate.
 
 \begin{mytable}{Poverty Regression: Full OLS Results}{tab:poverty_ols}
   \input{tables/tab10_poverty_ols}
@@ -1121,6 +1168,12 @@ Replication code is available at the same repository.\footnote{\url{https://gith
   Figure~\ref{fig:small_sample} for a visual comparison of all methods.
 \end{mytable}
 
+Figure~\ref{fig:small_sample} plots all five small-sample inference methods
+side by side, confirming that the significant negative coefficient is not an
+artefact of asymptotic approximations: every method that tests the magnitude
+of $\hat\beta$ rejects $H_0:\beta=0$ at $p\leq0.003$, and the Bayesian
+posterior places $P(\hat\beta<0)=1.000$.
+
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.85\textwidth]{figures/fig16_small_sample}
@@ -1130,6 +1183,13 @@ Replication code is available at the same repository.\footnote{\url{https://gith
     not the coefficient magnitude).}
   \label{fig:small_sample}
 \end{figure}
+
+Figure~\ref{fig:small_sample} shows that only the sign test (which tests
+residual symmetry rather than the coefficient magnitude) fails to reject
+$H_0$, as expected given the one-sided hypothesis at $N=18$.
+Table~\ref{tab:subperiod} complements this by checking structural stability
+across the two sub-periods, reporting OLS slopes for 2005--2014 and
+2015--2024 together with a Chow test that cannot reject slope equality.
 
 \begin{mytable}{GDP--Poverty Reduced-Form Coefficient: Sub-Period Stability}{tab:subperiod}
   \input{tables/tab11_subperiod_stability}
