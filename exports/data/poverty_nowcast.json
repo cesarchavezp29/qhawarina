@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-03-18T21:29:29.952386",
+    "generated_at": "2026-03-19T23:19:48.493504",
     "tipo_estimacion": "proyección",
     "methodology_note": "Proyección basada en correlaciones históricas entre indicadores macroeconómicos mensuales y tasas de pobreza anuales ENAHO (2004-2024). No es una encuesta; los intervalos de confianza reflejan el error histórico del modelo.",
     "model_type": "GradientBoostingRegressor",

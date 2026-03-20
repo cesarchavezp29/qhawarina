@@ -1,0 +1,78 @@
+{
+  "validation": {
+    "r2_cross_section_2019": 0.742,
+    "r2_pooled": 0.068,
+    "r2_year_fe": 0.819,
+    "r2_within": 0.313,
+    "r2_growth": 0.0,
+    "beta_cross_section": 1.318,
+    "beta_year_fe": 1.43,
+    "n_dept_years": 525,
+    "gdp_proxy": "BCRP credit by department (total S/ mns, log-transformed)",
+    "verdict": "YES (cross-sectional)",
+    "summary": "Las luces nocturnas explican el 74% de la variación del crédito departamental",
+    "rossi_r2_cross_country": 0.73,
+    "rossi_beta": 0.3,
+    "rossi_note": "Henderson, Storeygard & Weil (2012) — 188 countries, 1992-2008",
+    "strong_depts": [
+      "Ancash",
+      "Apurimac",
+      "Arequipa",
+      "Ayacucho",
+      "Cusco",
+      "Huanuco",
+      "Ica",
+      "Junin",
+      "La Libertad",
+      "Lambayeque",
+      "Lima",
+      "Madre de Dios",
+      "Moquegua",
+      "Pasco",
+      "Piura",
+      "Puno",
+      "San Martin",
+      "Tacna",
+      "Tumbes",
+      "Ucayali"
+    ],
+    "weak_depts": [
+      "Callao"
+    ],
+    "note_original_error": "Original R²=0.158 used electricity PRODUCTION (not consumption) as proxy without year FE — breaks for hydro/mining depts"
+  },
+  "all_results": {
+    "Spec 7: cross-section 2019": {
+      "r2": 0.7422242619514707,
+      "b": 1.317798341328105
+    },
+    "Spec 1: pooled OLS": {
+      "r2": 0.06783063030606806,
+      "b": 0.4179024363000496
+    },
+    "Spec 2: year FE": {
+      "r2": 0.819137092063485,
+      "b": 1.4298062588164222
+    },
+    "Spec 3: dept FE (within)": {
+      "r2": 0.31252407154852646,
+      "b": -0.8151091541700756
+    },
+    "Spec 4: dept + year FE": {
+      "r2": 0.10394749527670466,
+      "b": 0.3548132969495476
+    },
+    "Spec 1 no Lima": {
+      "r2": 0.01061174385694752,
+      "b": 0.15173053186257068
+    },
+    "Spec 1 no mining depts": {
+      "r2": 0.0904450463000327,
+      "b": 0.49161361236860146
+    },
+    "Growth rates": {
+      "r2": 6.550047722975183e-05,
+      "b": 0.006614274376697072
+    }
+  }
+}

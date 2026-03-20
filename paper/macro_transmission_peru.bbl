@@ -1,0 +1,93 @@
+\begin{thebibliography}{}
+
+\bibitem[Antol\'in-D\'iaz and Rubio-Ram\'irez, 2018]{antolin2018}
+Antol\'in-D\'iaz, J. and Rubio-Ram\'irez, J.~F. (2018).
+\newblock Narrative sign restrictions for {SVARs}.
+\newblock {\em American Economic Review}, 108(10):2802--2829.
+
+\bibitem[Caldara and Herbst, 2019]{caldara2019}
+Caldara, D. and Herbst, E. (2019).
+\newblock Monetary policy, real activity, and credit spreads: Evidence from
+  {Bayesian} proxy {SVARs}.
+\newblock {\em American Economic Journal: Macroeconomics}, 11(1):119--160.
+
+\bibitem[Castillo et~al., 2011]{castillo2011}
+Castillo, P., P\'erez, F., and Tuesta, V. (2011).
+\newblock Los mecanismos de transmisi\'on de la pol\'itica monetaria en
+  {Per\'u}.
+\newblock {\em Estudios Econ\'omicos}, 21:41--63.
+
+\bibitem[Gertler and Karadi, 2015]{gertler2015}
+Gertler, M. and Karadi, P. (2015).
+\newblock Monetary policy surprises, credit costs, and economic activity.
+\newblock {\em American Economic Journal: Macroeconomics}, 7(1):44--76.
+
+\bibitem[Ha et~al., 2025]{ha2025}
+Ha, J., Kose, M.~A., and Ohnsorge, F. (2025).
+\newblock Resolving puzzles of monetary policy transmission in emerging
+  markets.
+\newblock {\em European Economic Review}, 163:104667.
+
+\bibitem[Jord\`a, 2005]{jorda2005}
+Jord\`a, {\`O}. (2005).
+\newblock Estimation and inference of impulse responses by local projections.
+\newblock {\em American Economic Review}, 95(1):161--182.
+
+\bibitem[Lahura and Vega, 2020]{lahura2020}
+Lahura, E. and Vega, M. (2020).
+\newblock Assessing central bank communication through monetary policy
+  statements.
+\newblock Technical report, Centro de Estudios Monetarios Latinoamericanos /
+  {BCRP}.
+
+\bibitem[Miranda-Agrippino and Ricco, 2021]{mirandaagrippino2021}
+Miranda-Agrippino, S. and Ricco, G. (2021).
+\newblock The transmission of monetary policy shocks.
+\newblock {\em American Economic Journal: Macroeconomics}, 13(3):74--107.
+
+\bibitem[Montiel~Olea et~al., 2021]{montiellolea2021}
+Montiel~Olea, J.~L., Stock, J.~H., and Watson, M.~W. (2021).
+\newblock Inference in {SVARs} identified with an external instrument.
+\newblock {\em Journal of Econometrics}, 225(1):74--87.
+
+\bibitem[P\'erez~Rojo and Rodr\'iguez, 2024]{perezrojo2024}
+P\'erez~Rojo, F. and Rodr\'iguez, G. (2024).
+\newblock Impact of monetary policy shocks in the {Peruvian} economy over time.
+\newblock {\em Structural Change and Economic Dynamics}, 69:40--54.
+
+\bibitem[Portilla et~al., 2022]{portilla2022}
+Portilla, J., Rodr\'iguez, G., and Castillo, P. (2022).
+\newblock Evolution of monetary policy in {Peru}: An empirical application
+  using a mixture innovation {TVP-VAR-SV} model.
+\newblock {\em CESifo Economic Studies}, 68(1):98--134.
+
+\bibitem[Read and Zubairy, 2023]{read2023}
+Read, M. and Zubairy, S. (2023).
+\newblock Identification and inference under narrative restrictions.
+\newblock Research Discussion Paper 2023-07, Reserve Bank of Australia.
+
+\bibitem[Rubio-Ram\'irez et~al., 2010]{rubioramirez2010}
+Rubio-Ram\'irez, J.~F., Waggoner, D.~F., and Zha, T. (2010).
+\newblock Structural vector autoregressions: Theory of identification and
+  algorithms for inference.
+\newblock {\em Review of Economic Studies}, 77(2):665--696.
+
+\bibitem[Stock and Watson, 2018]{stock2018}
+Stock, J.~H. and Watson, M.~W. (2018).
+\newblock Identification and estimation of dynamic causal effects in
+  macroeconomics using external instruments.
+\newblock {\em Economic Journal}, 128(610):917--948.
+
+\bibitem[Uhlig, 2005]{uhlig2005}
+Uhlig, H. (2005).
+\newblock What are the effects of monetary policy on output? results from an
+  agnostic identification procedure.
+\newblock {\em Journal of Monetary Economics}, 52(2):381--419.
+
+\bibitem[Wolf, 2020]{wolf2020}
+Wolf, C.~K. (2020).
+\newblock {SVAR} (mis)identification and the real effects of monetary policy
+  shocks.
+\newblock {\em American Economic Journal: Macroeconomics}, 12(4):1--32.
+
+\end{thebibliography}
