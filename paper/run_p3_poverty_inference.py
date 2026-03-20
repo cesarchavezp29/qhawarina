@@ -364,17 +364,22 @@ def main():
     # Right panel: data scatter with OLS fit
     ax2 = axes[1]
     ax2.scatter(x, y, color=C["accent2"], s=50, zorder=3, alpha=0.85)
+    # Only label the two interpretable outliers to avoid overlap
+    label_years = {2009: (-6, 4), 2022: (4, -8)}
     for i, yr in enumerate(years):
-        ax2.annotate(str(yr), (x[i], y[i]), textcoords='offset points',
-                     xytext=(4, 3), fontsize=7, color=C["gray_line"])
+        if yr in label_years:
+            dx, dy = label_years[yr]
+            ax2.annotate(str(yr), (x[i], y[i]), textcoords='offset points',
+                         xytext=(dx, dy), fontsize=7.5, color=C["accent1"],
+                         fontweight='bold')
     xfit = np.linspace(x.min() - 0.5, x.max() + 0.5, 200)
     ax2.plot(xfit, alpha_hat + beta_hat * xfit, color=C["accent1"], lw=2,
              label=f'OLS: β={beta_hat:.3f} (SE={se_ols:.3f})')
-    # Bayesian credible band: use posterior samples
-    sample_idx = rng.choice(n_keep, size=500, replace=False)
+    # Bayesian credible band: use posterior samples (reduced to avoid clutter)
+    sample_idx = rng.choice(n_keep, size=150, replace=False)
     for idx in sample_idx:
         a_s, b_s = beta_samples[idx, 0], beta_samples[idx, 1]
-        ax2.plot(xfit, a_s + b_s * xfit, color=C["accent2"], lw=0.3, alpha=0.06)
+        ax2.plot(xfit, a_s + b_s * xfit, color=C["accent2"], lw=0.4, alpha=0.08)
     ax2.set_xlabel('Annual GDP Growth (%)')
     ax2.set_ylabel('Annual Change in Poverty Rate (pp)')
     ax2.set_title('')

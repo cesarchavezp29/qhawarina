@@ -275,22 +275,6 @@ ax.annotate('$-$0.195\u2009pp\n(Cholesky)',
 stat_box(ax, '80,000 draws · 63,743 accepted (79.7%)', loc='upper right', fontsize=7.5)
 legend_below(ax, ncol=2)
 
-# ── Zoomed inset: Cholesky range [-0.8, 0.5] pp ─────────────────────────────
-ax_in = ax.inset_axes([0.07, 0.10, 0.40, 0.42])
-if lo16 and hi84:
-    ax_in.fill_between(h_sr, lo16, hi84, alpha=0.55, color=C["ci_dark"])
-ax_in.plot(h_sr, med, color=C["main"], lw=1.5)
-ax_in.plot(H8, GDP_POINT, color=C["accent1"], lw=2, ls='--')
-ax_in.axhline(0, color=C["gray_line"], lw=0.5, ls='--')
-ax_in.set_ylim(-0.8, 0.5)
-ax_in.set_xlim(-0.3, 8.3)
-ax_in.set_yticks([-0.6, -0.3, 0, 0.3])
-ax_in.set_xticks([0, 2, 4, 6, 8])
-ax_in.tick_params(labelsize=6)
-ax_in.set_title('Zoom: Cholesky range', fontsize=6.5, pad=2)
-ax_in.spines['top'].set_visible(True)
-ax_in.spines['right'].set_visible(True)
-
 savefig(fig, 'fig3_sign_restriction_set')
 
 
