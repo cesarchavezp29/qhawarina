@@ -1119,7 +1119,23 @@ def post_filter_scores(df: pd.DataFrame) -> pd.DataFrame:
         r"(bolsonaro|lula|milei|petro|boric|maduro|noboa|arce|lacalle|trump|biden|harris|"
         r"macron|scholz|starmer|meloni|modi|xi jinping|putin).{0,80}"
         r"(inaugur|posesion|posesi[oó]n|gana las elecciones|pierde las elecciones|"
-        r"renuncia al cargo|es reelegido|asume el cargo)"
+        r"renuncia al cargo|es reelegido|asume el cargo)|"
+        # Bolivian internal politics (judicial, arrests, party conflicts — no Peru nexus)
+        r"(hijo|familiar|aliado|partido).{0,40}(arce|evo morales|morales evo).{0,60}"
+        r"(detenido|arrestado|imputado|acusado|investigado|formalizado)|"
+        r"(arce|evo morales).{0,40}(hijo|familiar|aliado).{0,60}"
+        r"(detenido|arrestado|imputado|acusado)|"
+        r"(detienen|arrestan|imputan|acusan|investigan).{0,60}"
+        r"(hijo|familiar|aliado|funcionario).{0,40}(arce|evo morales)\b|"
+        r"justicia boliviana|fiscal[ií]a de bolivia|gobierno boliviano.{0,60}"
+        r"(detiene|arresta|imputa|investiga)|"
+        r"crisis pol[ií]tica (en|de) bolivia\b|"
+        r"bolivia.{0,30}(golpe|crisis institucional|estado de emergencia)|"
+        # Foreign wire dispatch format: "Country: ..." — foreign internal news
+        r"^(bolivia|ecuador|argentina|colombia|venezuela|brasil|paraguay|uruguay|"
+        r"chile|m[eé]xico|cuba|nicaragua|el salvador|honduras|guatemala)\s*:\s*.{0,200}"
+        r"(detenido|arrestado|imputado|acusado|golpe|crisis|protestas|manifestantes|"
+        r"huelga|paro nacional|estado de emergencia|renuncia|destituido|vacancia)"
     )
     mask_foreign_dom = nt.str.contains(_foreign_domestic, regex=True, na=False) & ~mask_crisis
     n_fd_eco = int((mask_foreign_dom & (df["economic_score"].fillna(0) > 0)).sum())
@@ -3134,6 +3150,18 @@ def post_filter_scores(df: pd.DataFrame) -> pd.DataFrame:
     if n_mlg > 0:
         logger.info("post_filter_scores: minor local gov pol=10 on %d articles", n_mlg)
 
+    # ── FINAL OVERRIDE: re-zero foreign domestic articles ─────────────────────
+    # Some boost rules later in this function (e.g. arrest/removal patterns) can
+    # re-boost articles that were already zeroed by mask_foreign_dom.
+    # Re-apply the foreign domestic mask unconditionally at the end.
+    mask_fd_recheck = nt.str.contains(_foreign_domestic, regex=True, na=False) & ~mask_crisis
+    n_fd_recheck = int((mask_fd_recheck & (
+        (df["political_score"].fillna(0) > 0) | (df["economic_score"].fillna(0) > 0)
+    )).sum())
+    if n_fd_recheck > 0:
+        df.loc[mask_fd_recheck, "political_score"] = 0
+        df.loc[mask_fd_recheck, "economic_score"] = 0
+        logger.info("post_filter_scores: FD re-zero override cleared %d articles", n_fd_recheck)
     # ── END NEW RULES ─────────────────────────────────────────────────────────
 
     return df
@@ -4026,6 +4054,37 @@ def classify_articles_dual(
     # ── END IMPROVEMENTS 4 & 5 inline ────────────────────────────────────────
 
     # ── J. NaN scores → 0 ─────────────────────────────────────────────────────
+    # FINAL OVERRIDE: re-apply foreign domestic zeroing to catch any articles
+    # that were re-boosted by inline rules (e.g. _pres_arrest_inline matching
+    # "detienen...expresidente" in Bolivia articles).
+    nt_final = df["title"].fillna("").apply(_normalize_title)
+    mask_crisis_final = nt_final.str.contains(_crisis_guard, regex=True, na=False)
+    _foreign_domestic_final = (
+        r"elecciones (en |de )(colombia|argentina|brasil|m[eé]xico|chile|venezuela|"
+        r"bolivia|ecuador|estados unidos|eeuu|reino unido|espa[ñn]a|francia|alemania|"
+        r"canada|australia|india)\b|"
+        r"(hijo|familiar|aliado|partido).{0,40}(arce|evo morales|morales evo).{0,60}"
+        r"(detenido|arrestado|imputado|acusado|investigado|formalizado)|"
+        r"(arce|evo morales).{0,40}(hijo|familiar|aliado).{0,60}"
+        r"(detenido|arrestado|imputado|acusado)|"
+        r"(detienen|arrestan|imputan|acusan|investigan).{0,60}"
+        r"(hijo|familiar|aliado|funcionario).{0,40}(arce|evo morales)\b|"
+        r"justicia boliviana|fiscal[ií]a de bolivia|gobierno boliviano.{0,60}"
+        r"(detiene|arresta|imputa|investiga)|"
+        r"crisis pol[ií]tica (en|de) bolivia\b|"
+        r"bolivia.{0,30}(golpe|crisis institucional|estado de emergencia)|"
+        r"^(bolivia|ecuador|argentina|colombia|venezuela|brasil|paraguay|uruguay|"
+        r"chile|m[eé]xico|cuba|nicaragua|el salvador|honduras|guatemala)\s*:\s*.{0,200}"
+        r"(detenido|arrestado|imputado|acusado|golpe|crisis|protestas|manifestantes|"
+        r"huelga|paro nacional|estado de emergencia|renuncia|destituido|vacancia)"
+    )
+    mask_fd_final = nt_final.str.contains(_foreign_domestic_final, regex=True, na=False) & ~mask_crisis_final
+    n_fd_final = int((mask_fd_final & ((df["political_score"].fillna(0) > 0) | (df["economic_score"].fillna(0) > 0))).sum())
+    if n_fd_final > 0:
+        df.loc[mask_fd_final, "political_score"] = 0
+        df.loc[mask_fd_final, "economic_score"] = 0
+        logger.info("post_filter_scores: final FD override re-zeroed %d articles boosted by inline rules", n_fd_final)
+
     # Articles never classified get NaN political_score or economic_score.
     # Must be set to 0 to avoid contaminating the intensity sum in the index formula.
     n_nan_pol = int(df["political_score"].isna().sum())

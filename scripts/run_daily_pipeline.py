@@ -61,6 +61,7 @@ logging.basicConfig(
         logging.StreamHandler(sys.stdout),
         logging.FileHandler(log_file, encoding="utf-8"),
     ],
+    encoding="utf-8",
 )
 logger = logging.getLogger("nexus.daily")
 
@@ -70,7 +71,7 @@ WEB_DIR = Path("D:/qhawarina")
 
 
 def run(label: str, cmd: list, cwd=PROJECT_ROOT, timeout: int = None) -> bool:
-    logger.info("── %s ──────────────────────────────────", label)
+    logger.info("-- %s ----------------------------------", label)
     try:
         result = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, timeout=timeout)
     except subprocess.TimeoutExpired:
@@ -224,6 +225,9 @@ def step_git_push(today: date, include_poverty: bool = False) -> bool:
     if not ok:
         return False
 
+    # Pull first to avoid rejection if remote has diverged
+    subprocess.run(["git", "pull", "--rebase", "origin", "master"],
+                   cwd=WEB_DIR, capture_output=True)
     return run("Git push", ["git", "push"], cwd=WEB_DIR)
 
 
