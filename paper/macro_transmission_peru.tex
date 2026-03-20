@@ -1119,6 +1119,12 @@ Replication code is available at the same repository.\footnote{\url{https://gith
 % ─────────────────────────────────────────────────────────────────────────────
 \appendix
 
+%% ── Appendix: reset and prefix all float counters with "A" ─────────────────
+\setcounter{figure}{0}
+\setcounter{table}{0}
+\renewcommand{\thefigure}{A\arabic{figure}}
+\renewcommand{\thetable}{A\arabic{table}}
+
 \section{Tables}
 \label{app:tables}
 

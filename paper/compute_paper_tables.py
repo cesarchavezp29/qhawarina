@@ -670,7 +670,7 @@ tone_tex_rows = '\n'.join(
     for r in tone_by_year.itertuples()
 )
 write_tex('tab2_tone_summary', rf"""
-\begin{{tabular}}{{lrcccc}}
+\resizebox{{\linewidth}}{{!}}{{\begin{{tabular}}{{lrcccc}}
 \toprule
 Year & $N$ & Dict. mean & (SD) & LLM mean & (SD) \\
 \midrule
@@ -680,7 +680,7 @@ Year & $N$ & Dict. mean & (SD) & LLM mean & (SD) \\
     {tone_by_year['dict_mean'].mean():.3f} & ({tone_by_year['dict_sd'].mean():.3f}) &
     {tone_by_year['llm_mean'].mean():.1f} & ({tone_by_year['llm_sd'].mean():.1f}) \\
 \bottomrule
-\end{{tabular}}
+\end{{tabular}}}}
 \begin{{tablenotes}}
 \small LLM: Claude Haiku, score $-100$ (dovish) to $+100$ (hawkish).
 Dict.: dictionary method (Lahura \& Vega 2020 adaptation).
