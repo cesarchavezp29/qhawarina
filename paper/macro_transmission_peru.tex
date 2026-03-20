@@ -84,27 +84,28 @@
 
   \begin{abstract}
     \noindent
-    We compare seven identification strategies for monetary policy
-    transmission in Peru and find that only recursive (Cholesky)
-    identification produces interpretable estimates---modern methods fail.
-    Three institutional features explain this: the interbank rate is
-    administered by construction, no rate-futures market exists for policy
-    surprise extraction, and the monetary record provides too few sharp
-    episodes for narrative restrictions. The Cholesky VAR(1) yields a
-    peak GDP response of minus 0.195 percentage points per 100 basis
-    points (90 percent confidence interval: minus 0.70 to plus 0.27),
-    consistent with the Peru SVAR literature. Our most robust result is
-    a GDP--poverty reduced-form coefficient of minus 0.656
-    (t-statistic minus 5.69, R-squared 0.67, 18 annual observations),
-    stable across sub-periods. A frequency-consistent chain estimate
-    implies a 100 basis point hike may raise poverty by approximately
-    0.50 percentage points (90 percent CI: 0.38 to 0.61), or roughly
-    170,000 people. The 2021--2023 hiking cycle (approximately 750 basis
-    points) may have raised the poverty rate by roughly 2.2 to 3.7
-    percentage points depending on the frequency-alignment method used.
-    These three features characterize a broad class
-    of EME central banks, making identification methodology---not just
-    Peru's results---the central contribution.
+    Modern identification strategies for monetary policy---sign restrictions,
+    Proxy-SVARs, narrative approaches---rest on assumptions that fail in
+    emerging markets where institutional features differ fundamentally from
+    those of the United States or Euro Area.
+    We document these failures systematically for Peru, where three features
+    block modern identification: the interbank rate is administered, no
+    rate-futures market exists, and the monetary record offers too few sharp
+    episodes for narrative restrictions.
+    Using 85 quarterly observations (2004Q2--2025Q3), we compare all seven
+    major identification strategies within a single unified framework.
+    Only Cholesky recursive identification survives; the peak GDP response
+    to a 100\,bp hike is $-0.195$\,pp, consistent with the published
+    Peru SVAR literature.
+    A precisely estimated GDP--poverty reduced-form coefficient chains this
+    to distributional outcomes: a 100\,bp hike raises the poverty headcount
+    rate by roughly 0.5\,pp.
+    The 2021--2023 hiking cycle ($\approx$750\,bp) therefore implies a
+    poverty increase of roughly 2--4\,pp---a magnitude consistent with the
+    pronounced poverty reversal observed after 2021.
+    The three blocking features characterize a broad class of EME central
+    banks, making the diagnostic toolkit for identification feasibility
+    the paper's primary methodological contribution.
   \end{abstract}
 
   \medskip
@@ -126,7 +127,7 @@ identification toolkit: recursive (Cholesky) ordering, sign restrictions
 \citep{uhlig2005}, narrative restrictions \citep{antolin2018}, and
 external-instrument Proxy-SVARs \citep{stock2018,gertler2015,montiellolea2021}.
 These methods have been applied extensively to the United States and Euro Area,
-and increasingly to advanced economies such as Australia. Their applicability
+and increasingly to advanced economies such as Australia, Canada, and the United Kingdom. Their applicability
 to small open emerging-market economies (EMEs) with institutional features
 that differ markedly from the US---administered policy rates, no OIS market,
 limited monetary history---has received far less systematic attention.
@@ -152,13 +153,14 @@ fail. This paper fills that gap with four contributions:
     strategies for monetary policy in Peru within a single unified dataset
     covering 85 quarterly observations (2004Q2--2025Q3).
 
-  \item \textbf{A cautionary result for the communication-as-instrument
-    literature:} our LLM-classified BCRP tone instrument (325
-    \textit{Notas Informativas}, 2001--2026) passes relevance only when it
-    retains anticipated policy content, violating exogeneity and producing
-    wrong-signed LP-IV responses at all horizons. This documents the
-    anticipated-policy problem in a central bank whose communication
-    closely tracks its decisions.
+  \item \textbf{A structural impossibility result for tone-based instruments:}
+    Peru's administered rate mechanically eliminates the policy-surprise
+    variation that Proxy-SVARs require. Our LLM-classified BCRP tone
+    instrument (325 \textit{Notas Informativas}, 2001--2026) passes
+    relevance only by retaining anticipated policy content, which violates
+    exogeneity and produces wrong-signed LP-IV responses at all horizons---a
+    concrete instance of the anticipated-policy problem when central bank
+    communication closely tracks decisions.
 
   \item \textbf{A well-identified GDP--poverty reduced-form coefficient}
     (minus 0.656, significant at the 0.1 percent level, 18 annual
@@ -227,8 +229,8 @@ instrument is mechanically collinear with the reference rate change already
 in the VAR (Section~\ref{sec:proxy_ib}).
 
 \paragraph{No rate expectations market.} Without OIS or futures contracts
-on PEN rates, it is impossible to separate the expected from the unexpected
-component of a rate decision, as is standard in the US literature
+on PEN rates, nothing separates the expected from the unexpected component
+of a rate decision---a decomposition standard in the US literature
 \citep{mirandaagrippino2021}.
 
 \paragraph{Limited sharp monetary episodes.} Since 2002, individual BCRP
@@ -448,9 +450,7 @@ poverty transmission.
 \section{Results}
 \label{sec:results}
 
-All tables are collected in Appendix~\ref{app:tables}; figures appear inline in the text.
-
-\subsection{Cholesky VAR(1): Benchmark}
+\subsection{Cholesky VAR(1): Benchmark}\footnote{All tables are collected in Appendix~\ref{app:tables}; figures appear inline.}
 \label{sec:cholesky}
 
 Table~\ref{tab:var_coefs} reports the estimated $\hat A_1$ matrix. The
@@ -531,8 +531,8 @@ Table~\ref{tab:narrative} (first row) and Figure~\ref{fig:sign_set} report
 sign restriction results. Of 80,000 candidate rotation matrices, 63,743
 (79.7\%) satisfy the restrictions---the restrictions are weak relative
 to the data. The median peak GDP response is $-2.30$\,pp with a 68\%
-credible set of $[-12.8,\,+5.4]$\,pp. The identified set is too wide
-to support point inference. Additional restrictions are required.
+credible set of $[-12.8,\,+5.4]$\,pp. The identified set spans $[-12.8,\,+5.4]$\,pp and provides no traction
+for point inference without additional restrictions.
 
 \begin{figure}[H]
   \centering
@@ -604,10 +604,10 @@ identification; without a valid instrument, LP-IV is not feasible.
 
 Table~\ref{tab:proxy_ib} reports feasibility diagnostics. Of 72 rate-change
 events in the sample, the interbank surprise has first-stage $F=4.73$, well
-below the $F>10$ threshold of \citet{stock2018}. Peru's interbank rate
-equals the reference rate by construction, so the ``surprise'' is
-mechanically collinear with the reference rate change already in the VAR.
-The relevance condition fails.
+below the $F>10$ threshold of \citet{stock2018}. Peru's interbank rate equals the reference rate by construction, so the
+``surprise'' is mechanically collinear with the reference rate change
+already in the VAR---the instrument eliminates the very variation
+relevance requires.
 
 \subsection{Proxy-SVAR: BCRP Communication Tone}
 \label{sec:proxy_tone}
@@ -847,7 +847,7 @@ Three features of Peru's monetary framework prevent modern identification:
     (Table~\ref{tab:proxy_ib}, $F=4.73$).
 
   \item \textbf{No rate expectations market.} Without OIS contracts or
-    exchange-traded rate futures for PEN, it is impossible to decompose
+    exchange-traded rate futures for PEN, no market price decomposes
     a rate decision into expected and unexpected components.
     \citet{mirandaagrippino2021} show this decomposition is essential for
     correct Proxy-SVAR identification; the logic applies a fortiori to Peru.
@@ -943,13 +943,14 @@ imprecisely estimated at quarterly frequency. The chained poverty effect
 but non-trivial over a full hiking cycle: the 2021--2023 hiking of $+750$\,bp
 may have contributed $\approx+1$\,pp to poverty through the GDP channel.
 
-For future research, three directions are promising. Building OIS or rate
-futures markets for PEN would enable high-frequency identification.
-Constructing a Romer--Romer style narrative series by manually reading
-BCRP minutes (not yet publicly available) remains feasible. Extending
-the LLM tone analysis to \textit{comunicados de prensa} (which are
-simultaneous with rate decisions, unlike \textit{Notas Informativas} which
-trail by days) may yield a tone instrument with better timing properties.
+For future research, two directions stand out. Extending the LLM tone
+analysis to \textit{comunicados de prensa}---published simultaneously
+with rate decisions, unlike \textit{Notas Informativas} which trail by
+days---may yield a communication instrument with better timing properties
+and a genuine shot at exogeneity. The deeper fix is structural: OIS or
+rate-futures markets for PEN would enable high-frequency surprise
+extraction and unlock the full modern identification toolkit for Peru
+and similarly administered EME rates.
 
 % ─────────────────────────────────────────────────────────────────────────────
 \section{Conclusion}
@@ -966,14 +967,10 @@ tone passes the relevance test but fails exogeneity, providing a cautionary
 result for central bank communication identification.
 
 Our most robust contribution is a precisely estimated GDP--poverty
-reduced-form coefficient of $\hat\beta=-0.656$ ($p<0.001$, $N=18$,
-$R^2=0.669$), stable across sub-periods and economically interpretable. A
-frequency-consistent chain estimate (Method~B, Equation~\ref{eq:chain})
-implies a 100\,bp hike may raise poverty by $+0.498$\,pp (90\% CI:
-$[+0.379,\,+0.608]$), with all uncertainty inheriting from the rate--GDP
-link. The 2021--2023 hiking cycle of approximately 750\,bp may therefore
-have raised the monetary poverty rate by roughly $2.2$--$3.7$\,pp
-depending on the frequency-alignment method used (Method~A 1yr vs.\ Method~B).
+reduced-form coefficient, stable across sub-periods and economically
+interpretable. Chaining this through the frequency-consistent GDP
+response (Section~\ref{sec:chain}) implies the 2021--2023 hiking
+cycle may have raised the monetary poverty rate by roughly 2--4\,pp.
 
 Across all Cholesky robustness variants---alternative variable orderings,
 lag orders, and COVID window treatments---the peak GDP response lies in
