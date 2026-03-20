@@ -619,33 +619,21 @@ equal slopes yields $t=0.78$ ($p\approx0.45$), failing to reject stability.
 \end{figure}
 
 \paragraph{Endogeneity and causal interpretation.}
-The reduced-form coefficient $\hat\beta=-0.656$ should be interpreted with
-care. GDP growth and poverty are jointly determined: common drivers include
-commodity price cycles, terms of trade shocks, and government transfer
-programs, all of which shift both variables simultaneously. The estimate
-is a \emph{descriptive} or \emph{reduced-form} parameter, not a causal
-one. The direction of omitted-variable bias is ambiguous in sign. If social
-transfer programs (such as Juntos) tend to reduce poverty beyond what GDP
-growth implies---because transfers respond counter-cyclically---then OLS
-will attribute some of that poverty reduction to low GDP growth, biasing
-$\hat\beta$ toward zero (less negative). Conversely, if anti-poverty
-programs are pro-cyclical (expanded when the economy grows), OLS will
-overstate the sensitivity, biasing $\hat\beta$ toward a more negative value.
-The 2009 observation is informative: poverty fell $3.4$\,pp despite GDP
-growth of only $1.1\%$---the exact pattern consistent with the
-counter-cyclical transfers story. The Chow test confirms that the
-reduced-form relationship is stable across sub-periods, but stability
-cannot rule out the presence of stable omitted variables that co-move
-with the business cycle. We therefore prefer the term ``reduced-form
-coefficient'' or ``semi-elasticity'' over ``causal elasticity'' throughout,
-and caution that the chained poverty estimate in the following section
-inherits this limitation.
+The coefficient $\hat\beta=-0.656$ is a \emph{reduced-form} parameter, not
+a causal elasticity: GDP growth and poverty are jointly determined by common
+drivers such as commodity cycles, terms of trade shocks, and transfer
+programs. The direction of omitted-variable bias is ambiguous---counter-cyclical
+transfers (e.g.\ Juntos) would attenuate $|\hat\beta|$, while pro-cyclical
+spending would inflate it---so we adopt the label ``reduced-form coefficient''
+throughout and caution that the chained poverty estimate in the following
+section inherits this uncertainty.
 
 \subsection{Chained Estimate: Rate $\to$ GDP $\to$ Poverty}
 \label{sec:chain}
 
 Chaining the Cholesky peak GDP response and the poverty OLS coefficient:
 \begin{equation}
+  \label{eq:chain}
   \underbrace{-0.195}_{\text{rate}\to\text{GDP}} \times
   \underbrace{(-0.656)}_{\text{GDP}\to\text{poverty}} =
   \underbrace{+0.128\;\text{pp}}_{\text{rate}\to\text{poverty}}.
@@ -660,34 +648,29 @@ precisely estimated.
 Two frequency issues affect the chain. First, the quarterly VAR uses
 quarter-on-quarter GDP growth (QoQ), while the poverty OLS uses annual
 year-on-year GDP growth (YoY)---distinct variable definitions. Second, the
-IRF peak occurs at $h=3$ (one rate shock $\to$ peak GDP after three
-quarters), but the annual poverty response requires aggregating the GDP
-impact over a full year. The cumulative Cholesky IRF over horizons
-$h=0,\ldots,3$ sums to approximately $-0.297$\,pp ($0.053 - 0.019 - 0.136
-- 0.195$), suggesting the annual-equivalent GDP impact of a rate shock is
-larger in magnitude than the peak quarterly impact alone. Chaining the
-peak quarterly IRF ($-0.195$\,pp) with the annual poverty coefficient
-therefore likely \emph{understates} the total poverty impact of a rate
-hike, because it omits the GDP impact accumulated over the remaining
-quarters of the year.
-
-A further implication concerns the sign ambiguity: the CI spanning
-$[-0.178,\,+0.458]$\,pp means a rate hike could arithmetically
-\emph{reduce} poverty at the upper end of the confidence interval. This
-is not an error---it reflects the genuine uncertainty about the
-rate--GDP link ($T=85$). At the upper bound of the GDP bootstrap CI
-(GDP rises in response to a hike), the poverty rate mechanically falls
-given $\hat\beta<0$. The chain should therefore be interpreted as an
-order-of-magnitude estimate of the \emph{central tendency}; the sign
-of the poverty effect is uncertain, but the point estimate ($+0.128$\,pp)
-is consistent with the view that tighter monetary policy, by slowing
-growth, raises headcount poverty in the short run.
+IRF peak occurs at $h=3$, but the annual poverty response requires
+aggregating the GDP impact over a full year. The cumulative Cholesky IRF
+over horizons $h=0,\ldots,3$ sums to approximately $-0.297$\,pp
+($0.053 - 0.019 - 0.136 - 0.195$). Chaining this cumulative figure with
+the poverty coefficient yields an alternative estimate:
+\begin{equation}
+  \underbrace{-0.297}_{\text{cumulative IRF}} \times
+  \underbrace{(-0.656)}_{\text{GDP}\to\text{poverty}} =
+  \underbrace{+0.195\;\text{pp}}_{\text{rate}\to\text{poverty}}.
+\end{equation}
+The peak-based chain ($+0.128$\,pp, Equation~\ref{eq:chain}) uses the
+single-quarter peak impact and likely \emph{understates} the annual-equivalent
+poverty effect; the cumulative-based chain ($+0.195$\,pp) aggregates the
+full-year GDP loss and likely \emph{overstates} it if not all of that
+loss is visible in annual poverty data. The true annual-equivalent poverty
+impact of a 100\,bp rate hike lies somewhere between these two
+bounds---roughly $+0.13$ to $+0.20$\,pp---and the compounded uncertainty
+from the rate--GDP link means the sign itself cannot be established with
+confidence given the available data.
 
 % ─────────────────────────────────────────────────────────────────────────────
 \section{Systematic Comparison}
 \label{sec:comparison}
-
-\noindent\textit{Panel A: Own estimates. Panel B: Published Peru estimates.}
 
 Table~\ref{tab:master} is the paper's signature result: a systematic
 comparison of all identification strategies, including published Peru

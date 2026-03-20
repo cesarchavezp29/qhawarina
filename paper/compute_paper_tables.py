@@ -347,14 +347,17 @@ b_plot  = lp_beta[mask]
 lo_plot = lp_lo90[mask]
 hi_plot = lp_hi90[mask]
 
-fig, ax = plt.subplots(figsize=(4.5, 3.2))
+fig, ax = plt.subplots(figsize=(7.0, 4.0))
 
 # Light red background (wrong sign zone)
-ax.axhspan(0, 12, color='#fce8e8', alpha=0.4, zorder=0)
+ax.axhspan(0, 14, color='#fce8e8', alpha=0.4, zorder=0)
 ax.axhline(0, color=C_DARK, lw=0.8, ls='--', zorder=2)
 
 for h, b, lo, hi in zip(hs_plot, b_plot, lo_plot, hi_plot):
-    ax.plot([h, h], [lo, hi], color=C_MED, lw=1.0, zorder=2)
+    ax.plot([h, h], [lo, hi], color=C_MED, lw=0.9, zorder=2)
+    # Cap ticks — narrow
+    ax.plot([h - 0.15, h + 0.15], [lo, lo], color=C_MED, lw=0.9, zorder=2)
+    ax.plot([h - 0.15, h + 0.15], [hi, hi], color=C_MED, lw=0.9, zorder=2)
     ax.plot(h, b, 'o', color=C_BLACK, ms=4, zorder=3)
 
 ax.set_xlabel('Horizon (quarters)', labelpad=4)
@@ -362,10 +365,11 @@ ax.set_ylabel('GDP response (pp)', labelpad=4)
 ax.set_xlim(-0.5, 12.5)
 ax.set_xticks(range(13))
 ax.set_ylim(-4, 14)
-ax.annotate('All estimates are positive (wrong sign)\n→ tone instrument fails exogeneity',
-            xy=(0.97, 0.97), xycoords='axes fraction',
-            fontsize=8, ha='right', va='top', color='#800000', style='italic')
-ax.annotate('Bars: 90% CI · Dot: point estimate',
+ax.annotate('All estimates are positive (wrong sign)\n\u2192 tone instrument fails exogeneity',
+            xy=(0.03, 0.97), xycoords='axes fraction',
+            fontsize=8, ha='left', va='top', color='#800000', style='italic',
+            bbox=dict(boxstyle='round,pad=0.3', fc='white', ec='none', alpha=0.85))
+ax.annotate('Bars: 90% CI \u00b7 Dot: point estimate',
             xy=(0.97, 0.04), xycoords='axes fraction',
             fontsize=8, ha='right', va='bottom', color=C_DARK)
 
@@ -403,12 +407,12 @@ for ax, col, ylabel, ylims in zip(
 ):
     for s, e in hiking:
         ax.axvspan(pd.Timestamp(s), pd.Timestamp(e),
-                   facecolor='none', edgecolor=C_DARK, hatch='///', lw=0,
-                   alpha=0.5, zorder=0)
+                   facecolor='none', edgecolor=C_DARK, hatch='/', lw=0,
+                   alpha=0.3, zorder=0)
     for s, e in cutting:
         ax.axvspan(pd.Timestamp(s), pd.Timestamp(e),
-                   facecolor='none', edgecolor=C_MED, hatch='...', lw=0,
-                   alpha=0.5, zorder=0)
+                   facecolor='none', edgecolor=C_MED, hatch='..', lw=0,
+                   alpha=0.3, zorder=0)
 
     ax.axhline(0, color=C_MED, lw=0.6, ls='--', zorder=1)
     ax.plot(tone_m['date'], tone_m[col], color=C_BLACK, lw=0.9, zorder=2)
@@ -419,8 +423,8 @@ for ax, col, ylabel, ylims in zip(
 
 # Legend patches
 legend_elements = [
-    Patch(facecolor='none', edgecolor=C_DARK, hatch='///', label='Hiking episode'),
-    Patch(facecolor='none', edgecolor=C_MED,  hatch='...', label='Cutting episode'),
+    Patch(facecolor='none', edgecolor=C_DARK, hatch='/', label='Hiking episode'),
+    Patch(facecolor='none', edgecolor=C_MED,  hatch='..', label='Cutting episode'),
 ]
 axes[0].legend(handles=legend_elements, loc='upper left', frameon=False, fontsize=8)
 
@@ -544,59 +548,74 @@ STRATEGIES = [
     ('Portilla et al. (2022)',         -0.25,  None, None, True),
 ]
 
-fig, ax = plt.subplots(figsize=(6.5, 4.2))
+Y_MULT = 1.6   # vertical spacing multiplier between rows
+N = len(STRATEGIES)
+fig, ax = plt.subplots(figsize=(7.5, 5.8))
 
-y_positions = list(range(len(STRATEGIES)))
+y_positions = [i * Y_MULT for i in range(N)]
 y_labels    = [s[0] for s in STRATEGIES]
 
-# Literature range reference band
-ax.axvspan(-0.30, -0.25, color='#e8e8f8', alpha=0.8, zorder=0,
-           label='Literature range [−0.30, −0.25]')
+# Literature range reference band — labelled at bottom via annotation, not legend
+ax.axvspan(-0.30, -0.25, color='#e8e8f8', alpha=0.8, zorder=0)
 ax.axvline(0, color=C_MED, lw=0.7, ls='--', zorder=1)
 
-# Divider between own estimates and literature
-ax.axhline(6.5, color=C_LIGHT, lw=0.6, ls='-')
-ax.annotate('Literature', xy=(0.01, 7.0), xycoords=('axes fraction', 'data'),
-            fontsize=8, color=C_MED, style='italic')
+# Divider between own estimates and literature (between row index 6 and 7)
+divider_y = (y_positions[6] + y_positions[7]) / 2 if N > 7 else y_positions[6] - Y_MULT / 2
+ax.axhline(divider_y, color=C_LIGHT, lw=0.7, ls='-')
 
-XLIM_LO = -8.5
+XLIM_LO = -9.5
 for i, (label, point, lo, hi, feasible) in enumerate(STRATEGIES):
-    y = len(STRATEGIES) - 1 - i  # top-to-bottom
+    y = y_positions[N - 1 - i]   # top-to-bottom
 
     if point is None:
         # Not identified — shaded row + × marker
-        ax.axhspan(y - 0.45, y + 0.45, color='#f0f0f0', zorder=0)
-        ax.plot(XLIM_LO + 0.3, y, 'x', color=C_MED, ms=7, mew=1.5, zorder=3)
-        ax.annotate('not identified', xy=(XLIM_LO + 0.7, y), fontsize=7.5,
+        ax.axhspan(y - 0.55, y + 0.55, color='#f0f0f0', zorder=0)
+        ax.plot(XLIM_LO + 0.4, y, 'x', color=C_MED, ms=7, mew=1.5, zorder=3)
+        ax.annotate('not identified', xy=(XLIM_LO + 1.1, y), fontsize=7.5,
                     color=C_MED, va='center', style='italic')
     else:
         if lo is not None and hi is not None:
-            ci_lo_clipped = max(lo, XLIM_LO + 0.2)
-            ci_hi_clipped = min(hi,  5.0)
+            ci_lo_clipped = max(lo, XLIM_LO + 0.3)
+            ci_hi_clipped = min(hi, 4.5)
             ax.plot([ci_lo_clipped, ci_hi_clipped], [y, y],
-                    color=C_MED, lw=1.2, zorder=2)
-            if lo < XLIM_LO + 0.2:
+                    color=C_MED, lw=1.4, zorder=2)
+            if lo < XLIM_LO + 0.3:
                 # Arrow pointing left to indicate truncation
-                ax.annotate('', xy=(XLIM_LO + 0.05, y),
+                ax.annotate('', xy=(XLIM_LO + 0.1, y),
                             xytext=(ci_lo_clipped, y),
                             arrowprops=dict(arrowstyle='->', color=C_DARK,
-                                            lw=1.0, shrinkA=0, shrinkB=0))
-                ax.annotate(f'{lo:.1f}', xy=(XLIM_LO + 0.05, y),
-                            xytext=(-4, 0), textcoords='offset points',
+                                            lw=1.1, shrinkA=0, shrinkB=0))
+                ax.annotate(f'{lo:.1f}', xy=(XLIM_LO + 0.1, y),
+                            xytext=(-5, 0), textcoords='offset points',
                             fontsize=7, ha='right', va='center', color=C_DARK)
-        marker = 'D' if i >= 7 else 'o'
-        msize  = 4.5 if i >= 7 else 5
-        color  = C_MED if i >= 7 else C_BLACK
-        ax.plot(point, y, marker, color=color, ms=msize, zorder=4)
+        is_lit = (i >= 7)
+        marker = 'D' if is_lit else 'o'
+        msize  = 6 if is_lit else 6
+        color  = C_DARK if is_lit else C_BLACK
+        ax.plot(point, y, marker, color=color, ms=msize, zorder=4,
+                markerfacecolor=('none' if is_lit else color),
+                markeredgewidth=1.5 if is_lit else 1.0)
 
-ax.set_yticks(list(range(len(STRATEGIES))))
+ax.set_yticks(y_positions)
 ax.set_yticklabels(list(reversed(y_labels)), fontsize=8.5)
 ax.set_xlabel('Peak GDP response to 100bp rate hike (pp)', labelpad=5)
-ax.set_xlim(XLIM_LO, 2.0)
-ax.set_ylim(-0.6, len(STRATEGIES) - 0.4)
+ax.set_xlim(XLIM_LO, 2.5)
+ax.set_ylim(-Y_MULT * 0.6, y_positions[-1] + Y_MULT * 0.6)
+
+# "Literature" label placed in bottom-right corner, clearly away from data rows
+ax.annotate('Shaded band: published Peru literature\nrange [\u22120.30, \u22120.25] pp',
+            xy=(0.98, 0.02), xycoords='axes fraction',
+            fontsize=7.5, ha='right', va='bottom', color=C_MED, style='italic',
+            bbox=dict(boxstyle='round,pad=0.3', fc='white', ec='none', alpha=0.85))
+
+# "Literature estimates" label near divider line, right side
+ax.annotate('Literature estimates \u2193', xy=(1.01, divider_y),
+            xycoords=('axes fraction', 'data'),
+            fontsize=7.5, ha='left', va='top', color=C_MED, style='italic',
+            annotation_clip=False)
 
 handles, labs = ax.get_legend_handles_labels()
-ax.legend(handles, labs, loc='lower right', frameon=False, fontsize=8)
+ax.legend(handles, labs, loc='upper right', frameon=False, fontsize=8)
 
 fig.tight_layout()
 savefig(fig, 'fig9_forest_plot')
@@ -919,7 +938,6 @@ Period & $\hat{\beta}$ & SE & $t$ & $p$ & $R^2$ & $N$ \\
     Pooled, 2005--2024 & $-0.656$ & $0.115$ & $-5.69$ & $<0.001$ & $0.669$ & 18 \\
     2005--2014 (expansion) & $-0.461$ & $0.179$ & $-2.57$ & $0.033$ & $0.452$ & 10 \\
     2015--2024 excl.\ COVID & $-0.723$ & $0.287$ & $-2.52$ & $0.045$ & $0.514$ & 8 \\
-    2015--2019 (pre-COVID) & $-0.634$ & $0.362$ & $-1.75$ & $0.178$ & $0.506$ & 5 \\
     Chow test ($H_0$: equal slopes) & \multicolumn{3}{l}{$t=0.78$, $p\approx0.45$} &
         \multicolumn{3}{l}{Cannot reject stability} \\
 \bottomrule
@@ -1023,7 +1041,7 @@ savefig(fig, 'fig10_poverty_influence')
 # ── Table 13: EME Taxonomy ────────────────────────────────────────────────────
 print('Table 13: EME taxonomy...')
 write_tex('tab13_eme_taxonomy', r"""
-\resizebox{\linewidth}{!}{\begin{tabular}{lcccp{3.8cm}}
+\resizebox{\linewidth}{!}{\begin{tabular}{lcccp{5.2cm}}
 \toprule
 Country & Administered & No rate & Limited & Notes \\
         & interbank & futures & episodes & \\
@@ -1048,7 +1066,7 @@ Country & Administered & No rate & Limited & Notes \\
 \end{tabular}}
 \begin{tablenotes}
 \small \cmark\ = constraint active; \warnmark\ = partial; $\times$ = absent.
-``Administered'' = BCRP sets interbank rate by construction.
+``Administered'' = central bank enforces interbank rate via active liquidity management.
 ``No futures'' = no liquid OIS/exchange-traded rate futures.
 ``Limited'' = fewer than 5 unambiguous IT-era shocks.
 Brazil's deep DI futures market enables Proxy-SVAR \citep{caldara2019}.
