@@ -1,5 +1,5 @@
 {
-  "date": "2026-03-19",
+  "date": "2026-03-20",
   "headline_es": "Precios supermercado -0.89% MTD · Nowcast PBI +2.84%",
   "headline_en": "Supermarket prices -0.89% MTD · GDP nowcast +2.84%",
   "body_es": "Datos de alta frecuencia actualizados. Revisa las páginas de estadísticas para el detalle completo.",
@@ -32,9 +32,9 @@
     },
     {
       "icon": "🏛️",
-      "text_es": "Riesgo político: IRP 191 — nivel alto.",
-      "text_en": "Political risk: IRP 191 — high level."
+      "text_es": "Riesgo político: IRP 874 — nivel crítico.",
+      "text_en": "Political risk: IRP 874 — critical level."
     }
   ],
-  "updated_at": "2026-03-20T03:21:40.147249+00:00"
+  "updated_at": "2026-03-20T05:11:11.755529+00:00"
 }
