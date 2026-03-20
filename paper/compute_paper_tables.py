@@ -400,33 +400,34 @@ cutting = [('2008-09-01', '2010-03-01'), ('2014-09-01', '2017-03-01'),
 fig, axes = plt.subplots(2, 1, figsize=(6.5, 4.2), sharex=True)
 
 from matplotlib.patches import Patch
-_first = True
 for ax, col, ylabel, ylims in zip(
     axes,
     ['dict_tone', 'llm_tone'],
     ['Dictionary tone\n(\u22121 to +1)', 'LLM tone\n(\u2212100 to +100)'],
     [(-1.2, 1.2), (-80, 80)]
 ):
+    # Light shading — no hatching, just fills with thin top-edge accent
     for s, e in hiking:
-        ax.axvspan(pd.Timestamp(s), pd.Timestamp(e),
-                   facecolor='none', edgecolor=C_DARK, hatch='/', lw=0,
-                   alpha=0.3, zorder=0)
+        s_ts, e_ts = pd.Timestamp(s), pd.Timestamp(e)
+        ax.axvspan(s_ts, e_ts, facecolor='#c8c8c8', alpha=0.22, zorder=0, lw=0)
+        ax.axvline(s_ts, color=C_DARK, lw=0.5, ls='-', zorder=1, alpha=0.5)
+        ax.axvline(e_ts, color=C_DARK, lw=0.5, ls='-', zorder=1, alpha=0.5)
     for s, e in cutting:
-        ax.axvspan(pd.Timestamp(s), pd.Timestamp(e),
-                   facecolor='none', edgecolor=C_MED, hatch='..', lw=0,
-                   alpha=0.3, zorder=0)
+        s_ts, e_ts = pd.Timestamp(s), pd.Timestamp(e)
+        ax.axvspan(s_ts, e_ts, facecolor='#888888', alpha=0.10, zorder=0, lw=0)
+        ax.axvline(s_ts, color=C_MED, lw=0.5, ls='--', zorder=1, alpha=0.4)
+        ax.axvline(e_ts, color=C_MED, lw=0.5, ls='--', zorder=1, alpha=0.4)
 
     ax.axhline(0, color=C_MED, lw=0.6, ls='--', zorder=1)
     ax.plot(tone_m['date'], tone_m[col], color=C_BLACK, lw=0.9, zorder=2)
     ax.set_ylabel(ylabel, labelpad=4)
     ax.set_ylim(*ylims)
     ax.set_xlim(pd.Timestamp('2001-01-01'), pd.Timestamp('2026-06-01'))
-    _first = False
 
-# Legend patches
+# Legend patches — use plain gray fills to match actual shading
 legend_elements = [
-    Patch(facecolor='none', edgecolor=C_DARK, hatch='/', label='Hiking episode'),
-    Patch(facecolor='none', edgecolor=C_MED,  hatch='..', label='Cutting episode'),
+    Patch(facecolor='#c8c8c8', alpha=0.5, edgecolor=C_DARK, lw=0.5, label='Hiking episode'),
+    Patch(facecolor='#888888', alpha=0.3, edgecolor=C_MED,  lw=0.5, label='Cutting episode'),
 ]
 leg = axes[0].legend(handles=legend_elements, loc='lower left', frameon=True,
                      fontsize=8, framealpha=0.95, edgecolor='none')
@@ -772,7 +773,7 @@ Equation & {hdr} \\
 \bottomrule
 \end{{tabular}}
 \begin{{tablenotes}}
-\small VAR(1), $T=85$, FWL COVID partial-out. Full SEs in Appendix A.
+\small VAR(1), $T=85$, FWL COVID partial-out. Full SEs available upon request.
 Ordering: [ToT, GDP, CPI, FX, Rate].
 \end{{tablenotes}}
 """)
@@ -977,7 +978,7 @@ write_tex('tab12_master_comparison', r"""
 Method & Type & Peak GDP (pp) & 90\% CI & Feasible & Reason \\
 \midrule
 \multicolumn{6}{l}{\textit{Own estimates, this paper}} \\
-    Cholesky VAR(1) & Recursive & $-0.195$ & $[-0.70, 0.27]$ & \cmark & Standard timing \\
+    Cholesky VAR(1) & Recursive & $-0.195$ & $[-0.70, 0.27]$ & \cmark & Cholesky timing assumption \\
     Sign restrictions & Set ID & $-2.30$ & $[-35.9, 19.7]$ & \warnmark & Set too wide \\
     Narrative SR (full) & Set ID & $-0.74$ & $[-1.06,-0.41]$ & \warnmark & COVID tension \\
     Narrative SR (2022) & Set ID & $-3.57$ & $[-30.0,-0.29]$ & \warnmark & Single episode \\

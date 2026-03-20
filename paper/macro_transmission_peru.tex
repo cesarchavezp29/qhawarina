@@ -28,6 +28,7 @@
 \usepackage{subcaption}
 \usepackage{pifont}
 \usepackage{xcolor}
+\usepackage{placeins}
 \usepackage[hidelinks,
             pdfauthor={Carlos C\'esar Ch\'avez Padilla},
             pdftitle={Identifying Monetary Policy Shocks in an Administered-Rate Economy}]{hyperref}
@@ -186,7 +187,7 @@ exogeneity; Table~\ref{tab:tone_iv}).
 Section~\ref{sec:background} describes Peru's monetary framework.
 Section~\ref{sec:data} presents the data. Section~\ref{sec:framework}
 develops the econometric framework. Section~\ref{sec:results} reports
-results. Section~\ref{sec:comparison} presents the master comparison.
+results (Section~\ref{sec:comparison} provides the systematic comparison).
 Section~\ref{sec:discussion} discusses implications.
 Section~\ref{sec:conclusion} concludes.
 
@@ -395,7 +396,7 @@ poverty transmission.
 \section{Results}
 \label{sec:results}
 
-\textit{All tables are collected in Appendix~\ref{app:tables}; figures appear inline.}
+All tables are collected in Appendix~\ref{app:tables}; figures appear inline in the text.
 
 \subsection{Cholesky VAR(1): Benchmark}
 \label{sec:cholesky}
@@ -631,13 +632,22 @@ from the rate--GDP link means the sign itself cannot be established with
 confidence given the available data.
 
 % ─────────────────────────────────────────────────────────────────────────────
-\section{Systematic Comparison}
+\subsection{Systematic Comparison}
 \label{sec:comparison}
 
-Table~\ref{tab:master} is the paper's signature result: a systematic
-comparison of all identification strategies, including published Peru
-estimates. Figure~\ref{fig:forest} displays a forest plot of peak GDP
-responses with confidence/credible intervals.
+Table~\ref{tab:master} collects all identification strategies in a single
+comparison (see also Figure~\ref{fig:forest}). The hierarchy is clear.
+Cholesky VAR(1) is the only method that produces an identified point
+estimate consistent with the Peru literature, does not require a valid
+external instrument, and is not undermined by the COVID--narrative
+tension. Sign restrictions and narrative SR yield sets that are too wide
+for inference. Both Proxy-SVAR instruments fail---the interbank rate on
+relevance ($F=4.73$) and the tone measure on exogeneity. The three
+published Peru estimates cluster tightly at $[-0.30,\,-0.25]$\,pp,
+bracketing the Cholesky point estimate of $-0.195$\,pp and confirming
+that recursive identification is the credible frontier in this setting.
+The 90\% CI includes zero, reflecting the small quarterly sample
+($T=85$) rather than any weakness of the identifying assumption.
 
 \begin{figure}[htbp]
   \centering
@@ -646,15 +656,11 @@ responses with confidence/credible intervals.
     Point estimates and 90\% confidence/credible intervals by strategy.
     The Cholesky estimate ($-0.195$\,pp) is consistent with published Peru
     estimates ($-0.25$ to $-0.30$\,pp). Sign restriction and narrative SR
-    sets are very wide. Failed Proxy-SVARs are not plotted.}
+    sets are very wide. Failed Proxy-SVARs are not plotted.
+    Note: sign restriction 90\% CI $[-35.9,\,19.7]$ and narrative SR
+    (2022) CI $[-30.0,\,-0.29]$ are truncated; arrows indicate direction.}
   \label{fig:forest}
 \end{figure}
-
-The table illustrates the hierarchy of identification quality in Peru's
-setting. The Cholesky benchmark is the only method that (i) produces an
-identified point estimate, (ii) has a CI consistent with the Peru
-literature, and (iii) does not require instruments or episode restrictions
-that fail in Peru's institutional environment.
 
 % ─────────────────────────────────────────────────────────────────────────────
 \section{Discussion}
@@ -876,6 +882,7 @@ deploying modern methods in any similar setting.
   \input{tables/tab13_eme_taxonomy}
 \end{mytable}
 
+\FloatBarrier
 \section{VAR Coefficient Matrix and Diagnostics}
 \label{app:var}
 
@@ -885,6 +892,7 @@ All five eigenvalues of $\hat A_1$ lie strictly inside the unit circle
 ToT $=14.17$, GDP $=3.91$, CPI $=0.18$, FX $=2.64$, Rate $=0.11$.
 AIC selects $p=1$ over $p=2$ (criterion value $-7.49$ vs.\ $-7.41$).
 
+\FloatBarrier
 \section{BCRP Communication Tone: Lexicon and Classification}
 \label{app:tone}
 
