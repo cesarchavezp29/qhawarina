@@ -90,7 +90,7 @@ def compute_cholesky_irf(var_result, shock_var_idx=4, horizon=9, n_boot=500,
     irf_pt = irf_calc(var_result.coefs, P, horizon, shock_var_idx, response_idx) / norm
 
     if n_boot == 0:
-        return irf_pt, irf_pt * np.nan, irf_pt * np.nan
+        return irf_pt, irf_pt * np.nan, irf_pt * np.nan, irf_pt * np.nan, irf_pt * np.nan
 
     boot = np.zeros((n_boot, horizon)); T_d = resids.shape[0]
     for b in range(n_boot):
@@ -110,7 +110,9 @@ def compute_cholesky_irf(var_result, shock_var_idx=4, horizon=9, n_boot=500,
             if abs(nb)<1e-10: nb=1.0
             boot[b] = irf_calc(rb.coefs, Pb, horizon, shock_var_idx, response_idx)/nb
         except: boot[b] = irf_pt
-    return irf_pt, np.percentile(boot,5,axis=0), np.percentile(boot,95,axis=0)
+    return (irf_pt,
+            np.percentile(boot, 5, axis=0), np.percentile(boot, 95, axis=0),
+            np.percentile(boot, 16, axis=0), np.percentile(boot, 84, axis=0))
 
 
 # ---------------------------------------------------------------------------
@@ -121,7 +123,7 @@ def figure_A1(var_df, res_base):
     h = np.arange(9)
 
     # Baseline IRF with CI
-    irf_base, ci_lo_base, ci_hi_base = compute_cholesky_irf(
+    irf_base, ci_lo90, ci_hi90, ci_lo68, ci_hi68 = compute_cholesky_irf(
         res_base, shock_var_idx=4, horizon=9, n_boot=1000, response_idx=1)
 
     # All orderings: (cols, shock_idx, resp_idx, label, style)
@@ -137,8 +139,8 @@ def figure_A1(var_df, res_base):
         sub = var_df[cols]
         try:
             r = VAR(sub).fit(1, trend='c')
-            irf_r, _, _ = compute_cholesky_irf(r, shock_var_idx=si, horizon=9,
-                                                n_boot=0, response_idx=ri)
+            irf_r, _, _, _, _ = compute_cholesky_irf(r, shock_var_idx=si, horizon=9,
+                                                      n_boot=0, response_idx=ri)
             alt_irfs.append((irf_r, label, ls))
         except Exception as e:
             print(f'  Warning: ordering {label} failed: {e}')
@@ -184,8 +186,9 @@ def figure_A1(var_df, res_base):
 
     fig, ax = plt.subplots(figsize=SZ["wide"])
 
-    # Baseline CI
-    ax.fill_between(h, ci_lo_base, ci_hi_base, color=C["ci_light"], alpha=0.15, label='Baseline 90% CI')
+    # Baseline CI — two levels
+    ax.fill_between(h, ci_lo90, ci_hi90, color=C["ci_light"], alpha=0.25, label='Baseline 90% CI')
+    ax.fill_between(h, ci_lo68, ci_hi68, color=C["ci_dark"],  alpha=0.50, label='Baseline 68% CI')
 
     # Alt orderings
     for irf_r, label, ls in alt_irfs:
@@ -452,27 +455,31 @@ def figure_A5(var_df):
     window = 40
     n_windows = len(var_df) - window + 1
     end_dates = var_df.index[window-1:]
-    peaks = []; ci_lo = []; ci_hi = []
+    peaks = []; ci_lo = []; ci_hi = []; ci_lo68 = []; ci_hi68 = []
 
     for i in range(n_windows):
         sub = var_df.iloc[i:i+window]
         try:
             r = VAR(sub).fit(1, trend='c')
-            irf_r, lo_r, hi_r = compute_cholesky_irf(r, shock_var_idx=4, response_idx=1,
-                                                       horizon=9, n_boot=300)
-            peaks.append(irf_r.min())
+            irf_r, lo_r90, hi_r90, lo_r68, hi_r68 = compute_cholesky_irf(
+                r, shock_var_idx=4, response_idx=1, horizon=9, n_boot=300)
             h_pk = int(irf_r.argmin())
-            ci_lo.append(lo_r[h_pk])
-            ci_hi.append(hi_r[h_pk])
+            peaks.append(irf_r[h_pk])
+            ci_lo.append(lo_r90[h_pk])
+            ci_hi.append(hi_r90[h_pk])
+            ci_lo68.append(lo_r68[h_pk])
+            ci_hi68.append(hi_r68[h_pk])
         except:
             peaks.append(np.nan); ci_lo.append(np.nan); ci_hi.append(np.nan)
+            ci_lo68.append(np.nan); ci_hi68.append(np.nan)
         if i % 10 == 0:
             print(f'  Rolling window {i+1}/{n_windows}')
 
     dates = [d.to_pydatetime() for d in end_dates]
 
     fig, ax = plt.subplots(figsize=SZ["single_sq"])
-    ax.fill_between(dates, ci_lo, ci_hi, color=C["ci_light"], alpha=0.15, label='90% CI')
+    ax.fill_between(dates, ci_lo,   ci_hi,   color=C["ci_light"], alpha=0.25, label='90% CI')
+    ax.fill_between(dates, ci_lo68, ci_hi68, color=C["ci_dark"],  alpha=0.50, label='68% CI')
     ax.plot(dates, peaks, color=C["main"], lw=1.5, label='Peak GDP response')
     ax.axhline(-0.195, color=C["accent1"], ls='--', lw=1, label='Full-sample: -0.195')
     ax.axvline(pd.Timestamp('2020-03-31'), color=C["gray_line"], ls=':', lw=1, label='COVID (2020Q1)')
@@ -497,7 +504,7 @@ def figure_A6(res_base):
     h = np.arange(9)
 
     # Cholesky IRF
-    irf_base, ci_lo_base, ci_hi_base = compute_cholesky_irf(
+    irf_base, ci_lo_base, ci_hi_base, _, _ = compute_cholesky_irf(
         res_base, shock_var_idx=4, horizon=9, n_boot=1000, response_idx=1)
 
     # GIRF point estimate

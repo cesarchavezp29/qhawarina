@@ -241,10 +241,13 @@ else:
 fig, ax = plt.subplots(figsize=SZ["single"])
 
 if lo05 and hi95:
-    ax.fill_between(h_sr, lo05, hi95, alpha=0.12, color=C["ci_light"],
-                    edgecolor=C["ci_dark"], linewidth=0.5, label='90% credible set')
+    _ymin, _ymax = -15, 8
+    lo05_vis = [max(v, _ymin) for v in lo05]
+    hi95_vis = [min(v, _ymax) for v in hi95]
+    ax.fill_between(h_sr, lo05_vis, hi95_vis, alpha=0.25, color=C["ci_light"],
+                    edgecolor=C["ci_dark"], linewidth=0.8, label='90% credible set')
 if lo16 and hi84:
-    ax.fill_between(h_sr, lo16, hi84, alpha=0.25, color=C["ci_dark"],
+    ax.fill_between(h_sr, lo16, hi84, alpha=0.50, color=C["ci_dark"],
                     edgecolor='none', label='68% credible set')
 ax.plot(h_sr, med, color=C["main"], lw=2, label='Median', zorder=3)
 ax.plot(H8, GDP_POINT, color=C["accent1"], lw=1.5, ls='--', zorder=2, label='Cholesky point')
@@ -368,15 +371,13 @@ for ax, col, ylabel, ylims in zip(
     ax.set_xlim(pd.Timestamp('2001-01-01'), pd.Timestamp('2026-06-01'))
 
 legend_elements = [
-    _Patch(facecolor=C["accent1"], alpha=0.25, label='Hiking episode'),
-    _Patch(facecolor=C["accent2"], alpha=0.25, label='Cutting episode'),
+    _Patch(facecolor=C["accent1"], alpha=0.40, label='Hiking episode'),
+    _Patch(facecolor=C["accent2"], alpha=0.40, label='Cutting episode'),
 ]
-fig.legend(handles=legend_elements, loc='lower center', ncol=2,
-           bbox_to_anchor=(0.5, -0.02), fontsize=8.5, frameon=False)
-
 axes[1].xaxis.set_major_locator(matplotlib.dates.YearLocator(2))
 axes[1].xaxis.set_major_formatter(matplotlib.dates.DateFormatter('%Y'))
 plt.setp(axes[1].xaxis.get_majorticklabels(), rotation=0, ha='center')
+legend_below(axes[1], ncol=2, handles=legend_elements)
 savefig(fig, 'fig6_bcrp_tone_series')
 
 

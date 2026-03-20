@@ -455,14 +455,10 @@ def main():
     ax.set_xticklabels(labels, fontsize=9)
     ax.set_ylabel('Poverty rate change (pp per 100bp shock)')
     ax.set_title('')
-    ax.text(
-        0, baseline_chain + 0.01 if baseline_chain >= 0 else baseline_chain - 0.03,
-        'Baseline\n(mismatch)', ha='center', va='bottom', fontsize=7.5, color=C["gray_line"]
-    )
-
-    # Annotate bars with values
+    # Annotate bars with values — place above the error bar cap (or above bar if no error bar)
     for i, (b_val, rect) in enumerate(zip(centers, bars)):
-        ypos = b_val + 0.01 if b_val >= 0 else b_val - 0.03
+        cap_top = b_val + hi_errs[i] if i > 0 else b_val
+        ypos = cap_top + 0.04 if cap_top >= 0 else b_val - 0.06
         ax.text(rect.get_x() + rect.get_width()/2, ypos,
                 f'{b_val:.3f}', ha='center', va='bottom', fontsize=8)
 
