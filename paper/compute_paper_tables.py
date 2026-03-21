@@ -655,7 +655,7 @@ tone_tex_rows = '\n'.join(
     for r in tone_by_year.itertuples()
 )
 write_tex('tab2_tone_summary', rf"""
-\resizebox{{0.5\linewidth}}{{!}}{{\begin{{tabular}}{{lrcccc}}
+\scalebox{{0.78}}{{\begin{{tabular}}{{lrcccc}}
 \toprule
 Year & $N$ & Dict. mean & (SD) & LLM mean & (SD) \\
 \midrule
