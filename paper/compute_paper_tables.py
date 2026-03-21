@@ -256,7 +256,8 @@ if lo16 and hi84:
     ax.fill_between(h_sr, lo16, hi84, alpha=0.50, color=C["ci_dark"],
                     edgecolor='none', label='68% credible set')
 ax.plot(h_sr, med, color=C["main"], lw=2, label='Median', zorder=3)
-ax.plot(H8, GDP_POINT, color=C["accent1"], lw=2.5, ls='--', zorder=4, label='Cholesky ($-$0.195\u2009pp)')
+ax.fill_between(H8, GDP_CI90_LO, GDP_CI90_HI, color=C["accent1"], alpha=0.12, zorder=3)
+ax.plot(H8, GDP_POINT, color=C["accent1"], lw=2.5, ls='--', zorder=4, label='Cholesky 90% CI')
 zero_line(ax)
 
 ax.set_xlabel('Horizon (quarters)')
@@ -264,12 +265,6 @@ ax.set_ylabel('GDP response (pp)')
 ax.set_xlim(-0.3, max(h_sr) + 0.3)
 ax.set_xticks(h_sr)
 ax.set_ylim(-15, 8)
-# Annotation arrow pointing to Cholesky line at h=3
-ax.annotate('$-$0.195\u2009pp\n(Cholesky)',
-            xy=(3, GDP_POINT[3]), xytext=(5.5, 3.5),
-            fontsize=7.5, color=C["accent1"],
-            arrowprops=dict(arrowstyle='->', color=C["accent1"], lw=1.2),
-            ha='center')
 stat_box(ax, '80,000 draws · 63,743 accepted (79.7%)', loc='upper right', fontsize=7.5)
 legend_below(ax, ncol=2)
 
@@ -286,7 +281,8 @@ ax.fill_between(NARR_H, NARR_P05, NARR_P95, alpha=0.18, color=C["ci_light"],
 ax.fill_between(NARR_H, NARR_P16, NARR_P84, alpha=0.40, color=C["ci_dark"],
                 edgecolor='none', label='68% credible set')
 ax.plot(NARR_H, NARR_P50, color=C["main"], lw=2, label='Median (narrative SR)', zorder=3)
-ax.plot(H8, GDP_POINT, color=C["accent1"], lw=2.0, ls='--', label='Cholesky point', zorder=2)
+ax.fill_between(H8, GDP_CI90_LO, GDP_CI90_HI, color=C["accent1"], alpha=0.12, zorder=2)
+ax.plot(H8, GDP_POINT, color=C["accent1"], lw=2.0, ls='--', label='Cholesky 90% CI', zorder=2)
 zero_line(ax)
 
 ax.set_xlabel('Horizon (quarters)')
