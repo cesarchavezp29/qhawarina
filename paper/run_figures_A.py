@@ -165,8 +165,8 @@ def figure_A1(var_df, res_base):
     # Bootstrap GIRF CI
     resids = res_base.resid
     T_d = resids.shape[0]; K = 5; lags = 1
-    girf_boot = np.zeros((500, 9))
-    for b in range(500):
+    girf_draws = []
+    for b in range(1000):
         idx = np.random.randint(0, T_d, size=T_d)
         br = resids.values[idx]; Y = np.zeros((T_d+lags, K))
         Y[:lags] = res_base.model.endog[:lags]
@@ -184,9 +184,9 @@ def figure_A1(var_df, res_base):
             for hh in range(9):
                 gi[hh] = (Ahb @ Sb @ e_k)[j_gdp] / nrm
                 Ahb = Ahb @ A1b
-            girf_boot[b] = gi
-        except:
-            girf_boot[b] = girf_pt
+            girf_draws.append(gi)
+        except: pass
+    girf_boot = np.array(girf_draws)
     girf_lo = np.percentile(girf_boot, 5, axis=0)
     girf_hi = np.percentile(girf_boot, 95, axis=0)
 
@@ -206,7 +206,8 @@ def figure_A1(var_df, res_base):
     # Baseline — bold
     ax.plot(h, irf_base, color=C["main"], lw=2.5, label='Baseline [ToT,GDP,CPI,FX,Rate]')
 
-    # GIRF — bold red
+    # GIRF — bold red with 90% CI
+    ax.fill_between(h, girf_lo, girf_hi, color=C["accent1"], alpha=0.12, label='GIRF 90% CI')
     ax.plot(h, girf_pt, color=C["accent1"], lw=2.5, label='GIRF (ordering-invariant)')
 
     zero_line(ax)
