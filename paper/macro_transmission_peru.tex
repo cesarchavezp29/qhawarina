@@ -98,9 +98,13 @@
     A novel LLM-classified BCRP tone instrument passes relevance but fails
     exogeneity, providing a cautionary result for communication-based
     identification in administered-rate settings.
-    Chaining the Cholesky estimate through a reduced-form GDP--poverty
-    coefficient, the estimated effect on the poverty headcount is approximately
-    $+0.5$\,pp per 100\,bp---a correlation, not a causal claim.
+    Chaining the Cholesky GDP estimate through a frequency-consistent
+    reduced-form poverty coefficient yields a central estimate of
+    $\approx+0.5$\,pp per 100\,bp and a 2021--2023 hiking-cycle contribution
+    of roughly 2--4\,pp to the poverty headcount---providing a distributional
+    benchmark for the poverty cost of monetary tightening in
+    administered-rate economies; this is a reduced-form chain, not a
+    structural estimate.
     The diagnostic toolkit for identification feasibility is the paper's
     primary methodological contribution.
   \end{abstract}
@@ -566,6 +570,23 @@ The 90\% CI includes zero beyond $h=1$, so the puzzle is not statistically
 robust; it is better interpreted as an artifact of the short sample
 ($T=85$ quarters) than as a structural feature of Peruvian inflation dynamics.
 
+A partial dollarisation channel provides additional economic plausibility.
+Peru's import basket is substantially invoiced in US dollars; when the BCRP
+raises rates, the sol appreciates only modestly relative to
+uncovered-interest-parity predictions because the central bank routinely
+intervenes in the FX market to smooth exchange-rate volatility.
+As a result, import prices in soles do not fall as the standard
+exchange-rate channel requires, while higher financing costs simultaneously
+raise domestic production costs---both forces apply upward pressure on
+near-term CPI.
+Panel~(c) corroborates this: the FX depreciation response is small and
+reverses within two quarters, indicating that the appreciation typically
+assumed to compress import prices is substantially attenuated by intervention.
+The 90\% CI includes zero beyond $h=1$, so the mechanism cannot be isolated
+statistically at this sample size, but it provides an economically coherent
+account of the positive point estimate rather than attributing it purely to
+short-sample noise.
+
 Figure~\ref{fig:hist_decomp} complements the IRF by decomposing the
 realized quarterly GDP growth path into shock contributions from each
 VAR variable, confirming that monetary policy shocks are quantitatively
@@ -899,8 +920,7 @@ Cholesky interpretation.
     The Cholesky estimate ($-0.195$\,pp) is consistent with published Peru
     estimates ($-0.25$ to $-0.30$\,pp). Sign restriction and narrative SR
     sets are very wide. Failed Proxy-SVARs are not plotted.
-    Note: sign restriction 90\% CI $[-35.9,\,19.7]$ and narrative SR
-    (2022) CI $[-30.0,\,-0.29]$ are truncated; arrows indicate direction.}
+    \footnote{The sign restriction 90\% CI $[-35.9,\,19.7]$ and narrative SR (2022) CI $[-30.0,\,-0.29]$ are truncated display values; the true identified sets extend beyond the axis limits in both directions, and the truncation reflects a readability choice, not the bounds of the posterior.}}
   \label{fig:forest}
 \end{figure}
 \FloatBarrier
@@ -1061,16 +1081,31 @@ policy---are essential complements.
 
 For the BCRP, monetary--GDP transmission exists (point estimate $-0.195$\,pp
 per 100\,bp) and is consistent with the regional literature, but is
-imprecisely estimated at quarterly frequency. The chained poverty effect
-($+0.128$\,pp per 100\,bp hike) is small relative to direct growth shocks
-but non-trivial over a full hiking cycle: the 2021--2023 hiking of $+750$\,bp
-may have contributed $\approx+1$\,pp to poverty through the GDP channel.
+imprecisely estimated at quarterly frequency. The chained poverty effect ranges from $+0.128$\,pp per 100\,bp (naive floor,
+mixing frequencies directly) to $+0.498$\,pp (Method~B, frequency-consistent
+preferred central estimate).
+Over the 2021--2023 hiking cycle of $+750$\,bp, this implies the cycle may
+have contributed $\approx+1$\,pp to the poverty headcount at the floor and
+$\approx+3.7$\,pp at the central estimate, through the GDP channel alone.
+These figures are chained reduced-form correlations, not structural causal
+effects.
 
 For future research, two directions stand out. Extending the LLM tone
 analysis to \textit{comunicados de prensa}---published simultaneously
-with rate decisions, unlike \textit{Notas Informativas} which trail by
-days---may yield a communication instrument with better timing properties
-and a genuine shot at exogeneity. The deeper fix is structural: OIS or
+with rate decisions---would sharpen the timing alignment relative to
+\textit{Notas Informativas}, which trail by days.
+Whether simultaneous release buys genuine exogeneity is, however, unclear:
+the tone of a \textit{comunicado} still reflects the BCRP's assessment of
+current conditions and its forward-looking risk balance, both of which are
+partially predictable from prior macro data.
+The identification gain would require the forward-looking language in the
+\textit{comunicado} to contain information about the \textit{shock}
+component---the surprise beyond what agents had already priced in---that is
+orthogonal to the rate decision itself.
+That condition is not guaranteed by simultaneity alone; it would need to be
+verified via a first-stage regression of the VAR rate residual on
+\textit{comunicado}-based tone, followed by an LP-IV sign check analogous
+to what was done for the \textit{Notas} in Section~\ref{sec:proxy}. The deeper fix is structural: OIS or
 rate-futures markets for PEN would enable high-frequency surprise
 extraction and unlock the full modern identification toolkit for Peru
 and similarly administered EME rates.
@@ -1094,6 +1129,11 @@ reduced-form coefficient, stable across sub-periods and economically
 interpretable. Chaining this through the frequency-consistent GDP
 response (Section~\ref{sec:chain}) implies the 2021--2023 hiking
 cycle may have raised the monetary poverty rate by roughly 2--4\,pp.
+This range spans the Method~A lower bound
+($+0.291\times7.5\approx+2.2$\,pp) and the Method~B central estimate
+($+0.498\times7.5\approx+3.7$\,pp); the naive frequency-mixing floor
+($+0.128\times7.5\approx+1.0$\,pp) forms the lower bound of the
+interval. All three are reduced-form chains, not structural estimates.
 
 Across all Cholesky robustness variants---alternative variable orderings,
 lag orders, and COVID window treatments---the peak GDP response lies in
