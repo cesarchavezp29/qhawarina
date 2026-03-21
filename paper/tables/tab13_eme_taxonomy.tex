@@ -6,15 +6,15 @@ Country & Administered & No rate & Limited & Published SVAR & Key \\
 \midrule
 \textit{Same identification constraints as Peru} & & & & & \\
 \quad Peru & \cmark & \cmark & \cmark & Recursive/Cholesky & \citet{perezrojo2024} \\
-\quad Bolivia & \cmark & \cmark & \cmark & No published SVAR & --- \\
+\quad Bolivia & \cmark & \cmark & \cmark & No published SVAR & \citet{imf2025bolivia} \\
 \quad Paraguay & \cmark & \cmark & \cmark & No published SVAR & --- \\
 \quad Egypt & \cmark & \cmark & \cmark & Recursive/Cholesky & \citet{ha2025} \\
 \quad Pakistan & \cmark & \cmark & \cmark & Recursive/Cholesky & \citet{ha2025} \\
-\quad Bangladesh & \cmark & \cmark & \cmark & No published SVAR & --- \\
+\quad Bangladesh & \cmark & \cmark & \cmark & No published SVAR & \citet{imf2023bangladesh} \\
 \midrule
 \textit{Administered rate but some market info} & & & & & \\
 \quad Colombia & \cmark & \warnmark & \warnmark & Recursive/Cholesky & \citet{ha2025} \\
-\quad Uruguay & \cmark & \cmark & \warnmark & Recursive/Cholesky & \citet{ha2025} \\
+\quad Uruguay & \warnmark & \cmark & \warnmark & Recursive/Cholesky & \citet{imf2022uruguay} \\
 \quad Costa Rica & \cmark & \cmark & \warnmark & No published SVAR & --- \\
 \midrule
 \textit{Rate futures exist (Proxy-SVAR feasible)} & & & & & \\
@@ -27,10 +27,18 @@ Country & Administered & No rate & Limited & Published SVAR & Key \\
 \small \cmark\ = constraint active; \warnmark\ = partial; $\times$ = absent.
 ``Administered'' = central bank enforces interbank rate via active liquidity management.
 ``No futures'' = no liquid OIS/exchange-traded rate futures.
-``Limited'' = fewer than 5 unambiguous IT-era shocks.
-``Published SVAR strategy'' refers to the identification method used in the
-most-cited monetary SVAR paper for each country.
-Brazil's deep DI futures market uniquely enables Proxy-SVAR identification
-comparable to \citet{gertler2015}; \citet{caldara2019} provides the canonical
-Proxy-SVAR methodology applied to a comparable setting.
+``Limited'' = fewer than 5 unambiguous IT-era rate decisions of $\geq50$\,bp at a single meeting.
+Bolivia: \citet{imf2025bolivia} documents active BCB liquidity management and
+interest rate caps constraining market rates.
+Bangladesh: \citet{imf2023bangladesh} confirms that Bangladesh Bank introduced
+an interest rate corridor only in July~2023, so the interbank rate was not
+market-clearing through most of the sample period.
+Egypt and Pakistan: classified in \citet{ha2025}, Table~1.
+Uruguay ($\triangle$): the BCU operated under money-base targeting through
+approximately 2013 before transitioning to interest-rate targeting; the
+$\triangle$ reflects this within-sample framework evolution
+\citep{imf2022uruguay, imf2015uruguay_wp}.
+Brazil: \citet{caldara2019}.
+Absence of liquid domestic-currency OIS or rate-futures contracts confirmed
+for BOB, BDT, EGP, and PKR via \citet{bis2022triennial}.
 \end{tablenotes}
