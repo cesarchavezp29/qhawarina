@@ -324,11 +324,6 @@ hi_plot = lp_hi90[mask]
 
 fig, ax = plt.subplots(figsize=SZ["single"])
 
-# Wrong-sign shading above zero
-ax.axhspan(0, max(hi_plot) + 2, color=C["accent1"], alpha=0.06, zorder=0)
-ax.annotate('Wrong sign (expansionary)', xy=(0.03, 0.88),
-            xycoords='axes fraction', fontsize=8, color=C["accent1"],
-            fontstyle='italic')
 zero_line(ax)
 
 ax.errorbar(hs_plot, b_plot,
@@ -546,10 +541,6 @@ ax.axvline(0, color=C["gray_line"], lw=0.7, ls=':', zorder=1)
 # ── Divider between own and literature ────────────────────────────────────────
 divider_y = (y_own[-1] + y_lit[0]) / 2
 ax.axhline(divider_y, color=C["ci_light"], lw=0.8)
-ax.annotate('Literature estimates ↓',
-            xy=(0.98, divider_y), xycoords=('axes fraction', 'data'),
-            fontsize=7.5, ha='right', va='top', color=C["gray_line"],
-            fontstyle='italic', annotation_clip=False)
 
 # ── Plot entries ──────────────────────────────────────────────────────────────
 for (label, point, lo, hi, is_lit), y in zip(ALL_FOREST, all_y):

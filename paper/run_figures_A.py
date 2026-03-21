@@ -216,13 +216,6 @@ def figure_A1(var_df, res_base):
     ax.set_title('')
     legend_outside(ax)
 
-    # Annotation
-    y_annot = min(irf_base.min(), -0.05)
-    ax.annotate('All orderings\nnegative (peak)',
-                xy=(3, y_annot), xytext=(5, y_annot - 0.05),
-                arrowprops=dict(arrowstyle='->', color=C["gray_line"], lw=0.8),
-                fontsize=7, color=C["gray_line"])
-
     savefig(fig, 'fig_A1_ordering_fan')
     shutil.copy(OUTDIR / 'fig_A1_ordering_fan.pdf', Path('D:/Nexus/nexus/paper/figures/fig11_ordering_fan.pdf'))
 
