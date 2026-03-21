@@ -343,17 +343,21 @@ approach using a hawkish/dovish lexicon adapted from \citet{lahura2020},
 producing scores in $[-1,+1]$; and (b) an LLM-based approach using Claude
 Haiku, prompted to score each note on $[-100,+100]$. Table~\ref{tab:tone_class}
 presents classification statistics. The correlation between dictionary and
-LLM scores is $0.373$, indicating moderate agreement. Both methods
+LLM scores is $0.380$, indicating moderate agreement.\footnote{The LLM
+  assigns scores from a coarse ordinal grid of 16 distinct values, all
+  multiples of five (e.g.\ $-85, -75, \ldots, 75$), reflecting the
+  model's tendency to round to salient numbers rather than use the full
+  $[-100, +100]$ range.} Both methods
 correctly flag 2009 as dovish and 2022 as hawkish. Figure~\ref{fig:tone}
 shows the tone series over time.
 
 \paragraph{LLM predictive validity.}
 We validate the LLM tone scores against subsequent policy outcomes.
 In a contemporaneous regression of the reference rate change on the LLM
-tone score, the $R^2$ is $0.459$---more than four times the dictionary
-$R^2$ of $0.106$. Forward-looking validation (regressing the
+tone score, the $R^2$ is $0.487$---more than four times the dictionary
+$R^2$ of $0.098$. Forward-looking validation (regressing the
 \emph{next-meeting} rate change on the current tone score) yields
-LLM $R^2=0.264$ versus dictionary $R^2=0.051$, consistent with tone
+LLM $R^2=0.282$ versus dictionary $R^2=0.058$, consistent with tone
 capturing forward guidance. A binary classification exercise---coding each
 note as hawkish ($\text{score}>0$), dovish ($\text{score}<0$), or neutral---shows
 the LLM correctly identifies hawkish/dovish episodes with 98.2\% accuracy
@@ -371,7 +375,7 @@ Table~\ref{tab:tone} (Appendix~\ref{app:tables}).
   \centering
   \includegraphics[width=\textwidth]{figures/fig17_tone_validation}
   \caption{LLM Tone Classification Validation. (a)~LLM tone score vs.\
-    contemporaneous rate change ($R^2 = 0.459$). (b)~Confusion matrix:
+    contemporaneous rate change ($R^2 = 0.487$). (b)~Confusion matrix:
     LLM classification vs.\ actual decision (98.2\% accuracy for
     hawkish $\to$ hike, 97.4\% for dovish $\to$ cut).}
   \label{fig:tone_validation}
@@ -380,7 +384,7 @@ Table~\ref{tab:tone} (Appendix~\ref{app:tables}).
 
 Figure~\ref{fig:tone_validation} confirms that the LLM tone measure aligns
 well with actual policy decisions: the scatter plot (panel~a) shows a
-positive slope ($R^2=0.459$) between tone scores and rate changes, and
+positive slope ($R^2=0.487$) between tone scores and rate changes, and
 the confusion matrix (panel~b) records 98.2\% accuracy for hawkish
 episodes and 97.4\% for dovish ones. Despite this predictive accuracy,
 the tone measure captures \emph{anticipated} policy and therefore fails
@@ -395,7 +399,7 @@ and cutting cycles are reflected in real time in BCRP communications.
     dictionary score ($-1$ to $+1$). \textit{Bottom panel:} LLM score
     ($-100$ to $+100$). Shading: hiking episodes (red); cutting episodes (blue).
     Both measures flag 2009 (GFC emergency cuts) as strongly dovish and
-    2022 (hiking cycle) as hawkish. Dictionary--LLM correlation: $r=0.373$.}
+    2022 (hiking cycle) as hawkish. Dictionary--LLM correlation: $r=0.380$.}
   \label{fig:tone}
 \end{figure}
 \FloatBarrier
@@ -717,9 +721,9 @@ relevance requires.
 
 Table~\ref{tab:tone_iv} reports instrument validity tests for the two
 constructions. Construction A (tone residualized on $\Delta r_t$ and lagged
-macro) has $F=4.75$: after purging the rate decision, residual tone carries
+macro) has $F=0.00$: after purging the rate decision, residual tone carries
 near-zero information about monetary shocks. Construction B (residualized
-on lagged macro only) has $F=33.7$, satisfying relevance. However,
+on lagged macro only) has $F=34.1$, satisfying relevance. However,
 Figure~\ref{fig:lp_iv} shows that LP-IV GDP responses are positive at all
 horizons ($+4.32$\,pp at $h=0$, $+7.36$\,pp at $h=1$)---the wrong sign
 for a contractionary shock. Construction B captures anticipated policy:
@@ -731,7 +735,7 @@ literature on central bank communication as identification
 \begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{figures/fig5_lpiv_tone_wrong_sign}
-  \caption{LP-IV IRFs with Tone Instrument (Construction B, $F=33.7$).
+  \caption{LP-IV IRFs with Tone Instrument (Construction B, $F=34.1$).
     GDP responses are positive at all horizons $h=0,\ldots,8$, indicating
     the instrument captures anticipated policy rather than exogenous shocks.}
   \label{fig:lp_iv}
@@ -757,7 +761,7 @@ constructed using only months in which $\Delta r_t=0$. Under both
 Construction~A and Construction~B, the first-stage $F$ collapses to
 approximately zero. Tone in hold months carries no predictive power for
 the reduced-form rate residual. This confirms the diagnosis: Construction
-B's $F=33.7$ is driven entirely by months in which the BCRP actually moved
+B's $F=34.1$ is driven entirely by months in which the BCRP actually moved
 the rate, precisely the variation contaminated by anticipated policy. The
 rate-hold result corroborates the exogeneity failure rather than providing
 a route around it.
@@ -1045,7 +1049,7 @@ The two approaches are therefore complementary rather than competing.
 
 The tone-instrument result warrants separate discussion. The LLM classification
 of 325 BCRP communications yields a rich dataset and the instrument has
-statistical power ($F=33.7$ under Construction B). But high $F$ does not
+statistical power ($F=34.1$ under Construction B). But high $F$ does not
 establish exogeneity. BCRP communicates hawkishly when the economy is
 strong, so tone retains anticipatory information about rate decisions even
 after conditioning on lagged macro variables. This is a caution for the
@@ -1194,10 +1198,18 @@ corpus of 325 BCRP \textit{Notas Informativas}.
 \end{mytable}
 
 Table~\ref{tab:tone_class} shows that both methods assign similar mean scores
-(dictionary: $-0.021$; LLM: near zero), with the LLM exhibiting higher
+(dictionary: $-0.059$; LLM: near zero), with the LLM exhibiting higher
 variance across years. Table~\ref{tab:tone} provides the year-by-year
 breakdown, allowing inspection of how tone co-moves with the hiking and
-cutting cycles visible in Figure~\ref{fig:tone}.
+cutting cycles visible in Figure~\ref{fig:tone}. A notable pattern in 2022 is
+that all 12 monthly LLM scores are $+75$ (with February at $+65$), reflecting
+the model's uniform recognition of the aggressive hiking cycle; the near-constant
+tone limits within-year variation but does not affect identification since the
+hiking cycle is correctly signed throughout.\footnote{The LLM tone scores for
+  2022 range from $+65$ (February) to $+75$ (all other months), while the
+  BCRP raised its reference rate in every month of the year (by 25--50\,bp per
+  meeting). The uniformity reflects the unambiguous hawkish signal in that
+  year's communications rather than a model failure.}
 
 \begin{mytable}{BCRP Communication Tone by Year, 2001--2026}{tab:tone}
   \input{tables/tab2_tone_summary}
@@ -1243,7 +1255,7 @@ weak first-stage relevance.
 Table~\ref{tab:proxy_ib} confirms that the first-stage $F=4.73$ fails the
 Stock-Yogo threshold of 10, ruling out the interbank rate as a valid instrument.
 Table~\ref{tab:tone_iv} contrasts the two tone instrument constructions, showing
-that the one construction that passes relevance ($F=33.7$) fails exogeneity,
+that the one construction that passes relevance ($F=34.1$) fails exogeneity,
 while the other fails relevance.
 
 \begin{mytable}{Tone Surprise Instrument Validity}{tab:tone_iv}

@@ -1,9 +1,21 @@
 \begin{thebibliography}{}
 
+\bibitem[Adler and Sosa, 2015]{imf2015uruguay_wp}
+Adler, G. and Sosa, S. (2015).
+\newblock A {M}odel for {M}onetary {P}olicy {A}nalysis in {U}ruguay.
+\newblock IMF Working Paper WP/15/170, International Monetary Fund, Washington,
+  D.C.
+
 \bibitem[Antol\'in-D\'iaz and Rubio-Ram\'irez, 2018]{antolin2018}
 Antol\'in-D\'iaz, J. and Rubio-Ram\'irez, J.~F. (2018).
 \newblock Narrative sign restrictions for {SVARs}.
 \newblock {\em American Economic Review}, 108(10):2802--2829.
+
+\bibitem[{Bank for International Settlements}, 2022]{bis2022triennial}
+{Bank for International Settlements} (2022).
+\newblock Triennial {C}entral {B}ank {S}urvey: {OTC} {I}nterest {R}ate
+  {D}erivatives {T}urnover in {A}pril 2022.
+\newblock \url{https://www.bis.org/statistics/d11\_1.htm}.
 
 \bibitem[Caldara and Herbst, 2019]{caldara2019}
 Caldara, D. and Herbst, E. (2019).
@@ -32,6 +44,31 @@ Ha, J., Kose, M.~A., and Ohnsorge, F. (2025).
 Hanson, M.~S. (2004).
 \newblock The ``price puzzle'' reconsidered.
 \newblock {\em Journal of Monetary Economics}, 51(7):1385--1413.
+
+\bibitem[{International Monetary Fund}, 2022]{imf2022uruguay}
+{International Monetary Fund} (2022).
+\newblock Uruguay: 2021 {A}rticle {IV} {C}onsultation---{P}ress {R}elease;
+  {S}taff {R}eport; and {S}tatement by the {E}xecutive {D}irector for
+  {U}ruguay.
+\newblock IMF Country Report 2022/016, International Monetary Fund, Washington,
+  D.C.
+
+\bibitem[{International Monetary Fund}, 2023]{imf2023bangladesh}
+{International Monetary Fund} (2023).
+\newblock Bangladesh: 2023 {A}rticle {IV} {C}onsultation, {F}irst {R}eviews
+  {U}nder the {E}xtended {C}redit {F}acility {A}rrangement, {A}rrangement
+  {U}nder the {E}xtended {F}und {F}acility, and the {R}esilience and
+  {S}ustainability {F}acility {A}rrangement.
+\newblock IMF Country Report 23/409, International Monetary Fund, Washington,
+  D.C.
+
+\bibitem[{International Monetary Fund}, 2025]{imf2025bolivia}
+{International Monetary Fund} (2025).
+\newblock Bolivia: 2024 {A}rticle {IV} {C}onsultation---{P}ress {R}elease;
+  {S}taff {R}eport; and {S}tatement by the {E}xecutive {D}irector for
+  {B}olivia.
+\newblock IMF Country Report 25/34, International Monetary Fund, Washington,
+  D.C.
 
 \bibitem[Jord\`a, 2005]{jorda2005}
 Jord\`a, {\`O}. (2005).

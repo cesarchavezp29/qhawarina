@@ -72,6 +72,9 @@ with open(LP_JSON, encoding='utf-8') as f:
 
 df_panel = pd.read_parquet(PANEL)
 df_tone  = pd.read_csv(TONE_CSV, parse_dates=['date'])
+# Drop flagged entries (QC pass: 2009-08 duplicate with suspect +25 score)
+_FLAGGED_KEYS = {'Nota-Informativa-059-2009-BCRP'}
+df_tone = df_tone[~df_tone['key'].isin(_FLAGGED_KEYS)].reset_index(drop=True)
 
 # ── Load svar_results from audit (embedded JSON) ───────────────────────────────
 audit_text = AUDIT.read_text(encoding='utf-8', errors='replace')
@@ -860,7 +863,7 @@ write_tex('tab9_tone_instrument', r"""
 & Construction A & Construction B \\
 & (residualize on $\Delta r_t$ + lags) & (residualize on lags only) \\
 \midrule
-    First-stage $F$ & $4.75$ & $33.7$ \\
+    First-stage $F$ & $0.00$ & $34.1$ \\
     Stock--Yogo threshold & \textbf{Fails} & \textbf{Passes} \\
     GDP response $h=0$ & --- & $+4.32$ (wrong sign) \\
     GDP response $h=1$ & --- & $+7.36$ (wrong sign) \\

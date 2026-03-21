@@ -1,326 +1,326 @@
-key,year,month,date,filename,n_chars,dict_tone,dict_hawkish,dict_dovish,dict_neutral,llm_tone,llm_reason
-Nota-Informativa-002-2001-BCRP,2001,2,2001-02-01,Nota-Informativa-002-2001-BCRP.pdf,2732,0.0,0,0,0,-35,"Recent rate cuts, lower corridor rates, accommodative stance signaled"
-Nota-Informativa-003-2001-BCRP,2001,3,2001-03-01,Nota-Informativa-003-2001-BCRP.pdf,3302,0.0,0,0,0,-45,"Rate cuts, increased monetary liquidity, stimulus signals."
-Nota-Informativa-004-2001-BCRP-Modificado,2001,4,2001-04-01,Nota-Informativa-004-2001-BCRP-Modificado.pdf,1175,-1.0,0,1,0,-45,"Liquidity target reduced due to financial turbulence, easing bias."
-Nota-Informativa-004-2001-BCRP,2001,4,2001-04-01,Nota-Informativa-004-2001-BCRP.pdf,3367,0.0,0,0,0,-45,"Rate cut 11.5% to 11.0%, increased liquidity target, accommodative stance"
-Nota-Informativa-005-2001-BCRP,2001,5,2001-05-01,Nota-Informativa-005-2001-BCRP.pdf,2565,-1.0,0,1,0,-25,Rate hold with selective easing in FX; liquidity reduction amid uncertainty
-Nota-Informativa-006-2001-BCRP,2001,6,2001-06-01,Nota-Informativa-006-2001-BCRP.pdf,3280,0.0,0,0,0,-65,"Rate cut 11% to 10.5%, increased liquidity provision, growth concerns"
-Nota-Informativa-007-2001-BCRP,2001,7,2001-07-01,Nota-Informativa-007-2001-BCRP.pdf,3256,1.0,2,0,0,-75,"Rate cut 10.5% to 10%, increased liquidity provision, easing stance"
-Nota-Informativa-008-2001-BCRP,2001,8,2001-08-01,Nota-Informativa-008-2001-BCRP.pdf,4017,0.0,0,0,0,-75,"Three consecutive rate cuts, easing liquidity conditions, stimulus focus"
-Nota-Informativa-009-2001-BCRP,2001,9,2001-09-01,Nota-Informativa-009-2001-BCRP.pdf,3633,0.0,0,0,0,-65,"Fourth consecutive rate cut, monetary stimulus, easing cycle"
-Nota-Informativa-010-2001-BCRP,2001,10,2001-10-01,Nota-Informativa-010-2001-BCRP.pdf,4234,0.0,0,0,0,-45,"Rate cuts across multiple facilities, easing monetary conditions"
-Nota-Informativa-011-2001-BCRP,2001,11,2001-11-01,Nota-Informativa-011-2001-BCRP.pdf,3683,0.0,0,0,0,-35,"Rate cuts across instruments, easing bias amid economic uncertainty."
-Nota-Informativa-012-2001-BCRP,2001,12,2001-12-01,Nota-Informativa-012-2001-BCRP.pdf,3916,1.0,2,0,0,-45,"Rate cuts, expanded liquidity, stimulus measures, crisis context"
-Nota-Informativa-001-2002-BCRP,2002,1,2002-01-01,Nota-Informativa-001-2002-BCRP.pdf,4080,1.0,2,0,0,-45,"Rate cuts, easier liquidity conditions, accommodative stance"
-Programa-Monetario-2002,2002,1,2002-01-01,Programa-Monetario-2002.pdf,19962,0.1111,5,4,0,-15,"Inflation targeting adoption, cautious stance, balanced risk management approach."
-Nota-Informativa-002-2002-BCRP,2002,2,2002-02-01,Nota-Informativa-002-2002-BCRP.pdf,4329,1.0,1,0,0,-35,"Rate cuts across multiple facilities, lower deposit rates, easing stance"
-Nota-Informativa-003-2002-BCRP,2002,3,2002-03-01,Nota-Informativa-003-2002-BCRP.pdf,4794,1.0,2,0,0,-45,"Rate cut 3.5% to 3.0%, increased liquidity, counter inflationary pressures"
-Nota-Informativa-004-2002-BCRP,2002,4,2002-04-01,Nota-Informativa-004-2002-BCRP.pdf,4358,1.0,2,0,0,-15,Slight easing bias; raising liquidity to prevent rate pressures.
-Nota-Informativa-005-2002-BCRP,2002,5,2002-05-01,Nota-Informativa-005-2002-BCRP.pdf,3608,1.0,1,0,0,0,Maintains all rates unchanged; neutral hold stance on policy
-Nota-Informativa-006-2002-BCRP,2002,6,2002-06-01,Nota-Informativa-006-2002-BCRP.pdf,2386,1.0,1,0,0,0,Maintains existing rates; no policy change signaled.
-Nota-Informativa-007-2002-BCRP,2002,7,2002-07-01,Nota-Informativa-007-2002-BCRP.pdf,2762,0.2,3,2,0,25,"Modest tightening: rate corridor raised to 3.25%, liquidity management tightened"
-Nota-Informativa-008-2002-BCRP,2002,8,2002-08-01,Nota-Informativa-008-2002-BCRP.pdf,2345,0.0,2,2,0,-35,"Rate hold with slight tightening bias, inflation concern evident."
-Nota-Informativa-009-2002-BCRP,2002,9,2002-09-01,Nota-Informativa-009-2002-BCRP.pdf,2491,-0.3333,1,2,0,35,"Rate hike signals: corridor rates raised from 3.25% to 3.75%, tightening bias."
-Nota-Informativa-010-2002-BCRP,2002,10,2002-10-01,Nota-Informativa-010-2002-BCRP.pdf,2805,0.0,1,1,0,65,Multiple rate increases signal tightening amid regional financial uncertainty
-Nota-Informativa-011-2002-BCRP,2002,11,2002-11-01,Nota-Informativa-011-2002-BCRP.pdf,2504,0.0,1,1,0,-35,"Lowered rates, reduced uncertainty, accommodative stance signals"
-Nota-Informativa-012-2002-BCRP,2002,12,2002-12-01,Nota-Informativa-012-2002-BCRP.pdf,2637,0.0,2,2,0,-35,"Rate cuts, increased liquidity provision, easing bias clearly signaled"
-Nota-Informativa-001-2003-BCRP,2003,1,2003-01-01,Nota-Informativa-001-2003-BCRP.pdf,2702,1.0,2,0,0,-25,"Rate cut signals easing; inflation below target, growth concerns"
-Nota-Informativa-002-2003-BCRP,2003,2,2003-02-01,Nota-Informativa-002-2003-BCRP.pdf,2337,1.0,2,0,0,0,"Hold stance, stable rates, inflation near target."
-Nota-Informativa-003-2003-BCRP,2003,3,2003-03-01,Nota-Informativa-003-2003-BCRP.pdf,2371,0.0,0,0,0,0,"Maintains rates, low inflation, monitoring oil prices only."
-Nota-Informativa-004-2003-BCRP,2003,4,2003-04-01,Nota-Informativa-004-2003-BCRP.pdf,2384,0.0,0,0,0,0,"Holds rates steady; inflation contained, no policy action needed."
-Nota-Informativa-005-2003-BCRP,2003,5,2003-05-01,Nota-Informativa-005-2003-BCRP.pdf,2383,1.0,1,0,0,0,Holds rates steady amid low inflation pressures.
-Nota-Informativa-006-2003-BCRP,2003,6,2003-06-01,Nota-Informativa-006-2003-BCRP.pdf,2396,1.0,1,0,0,-25,"Holds rates amid declining inflation pressures, dovish lean"
-Nota-Informativa-007-2003-BCRP,2003,7,2003-07-01,Nota-Informativa-007-2003-BCRP.pdf,2731,-1.0,0,2,0,-65,"Rate cut 25bps, deflation concerns, stimulus focus"
-Nota-Informativa-010-2003-BCRP,2003,10,2003-10-01,Nota-Informativa-010-2003-BCRP.pdf,2653,-1.0,0,2,0,-15,Held rates after cuts; low inflation trajectory supports pause
-Nota-Informativa-011-2003-BCRP,2003,11,2003-11-01,Nota-Informativa-011-2003-BCRP.pdf,2768,-0.3333,1,2,0,-65,"Rate cut 275→250bps, low inflation 1.3%, accommodative stance"
-Nota-Informativa-012-2003-BCRP,2003,12,2003-12-01,Nota-Informativa-012-2003-BCRP.pdf,2832,0.0,1,1,1,-15,Holds rates steady; inflation rising but still contained below target
-Nota-Informativa-001-2004-BCRP,2004,1,2004-01-01,Nota-Informativa-001-2004-BCRP.pdf,3331,0.0,1,1,1,-15,Maintains rates amid target inflation; recent cuts signal accommodation.
-Nota-Informativa-002-2004-BCRP,2004,2,2004-02-01,Nota-Informativa-002-2004-BCRP.pdf,2988,0.0,0,0,1,0,Holds rates steady amid moderate inflation uptick.
-Nota-Informativa-005-2004-BCRP,2004,3,2004-03-01,Nota-Informativa-005-2004-BCRP.pdf,2978,0.0,0,0,1,0,Maintains reference rate at 2.50%; temporary inflation spike expected.
-Nota-Informativa-009-2004-BCRP,2004,4,2004-04-01,Nota-Informativa-009-2004-BCRP.pdf,3028,0.0,0,0,1,0,Holds rates steady; inflation within target range expectations.
-Nota-Informativa-011-2004-BCRP,2004,5,2004-05-01,Nota-Informativa-011-2004-BCRP.pdf,3217,0.0,0,0,1,0,"Maintains rates, inflation near target, neutral stance."
-Nota-Informativa-013-2004-BCRP,2004,6,2004-06-01,Nota-Informativa-013-2004-BCRP.pdf,2996,-0.5,0,1,1,0,Maintains rates unchanged; inflation within target range expectations
-Nota-Informativa-015-2004-BCRP,2004,7,2004-07-01,Nota-Informativa-015-2004-BCRP.pdf,3206,0.0,1,1,1,0,Holds rates steady; mentions inflation concerns but projects within target range.
-Nota-Informativa-019-2004-BCRP,2004,8,2004-08-01,Nota-Informativa-019-2004-BCRP.pdf,3384,1.0,1,0,0,65,"Rate hike 25bps, inflation above target, tightening bias"
-Nota-Informativa-021-2004-BCRP,2004,9,2004-09-01,Nota-Informativa-021-2004-BCRP.pdf,3002,0.0,0,0,1,15,Maintains rates amid temporary inflation overshoot; measured approach
-Nota-Informativa-022-2004-BCRP,2004,10,2004-10-01,Nota-Informativa-022-2004-BCRP.pdf,3022,0.0,0,0,0,45,"Rate hike 2.75%→3.00%, inflation above target, tightening bias"
-Nota-Informativa-024-2004-BCRP,2004,11,2004-11-01,Nota-Informativa-024-2004-BCRP.pdf,2993,0.0,0,0,1,0,"Holds rates steady; inflation near target, stable outlook."
-Nota-Informativa-027-2004-BCRP,2004,12,2004-12-01,Nota-Informativa-027-2004-BCRP.pdf,3457,0.5,1,0,1,0,Holds rates steady despite temporary inflation spike above target
-Nota-Informativa-001-2005-BCRP,2005,1,2005-01-01,Nota-Informativa-001-2005-BCRP.pdf,3946,0.5,1,0,1,0,"Holding rates, inflation target met, no bias signaled"
-Nota-Informativa-008-2005-BCRP,2005,2,2005-02-01,Nota-Informativa-008-2005-BCRP.pdf,3011,-0.6667,0,2,1,0,Holds rates steady; inflation moderating within target band.
-Nota-Informativa-014-2005-BCRP,2005,3,2005-03-01,Nota-Informativa-014-2005-BCRP.pdf,3113,-0.6667,0,2,1,-15,"Holding rates amid low inflation, modest dovish lean"
-Nota-Informativa-020-2005-BCRP,2005,4,2005-04-01,Nota-Informativa-020-2005-BCRP.pdf,3119,-0.6667,0,2,1,-15,"Inflation below target, holding rates, modest growth expectations"
-Nota-Informativa-022-2005-BCRP,2005,5,2005-05-01,Nota-Informativa-022-2005-BCRP.pdf,2862,0.6667,2,0,1,0,"Holds rates steady; inflation below target, no urgency signals."
-Nota-Informativa-025-2005-BCRP,2005,6,2005-06-01,Nota-Informativa-025-2005-BCRP.pdf,3153,-0.4,1,3,1,-15,"Inflation below target, economic growth strong, rates held steady."
-Nota-Informativa-028-2005-BCRP,2005,7,2005-07-01,Nota-Informativa-028-2005-BCRP.pdf,2722,-0.6667,0,2,1,-15,"Hold stance; inflation at lower target bound, modest dovish tilt."
-Nota-Informativa-031-2005-BCRP,2005,8,2005-08-01,Nota-Informativa-031-2005-BCRP.pdf,2388,-0.25,1,2,1,-15,"Hold decision, low inflation concern, sustained growth without pressures"
-Nota-Informativa-034-2005-BCRP,2005,9,2005-09-01,Nota-Informativa-034-2005-BCRP.pdf,2139,-0.6667,0,2,1,-15,"Hold decision; inflation below target, growth steady, slight dovish lean."
-Nota-Informativa-036-2005-BCRP,2005,10,2005-10-01,Nota-Informativa-036-2005-BCRP.pdf,3738,-0.1667,2,3,1,0,"Hold decision with balanced economic fundamentals, inflation stable"
-Nota-Informativa-041-2005-BCRP,2005,11,2005-11-01,Nota-Informativa-041-2005-BCRP.pdf,2722,-0.2857,2,4,1,-15,"Hold stance, inflation below target, growth solid, slightly dovish bias"
-Nota-Informativa-044-2005-BCRP,2005,12,2005-12-01,Nota-Informativa-044-2005-BCRP.pdf,3142,0.0,1,1,0,35,"Rate hike to combat currency volatility, inflation contained below target"
-Nota-Informativa-002-2006-BCRP,2006,1,2006-01-01,Nota-Informativa-002-2006-BCRP.pdf,5253,0.2,3,2,0,35,"Rate hike amid strong growth, low inflation, solid external position"
-Nota-Informativa-003-2006-BCRP,2006,2,2006-02-01,Nota-Informativa-003-2006-BCRP.pdf,5496,0.6,4,1,0,35,"Rate hike amid strong growth, stable inflation within target range"
-Nota-Informativa-012-2006-BCRP,2006,3,2006-03-01,Nota-Informativa-012-2006-BCRP.pdf,5568,0.6,4,1,0,45,"Rate hike signals inflation vigilance, strong growth justifies tightening"
-Nota-Informativa-013-2006-BCRP,2006,4,2006-04-01,Nota-Informativa-013-2006-BCRP.pdf,5708,1.0,4,0,0,35,"Rate hike amid solid growth, inflation at target center"
-Nota-Informativa-024-2006-BCRP,2006,4,2006-04-01,Nota-Informativa-024-2006-BCRP.pdf,2678,0.0,0,0,0,25,"Rate hike 25bps, tightening liquidity measures, inflation control focus"
-Nota-Informativa-026-2006-BCRP,2006,5,2006-05-01,Nota-Informativa-026-2006-BCRP.pdf,4548,1.0,3,0,0,45,"Rate hike amid transitory inflation, strong growth concerns."
-Nota-Informativa-033-2006-BCRP,2006,6,2006-06-01,Nota-Informativa-033-2006-BCRP.pdf,4240,0.4,3,1,1,0,"Holds rates steady; inflation within target, growth solid."
-Nota-Informativa-043-2006-BCRP,2006,7,2006-07-01,Nota-Informativa-043-2006-BCRP.pdf,3757,0.6667,2,0,1,0,"Holding rates stable; inflation within target, growth strong."
-Nota-Informativa-046-2006-BCRP,2006,8,2006-08-01,Nota-Informativa-046-2006-BCRP.pdf,3987,0.4,3,1,1,0,Holding rates steady amid low inflation and strong growth
-Nota-Informativa-064-2006-BCRP,2006,9,2006-09-01,Nota-Informativa-064-2006-BCRP.pdf,4541,0.25,2,1,1,0,"Inflation on target, growth strong, rates held steady neutral."
-Nota-Informativa-072-2006-BCRP,2006,10,2006-10-01,Nota-Informativa-072-2006-BCRP.pdf,4621,0.5,4,1,1,0,"Maintains rates amid low inflation, strong growth balance."
-Nota-Informativa-076-2006-BCRP,2006,11,2006-11-01,Nota-Informativa-076-2006-BCRP.pdf,4759,0.4444,6,2,1,0,"Holding rates steady, inflation contained, growth strong baseline."
-Nota-Informativa-089-2006-BCRP,2006,12,2006-12-01,Nota-Informativa-089-2006-BCRP.pdf,5279,0.0,5,5,1,-15,"Hold rate, inflation below target, some demand risks flagged"
-Nota-Informativa-001-2007-BCRP,2007,1,2007-01-01,Nota-Informativa-001-2007-BCRP.pdf,5863,0.0,3,3,1,0,"Hold rate, inflation below target but transitory factors cited"
-Nota-Informativa-010-2007-BCRP,2007,2,2007-02-01,Nota-Informativa-010-2007-BCRP.pdf,4330,0.25,2,1,1,0,"Hold stance; low inflation transitory, strong growth, no policy change"
-Nota-Informativa-018-2007-BCRP,2007,3,2007-03-01,Nota-Informativa-018-2007-BCRP.pdf,5133,0.1667,3,2,1,0,"Hold rate steady, transitory low inflation, strong growth"
-Nota-Informativa-027-2007-BCRP,2007,4,2007-04-01,Nota-Informativa-027-2007-BCRP.pdf,4618,0.75,3,0,1,35,Hold stance with hawkish tilt; inflation concern flagged for future tightening.
-Nota-Informativa-033-2007-BCRP,2007,5,2007-05-01,Nota-Informativa-033-2007-BCRP.pdf,4765,0.5,4,1,1,25,"Hold rate, but inflation vigilant; future tightening bias signaled"
-Nota-Informativa-048-2007-BCRP,2007,6,2007-06-01,Nota-Informativa-048-2007-BCRP.pdf,4500,0.4,3,1,1,0,"Holds rates, inflation below target, balanced assessment."
-Nota-Informativa-055-2007-BCRP,2007,7,2007-07-01,Nota-Informativa-055-2007-BCRP.pdf,5126,0.5,3,1,0,65,"Rate hike, inflation vigilance, robust demand concerns."
-Nota-Informativa-024-2008-BCRP,2007,7,2007-07-01,Nota-Informativa-024-2008-BCRP.pdf,2751,0.3333,2,1,0,75,"Multiple rate hikes, reserve requirement increases, inflation control focus"
-Nota-Informativa-063-2007-BCRP,2007,8,2007-08-01,Nota-Informativa-063-2007-BCRP.pdf,4608,-0.25,1,2,1,35,Holds rates but signals preventive tightening bias if inflation expectations rise.
-Nota-Informativa-067-2007-BCRP,2007,9,2007-09-01,Nota-Informativa-067-2007-BCRP.pdf,4077,1.0,2,0,0,75,"Rate hike 4.75% to 5.0%, preventive tightening, inflation concerns."
-Nota-Informativa-034-2008-BCRP,2007,9,2007-09-01,Nota-Informativa-034-2008-BCRP.pdf,1855,0.6,4,1,0,75,"Multiple tightening measures: rate hikes, reserve requirement increases, inflation targeting"
-Nota-Informativa-075-2007-BCRP,2007,10,2007-10-01,Nota-Informativa-075-2007-BCRP.pdf,4142,0.6667,2,0,1,15,"Hold stance with hawkish tilt; monitoring inflation risks, preventive stance ready"
-Nota-Informativa-078-2007-BCRP,2007,11,2007-11-01,Nota-Informativa-078-2007-BCRP.pdf,4835,0.8,4,0,1,15,"Hold rate, inflation above target, preventive stance signaled"
-Nota-Informativa-079-2007-BCRP,2007,12,2007-12-01,Nota-Informativa-079-2007-BCRP.pdf,4739,0.8,4,0,1,25,"Holds rates, monitors inflation above target, signals preventive tightening readiness."
-Nota-Informativa-081-2007-BCRP,2008,1,2008-01-01,Nota-Informativa-081-2007-BCRP.pdf,1868,-1.0,0,1,0,0,Neutral administrative announcement of 2008 meeting schedule only
-Nota-Informativa-003-2008-BCRP,2008,1,2008-01-01,Nota-Informativa-003-2008-BCRP.pdf,4917,0.7143,6,1,0,45,"Rate hike to combat imported inflation, maintain expectations anchored"
-Nota-Informativa-015-2008-BCRP,2008,2,2008-02-01,Nota-Informativa-015-2008-BCRP.pdf,4378,0.4444,6,2,1,45,Maintains rates but tightens via reserve requirements; inflation concerns dominate
-Nota-Informativa-025-2008-BCRP,2008,3,2008-03-01,Nota-Informativa-025-2008-BCRP.pdf,3619,0.8333,5,0,1,65,"Rate hold but reserve requirement hikes signal tightening, inflation concerns."
-Nota-Informativa-026-2008-BCRP,2008,4,2008-04-01,Nota-Informativa-026-2008-BCRP.pdf,2345,1.0,1,0,0,75,"Reserve requirement hikes to combat inflation, monetary tightening"
-Nota-Informativa-038-2008-BCRP,2008,4,2008-04-01,Nota-Informativa-038-2008-BCRP.pdf,2569,0.0,0,0,0,75,"Rate hike, tightening, inflation control focus clear."
-Nota-Informativa-049-2008-BCRP,2008,5,2008-05-01,Nota-Informativa-049-2008-BCRP.pdf,1370,0.0,0,0,1,25,"Hold stance, monitoring inflation from supply shocks, prior tightening."
-Nota-Informativa-064-2008-BCRP,2008,6,2008-06-01,Nota-Informativa-064-2008-BCRP.pdf,1510,0.0,1,1,0,75,"Rate hike to combat inflation expectations, high demand pressures"
-Nota-Informativa-075-2008-BCRP,2008,7,2008-07-01,Nota-Informativa-075-2008-BCRP.pdf,2226,1.0,1,0,0,75,"Rate hike, tightening, inflation concern dominates"
-Nota-Informativa-081-2008-BCRP,2008,7,2008-07-01,Nota-Informativa-081-2008-BCRP.pdf,1070,0.0,1,1,0,65,"Reserve requirement hikes to moderate credit expansion, preserve monetary stability"
-Nota-Informativa-085-2008-BCRP,2008,8,2008-08-01,Nota-Informativa-085-2008-BCRP.pdf,2259,-0.25,3,5,0,75,"Rate hike 175bps YTD, inflation above target, demand concerns"
-Nota-Informativa-094-2008-BCRP,2008,9,2008-09-01,Nota-Informativa-094-2008-BCRP.pdf,2497,0.0,3,3,0,75,Rate hike to fight inflation amid demand-supply imbalance.
-Nota-Informativa-100-2008-BCRP,2008,10,2008-10-01,Nota-Informativa-100-2008-BCRP.pdf,1699,0.0,1,1,1,-35,"Hold amid global uncertainty, deflation risk from commodity/food prices falling"
-Nota-Informativa-113-2008-BCRP,2008,11,2008-11-01,Nota-Informativa-113-2008-BCRP.pdf,1761,0.5,1,0,1,-35,"Hold rate, signals flexibility for stimulus if needed"
-Nota-Informativa-120-2008-BCRP,2008,12,2008-12-01,Nota-Informativa-120-2008-BCRP.pdf,3124,0.5,1,0,1,-45,Rate hold but reserve requirement cuts signal stimulus amid crisis.
-Nota-Informativa-123-2008-BCRP,2008,12,2008-12-01,Nota-Informativa-123-2008-BCRP.pdf,918,0.0,0,0,0,-35,"Liquidity support during financial crisis, dovish accommodation measure."
-Nota-Informativa-122-2008-BCRP,2008,12,2008-12-01,Nota-Informativa-122-2008-BCRP.pdf,963,0.0,0,0,0,-75,"Reserve requirement cuts, liquidity injection, financial system stimulus."
-Nota-Informativa-007-2009-BCRP,2009,1,2009-01-01,Nota-Informativa-007-2009-BCRP.pdf,2629,0.5,1,0,1,-45,"Reserve ratio cut, rate hold, inflation declining, crisis liquidity support"
-Nota-Informativa-009-2009-BCRP,2009,2,2009-02-01,Nota-Informativa-009-2009-BCRP.pdf,1643,0.3333,2,1,0,-75,"Rate cut amid weak growth, falling commodity prices, low inflation"
-Nota-Informativa-011-2009-BCRP,2009,3,2009-03-01,Nota-Informativa-011-2009-BCRP.pdf,1767,0.0,2,2,0,-75,"Rate cut, stimulus, declining inflation, weak global growth concerns"
-Nota-Informativa-017-2009-BCRP,2009,4,2009-04-01,Nota-Informativa-017-2009-BCRP.pdf,1733,-1.0,0,3,0,-75,"Rate cut 150bps YTD, easing cycle, inflation declining, recession concerns"
-Nota-Informativa-029-2009-BCRP,2009,5,2009-05-01,Nota-Informativa-029-2009-BCRP.pdf,1803,-1.0,0,3,0,-85,"Fourth consecutive rate cut, 250bp reduction, monetary easing stimulus."
-Nota-Informativa-040-2009-BCRP,2009,6,2009-06-01,Nota-Informativa-040-2009-BCRP.pdf,1663,-1.0,0,2,0,-85,"Fifth consecutive rate cut, 350bp reduction, deflation concerns"
-Nota-Informativa-054-2009-BCRP,2009,7,2009-07-01,Nota-Informativa-054-2009-BCRP.pdf,1872,-1.0,0,3,0,-85,Sixth consecutive rate cut to historic low; significant monetary stimulus
-Nota-Informativa-061-2009-BCRP,2009,8,2009-08-01,Nota-Informativa-061-2009-BCRP.pdf,2144,-0.5,1,3,0,-85,"Seventh consecutive rate cut, inflation concerns receding, easing cycle"
-Nota-Informativa-059-2009-BCRP,2009,8,2009-08-01,Nota-Informativa-059-2009-BCRP.pdf,1358,-1.0,0,2,0,25,Inflation returned to target range; monetary tightening achieved successfully
-Nota-Informativa-073-2009-BCRP,2009,9,2009-09-01,Nota-Informativa-073-2009-BCRP.pdf,1721,-0.5,0,1,1,-45,"Maintaining stimulus amid falling inflation, deflation risk evident."
-Nota-Informativa-076-2009-BCRP,2009,10,2009-10-01,Nota-Informativa-076-2009-BCRP.pdf,2007,-0.6667,0,2,1,-45,"Maintains stimulus amid deflation concerns, expects below-target inflation"
-Nota-Informativa-081-2009-BCRP,2009,11,2009-11-01,Nota-Informativa-081-2009-BCRP.pdf,1765,-0.75,0,3,1,-45,"Holds rates at 1.25%, maintains stimulus despite falling inflation below target"
-Nota-Informativa-087-2009-BCRP,2009,12,2009-12-01,Nota-Informativa-087-2009-BCRP.pdf,1720,-0.25,1,2,1,-25,"Hold decision, deflation concern, recovery signals emerging"
-Nota-Informativa-BCRP-20100107,2010,1,2010-01-01,Nota-Informativa-BCRP-20100107.pdf,2179,0.25,2,1,1,-15,"Hold decision with dovish bias; inflation well below target, recovery signal."
-Nota-Informativa-BCRP-20100211,2010,2,2010-02-01,Nota-Informativa-BCRP-20100211.pdf,1727,0.75,3,0,1,-45,"Maintaining stimulus, low inflation, recovery signals present"
-Nota-Informativa-BCRP-20100311,2010,3,2010-03-01,Nota-Informativa-BCRP-20100311.pdf,1726,0.1667,3,2,1,-35,Maintains stimulus; inflation below target; recovery signals present
-Nota-Informativa-BCRP-20100408,2010,4,2010-04-01,Nota-Informativa-BCRP-20100408.pdf,1673,0.0,2,2,1,-35,Maintains stimulus despite low inflation; recovery signals noted.
-Nota-Informativa-BCRP-20100408-2,2010,4,2010-04-01,Nota-Informativa-BCRP-20100408-2.pdf,1673,0.0,2,2,1,-35,"Holding rates amid recovery, maintaining stimulus despite low inflation."
-Nota-Informativa-BCRP-20100507,2010,5,2010-05-01,Nota-Informativa-BCRP-20100507.pdf,1566,-1.0,0,1,0,25,Modest tightening bias; preventive rate hike with expansionary policy intent.
-Nota-Informativa-BCRP-20100506,2010,5,2010-05-01,Nota-Informativa-BCRP-20100506.pdf,2378,1.0,5,0,0,35,Rate hike to reduce stimulus; no inflation pressure yet
-2010-06-10,2010,6,2010-06-10,nota-informativa-2010-06-10.pdf,2239,0.3333,6,3,0,35,"Rate hike but preventive, stimulus maintained, no inflation pressures"
-2010-07-08,2010,7,2010-07-08,nota-informativa-2010-07-08.pdf,2347,0.5,6,2,0,45,"Rate hike, preventive stance, but maintains stimulus, no inflation pressure"
-2010-08-05,2010,8,2010-08-05,nota-informativa-2010-08-05.pdf,2195,1.0,6,0,0,65,"Rate hike, strong demand, preventive tightening, inflation vigilance"
-2010-08-08,2010,8,2010-08-08,nota-informativa-2010-08-08.pdf,2509,1.0,2,0,0,75,"Multiple rate hikes, tightening measures, inflation control focus"
-2010-09-09,2010,9,2010-09-09,nota-informativa-2010-09-09.pdf,2225,1.0,6,0,0,65,"Rate hike, preventive tightening, strong demand concerns"
-2010-10-07,2010,10,2010-10-07,nota-informativa-2010-10-07.pdf,2542,-0.25,1,2,1,0,Hold decision with balanced inflation-growth assessment.
-2010-11-11,2010,11,2010-11-11,nota-informativa-2010-11-11.pdf,2545,0.0,1,1,1,0,"Hold stance, inflation near target, balanced outlook"
-2010-12-09,2010,12,2010-12-09,nota-informativa-2010-12-09.pdf,2106,0.0,1,1,1,0,"Neutral hold. Inflation at target, economic growth solid, monitoring stance."
-2011-01-06,2011,1,2011-01-06,nota-informativa-2011-01-06.pdf,2525,1.0,4,0,0,65,"Rate hike, inflation concerns, preventive tightening stance"
-2011-02-10,2011,2,2011-02-10,nota-informativa-2011-02-10.pdf,2275,1.0,5,0,0,45,"Rate hike, preventive tightening amid inflation concerns, strong demand"
-2011-03-10,2011,3,2011-03-10,nota-informativa-2011-03-10.pdf,2413,1.0,5,0,0,65,Rate hike to fight inflation amid strong demand growth
-2011-04-07,2011,4,2011-04-07,nota-informativa-2011-04-07.pdf,2254,1.0,4,0,0,65,"Rate hike 3.75% to 4.0% to combat inflation expectations, hawkish stance"
-2011-05-12,2011,5,2011-05-12,nota-informativa-2011-05-12.pdf,2357,0.3333,2,1,0,65,"Rate hike amid inflation concerns, supply-side pressures."
-2011-06-09,2011,6,2011-06-09,nota-informativa-2011-06-09.pdf,2060,-0.75,0,3,1,-15,"Hold rate, moderate inflation, weakening activity signals caution"
-2011-07-07,2011,7,2011-07-07,nota-informativa-2011-07-07.pdf,2019,-0.75,0,3,1,-15,"Hold pause, inflation moderating, global uncertainty concerns"
-2011-08-11,2011,8,2011-08-11,nota-informativa-2011-08-11.pdf,2057,-0.8,0,4,1,-15,"Hold rate amid global slowdown, transitory inflation, monitoring ahead."
-2011-09-08,2011,9,2011-09-08,nota-informativa-2011-09-08.pdf,2334,-0.8,0,4,1,-15,"Hold rate amid slowdown concerns, conditional easing signal"
-2011-10-06,2011,10,2011-10-06,nota-informativa-2011-10-06.pdf,2448,-0.75,0,3,1,-15,"Hold rate, but signaling dovish tilt due to growth moderation risks"
-2011-11-10,2011,11,2011-11-10,nota-informativa-2011-11-10.pdf,2231,-0.75,0,3,1,-35,"Hold with dovish bias; slower growth, international risks cited"
-2011-12-07,2011,12,2011-12-07,nota-informativa-2011-12-07.pdf,2649,-0.375,2,5,1,-15,"Hold with modest dovish tilt; growth slowing, temporary inflation, watch uncertainties"
-2012-01-12,2012,1,2012-01-12,nota-informativa-2012-01-12.pdf,3081,-0.4,1,3,1,-15,"Hold rate, inflation transitory, growth moderating concerns"
-2012-02-09,2012,2,2012-02-09,nota-informativa-2012-02-09.pdf,2629,-0.75,0,3,1,-15,"Hold rate, cite growth moderation, temporary inflation factors"
-2012-03-08,2012,3,2012-03-08,nota-informativa-2012-03-08.pdf,2335,-0.75,0,3,1,-15,"Hold rate, concern growth slowdown, temporary inflation factors"
-2012-04-12,2012,4,2012-04-12,nota-informativa-2012-04-12.pdf,2518,-0.6667,0,2,1,0,"Hold decision, temporary inflation, stable growth near potential."
-2012-05-10,2012,5,2012-05-10,nota-informativa-2012-05-10.pdf,2773,-0.6667,0,2,1,15,"Holding rates, inflation above target, preventive tightening measures."
-2012-06-07,2012,6,2012-06-07,nota-informativa-2012-06-07.pdf,2575,0.0,2,2,1,0,"Holds rates, temporary inflation factors, growth near potential."
-2012-07-12,2012,7,2012-07-12,nota-informativa-2012-07-12.pdf,2611,0.0,2,2,1,0,Hold decision; inflation above target but supply-driven; growth stable.
-2012-08-09,2012,8,2012-08-09,nota-informativa-2012-08-09.pdf,2689,0.1667,3,2,1,0,"Hold stance, temporary inflation factors, growth at potential"
-2012-09-06,2012,9,2012-09-06,nota-informativa-2012-09-06.pdf,2758,0.0,2,2,1,0,"Hold decision, temporary supply shocks, balanced uncertainty assessment."
-2012-10-11,2012,10,2012-10-11,nota-informativa-2012-10-11.pdf,2688,0.0,2,2,1,0,Hold decision; temporary supply shocks; balanced outlook
-2012-11-08,2012,11,2012-11-08,nota-informativa-2012-11-08.pdf,2471,0.0,1,1,1,0,"Hold decision, temporary supply shocks, stable growth, monitoring inflation"
-2012-12-06,2012,12,2012-12-06,nota-informativa-2012-12-06.pdf,2482,0.0,0,0,1,-15,"Hold rate, inflation declining, growth stable, external uncertainty remains."
-2013-01-10,2013,1,2013-01-10,nota-informativa-2013-01-10.pdf,2621,0.0,0,0,1,0,"Rate hold amid declining inflation, stable growth near potential."
-2013-02-07,2013,2,2013-02-07,nota-informativa-2013-02-07.pdf,2152,0.0,0,0,1,0,"Hold decision, inflation near target, balanced outlook"
-2013-03-07,2013,3,2013-03-07,nota-informativa-2013-03-07.pdf,2140,0.0,0,0,1,0,"Hold decision, inflation tracking downward, growth stable"
-2013-04-11,2013,4,2013-04-11,nota-informativa-2013-04-11.pdf,2203,0.0,0,0,1,0,"Hold decision, inflation on target, growth stable near potential."
-2013-05-09,2013,5,2013-05-09,nota-informativa-2013-05-09.pdf,2170,0.0,0,0,1,0,"Holds rates, inflation on target, growth stable, neutral stance."
-2013-06-13,2013,6,2013-06-13,nota-informativa-2013-06-13.pdf,2122,-0.6667,0,2,1,0,"Hold decision, inflation stable within target range, balanced outlook."
-2013-07-11,2013,7,2013-07-11,nota-informativa-2013-07-11.pdf,2900,-0.75,0,3,1,0,"Holds rates steady, inflation within target, balanced outlook"
-2013-08-08,2013,8,2013-08-08,nota-informativa-2013-08-08.pdf,2766,-0.75,0,3,1,0,"Hold rate, balanced risks, temporary inflation factors"
-2013-09-12,2013,9,2013-09-12,nota-informativa-2013-09-12.pdf,2897,-0.25,1,2,1,0,"Hold decision with balanced guidance; growth near potential, inflation temporary."
-2013-10-10,2013,10,2013-10-10,nota-informativa-2013-10-10.pdf,3261,-0.25,1,2,1,0,"Holds rates, growth near potential, inflation anchored."
-2013-11-07,2013,11,2013-11-07,nota-informativa-2013-11-07.pdf,2482,-1.0,0,6,0,-65,"Rate cut, growth deceleration concerns, preventive easing stance"
-2013-11-08,2013,11,2013-11-08,nota-informativa-2013-11-08.pdf,2516,-0.6,1,4,0,-45,"Rate cut justified by below-potential growth, lower global outlook"
-2013-12-12,2013,12,2013-12-12,nota-informativa-2013-12-12.pdf,2675,-0.4444,2,6,1,-15,"Hold rate, growth below potential, reduced reserve requirement"
-2014-01-09,2014,1,2014-01-09,nota-informativa-2014-01-09.pdf,3128,-0.4444,2,6,1,-15,"Hold rate, recovery signals, modest stimulus via reserve requirement cuts"
-2014-02-13,2014,2,2014-02-13,nota-informativa-2014-02-13.pdf,2713,-0.4444,2,6,1,-15,"Hold rate, growth below potential, modest dovish tilt"
-2014-03-13,2014,3,2014-03-13,nota-informativa-2014-03-13.pdf,2499,-0.5,1,4,1,-15,"Hold rate, modest growth concerns, supply shocks moderating, cautious."
-2014-04-10,2014,4,2014-04-10,nota-informativa-2014-04-10.pdf,2359,-0.5,1,4,1,-15,"Hold rate, but cutting reserve requirements, monitoring inflation decline."
-2014-05-08,2014,5,2014-05-08,nota-informativa-2014-05-08.pdf,2202,-0.75,0,3,1,-15,"Hold rate, growth below potential, supply shocks moderating"
-2014-06-12,2014,6,2014-06-12,nota-informativa-2014-06-12.pdf,2516,-0.625,1,6,1,-15,"Hold rate, temporary weakness, ready for easing if needed"
-2014-07-10,2014,7,2014-07-10,nota-informativa-2014-07-10.pdf,2517,-0.6667,1,5,0,-45,"Rate cut with growth concerns, but inflation still elevated."
-2014-08-07,2014,8,2014-08-07,nota-informativa-2014-08-07.pdf,2322,-0.4,1,3,1,-25,"Holding rates but signaling flexibility; growth concerns, modest inflation pressures."
-2014-09-11,2014,9,2014-09-11,nota-informativa-2014-09-11.pdf,2300,-0.6667,1,5,0,-65,"Rate cut 25bps, weak growth, inflation concerns easing, stimulus bias"
-2014-10-09,2014,10,2014-10-09,nota-informativa-2014-10-09.pdf,2408,-0.5714,1,5,1,-15,"Hold rate, weak growth concern, ready to ease if needed"
-2014-11-13,2014,11,2014-11-13,nota-informativa-2014-11-13.pdf,2256,-0.25,1,2,1,-35,"Hold rate, weak growth, reduced reserve requirement, stimulus signal"
-2014-12-11,2014,12,2014-12-11,nota-informativa-2014-12-11.pdf,2637,-0.4,1,3,1,-35,"Hold rate, but signaling easing bias with reserve requirement cuts."
-2015-01-15,2015,1,2015-01-15,nota-informativa-2015-01-15.pdf,2446,-0.5,1,3,0,-65,"Rate cut 25bps, below-potential growth, inflation convergence to target"
-2015-02-12,2015,2,2015-02-12,nota-informativa-2015-02-12.pdf,2147,-0.4,1,3,1,-35,"Hold rate, weak growth concern, ready for further easing"
-2015-03-12,2015,3,2015-03-12,nota-informativa-2015-03-12.pdf,2215,-0.4,1,3,1,-35,"Hold rate, but easing bias: reduced reserve requirements, signals more cuts if needed"
-2015-04-09,2015,4,2015-04-09,nota-informativa-2015-04-09.pdf,2592,-0.4,1,3,1,-25,"Hold rate, but economic weakness and stimulus measures signal dovish tilt"
-2015-05-14,2015,5,2015-05-14,nota-informativa-2015-05-14.pdf,2563,-0.4,1,3,1,-35,"Hold rate, weak activity, supply-side inflation, reducing reserve requirements"
-2015-06-11,2015,6,2015-06-11,nota-informativa-2015-06-11.pdf,2571,-0.5,1,4,1,-25,"Hold rate, below-potential growth, supply shocks reversing gradually"
-2015-07-09,2015,7,2015-07-09,nota-informativa-2015-07-09.pdf,2563,-0.5,0,1,1,-15,"Hold with growth concerns, modest hawkish inflation signals."
-2015-08-13,2015,8,2015-08-13,nota-informativa-2015-08-13.pdf,2992,-0.5,0,1,1,-15,"Holding rates amid weak growth, inflation near ceiling, cautious stance."
-Pjd2hye7jF-jdjd3uR5elsuy_j4eu,2015,9,2015-09-01,Pjd2hye7jF-jdjd3uR5elsuy_j4eu.pdf,3298,-1.0,0,1,0,35,"Rate hike with inflation concerns, but gradual recovery acknowledged"
-2015-09-10,2015,9,2015-09-10,nota-informativa-2015-09-10.pdf,3298,-1.0,0,1,0,35,"Rate hike amid inflation concerns, but expansionary stance maintained."
-Fd34d5de7j763kdjd3uR_f-lsuy_9te-e,2015,10,2015-10-01,Fd34d5de7j763kdjd3uR_f-lsuy_9te-e.pdf,3077,-0.6667,0,2,1,-15,"Hold rate, temporary inflation factors, gradual recovery signal"
-2015-10-15,2015,10,2015-10-15,nota-informativa-2015-10-15.pdf,3077,-0.6667,0,2,1,-15,"Hold rate, gradual recovery, temporary inflation factors"
-Fdpdif7-jhdy-6376d3uR_f-lsKdhsy5_p4erf,2015,11,2015-11-01,Fdpdif7-jhdy-6376d3uR_f-lsKdhsy5_p4erf.pdf,2843,-0.5,0,1,1,-15,"Hold with dovish lean; inflation temporary, gradual recovery acknowledged"
-2015-11-12,2015,11,2015-11-12,nota-informativa-2015-11-12.pdf,2843,-0.5,0,1,1,-15,"Hold decision, gradual recovery, inflation expectations converging"
-2015-12-10,2015,12,2015-12-10,nota-informativa-2015-12-10.pdf,3287,0.0,1,1,0,45,"Rate hike amid inflation concerns, gradual recovery."
-2016-01-14,2016,1,2016-01-14,nota-informativa-2016-01-14.pdf,2933,0.0,1,1,0,35,"Rate hike amid inflation concerns, but temporary factors acknowledged"
-2016-02-11,2016,2,2016-02-11,nota-informativa-2016-02-11.pdf,3258,-0.3333,1,2,0,75,"Rate hike of 25bps, inflation concerns, tightening bias"
-2016-03-10,2016,3,2016-03-10,nota-informativa-2016-03-10.pdf,2924,0.0,1,1,1,35,"Hold decision, inflation above target, cautious tightening bias"
-LkdkT_dfkrk-re456ldl_yekdk-p34md,2016,4,2016-04-01,LkdkT_dfkrk-re456ldl_yekdk-p34md.pdf,2613,-0.6667,0,2,1,-15,"Hold with dovish tilt; inflation declining, recovery gradual, monitoring stance."
-2016-04-14,2016,4,2016-04-14,nota-informativa-2016-04-14.pdf,2613,-0.6667,0,2,1,-15,"Hold with dovish lean; inflation declining, growth recovering gradually"
-2016-05-12,2016,5,2016-05-12,nota-informativa-2016-05-12.pdf,2591,-0.75,0,3,1,-15,"Hold stance, inflation declining toward target, recovery signals"
-kieorDLW-83kd_7edue23-je87,2016,6,2016-06-01,kieorDLW-83kd_7edue23-je87.pdf,2421,-0.6667,0,2,1,-25,"Hold decision, inflation moderating, growth near potential, cautiously optimistic"
-2016-06-09,2016,6,2016-06-09,nota-informativa-2016-06-09.pdf,2421,-0.6667,0,2,1,-25,"Hold rate, inflation declining, growth stable, modest dovish tilt"
-Ldju73-ekd9_uro928-gam3-0f,2016,7,2016-07-01,Ldju73-ekd9_uro928-gam3-0f.pdf,2510,-0.6667,0,2,1,-25,"Hold rate, inflation declining, economic growth stable, cautiously optimistic"
-2016-07-14,2016,7,2016-07-14,nota-informativa-2016-07-14.pdf,2510,-0.6667,0,2,1,-25,"Hold rate, inflation declining, growth stable, cautiously dovish bias"
-2016-08-11,2016,8,2016-08-11,nota-informativa-2016-08-11.pdf,2907,-0.5,1,4,1,5,"Neutral hold. Inflation declining toward target, growth near potential."
-2016-09-08,2016,9,2016-09-08,nota-informativa-2016-09-08.pdf,3050,-0.25,1,2,1,0,"Hold decision with gradual disinflation, stable economy near potential"
-2016-10-13,2016,10,2016-10-13,nota-informativa-2016-10-13.pdf,3064,-0.25,1,2,1,0,Holds rates steady; inflation converging gradually to target
-2016-11-10,2016,11,2016-11-10,nota-informativa-2016-11-10.pdf,3075,-0.4,1,3,1,0,"Hold decision, transitory inflation, stable expectations within target."
-2016-12-15,2016,12,2016-12-15,nota-informativa-2016-12-15.pdf,2976,-0.25,1,2,1,0,"Hold decision, inflation near target, balanced economic outlook"
-2017-01-12,2017,1,2017-01-12,nota-informativa-2017-01-12.pdf,2719,-0.1667,2,3,1,0,"Hold decision; inflation converging to target, balanced outlook"
-2017-02-09,2017,2,2017-02-09,nota-informativa-2017-02-09.pdf,2736,-0.375,2,5,1,0,"Held rate steady; inflation near target, balanced outlook"
-2017-03-09,2017,3,2017-03-09,nota-informativa-2017-03-09.pdf,2722,-0.375,2,5,1,0,"Hold decision, inflation converging to target, balanced outlook"
-2017-04-06,2017,4,2017-04-06,nota-informativa-2017-04-06.pdf,3087,-0.1667,2,3,1,-15,"Hold rate, temporary inflation, hints at future easing flexibility."
-2017-05-11,2017,5,2017-05-11,nota-informativa-2017-05-11.pdf,2927,-0.6,1,4,0,-45,"Rate cut 25bps, growth deceleration concern, inflation moderating"
-2017-06-08,2017,6,2017-06-08,nota-informativa-2017-06-08.pdf,2894,0.0,2,2,1,-35,"Hold rate, inflation declining, easing bias signaled"
-2017-07-13,2017,7,2017-07-13,nota-informativa-2017-07-13.pdf,3267,-0.2,2,3,0,-45,"Rate cut 25bp, growth below potential, stimulus expected"
-2017-08-10,2017,8,2017-08-10,nota-informativa-2017-08-10.pdf,2882,-0.1667,2,3,1,-25,"Hold with dovish bias; mentions future rate cuts, below-potential growth."
-2017-09-14,2017,9,2017-09-14,nota-informativa-2017-09-14.pdf,3102,0.0,3,3,0,-35,"Rate cut 25bps, growth below potential, inflation expectations declining"
-2017-10-12,2017,10,2017-10-12,nota-informativa-2017-10-12.pdf,2773,0.0,3,3,1,-15,"Holding rates, inflation declining, growth below potential, cautiously optimistic."
-2017-11-09,2017,11,2017-11-09,nota-informativa-2017-11-09.pdf,2874,0.0,2,2,0,-45,"Rate cut, low inflation, below-potential growth concern"
-2017-12-14,2017,12,2017-12-14,nota-informativa-2017-12-14.pdf,3197,0.0,2,2,1,-15,"Hold stance, inflation declining toward target, moderate growth concern"
-2018-01-03,2018,1,2018-01-03,nota-informativa-2018-01-03.pdf,963,0.0,0,0,0,0,"Administrative calendar announcement, no policy stance indicated."
-2018-01-11,2018,1,2018-01-11,nota-informativa-2018-01-11.pdf,2984,-0.2,2,3,0,-65,Rate cut amid low inflation and below-potential activity growth.
-2018-02-08,2018,2,2018-02-08,nota-informativa-2018-02-08.pdf,2934,-0.125,3,4,1,-15,"Hold rate, inflation below target, economic slack noted"
-2018-03-08,2018,3,2018-03-08,nota-informativa-2018-03-08.pdf,2790,0.0,3,3,0,-65,"Rate cut amid below-potential growth, low inflation, falling expectations"
-2018-04-12,2018,4,2018-04-12,nota-informativa-2018-04-12.pdf,2832,-0.125,3,4,1,-35,"Hold rate amid low inflation, below-potential growth, dovish bias"
-2018-05-10,2018,5,2018-05-10,nota-informativa-2018-05-10.pdf,2905,-0.125,3,4,1,-25,"Hold rate, maintains expansive stance, inflation below target"
-2018-06-07,2018,6,2018-06-07,nota-informativa-2018-06-07.pdf,2915,0.4,3,1,1,-25,"Holds rates, inflation below target, expansive policy stance maintained"
-2018-07-12,2018,7,2018-07-12,nota-informativa-2018-07-12.pdf,2927,0.0,2,2,1,-15,Hold with mild dovish bias; maintains expansive stance citing below-potential growth
-2018-08-09,2018,8,2018-08-09,nota-informativa-2018-08-09.pdf,2699,0.25,2,1,1,-25,"Holds rates, maintains expansive stance, citing growth below potential"
-2018-09-13,2018,9,2018-09-13,nota-informativa-2018-09-13.pdf,2730,0.25,2,1,1,-25,"Hold rate, expansive stance, growth concerns outweigh inflation"
-2018-10-11,2018,10,2018-10-11,nota-informativa-2018-10-11.pdf,2780,0.0,2,2,1,-15,"Hold rate, expansionary stance, growth concerns dominate."
-2018-11-08,2018,11,2018-11-08,nota-informativa-2018-11-08.pdf,2705,0.0,2,2,1,-15,Hold with expansionary bias; growth concerns outweigh inflation.
-2018-12-13,2018,12,2018-12-13,nota-informativa-2018-12-13.pdf,2983,0.0,2,2,1,-15,"Hold rate, expansive stance, output gap concerns"
-2019-01-10,2019,1,2019-01-10,nota-informativa-2019-01-10.pdf,2659,0.0,2,2,1,-25,"Hold with expansive stance, below-potential output concern"
-2019-02-07,2019,2,2019-02-07,nota-informativa-2019-02-07.pdf,2619,0.25,2,1,1,-25,"Holding rates, expansive stance, output gap concerns"
-2019-03-07,2019,3,2019-03-07,nota-informativa-2019-03-07.pdf,2600,0.25,2,1,1,-25,"Hold stance, expansive policy, below-potential output concerns"
-2019-04-11,2019,4,2019-04-11,nota-informativa-2019-04-11.pdf,2713,0.25,2,1,1,-25,"Maintaining rates, inflation anchored, expansionary stance appropriate"
-2019-05-09,2019,5,2019-05-09,nota-informativa-2019-05-09.pdf,2858,-0.1667,2,3,1,-15,"Hold rate, maintain expansive stance, below-potential output"
-2019-06-13,2019,6,2019-06-13,nota-informativa-2019-06-13.pdf,2928,0.0,2,2,1,-25,"Hold with dovish lean: expansive policy, economic slack concerns."
-2019-07-11,2019,7,2019-07-11,nota-informativa-2019-07-11.pdf,3058,0.0,2,2,1,-15,"Hold with expansive bias; inflation within target, growth concerns, global risks."
-2019-08-08,2019,8,2019-08-08,nota-informativa-2019-08-08.pdf,3078,0.5,3,1,0,-45,"Rate cut to 2.50%, stimulus expansion, weak activity, low inflation expectations"
-2019-09-12,2019,9,2019-09-12,nota-informativa-2019-09-12.pdf,3034,0.25,2,1,1,-25,"Hold stance with dovish bias; expansion maintained, downside growth risks"
-2019-10-10,2019,10,2019-10-10,nota-informativa-2019-10-10.pdf,2930,0.25,2,1,1,-25,"Hold rate, expansive policy, growth concerns, inflation below target"
-2019-11-07,2019,11,2019-11-07,nota-informativa-2019-11-07.pdf,2792,1.0,1,0,0,-65,"Rate cut amid low inflation, weak demand, negative bias"
-2019-12-12,2019,12,2019-12-12,nota-informativa-2019-12-12.pdf,2637,0.0,1,1,1,-15,"Hold stance with dovish bias; inflation below target, growth concerns."
-2019-12-31,2019,12,2019-12-31,nota-informativa-2019-12-31.pdf,1238,0.0,0,0,0,-65,"Two rate cuts, expansive stance, downward inflation bias, stimulus focus"
-2020-01-09,2020,1,2020-01-09,nota-informativa-2020-01-09.pdf,2507,0.25,2,1,1,-15,"Hold rate, but downside inflation bias, weak activity concerns."
-2020-02-13,2020,2,2020-02-13,nota-informativa-2020-02-13.pdf,2469,0.4,3,1,1,-15,"Hold rate, inflation below target, growth concerns, downside bias"
-2020-03-12,2020,3,2020-03-12,nota-informativa-2020-03-12.pdf,2252,0.0,1,1,1,-35,"Hold stance, but dovish tilt: downward inflation bias, deteriorating expectations, COVID-19 risks, ready to ease"
-2020-03-19,2020,3,2020-03-19,nota-informativa-2020-03-19.pdf,2344,-1.0,0,2,0,-85,"Emergency rate cut 100bp, recession concerns, maximum stimulus stance"
-2020-03-26,2020,3,2020-03-26,nota-informativa-2020-03-26.pdf,1672,0.0,0,0,0,-75,"Multiple rate cuts, reserve requirement reductions, liquidity injections"
-2020-04-09,2020,4,2020-04-09,nota-informativa-2020-04-09.pdf,2270,-0.3333,1,2,0,-85,"Emergency rate cut to 0.25%, liquidity injections, recession concerns"
-2020-05-07,2020,5,2020-05-07,nota-informativa-2020-05-07.pdf,2655,-0.5714,1,5,1,-85,"Maintaining ultra-low rates, expanding liquidity, recession concern"
-2020-06-11,2020,6,2020-06-11,nota-informativa-2020-06-11.pdf,2781,-0.4,1,3,1,-75,"Expansive policy, rate at floor, severe recession concerns, demand collapse"
-2020-07-09,2020,7,2020-07-09,nota-informativa-2020-07-09.pdf,3120,-0.5,1,4,1,-75,"Expansive policy, rate cut to 0.25%, liquidity injections, recession concerns"
-2020-08-13,2020,8,2020-08-13,nota-informativa-2020-08-13.pdf,3000,-0.1667,2,3,1,-75,"Expansive policy, emergency rates, recession concerns, stimulus liquidity injection"
-2020-09-10,2020,9,2020-09-10,nota-informativa-2020-09-10.pdf,2981,-0.5,1,4,1,-75,"Expansive policy, near-zero rates, inflation below target, stimulus focus"
-2020-10-07,2020,10,2020-10-07,nota-informativa-2020-10-07.pdf,2969,-0.5714,1,5,1,-75,"Expansive policy, rate hold at 0.25%, massive liquidity injections, below-target inflation"
-2020-11-12,2020,11,2020-11-12,nota-informativa-2020-11-12.pdf,2707,-0.5,1,4,1,-75,"Deeply dovish: ultra-low rates, expansive stimulus, weak demand concerns"
-2020-12-10,2020,12,2020-12-10,nota-informativa-2020-12-10.pdf,3200,-0.25,1,2,1,-65,"Expansive policy, rate hold at 0.25%, weak demand, liquidity injection"
-2021-01-14,2021,1,2021-01-14,nota-informativa-2021-01-14.pdf,3299,-0.4,1,3,1,-45,"Maintains ultra-low rates, expansionary policy, below-potential economy"
-2021-02-11,2021,2,2021-02-11,nota-informativa-2021-02-11.pdf,2949,-0.75,0,3,1,-45,"Maintaining ultra-low rates, expansive policy, pandemic concerns dominate"
-2021-03-11,2021,3,2021-03-11,nota-informativa-2021-03-11.pdf,2812,-0.6667,0,2,1,-65,"Expansive policy, low rates, stimulus, below-potential growth concerns"
-2021-04-08,2021,4,2021-04-08,nota-informativa-2021-04-08.pdf,2639,-0.25,1,2,1,-65,"Strong stimulus, low rates, prolonged expansive stance, pandemic support"
-2021-05-13,2021,5,2021-05-13,nota-informativa-2021-05-13.pdf,2598,-0.8333,0,5,1,-65,"Strongly expansive policy, rate hold at minimum, liquidity injections"
-2021-06-10,2021,6,2021-06-10,nota-informativa-2021-06-10.pdf,2641,-0.4,1,3,1,-35,"Maintaining ultra-loose policy, expansionary stance, pandemic concerns dominate"
-2021-07-08,2021,7,2021-07-08,nota-informativa-2021-07-08.pdf,3002,-0.1667,2,3,1,-45,"Maintains expansive policy, rate hold at 0.25%, prioritizes economic recovery"
-2021-08-12,2021,8,2021-08-12,nota-informativa-2021-08-12.pdf,3015,-0.2,2,3,0,-35,"Rate hike amid transitory inflation, but policy remains expansive"
-2021-09-09,2021,9,2021-09-09,nota-informativa-2021-09-09.pdf,3000,0.2,3,2,0,25,"Rate hike but modest, emphasizes transitory inflation, economy below potential"
-2021-10-07,2021,10,2021-10-07,nota-informativa-2021-10-07.pdf,3175,0.2,3,2,0,35,"Rate hike signals inflation concern, but emphasizes transitory factors and expansionary policy continues."
-2021-11-11,2021,11,2021-11-11,nota-informativa-2021-11-11.pdf,3058,0.0,2,2,0,35,"Rate hike signals inflation concern, but policy remains expansive overall."
-2021-12-09,2021,12,2021-12-09,nota-informativa-2021-12-09.pdf,3384,-0.5,1,3,0,35,"Rate hike with hawkish inflation concerns, yet policy remains expansive"
-2022-01-06,2022,1,2022-01-06,nota-informativa-2022-01-06.pdf,2930,-0.2,2,3,0,75,"Rate hike 50bps, inflation above target, tightening cycle"
-2022-02-10,2022,2,2022-02-10,nota-informativa-2022-02-10.pdf,2797,0.0,3,3,0,65,"Rate hike, inflation above target, tightening bias."
-2022-03-10,2022,3,2022-03-10,nota-informativa-2022-03-10.pdf,3565,-0.1429,3,4,0,75,"Rate hike, inflation above target, tightening cycle continues"
-2022-04-07,2022,4,2022-04-07,nota-informativa-2022-04-07.pdf,3696,0.0,4,4,0,75,"Rate hike 50bps, inflation above target, hawkish tightening stance."
-2022-05-12,2022,5,2022-05-12,nota-informativa-2022-05-12.pdf,3475,0.5,3,1,0,75,"Rate hike 50bps, inflation well above target, hawkish tightening cycle"
-2022-06-09,2022,6,2022-06-09,nota-informativa-2022-06-09.pdf,3458,0.5,3,1,0,75,"Rate hike 50bps, inflation above target, hawkish tightening"
-2022-07-07,2022,7,2022-07-07,nota-informativa-2022-07-07.pdf,3429,0.0,3,3,0,75,"Rate hike, inflation above target, tightening cycle continues"
-2022-08-11,2022,8,2022-08-11,nota-informativa-2022-08-11.pdf,3456,0.1429,4,3,0,75,"Rate hike continuation, inflation above target, tightening cycle"
-2022-09-08,2022,9,2022-09-08,nota-informativa-2022-09-08.pdf,3507,0.2,3,2,0,75,"Rate hike continuation, inflation above target, tightening stance"
-2022-10-06,2022,10,2022-10-06,nota-informativa-2022-10-06.pdf,3454,0.1429,4,3,0,75,"Rate hike to 7%, inflation above target, tightening cycle continues"
-2022-11-10,2022,11,2022-11-10,nota-informativa-2022-11-10.pdf,3351,-0.2,2,3,0,75,"Rate hike to 7.25%, inflation above target, tightening cycle continues"
-2022-12-07,2022,12,2022-12-07,nota-informativa-2022-12-07.pdf,3512,-0.2,2,3,0,75,"Rate hike to 7.50%, inflation above target, restrictive stance"
-2023-01-12,2023,1,2023-01-12,nota-informativa-2023-01-12.pdf,3355,0.0,2,2,0,75,"Rate hike to 7.75%, inflation above target, restrictive stance"
-2023-02-09,2023,2,2023-02-09,nota-informativa-2023-02-09.pdf,3865,0.0,2,2,1,35,"Hold with hawkish tilt; inflation above target, future hikes possible"
-2023-03-09,2023,3,2023-03-09,nota-informativa-2023-03-09.pdf,4013,0.0,2,2,1,35,"Hold stance, hawkish bias: inflation above target, conditional on data"
-2023-04-13,2023,4,2023-04-13,nota-informativa-2023-04-13.pdf,3889,-0.1667,2,3,1,25,"Hold stance with hawkish bias; inflation above target, future hikes possible"
-2023-05-11,2023,5,2023-05-11,nota-informativa-2023-05-11.pdf,3772,0.0,2,2,1,15,"Hold stance, inflation declining, future hikes conditional on data"
-2023-06-08,2023,6,2023-06-08,nota-informativa-2023-06-08.pdf,3725,0.0,2,2,1,15,Hold stance with future tightening optionality; inflation above target.
-2023-07-13,2023,7,2023-07-13,nota-informativa-2023-07-13.pdf,4183,-0.1667,2,3,1,25,"Hold stance with hawkish bias; inflation above target, monitoring future data"
-2023-08-10,2023,8,2023-08-10,nota-informativa-2023-08-10.pdf,4180,0.1667,3,2,1,25,"Hold with hawkish bias; inflation above target, moderating but monitored."
-2023-09-14,2023,9,2023-09-14,nota-informativa-2023-09-14.pdf,4254,0.0,3,3,0,-35,Rate cut signals easing; inflation still above target but declining trend.
-2023-10-05,2023,10,2023-10-05,nota-informativa-2023-10-05.pdf,3984,-0.1429,3,4,0,-35,"Rate cut signal, but inflation concerns persist above target"
-2023-11-09,2023,11,2023-11-09,nota-informativa-2023-11-09.pdf,4116,-0.1429,3,4,0,-35,"Rate cut signaling, but inflation still above target, future hikes conditional"
-2023-12-14,2023,12,2023-12-14,nota-informativa-2023-12-14.pdf,4346,-0.1429,3,4,0,-35,Rate cut with cautious forward guidance; inflation still above target
-2024-01-11,2024,1,2024-01-11,nota-informativa-2024-01-11.pdf,3780,-0.1429,3,4,0,-45,Rate cut with cautious forward guidance; inflation declining toward target
-2024-02-08,2024,2,2024-02-08,nota-informativa-2024-02-08.pdf,3560,-0.3333,1,2,0,-35,"Rate cut 25bps, inflation declining, but cautious tone on future cuts"
-2024-03-07,2024,3,2024-03-07,nota-informativa-2024-03-07.pdf,3893,-0.25,1,2,1,-15,"Hold rate, reduce reserve requirements, inflation moderating, dovish tilt"
-2024-04-11,2024,4,2024-04-11,nota-informativa-2024-04-11.pdf,3642,-0.3333,2,4,0,-65,"Rate cut 25bps, inflation converging to target, dovish bias"
-2024-05-09,2024,5,2024-05-09,nota-informativa-2024-05-09.pdf,3599,-0.6,1,4,0,-45,"Rate cut with gradual disinflation path, economic slowdown signals."
-2024-06-13,2024,6,2024-06-13,nota-informativa-2024-06-13.pdf,3717,-0.1667,2,3,1,-15,"Hold stance with mild dovish tilt; inflation cooling, expectations contained."
-2024-07-11,2024,7,2024-07-11,nota-informativa-2024-07-11.pdf,3559,0.0,3,3,1,15,"Hold stance, inflation persistence concerns offset by moderate outlook."
-2024-08-08,2024,8,2024-08-08,nota-informativa-2024-08-08.pdf,3700,-0.2,2,3,0,-45,"Rate cut, inflation declining, improving economic indicators, optimistic outlook."
-2024-09-12,2024,9,2024-09-12,nota-informativa-2024-09-12.pdf,3530,0.0,2,2,0,-35,"Rate cut with cautious forward guidance; inflation at target, stable outlook."
-2024-10-10,2024,10,2024-10-10,nota-informativa-2024-10-10.pdf,3639,-0.1667,2,3,1,10,"Hold stance, inflation near target, modest optimism"
-2024-11-07,2024,11,2024-11-07,nota-informativa-2024-11-07.pdf,3622,-0.2,2,3,0,-45,"Rate cut 25bps, inflation near target, but cautious on future cuts"
-2024-12-12,2024,12,2024-12-12,nota-informativa-2024-12-12.pdf,3508,-0.4,1,3,1,5,"Hold stance, inflation near target, modest growth optimism"
-2025-01-09,2025,1,2025-01-09,nota-informativa-2025-01-09.pdf,3330,-0.5,1,3,0,-45,"Rate cut to neutral level, inflation controlled, gradual easing bias."
-2025-02-13,2025,2,2025-02-13,nota-informativa-2025-02-13.pdf,3824,-0.5714,1,5,1,-15,"Hold stance, inflation declining toward target, modest dovish bias."
-2025-03-13,2025,3,2025-03-13,nota-informativa-2025-03-13.pdf,3732,-0.5714,1,5,1,0,"Hold decision with balanced inflation concerns, gradual convergence expected."
-2025-04-10,2025,4,2025-04-10,nota-informativa-2025-04-10.pdf,3635,0.0,1,1,1,5,"Hold stance, slight hawkish bias from inflation concerns and trade tensions."
-2025-05-08,2025,5,2025-05-08,nota-informativa-2025-05-08.pdf,3656,-0.3333,1,2,0,-45,"Rate cut to neutral level, inflation concerns easing, growth deteriorating slightly."
-2025-06-12,2025,6,2025-06-12,nota-informativa-2025-06-12.pdf,3587,-0.4,1,3,1,-15,"Hold rate, inflation below target, economic slowdown signals"
-2025-07-10,2025,7,2025-07-10,nota-informativa-2025-07-10.pdf,3426,-0.25,1,2,1,-15,"Hold decision, low inflation, growth concerns, dovish tilt"
-2025-08-14,2025,8,2025-08-14,nota-informativa-2025-08-14.pdf,3086,-0.4,1,3,1,-15,"Hold with dovish tilt; low inflation, reduced expectations, cautious global outlook."
-2025-09-11,2025,9,2025-09-11,nota-informativa-2025-09-11.pdf,3210,0.0,1,1,0,-45,"Rate cut, inflation declining, but cautious on global outlook risks"
-2025-10-09,2025,10,2025-10-09,nota-informativa-2025-10-09.pdf,2780,0.5,1,0,1,5,"Hold stance, inflation near target, vigilant to data shifts"
-2025-11-13,2025,11,2025-11-13,nota-informativa-2025-11-13.pdf,2923,0.5,1,0,1,0,"Hold decision; inflation near target, stable expectations, balanced risks."
-2025-12-11,2025,12,2025-12-11,nota-informativa-2025-12-11.pdf,3005,0.0,1,1,1,5,"Hold stance, inflation below target, economic activity stable"
-2026-01-08,2026,1,2026-01-08,nota-informativa-2026-01-08.pdf,2814,-0.25,1,2,1,5,"Hold stance, inflation near target, stable growth outlook"
-2026-02-12,2026,2,2026-02-12,nota-informativa-2026-02-12.pdf,2869,0.6667,2,0,1,15,"Hold with modest hawkish bias; inflation rising, monitoring stance"
-2026-03-12,2026,3,2026-03-12,nota-informativa-2026-03-12.pdf,3629,0.8,4,0,1,0,"Hold decision, inflation near target, temporary pressures acknowledged"
+key,year,month,date,filename,n_chars,dict_tone,dict_hawkish,dict_dovish,dict_neutral,llm_tone,llm_reason,is_flagged
+Nota-Informativa-002-2001-BCRP,2001,2,2001-02-01,Nota-Informativa-002-2001-BCRP.pdf,2732,0.0,0,0,0,-35,"Recent rate cuts, lower corridor rates, accommodative stance signaled",False
+Nota-Informativa-003-2001-BCRP,2001,3,2001-03-01,Nota-Informativa-003-2001-BCRP.pdf,3302,0.0,0,0,0,-45,"Rate cuts, increased monetary liquidity, stimulus signals.",False
+Nota-Informativa-004-2001-BCRP-Modificado,2001,4,2001-04-01,Nota-Informativa-004-2001-BCRP-Modificado.pdf,1175,-1.0,0,1,0,-45,"Liquidity target reduced due to financial turbulence, easing bias.",False
+Nota-Informativa-004-2001-BCRP,2001,4,2001-04-01,Nota-Informativa-004-2001-BCRP.pdf,3367,0.0,0,0,0,-45,"Rate cut 11.5% to 11.0%, increased liquidity target, accommodative stance",False
+Nota-Informativa-005-2001-BCRP,2001,5,2001-05-01,Nota-Informativa-005-2001-BCRP.pdf,2565,-1.0,0,1,0,-25,Rate hold with selective easing in FX; liquidity reduction amid uncertainty,False
+Nota-Informativa-006-2001-BCRP,2001,6,2001-06-01,Nota-Informativa-006-2001-BCRP.pdf,3280,0.0,0,0,0,-65,"Rate cut 11% to 10.5%, increased liquidity provision, growth concerns",False
+Nota-Informativa-007-2001-BCRP,2001,7,2001-07-01,Nota-Informativa-007-2001-BCRP.pdf,3256,1.0,2,0,0,-75,"Rate cut 10.5% to 10%, increased liquidity provision, easing stance",False
+Nota-Informativa-008-2001-BCRP,2001,8,2001-08-01,Nota-Informativa-008-2001-BCRP.pdf,4017,0.0,0,0,0,-75,"Three consecutive rate cuts, easing liquidity conditions, stimulus focus",False
+Nota-Informativa-009-2001-BCRP,2001,9,2001-09-01,Nota-Informativa-009-2001-BCRP.pdf,3633,0.0,0,0,0,-65,"Fourth consecutive rate cut, monetary stimulus, easing cycle",False
+Nota-Informativa-010-2001-BCRP,2001,10,2001-10-01,Nota-Informativa-010-2001-BCRP.pdf,4234,0.0,0,0,0,-45,"Rate cuts across multiple facilities, easing monetary conditions",False
+Nota-Informativa-011-2001-BCRP,2001,11,2001-11-01,Nota-Informativa-011-2001-BCRP.pdf,3683,0.0,0,0,0,-35,"Rate cuts across instruments, easing bias amid economic uncertainty.",False
+Nota-Informativa-012-2001-BCRP,2001,12,2001-12-01,Nota-Informativa-012-2001-BCRP.pdf,3916,1.0,2,0,0,-45,"Rate cuts, expanded liquidity, stimulus measures, crisis context",False
+Nota-Informativa-001-2002-BCRP,2002,1,2002-01-01,Nota-Informativa-001-2002-BCRP.pdf,4080,1.0,2,0,0,-45,"Rate cuts, easier liquidity conditions, accommodative stance",False
+Programa-Monetario-2002,2002,1,2002-01-01,Programa-Monetario-2002.pdf,19962,0.1111,5,4,0,-15,"Inflation targeting adoption, cautious stance, balanced risk management approach.",False
+Nota-Informativa-002-2002-BCRP,2002,2,2002-02-01,Nota-Informativa-002-2002-BCRP.pdf,4329,1.0,1,0,0,-35,"Rate cuts across multiple facilities, lower deposit rates, easing stance",False
+Nota-Informativa-003-2002-BCRP,2002,3,2002-03-01,Nota-Informativa-003-2002-BCRP.pdf,4794,1.0,2,0,0,-45,"Rate cut 3.5% to 3.0%, increased liquidity, counter inflationary pressures",False
+Nota-Informativa-004-2002-BCRP,2002,4,2002-04-01,Nota-Informativa-004-2002-BCRP.pdf,4358,1.0,2,0,0,-15,Slight easing bias; raising liquidity to prevent rate pressures.,False
+Nota-Informativa-005-2002-BCRP,2002,5,2002-05-01,Nota-Informativa-005-2002-BCRP.pdf,3608,1.0,1,0,0,0,Maintains all rates unchanged; neutral hold stance on policy,False
+Nota-Informativa-006-2002-BCRP,2002,6,2002-06-01,Nota-Informativa-006-2002-BCRP.pdf,2386,1.0,1,0,0,0,Maintains existing rates; no policy change signaled.,False
+Nota-Informativa-007-2002-BCRP,2002,7,2002-07-01,Nota-Informativa-007-2002-BCRP.pdf,2762,0.2,3,2,0,25,"Modest tightening: rate corridor raised to 3.25%, liquidity management tightened",False
+Nota-Informativa-008-2002-BCRP,2002,8,2002-08-01,Nota-Informativa-008-2002-BCRP.pdf,2345,0.0,2,2,0,-35,"Rate hold with slight tightening bias, inflation concern evident.",False
+Nota-Informativa-009-2002-BCRP,2002,9,2002-09-01,Nota-Informativa-009-2002-BCRP.pdf,2491,-0.3333,1,2,0,35,"Rate hike signals: corridor rates raised from 3.25% to 3.75%, tightening bias.",False
+Nota-Informativa-010-2002-BCRP,2002,10,2002-10-01,Nota-Informativa-010-2002-BCRP.pdf,2805,0.0,1,1,0,65,Multiple rate increases signal tightening amid regional financial uncertainty,False
+Nota-Informativa-011-2002-BCRP,2002,11,2002-11-01,Nota-Informativa-011-2002-BCRP.pdf,2504,0.0,1,1,0,-35,"Lowered rates, reduced uncertainty, accommodative stance signals",False
+Nota-Informativa-012-2002-BCRP,2002,12,2002-12-01,Nota-Informativa-012-2002-BCRP.pdf,2637,0.0,2,2,0,-35,"Rate cuts, increased liquidity provision, easing bias clearly signaled",False
+Nota-Informativa-001-2003-BCRP,2003,1,2003-01-01,Nota-Informativa-001-2003-BCRP.pdf,2702,1.0,2,0,0,-25,"Rate cut signals easing; inflation below target, growth concerns",False
+Nota-Informativa-002-2003-BCRP,2003,2,2003-02-01,Nota-Informativa-002-2003-BCRP.pdf,2337,1.0,2,0,0,0,"Hold stance, stable rates, inflation near target.",False
+Nota-Informativa-003-2003-BCRP,2003,3,2003-03-01,Nota-Informativa-003-2003-BCRP.pdf,2371,0.0,0,0,0,0,"Maintains rates, low inflation, monitoring oil prices only.",False
+Nota-Informativa-004-2003-BCRP,2003,4,2003-04-01,Nota-Informativa-004-2003-BCRP.pdf,2384,0.0,0,0,0,0,"Holds rates steady; inflation contained, no policy action needed.",False
+Nota-Informativa-005-2003-BCRP,2003,5,2003-05-01,Nota-Informativa-005-2003-BCRP.pdf,2383,1.0,1,0,0,0,Holds rates steady amid low inflation pressures.,False
+Nota-Informativa-006-2003-BCRP,2003,6,2003-06-01,Nota-Informativa-006-2003-BCRP.pdf,2396,1.0,1,0,0,-25,"Holds rates amid declining inflation pressures, dovish lean",False
+Nota-Informativa-007-2003-BCRP,2003,7,2003-07-01,Nota-Informativa-007-2003-BCRP.pdf,2731,-1.0,0,2,0,-65,"Rate cut 25bps, deflation concerns, stimulus focus",False
+Nota-Informativa-010-2003-BCRP,2003,10,2003-10-01,Nota-Informativa-010-2003-BCRP.pdf,2653,-1.0,0,2,0,-15,Held rates after cuts; low inflation trajectory supports pause,False
+Nota-Informativa-011-2003-BCRP,2003,11,2003-11-01,Nota-Informativa-011-2003-BCRP.pdf,2768,-0.3333,1,2,0,-65,"Rate cut 275→250bps, low inflation 1.3%, accommodative stance",False
+Nota-Informativa-012-2003-BCRP,2003,12,2003-12-01,Nota-Informativa-012-2003-BCRP.pdf,2832,0.0,1,1,1,-15,Holds rates steady; inflation rising but still contained below target,False
+Nota-Informativa-001-2004-BCRP,2004,1,2004-01-01,Nota-Informativa-001-2004-BCRP.pdf,3331,0.0,1,1,1,-15,Maintains rates amid target inflation; recent cuts signal accommodation.,False
+Nota-Informativa-002-2004-BCRP,2004,2,2004-02-01,Nota-Informativa-002-2004-BCRP.pdf,2988,0.0,0,0,1,0,Holds rates steady amid moderate inflation uptick.,False
+Nota-Informativa-005-2004-BCRP,2004,3,2004-03-01,Nota-Informativa-005-2004-BCRP.pdf,2978,0.0,0,0,1,0,Maintains reference rate at 2.50%; temporary inflation spike expected.,False
+Nota-Informativa-009-2004-BCRP,2004,4,2004-04-01,Nota-Informativa-009-2004-BCRP.pdf,3028,0.0,0,0,1,0,Holds rates steady; inflation within target range expectations.,False
+Nota-Informativa-011-2004-BCRP,2004,5,2004-05-01,Nota-Informativa-011-2004-BCRP.pdf,3217,0.0,0,0,1,0,"Maintains rates, inflation near target, neutral stance.",False
+Nota-Informativa-013-2004-BCRP,2004,6,2004-06-01,Nota-Informativa-013-2004-BCRP.pdf,2996,-0.5,0,1,1,0,Maintains rates unchanged; inflation within target range expectations,False
+Nota-Informativa-015-2004-BCRP,2004,7,2004-07-01,Nota-Informativa-015-2004-BCRP.pdf,3206,0.0,1,1,1,0,Holds rates steady; mentions inflation concerns but projects within target range.,False
+Nota-Informativa-019-2004-BCRP,2004,8,2004-08-01,Nota-Informativa-019-2004-BCRP.pdf,3384,1.0,1,0,0,65,"Rate hike 25bps, inflation above target, tightening bias",False
+Nota-Informativa-021-2004-BCRP,2004,9,2004-09-01,Nota-Informativa-021-2004-BCRP.pdf,3002,0.0,0,0,1,15,Maintains rates amid temporary inflation overshoot; measured approach,False
+Nota-Informativa-022-2004-BCRP,2004,10,2004-10-01,Nota-Informativa-022-2004-BCRP.pdf,3022,0.0,0,0,0,45,"Rate hike 2.75%→3.00%, inflation above target, tightening bias",False
+Nota-Informativa-024-2004-BCRP,2004,11,2004-11-01,Nota-Informativa-024-2004-BCRP.pdf,2993,0.0,0,0,1,0,"Holds rates steady; inflation near target, stable outlook.",False
+Nota-Informativa-027-2004-BCRP,2004,12,2004-12-01,Nota-Informativa-027-2004-BCRP.pdf,3457,0.5,1,0,1,0,Holds rates steady despite temporary inflation spike above target,False
+Nota-Informativa-001-2005-BCRP,2005,1,2005-01-01,Nota-Informativa-001-2005-BCRP.pdf,3946,0.5,1,0,1,0,"Holding rates, inflation target met, no bias signaled",False
+Nota-Informativa-008-2005-BCRP,2005,2,2005-02-01,Nota-Informativa-008-2005-BCRP.pdf,3011,-0.6667,0,2,1,0,Holds rates steady; inflation moderating within target band.,False
+Nota-Informativa-014-2005-BCRP,2005,3,2005-03-01,Nota-Informativa-014-2005-BCRP.pdf,3113,-0.6667,0,2,1,-15,"Holding rates amid low inflation, modest dovish lean",False
+Nota-Informativa-020-2005-BCRP,2005,4,2005-04-01,Nota-Informativa-020-2005-BCRP.pdf,3119,-0.6667,0,2,1,-15,"Inflation below target, holding rates, modest growth expectations",False
+Nota-Informativa-022-2005-BCRP,2005,5,2005-05-01,Nota-Informativa-022-2005-BCRP.pdf,2862,0.6667,2,0,1,0,"Holds rates steady; inflation below target, no urgency signals.",False
+Nota-Informativa-025-2005-BCRP,2005,6,2005-06-01,Nota-Informativa-025-2005-BCRP.pdf,3153,-0.4,1,3,1,-15,"Inflation below target, economic growth strong, rates held steady.",False
+Nota-Informativa-028-2005-BCRP,2005,7,2005-07-01,Nota-Informativa-028-2005-BCRP.pdf,2722,-0.6667,0,2,1,-15,"Hold stance; inflation at lower target bound, modest dovish tilt.",False
+Nota-Informativa-031-2005-BCRP,2005,8,2005-08-01,Nota-Informativa-031-2005-BCRP.pdf,2388,-0.25,1,2,1,-15,"Hold decision, low inflation concern, sustained growth without pressures",False
+Nota-Informativa-034-2005-BCRP,2005,9,2005-09-01,Nota-Informativa-034-2005-BCRP.pdf,2139,-0.6667,0,2,1,-15,"Hold decision; inflation below target, growth steady, slight dovish lean.",False
+Nota-Informativa-036-2005-BCRP,2005,10,2005-10-01,Nota-Informativa-036-2005-BCRP.pdf,3738,-0.1667,2,3,1,0,"Hold decision with balanced economic fundamentals, inflation stable",False
+Nota-Informativa-041-2005-BCRP,2005,11,2005-11-01,Nota-Informativa-041-2005-BCRP.pdf,2722,-0.2857,2,4,1,-15,"Hold stance, inflation below target, growth solid, slightly dovish bias",False
+Nota-Informativa-044-2005-BCRP,2005,12,2005-12-01,Nota-Informativa-044-2005-BCRP.pdf,3142,0.0,1,1,0,35,"Rate hike to combat currency volatility, inflation contained below target",False
+Nota-Informativa-002-2006-BCRP,2006,1,2006-01-01,Nota-Informativa-002-2006-BCRP.pdf,5253,0.2,3,2,0,35,"Rate hike amid strong growth, low inflation, solid external position",False
+Nota-Informativa-003-2006-BCRP,2006,2,2006-02-01,Nota-Informativa-003-2006-BCRP.pdf,5496,0.6,4,1,0,35,"Rate hike amid strong growth, stable inflation within target range",False
+Nota-Informativa-012-2006-BCRP,2006,3,2006-03-01,Nota-Informativa-012-2006-BCRP.pdf,5568,0.6,4,1,0,45,"Rate hike signals inflation vigilance, strong growth justifies tightening",False
+Nota-Informativa-013-2006-BCRP,2006,4,2006-04-01,Nota-Informativa-013-2006-BCRP.pdf,5708,1.0,4,0,0,35,"Rate hike amid solid growth, inflation at target center",False
+Nota-Informativa-024-2006-BCRP,2006,4,2006-04-01,Nota-Informativa-024-2006-BCRP.pdf,2678,0.0,0,0,0,25,"Rate hike 25bps, tightening liquidity measures, inflation control focus",False
+Nota-Informativa-026-2006-BCRP,2006,5,2006-05-01,Nota-Informativa-026-2006-BCRP.pdf,4548,1.0,3,0,0,45,"Rate hike amid transitory inflation, strong growth concerns.",False
+Nota-Informativa-033-2006-BCRP,2006,6,2006-06-01,Nota-Informativa-033-2006-BCRP.pdf,4240,0.4,3,1,1,0,"Holds rates steady; inflation within target, growth solid.",False
+Nota-Informativa-043-2006-BCRP,2006,7,2006-07-01,Nota-Informativa-043-2006-BCRP.pdf,3757,0.6667,2,0,1,0,"Holding rates stable; inflation within target, growth strong.",False
+Nota-Informativa-046-2006-BCRP,2006,8,2006-08-01,Nota-Informativa-046-2006-BCRP.pdf,3987,0.4,3,1,1,0,Holding rates steady amid low inflation and strong growth,False
+Nota-Informativa-064-2006-BCRP,2006,9,2006-09-01,Nota-Informativa-064-2006-BCRP.pdf,4541,0.25,2,1,1,0,"Inflation on target, growth strong, rates held steady neutral.",False
+Nota-Informativa-072-2006-BCRP,2006,10,2006-10-01,Nota-Informativa-072-2006-BCRP.pdf,4621,0.5,4,1,1,0,"Maintains rates amid low inflation, strong growth balance.",False
+Nota-Informativa-076-2006-BCRP,2006,11,2006-11-01,Nota-Informativa-076-2006-BCRP.pdf,4759,0.4444,6,2,1,0,"Holding rates steady, inflation contained, growth strong baseline.",False
+Nota-Informativa-089-2006-BCRP,2006,12,2006-12-01,Nota-Informativa-089-2006-BCRP.pdf,5279,0.0,5,5,1,-15,"Hold rate, inflation below target, some demand risks flagged",False
+Nota-Informativa-001-2007-BCRP,2007,1,2007-01-01,Nota-Informativa-001-2007-BCRP.pdf,5863,0.0,3,3,1,0,"Hold rate, inflation below target but transitory factors cited",False
+Nota-Informativa-010-2007-BCRP,2007,2,2007-02-01,Nota-Informativa-010-2007-BCRP.pdf,4330,0.25,2,1,1,0,"Hold stance; low inflation transitory, strong growth, no policy change",False
+Nota-Informativa-018-2007-BCRP,2007,3,2007-03-01,Nota-Informativa-018-2007-BCRP.pdf,5133,0.1667,3,2,1,0,"Hold rate steady, transitory low inflation, strong growth",False
+Nota-Informativa-027-2007-BCRP,2007,4,2007-04-01,Nota-Informativa-027-2007-BCRP.pdf,4618,0.75,3,0,1,35,Hold stance with hawkish tilt; inflation concern flagged for future tightening.,False
+Nota-Informativa-033-2007-BCRP,2007,5,2007-05-01,Nota-Informativa-033-2007-BCRP.pdf,4765,0.5,4,1,1,25,"Hold rate, but inflation vigilant; future tightening bias signaled",False
+Nota-Informativa-048-2007-BCRP,2007,6,2007-06-01,Nota-Informativa-048-2007-BCRP.pdf,4500,0.4,3,1,1,0,"Holds rates, inflation below target, balanced assessment.",False
+Nota-Informativa-055-2007-BCRP,2007,7,2007-07-01,Nota-Informativa-055-2007-BCRP.pdf,5126,0.5,3,1,0,65,"Rate hike, inflation vigilance, robust demand concerns.",False
+Nota-Informativa-024-2008-BCRP,2007,7,2007-07-01,Nota-Informativa-024-2008-BCRP.pdf,2751,0.3333,2,1,0,75,"Multiple rate hikes, reserve requirement increases, inflation control focus",False
+Nota-Informativa-063-2007-BCRP,2007,8,2007-08-01,Nota-Informativa-063-2007-BCRP.pdf,4608,-0.25,1,2,1,35,Holds rates but signals preventive tightening bias if inflation expectations rise.,False
+Nota-Informativa-067-2007-BCRP,2007,9,2007-09-01,Nota-Informativa-067-2007-BCRP.pdf,4077,1.0,2,0,0,75,"Rate hike 4.75% to 5.0%, preventive tightening, inflation concerns.",False
+Nota-Informativa-034-2008-BCRP,2007,9,2007-09-01,Nota-Informativa-034-2008-BCRP.pdf,1855,0.6,4,1,0,75,"Multiple tightening measures: rate hikes, reserve requirement increases, inflation targeting",False
+Nota-Informativa-075-2007-BCRP,2007,10,2007-10-01,Nota-Informativa-075-2007-BCRP.pdf,4142,0.6667,2,0,1,15,"Hold stance with hawkish tilt; monitoring inflation risks, preventive stance ready",False
+Nota-Informativa-078-2007-BCRP,2007,11,2007-11-01,Nota-Informativa-078-2007-BCRP.pdf,4835,0.8,4,0,1,15,"Hold rate, inflation above target, preventive stance signaled",False
+Nota-Informativa-079-2007-BCRP,2007,12,2007-12-01,Nota-Informativa-079-2007-BCRP.pdf,4739,0.8,4,0,1,25,"Holds rates, monitors inflation above target, signals preventive tightening readiness.",False
+Nota-Informativa-081-2007-BCRP,2008,1,2008-01-01,Nota-Informativa-081-2007-BCRP.pdf,1868,-1.0,0,1,0,0,Neutral administrative announcement of 2008 meeting schedule only,False
+Nota-Informativa-003-2008-BCRP,2008,1,2008-01-01,Nota-Informativa-003-2008-BCRP.pdf,4917,0.7143,6,1,0,45,"Rate hike to combat imported inflation, maintain expectations anchored",False
+Nota-Informativa-015-2008-BCRP,2008,2,2008-02-01,Nota-Informativa-015-2008-BCRP.pdf,4378,0.4444,6,2,1,45,Maintains rates but tightens via reserve requirements; inflation concerns dominate,False
+Nota-Informativa-025-2008-BCRP,2008,3,2008-03-01,Nota-Informativa-025-2008-BCRP.pdf,3619,0.8333,5,0,1,65,"Rate hold but reserve requirement hikes signal tightening, inflation concerns.",False
+Nota-Informativa-026-2008-BCRP,2008,4,2008-04-01,Nota-Informativa-026-2008-BCRP.pdf,2345,1.0,1,0,0,75,"Reserve requirement hikes to combat inflation, monetary tightening",False
+Nota-Informativa-038-2008-BCRP,2008,4,2008-04-01,Nota-Informativa-038-2008-BCRP.pdf,2569,0.0,0,0,0,75,"Rate hike, tightening, inflation control focus clear.",False
+Nota-Informativa-049-2008-BCRP,2008,5,2008-05-01,Nota-Informativa-049-2008-BCRP.pdf,1370,0.0,0,0,1,25,"Hold stance, monitoring inflation from supply shocks, prior tightening.",False
+Nota-Informativa-064-2008-BCRP,2008,6,2008-06-01,Nota-Informativa-064-2008-BCRP.pdf,1510,0.0,1,1,0,75,"Rate hike to combat inflation expectations, high demand pressures",False
+Nota-Informativa-075-2008-BCRP,2008,7,2008-07-01,Nota-Informativa-075-2008-BCRP.pdf,2226,1.0,1,0,0,75,"Rate hike, tightening, inflation concern dominates",False
+Nota-Informativa-081-2008-BCRP,2008,7,2008-07-01,Nota-Informativa-081-2008-BCRP.pdf,1070,0.0,1,1,0,65,"Reserve requirement hikes to moderate credit expansion, preserve monetary stability",False
+Nota-Informativa-085-2008-BCRP,2008,8,2008-08-01,Nota-Informativa-085-2008-BCRP.pdf,2259,-0.25,3,5,0,75,"Rate hike 175bps YTD, inflation above target, demand concerns",False
+Nota-Informativa-094-2008-BCRP,2008,9,2008-09-01,Nota-Informativa-094-2008-BCRP.pdf,2497,0.0,3,3,0,75,Rate hike to fight inflation amid demand-supply imbalance.,False
+Nota-Informativa-100-2008-BCRP,2008,10,2008-10-01,Nota-Informativa-100-2008-BCRP.pdf,1699,0.0,1,1,1,-35,"Hold amid global uncertainty, deflation risk from commodity/food prices falling",False
+Nota-Informativa-113-2008-BCRP,2008,11,2008-11-01,Nota-Informativa-113-2008-BCRP.pdf,1761,0.5,1,0,1,-35,"Hold rate, signals flexibility for stimulus if needed",False
+Nota-Informativa-120-2008-BCRP,2008,12,2008-12-01,Nota-Informativa-120-2008-BCRP.pdf,3124,0.5,1,0,1,-45,Rate hold but reserve requirement cuts signal stimulus amid crisis.,False
+Nota-Informativa-123-2008-BCRP,2008,12,2008-12-01,Nota-Informativa-123-2008-BCRP.pdf,918,0.0,0,0,0,-35,"Liquidity support during financial crisis, dovish accommodation measure.",False
+Nota-Informativa-122-2008-BCRP,2008,12,2008-12-01,Nota-Informativa-122-2008-BCRP.pdf,963,0.0,0,0,0,-75,"Reserve requirement cuts, liquidity injection, financial system stimulus.",False
+Nota-Informativa-007-2009-BCRP,2009,1,2009-01-01,Nota-Informativa-007-2009-BCRP.pdf,2629,0.5,1,0,1,-45,"Reserve ratio cut, rate hold, inflation declining, crisis liquidity support",False
+Nota-Informativa-009-2009-BCRP,2009,2,2009-02-01,Nota-Informativa-009-2009-BCRP.pdf,1643,0.3333,2,1,0,-75,"Rate cut amid weak growth, falling commodity prices, low inflation",False
+Nota-Informativa-011-2009-BCRP,2009,3,2009-03-01,Nota-Informativa-011-2009-BCRP.pdf,1767,0.0,2,2,0,-75,"Rate cut, stimulus, declining inflation, weak global growth concerns",False
+Nota-Informativa-017-2009-BCRP,2009,4,2009-04-01,Nota-Informativa-017-2009-BCRP.pdf,1733,-1.0,0,3,0,-75,"Rate cut 150bps YTD, easing cycle, inflation declining, recession concerns",False
+Nota-Informativa-029-2009-BCRP,2009,5,2009-05-01,Nota-Informativa-029-2009-BCRP.pdf,1803,-1.0,0,3,0,-85,"Fourth consecutive rate cut, 250bp reduction, monetary easing stimulus.",False
+Nota-Informativa-040-2009-BCRP,2009,6,2009-06-01,Nota-Informativa-040-2009-BCRP.pdf,1663,-1.0,0,2,0,-85,"Fifth consecutive rate cut, 350bp reduction, deflation concerns",False
+Nota-Informativa-054-2009-BCRP,2009,7,2009-07-01,Nota-Informativa-054-2009-BCRP.pdf,1872,-1.0,0,3,0,-85,Sixth consecutive rate cut to historic low; significant monetary stimulus,False
+Nota-Informativa-061-2009-BCRP,2009,8,2009-08-01,Nota-Informativa-061-2009-BCRP.pdf,2144,-0.5,1,3,0,-85,"Seventh consecutive rate cut, inflation concerns receding, easing cycle",False
+Nota-Informativa-059-2009-BCRP,2009,8,2009-08-01,Nota-Informativa-059-2009-BCRP.pdf,1358,-1.0,0,2,0,25,Inflation returned to target range; monetary tightening achieved successfully,True
+Nota-Informativa-073-2009-BCRP,2009,9,2009-09-01,Nota-Informativa-073-2009-BCRP.pdf,1721,-0.5,0,1,1,-45,"Maintaining stimulus amid falling inflation, deflation risk evident.",False
+Nota-Informativa-076-2009-BCRP,2009,10,2009-10-01,Nota-Informativa-076-2009-BCRP.pdf,2007,-0.6667,0,2,1,-45,"Maintains stimulus amid deflation concerns, expects below-target inflation",False
+Nota-Informativa-081-2009-BCRP,2009,11,2009-11-01,Nota-Informativa-081-2009-BCRP.pdf,1765,-0.75,0,3,1,-45,"Holds rates at 1.25%, maintains stimulus despite falling inflation below target",False
+Nota-Informativa-087-2009-BCRP,2009,12,2009-12-01,Nota-Informativa-087-2009-BCRP.pdf,1720,-0.25,1,2,1,-25,"Hold decision, deflation concern, recovery signals emerging",False
+Nota-Informativa-BCRP-20100107,2010,1,2010-01-01,Nota-Informativa-BCRP-20100107.pdf,2179,0.25,2,1,1,-15,"Hold decision with dovish bias; inflation well below target, recovery signal.",False
+Nota-Informativa-BCRP-20100211,2010,2,2010-02-01,Nota-Informativa-BCRP-20100211.pdf,1727,0.75,3,0,1,-45,"Maintaining stimulus, low inflation, recovery signals present",False
+Nota-Informativa-BCRP-20100311,2010,3,2010-03-01,Nota-Informativa-BCRP-20100311.pdf,1726,0.1667,3,2,1,-35,Maintains stimulus; inflation below target; recovery signals present,False
+Nota-Informativa-BCRP-20100408,2010,4,2010-04-01,Nota-Informativa-BCRP-20100408.pdf,1673,0.0,2,2,1,-35,Maintains stimulus despite low inflation; recovery signals noted.,False
+Nota-Informativa-BCRP-20100408-2,2010,4,2010-04-01,Nota-Informativa-BCRP-20100408-2.pdf,1673,0.0,2,2,1,-35,"Holding rates amid recovery, maintaining stimulus despite low inflation.",False
+Nota-Informativa-BCRP-20100507,2010,5,2010-05-01,Nota-Informativa-BCRP-20100507.pdf,1566,-1.0,0,1,0,25,Modest tightening bias; preventive rate hike with expansionary policy intent.,False
+Nota-Informativa-BCRP-20100506,2010,5,2010-05-01,Nota-Informativa-BCRP-20100506.pdf,2378,1.0,5,0,0,35,Rate hike to reduce stimulus; no inflation pressure yet,False
+2010-06-10,2010,6,2010-06-10,nota-informativa-2010-06-10.pdf,2239,0.3333,6,3,0,35,"Rate hike but preventive, stimulus maintained, no inflation pressures",False
+2010-07-08,2010,7,2010-07-08,nota-informativa-2010-07-08.pdf,2347,0.5,6,2,0,45,"Rate hike, preventive stance, but maintains stimulus, no inflation pressure",False
+2010-08-05,2010,8,2010-08-05,nota-informativa-2010-08-05.pdf,2195,1.0,6,0,0,65,"Rate hike, strong demand, preventive tightening, inflation vigilance",False
+2010-08-08,2010,8,2010-08-08,nota-informativa-2010-08-08.pdf,2509,1.0,2,0,0,75,"Multiple rate hikes, tightening measures, inflation control focus",False
+2010-09-09,2010,9,2010-09-09,nota-informativa-2010-09-09.pdf,2225,1.0,6,0,0,65,"Rate hike, preventive tightening, strong demand concerns",False
+2010-10-07,2010,10,2010-10-07,nota-informativa-2010-10-07.pdf,2542,-0.25,1,2,1,0,Hold decision with balanced inflation-growth assessment.,False
+2010-11-11,2010,11,2010-11-11,nota-informativa-2010-11-11.pdf,2545,0.0,1,1,1,0,"Hold stance, inflation near target, balanced outlook",False
+2010-12-09,2010,12,2010-12-09,nota-informativa-2010-12-09.pdf,2106,0.0,1,1,1,0,"Neutral hold. Inflation at target, economic growth solid, monitoring stance.",False
+2011-01-06,2011,1,2011-01-06,nota-informativa-2011-01-06.pdf,2525,1.0,4,0,0,65,"Rate hike, inflation concerns, preventive tightening stance",False
+2011-02-10,2011,2,2011-02-10,nota-informativa-2011-02-10.pdf,2275,1.0,5,0,0,45,"Rate hike, preventive tightening amid inflation concerns, strong demand",False
+2011-03-10,2011,3,2011-03-10,nota-informativa-2011-03-10.pdf,2413,1.0,5,0,0,65,Rate hike to fight inflation amid strong demand growth,False
+2011-04-07,2011,4,2011-04-07,nota-informativa-2011-04-07.pdf,2254,1.0,4,0,0,65,"Rate hike 3.75% to 4.0% to combat inflation expectations, hawkish stance",False
+2011-05-12,2011,5,2011-05-12,nota-informativa-2011-05-12.pdf,2357,0.3333,2,1,0,65,"Rate hike amid inflation concerns, supply-side pressures.",False
+2011-06-09,2011,6,2011-06-09,nota-informativa-2011-06-09.pdf,2060,-0.75,0,3,1,-15,"Hold rate, moderate inflation, weakening activity signals caution",False
+2011-07-07,2011,7,2011-07-07,nota-informativa-2011-07-07.pdf,2019,-0.75,0,3,1,-15,"Hold pause, inflation moderating, global uncertainty concerns",False
+2011-08-11,2011,8,2011-08-11,nota-informativa-2011-08-11.pdf,2057,-0.8,0,4,1,-15,"Hold rate amid global slowdown, transitory inflation, monitoring ahead.",False
+2011-09-08,2011,9,2011-09-08,nota-informativa-2011-09-08.pdf,2334,-0.8,0,4,1,-15,"Hold rate amid slowdown concerns, conditional easing signal",False
+2011-10-06,2011,10,2011-10-06,nota-informativa-2011-10-06.pdf,2448,-0.75,0,3,1,-15,"Hold rate, but signaling dovish tilt due to growth moderation risks",False
+2011-11-10,2011,11,2011-11-10,nota-informativa-2011-11-10.pdf,2231,-0.75,0,3,1,-35,"Hold with dovish bias; slower growth, international risks cited",False
+2011-12-07,2011,12,2011-12-07,nota-informativa-2011-12-07.pdf,2649,-0.375,2,5,1,-15,"Hold with modest dovish tilt; growth slowing, temporary inflation, watch uncertainties",False
+2012-01-12,2012,1,2012-01-12,nota-informativa-2012-01-12.pdf,3081,-0.4,1,3,1,-15,"Hold rate, inflation transitory, growth moderating concerns",False
+2012-02-09,2012,2,2012-02-09,nota-informativa-2012-02-09.pdf,2629,-0.75,0,3,1,-15,"Hold rate, cite growth moderation, temporary inflation factors",False
+2012-03-08,2012,3,2012-03-08,nota-informativa-2012-03-08.pdf,2335,-0.75,0,3,1,-15,"Hold rate, concern growth slowdown, temporary inflation factors",False
+2012-04-12,2012,4,2012-04-12,nota-informativa-2012-04-12.pdf,2518,-0.6667,0,2,1,0,"Hold decision, temporary inflation, stable growth near potential.",False
+2012-05-10,2012,5,2012-05-10,nota-informativa-2012-05-10.pdf,2773,-0.6667,0,2,1,15,"Holding rates, inflation above target, preventive tightening measures.",False
+2012-06-07,2012,6,2012-06-07,nota-informativa-2012-06-07.pdf,2575,0.0,2,2,1,0,"Holds rates, temporary inflation factors, growth near potential.",False
+2012-07-12,2012,7,2012-07-12,nota-informativa-2012-07-12.pdf,2611,0.0,2,2,1,0,Hold decision; inflation above target but supply-driven; growth stable.,False
+2012-08-09,2012,8,2012-08-09,nota-informativa-2012-08-09.pdf,2689,0.1667,3,2,1,0,"Hold stance, temporary inflation factors, growth at potential",False
+2012-09-06,2012,9,2012-09-06,nota-informativa-2012-09-06.pdf,2758,0.0,2,2,1,0,"Hold decision, temporary supply shocks, balanced uncertainty assessment.",False
+2012-10-11,2012,10,2012-10-11,nota-informativa-2012-10-11.pdf,2688,0.0,2,2,1,0,Hold decision; temporary supply shocks; balanced outlook,False
+2012-11-08,2012,11,2012-11-08,nota-informativa-2012-11-08.pdf,2471,0.0,1,1,1,0,"Hold decision, temporary supply shocks, stable growth, monitoring inflation",False
+2012-12-06,2012,12,2012-12-06,nota-informativa-2012-12-06.pdf,2482,0.0,0,0,1,-15,"Hold rate, inflation declining, growth stable, external uncertainty remains.",False
+2013-01-10,2013,1,2013-01-10,nota-informativa-2013-01-10.pdf,2621,0.0,0,0,1,0,"Rate hold amid declining inflation, stable growth near potential.",False
+2013-02-07,2013,2,2013-02-07,nota-informativa-2013-02-07.pdf,2152,0.0,0,0,1,0,"Hold decision, inflation near target, balanced outlook",False
+2013-03-07,2013,3,2013-03-07,nota-informativa-2013-03-07.pdf,2140,0.0,0,0,1,0,"Hold decision, inflation tracking downward, growth stable",False
+2013-04-11,2013,4,2013-04-11,nota-informativa-2013-04-11.pdf,2203,0.0,0,0,1,0,"Hold decision, inflation on target, growth stable near potential.",False
+2013-05-09,2013,5,2013-05-09,nota-informativa-2013-05-09.pdf,2170,0.0,0,0,1,0,"Holds rates, inflation on target, growth stable, neutral stance.",False
+2013-06-13,2013,6,2013-06-13,nota-informativa-2013-06-13.pdf,2122,-0.6667,0,2,1,0,"Hold decision, inflation stable within target range, balanced outlook.",False
+2013-07-11,2013,7,2013-07-11,nota-informativa-2013-07-11.pdf,2900,-0.75,0,3,1,0,"Holds rates steady, inflation within target, balanced outlook",False
+2013-08-08,2013,8,2013-08-08,nota-informativa-2013-08-08.pdf,2766,-0.75,0,3,1,0,"Hold rate, balanced risks, temporary inflation factors",False
+2013-09-12,2013,9,2013-09-12,nota-informativa-2013-09-12.pdf,2897,-0.25,1,2,1,0,"Hold decision with balanced guidance; growth near potential, inflation temporary.",False
+2013-10-10,2013,10,2013-10-10,nota-informativa-2013-10-10.pdf,3261,-0.25,1,2,1,0,"Holds rates, growth near potential, inflation anchored.",False
+2013-11-07,2013,11,2013-11-07,nota-informativa-2013-11-07.pdf,2482,-1.0,0,6,0,-65,"Rate cut, growth deceleration concerns, preventive easing stance",False
+2013-11-08,2013,11,2013-11-08,nota-informativa-2013-11-08.pdf,2516,-0.6,1,4,0,-45,"Rate cut justified by below-potential growth, lower global outlook",False
+2013-12-12,2013,12,2013-12-12,nota-informativa-2013-12-12.pdf,2675,-0.4444,2,6,1,-15,"Hold rate, growth below potential, reduced reserve requirement",False
+2014-01-09,2014,1,2014-01-09,nota-informativa-2014-01-09.pdf,3128,-0.4444,2,6,1,-15,"Hold rate, recovery signals, modest stimulus via reserve requirement cuts",False
+2014-02-13,2014,2,2014-02-13,nota-informativa-2014-02-13.pdf,2713,-0.4444,2,6,1,-15,"Hold rate, growth below potential, modest dovish tilt",False
+2014-03-13,2014,3,2014-03-13,nota-informativa-2014-03-13.pdf,2499,-0.5,1,4,1,-15,"Hold rate, modest growth concerns, supply shocks moderating, cautious.",False
+2014-04-10,2014,4,2014-04-10,nota-informativa-2014-04-10.pdf,2359,-0.5,1,4,1,-15,"Hold rate, but cutting reserve requirements, monitoring inflation decline.",False
+2014-05-08,2014,5,2014-05-08,nota-informativa-2014-05-08.pdf,2202,-0.75,0,3,1,-15,"Hold rate, growth below potential, supply shocks moderating",False
+2014-06-12,2014,6,2014-06-12,nota-informativa-2014-06-12.pdf,2516,-0.625,1,6,1,-15,"Hold rate, temporary weakness, ready for easing if needed",False
+2014-07-10,2014,7,2014-07-10,nota-informativa-2014-07-10.pdf,2517,-0.6667,1,5,0,-45,"Rate cut with growth concerns, but inflation still elevated.",False
+2014-08-07,2014,8,2014-08-07,nota-informativa-2014-08-07.pdf,2322,-0.4,1,3,1,-25,"Holding rates but signaling flexibility; growth concerns, modest inflation pressures.",False
+2014-09-11,2014,9,2014-09-11,nota-informativa-2014-09-11.pdf,2300,-0.6667,1,5,0,-65,"Rate cut 25bps, weak growth, inflation concerns easing, stimulus bias",False
+2014-10-09,2014,10,2014-10-09,nota-informativa-2014-10-09.pdf,2408,-0.5714,1,5,1,-15,"Hold rate, weak growth concern, ready to ease if needed",False
+2014-11-13,2014,11,2014-11-13,nota-informativa-2014-11-13.pdf,2256,-0.25,1,2,1,-35,"Hold rate, weak growth, reduced reserve requirement, stimulus signal",False
+2014-12-11,2014,12,2014-12-11,nota-informativa-2014-12-11.pdf,2637,-0.4,1,3,1,-35,"Hold rate, but signaling easing bias with reserve requirement cuts.",False
+2015-01-15,2015,1,2015-01-15,nota-informativa-2015-01-15.pdf,2446,-0.5,1,3,0,-65,"Rate cut 25bps, below-potential growth, inflation convergence to target",False
+2015-02-12,2015,2,2015-02-12,nota-informativa-2015-02-12.pdf,2147,-0.4,1,3,1,-35,"Hold rate, weak growth concern, ready for further easing",False
+2015-03-12,2015,3,2015-03-12,nota-informativa-2015-03-12.pdf,2215,-0.4,1,3,1,-35,"Hold rate, but easing bias: reduced reserve requirements, signals more cuts if needed",False
+2015-04-09,2015,4,2015-04-09,nota-informativa-2015-04-09.pdf,2592,-0.4,1,3,1,-25,"Hold rate, but economic weakness and stimulus measures signal dovish tilt",False
+2015-05-14,2015,5,2015-05-14,nota-informativa-2015-05-14.pdf,2563,-0.4,1,3,1,-35,"Hold rate, weak activity, supply-side inflation, reducing reserve requirements",False
+2015-06-11,2015,6,2015-06-11,nota-informativa-2015-06-11.pdf,2571,-0.5,1,4,1,-25,"Hold rate, below-potential growth, supply shocks reversing gradually",False
+2015-07-09,2015,7,2015-07-09,nota-informativa-2015-07-09.pdf,2563,-0.5,0,1,1,-15,"Hold with growth concerns, modest hawkish inflation signals.",False
+2015-08-13,2015,8,2015-08-13,nota-informativa-2015-08-13.pdf,2992,-0.5,0,1,1,-15,"Holding rates amid weak growth, inflation near ceiling, cautious stance.",False
+Pjd2hye7jF-jdjd3uR5elsuy_j4eu,2015,9,2015-09-01,Pjd2hye7jF-jdjd3uR5elsuy_j4eu.pdf,3298,-1.0,0,1,0,35,"Rate hike with inflation concerns, but gradual recovery acknowledged",False
+2015-09-10,2015,9,2015-09-10,nota-informativa-2015-09-10.pdf,3298,-1.0,0,1,0,35,"Rate hike amid inflation concerns, but expansionary stance maintained.",False
+Fd34d5de7j763kdjd3uR_f-lsuy_9te-e,2015,10,2015-10-01,Fd34d5de7j763kdjd3uR_f-lsuy_9te-e.pdf,3077,-0.6667,0,2,1,-15,"Hold rate, temporary inflation factors, gradual recovery signal",False
+2015-10-15,2015,10,2015-10-15,nota-informativa-2015-10-15.pdf,3077,-0.6667,0,2,1,-15,"Hold rate, gradual recovery, temporary inflation factors",False
+Fdpdif7-jhdy-6376d3uR_f-lsKdhsy5_p4erf,2015,11,2015-11-01,Fdpdif7-jhdy-6376d3uR_f-lsKdhsy5_p4erf.pdf,2843,-0.5,0,1,1,-15,"Hold with dovish lean; inflation temporary, gradual recovery acknowledged",False
+2015-11-12,2015,11,2015-11-12,nota-informativa-2015-11-12.pdf,2843,-0.5,0,1,1,-15,"Hold decision, gradual recovery, inflation expectations converging",False
+2015-12-10,2015,12,2015-12-10,nota-informativa-2015-12-10.pdf,3287,0.0,1,1,0,45,"Rate hike amid inflation concerns, gradual recovery.",False
+2016-01-14,2016,1,2016-01-14,nota-informativa-2016-01-14.pdf,2933,0.0,1,1,0,35,"Rate hike amid inflation concerns, but temporary factors acknowledged",False
+2016-02-11,2016,2,2016-02-11,nota-informativa-2016-02-11.pdf,3258,-0.3333,1,2,0,75,"Rate hike of 25bps, inflation concerns, tightening bias",False
+2016-03-10,2016,3,2016-03-10,nota-informativa-2016-03-10.pdf,2924,0.0,1,1,1,35,"Hold decision, inflation above target, cautious tightening bias",False
+LkdkT_dfkrk-re456ldl_yekdk-p34md,2016,4,2016-04-01,LkdkT_dfkrk-re456ldl_yekdk-p34md.pdf,2613,-0.6667,0,2,1,-15,"Hold with dovish tilt; inflation declining, recovery gradual, monitoring stance.",False
+2016-04-14,2016,4,2016-04-14,nota-informativa-2016-04-14.pdf,2613,-0.6667,0,2,1,-15,"Hold with dovish lean; inflation declining, growth recovering gradually",False
+2016-05-12,2016,5,2016-05-12,nota-informativa-2016-05-12.pdf,2591,-0.75,0,3,1,-15,"Hold stance, inflation declining toward target, recovery signals",False
+kieorDLW-83kd_7edue23-je87,2016,6,2016-06-01,kieorDLW-83kd_7edue23-je87.pdf,2421,-0.6667,0,2,1,-25,"Hold decision, inflation moderating, growth near potential, cautiously optimistic",False
+2016-06-09,2016,6,2016-06-09,nota-informativa-2016-06-09.pdf,2421,-0.6667,0,2,1,-25,"Hold rate, inflation declining, growth stable, modest dovish tilt",False
+Ldju73-ekd9_uro928-gam3-0f,2016,7,2016-07-01,Ldju73-ekd9_uro928-gam3-0f.pdf,2510,-0.6667,0,2,1,-25,"Hold rate, inflation declining, economic growth stable, cautiously optimistic",False
+2016-07-14,2016,7,2016-07-14,nota-informativa-2016-07-14.pdf,2510,-0.6667,0,2,1,-25,"Hold rate, inflation declining, growth stable, cautiously dovish bias",False
+2016-08-11,2016,8,2016-08-11,nota-informativa-2016-08-11.pdf,2907,-0.5,1,4,1,5,"Neutral hold. Inflation declining toward target, growth near potential.",False
+2016-09-08,2016,9,2016-09-08,nota-informativa-2016-09-08.pdf,3050,-0.25,1,2,1,0,"Hold decision with gradual disinflation, stable economy near potential",False
+2016-10-13,2016,10,2016-10-13,nota-informativa-2016-10-13.pdf,3064,-0.25,1,2,1,0,Holds rates steady; inflation converging gradually to target,False
+2016-11-10,2016,11,2016-11-10,nota-informativa-2016-11-10.pdf,3075,-0.4,1,3,1,0,"Hold decision, transitory inflation, stable expectations within target.",False
+2016-12-15,2016,12,2016-12-15,nota-informativa-2016-12-15.pdf,2976,-0.25,1,2,1,0,"Hold decision, inflation near target, balanced economic outlook",False
+2017-01-12,2017,1,2017-01-12,nota-informativa-2017-01-12.pdf,2719,-0.1667,2,3,1,0,"Hold decision; inflation converging to target, balanced outlook",False
+2017-02-09,2017,2,2017-02-09,nota-informativa-2017-02-09.pdf,2736,-0.375,2,5,1,0,"Held rate steady; inflation near target, balanced outlook",False
+2017-03-09,2017,3,2017-03-09,nota-informativa-2017-03-09.pdf,2722,-0.375,2,5,1,0,"Hold decision, inflation converging to target, balanced outlook",False
+2017-04-06,2017,4,2017-04-06,nota-informativa-2017-04-06.pdf,3087,-0.1667,2,3,1,-15,"Hold rate, temporary inflation, hints at future easing flexibility.",False
+2017-05-11,2017,5,2017-05-11,nota-informativa-2017-05-11.pdf,2927,-0.6,1,4,0,-45,"Rate cut 25bps, growth deceleration concern, inflation moderating",False
+2017-06-08,2017,6,2017-06-08,nota-informativa-2017-06-08.pdf,2894,0.0,2,2,1,-35,"Hold rate, inflation declining, easing bias signaled",False
+2017-07-13,2017,7,2017-07-13,nota-informativa-2017-07-13.pdf,3267,-0.2,2,3,0,-45,"Rate cut 25bp, growth below potential, stimulus expected",False
+2017-08-10,2017,8,2017-08-10,nota-informativa-2017-08-10.pdf,2882,-0.1667,2,3,1,-25,"Hold with dovish bias; mentions future rate cuts, below-potential growth.",False
+2017-09-14,2017,9,2017-09-14,nota-informativa-2017-09-14.pdf,3102,0.0,3,3,0,-35,"Rate cut 25bps, growth below potential, inflation expectations declining",False
+2017-10-12,2017,10,2017-10-12,nota-informativa-2017-10-12.pdf,2773,0.0,3,3,1,-15,"Holding rates, inflation declining, growth below potential, cautiously optimistic.",False
+2017-11-09,2017,11,2017-11-09,nota-informativa-2017-11-09.pdf,2874,0.0,2,2,0,-45,"Rate cut, low inflation, below-potential growth concern",False
+2017-12-14,2017,12,2017-12-14,nota-informativa-2017-12-14.pdf,3197,0.0,2,2,1,-15,"Hold stance, inflation declining toward target, moderate growth concern",False
+2018-01-03,2018,1,2018-01-03,nota-informativa-2018-01-03.pdf,963,0.0,0,0,0,0,"Administrative calendar announcement, no policy stance indicated.",False
+2018-01-11,2018,1,2018-01-11,nota-informativa-2018-01-11.pdf,2984,-0.2,2,3,0,-65,Rate cut amid low inflation and below-potential activity growth.,False
+2018-02-08,2018,2,2018-02-08,nota-informativa-2018-02-08.pdf,2934,-0.125,3,4,1,-15,"Hold rate, inflation below target, economic slack noted",False
+2018-03-08,2018,3,2018-03-08,nota-informativa-2018-03-08.pdf,2790,0.0,3,3,0,-65,"Rate cut amid below-potential growth, low inflation, falling expectations",False
+2018-04-12,2018,4,2018-04-12,nota-informativa-2018-04-12.pdf,2832,-0.125,3,4,1,-35,"Hold rate amid low inflation, below-potential growth, dovish bias",False
+2018-05-10,2018,5,2018-05-10,nota-informativa-2018-05-10.pdf,2905,-0.125,3,4,1,-25,"Hold rate, maintains expansive stance, inflation below target",False
+2018-06-07,2018,6,2018-06-07,nota-informativa-2018-06-07.pdf,2915,0.4,3,1,1,-25,"Holds rates, inflation below target, expansive policy stance maintained",False
+2018-07-12,2018,7,2018-07-12,nota-informativa-2018-07-12.pdf,2927,0.0,2,2,1,-15,Hold with mild dovish bias; maintains expansive stance citing below-potential growth,False
+2018-08-09,2018,8,2018-08-09,nota-informativa-2018-08-09.pdf,2699,0.25,2,1,1,-25,"Holds rates, maintains expansive stance, citing growth below potential",False
+2018-09-13,2018,9,2018-09-13,nota-informativa-2018-09-13.pdf,2730,0.25,2,1,1,-25,"Hold rate, expansive stance, growth concerns outweigh inflation",False
+2018-10-11,2018,10,2018-10-11,nota-informativa-2018-10-11.pdf,2780,0.0,2,2,1,-15,"Hold rate, expansionary stance, growth concerns dominate.",False
+2018-11-08,2018,11,2018-11-08,nota-informativa-2018-11-08.pdf,2705,0.0,2,2,1,-15,Hold with expansionary bias; growth concerns outweigh inflation.,False
+2018-12-13,2018,12,2018-12-13,nota-informativa-2018-12-13.pdf,2983,0.0,2,2,1,-15,"Hold rate, expansive stance, output gap concerns",False
+2019-01-10,2019,1,2019-01-10,nota-informativa-2019-01-10.pdf,2659,0.0,2,2,1,-25,"Hold with expansive stance, below-potential output concern",False
+2019-02-07,2019,2,2019-02-07,nota-informativa-2019-02-07.pdf,2619,0.25,2,1,1,-25,"Holding rates, expansive stance, output gap concerns",False
+2019-03-07,2019,3,2019-03-07,nota-informativa-2019-03-07.pdf,2600,0.25,2,1,1,-25,"Hold stance, expansive policy, below-potential output concerns",False
+2019-04-11,2019,4,2019-04-11,nota-informativa-2019-04-11.pdf,2713,0.25,2,1,1,-25,"Maintaining rates, inflation anchored, expansionary stance appropriate",False
+2019-05-09,2019,5,2019-05-09,nota-informativa-2019-05-09.pdf,2858,-0.1667,2,3,1,-15,"Hold rate, maintain expansive stance, below-potential output",False
+2019-06-13,2019,6,2019-06-13,nota-informativa-2019-06-13.pdf,2928,0.0,2,2,1,-25,"Hold with dovish lean: expansive policy, economic slack concerns.",False
+2019-07-11,2019,7,2019-07-11,nota-informativa-2019-07-11.pdf,3058,0.0,2,2,1,-15,"Hold with expansive bias; inflation within target, growth concerns, global risks.",False
+2019-08-08,2019,8,2019-08-08,nota-informativa-2019-08-08.pdf,3078,0.5,3,1,0,-45,"Rate cut to 2.50%, stimulus expansion, weak activity, low inflation expectations",False
+2019-09-12,2019,9,2019-09-12,nota-informativa-2019-09-12.pdf,3034,0.25,2,1,1,-25,"Hold stance with dovish bias; expansion maintained, downside growth risks",False
+2019-10-10,2019,10,2019-10-10,nota-informativa-2019-10-10.pdf,2930,0.25,2,1,1,-25,"Hold rate, expansive policy, growth concerns, inflation below target",False
+2019-11-07,2019,11,2019-11-07,nota-informativa-2019-11-07.pdf,2792,1.0,1,0,0,-65,"Rate cut amid low inflation, weak demand, negative bias",False
+2019-12-12,2019,12,2019-12-12,nota-informativa-2019-12-12.pdf,2637,0.0,1,1,1,-15,"Hold stance with dovish bias; inflation below target, growth concerns.",False
+2019-12-31,2019,12,2019-12-31,nota-informativa-2019-12-31.pdf,1238,0.0,0,0,0,-65,"Two rate cuts, expansive stance, downward inflation bias, stimulus focus",False
+2020-01-09,2020,1,2020-01-09,nota-informativa-2020-01-09.pdf,2507,0.25,2,1,1,-15,"Hold rate, but downside inflation bias, weak activity concerns.",False
+2020-02-13,2020,2,2020-02-13,nota-informativa-2020-02-13.pdf,2469,0.4,3,1,1,-15,"Hold rate, inflation below target, growth concerns, downside bias",False
+2020-03-12,2020,3,2020-03-12,nota-informativa-2020-03-12.pdf,2252,0.0,1,1,1,-35,"Hold stance, but dovish tilt: downward inflation bias, deteriorating expectations, COVID-19 risks, ready to ease",False
+2020-03-19,2020,3,2020-03-19,nota-informativa-2020-03-19.pdf,2344,-1.0,0,2,0,-85,"Emergency rate cut 100bp, recession concerns, maximum stimulus stance",False
+2020-03-26,2020,3,2020-03-26,nota-informativa-2020-03-26.pdf,1672,0.0,0,0,0,-75,"Multiple rate cuts, reserve requirement reductions, liquidity injections",False
+2020-04-09,2020,4,2020-04-09,nota-informativa-2020-04-09.pdf,2270,-0.3333,1,2,0,-85,"Emergency rate cut to 0.25%, liquidity injections, recession concerns",False
+2020-05-07,2020,5,2020-05-07,nota-informativa-2020-05-07.pdf,2655,-0.5714,1,5,1,-85,"Maintaining ultra-low rates, expanding liquidity, recession concern",False
+2020-06-11,2020,6,2020-06-11,nota-informativa-2020-06-11.pdf,2781,-0.4,1,3,1,-75,"Expansive policy, rate at floor, severe recession concerns, demand collapse",False
+2020-07-09,2020,7,2020-07-09,nota-informativa-2020-07-09.pdf,3120,-0.5,1,4,1,-75,"Expansive policy, rate cut to 0.25%, liquidity injections, recession concerns",False
+2020-08-13,2020,8,2020-08-13,nota-informativa-2020-08-13.pdf,3000,-0.1667,2,3,1,-75,"Expansive policy, emergency rates, recession concerns, stimulus liquidity injection",False
+2020-09-10,2020,9,2020-09-10,nota-informativa-2020-09-10.pdf,2981,-0.5,1,4,1,-75,"Expansive policy, near-zero rates, inflation below target, stimulus focus",False
+2020-10-07,2020,10,2020-10-07,nota-informativa-2020-10-07.pdf,2969,-0.5714,1,5,1,-75,"Expansive policy, rate hold at 0.25%, massive liquidity injections, below-target inflation",False
+2020-11-12,2020,11,2020-11-12,nota-informativa-2020-11-12.pdf,2707,-0.5,1,4,1,-75,"Deeply dovish: ultra-low rates, expansive stimulus, weak demand concerns",False
+2020-12-10,2020,12,2020-12-10,nota-informativa-2020-12-10.pdf,3200,-0.25,1,2,1,-65,"Expansive policy, rate hold at 0.25%, weak demand, liquidity injection",False
+2021-01-14,2021,1,2021-01-14,nota-informativa-2021-01-14.pdf,3299,-0.4,1,3,1,-45,"Maintains ultra-low rates, expansionary policy, below-potential economy",False
+2021-02-11,2021,2,2021-02-11,nota-informativa-2021-02-11.pdf,2949,-0.75,0,3,1,-45,"Maintaining ultra-low rates, expansive policy, pandemic concerns dominate",False
+2021-03-11,2021,3,2021-03-11,nota-informativa-2021-03-11.pdf,2812,-0.6667,0,2,1,-65,"Expansive policy, low rates, stimulus, below-potential growth concerns",False
+2021-04-08,2021,4,2021-04-08,nota-informativa-2021-04-08.pdf,2639,-0.25,1,2,1,-65,"Strong stimulus, low rates, prolonged expansive stance, pandemic support",False
+2021-05-13,2021,5,2021-05-13,nota-informativa-2021-05-13.pdf,2598,-0.8333,0,5,1,-65,"Strongly expansive policy, rate hold at minimum, liquidity injections",False
+2021-06-10,2021,6,2021-06-10,nota-informativa-2021-06-10.pdf,2641,-0.4,1,3,1,-35,"Maintaining ultra-loose policy, expansionary stance, pandemic concerns dominate",False
+2021-07-08,2021,7,2021-07-08,nota-informativa-2021-07-08.pdf,3002,-0.1667,2,3,1,-45,"Maintains expansive policy, rate hold at 0.25%, prioritizes economic recovery",False
+2021-08-12,2021,8,2021-08-12,nota-informativa-2021-08-12.pdf,3015,-0.2,2,3,0,-35,"Rate hike amid transitory inflation, but policy remains expansive",False
+2021-09-09,2021,9,2021-09-09,nota-informativa-2021-09-09.pdf,3000,0.2,3,2,0,25,"Rate hike but modest, emphasizes transitory inflation, economy below potential",False
+2021-10-07,2021,10,2021-10-07,nota-informativa-2021-10-07.pdf,3175,0.2,3,2,0,35,"Rate hike signals inflation concern, but emphasizes transitory factors and expansionary policy continues.",False
+2021-11-11,2021,11,2021-11-11,nota-informativa-2021-11-11.pdf,3058,0.0,2,2,0,35,"Rate hike signals inflation concern, but policy remains expansive overall.",False
+2021-12-09,2021,12,2021-12-09,nota-informativa-2021-12-09.pdf,3384,-0.5,1,3,0,35,"Rate hike with hawkish inflation concerns, yet policy remains expansive",False
+2022-01-06,2022,1,2022-01-06,nota-informativa-2022-01-06.pdf,2930,-0.2,2,3,0,75,"Rate hike 50bps, inflation above target, tightening cycle",False
+2022-02-10,2022,2,2022-02-10,nota-informativa-2022-02-10.pdf,2797,0.0,3,3,0,65,"Rate hike, inflation above target, tightening bias.",False
+2022-03-10,2022,3,2022-03-10,nota-informativa-2022-03-10.pdf,3565,-0.1429,3,4,0,75,"Rate hike, inflation above target, tightening cycle continues",False
+2022-04-07,2022,4,2022-04-07,nota-informativa-2022-04-07.pdf,3696,0.0,4,4,0,75,"Rate hike 50bps, inflation above target, hawkish tightening stance.",False
+2022-05-12,2022,5,2022-05-12,nota-informativa-2022-05-12.pdf,3475,0.5,3,1,0,75,"Rate hike 50bps, inflation well above target, hawkish tightening cycle",False
+2022-06-09,2022,6,2022-06-09,nota-informativa-2022-06-09.pdf,3458,0.5,3,1,0,75,"Rate hike 50bps, inflation above target, hawkish tightening",False
+2022-07-07,2022,7,2022-07-07,nota-informativa-2022-07-07.pdf,3429,0.0,3,3,0,75,"Rate hike, inflation above target, tightening cycle continues",False
+2022-08-11,2022,8,2022-08-11,nota-informativa-2022-08-11.pdf,3456,0.1429,4,3,0,75,"Rate hike continuation, inflation above target, tightening cycle",False
+2022-09-08,2022,9,2022-09-08,nota-informativa-2022-09-08.pdf,3507,0.2,3,2,0,75,"Rate hike continuation, inflation above target, tightening stance",False
+2022-10-06,2022,10,2022-10-06,nota-informativa-2022-10-06.pdf,3454,0.1429,4,3,0,75,"Rate hike to 7%, inflation above target, tightening cycle continues",False
+2022-11-10,2022,11,2022-11-10,nota-informativa-2022-11-10.pdf,3351,-0.2,2,3,0,75,"Rate hike to 7.25%, inflation above target, tightening cycle continues",False
+2022-12-07,2022,12,2022-12-07,nota-informativa-2022-12-07.pdf,3512,-0.2,2,3,0,75,"Rate hike to 7.50%, inflation above target, restrictive stance",False
+2023-01-12,2023,1,2023-01-12,nota-informativa-2023-01-12.pdf,3355,0.0,2,2,0,75,"Rate hike to 7.75%, inflation above target, restrictive stance",False
+2023-02-09,2023,2,2023-02-09,nota-informativa-2023-02-09.pdf,3865,0.0,2,2,1,35,"Hold with hawkish tilt; inflation above target, future hikes possible",False
+2023-03-09,2023,3,2023-03-09,nota-informativa-2023-03-09.pdf,4013,0.0,2,2,1,35,"Hold stance, hawkish bias: inflation above target, conditional on data",False
+2023-04-13,2023,4,2023-04-13,nota-informativa-2023-04-13.pdf,3889,-0.1667,2,3,1,25,"Hold stance with hawkish bias; inflation above target, future hikes possible",False
+2023-05-11,2023,5,2023-05-11,nota-informativa-2023-05-11.pdf,3772,0.0,2,2,1,15,"Hold stance, inflation declining, future hikes conditional on data",False
+2023-06-08,2023,6,2023-06-08,nota-informativa-2023-06-08.pdf,3725,0.0,2,2,1,15,Hold stance with future tightening optionality; inflation above target.,False
+2023-07-13,2023,7,2023-07-13,nota-informativa-2023-07-13.pdf,4183,-0.1667,2,3,1,25,"Hold stance with hawkish bias; inflation above target, monitoring future data",False
+2023-08-10,2023,8,2023-08-10,nota-informativa-2023-08-10.pdf,4180,0.1667,3,2,1,25,"Hold with hawkish bias; inflation above target, moderating but monitored.",False
+2023-09-14,2023,9,2023-09-14,nota-informativa-2023-09-14.pdf,4254,0.0,3,3,0,-35,Rate cut signals easing; inflation still above target but declining trend.,False
+2023-10-05,2023,10,2023-10-05,nota-informativa-2023-10-05.pdf,3984,-0.1429,3,4,0,-35,"Rate cut signal, but inflation concerns persist above target",False
+2023-11-09,2023,11,2023-11-09,nota-informativa-2023-11-09.pdf,4116,-0.1429,3,4,0,-35,"Rate cut signaling, but inflation still above target, future hikes conditional",False
+2023-12-14,2023,12,2023-12-14,nota-informativa-2023-12-14.pdf,4346,-0.1429,3,4,0,-35,Rate cut with cautious forward guidance; inflation still above target,False
+2024-01-11,2024,1,2024-01-11,nota-informativa-2024-01-11.pdf,3780,-0.1429,3,4,0,-45,Rate cut with cautious forward guidance; inflation declining toward target,False
+2024-02-08,2024,2,2024-02-08,nota-informativa-2024-02-08.pdf,3560,-0.3333,1,2,0,-35,"Rate cut 25bps, inflation declining, but cautious tone on future cuts",False
+2024-03-07,2024,3,2024-03-07,nota-informativa-2024-03-07.pdf,3893,-0.25,1,2,1,-15,"Hold rate, reduce reserve requirements, inflation moderating, dovish tilt",False
+2024-04-11,2024,4,2024-04-11,nota-informativa-2024-04-11.pdf,3642,-0.3333,2,4,0,-65,"Rate cut 25bps, inflation converging to target, dovish bias",False
+2024-05-09,2024,5,2024-05-09,nota-informativa-2024-05-09.pdf,3599,-0.6,1,4,0,-45,"Rate cut with gradual disinflation path, economic slowdown signals.",False
+2024-06-13,2024,6,2024-06-13,nota-informativa-2024-06-13.pdf,3717,-0.1667,2,3,1,-15,"Hold stance with mild dovish tilt; inflation cooling, expectations contained.",False
+2024-07-11,2024,7,2024-07-11,nota-informativa-2024-07-11.pdf,3559,0.0,3,3,1,15,"Hold stance, inflation persistence concerns offset by moderate outlook.",False
+2024-08-08,2024,8,2024-08-08,nota-informativa-2024-08-08.pdf,3700,-0.2,2,3,0,-45,"Rate cut, inflation declining, improving economic indicators, optimistic outlook.",False
+2024-09-12,2024,9,2024-09-12,nota-informativa-2024-09-12.pdf,3530,0.0,2,2,0,-35,"Rate cut with cautious forward guidance; inflation at target, stable outlook.",False
+2024-10-10,2024,10,2024-10-10,nota-informativa-2024-10-10.pdf,3639,-0.1667,2,3,1,10,"Hold stance, inflation near target, modest optimism",False
+2024-11-07,2024,11,2024-11-07,nota-informativa-2024-11-07.pdf,3622,-0.2,2,3,0,-45,"Rate cut 25bps, inflation near target, but cautious on future cuts",False
+2024-12-12,2024,12,2024-12-12,nota-informativa-2024-12-12.pdf,3508,-0.4,1,3,1,5,"Hold stance, inflation near target, modest growth optimism",False
+2025-01-09,2025,1,2025-01-09,nota-informativa-2025-01-09.pdf,3330,-0.5,1,3,0,-45,"Rate cut to neutral level, inflation controlled, gradual easing bias.",False
+2025-02-13,2025,2,2025-02-13,nota-informativa-2025-02-13.pdf,3824,-0.5714,1,5,1,-15,"Hold stance, inflation declining toward target, modest dovish bias.",False
+2025-03-13,2025,3,2025-03-13,nota-informativa-2025-03-13.pdf,3732,-0.5714,1,5,1,0,"Hold decision with balanced inflation concerns, gradual convergence expected.",False
+2025-04-10,2025,4,2025-04-10,nota-informativa-2025-04-10.pdf,3635,0.0,1,1,1,5,"Hold stance, slight hawkish bias from inflation concerns and trade tensions.",False
+2025-05-08,2025,5,2025-05-08,nota-informativa-2025-05-08.pdf,3656,-0.3333,1,2,0,-45,"Rate cut to neutral level, inflation concerns easing, growth deteriorating slightly.",False
+2025-06-12,2025,6,2025-06-12,nota-informativa-2025-06-12.pdf,3587,-0.4,1,3,1,-15,"Hold rate, inflation below target, economic slowdown signals",False
+2025-07-10,2025,7,2025-07-10,nota-informativa-2025-07-10.pdf,3426,-0.25,1,2,1,-15,"Hold decision, low inflation, growth concerns, dovish tilt",False
+2025-08-14,2025,8,2025-08-14,nota-informativa-2025-08-14.pdf,3086,-0.4,1,3,1,-15,"Hold with dovish tilt; low inflation, reduced expectations, cautious global outlook.",False
+2025-09-11,2025,9,2025-09-11,nota-informativa-2025-09-11.pdf,3210,0.0,1,1,0,-45,"Rate cut, inflation declining, but cautious on global outlook risks",False
+2025-10-09,2025,10,2025-10-09,nota-informativa-2025-10-09.pdf,2780,0.5,1,0,1,5,"Hold stance, inflation near target, vigilant to data shifts",False
+2025-11-13,2025,11,2025-11-13,nota-informativa-2025-11-13.pdf,2923,0.5,1,0,1,0,"Hold decision; inflation near target, stable expectations, balanced risks.",False
+2025-12-11,2025,12,2025-12-11,nota-informativa-2025-12-11.pdf,3005,0.0,1,1,1,5,"Hold stance, inflation below target, economic activity stable",False
+2026-01-08,2026,1,2026-01-08,nota-informativa-2026-01-08.pdf,2814,-0.25,1,2,1,5,"Hold stance, inflation near target, stable growth outlook",False
+2026-02-12,2026,2,2026-02-12,nota-informativa-2026-02-12.pdf,2869,0.6667,2,0,1,15,"Hold with modest hawkish bias; inflation rising, monitoring stance",False
+2026-03-12,2026,3,2026-03-12,nota-informativa-2026-03-12.pdf,3629,0.8,4,0,1,0,"Hold decision, inflation near target, temporary pressures acknowledged",False

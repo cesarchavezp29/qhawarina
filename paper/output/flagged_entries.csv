@@ -1,0 +1,2 @@
+key,year,month,date,filename,n_chars,dict_tone,dict_hawkish,dict_dovish,dict_neutral,llm_tone,llm_reason,flag_reason
+Nota-Informativa-059-2009-BCRP,2009,8,2009-08-01,Nota-Informativa-059-2009-BCRP.pdf,1358,-1.0,0,2,0,25,Inflation returned to target range; monetary tightening achieved successfully,Suspected Haiku hallucination: llm_tone=+25 (hawkish) for Aug 2009 — contradicts GFC easing cycle. dict_tone=-1.0. Duplicate month: Nota-061-2009 has llm_tone=-85. The +25 score is inconsistent with the unanimous cutting signal and raises suspicion of a model error.
