@@ -2390,12 +2390,16 @@ def main_daily():
         logger.info("=" * 60)
 
         # Load only political index — GDP/inflation/poverty need gitignored panel data
+        # Skip if parquet is absent (GitHub Actions env: parquet is gitignored,
+        # local daily_political.bat owns the political index pipeline).
         political_path = PROCESSED_DAILY_DIR / "daily_index.parquet"
-        political_df = pd.read_parquet(political_path).sort_values("date")
-        latest_political = political_df.iloc[-1]
-
-        logger.info("Exporting political index...")
-        export_political_index(political_df, latest_political, skip_haiku=args.no_haiku)
+        if political_path.exists():
+            political_df = pd.read_parquet(political_path).sort_values("date")
+            latest_political = political_df.iloc[-1]
+            logger.info("Exporting political index...")
+            export_political_index(political_df, latest_political, skip_haiku=args.no_haiku)
+        else:
+            logger.info("Skipping political index export — parquet not found (no local pipeline run)")
 
         logger.info("Updating monthly risk peaks JSON...")
         export_monthly_peaks_json()

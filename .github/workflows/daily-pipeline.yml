@@ -48,16 +48,15 @@ jobs:
         run: python scripts/build_price_index.py
         continue-on-error: true
 
-      # ── 6. Build political index ────────────────────────────────────────────
-      # Fetches RSS from 11 feeds + classifies with Claude Haiku (EPU v2).
-      # Captures the full news cycle: articles published 07:00–22:00 PET.
-      - name: Build political index (RSS + Haiku)
-        run: python scripts/build_daily_index.py
+      # ── 6. Build political index — DISABLED ────────────────────────────────
+      # The local daily_political.bat (08:00 PET) owns this pipeline.
+      # GitHub Actions lacks data/raw/rss/ and data/processed/ (both gitignored),
+      # so running build_daily_index.py here produces a 1-day baseline → inflated
+      # IRP/IRE values (observed: IRP=1093 instead of correct ~70).
+      # The committed exports/data/political_index_daily.json from the local run is used as-is.
 
-      # ── 7. Validate RSS ─────────────────────────────────────────────────────
-      - name: Validate RSS
-        run: python scripts/validate_pipeline.py --check rss
-        continue-on-error: true
+      # ── 7. Validate RSS — DISABLED ─────────────────────────────────────────
+      # No RSS data in CI environment (data/raw/rss/ is gitignored).
 
       # ── 8. GDP + inflation nowcast (Sundays only) ───────────────────────────
       # NOTE: generate_nowcast.py reads data/processed/national/panel_national_monthly.parquet
@@ -74,10 +73,12 @@ jobs:
           fi
 
       # ── 9. Export all JSON files ────────────────────────────────────────────
-      # --daily: exports only political_index_daily.json + fx_interventions.json
-      # + daily_price_index.json. Skips GDP/inflation/poverty (need gitignored panel data).
+      # --daily: exports daily_price_index.json + fx_interventions.json.
+      # Political index export is skipped automatically if parquet is absent
+      # (export_web_data.py checks for file existence before reading).
       - name: Export all data
         run: python scripts/export_web_data.py --daily
+        continue-on-error: true
 
       # ── 9.5. Generate CSV exports ────────────────────────────────────────────
       # Converts JSON exports to CSV (UTF-8 with BOM) for Excel-friendly downloads.
@@ -111,11 +112,10 @@ jobs:
           git diff --staged --quiet || git commit -m "data: $(date +%Y-%m-%d) daily update"
           git push
 
-      # ── 12. Email alert ────────────────────────────────────────────────────
-      # Runs even if earlier steps failed (if: always()) so you always get notified.
-      - name: Send email alert
-        if: always()
-        run: python scripts/validate_pipeline.py --alert email
+      # ── 12. Email alert — DISABLED ─────────────────────────────────────────
+      # Removed: was sending false-positive errors for supermarket (scraper runs
+      # at 22:00 PET, GitHub Actions runs at 22:30 — but UTC timing caused
+      # the check to look for "today" snapshot before the scraper ran).
 
     env:
       ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}

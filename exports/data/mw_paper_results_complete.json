@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated": "2026-03-17T12:26:53.651696",
+    "generated": "2026-03-25T02:14:49.802556",
     "description": "Complete MW paper results — all tables and figures",
     "sources": {
       "primary": "ENAHO Module 500 CS (2015-2023)",
@@ -108,89 +108,131 @@
   "table3_panel_decomposition": {
     "feasible": true,
     "n_treatment": 1171,
-    "n_control": 3903
+    "n_control": 3903,
+    "treatment": {
+      "n_2021": 1171,
+      "n_reinterviewed": 286,
+      "n_attrited": 885,
+      "attrition_rate": 0.7558,
+      "emp_ret_reint_wtd": 0.6386,
+      "formal_dep_ret_reint_wtd": 0.4681,
+      "dlogw_stayers_wtd": 0.3072,
+      "dhours_stayers_wtd": 0.75,
+      "n_stayers": 142,
+      "transition_formal23": 142,
+      "transition_informal23": 25,
+      "transition_not_emp23": 101,
+      "transition_attrited": 885
+    },
+    "control": {
+      "n_2021": 3903,
+      "n_reinterviewed": 921,
+      "n_attrited": 2982,
+      "attrition_rate": 0.764,
+      "emp_ret_reint_wtd": 0.6006,
+      "formal_dep_ret_reint_wtd": 0.4991,
+      "dlogw_stayers_wtd": 0.1541,
+      "dhours_stayers_wtd": -1.3,
+      "n_stayers": 486,
+      "transition_formal23": 486,
+      "transition_informal23": 45,
+      "transition_not_emp23": 334,
+      "transition_attrited": 2982
+    },
+    "did": {
+      "did_emp_ret_reint_wtd": 0.038,
+      "did_formal_dep_ret_reint_wtd": -0.031,
+      "did_dlogw_stayers_wtd": 0.1531,
+      "did_dhours_stayers_wtd": 2.05
+    },
+    "notes": [
+      "emp_ret and formal_dep_ret are among re-interviewed workers only (weighted by facpanel2123)",
+      "attrition = facpanel2123 <= 0 AND ocu500_23 is NaN â€” not re-interviewed, not counted as unemployed",
+      "dlogw and dhours are weighted means among formal-dep stayers",
+      "transition counts are unweighted"
+    ]
   },
   "table4_heterogeneity": {
     "Total (referencia)": {
       "ratios": {
         "A": {
-          "ratio": 0.714,
+          "ratio": 0.696,
           "unreliable": false
         },
         "B": {
-          "ratio": 0.847,
+          "ratio": 0.829,
           "unreliable": false
         },
         "C": {
-          "ratio": 0.839,
+          "ratio": 0.83,
           "unreliable": false
         }
       },
-      "avg_ratio": 0.8,
+      "avg_ratio": 0.785,
       "n_pre_2015": 9952
     },
     "Agricultura / Mineria": {
       "ratios": {
         "A": {
-          "ratio": 1.886,
+          "ratio": 1.641,
           "unreliable": false
         },
         "B": {
-          "ratio": 0.801,
+          "ratio": 0.765,
           "unreliable": false
         },
         "C": {
-          "ratio": 0.57,
+          "ratio": 0.407,
           "unreliable": false
         }
       },
-      "avg_ratio": 1.086,
-      "n_pre_2015": 939
+      "avg_ratio": 0.938,
+      "n_pre_2015": 1031
     },
     "Manufactura": {
       "ratios": {
         "A": {
-          "ratio": 1.449,
+          "ratio": 1.0,
           "unreliable": false
         },
         "B": {
-          "ratio": 0.947,
+          "ratio": 0.869,
           "unreliable": false
         },
         "C": {
-          "ratio": 1.133,
+          "ratio": 1.049,
           "unreliable": false
         }
       },
-      "avg_ratio": 1.177,
+      "avg_ratio": 0.973,
       "n_pre_2015": 904
     },
     "Construccion": {
       "ratios": {
         "A": {
-          "ratio": 3.055,
+          "ratio": 1.519,
           "unreliable": false
         },
         "B": {
-          "ratio": 0.729,
+          "ratio": 0.526,
           "unreliable": false
         },
         "C": {
-          "ratio": 8.98,
+          "ratio": 1.536,
           "unreliable": false
         }
       },
-      "avg_ratio": 4.255,
+      "avg_ratio": 1.194,
       "n_pre_2015": 478
     },
     "Comercio": {
       "ratios": {
         "A": {
-          "ratio": 0.793,
+          "ratio": 0.784,
           "unreliable": false
         },
         "B": {
-          "ratio": 1.242,
+          "ratio": 1.209,
           "unreliable": false
         },
         "C": {
@@ -198,35 +240,35 @@
           "unreliable": false
         }
       },
-      "avg_ratio": 0.919,
+      "avg_ratio": 0.905,
       "n_pre_2015": 937
     },
     "Transporte y alojamiento": {
       "ratios": {
         "A": {
-          "ratio": 1.06,
+          "ratio": 1.041,
           "unreliable": false
         },
         "B": {
-          "ratio": 1.034,
+          "ratio": 1.018,
           "unreliable": false
         },
         "C": {
-          "ratio": 0.592,
+          "ratio": 0.585,
           "unreliable": false
         }
       },
-      "avg_ratio": 0.895,
+      "avg_ratio": 0.881,
       "n_pre_2015": 556
     },
     "Finanzas / Servicios prof.": {
       "ratios": {
         "A": {
-          "ratio": 0.808,
+          "ratio": 0.768,
           "unreliable": false
         },
         "B": {
-          "ratio": 1.089,
+          "ratio": 1.018,
           "unreliable": false
         },
         "C": {
@@ -234,71 +276,71 @@
           "unreliable": false
         }
       },
-      "avg_ratio": 0.901,
+      "avg_ratio": 0.864,
       "n_pre_2015": 1113
     },
     "Administracion publica": {
       "ratios": {
         "A": {
-          "ratio": 1.139,
+          "ratio": 1.033,
           "unreliable": false
         },
         "B": {
-          "ratio": 0.504,
+          "ratio": 0.498,
           "unreliable": false
         },
         "C": {
-          "ratio": 0.809,
+          "ratio": 0.804,
           "unreliable": false
         }
       },
-      "avg_ratio": 0.817,
+      "avg_ratio": 0.778,
       "n_pre_2015": 1639
     },
     "Educacion y salud": {
       "ratios": {
         "A": {
-          "ratio": 0.644,
+          "ratio": 0.598,
           "unreliable": false
         },
         "B": {
-          "ratio": 0.724,
+          "ratio": 0.709,
           "unreliable": false
         },
         "C": {
-          "ratio": 0.997,
+          "ratio": 0.975,
           "unreliable": false
         }
       },
-      "avg_ratio": 0.788,
+      "avg_ratio": 0.76,
       "n_pre_2015": 3021
     },
     "Micro (<=10 trab.)": {
       "ratios": {
         "A": {
-          "ratio": 0.902,
+          "ratio": 0.899,
           "unreliable": false
         },
         "B": {
-          "ratio": 0.925,
+          "ratio": 0.909,
           "unreliable": false
         },
         "C": {
-          "ratio": 0.707,
+          "ratio": 0.69,
           "unreliable": false
         }
       },
-      "avg_ratio": 0.845,
+      "avg_ratio": 0.833,
       "n_pre_2015": 705
     },
     "Pequena (11-50 trab.)": {
       "ratios": {
         "A": {
-          "ratio": 1.11,
+          "ratio": 0.919,
           "unreliable": false
         },
         "B": {
-          "ratio": 0.949,
+          "ratio": 0.901,
           "unreliable": false
         },
         "C": {
@@ -306,89 +348,53 @@
           "unreliable": false
         }
       },
-      "avg_ratio": 0.886,
+      "avg_ratio": 0.806,
       "n_pre_2015": 1238
     },
     "Mediana/Grande (51+)": {
       "ratios": {
         "A": {
-          "ratio": 0.7,
+          "ratio": 0.686,
           "unreliable": false
         },
         "B": {
-          "ratio": 0.814,
+          "ratio": 0.793,
           "unreliable": false
         },
         "C": {
-          "ratio": 0.919,
+          "ratio": 0.896,
           "unreliable": false
         }
       },
-      "avg_ratio": 0.811,
+      "avg_ratio": 0.792,
       "n_pre_2015": 7557
     },
     "Edad 18-24": {
       "ratios": {
         "A": {
-          "ratio": 0.729,
+          "ratio": 0.661,
           "unreliable": false
         },
         "B": {
-          "ratio": 1.074,
+          "ratio": 1.01,
           "unreliable": false
         },
         "C": {
-          "ratio": 0.848,
+          "ratio": 0.805,
           "unreliable": false
         }
       },
-      "avg_ratio": 0.883,
+      "avg_ratio": 0.826,
       "n_pre_2015": 890
     },
     "Edad 25-44": {
       "ratios": {
         "A": {
-          "ratio": 0.774,
+          "ratio": 0.748,
           "unreliable": false
         },
         "B": {
-          "ratio": 0.813,
-          "unreliable": false
-        },
-        "C": {
-          "ratio": 0.821,
-          "unreliable": false
-        }
-      },
-      "avg_ratio": 0.803,
-      "n_pre_2015": 5279
-    },
-    "Edad 45-64": {
-      "ratios": {
-        "A": {
-          "ratio": 0.713,
-          "unreliable": false
-        },
-        "B": {
-          "ratio": 0.939,
-          "unreliable": false
-        },
-        "C": {
-          "ratio": 0.853,
-          "unreliable": false
-        }
-      },
-      "avg_ratio": 0.835,
-      "n_pre_2015": 3564
-    },
-    "Hombres": {
-      "ratios": {
-        "A": {
-          "ratio": 0.759,
-          "unreliable": false
-        },
-        "B": {
-          "ratio": 0.801,
+          "ratio": 0.792,
           "unreliable": false
         },
         "C": {
@@ -396,80 +402,116 @@
           "unreliable": false
         }
       },
-      "avg_ratio": 0.786,
+      "avg_ratio": 0.779,
+      "n_pre_2015": 5279
+    },
+    "Edad 45-64": {
+      "ratios": {
+        "A": {
+          "ratio": 0.701,
+          "unreliable": false
+        },
+        "B": {
+          "ratio": 0.927,
+          "unreliable": false
+        },
+        "C": {
+          "ratio": 0.853,
+          "unreliable": false
+        }
+      },
+      "avg_ratio": 0.827,
+      "n_pre_2015": 3564
+    },
+    "Hombres": {
+      "ratios": {
+        "A": {
+          "ratio": 0.726,
+          "unreliable": false
+        },
+        "B": {
+          "ratio": 0.788,
+          "unreliable": false
+        },
+        "C": {
+          "ratio": 0.778,
+          "unreliable": false
+        }
+      },
+      "avg_ratio": 0.764,
       "n_pre_2015": 6043
     },
     "Mujeres": {
       "ratios": {
         "A": {
-          "ratio": 0.714,
+          "ratio": 0.697,
           "unreliable": false
         },
         "B": {
-          "ratio": 0.947,
+          "ratio": 0.922,
           "unreliable": false
         },
         "C": {
-          "ratio": 0.882,
+          "ratio": 0.877,
           "unreliable": false
         }
       },
-      "avg_ratio": 0.848,
+      "avg_ratio": 0.832,
       "n_pre_2015": 3909
     }
   },
   "table5_owe_elasticity": {
     "A": {
-      "pi_wage": 0.12388,
-      "pi_se": 0.0729,
-      "pi_p": 0.0893,
-      "f_stat": 2.89,
-      "beta_emp": 0.00671,
-      "beta_se": 0.03403,
-      "beta_p": 0.8436,
-      "owe": 0.0542,
-      "owe_se": 0.2765,
-      "n_wage_obs": 21032,
+      "pi_wage": 0.1689,
+      "pi_se": 0.08158,
+      "pi_p": 0.0384,
+      "f_stat": 4.29,
+      "beta_emp": 0.01391,
+      "beta_se": 0.03815,
+      "beta_p": 0.7154,
+      "owe": 0.0824,
+      "owe_se": 0.2293,
+      "n_wage_obs": 20560,
       "n_emp_obs": 158108,
       "n_depts": 25
     },
     "B": {
-      "pi_wage": -0.0654,
-      "pi_se": 0.08542,
-      "pi_p": 0.4439,
-      "f_stat": 0.59,
-      "beta_emp": 0.12016,
-      "beta_se": 0.04424,
-      "beta_p": 0.0066,
-      "owe": -1.8374,
-      "owe_se": 2.4933,
-      "n_wage_obs": 21922,
+      "pi_wage": -0.06969,
+      "pi_se": 0.10285,
+      "pi_p": 0.498,
+      "f_stat": 0.46,
+      "beta_emp": 0.12147,
+      "beta_se": 0.04421,
+      "beta_p": 0.006,
+      "owe": -1.7429,
+      "owe_se": 2.649,
+      "n_wage_obs": 21356,
       "n_emp_obs": 159735,
       "n_depts": 25
     },
     "C": {
-      "pi_wage": 0.14222,
-      "pi_se": 0.09186,
-      "pi_p": 0.1216,
-      "f_stat": 2.4,
-      "beta_emp": 0.2241,
-      "beta_se": 0.07757,
-      "beta_p": 0.0039,
-      "owe": 1.5758,
-      "owe_se": 1.1548,
-      "n_wage_obs": 18939,
+      "pi_wage": 0.13192,
+      "pi_se": 0.08971,
+      "pi_p": 0.1414,
+      "f_stat": 2.16,
+      "beta_emp": 0.21988,
+      "beta_se": 0.07573,
+      "beta_p": 0.0037,
+      "owe": 1.6668,
+      "owe_se": 1.2705,
+      "n_wage_obs": 18282,
       "n_emp_obs": 148990,
       "n_depts": 25
     },
     "pooled": {
-      "owe": 0.114,
-      "owe_se": 0.2673,
-      "owe_p": 0.6698
+      "owe": 0.1189,
+      "owe_se": 0.2248,
+      "owe_p": 0.597
     },
     "pooled_ab": {
-      "owe": 0.0312,
-      "owe_se": 0.2748,
-      "owe_p": 0.9096,
+      "owe": 0.0688,
+      "owe_se": 0.2284,
+      "owe_p": 0.7632,
       "note": "Events A+B only; Event C excluded (F=1.5, weak instrument)"
     }
   },
@@ -523,24 +565,24 @@
           "p": 1.0
         },
         "2016": {
-          "beta": 0.0635967766101401,
-          "se": 0.024836078327803365,
-          "p": 0.010447325024840675
+          "beta": 0.06246197263595101,
+          "se": 0.026443586659504012,
+          "p": 0.018172524636377585
         },
         "2017": {
-          "beta": 0.0068228015418182715,
-          "se": 0.03406055036670566,
-          "p": 0.8412350954035261
+          "beta": 0.014070382004700566,
+          "se": 0.03819300877233946,
+          "p": 0.7125734832164792
         },
         "2018": {
-          "beta": 0.07232335827737014,
-          "se": 0.03317400340582679,
-          "p": 0.029248455985540392
+          "beta": 0.07277466189112705,
+          "se": 0.0350812549430767,
+          "p": 0.038036605294756116
         },
         "2019": {
-          "beta": 0.11989504720924803,
-          "se": 0.0395549980612577,
-          "p": 0.0024366672502763214
+          "beta": 0.10736429658023104,
+          "se": 0.039477957167449576,
+          "p": 0.006536070690478524
         }
       },
       "log_wage": {
@@ -550,38 +592,38 @@
           "p": 1.0
         },
         "2016": {
-          "beta": 0.031516780215490335,
-          "se": 0.16918306794093063,
-          "p": 0.8522188948635672
+          "beta": 0.0558641885655985,
+          "se": 0.17763997836807935,
+          "p": 0.75315664028451
         },
         "2017": {
-          "beta": 0.2342761636132614,
-          "se": 0.2222927690924534,
-          "p": 0.2919249658752494
+          "beta": 0.2670353028329135,
+          "se": 0.23996117006524104,
+          "p": 0.26578267643284814
         },
         "2018": {
-          "beta": 0.2832367761061601,
-          "se": 0.3012341470137708,
-          "p": 0.34708700887167465
+          "beta": 0.32346260381286124,
+          "se": 0.31902766782810826,
+          "p": 0.31062979615805963
         },
         "2019": {
-          "beta": 0.1806769878400981,
-          "se": 0.20276928995462182,
-          "p": 0.37290390255365236
+          "beta": 0.151573240840523,
+          "se": 0.20429789455780017,
+          "p": 0.45813418538026474
         }
       }
     },
     "B": {
       "employment": {
         "2015": {
-          "beta": -0.01879970892622431,
-          "se": 0.04672836395966056,
-          "p": 0.6874492691469383
+          "beta": -0.015417467019478449,
+          "se": 0.047282035713451825,
+          "p": 0.7443679757636918
         },
         "2016": {
-          "beta": 0.05144968623491093,
-          "se": 0.026457962525587523,
-          "p": 0.05182526851258182
+          "beta": 0.0549627594597605,
+          "se": 0.026400010132016722,
+          "p": 0.037349603338114046
         },
         "2017": {
           "beta": 0.0,
@@ -589,27 +631,27 @@
           "p": 1.0
         },
         "2018": {
-          "beta": 0.08335934747513053,
-          "se": 0.03726141134558387,
-          "p": 0.02527657115765344
+          "beta": 0.08519497311643313,
+          "se": 0.03685535613510162,
+          "p": 0.020799539276423105
         },
         "2019": {
-          "beta": 0.11993090507626533,
-          "se": 0.04428515751394959,
-          "p": 0.00676591781539322
+          "beta": 0.12121262917645612,
+          "se": 0.04424261724425107,
+          "p": 0.0061490506039577845
         },
-        "pretrend_f_pvalue": 0.010194293041648077
+        "pretrend_f_pvalue": 0.007176502436495102
       },
       "log_wage": {
         "2015": {
-          "beta": -0.24211317295247214,
-          "se": 0.2264841361015837,
-          "p": 0.28506642354877565
+          "beta": -0.2520608366769761,
+          "se": 0.22415157994200352,
+          "p": 0.2607964591553724
         },
         "2016": {
-          "beta": -0.21746341613567982,
-          "se": 0.1740758987203823,
-          "p": 0.21157554054360783
+          "beta": -0.21869818482796635,
+          "se": 0.17246664313799254,
+          "p": 0.20477624855082355
         },
         "2017": {
           "beta": 0.0,
@@ -617,24 +659,24 @@
           "p": 1.0
         },
         "2018": {
-          "beta": 0.10895048697580674,
-          "se": 0.157857186699527,
-          "p": 0.49007855382696586
+          "beta": 0.12272486035341115,
+          "se": 0.15984889769564173,
+          "p": 0.4426324938550641
         },
         "2019": {
-          "beta": -0.09203313098248432,
-          "se": 0.13971717191388128,
-          "p": 0.5100818600457779
+          "beta": -0.10684725498862889,
+          "se": 0.14291450422570678,
+          "p": 0.4546830087454826
         },
-        "pretrend_f_pvalue": 0.4154521053451713
+        "pretrend_f_pvalue": 0.3946650121797219
       }
     },
     "C": {
       "employment": {
         "2019": {
-          "beta": 0.16797794927415724,
-          "se": 0.07456895896386508,
-          "p": 0.02428107027338692
+          "beta": 0.162753683344389,
+          "se": 0.07199472632213491,
+          "p": 0.0237819673697824
         },
         "2021": {
           "beta": 0.0,
@@ -642,22 +684,22 @@
           "p": 1.0
         },
         "2022": {
-          "beta": 0.15045045071869828,
-          "se": 0.06111416873847896,
-          "p": 0.013824431561006725
+          "beta": 0.1462323971419733,
+          "se": 0.05980717550029592,
+          "p": 0.014482626906300462
         },
         "2023": {
-          "beta": 0.2237263299832529,
-          "se": 0.07750029621838372,
-          "p": 0.0038920587099658165
+          "beta": 0.2195001552664082,
+          "se": 0.07565756214552499,
+          "p": 0.0037169833940285907
         },
-        "pretrend_f_pvalue": 0.03369755590468144
+        "pretrend_f_pvalue": 0.03312888059858529
       },
       "log_wage": {
         "2019": {
-          "beta": 0.020361385169490077,
-          "se": 0.11893666433822914,
-          "p": 0.8640702873724716
+          "beta": 0.015691649322622143,
+          "se": 0.12351465426487482,
+          "p": 0.898906511914932
         },
         "2021": {
           "beta": 0.0,
@@ -665,16 +707,16 @@
           "p": 1.0
         },
         "2022": {
-          "beta": -0.07885349135437153,
-          "se": 0.10734395499518767,
-          "p": 0.462590958394579
+          "beta": -0.07886185867953883,
+          "se": 0.10851369558837239,
+          "p": 0.4673817691643476
         },
         "2023": {
-          "beta": -0.008354252587434552,
-          "se": 0.09549772916352686,
-          "p": 0.9302890563028179
+          "beta": -0.014893109127154525,
+          "se": 0.09978672667862908,
+          "p": 0.8813568405788713
         },
-        "pretrend_f_pvalue": 0.8655054858905037
+        "pretrend_f_pvalue": 0.8999649343156964
       }
     }
   },
