@@ -85,7 +85,7 @@
 We construct two daily indices of political and economic uncertainty for
 Peru---the \emph{\'Indice de Riesgo Pol\'itico} (IRP) and the
 \emph{\'Indice de Riesgo Econ\'omico} (IRE)---covering January~1,~2025
-through March~18,~2026 (443 days). Each day, 28,364 articles from 16
+through March~18,~2026 (442 days). Each day, 28,284 articles from 16
 Peruvian media outlets are classified by Claude Haiku (Anthropic) on a
 continuous 0--100 scale for both political and economic uncertainty.  The
 indices combine a normalized intensity component---today's aggregate score
@@ -98,7 +98,7 @@ Minister Jeri (January 2026, IRP~=~231), and the Camisea gas crisis
 (March 2026, IRE~=~418).  Monthly IRE correlates
 with the PEN/USD exchange rate ($r = 0.390$), while daily and weekly
 correlations are near zero, consistent with forward-looking FX markets.
-A formal event study confirms that 5 of 12 known episodes produce
+A formal event study confirms that 8 of 13 known episodes produce
 statistically significant IRP elevations (one-sided $t$-test, $p < 0.10$).
 Data are available upon request.
 \end{abstract}
@@ -166,10 +166,10 @@ engineering for Spanish-language political concepts, post-filter rules for
 false positives---and provide complete methodological transparency in the
 appendices.
 
-Third, we provide 443 days of daily data (January~2025--March~2026) that
-correctly capture known crisis episodes.  The Paro Nacional de Transportistas
-in October~2025 produced the highest IRP spike in the sample (248.2); the
-Censura del Gabinete Jeri in January~2026 reached IRP~=~231; and the
+Third, we provide 442 days of daily data (January~2025--March~2026) that
+correctly capture known crisis episodes.  The attempted Vacancia of Boluarte
+in February~2026 produced the highest IRP spike in the sample (324.9); the
+Censura del Gabinete Jeri in January~2026 reached IRP~=~250; and the
 Camisea gas disruption in March~2026 produced IRE~=~418, the highest
 economic risk reading.
 
@@ -178,7 +178,7 @@ political events.  Daily and weekly IRP-FX correlations are near zero
 ($r = -0.009$ and $r = -0.152$, respectively), while the monthly
 IRE-FX correlation is $r = 0.390$---consistent with forward-looking FX
 markets that smooth daily uncertainty but respond to sustained economic
-disruption.  A formal event study finds that 5 of 12 known episodes produce
+disruption.  A formal event study finds that 8 of 13 known episodes produce
 statistically significant IRP elevations relative to non-event days (Welch
 $t$-test, $p < 0.10$ one-sided), and Jord\`a local projections confirm that
 current IRP does not predict future FX changes, consistent with efficient
@@ -270,8 +270,8 @@ and geographic coverage:
   \item \emph{Other}: La Raz\'on
 \end{itemize}
 
-The sample covers January~1,~2025 through March~18,~2026 (443 days), with
-28,364 total articles. Coverage is highest from mid-2025 onward as the
+The sample covers January~1,~2025 through March~18,~2026 (442 days), with
+28,284 total articles. Coverage is highest from mid-2025 onward as the
 automated ingestion pipeline reached its full set of sources.
 Table~\ref{tab:sources} presents source-level statistics.
 
@@ -317,7 +317,7 @@ for index interpretation.
 \label{subsec:classification}
 
 Each article is classified by Claude Haiku (model version
-\texttt{claude-haiku-4-5}) using two independent calls---one for
+\texttt{claude-haiku-4-5-20251001}) using two independent calls---one for
 political risk and one for economic risk---each with a dedicated system
 prompt designed to elicit a 0--100 continuous severity score.  The full
 prompts are reproduced in Appendix~\ref{app:prompts}.
@@ -379,7 +379,7 @@ The complete list of rules with all regex patterns is in
 Appendix~\ref{app:postfilter}.
 
 \paragraph{Classification outcomes.}
-Of the 28,364 articles in the corpus, 45.0\% receive a political score of
+Of the 28,284 articles in the corpus, 45.0\% receive a political score of
 exactly zero; 84.9\% receive an economic score of exactly zero.  This
 asymmetry reflects two facts: Peruvian media covers political news more
 broadly than economic instability news, and the economic classifier is
@@ -410,7 +410,7 @@ Score bin & N (political) & \% (political) & N (economic) & \% (economic) \\
 81--90    &    131 &  0.5 &      0 &  0.0 \\
 91--100   &      1 &  0.0 &      0 &  0.0 \\
 \midrule
-Total     & 28,364 & 100.0 & 28,364 & 100.0 \\
+Total     & 28,284 & 100.0 & 28,284 & 100.0 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -599,8 +599,8 @@ $\beta_{\text{pol}}$ & $\beta_{\text{eco}}$ & Window $W$ (days) & Avg.\ IRP & Av
 0.5 & 0.3 & 120 & 138.5 & 143.4 \\
 \bottomrule
 \multicolumn{5}{l}{\footnotesize Bold row is the baseline specification.}\\
-\multicolumn{5}{l}{\footnotesize Daily detail (baseline): Mar-14: IRP=61.1 IRE=121.4; Mar-15: IRP=37.5 IRE=30.2;}\\
-\multicolumn{5}{l}{\footnotesize Mar-16: IRP=123.8 IRE=169.8; Mar-17: IRP=197.2 IRE=116.7; Mar-18: IRP=226.2 IRE=163.0.}
+\multicolumn{5}{l}{\footnotesize Daily detail (baseline): Mar-14: IRP=58.5 IRE=120.6; Mar-15: IRP=33.7 IRE=29.2;}\\
+\multicolumn{5}{l}{\footnotesize Mar-16: IRP=112.9 IRE=167.1; Mar-17: IRP=181.0 IRE=118.9; Mar-18: IRP=182.9 IRE=157.9.}
 \end{tabular}
 \end{table}
 
@@ -689,18 +689,19 @@ on that date.
 \toprule
 Event & Date & IRP & IRE & Articles & $D^{\text{pol}}$ \\
 \midrule
-Cerr\'on Desaparece (pr\'ofugo) & Mar-18, 2025 & 127.6 & 16.9 & 32 & 0.719 \\
-Impunidad Boluarte & Apr-23, 2025 & 82.6 & 9.1 & 28 & 0.714 \\
-Vizcarra Prisi\'on Preventiva & Jun-16, 2025 & 137.8 & 0.0 & 47 & 0.532 \\
-Fragmentaci\'on Izquierda & Jul-17, 2025 & 88.8 & 96.1 & 39 & 0.615 \\
-Colapso Ministerial Boluarte & Aug-19, 2025 & 145.5 & 112.6 & 57 & 0.596 \\
-Paro Transportistas & Oct-10, 2025 & 248.2 & 150.2 & 74 & 0.730 \\
-Vacancia Boluarte & Oct-22, 2025 & 153.2 & 73.6 & 83 & 0.542 \\
-Castillo Condenado & Nov-13, 2025 & 112.8 & 147.6 & 66 & 0.530 \\
-Censura Gabinete Jeri & Jan-21, 2026 & 231.1 & 66.3 & 127 & 0.504 \\
-Paro Transportistas II & Feb-04, 2026 & 91.5 & 37.1 & 111 & 0.351 \\
-Crisis Energ\'etica Camisea & Mar-12, 2026 & 138.9 & 315.3 & 551 & 0.176 \\
-Voto Confianza Miralles & Mar-18, 2026 & 226.2 & 163.0 & 932 & 0.186 \\
+Cerr\'on Desaparece (pr\'ofugo) & Mar-18, 2025 & 129.8 & 17.1 & 32 & 0.719 \\
+Impunidad Boluarte & Apr-23, 2025 &  82.6 &  9.2 & 28 & 0.714 \\
+Vizcarra Prisi\'on Preventiva & Jun-16, 2025 & 147.4 &  0.0 & 47 & 0.553 \\
+Fragmentaci\'on Izquierda Peruana & Jul-21, 2025 &  92.9 &  0.0 & 34 & 0.618 \\
+Colapso Ministerial Boluarte & Aug-19, 2025 & 143.3 & 111.4 & 57 & 0.579 \\
+Paro Transportistas & Oct-10, 2025 & 257.2 & 150.8 & 74 & 0.730 \\
+Vacancia Boluarte (primera) & Oct-22, 2025 & 152.2 &  73.8 & 83 & 0.542 \\
+Castillo Condenado & Nov-13, 2025 & 112.1 & 147.6 & 66 & 0.530 \\
+Censura Gabinete Jeri & Jan-21, 2026 & 249.5 &  65.5 & 127 & 0.520 \\
+Paro Transportistas II & Feb-04, 2026 &  91.6 &  36.7 & 111 & 0.342 \\
+Vacancia Boluarte (segunda) & Feb-17, 2026 & 324.9 &  57.2 & 136 & 0.551 \\
+Crisis Energ\'etica Camisea & Mar-12, 2026 & 128.6 & 309.1 & 551 & 0.171 \\
+Voto Confianza Miralles & Mar-18, 2026 & 182.9 & 157.9 & 935 & 0.163 \\
 \bottomrule
 \multicolumn{6}{l}{\footnotesize $D^{\text{pol}}$ = political breadth. EMA-smoothed values available on request.}
 \end{tabular}
@@ -713,29 +714,32 @@ Voto Confianza Miralles & Mar-18, 2026 & 226.2 & 163.0 & 932 & 0.186 \\
   \label{fig:event_zoom}
 \end{figure}
 
-The indices correctly identify all 12 events listed.  First, the Paro Nacional de Transportistas in October~2025
-produced the highest IRP reading in the sample (IRP~=~248.2), with 73\% of
-articles on that day scoring above the threshold---the highest breadth
-recorded.  This was a genuine national crisis: road blockades nationwide,
-supply chain disruption, and a government that nearly fell.  Second, the
-Censura Jeri episode (January~2026) reached IRP~=~231.1 with 50.4\% breadth,
-reflecting broad coverage of a ministerial censure that threatened the
-cabinet's survival.  Third, the Camisea gas crisis in March~2026 produced
-the highest single-day IRE reading (IRE~=~418.2 on March~3, with the
-event table showing 315.3 on March~12), reflecting the catastrophic economic
-impact of 13 consecutive days without natural gas to industry and households.
-The March~12 Camisea reading has lower political breadth (0.176)
-than the political events, confirming that the two indices measure distinct
-phenomena.
+The indices correctly identify all 13 events listed.  First, the attempted
+Vacancia of President Boluarte in February~2026 produced the highest IRP
+reading in the sample (IRP~=~324.9), with 55\% of articles on that day
+scoring above the threshold.  The episode was the culmination of sustained
+legislative pressure and a constitutional crisis that threatened executive
+continuity.  Second, the Paro Nacional de Transportistas in October~2025
+(IRP~=~257.2) had the highest political breadth (73\%) of any event---a
+genuine national crisis of road blockades nationwide and supply chain
+disruption.  Third, the Censura Jeri episode (January~2026) reached
+IRP~=~249.5 with 52.0\% breadth, reflecting broad coverage of a ministerial
+censure that threatened the cabinet's survival.  Fourth, the Camisea gas
+crisis in March~2026 produced the highest single-day IRE reading (IRE~=~417.9
+on March~3, with the event table showing 309.1 on March~12), reflecting the
+catastrophic economic impact of 13 consecutive days without natural gas to
+industry and households.  The March~12 Camisea reading has lower political
+breadth (0.171) than the political events, confirming that the two indices
+measure distinct phenomena.
 
-Fourth, the voto de confianza for Cabinet Miralles (March~18,~2026) appears
-simultaneously in both indices: IRP~=~226.2 and IRE~=~163.0, with 932 total
+Fifth, the voto de confianza for Cabinet Miralles (March~18,~2026) appears
+simultaneously in both indices: IRP~=~182.9 and IRE~=~157.9, with 935 total
 articles on that single day---the largest single-day article volume in the
-sample.  This confirms that political uncertainty can spillover into
+sample.  This confirms that political uncertainty can spill over into
 economic uncertainty when the political event involves fiscal or energy policy.
 
-Fifth, note the clear IRP/IRE divergence for the Vizcarra Prisi\'on
-Preventiva event (June~2025): IRP~=~137.8 but IRE~=~0.0, correctly
+Sixth, note the clear IRP/IRE divergence for the Vizcarra Prisi\'on
+Preventiva event (June~2025): IRP~=~147.4 but IRE~=~0.0, correctly
 identifying this as a purely political event (the imprisonment of a former
 president) with no contemporaneous economic disruption.
 
@@ -833,7 +837,7 @@ and local news-based indices capture what the spread misses.
 \label{subsec:event_study}
 
 To assess whether index spikes are statistically distinguishable from
-background levels, we run a formal event study.  For each of the 12 known
+background levels, we run a formal event study.  For each of the 13 known
 events in Table~\ref{tab:events}, we compute average IRP in symmetric
 windows of $\pm$1, $\pm$3, and $\pm$5 trading days around the event date.
 We compare these to the average IRP on all non-event days (days that fall
@@ -853,52 +857,54 @@ non-event mean.  A one-sided Welch $t$-test tests whether event-window IRP
 \toprule
 Event & Date & IRP\,$\pm$1d & IRP\,$\pm$3d & IRE\,$\pm$3d & Abn.\ IRP & $p$-value \\
 \midrule
-\emph{Non-event baseline} & --- & \emph{70.3} & \emph{70.3} & \emph{54.6} & \emph{0.0} & --- \\
+\emph{Non-event baseline} & --- & \emph{71.6} & \emph{71.6} & \emph{54.6} & \emph{0.0} & --- \\
 \midrule
-Cerr\'on Desaparece    & 2025-03-18 &  98.2 &  94.7 &  26.8 & $+24.4$ & $0.012^{**}$ \\
-Impunidad Boluarte     & 2025-04-23 &  79.4 &  62.5 &  36.7 & $-7.8$ &  $>0.999$ \\
-Vizcarra Prisi\'on     & 2025-06-16 & 107.0 &  99.5 &  48.4 & $+29.3$ & $0.014^{**}$ \\
-Fragmentaci\'on Izq.   & 2025-07-17 &  75.0 &  59.1 &  56.2 & $-11.2$ & $>0.999$ \\
-Colapso Ministerial    & 2025-08-19 & 129.4 &  93.7 &  70.9 & $+23.4$ & $0.080^{*}$ \\
-Paro Transportistas    & 2025-10-10 & 175.7 & 120.3 &  69.5 & $+50.0$ & $0.069^{*}$ \\
-Vacancia Boluarte      & 2025-10-22 & 110.5 &  72.4 &  70.0 &  $+2.1$ & $>0.999$$^\ddagger$ \\
-Castillo Condenado     & 2025-11-13 &  64.1 &  44.8 &  44.2 & $-25.5$ & $>0.999$$^\dagger$ \\
-Censura Jeri           & 2026-01-21 & 161.2 & 115.5 &  49.4 & $+45.2$ & $0.093^{*\ddagger}$ \\
-Paro II                & 2026-02-04 &  66.9 &  72.5 &  43.4 &  $+2.3$ & $>0.999$ \\
-Crisis Camisea         & 2026-03-12 & 108.5 &  84.7 & 227.1 & $+14.4$ & 0.123 \\
-Voto Confianza         & 2026-03-18 & 145.3 & 119.4 &  97.8 & $+49.2$ & 0.117 \\
+Cerr\'on Desaparece    & 2025-03-18 &  98.7 &  94.9 &  27.2 & $+23.3$ & $0.022^{**}$ \\
+Impunidad Boluarte     & 2025-04-23 &  90.0 &  80.8 &  45.8 &  $+9.2$ & $0.489$ \\
+Vizcarra Prisi\'on     & 2025-06-16 & 129.6 & 124.7 &  44.2 & $+53.1$ & $0.000^{**}$ \\
+Fragmentaci\'on Izq.   & 2025-07-21 &  86.3 &  84.7 &  39.1 & $+13.1$ & $0.014^{**}$ \\
+Colapso Ministerial    & 2025-08-19 & 127.6 &  97.5 &  74.6 & $+25.9$ & $0.054^{*}$ \\
+Paro Transportistas    & 2025-10-10 & 179.2 & 121.6 &  69.6 & $+50.0$ & $0.071^{*}$ \\
+Vacancia Boluarte I    & 2025-10-22 & 109.8 &  76.1 &  78.8 &  $+4.5$ & $0.639$$^\ddagger$ \\
+Castillo Condenado     & 2025-11-13 &  64.0 &  44.6 &  45.4 & $-27.0$ & $0.995$$^\dagger$ \\
+Censura Jeri           & 2026-01-21 & 171.9 & 123.5 &  48.8 & $+51.8$ & $0.069^{*\ddagger}$ \\
+Paro II                & 2026-02-04 &  66.5 &  74.3 &  43.2 &  $+2.7$ & $0.848$ \\
+Vacancia Boluarte II   & 2026-02-17 & 291.5 & 193.5 &  68.2 & $+121.8$ & $0.011^{**}$ \\
+Crisis Camisea         & 2026-03-12 & 100.4 &  78.2 & 225.4 &  $+6.6$ & $0.224$ \\
+Voto Confianza         & 2026-03-18 & 181.9 & 127.6 & 118.3 & $+56.0$ & $0.081^{*}$ \\
 \bottomrule
 \multicolumn{7}{l}{\footnotesize IRP\,$\pm$1d and IRP\,$\pm$3d are raw daily index levels (unbounded scale); they are \emph{not} percentages.} \\
-\multicolumn{7}{l}{\footnotesize Values below the non-event baseline (70.3) indicate quieter-than-average political coverage that week.} \\
-\multicolumn{7}{l}{\footnotesize Abn.\ IRP = $\pm$3d window mean minus 70.3. Non-event baseline: $N = 320$ days outside any $\pm$5d window.} \\
+\multicolumn{7}{l}{\footnotesize Values below the non-event baseline (71.6) indicate quieter-than-average political coverage that week.} \\
+\multicolumn{7}{l}{\footnotesize Abn.\ IRP = $\pm$3d window mean minus 71.6. Non-event baseline: $N = 309$ days outside any $\pm$5d window.} \\
 \multicolumn{7}{l}{\footnotesize $p$-value: one-sided Welch $t$-test, event $\pm$5d vs.\ non-event. $^{*}p<0.10$, $^{**}p<0.05$.} \\
 \multicolumn{7}{l}{\footnotesize ``$>0.999$'': event-window mean is \emph{below} baseline (test is in wrong tail). $^\dagger$Sentencing fell in an} \\
-\multicolumn{7}{l}{\footnotesize unusually low-coverage week; daily IRP\,$\pm$1d = 64.1 is below the non-event mean of 70.3.} \\
-\multicolumn{7}{l}{\footnotesize $^\ddagger$Post-filter floor rule applied: pol~$\geq$~90 (Vacancia) and pol~$\geq$~85 (Censura Jeri).}
+\multicolumn{7}{l}{\footnotesize unusually low-coverage week; daily IRP\,$\pm$1d = 64.0 is below the non-event mean of 71.6.} \\
+\multicolumn{7}{l}{\footnotesize $^\ddagger$Post-filter floor rule applied: pol~$\geq$~90 (Vacancia~I) and pol~$\geq$~85 (Censura Jeri).}
 \end{tabular}
 \end{table}
 
-Five of 12 events are significant at the 10\% level (one-sided), and two at
-5\%---Cerr\'on Desaparece and Vizcarra Prisi\'on Preventiva.  The three
-highest positive abnormal readings are Paro Transportistas ($+50.0$),
-Voto Confianza Miralles ($+49.2$), and Censura Jeri ($+45.2$)---all
-episodes that generated sustained, broad media coverage.
+Eight of 13 events are significant at the 10\% level (one-sided), and four at
+5\%---Cerr\'on Desaparece, Vizcarra Prisi\'on Preventiva, Fragmentaci\'on
+Izquierda, and Vacancia Boluarte~II.  The three highest positive abnormal
+readings are Vacancia Boluarte~II ($+121.8$), Voto Confianza Miralles
+($+56.0$), and Vizcarra Prisi\'on Preventiva ($+53.1$)---all episodes
+that generated sustained, broad media coverage.
 
-Four events show near-zero or negative abnormal IRP.  Impunidad Boluarte,
-Vacancia Boluarte, and Paro II occurred in periods when background IRP
+Five events show near-zero or negative abnormal IRP.  Impunidad Boluarte,
+Vacancia Boluarte~I, and Paro~II occurred in periods when background IRP
 was already elevated, so the $\pm$3-day window mean is not statistically
-different from the non-event baseline.  Castillo Condenado ($-25.5$)
+different from the non-event baseline.  Castillo Condenado ($-27.0$)
 occurred in a period of unusually low political coverage, driving the
 window average below the non-event mean---a finding that also appears in
-Table~\ref{tab:events}, where the November~2025 IRP of 112.8 is
+Table~\ref{tab:events}, where the November~2025 IRP of 112.1 is
 comparatively modest despite the significance of the event.
 
-The Camisea gas crisis ($p = 0.123$) is correctly identified as a primarily
-economic event: IRE rises sharply ($+172.5$ relative to non-event IRE of
-54.6) while IRP abnormal reading is modest ($+14.4$).  Voto Confianza
-($p = 0.117$) occurs on the last day of the sample, so the $\pm$5-day
-window is right-censored; with more post-event data the $t$-test would
-likely become significant.
+The Camisea gas crisis ($p = 0.224$) is correctly identified as a primarily
+economic event: IRE rises sharply ($+170.8$ relative to non-event IRE of
+54.6) while IRP abnormal reading is modest ($+6.6$).  Voto Confianza
+Miralles ($p = 0.081$) is significant at the 10\% level; the $\pm$5-day
+window is right-censored at the sample end, which likely depresses the
+$t$-statistic relative to what a full post-event window would yield.
 
 \paragraph{Pre-filter robustness check.}
 To address the circularity concern that hard-coded floor rules may mechanically
@@ -1050,7 +1056,7 @@ strongest external validation in this paper.
 
 We conducted a formal false positive audit by drawing a stratified random
 sample of 500 articles---100 per political score quintile---from the full
-corpus of 28,364 classified articles and re-scoring each article
+corpus of 28,284 classified articles and re-scoring each article
 independently using Claude Haiku with a scoring rubric that was identical
 in structure to the production classifier but implemented in a separate
 API call with no access to the original scores.\footnote{Quintile boundaries
@@ -1197,7 +1203,7 @@ IRE readings.
 \label{subsec:descriptive}
 
 Table~\ref{tab:summary} reports summary statistics for daily IRP and IRE
-over the full 443-day sample.
+over the full 442-day sample.
 
 \begin{table}[h!]
 \centering
@@ -1207,12 +1213,12 @@ over the full 443-day sample.
 \toprule
 Series & Mean & Median & Std & Min & Max & Skew & Kurt & $\rho_1$ & $\rho_7$ & $\rho_{30}$ \\
 \midrule
-IRP (raw)      & 72.3 & 65.4 & 42.1 &  7.8 & 302.6 & 1.63 & 4.72 & 0.456 & 0.240 & $-0.060$ \\
-IRP (smoothed) & 72.3 & 67.6 & 35.4 & 18.4 & 287.8 & 1.76 & 5.81 & 0.656 & 0.249 & $-0.021$ \\
-IRE (raw)      & 57.8 & 38.7 & 65.3 &  0.0 & 418.2 & 2.35 & 7.17 & 0.510 & 0.347 & $-0.015$ \\
-IRE (smoothed) & 57.8 & 41.4 & 56.6 &  0.0 & 355.3 & 2.41 & 7.40 & 0.730 & 0.415 & $-0.018$ \\
+IRP (raw)      & 72.6 & 65.0 & 43.0 &  8.5 & 324.9 & 1.82 & 6.18 & 0.479 & 0.237 & $-0.039$ \\
+IRP (smoothed) & 72.5 & 66.8 & 36.3 & 18.6 & 309.2 & 1.98 & 7.67 & 0.673 & 0.240 & $-0.014$ \\
+IRE (raw)      & 57.9 & 38.9 & 65.5 &  0.0 & 417.9 & 2.34 & 7.03 & 0.519 & 0.356 & $-0.025$ \\
+IRE (smoothed) & 57.8 & 41.7 & 56.9 &  0.0 & 358.9 & 2.40 & 7.30 & 0.736 & 0.417 & $-0.031$ \\
 \bottomrule
-\multicolumn{11}{l}{\footnotesize $\rho_k$ = sample autocorrelation at lag $k$ days. $N = 443$ days.}
+\multicolumn{11}{l}{\footnotesize $\rho_k$ = sample autocorrelation at lag $k$ days. $N = 442$ days.}
 \end{tabular}
 \end{table}
 
@@ -1224,9 +1230,9 @@ IRE (smoothed) & 57.8 & 41.4 & 56.6 &  0.0 & 355.3 & 2.41 & 7.40 & 0.730 & 0.415
 \end{figure}
 
 Both series are right-skewed with excess kurtosis, consistent with rare but
-large crisis episodes.  The IRP has positive skewness (1.63) and kurtosis
-(4.72), indicating a fat right tail.  The IRE is more extreme: skewness 2.35
-and kurtosis 7.17.  The IRE all-time maximum of 418.2 (on March~3,~2026,
+large crisis episodes.  The IRP has positive skewness (1.82) and kurtosis
+(6.18), indicating a fat right tail.  The IRE is more extreme: skewness 2.34
+and kurtosis 7.03.  The IRE all-time maximum of 417.9 (on March~3,~2026,
 during the Camisea gas crisis) represents a day with raw economic intensity
 more than four times the 90-day average, with $\text{breadth}_{\text{eco}} = 0.060$.  The
 large kurtosis reflects these tail events.
@@ -1239,7 +1245,7 @@ This pattern is consistent with crises that last days to weeks rather than
 months.  The smoothed series has higher $\rho_1$ by construction (EMA
 introduces mechanical persistence) and similar $\rho_7$.
 
-The IRP mean of 72.3 is below 100.  This reflects the rolling
+The IRP mean of 72.6 is below 100.  This reflects the rolling
 baseline normalization during the early sample months: the baseline window
 was short (expanding mean over fewer than 90 days), so as the sample grew
 and more high-risk days were added to the rolling history, the baseline
@@ -1270,7 +1276,7 @@ ongoing data collection work.
 \label{subsec:persistence}
 
 We define a high-risk episode as a period of consecutive days with
-IRP~$\geq$~150.  Over the 443-day sample, there are 21 days with
+IRP~$\geq$~150.  Over the 442-day sample, there are 23 days with
 IRP~$\geq$~150, spanning 14 distinct episodes with average duration 1.5
 days.  The longest episode was 4 consecutive days.  This is brief: political
 crises in Peru resolve quickly (through cabinet reshuffles, Congressional
@@ -1305,11 +1311,11 @@ mechanical effects from increased political news volume requires more data.
 \subsection{Political vs.\ Economic Correlation}
 \label{subsec:irp_ire_corr}
 
-The daily correlation between IRP and IRE is $r = 0.181$ ($p < 0.001$),
+The daily correlation between IRP and IRE is $r = 0.163$ ($p < 0.001$),
 indicating a positive but weak association.  This low correlation is itself
 a form of construct validation: if IRP and IRE were highly correlated, the
 two-index design would provide no additional information over a single
-composite index.  The 0.181 correlation confirms that political and economic
+composite index.  The 0.163 correlation confirms that political and economic
 risk dimensions are empirically separable in Peruvian media coverage.
 The monthly correlation is $r = 0.242$ ($p = 0.386$; 15 observations),
 which is not statistically significant given the short sample.
@@ -1327,7 +1333,7 @@ dominates.  The Vizcarra imprisonment (June~2025) is purely political
 IRP (112.8) but higher IRE (147.6)---because the sentencing reopened
 questions about the social programs Castillo had promised, creating economic
 uncertainty about redistribution.  The Camisea gas crisis has the most
-extreme divergence: IRE~=~418.2 versus IRP~=~138.9 on March~3.
+extreme divergence: IRE~=~417.9 versus IRP~=~76.2 on March~3.
 
 \begin{figure}[htbp]
   \centering
@@ -1415,7 +1421,7 @@ would allow researchers to test sensitivity to this concentration.
 The Google Trends validation in Section~\ref{subsec:trends} provides an independent check: if the IRP correctly identifies high-risk weeks, those weeks should also show elevated search interest in crisis-related terms.
 
 \paragraph{3. Short history.}
-443 days of data is insufficient for many econometric applications.  A
+442 days of data is insufficient for many econometric applications.  A
 reliable autocorrelation function requires several hundred lags; business
 cycle analysis requires multiple cycles; electoral analysis requires
 multiple electoral cycles.  Backward extension to 2000 (or earlier) using
@@ -1427,7 +1433,7 @@ The IRP and IRE measure \emph{media-reported} uncertainty, not
 \emph{objective} political or economic risk.  Media can amplify genuine
 uncertainty, underreport suppressed crises, or create uncertainty through
 framing.  We do not estimate the causal effect of IRP on any outcome.
-With only 443 days and 4 quarters of economic data, credible
+With only 442 days and 4 quarters of economic data, credible
 identification of IRP's macroeconomic effects is not possible.
 This paper is a measurement contribution, not a causal one.
 
@@ -1475,14 +1481,14 @@ risk) and IRE (economic risk)---for Peru, covering January~2025 through
 March~2026.  The indices combine AI-assigned severity scores with a
 breadth measure of media attention into a formula calibrated to Peru's
 concentrated media landscape.  They correctly identify all major political
-and economic events in the sample, including the transporters' strike
-(IRP~=~248), the Jeri censure (IRP~=~231), and the Camisea gas crisis
+and economic events in the sample, including the February~2026 vacancia
+attempt (IRP~=~325), the Jeri censure (IRP~=~250), and the Camisea gas crisis
 (IRE~=~418).  Monthly IRE correlates with exchange rate movements
 ($r = 0.390$), while daily correlations are near zero as expected for
-forward-looking financial markets.  A formal event study confirms that 5 of 12
+forward-looking financial markets.  A formal event study confirms that 8 of 13
 documented episodes produce statistically significant IRP elevations.
 
-The principal limitation is the short sample (443 days).  As the pipeline
+The principal limitation is the short sample (442 days).  As the pipeline
 continues running, the data will become more useful for time series
 analysis, event studies, and eventually causal identification.  The data
 are available from the author upon request and the statistics
@@ -1796,7 +1802,7 @@ $\beta_{\text{pol}}$ & $\beta_{\text{eco}}$ & Window & Avg.\ IRP & Avg.\ IRE \\
 \label{app:source_monthly}
 
 Table~\ref{tab:sources_monthly} provides monthly IRP and IRE averages for
-the full 443-day sample.
+the full 442-day sample.
 
 \begin{table}[h!]
 \centering
