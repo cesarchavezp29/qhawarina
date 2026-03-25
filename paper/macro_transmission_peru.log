@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.4) (preloaded format=pdflatex 2023.9.6)  20 MAR 2026 20:31
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.4) (preloaded format=pdflatex 2023.9.6)  20 MAR 2026 22:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -581,17 +581,17 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.161 
+l.165 
        [1] [2] [3] [4]
 <figures/fig1_bcrp_rate_path.pdf, id=310, 398.68903pt x 275.83003pt>
 File: figures/fig1_bcrp_rate_path.pdf Graphic file (type pdf)
 <use figures/fig1_bcrp_rate_path.pdf>
 Package pdftex.def Info: figures/fig1_bcrp_rate_path.pdf  used on input line 30
-1.
+5.
 (pdftex.def)             Requested size: 469.75502pt x 324.9968pt.
  [5] [6 <./figures/fig1_bcrp_rate_path.pdf>]
 LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 3
-35.
+39.
 
 (C:\Program Files\MiKTeX\tex/latex/base\t1cmtt.fd
 File: t1cmtt.fd 2022/07/10 v2.5l Standard LaTeX font definitions
@@ -601,226 +601,271 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
  [7]
-<figures/fig17_tone_validation.pdf, id=361, 542.92847pt x 326.27621pt>
+<figures/fig17_tone_validation.pdf, id=365, 542.92847pt x 326.27621pt>
 File: figures/fig17_tone_validation.pdf Graphic file (type pdf)
 <use figures/fig17_tone_validation.pdf>
 Package pdftex.def Info: figures/fig17_tone_validation.pdf  used on input line 
-368.
+376.
 (pdftex.def)             Requested size: 469.75502pt x 282.30966pt.
-<figures/fig6_bcrp_tone_series.pdf, id=364, 543.20776pt x 326.25667pt>
+<figures/fig6_bcrp_tone_series.pdf, id=368, 543.20776pt x 326.25667pt>
 File: figures/fig6_bcrp_tone_series.pdf Graphic file (type pdf)
 <use figures/fig6_bcrp_tone_series.pdf>
 Package pdftex.def Info: figures/fig6_bcrp_tone_series.pdf  used on input line 
-389.
+397.
 (pdftex.def)             Requested size: 469.75502pt x 282.14839pt.
  [8 <./figures/fig17_tone_validation.pdf>] [9 <./figures/fig6_bcrp_tone_series.
 pdf>] [10] [11]
-<figures/fig2_cholesky_irfs.pdf, id=445, 398.68903pt x 470.95786pt>
+<figures/fig2_cholesky_irfs.pdf, id=449, 398.68903pt x 470.95786pt>
 File: figures/fig2_cholesky_irfs.pdf Graphic file (type pdf)
 <use figures/fig2_cholesky_irfs.pdf>
-Package pdftex.def Info: figures/fig2_cholesky_irfs.pdf  used on input line 526
+Package pdftex.def Info: figures/fig2_cholesky_irfs.pdf  used on input line 534
 .
 (pdftex.def)             Requested size: 469.75502pt x 554.90622pt.
  [12]
-[13 <./figures/fig2_cholesky_irfs.pdf>]
-<figures/fig12_hist_decomp.pdf, id=484, 543.24477pt x 290.28279pt>
+[13 <./figures/fig2_cholesky_irfs.pdf>] [14]
+<figures/fig12_hist_decomp.pdf, id=492, 543.24477pt x 290.28279pt>
 File: figures/fig12_hist_decomp.pdf Graphic file (type pdf)
 <use figures/fig12_hist_decomp.pdf>
-Package pdftex.def Info: figures/fig12_hist_decomp.pdf  used on input line 576.
+Package pdftex.def Info: figures/fig12_hist_decomp.pdf  used on input line 601.
 
 (pdftex.def)             Requested size: 469.75502pt x 251.0247pt.
- [14]
-<figures/fig11_ordering_fan.pdf, id=496, 543.2569pt x 290.28044pt>
+ [15 <./figures/fig12_hist_decomp.pdf>]
+<figures/fig11_ordering_fan.pdf, id=511, 543.2569pt x 290.28044pt>
 File: figures/fig11_ordering_fan.pdf Graphic file (type pdf)
 <use figures/fig11_ordering_fan.pdf>
-Package pdftex.def Info: figures/fig11_ordering_fan.pdf  used on input line 600
+Package pdftex.def Info: figures/fig11_ordering_fan.pdf  used on input line 625
 .
 (pdftex.def)             Requested size: 469.75502pt x 251.00496pt.
- [15 <./figures/fig12_hist_decomp.pdf>]
 <figures/fig3_sign_restriction_set.pdf, id=514, 398.68903pt x 276.29842pt>
 File: figures/fig3_sign_restriction_set.pdf Graphic file (type pdf)
 <use figures/fig3_sign_restriction_set.pdf>
 Package pdftex.def Info: figures/fig3_sign_restriction_set.pdf  used on input l
-ine 621.
+ine 646.
 (pdftex.def)             Requested size: 469.75502pt x 325.54868pt.
  [16 <./figures/fig11_ordering_fan.pdf>] [17 <./figures/fig3_sign_restriction_s
 et.pdf>]
-<figures/fig4_narrative_sr_irfs.pdf, id=544, 398.68903pt x 276.29842pt>
+<figures/fig4_narrative_sr_irfs.pdf, id=546, 398.68903pt x 276.29842pt>
 File: figures/fig4_narrative_sr_irfs.pdf Graphic file (type pdf)
 <use figures/fig4_narrative_sr_irfs.pdf>
 Package pdftex.def Info: figures/fig4_narrative_sr_irfs.pdf  used on input line
- 664.
+ 689.
 (pdftex.def)             Requested size: 469.75502pt x 325.54868pt.
  [18 <./figures/fig4_narrative_sr_irfs.pdf>]
-<figures/fig5_lpiv_tone_wrong_sign.pdf, id=568, 398.68903pt x 275.83003pt>
+<figures/fig5_lpiv_tone_wrong_sign.pdf, id=570, 398.68903pt x 275.83003pt>
 File: figures/fig5_lpiv_tone_wrong_sign.pdf Graphic file (type pdf)
 <use figures/fig5_lpiv_tone_wrong_sign.pdf>
 Package pdftex.def Info: figures/fig5_lpiv_tone_wrong_sign.pdf  used on input l
-ine 712.
+ine 737.
 (pdftex.def)             Requested size: 469.75502pt x 324.9968pt.
  [19] [20 <./figures/fig5_lpiv_tone_wrong_sign.pdf>]
-<figures/fig7_gdp_poverty_scatter.pdf, id=603, 398.68903pt x 290.27667pt>
+<figures/fig7_gdp_poverty_scatter.pdf, id=605, 398.68903pt x 290.27667pt>
 File: figures/fig7_gdp_poverty_scatter.pdf Graphic file (type pdf)
 <use figures/fig7_gdp_poverty_scatter.pdf>
 Package pdftex.def Info: figures/fig7_gdp_poverty_scatter.pdf  used on input li
-ne 770.
+ne 795.
 (pdftex.def)             Requested size: 352.31625pt x 256.5117pt.
  [21]
-<figures/fig8_gdp_poverty_subperiod.pdf, id=615, 398.68903pt x 290.43776pt>
+<figures/fig8_gdp_poverty_subperiod.pdf, id=617, 398.68903pt x 290.43776pt>
 File: figures/fig8_gdp_poverty_subperiod.pdf Graphic file (type pdf)
 <use figures/fig8_gdp_poverty_subperiod.pdf>
 Package pdftex.def Info: figures/fig8_gdp_poverty_subperiod.pdf  used on input 
-line 787.
+line 812.
 (pdftex.def)             Requested size: 352.31625pt x 256.65405pt.
  [22 <./figures/fig7_gdp_poverty_scatter.pdf>]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 806.
+(hyperref)                removing `math shift' on input line 831.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\to' on input line 806.
+(hyperref)                removing `\to' on input line 831.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 806.
+(hyperref)                removing `math shift' on input line 831.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 806.
+(hyperref)                removing `math shift' on input line 831.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\to' on input line 806.
+(hyperref)                removing `\to' on input line 831.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 806.
+(hyperref)                removing `math shift' on input line 831.
 
 [23 <./figures/fig8_gdp_poverty_subperiod.pdf>]
-<figures/fig15_chain_comparison.pdf, id=694, 543.22902pt x 290.28403pt>
+<figures/fig15_chain_comparison.pdf, id=696, 543.22902pt x 290.28403pt>
 File: figures/fig15_chain_comparison.pdf Graphic file (type pdf)
 <use figures/fig15_chain_comparison.pdf>
 Package pdftex.def Info: figures/fig15_chain_comparison.pdf  used on input line
- 855.
+ 880.
 (pdftex.def)             Requested size: 399.29463pt x 213.37169pt.
  [24] [25 <./figures/fig15_chain_comparison.pdf>]
-<figures/fig9_forest_plot.pdf, id=729, 406.52937pt x 470.41663pt>
+<figures/fig9_forest_plot.pdf, id=731, 406.52937pt x 470.41663pt>
 File: figures/fig9_forest_plot.pdf Graphic file (type pdf)
 <use figures/fig9_forest_plot.pdf>
-Package pdftex.def Info: figures/fig9_forest_plot.pdf  used on input line 896.
+Package pdftex.def Info: figures/fig9_forest_plot.pdf  used on input line 921.
 (pdftex.def)             Requested size: 469.75502pt x 543.60922pt.
- [26] [27 <./figures/fig9_forest_plot.pdf>]
-<figures/fig18_fx_channel.pdf, id=763, 398.68903pt x 291.08311pt>
+
+! Argument of \caption@ydblarg has an extra }.
+<inserted text> 
+                \par 
+l.927 ...hoice, not the bounds of the posterior.}}
+                                                  
+I've run across a `}' that doesn't seem to match anything.
+For example, `\def\a#1{...}' and `\a}' would produce
+this error. If you simply proceed now, the `\par' that
+I've just inserted will cause me to report a runaway
+argument that might be the root of the problem. But if
+your `}' was spurious, just type `2' and it will go away.
+
+Runaway argument?
+{\@caption \@captype }{\@xfootnote }\def \reserved@b {\stepcounter \@mpfn \ETC.
+! Paragraph ended before \caption@ydblarg was complete.
+<to be read again> 
+                   \par 
+l.927 ...hoice, not the bounds of the posterior.}}
+                                                  
+I suspect you've forgotten a `}', causing me to apply this
+control sequence to too much text. How can we recover?
+My plan is to forget the whole thing and hope for the best.
+
+[26] [27 <./figures/fig9_forest_plot.pdf>]
+<figures/fig18_fx_channel.pdf, id=767, 398.68903pt x 291.08311pt>
 File: figures/fig18_fx_channel.pdf Graphic file (type pdf)
 <use figures/fig18_fx_channel.pdf>
-Package pdftex.def Info: figures/fig18_fx_channel.pdf  used on input line 929.
+Package pdftex.def Info: figures/fig18_fx_channel.pdf  used on input line 953.
 (pdftex.def)             Requested size: 352.31625pt x 257.22433pt.
  [28 <./figures/fig18_fx_channel.pdf>]
-<figures/fig13_fevd.pdf, id=790, 398.71687pt x 290.28403pt>
+<figures/fig13_fevd.pdf, id=794, 398.71687pt x 290.28403pt>
 File: figures/fig13_fevd.pdf Graphic file (type pdf)
 <use figures/fig13_fevd.pdf>
-Package pdftex.def Info: figures/fig13_fevd.pdf  used on input line 950.
+Package pdftex.def Info: figures/fig13_fevd.pdf  used on input line 974.
 (pdftex.def)             Requested size: 352.31625pt x 256.5182pt.
-<figures/fig19_granger_network.pdf, id=792, 398.68903pt x 362.55402pt>
+<figures/fig19_granger_network.pdf, id=796, 398.68903pt x 362.55402pt>
 File: figures/fig19_granger_network.pdf Graphic file (type pdf)
 <use figures/fig19_granger_network.pdf>
 Package pdftex.def Info: figures/fig19_granger_network.pdf  used on input line 
-970.
+994.
 (pdftex.def)             Requested size: 352.31625pt x 320.38176pt.
- [29 <./figures/fig13_fevd.pdf>] [30 <./figures/fig19_granger_network.pdf>] [31
-] [32]
-Underfull \hbox (badness 10000) in paragraph at lines 1111--1111
+ [29 <./figures/fig13_fevd.pdf>] [30 <./figures/fig19_granger_network.pdf>]
+[31] [32]
+
+LaTeX Warning: Reference `sec:proxy' on page 33 undefined on input line 1112.
+
+[33]
+Underfull \hbox (badness 10000) in paragraph at lines 1155--1155
 [][][][]$\T1/cmtt/m/n/10 https : / / github . com / cesarchavezp29 / qhawarina 
 / blob / master / paper / output / bcrp _ tone _
  []
 
-[33] [34] (macro_transmission_peru.bbl [35] [36])
-(tables/tab1_summary_stats.tex) (tables/tab3_poverty_data.tex) [37]
-(tables/tab8_tone_classification.tex) [38] (tables/tab2_tone_summary.tex)
-[39]
-Overfull \vbox (428.8671pt too high) has occurred while \output is active []
-
-
-[40] (tables/tab4_var_coefs.tex) (tables/tab5_narrative_sr.tex) [41]
-(tables/tab6_lp_results.tex) (tables/tab7_proxy_svar_ib.tex) [42]
-(tables/tab9_tone_instrument.tex) [43] (tables/tab10_poverty_ols.tex)
-Underfull \hbox (badness 10000) in paragraph at lines 15--1220
+[34] (macro_transmission_peru.bbl [35] [36]) (tables/tab1_summary_stats.tex)
+[37] (tables/tab3_poverty_data.tex) [38] (tables/tab8_tone_classification.tex)
+[39] (tables/tab2_tone_summary.tex) [40] (tables/tab4_var_coefs.tex) [41]
+(tables/tab5_narrative_sr.tex) [42] (tables/tab6_lp_results.tex)
+(tables/tab7_proxy_svar_ib.tex) [43] (tables/tab9_tone_instrument.tex) [44]
+(tables/tab10_poverty_ols.tex)
+Underfull \hbox (badness 10000) in paragraph at lines 15--1272
 
  []
 
-[44]
-<figures/fig16_small_sample.pdf, id=949, 543.05988pt x 327.09311pt>
+[45]
+<figures/fig16_small_sample.pdf, id=965, 543.05988pt x 327.09311pt>
 File: figures/fig16_small_sample.pdf Graphic file (type pdf)
 <use figures/fig16_small_sample.pdf>
-Package pdftex.def Info: figures/fig16_small_sample.pdf  used on input line 123
-9.
+Package pdftex.def Info: figures/fig16_small_sample.pdf  used on input line 129
+1.
 (pdftex.def)             Requested size: 399.29463pt x 240.51285pt.
- [45] (tables/tab11_subperiod_stability.tex)
-(tables/tab12_master_comparison.tex) [46 <./figures/fig16_small_sample.pdf>]
+ [46] (tables/tab11_subperiod_stability.tex)
+(tables/tab12_master_comparison.tex) [47 <./figures/fig16_small_sample.pdf>]
 (tables/tab13_eme_taxonomy.tex
+Underfull \hbox (badness 10000) in paragraph at lines 25--25
+[]|[]\T1/cmr/m/n/12 (+20) International Mon-e-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 25--25
+[]|[]\T1/cmr/m/n/12 (+20) International Mon-e-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 25--25
+[]|[]\T1/cmr/m/n/12 (+20) International Mon-e-
+ []
+
+
 Underfull \hbox (badness 2042) in paragraph at lines 25--25
 []|[]\T1/cmr/m/n/12 (+20) Caldara and Herbst[]
  []
 
-) [47] [48] [49] (tables/tab_lag_selection.tex) [50] [51] [52]
-<figures/fig10_poverty_influence.pdf, id=1058, 398.68903pt x 326.41902pt>
+) [48] [49] [50] (tables/tab_lag_selection.tex) [51] [52] [53]
+<figures/fig10_poverty_influence.pdf, id=1092, 398.68903pt x 326.41902pt>
 File: figures/fig10_poverty_influence.pdf Graphic file (type pdf)
 <use figures/fig10_poverty_influence.pdf>
 Package pdftex.def Info: figures/fig10_poverty_influence.pdf  used on input lin
-e 1441.
+e 1493.
 (pdftex.def)             Requested size: 352.31625pt x 288.44997pt.
- [53 <./figures/fig10_poverty_influence.pdf>] [54] [55] [56] [57]
-<figures/fig14_rolling_irf.pdf, id=1126, 396.91727pt x 290.7091pt>
+ [54] [55 <./figures/fig10_poverty_influence.pdf>] [56] [57] [58] [59]
+<figures/fig14_rolling_irf.pdf, id=1166, 396.91727pt x 290.7091pt>
 File: figures/fig14_rolling_irf.pdf Graphic file (type pdf)
 <use figures/fig14_rolling_irf.pdf>
-Package pdftex.def Info: figures/fig14_rolling_irf.pdf  used on input line 1654
+Package pdftex.def Info: figures/fig14_rolling_irf.pdf  used on input line 1706
 .
 (pdftex.def)             Requested size: 469.75502pt x 344.06288pt.
- [58] [59 <./figures/fig14_rolling_irf.pdf>] (macro_transmission_peru.aux)
+ [60] [61 <./figures/fig14_rolling_irf.pdf>] (macro_transmission_peru.aux)
+
+LaTeX Warning: There were undefined references.
+
 Package rerunfilecheck Info: File `macro_transmission_peru.out' has not changed
 .
 (rerunfilecheck)             Checksum: 581DFE8F3B9E84AC41D2783763E05355;9452.
  ) 
 Here is how much of TeX's memory you used:
- 16261 strings out of 476331
- 262642 string characters out of 5797584
- 1871660 words of memory out of 5000000
- 35798 multiletter control sequences out of 15000+600000
- 549014 words of font info for 281 fonts, out of 8000000 for 9000
+ 16309 strings out of 476331
+ 263375 string characters out of 5797584
+ 1872660 words of memory out of 5000000
+ 35814 multiletter control sequences out of 15000+600000
+ 549764 words of font info for 292 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,20n,76p,1022b,605s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Progra
-m Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKT
-eX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiKTeX/fonts/typ
-e1/public/amsfonts/cm/cmmi7.pfb><C:/Program Files/MiKTeX/fonts/type1/public/ams
-fonts/cm/cmmi8.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr1
-0.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Pro
-gram Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program Files/MiK
-TeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files/MiKTeX/fonts/type
-1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/ams
-fonts/cm/cmsy7.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy
-8.pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sfbx109
-5.pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sfbx120
-0.pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sfbx144
-0.pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sfbx172
-8.pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sfbx207
-4.pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sfrm070
-0.pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sfrm080
-0.pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sfrm100
-0.pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sfrm109
-5.pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sfrm120
-0.pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sfrm144
-0.pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sfti100
-0.pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sfti109
-5.pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sfti120
-0.pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sftt100
-0.pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sftt109
-5.pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sftt120
-0.pfb><C:/Program Files/MiKTeX/fonts/type1/urw/zapfding/uzdr.pfb>
-Output written on macro_transmission_peru.pdf (60 pages, 1768893 bytes).
+ 75i,20n,76p,1022b,603s stack positions out of 10000i,1000n,20000p,200000b,200000s
+
+pdfTeX warning (dest): name{Hfootnote.4} has been referenced but does not exist
+, replaced by a fixed one
+
+<C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program 
+Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX
+/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiKTeX/fonts/type1
+/public/amsfonts/cm/cmmi7.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfo
+nts/cm/cmmi8.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.
+pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Progr
+am Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program Files/MiKTe
+X/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files/MiKTeX/fonts/type1/
+public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfo
+nts/cm/cmsy7.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.
+pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sfbx1095.
+pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sfbx1200.
+pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sfbx1440.
+pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sfbx1728.
+pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sfbx2074.
+pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sfrm0700.
+pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sfrm0800.
+pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sfrm1000.
+pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sfrm1095.
+pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sfrm1200.
+pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sfrm1440.
+pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sfti1000.
+pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sfti1095.
+pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sfti1200.
+pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sftt1000.
+pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sftt1095.
+pfb><C:/Users/User/AppData/Roaming/MiKTeX/fonts/type1/public/cm-super/sftt1200.
+pfb><C:/Program Files/MiKTeX/fonts/type1/urw/zapfding/uzdr.pfb>
+Output written on macro_transmission_peru.pdf (62 pages, 1787836 bytes).
 PDF statistics:
- 1322 PDF objects out of 1440 (max. 8388607)
- 230 named destinations out of 1000 (max. 500000)
+ 1362 PDF objects out of 1440 (max. 8388607)
+ 240 named destinations out of 1000 (max. 500000)
  53216 words of extra memory for PDF output out of 61914 (max. 10000000)
 

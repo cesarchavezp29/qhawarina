@@ -701,7 +701,7 @@ Peru.
 
 Table~\ref{tab:lp} reports LP estimates at horizons $h=0,\ldots,8$.
 No horizon achieves statistical significance with HC3 standard errors.
-Positive coefficients at $h=0$ and $h=1$ reflect the classic endogeneity
+Positive coefficients at $h=0$, $h=1$, and $h=2$ reflect the classic endogeneity
 problem: the BCRP raises rates when GDP is strong. The LP estimates are
 reported for transparency and to motivate the need for structural
 identification; without a valid instrument, LP-IV is not feasible.
@@ -844,7 +844,7 @@ chain use the same frequency concept.
 \paragraph{Method~B (preferred): frequency-consistent chain.}
 Re-estimating equation~\eqref{eq:poverty} with GDP growth defined as the
 calendar-year average of quarterly QoQ growth---matching the frequency of
-the Cholesky IRF outcome---yields $\hat\beta_B = -2.554$ (SE\,$=0.382$,
+the Cholesky IRF outcome---yields $\hat\beta_B = -2.554$ (SE\,$=0.415$,
 $p<0.001$, $N=18$). The frequency-consistent chain is:
 \begin{equation}
   \label{eq:chain}
@@ -1109,7 +1109,7 @@ orthogonal to the rate decision itself.
 That condition is not guaranteed by simultaneity alone; it would need to be
 verified via a first-stage regression of the VAR rate residual on
 \textit{comunicado}-based tone, followed by an LP-IV sign check analogous
-to what was done for the \textit{Notas} in Section~\ref{sec:proxy}. The deeper fix is structural: OIS or
+to what was done for the \textit{Notas} in Section~\ref{sec:proxy_tone}. The deeper fix is structural: OIS or
 rate-futures markets for PEN would enable high-frequency surprise
 extraction and unlock the full modern identification toolkit for Peru
 and similarly administered EME rates.
@@ -1135,9 +1135,11 @@ response (Section~\ref{sec:chain}) implies the 2021--2023 hiking
 cycle may have raised the monetary poverty rate by roughly 2--4\,pp.
 This range spans the Method~A lower bound
 ($+0.291\times7.5\approx+2.2$\,pp) and the Method~B central estimate
-($+0.498\times7.5\approx+3.7$\,pp); the naive frequency-mixing floor
-($+0.128\times7.5\approx+1.0$\,pp) forms the lower bound of the
-interval. All three are reduced-form chains, not structural estimates.
+($+0.498\times7.5\approx+3.7$\,pp). A naive frequency-mixing floor
+($+0.128\times7.5\approx+1.0$\,pp) provides an absolute lower bound
+below this range but is not recommended as a primary estimate due to
+the frequency mismatch between the QoQ IRF and the annual poverty slope.
+All estimates are reduced-form chains, not structural effects.
 
 Across all Cholesky robustness variants---alternative variable orderings,
 lag orders, and COVID window treatments---the peak GDP response lies in
@@ -1242,8 +1244,7 @@ endogeneity bias diagnosed in the main text.
   \input{tables/tab6_lp_results}
 \end{mytable}
 
-Table~\ref{tab:lp} shows that the LP estimates are positive at all horizons
-with declining $R^2$, consistent with a misspecified endogenous regressor.
+Table~\ref{tab:lp} shows that the LP estimates are positive at $h=0$, $1$, and $2$, then turn negative at $h=3$ through $h=8$, with declining $R^2$, consistent with a misspecified endogenous regressor at short horizons.
 Table~\ref{tab:proxy_ib} then reports the interbank rate instrument
 diagnostics that rule out the first Proxy-SVAR strategy on the grounds of
 weak first-stage relevance.
@@ -1338,11 +1339,11 @@ about inflation, tightening, and vigilance. Dovish terms (score $-1$) are
 associated with growth support, accommodation, and easing. The note-level
 score is the normalized net count.
 
-The LLM classifier used Claude Haiku (\texttt{claude-haiku-4-5}) with
+The LLM classifier used Claude Haiku (\texttt{claude-haiku-4-5-20251001}) with
 the prompt: \textit{``Score the following BCRP monetary policy statement
 from $-100$ (strongly dovish) to $+100$ (strongly hawkish). Explain your
 reasoning in one sentence, then give the score.''} Scores were extracted
-via regex. Correlation between dictionary and LLM methods is $0.373$.
+via regex. Correlation between dictionary and LLM methods is $0.380$.
 Table~\ref{tab:tone} presents the year-by-year summary.
 
 \section{Sensitivity Analysis}
@@ -1505,12 +1506,12 @@ $[-0.59,\,-0.76]$ confirms no single observation drives the result.
 The main text (Section~\ref{sec:chain}) reports two chain methods. Here
 we document the underlying calculations.
 
-\paragraph{Method~A (cross-frequency, lower bound).}
+\paragraph{Naive floor (frequency-mixing baseline).}
 The quarterly VAR Cholesky peak-response at $h=3$ is $-0.195$\,pp
-(QoQ GDP). Multiplying by the annual YoY poverty slope
-$\hat\beta=-0.656$ gives $+0.128$\,pp. This mixes frequencies: the IRF
-is QoQ while $\hat\beta$ is estimated on YoY data. We report it as a
-conservative lower bound.
+(QoQ GDP). Multiplying directly by the annual YoY poverty slope
+$\hat\beta=-0.656$ gives $+0.128$\,pp. This mixes frequencies (QoQ IRF
+with YoY slope) and is reported only as a conservative floor, not the
+preferred Method~A estimate.
 
 \paragraph{Method~B (frequency-consistent, preferred).}
 We re-estimate equation~\eqref{eq:poverty} replacing annual YoY GDP
@@ -1520,10 +1521,10 @@ by the Cholesky IRF. The re-estimated slope is $\hat\beta_B=-2.554$
 (SE$\,=0.382$, $p<0.001$, $N=18$). The chain is
 $(-0.195)\times(-2.554)=+0.498$\,pp. Uncertainty is propagated by
 drawing 2,000 bootstrap VAR(1) peak responses and pairing each with a
-draw from $\mathcal{N}(-2.554,\,0.382^2)$; the 2.5th--97.5th percentile
+draw from $\mathcal{N}(-2.554,\,0.415^2)$; the 5th--95th percentile
 of the chained distribution is $[+0.379,\,+0.608]$\,pp.
 
-\paragraph{Method~A (cross-frequency lower bound).}
+\paragraph{Method~A (cross-frequency lower bound, preferred).}
 Applying the cumulative QoQ IRF over the first year ($h=0,\ldots,3$),
 which sums to $-0.444$\,pp, as a proxy for the annual GDP impact and
 multiplying by the annual YoY poverty slope $\hat\beta=-0.656$ gives:

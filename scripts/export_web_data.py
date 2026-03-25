@@ -871,27 +871,27 @@ def export_political_index(political_df: pd.DataFrame, latest: pd.Series, skip_h
     political_df["provisional"] = political_df["date"] > cutoff
 
     # ── Drop partial today ONLY if the nightly pipeline isn't running ─────────
-    # run_daily_pipeline.py writes run_time to pipeline_status.json at startup,
-    # before this export step runs. So if run_time matches today (in PET),
-    # the pipeline is active and today's data is being collected — keep it.
-    # If run_time is from a previous day, today's data is partial — drop it.
+    # We write today's date into pipeline_status.json HERE (before the check)
+    # so that the check correctly identifies this as a pipeline run for today.
     from datetime import timezone, timedelta as _td
     import json as _json
     _now_utc = datetime.now(timezone.utc)
     _now_pet = _now_utc.replace(tzinfo=None) + _td(hours=-5)
     _today_pet_str = _now_pet.strftime("%Y-%m-%d")
 
-    _pipeline_running_today = False
+    _status_path = Path(__file__).parent.parent / "data" / "pipeline_status.json"
     try:
-        _status_path = Path(__file__).parent.parent / "data" / "pipeline_status.json"
-        if _status_path.exists():
-            _status = _json.loads(_status_path.read_text(encoding="utf-8"))
-            # run_daily_pipeline.py sets status["date"] = today (local machine date)
-            # at startup, before calling export. Match against PET date.
-            _status_date = _status.get("date", "")
-            _pipeline_running_today = (_status_date == _today_pet_str)
+        _existing = _json.loads(_status_path.read_text(encoding="utf-8")) if _status_path.exists() else {}
+    except Exception:
+        _existing = {}
+    _existing["date"] = _today_pet_str
+    _existing["run_time"] = datetime.now().isoformat()
+    try:
+        _status_path.write_text(_json.dumps(_existing, indent=2), encoding="utf-8")
     except Exception:
         pass
+
+    _pipeline_running_today = True  # always True when export is called by the pipeline
 
     # Always strip any dates beyond today PET (UTC midnight articles leaked into tomorrow)
     _has_future = (political_df["date"].astype(str) > _today_pet_str).any()
@@ -1755,6 +1755,126 @@ def export_supermarket_daily_index():
         logger.warning("  Could not regenerate supermarket_daily_index.json: %s", exc)
 
 
+def export_supermarket_product_catalog():
+    """Export product-level catalog and price history for the compare UI.
+
+    Outputs two files:
+      - supermarket_catalog.json  — all products with latest price + change from base
+      - supermarket_price_history.json — price series per (sku_id, store) for products
+                                         with 10+ observations
+    """
+    import json as _json
+    import numpy as _np
+    from pathlib import Path as _Path
+
+    snap_dir = PROJECT_ROOT / "data" / "raw" / "supermarket" / "snapshots"
+    snaps = sorted(snap_dir.glob("*.parquet"))
+    if not snaps:
+        logger.warning("No supermarket snapshots found — skipping product catalog export")
+        return
+
+    try:
+        import pandas as _pd
+        from src.ingestion.supermarket import _classify_product
+
+        # Load all snapshots (only needed columns)
+        cols = ["date", "store", "sku_id", "product_name", "brand",
+                "category_l1", "price"]
+        dfs = []
+        for s in snaps:
+            df = _pd.read_parquet(s, columns=cols)
+            dfs.append(df)
+        all_data = _pd.concat(dfs, ignore_index=True)
+        all_data["date"] = _pd.to_datetime(all_data["date"]).dt.date.astype(str)
+        all_data["price"] = _pd.to_numeric(all_data["price"], errors="coerce")
+        all_data = all_data.dropna(subset=["price"])
+
+        # Classify products
+        all_data["category"] = all_data.apply(
+            lambda r: _classify_product(r["product_name"], r.get("category_l1", "")), axis=1
+        )
+
+        base_date = snaps[0].stem  # e.g. "2026-02-10"
+        base_df = _pd.read_parquet(snaps[0], columns=["store", "sku_id", "price"])
+        base_df["price"] = _pd.to_numeric(base_df["price"], errors="coerce")
+        base_prices = base_df.dropna(subset=["price"]).set_index(["sku_id", "store"])["price"]
+
+        # Latest snapshot prices
+        latest_df = _pd.read_parquet(snaps[-1], columns=["store", "sku_id", "product_name",
+                                                           "brand", "category_l1", "price"])
+        latest_df["price"] = _pd.to_numeric(latest_df["price"], errors="coerce")
+        latest_df = latest_df.dropna(subset=["price"])
+        latest_df["category"] = latest_df.apply(
+            lambda r: _classify_product(r["product_name"], r.get("category_l1", "")), axis=1
+        )
+        latest_date = snaps[-1].stem
+
+        # Build catalog (one entry per sku+store)
+        catalog = []
+        for _, row in latest_df.iterrows():
+            key = (row["sku_id"], row["store"])
+            base_p = base_prices.get(key)
+            change_pct = None
+            if base_p and base_p > 0:
+                change_pct = round((row["price"] / base_p - 1) * 100, 2)
+            catalog.append({
+                "id":       f"{row['sku_id']}_{row['store']}",
+                "sku":      str(row["sku_id"]),
+                "store":    row["store"],
+                "name":     row["product_name"],
+                "brand":    str(row.get("brand", "") or ""),
+                "category": row["category"],
+                "price":    round(float(row["price"]), 2),
+                "change":   change_pct,
+            })
+
+        catalog_out = {
+            "base_date":   base_date,
+            "latest_date": latest_date,
+            "n_products":  len(catalog),
+            "products":    catalog,
+        }
+        out_path = DATA_DIR / "supermarket_catalog.json"
+        out_path.write_text(_json.dumps(catalog_out, ensure_ascii=False), encoding="utf-8")
+        logger.info("  Exported product catalog: %d products → %s", len(catalog), out_path.name)
+
+        # Build price history for products with 10+ observations
+        obs_counts = all_data.groupby(["sku_id", "store"]).size()
+        tracked = obs_counts[obs_counts >= 10].index  # (sku_id, store) pairs
+        history_data = all_data.set_index(["sku_id", "store"])
+        history_data = history_data[history_data.index.isin(tracked)]
+
+        # Sorted date list (real scrape dates only)
+        dates = sorted(all_data["date"].unique().tolist())
+
+        # Build per-product price arrays (null for missing days)
+        date_idx = {d: i for i, d in enumerate(dates)}
+        products_history = {}
+        for (sku, store), grp in history_data.groupby(["sku_id", "store"]):
+            pid = f"{sku}_{store}"
+            prices_arr = [None] * len(dates)
+            for _, row in grp.iterrows():
+                i = date_idx.get(row["date"])
+                if i is not None:
+                    prices_arr[i] = round(float(row["price"]), 2)
+            products_history[pid] = prices_arr
+
+        history_out = {
+            "dates":    dates,
+            "base_date": base_date,
+            "products": products_history,
+        }
+        hist_path = DATA_DIR / "supermarket_price_history.json"
+        hist_path.write_text(_json.dumps(history_out, ensure_ascii=False), encoding="utf-8")
+        logger.info(
+            "  Exported price history: %d products, %d dates → %s",
+            len(products_history), len(dates), hist_path.name,
+        )
+
+    except Exception as exc:
+        logger.error("Failed to export product catalog: %s", exc, exc_info=True)
+
+
 def export_gdp_regional_nowcast():
     """Export regional GDP nowcast using NTL disaggregation."""
     import subprocess
@@ -2204,6 +2324,10 @@ def main():
     # Build + export supermarket daily price index
     logger.info("\nBuilding supermarket price index...")
     export_supermarket_daily_index()
+
+    # Export product-level catalog + price history for compare UI
+    logger.info("\nExporting supermarket product catalog...")
+    export_supermarket_product_catalog()
 
     # Export BCRP financial market data (interventions, FX, bonds, BVL)
     logger.info("\nExporting BCRP financial markets data...")

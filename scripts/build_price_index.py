@@ -81,7 +81,14 @@ def map_category(row: pd.Series) -> str:
         return "carnes"
     if any(w in combined for w in ["pescado", "mariscos", "atun", "salmon", "sardina", "anchoveta", "camaron"]):
         return "pescados_mariscos"
-    if any(w in combined for w in ["leche", "yogurt", "queso", "mantequilla", "crema", "lacteo", "huevo"]):
+    # Exclude non-egg products that contain "huevo" in the name:
+    # Easter chocolates (pascua), chocolate eggs (kinder, sorpresa), gummy candy (fini, gomita), pasta al huevo
+    _huevo_exclusions = ["pascua", "kinder", "sorpresa", "fini", "gomita", "fettuccine", "pappardelle"]
+    _is_egg = "huevo" in combined and not any(w in combined for w in _huevo_exclusions)
+    # Also exclude "al huevo" pasta: fideos/pasta + huevo combination
+    if _is_egg and "huevo" in combined and any(w in combined for w in ["fideos", "pasta", "tallarines", "spaghetti"]):
+        _is_egg = False
+    if any(w in combined for w in ["leche", "yogurt", "queso", "mantequilla", "crema", "lacteo"]) or _is_egg:
         return "lacteos"
     if any(w in combined for w in ["fruta", "manzana", "platano", "naranja", "uva", "pera", "durazno", "fresa", "mango"]):
         return "frutas"
@@ -478,22 +485,19 @@ def main():
     # ── Fill missing days with linear interpolation ───────────────────────────
     # Note: Supermarkets operate 7 days/week, so use date_range (not bdate_range)
     df["date"] = pd.to_datetime(df["date"])
+    scraped_dates = set(df["date"].dt.normalize())  # capture BEFORE reindex
     all_days = pd.date_range(df["date"].min(), df["date"].max(), freq='D')
     df_full = df.set_index("date").reindex(all_days)
     n_missing = df_full["index_all"].isna().sum()
     if n_missing > 0:
         index_cols = [c for c in df_full.columns if c.startswith("index_") or c in ("n_matched", "jevons_ratio_all")]
         df_full[index_cols] = df_full[index_cols].interpolate(method="linear")
-        df_full["interpolated"] = False
-        base_date = df_full.index[0]
-        df_full.loc[
-            (df_full.index != base_date) & (df_full["n_matched"].isna() | (df_full["n_matched"] == 0)),
-            "interpolated"
-        ] = True
+        # Flag using scraped_dates set captured before interpolation fills n_matched
+        df_full["interpolated"] = ~pd.Series(df_full.index).isin(scraped_dates).values
         df_full = df_full.reset_index().rename(columns={"index": "date"})
         df_full = compute_variations(df_full)
-        print(f"[OK] Interpolated {n_missing} missing day(s): "
-              f"{[d.strftime('%Y-%m-%d') for d in all_days if d not in df['date'].values]}")
+        missing_days = [d.strftime('%Y-%m-%d') for d in all_days if d not in scraped_dates]
+        print(f"[OK] Interpolated {n_missing} missing day(s): {missing_days}")
     else:
         df_full["interpolated"] = False
         df_full = df_full.reset_index().rename(columns={"index": "date"})

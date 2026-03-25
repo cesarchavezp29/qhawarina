@@ -722,9 +722,18 @@ def _classify_product(product_name: str, category_l1: str) -> str:
         Category key from CATEGORY_KEYWORDS, or 'other'.
     """
     name_lower = product_name.lower()
+
+    # Egg exclusions: "huevo" appears in non-egg products that distort the index.
+    # Exclude: chocolate Easter eggs (pascua/kinder/sorpresa), gummy candy (fini/gomita),
+    # and pasta "al huevo" (fideos/fettuccine/pappardelle/tallarines/pasta).
+    _EGG_EXCLUSIONS = ("pascua", "kinder", "sorpresa", "fini", "gomita", "fettuccine",
+                       "pappardelle", "fideos", "tallarines", "spaghetti")
+
     for cat, keywords in CATEGORY_KEYWORDS.items():
         for kw in keywords:
             if kw in name_lower:
+                if cat == "huevos" and any(ex in name_lower for ex in _EGG_EXCLUSIONS):
+                    continue  # skip: non-egg product containing "huevo"
                 return cat
     # Fallback: map L1 store category to CPI category
     # Normalize L1 name (strip encoding artifacts)

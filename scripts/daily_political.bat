@@ -63,10 +63,9 @@ if %errorlevel% neq 0 (
 )
 echo [%TIME%] Step 3 DONE >> %LOGFILE%
 
-:: Step 4: Copy JSON to Qhawarina website
-echo [%TIME%] Step 4: Copying to website... >> %LOGFILE%
-copy /Y %PROJECT%\exports\data\political_index_daily.json %WEBSITE%\political_index_daily.json >> %LOGFILE% 2>&1
-echo [%TIME%] Step 4 DONE >> %LOGFILE%
+:: Step 4: REMOVED — main pipeline (run_daily_pipeline.py) handles sync via sync_web_data.py
+:: Direct copy here overwrote AI-GPR values with raw RSS values. Do not re-add.
+echo [%TIME%] Step 4: Skipped (sync handled by main pipeline) >> %LOGFILE%
 
 echo [%DATE% %TIME%] PIPELINE COMPLETE >> %LOGFILE%
 echo ============================================================ >> %LOGFILE%

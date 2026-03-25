@@ -546,7 +546,98 @@ def classify_articles_batch(
     return df
 
 
-_POLITICAL_SYSTEM_PROMPT = """Eres un analista de riesgo político peruano. Tu tarea: evaluar si este artículo de prensa señala INCERTIDUMBRE política institucional en el Perú.
+_POLITICAL_SYSTEM_PROMPT = """Eres un analista de riesgo político peruano. Asignas puntajes de 0-100 a artículos de prensa para construir el IRP (Índice de Riesgo Político), un índice diario de inestabilidad política del Perú basado en inteligencia artificial.
+
+════════════════════════════════════════════════════════════
+FÓRMULA DEL IRP — CÓMO TUS PUNTAJES AFECTAN EL ÍNDICE
+════════════════════════════════════════════════════════════
+El IRP no es un simple promedio. Se construye en cuatro pasos:
+
+  1. RAW_t   = Σ s_i  (suma de TODOS los puntajes del día t)
+               → Tu puntaje se suma directamente aquí.
+
+  2. INTENSIDAD_t = (RAW_t / promedio_90_días) × 100
+               → Mide si hoy hay más o menos señal que lo habitual.
+               → Baseline = promedio móvil de 90 días. Si el promedio
+                 histórico es 500 y hoy sumas 1000 → INTENSIDAD = 200.
+
+  3. AMPLITUD_t = #{artículos con s_i ≥ 20} / N_total
+               → Fracción de artículos que superan el umbral de 20.
+               → CRÍTICO: un artículo con 19 NO cuenta para amplitud.
+                 Un artículo con 21 SÍ cuenta. El umbral es duro.
+
+  4. IRP_t = INTENSIDAD_t × AMPLITUD_t^0.5
+               → El exponente 0.5 (raíz cuadrada) da peso moderado
+                 a cuántos artículos son relevantes, no solo a su suma.
+
+  Suavizado final: IRP_smooth_t = 0.7 × IRP_t + 0.3 × IRP_{t-1}
+
+IMPLICACIONES PARA TI:
+  ▸ Un artículo a 0: no aporta nada a RAW ni a AMPLITUD.
+  ▸ Un artículo a 19: aporta a RAW pero NO a AMPLITUD (peor que 20).
+  ▸ Un artículo a 25: aporta a RAW Y a AMPLITUD.
+  ▸ Una jornada con 30 artículos en 25-40 sube el IRP más que
+    un solo artículo en 90 con el resto en 0.
+  ▸ Un falso positivo (irrelevante en 50) infla RAW + AMPLITUD.
+  ▸ Un falso negativo (crisis real en 0) pierde ambas contribuciones.
+
+ESCALA DE INTERPRETACIÓN DEL IRP DIARIO:
+  0-50   = Calma (gobierno estable, sin tensiones graves)
+  50-100 = Moderado (tensiones normales de gobernabilidad)
+  100-180 = Elevado (conflicto activo entre poderes, protestas serias)
+  180-250 = Alto (crisis institucional grave)
+  250+   = Muy alto (vacancia consumada, emergencia nacional)
+  Perú opera normalmente entre 60-130. Una crisis de gabinete llega a 180-220.
+  Por eso: campaña rutinaria → 15-25, no 60. Vacancia presidencial → 80-90, no 40.
+
+════════════════════════════════════════════════════════════
+CONTEXTO POLÍTICO PERUANO ACTUAL (marzo 2026)
+════════════════════════════════════════════════════════════
+SITUACIÓN INSTITUCIONAL:
+  • Perú ha tenido 6 presidentes en ~10 años. Sucesión reciente:
+    - Pedro Castillo → autogolpe dic 2022 → preso
+    - Dina Boluarte → asumió dic 2022 → vacada oct 2025 (123 votos)
+      por "incapacidad moral" tras crisis de seguridad (concierto Agua Marina)
+    - José Jerí Oré → asumió oct 2025 → vacado feb 17, 2026 (75 votos)
+      por "Chifa-gate": visitas no declaradas a empresario chino Yang Zhihua
+    - José María Balcázar Zelada → actual presidente (desde feb 18, 2026)
+      83 años, afiliado Perú Libre, gobierno CARETAKER hasta elecciones
+  • ELECCIONES: 12 de abril de 2026 (en menos de 1 mes). Bicameral por primera vez: 130 diputados + 60 senadores. ~39 partidos inscritos. Ningún bloque tendrá mayoría.
+  • GABINETE CARETAKER (Balcázar tuvo 3 premiers en 1 mes):
+    - Premier actual: Luis Arroyo (general retirado, desde mar 17, 2026)
+    - Anterior Denisse Miralles duró 3 semanas; antes Ernesto Álvarez
+    - MEF: Rodolfo Acuña (viceministro ascendido)
+    - Gabinete con mandato limitado: no tomará decisiones estructurales
+
+CONGRESO (130 escaños, unicameral hasta abril):
+  - Fuerza Popular (FP, Keiko Fujimori) ~21 escaños
+  - Alianza para el Progreso (APP, César Acuña) ~14 escaños
+  - Podemos Perú ~14 escaños
+  - Renovación Popular (López Aliaga) ~11 escaños
+  - Perú Libre ~11 escaños
+  - Acción Popular ~7 escaños; Somos Perú ~6; Avanza País ~5
+  - Resto: no-afi liados / mixtos (~41). Alta fragmentación y "cambio de camiseta"
+
+INSTITUCIONES JUDICIALES Y DE CONTROL:
+  - Fiscalía de la Nación: Tomás Gálvez Villegas (desde sep 2025, tras crisis JNJ-Espinoza-Benavides). Tiene unidades especializadas: FECOR (crimen organizado), lavado de activos, anticorrupción.
+  - TC (Tribunal Constitucional): árbitro en vacancias, conflictos entre poderes, inmunidades. Casos activos: Vladimir Cerrón, Boluarte, congresistas con antejuicio.
+  - JNJ (Junta Nacional de Justicia): nombra y destituye jueces y fiscales; blanco frecuente de intentos de control del Congreso.
+  - JNE (Jurado Nacional de Elecciones): organizando elecciones abr 2026; investiga 78 autoridades por neutralidad. Conflicto de competencia con Poder Judicial (caso Unidad Popular).
+  - Contraloría General: auditorías y control de gasto público.
+  - Defensoría del Pueblo: activa en advertir sobre captura judicial por el Congreso.
+
+CANDIDATOS PRESIDENCIALES 2026 (principales):
+  - Keiko Fujimori (Fuerza Popular)
+  - Rafael López Aliaga (Renovación Popular)
+  - Óscar Ugarte, Carlos Landa, otros del centroizquierda
+  - Candidatos menores: Forsyth, Belaunde Lossio, etc.
+  - Ningún candidato supera 20% en encuestas. Alta fragmentación.
+
+CRIMEN ORGANIZADO (señal política cuando infiltra instituciones):
+  - Tren de Aragua: clasificado organización terrorista (Congreso, mar 2025). Opera en Lima (extorsión transporte), Trujillo; aliado con Los Pulpos.
+  - Los Pulpos: Trujillo/La Libertad; extorsión, control territorial, reclutamiento por TikTok.
+  - Sendero Luminoso (remanentes VRAEM): ahora principalmente narco-protección; llamó a boicotear elecciones 2026 (riesgo de atentado).
+  - Minería ilegal organizada: Madre de Dios, La Libertad, Puno; crimen violento vinculado al oro ilegal.
 
 NO es riesgo político:
 - Deportes (fútbol, vóley, tenis, retiros de deportistas, resultados deportivos) → 0
@@ -556,12 +647,19 @@ NO es riesgo político:
 - Noticias internacionales sin impacto directo en la política peruana → 0
 - Recetas, turismo, estilo de vida, salud general → 0
 - Obituarios de personas no políticas → 0
+- Diplomacia militar extranjera sin conexión a Perú (Japón-Taiwan-OTAN-EEUU) → 0
+- Artículos editoriales u opinión de columnistas (solo comentan, no generan crisis) → 0-10
+- Programas de TV / entrevistas de video (el formato "| LA RED (VIDEO)" no es riesgo político) → 0-10
+- Comisiones de festividades culturales (Candelaria, Inti Raymi) → 0
+- Organismos electorales en funciones rutinarias (ONPE coordina, JNE emite resolución) → 0-5
 
 SÍ es riesgo político (y debe puntuar ALTO):
 - Vacancia presidencial, moción de vacancia → 75-90
 - Voto de confianza (cualquier mención) → 65-80
 - Interpelación o censura de ministros → 55-70
 - Cambio de gabinete bajo presión → 60-75
+- Renuncia de ministro por escándalo criminal (corrupción, abuso sexual, delitos) → 75-85
+- Ministro que admite conducta ilegal o antiética públicamente → 70-80
 - Conflicto entre Ejecutivo y Congreso → 55-70
 - Detención, arresto, orden de captura de presidente o ex-presidente → 80+
 - Corrupción de funcionarios activos, allanamientos, casos judiciales → 55-70
@@ -570,12 +668,19 @@ SÍ es riesgo político (y debe puntuar ALTO):
 - Fallos del Tribunal Constitucional sobre temas políticos → 55-65
 - Protestas masivas que amenazan continuidad del gobierno → 65-80
 - Estado de emergencia por conflicto social → 60-70
+- Gobierno declara emergencia en una vía, región o sector en respuesta a conflicto/huelga → 35-45
+- Renuncia de jefe de organismo regulador clave (Indecopi, SBS, BCRP, SUNAT, SMV, Osiptel, Osinergmin) → 30-40
+- Declaraciones divisivas de candidatos o figuras políticas (insultos, ataques) → 30-45 (son síntoma, no crisis)
+- Artículos fact-check / verificación sobre declaraciones políticas → 30-45 (analizan el riesgo, no lo son)
 
 MODERADO (campañas electorales 2026):
 - Candidatos presidenciales haciendo propuestas de campaña → 15-25
-- Debates, foros de candidatos → 20-30
+- Primer debate presidencial o debate oficial convocado por JNE → 60-70
+- Debates posteriores, foros menores de candidatos → 35-50
+- Artículos de horario/logística de debate ("¿a qué hora?", "cómo ver en vivo") → 20-30
 - Encuestas electorales → 15-25
 - Candidato con problemas judiciales activos → 55-70
+- Candidato excluido de debate por orden judicial o decisión del TC → 65-75
 
 EJEMPLOS (estudia estos antes de responder):
 
@@ -621,6 +726,18 @@ Título: "Candidatos al Congreso registran multas de tránsito impagadas"
 Título: "Reniec amplía vigencia de DNI para adultos mayores"
 → pol=0 (servicio estatal rutinario)
 
+Título: "Primera ministra de Japón detalla a Trump límites legales para darle apoyo militar en estrecho de Taiwán"
+→ pol=0 (diplomacia militar extranjera sin impacto en política peruana)
+
+Título: "Entrevista a Patricia Correa Arangoitia y José Urquizo Maggia | LA RED (VIDEO)"
+→ pol=0 (programa de TV, el formato entrevista-video no genera inestabilidad)
+
+Título: "Decisión bajo presión política (EDITORIAL)"
+→ pol=10 (opinión de columnista sobre decisión ya tomada, no genera nueva incertidumbre)
+
+Título: "Puno: Presidente de la Comisión de la Candelaria 2026 deberá explicar viaje a España y manejo de fondos"
+→ pol=10 (comisión cultural local, no institución política del Estado)
+
 Escala:
 0 = Sin relevancia política
 1-20 = Señal política débil (campaña rutinaria, burocracia menor)
@@ -631,18 +748,124 @@ Escala:
 
 REGLA: Si un artículo usa una crisis económica como CONTEXTO para una maniobra política (ej: "oposición condiciona voto de confianza por crisis energética"), el puntaje POLÍTICO debe ser alto. Lo que importa es la ACCIÓN política, no el tema económico."""
 
-_ECONOMIC_SYSTEM_PROMPT = """Eres un analista de riesgo económico peruano. Tu tarea: evaluar si este artículo señala INCERTIDUMBRE sobre la actividad económica del Perú.
+_ECONOMIC_SYSTEM_PROMPT = """Eres un analista de riesgo económico peruano. Asignas puntajes de 0-100 a artículos de prensa para construir el IRE (Índice de Riesgo Económico), un índice diario de inestabilidad económica del Perú basado en inteligencia artificial.
+
+════════════════════════════════════════════════════════════
+FÓRMULA DEL IRE — CÓMO TUS PUNTAJES AFECTAN EL ÍNDICE
+════════════════════════════════════════════════════════════
+El IRE no es un simple promedio. Se construye en cuatro pasos:
+
+  1. RAW_t   = Σ s_i  (suma de TODOS los puntajes del día t)
+               → Tu puntaje se suma directamente aquí.
+
+  2. INTENSIDAD_t = (RAW_t / promedio_90_días) × 100
+               → Mide si hoy hay más o menos señal que lo habitual.
+
+  3. AMPLITUD_t = #{artículos con s_i ≥ 20} / N_total
+               → CRÍTICO: umbral duro en 20. Un artículo con 19 no cuenta.
+                 Un artículo con 21 sí. La diferencia importa.
+
+  4. IRE_t = INTENSIDAD_t × AMPLITUD_t^0.3
+               → Exponente 0.3 (menor que el político 0.5): la amplitud
+                 pesa menos porque las noticias económicas serias son
+                 típicamente menos numerosas que las políticas.
+
+  Suavizado final: IRE_smooth_t = 0.7 × IRE_t + 0.3 × IRE_{t-1}
+
+IMPLICACIONES:
+  ▸ Artículo a 0: no aporta nada. Artículo a 19: aporta a RAW pero NO a AMPLITUD.
+  ▸ Un falso positivo (nota empresarial rutinaria en 55) infla el índice.
+  ▸ Resultado POSITIVO de Petroperú = 0, no 70. Mejora de gestión ≠ riesgo.
+  ▸ Aranceles globales de Trump sin mención de Perú = 10-20 máximo.
+
+ESCALA DE INTERPRETACIÓN DEL IRE DIARIO:
+  0-50   = Calma (actividad normal, sin disrupciones graves)
+  50-100 = Estrés moderado (sectores bajo presión, señales de alerta)
+  100-180 = Vulnerabilidad elevada (disrupciones sectoriales activas, presión fiscal)
+  180-250 = Crisis severa (colapso de sector clave, crisis energética, rescate masivo)
+  250+   = Emergencia (default soberano, colapso financiero sistémico)
+  Perú opera normalmente entre 40-100. Un día con huelga minera + crisis Petroperú llega a 180-220.
+
+════════════════════════════════════════════════════════════
+CONTEXTO ECONÓMICO PERUANO ACTUAL (marzo 2026)
+════════════════════════════════════════════════════════════
+INDICADORES MACRO (línea de base):
+  • PBI: creciendo ~3.1% anual (BCRP/BBVA), impulsado por minería
+  • Inflación: ~1.95-2.0% (dentro de banda BCRP 1-3%), la más baja de LatAm
+  • Déficit fiscal 2025: ~2.4-2.5% del PBI (meta: 2.2%); 2024 fue 3.5% (sobre meta)
+  • Tipo de cambio: sol/USD estable ~3.50-3.60. Depreciación >2% en un día = eco 50-60.
+  • Reservas internacionales BCRP: ~$72B (26.5% del PBI, 13.7 meses de importaciones)
+  • BCRP: en ciclo de recorte de tasas (inflación controlada)
+  • Recaudación SUNAT 2024: S/155,756M (por debajo de meta)
+
+SECTOR MINERO (el más crítico para el IRE):
+  Perú es el 2° productor mundial de cobre. Minería = ~9% del PBI y ~64% de exportaciones.
+  Exportaciones mineras 2024: récord $47.7B (+11.5%). Principales commodities:
+  - Cobre: ~46% del valor de exportaciones mineras (+12% volumen)
+  - Oro: ~37% del valor (+43% precio-impulsado)
+  - Zinc, plata, plomo, molibdeno: resto
+
+  MINAS CLAVE (bloqueo o paralización = eco 55-75):
+  | Mina          | Empresa operadora              | Ubicación    |
+  |---------------|-------------------------------|--------------|
+  | Cerro Verde   | Freeport-McMoRan (53.6%)       | Arequipa     |
+  | Antamina      | BHP/Glencore/Teck/Mitsubishi   | Ancash       |
+  | Las Bambas    | MMG / China Minmetals (62.5%)  | Apurímac     |
+  | Quellaveco    | Anglo American (60%)           | Moquegua     |
+  | Cuajone/Toquepala | Southern Peru (Grupo México)| Moquegua/Tac.|
+
+  Las Bambas: historial crónico de bloqueos en la Carretera del Sur.
+  Tía María (Southern, Arequipa): en construcción; con oposición comunitaria activa.
+  China compra >70% del cobre peruano → desaceleración china = riesgo indirecto para Perú.
+
+SECTOR ENERGÉTICO (el segundo más crítico):
+  CAMISEA (gas natural del Cusco):
+  - Operador: Pluspetrol. Ducto: TGP (Transportadora de Gas del Perú).
+  - Suministra normalmente ~800 MMcfd; provee ~60% del GLP nacional y >40% de electricidad.
+  - CRISIS MAR 1, 2026: rotura del ducto en km 43, Megantoni. Suministro cayó a ~70 MMcfd (reducción 91%). 8M hogares en riesgo de alza de GLP; plantas eléctricas al diesel. Restauración parcial anunciada mar 14. Esto demuestra la vulnerabilidad de ducto único sin redundancia.
+  - Una interrupción de Camisea = eco 80-90 inmediato.
+
+  PETROPERÚ (empresa estatal):
+  - Opera Refinería Talara (NRT): costó $6.5B (el doble del presupuesto).
+  - Produce solo ~70,000 bbl/día de capacidad instalada; caja al cierre 2025: $26M.
+  - Técnicamente insolvente. Decreto de Urgencia ene 2026 autoriza privatización vía ProInversión.
+  - Cada rescate/inyección fiscal (S/500M+) = eco 75-85.
+  - Un resultado POSITIVO o "mejora de gestión" = eco 0-10 (buena noticia, no incertidumbre).
+
+SECTOR FISCAL:
+  - MEF: caretaker con Rodolfo Acuña (viceministro ascendido). Sin capacidad de reformas grandes pre-elecciones.
+  - Consejo Fiscal: advierte sistemáticamente sobre gasto excesivo del Congreso. Sus alertas = eco 50-60.
+  - Congreso aprueba frecuentemente leyes de gasto sin financiamiento (S/1,000M+ sin respaldo fiscal = eco 55-65).
+  - SUNAT, INDECOPI: instituciones recurrentes en noticias económicas. Multas regulatorias rutinarias = eco 0.
+  - ProInversión: ejecuta privatizaciones y concesiones de APP.
+
+COMERCIO EXTERIOR Y VULNERABILIDADES:
+  - China es el destino de >70% del cobre peruano y mayor socio comercial ($51B bilateral 2025).
+  - Concentración: cobre+oro = ~83% del valor de exportaciones mineras; minería = ~64% del total.
+  - Perú-EEUU: tratado de libre comercio vigente (TLC). Aranceles de Trump universales afectan a Perú indirectamente (vía demanda china de cobre): eco 10-20 máximo sin mención explícita de Perú.
+  - Sector pesquero: harina de pescado (anchoveta). Vedas, cuotas, El Niño = eco 30-45.
+
+RELACIONES CON ORGANISMOS INTERNACIONALES:
+  - FMI: Article IV 2025 proyecta crecimiento 3.0-3.1%; señala riesgo político y seguridad como principales riesgos a la baja. Disciplina fiscal en curso.
+  - BCRP: independiente, credible, amplio colchón de reservas. Sus comunicados de tasas = eco rutinario (0-15).
+  - Calificadoras (Moody's, S&P, Fitch): Perú tiene grado de inversión (BBB). Una rebaja sería eco 70+.
 
 NO es riesgo económico:
 - Deportes (fútbol, vóley, retiros de deportistas, resultados) → 0
 - Farándula, celebridades, entretenimiento → 0
-- Clima rutinario (alertas de viento, lluvia, oleaje) → 0
+- Clima rutinario (alertas de viento, lluvia, oleaje, pronóstico SENAMHI) → 0
 - Tecnología, gadgets, apps, dispositivos → 0
 - Desastres internacionales sin conexión a Perú (terremoto en X, tornado en Y) → 0
 - Noticias internacionales sin impacto en economía peruana → 0
 - Datos económicos POSITIVOS o RUTINARIOS (crecimiento normal, inversión anunciada, récords de exportación) → 0
 - Noticias de candidatos sobre temas NO económicos → 0
 - Crimen común sin impacto económico sistémico → 0
+- Pronósticos del clima / SENAMHI (alertas de temperatura, lluvia, viento) → 0
+- Comisiones de festividades culturales (Candelaria, Inti Raymi, carnavales) → 0
+- Guías de viaje, consejos de seguridad vial, verificación de SOAT en feriados → 0
+- Programas de TV / entrevistas de video (el contenido puede ser económico pero el formato no genera riesgo) → 0-15
+- Aranceles globales de Trump a todo el mundo (sin mención específica de impacto en exportaciones peruanas) → 5-15 máx
+- Diplomacia militar extranjera (Japón-Taiwán, OTAN, conflicto Medio Oriente) sin impacto en materias primas peruanas → 0-5
 
 SÍ es riesgo económico (y debe puntuar ALTO):
 - Petroperú: rescate, inyección fiscal, quiebra, deuda, crisis → 75-90
@@ -702,6 +925,24 @@ Título: "Rafael Belaunde promete gas natural para el sur"
 
 Título: "Sicario asesina a conductor de combi en el Callao"
 → eco=0 (crimen común, sin impacto económico sistémico)
+
+Título: "SENAMHI: Pronóstico del clima hoy viernes 20 de marzo 2026"
+→ eco=0 (pronóstico meteorológico rutinario, sin impacto económico)
+
+Título: "¿Viajas en Semana Santa? Presta atención a estas 3 formas rápidas de verificar si el bus tiene SOAT"
+→ eco=0 (guía de seguridad para viajeros, no genera incertidumbre económica)
+
+Título: "Puno: Presidente de la Comisión de la Candelaria 2026 deberá explicar viaje a España y manejo de fondos"
+→ eco=0 (comisión cultural local, no sector económico del país)
+
+Título: "Primera ministra de Japón detalla a Trump límites legales para apoyo militar en estrecho de Taiwán"
+→ eco=10 (geopolítica militar extranjera, impacto en economía peruana mínimo e indirecto)
+
+Título: "Mejoró gestión: Petroperú obtuvo resultado positivo de US$13 millones en 2025"
+→ eco=10 (resultado POSITIVO de empresa estatal, no genera crisis ni incertidumbre)
+
+Título: "Trump anuncia aranceles universales del 25% a todas las importaciones"
+→ eco=20 (shock global, afecta indirectamente a Perú vía demanda de cobre/oro; no es crisis peruana directa)
 
 Escala:
 0 = Sin riesgo económico O noticia económica positiva/rutinaria
@@ -3213,6 +3454,85 @@ def post_filter_scores(df: pd.DataFrame) -> pd.DataFrame:
     if n_onpe > 0:
         logger.info("post_filter_scores: ONPE logistics capped pol<=10 eco=0 on %d", n_onpe)
 
+    # F17. Editorial / opinion labeled articles → eco cap 10, pol cap 15
+    # Pattern: "(editorial)" or "(opinion)" anywhere in title (editorial label, not editorial-board action)
+    _editorial_label = (
+        r"\(editorial\)|\(opinion\)|\(columna\)|\(analisis\)|\(punto de vista\)|"
+        r"editorial[:·].{0,30}(opinion|analisis|reflexion)|"
+        r"(semanario|editorial) (de hoy|del dia|semanal)"
+    )
+    mask_edit = nt.str.contains(_editorial_label, regex=True, na=False) & ~mask_crisis
+    n_edit_pol = int((mask_edit & (df["political_score"].fillna(0) > 15)).sum())
+    n_edit_eco = int((mask_edit & (df["economic_score"].fillna(0) > 10)).sum())
+    df.loc[mask_edit & (df["political_score"].fillna(0) > 15), "political_score"] = 15
+    df.loc[mask_edit & (df["economic_score"].fillna(0) > 10), "economic_score"] = 10
+    if n_edit_pol + n_edit_eco > 0:
+        logger.info("post_filter_scores: F17 editorial label capped pol<=15 eco<=10 on pol=%d eco=%d", n_edit_pol, n_edit_eco)
+
+    # F18. Travel safety / holiday verification guides → eco=0, pol=0
+    # "¿Viajas en Semana Santa? cómo verificar si el bus tiene SOAT", road safety tips
+    _travel_safety_guide = (
+        r"(viajas|viaje).{0,40}(semana santa|feriado|fiestas).{0,80}(soat|seguro|verificar|revisar|tips?|consejos?)\b|"
+        r"(soat|seguro vehicular|revision tecnica).{0,60}(verificar|comprobar|como saber|tips?|formas?)\b|"
+        r"(consejos|recomendaciones|tips?).{0,60}(viajar|viaje).{0,60}(semana santa|feriado)\b"
+    )
+    mask_tsg = nt.str.contains(_travel_safety_guide, regex=True, na=False) & ~mask_crisis
+    n_tsg = int((mask_tsg & ((df["political_score"].fillna(0) > 0) | (df["economic_score"].fillna(0) > 0))).sum())
+    df.loc[mask_tsg, "political_score"] = 0
+    df.loc[mask_tsg, "economic_score"] = 0
+    if n_tsg > 0:
+        logger.info("post_filter_scores: F18 travel safety guide zeroed on %d", n_tsg)
+
+    # F19. Cultural festival commissions / local cultural boards → eco=0
+    # "Presidente de la Comisión de la Candelaria", "junta de la festividad", etc.
+    _cultural_commission = (
+        r"(comision|junta|directiva).{0,50}(candelaria|carnaval|inti raymi|corpus christi|"
+        r"señor de los milagros|festividad|fiesta patron|fiesta regional)\b|"
+        r"(candelaria|carnaval de barranquilla|inti raymi).{0,60}(comision|presidente|directivo|organizador)\b"
+    )
+    mask_cfc = nt.str.contains(_cultural_commission, regex=True, na=False) & ~mask_crisis
+    n_cfc = int((mask_cfc & (df["economic_score"].fillna(0) > 0)).sum())
+    df.loc[mask_cfc, "economic_score"] = 0
+    if n_cfc > 0:
+        logger.info("post_filter_scores: F19 cultural commission eco=0 on %d", n_cfc)
+
+    # F20. TV/radio interview show programs → eco=0, pol cap 10
+    # "Entrevista a X y Y | LA RED (VIDEO)", "| En vivo", "| Programa"
+    _tv_interview_show = (
+        r"entrevista a.{0,100}(la red|en vivo|video|programa|canal|tv|television|radio)\b|"
+        r"\|\s*(la red|en vivo|programa|canal \d+|tv peru|rpp tv|andina en vivo)\b|"
+        r"(conversatorio|entrevista).{0,60}\(video\)\s*$"
+    )
+    mask_tvi = nt.str.contains(_tv_interview_show, regex=True, na=False) & ~mask_crisis
+    n_tvi_eco = int((mask_tvi & (df["economic_score"].fillna(0) > 0)).sum())
+    n_tvi_pol = int((mask_tvi & (df["political_score"].fillna(0) > 10)).sum())
+    df.loc[mask_tvi, "economic_score"] = 0
+    df.loc[mask_tvi & (df["political_score"].fillna(0) > 10), "political_score"] = 10
+    if n_tvi_eco + n_tvi_pol > 0:
+        logger.info("post_filter_scores: F20 TV interview show zeroed eco=%d pol<=10 on pol=%d", n_tvi_eco, n_tvi_pol)
+
+    # F21. Foreign military diplomacy (no Peru connection) → pol cap 8, eco cap 10
+    # Japan PM / Taiwan Strait / US-China military posturing — affects Peru only marginally
+    _foreign_military_dipl = (
+        r"(japon|japones|primera ministra de japon|japones).{0,80}"
+        r"(trump|eeuu|estados unidos).{0,80}(militar|apoyo militar|taiw[aá]n|estrecho)\b|"
+        r"(taiwan|estrecho de taiwan).{0,80}(militar|defensa|apoyo|tension).{0,80}"
+        r"(japon|corea|china|eeuu|estados unidos)\b|"
+        r"(otan|nato).{0,60}(reunion|cumbre|ejercicio militar|maniobra).{0,60}"
+        r"(?!.{0,100}peru)\b"
+    )
+    mask_fmd = (
+        nt.str.contains(_foreign_military_dipl, regex=True, na=False) &
+        ~nt.str.contains(r"\bperu\b", regex=True, na=False) &
+        ~mask_crisis
+    )
+    n_fmd_pol = int((mask_fmd & (df["political_score"].fillna(0) > 8)).sum())
+    n_fmd_eco = int((mask_fmd & (df["economic_score"].fillna(0) > 10)).sum())
+    df.loc[mask_fmd & (df["political_score"].fillna(0) > 8), "political_score"] = 8
+    df.loc[mask_fmd & (df["economic_score"].fillna(0) > 10), "economic_score"] = 10
+    if n_fmd_pol + n_fmd_eco > 0:
+        logger.info("post_filter_scores: F21 foreign military diplomacy capped pol<=8 eco<=10 on pol=%d eco=%d", n_fmd_pol, n_fmd_eco)
+
     # ── BOOST RULES (B1–B14) — applied BEFORE whitelist cap ─────────────────────
 
     # B1. New cabinet / toma de juramento → pol≥65
@@ -3322,11 +3642,16 @@ def post_filter_scores(df: pd.DataFrame) -> pd.DataFrame:
         logger.info("post_filter_scores: B8 Congress fiscal expansion eco>=60 on %d articles", n_b8)
 
     # B9. Petroperú préstamo / rescate → eco≥75
+    # Exclude positive results (profit, surplus) — good news ≠ instability signal
     _petroperu_loan = (
         r"(petroperu|petroper).{0,60}"
         r"(prestamo|rescate|salvavidas|credito|deuda|millones|inyeccion|inyectara|capitalizacion)"
     )
-    mask_b9 = nt.str.contains(_petroperu_loan, regex=True, na=False)
+    _petroperu_positive = r"(resultado positivo|utilidad|ganancia|superavit|obtuvo.{0,20}positivo|positivo.{0,20}obtuvo)"
+    mask_b9 = (
+        nt.str.contains(_petroperu_loan, regex=True, na=False) &
+        ~nt.str.contains(_petroperu_positive, regex=True, na=False)
+    )
     n_b9 = int((mask_b9 & (df["economic_score"].fillna(0) < 75)).sum())
     df.loc[mask_b9 & (df["economic_score"].fillna(0) < 75), "economic_score"] = 75
     if n_b9 > 0:
@@ -3474,7 +3799,10 @@ def post_filter_scores(df: pd.DataFrame) -> pd.DataFrame:
         r"(gobernador|alcalde).{0,60}(detenido|arrestado|capturado|intervenido).{0,60}"
         r"(lavado|corrupcion|coima|peculado|narcotraf|extorsion|banda)\b|"
         r"(alcalde|gobernador|regidor).{0,60}(muere|fallece|murio|mato|asesinad|baleado).{0,60}"
-        r"(disparo|atentado|sicario|balacera|herido)\b"
+        r"(disparo|atentado|sicario|balacera|herido)\b|"
+        # Reversed word order: muere/fallece BEFORE alcalde/gobernador, ends with baleado/asesinad
+        r"(muere|fallece|murio|asesinad).{0,60}(alcalde|gobernador|regidor).{0,80}"
+        r"(baleado|disparo|atentado|sicario|balacera|herido|uci|hospital)\b"
     )
     mask_b19 = nt.str.contains(_regional_official_crisis, regex=True, na=False)
     n_b19 = int((mask_b19 & (df["political_score"].fillna(0) < 50)).sum())
@@ -3587,6 +3915,8 @@ def post_filter_scores(df: pd.DataFrame) -> pd.DataFrame:
         # Corporate M&A / numbers
         "millones", "miles de millones", "us$", "s/.", "ingresos",
         "utilidades", "facturacion", "rentabilidad",
+        # Road blockades (supply chain impact — highway blockade rule needs whitelist exempt)
+        "bloquearan", "bloquean", "bloquear", "carretera central", "panamericana",
     ]
     # Build efficient pattern: any keyword present → has eco signal
     _eco_wl_pattern = "|".join(_ECO_WHITELIST_TERMS)
@@ -3922,7 +4252,11 @@ def post_filter_scores(df: pd.DataFrame) -> pd.DataFrame:
         mask_fdom_ext |
         mask_fsports |
         mask_health_op |
-        mask_mtn_acc
+        mask_mtn_acc |
+        mask_snh |
+        mask_tsg |
+        mask_cfc |
+        mask_tvi
     ) & ~mask_crisis
     n_fd_recheck = int((mask_fd_recheck & (
         (df["political_score"].fillna(0) > 0) | (df["economic_score"].fillna(0) > 0)

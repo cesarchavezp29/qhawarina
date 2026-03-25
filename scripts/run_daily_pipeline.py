@@ -42,9 +42,15 @@ KNOWN BUGS (fixed):
 
 import argparse
 import logging
+import os
+import smtplib
+import ssl
 import subprocess
 import sys
 from datetime import date, datetime
+from email.mime.image import MIMEImage
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).parent.parent
@@ -89,8 +95,117 @@ def run(label: str, cmd: list, cwd=PROJECT_ROOT, timeout: int = None) -> bool:
     return True
 
 
+def _load_env() -> dict:
+    """Load .env from project root into a dict."""
+    env = {}
+    env_file = PROJECT_ROOT / ".env"
+    if env_file.exists():
+        for line in env_file.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if line and not line.startswith("#") and "=" in line:
+                k, _, v = line.partition("=")
+                v = v.split(" #")[0].strip().strip('"').strip("'")
+                env[k.strip()] = v
+    return env
+
+
+def send_success_email(today: date, results: dict) -> None:
+    """Send daily summary email with IRP/IRE values and chart images attached."""
+    env = _load_env()
+    addr = env.get("GMAIL_ADDRESS") or os.environ.get("GMAIL_ADDRESS", "")
+    pwd  = (env.get("GMAIL_APP_PASSWORD") or os.environ.get("GMAIL_APP_PASSWORD", "")).replace(" ", "")
+    if not addr or not pwd:
+        logger.warning("GMAIL credentials not found — skipping success email")
+        return
+
+    # Load IRP/IRE values from political_index_daily.json
+    irp_val = ire_val = irp_level = ire_level = "?"
+    top_drivers = []
+    try:
+        import json
+        data_path = PROJECT_ROOT / "exports" / "data" / "political_index_daily.json"
+        if data_path.exists():
+            data = json.loads(data_path.read_text(encoding="utf-8"))
+            cur = data.get("current", {})
+            irp_val   = f"{cur.get('political_raw', cur.get('prr', '?')):.1f}"
+            ire_val   = f"{cur.get('economic_raw',  cur.get('ere', '?')):.1f}"
+            irp_level = cur.get("political_raw_level", cur.get("level", "?"))
+            ire_level = cur.get("economic_raw_level",  cur.get("economic_level", "?"))
+            top_drivers = cur.get("top_political_drivers", [])[:5]
+    except Exception as e:
+        logger.warning("Could not read index data for email: %s", e)
+
+    steps_summary = "\n".join(
+        f"  {'✅' if ok else '❌'} {step}" for step, ok in results.items()
+    )
+    drivers_text = ""
+    if top_drivers:
+        drivers_text = "\nTop drivers IRP:\n" + "\n".join(
+            f"  [{d.get('score','?')}] {d.get('title','')[:80]}"
+            for d in top_drivers if isinstance(d, dict)
+        )
+
+    subject = f"[Qhawarina] Pipeline OK — {today.isoformat()} | IRP={irp_val} {irp_level} | IRE={ire_val} {ire_level}"
+    body = f"""Pipeline diario completado exitosamente.
+
+Fecha   : {today.isoformat()}
+IRP     : {irp_val} — {irp_level}
+IRE     : {ire_val} — {ire_level}
+{drivers_text}
+
+Pasos:
+{steps_summary}
+
+— Qhawarina automated monitor
+"""
+
+    msg = MIMEMultipart()
+    msg["Subject"] = subject
+    msg["From"]    = addr
+    msg["To"]      = addr
+    msg.attach(MIMEText(body, "plain", "utf-8"))
+
+    # Attach IRP and IRE chart images
+    images_dir = PROJECT_ROOT / "output" / "twitter_images"
+    for name, fname in [("IRP", f"irp_{today}.png"), ("IRE", f"ire_{today}.png")]:
+        img_path = images_dir / fname
+        if img_path.exists():
+            try:
+                with open(img_path, "rb") as f:
+                    img = MIMEImage(f.read(), name=fname)
+                    img.add_header("Content-Disposition", "attachment", filename=fname)
+                    msg.attach(img)
+                logger.info("Attached %s chart to email", name)
+            except Exception as e:
+                logger.warning("Could not attach %s: %s", fname, e)
+
+    try:
+        ctx = ssl.create_default_context()
+        ctx.check_hostname = False
+        ctx.verify_mode = ssl.CERT_NONE
+        with smtplib.SMTP("smtp.gmail.com", 587) as server:
+            server.ehlo()
+            server.starttls(context=ctx)
+            server.login(addr, pwd)
+            server.sendmail(addr, [addr], msg.as_bytes())
+        logger.info("Success email sent to %s", addr)
+    except Exception as e:
+        logger.error("Failed to send success email: %s", e)
+
+
 def step_scrape_supermarket() -> bool:
-    """Step 1: Scrape supermarket prices and save snapshot."""
+    """Step 1: Scrape supermarket prices and save snapshot.
+
+    Skips if snapshot already exists for today (idempotent).
+    Retries up to 3 times with 5-minute delays on failure.
+    """
+    import time
+    from pathlib import Path as _Path
+    snap_path = PROJECT_ROOT / "data" / "raw" / "supermarket" / "snapshots" / f"{date.today().isoformat()}.parquet"
+    if snap_path.exists():
+        logger.info("Snapshot for %s already exists (%s) — skipping scrape", date.today(), snap_path.name)
+        return True
+
     script = f"""
 import sys, pandas as pd
 sys.path.insert(0, r'{PROJECT_ROOT}')
@@ -106,12 +221,31 @@ if not df.empty:
     print(by_store.to_string())
 else:
     print('WARNING: scraper returned empty dataframe')
+    sys.exit(1)
 """
-    return run(
-        "Supermarket scrape",
-        [PYTHON, "-c", script],
-        timeout=1800,  # 30 min max — never block the rest of the pipeline
+    max_attempts = 3
+    for attempt in range(1, max_attempts + 1):
+        logger.info("Scrape attempt %d/%d", attempt, max_attempts)
+        ok = run(
+            "Supermarket scrape",
+            [PYTHON, "-c", script],
+            timeout=1800,  # 30 min max — never block the rest of the pipeline
+        )
+        if ok:
+            return True
+        if attempt < max_attempts:
+            logger.warning("Scrape failed — waiting 5 minutes before retry...")
+            time.sleep(300)
+
+    # All attempts failed — send alert
+    logger.error("Supermarket scrape failed after %d attempts", max_attempts)
+    run(
+        "Send failure alert",
+        [PYTHON, str(SCRIPTS / "send_pipeline_alert.py"),
+         "run_daily_pipeline",
+         f"Supermarket scrape failed after {max_attempts} attempts on {date.today().isoformat()}"],
     )
+    return False
 
 
 def step_political_index() -> bool:
@@ -204,6 +338,10 @@ def step_git_push(today: date, include_poverty: bool = False) -> bool:
     else:
         msg = f"Daily update {today.isoformat()}: prices + political index"
 
+    # Pull before staging so we don't diverge from remote
+    subprocess.run(["git", "pull", "--rebase", "origin", "master"],
+                   cwd=WEB_DIR, capture_output=True)
+
     ok = run("Git add", ["git", "add", "public/assets/data/"], cwd=WEB_DIR)
     if not ok:
         return False
@@ -225,10 +363,14 @@ def step_git_push(today: date, include_poverty: bool = False) -> bool:
     if not ok:
         return False
 
-    # Pull first to avoid rejection if remote has diverged
+    # Push with one retry: if rejected, pull --rebase and try again
+    result = subprocess.run(["git", "push"], cwd=WEB_DIR, capture_output=True, text=True)
+    if result.returncode == 0:
+        return True
+    logger.warning("  Git push rejected — pulling --rebase and retrying")
     subprocess.run(["git", "pull", "--rebase", "origin", "master"],
                    cwd=WEB_DIR, capture_output=True)
-    return run("Git push", ["git", "push"], cwd=WEB_DIR)
+    return run("Git push (retry)", ["git", "push"], cwd=WEB_DIR)
 
 
 def main():
@@ -279,6 +421,25 @@ def main():
     logger.info("=" * 60)
 
     failed = [k for k, v in results.items() if not v]
+    if failed:
+        run(
+            "Send failure alert",
+            [PYTHON, str(SCRIPTS / "send_pipeline_alert.py"),
+             "run_daily_pipeline",
+             f"Steps failed on {today.isoformat()}: {', '.join(failed)}"],
+        )
+    else:
+        send_success_email(today, results)
+
+    # ── Publicar tweets IRP e IRE después del git push ─────────────────────
+    import subprocess, time as _time
+    logger.info("[PIPELINE] Publicando tweet IRP...")
+    subprocess.run([sys.executable, str(SCRIPTS / "tweet_irp.py"), "--no-delay"])
+    _time.sleep(120)
+    logger.info("[PIPELINE] Publicando tweet IRE...")
+    subprocess.run([sys.executable, str(SCRIPTS / "tweet_ire.py"), "--no-delay"])
+    logger.info("[PIPELINE] Tweets publicados.")
+
     sys.exit(1 if failed else 0)
 
 

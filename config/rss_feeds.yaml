@@ -132,9 +132,9 @@ rss:
       source: "diariouno"
 
   classification:
-    model: "claude-haiku-4-5-20251001"
+    model: "claude-sonnet-4-6"
     batch_size: 20
-    delay: 0.3
+    delay: 0.5
   archives:
     arc_domains:
       - domain: "elcomercio.pe"
