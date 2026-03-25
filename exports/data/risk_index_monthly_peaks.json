@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-25T05:19:40.772388Z",
+  "generated_at": "2026-03-25T06:15:01.109569Z",
   "months": [
     {
       "month": "2025-01",
@@ -98,17 +98,17 @@
     },
     {
       "month": "2025-06",
-      "irp_7d_peak": 6300.0,
-      "irp_peak_date": "2025-06-09",
-      "irp_event": "HIMA Perú Expansión",
+      "irp_7d_peak": 0.0,
+      "irp_peak_date": "2025-06-01",
+      "irp_event": "",
       "irp_top_articles": [
         "Congreso: al menos 40 legisladores apoyarían que se admita moción de vacancia contra Boluarte",
         "Censo 2025 incluirá preguntas sobre tipo de vivienda y materiales de construcción",
         "Estado facilitará trámites para la realización de la “Final Conmebol Libertadores 2025”"
       ],
-      "ire_7d_peak": 6300.0,
-      "ire_peak_date": "2025-06-09",
-      "ire_event": "HIMA Expande Latinoamérica",
+      "ire_7d_peak": 0.0,
+      "ire_peak_date": "2025-06-01",
+      "ire_event": "",
       "ire_top_articles": [
         "AFIN: iniciativa del Congreso encarecería el precio de celulares",
         "¿Qué tan lento se avanza en Lima?, así se elevan los costos logísticos",
