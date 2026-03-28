@@ -1,53 +1,255 @@
 {
   "metadata": {
-    "generated_at": "2026-03-25T03:16:42.651959",
-    "coverage_days": 449,
+    "generated_at": "2026-03-27T21:31:21.710776",
+    "coverage_days": 451,
     "rss_feeds": 35,
     "rss_sources": 16,
     "methodology": "AI-GPR dual index (Iacoviello & Tong 2026): IRP + IRE, mean=100 over 2025 baseline"
   },
   "current": {
-    "date": "2026-03-25",
-    "political_raw": 32.5,
-    "political_raw_level": "MINIMO",
-    "political_7d": 68.7,
-    "political_level": "BAJO",
-    "political_multiplier": 0.69,
-    "economic_raw": 29.8,
-    "economic_raw_level": "MINIMO",
-    "economic_7d": 72.2,
-    "economic_level": "BAJO",
-    "economic_multiplier": 0.72,
-    "score": 68.7,
-    "prr_7d": 68.7,
-    "prr_raw": 32.5,
-    "level": "BAJO",
-    "articles_total": 91,
-    "articles_political_relevant": 40,
-    "articles_economic_relevant": 15,
-    "political_justification": null,
-    "economic_justification": null,
-    "top_political_drivers": [],
-    "top_economic_drivers": [],
-    "eco_sector_titles": [],
-    "justification": null,
-    "top_drivers": []
+    "date": "2026-03-27",
+    "political_raw": 83.4,
+    "political_raw_level": "BAJO",
+    "political_7d": 110.3,
+    "political_level": "ELEVADO",
+    "political_multiplier": 1.1,
+    "economic_raw": 122.9,
+    "economic_raw_level": "ELEVADO",
+    "economic_7d": 140.3,
+    "economic_level": "ELEVADO",
+    "economic_multiplier": 1.4,
+    "score": 110.3,
+    "prr_7d": 110.3,
+    "prr_raw": 83.4,
+    "level": "ELEVADO",
+    "articles_total": 605,
+    "articles_political_relevant": 217,
+    "articles_economic_relevant": 115,
+    "political_justification": "El panorama político mantiene una estabilidad relativa, aunque con tensiones moderadas. La prolongación de la prisión preventiva de Castillo y la gestión del voto de confianza del Premier generan incertidumbre institucional. Sin embargo, los mecanismos de control judicial y parlamentario funcionan dentro de parámetros normales.",
+    "economic_justification": "El país enfrenta presiones fiscales elevadas por el gasto público insostenible y la crisis de Petroperú, que requiere aportes estatales significativos. Simultáneamente, tensiones en sectores clave como energía y minería amenazan la inversión de largo plazo, mientras organismos internacionales advierten sobre la necesidad de reformas urgentes.",
+    "top_political_drivers": [
+      {
+        "title": "Pedro Castillo: PJ amplía por 12 meses prisión preventiva en caso de presunta corrupción",
+        "source": "elcomercio",
+        "score": 82
+      },
+      {
+        "title": "Amplían prisión preventiva contra Pedro Castillo por caso de presunta organización criminal",
+        "source": "correo",
+        "score": 82
+      },
+      {
+        "title": "Pedro Castillo: Poder Judicial amplía prisión preventiva en su contra por 12 meses",
+        "source": "larepublica",
+        "score": 82
+      },
+      {
+        "title": "Poder Judicial amplía la prisión preventiva del expresidente Pedro Castillo y el exministro Geiner Alvarado",
+        "source": "rpp",
+        "score": 82
+      },
+      {
+        "title": "Amplían prisión preventiva a Pedro Castillo y Geiner Alvarado",
+        "source": "canaln",
+        "score": 82
+      },
+      {
+        "title": "Premier aún sin fecha para presentarse al Congreso en busca del voto de confianza",
+        "source": "gestion",
+        "score": 72
+      },
+      {
+        "title": "Luis Arroyo coordina con el Congreso fecha para solicitar voto de confianza",
+        "source": "correo",
+        "score": 72
+      },
+      {
+        "title": "Luis Arroyo anuncia que \"próximamente\" se definirá la fecha para solicitar el voto de confianza al Congreso",
+        "source": "larepublica",
+        "score": 72
+      },
+      {
+        "title": "Ollanta Humala: Sala de apelaciones rechaza pedido para suspender ejecución provisional de su condena de 15 años",
+        "source": "elcomercio",
+        "score": 65
+      },
+      {
+        "title": "Pedro Castillo seguirá en prisión: Poder Judicial amplía por 12 meses su detención preventiva",
+        "source": "caretas",
+        "score": 65
+      }
+    ],
+    "top_economic_drivers": [
+      {
+        "title": "Petroperú a la espera de decreto para recibir aval del Estado por US$2.000 millones y reperfilamiento de su deuda",
+        "source": "larepublica",
+        "score": 85
+      },
+      {
+        "title": "Petroperú: transferencia de S/ 23 millones para operación de gas",
+        "source": "canaln",
+        "score": 75
+      },
+      {
+        "title": "Huancayo: Fiscalía interviene grifos por escasez de combustible y advierte sobre especulación",
+        "source": "correo",
+        "score": 65
+      },
+      {
+        "title": "Alonso Segura, presidente del Consejo Fiscal, advierte que leyes aprobadas por el Congreso podría comprometer la estabilidad económica del país",
+        "source": "elcomercio",
+        "score": 60
+      },
+      {
+        "title": "Consejo Fiscal cuestiona al Ejecutivo por promulgar leyes que hacen insostenible el gasto público",
+        "source": "correo",
+        "score": 60
+      },
+      {
+        "title": "ComexPerú advierte que Balcázar “está hipotecando el futuro del país” con leyes de impacto fiscal",
+        "source": "elcomercio",
+        "score": 55
+      },
+      {
+        "title": "FMI le apunta a Perú dos tareas “urgentes”: continuar reforma de Petroperú y frenar gasto público",
+        "source": "gestion",
+        "score": 55
+      },
+      {
+        "title": "Exviceministro de Energía y Minas advirtió que nuevos aportes a Petroperú tendrían impacto en la situación fiscal del país",
+        "source": "canaln",
+        "score": 55
+      },
+      {
+        "title": "SNI: cambios a concesiones mineras afectarían inversiones de largo plazo",
+        "source": "gestion",
+        "score": 45
+      },
+      {
+        "title": "El concesionario que negó la pandemia hoy invoca fuerza mayor: la crisis del gas revela reglas desiguales",
+        "source": "gestion",
+        "score": 45
+      }
+    ],
+    "eco_sector_titles": [
+      "Petroperú a la espera de decreto para recibir aval del Estado por US$2.000 millones y reperfilamiento de su deuda",
+      "Petroperú: transferencia de S/ 23 millones para operación de gas",
+      "Huancayo: Fiscalía interviene grifos por escasez de combustible y advierte sobre especulación",
+      "Alonso Segura, presidente del Consejo Fiscal, advierte que leyes aprobadas por el Congreso podría comprometer la estabilidad económica del país",
+      "Consejo Fiscal cuestiona al Ejecutivo por promulgar leyes que hacen insostenible el gasto público",
+      "ComexPerú advierte que Balcázar “está hipotecando el futuro del país” con leyes de impacto fiscal",
+      "FMI le apunta a Perú dos tareas “urgentes”: continuar reforma de Petroperú y frenar gasto público",
+      "Exviceministro de Energía y Minas advirtió que nuevos aportes a Petroperú tendrían impacto en la situación fiscal del país",
+      "SNI: cambios a concesiones mineras afectarían inversiones de largo plazo",
+      "El concesionario que negó la pandemia hoy invoca fuerza mayor: la crisis del gas revela reglas desiguales",
+      "Colegio de Economistas de Lima advierte riesgos fiscales por leyes que incrementan gasto público",
+      "Confiep pide a Balcázar frenar derroche fiscal",
+      "Precio del pollo se duplica en Huamanga en menos de dos semanas y llega hasta 16 soles el kilo",
+      "Dólar, deudas y precios: ¿qué pasará si la guerra y El Niño convulsionan, según Rímac?",
+      "Menos minería formal, más ilegalidad: el efecto de la reforma",
+      "El barril de petróleo Brent cerró la semana a 112,57 dólares, el precio más alto desde 2022",
+      "Dan ultimátum al MTC y anuncian paro por colapso de la margen izquierda de la carretera Central",
+      "Loreto: Transporte fluvial en riesgo por alza del combustible",
+      "Petroperú: alzas en combustibles son principalmente por aumento en cotización internacional",
+      "Marco Rubio dice la operación militar en Irán terminará “en cuestión de semanas”",
+      "Presidente oneroso",
+      "Transporte de carga pide declaratoria de emergencia al MTC",
+      "El presidente de Estados Unidos llama \"estrecho de Trump\" al estrecho de Ormuz",
+      "Werner Salcedo señala decisiones políticas frenaron gasoducto del sur",
+      "Retiran la Línea 3 del Plan Nacional y Lima pierde clave proyecto para reducir viajes de 3 horas a 1",
+      "Nuevo ataque al transporte: presuntos extorsionadores queman combi en el Callao",
+      "Osinergmin: ¿Dónde puedes encontrar el combustible más barato en Lima y provincias?",
+      "EE.UU. e Israel atacan plantas nucleares en Irán que amenaza con un “precio muy alto”",
+      "La Autoridad Nacional de Control y el caso Awajún en Condorcanqui sin presupuesto, advierte Tomás Gálvez",
+      "Osinergmin dice que \"no ha emitido ninguna estimación\" de multa contra la concesionaria de gas de Camisea",
+      "Juliaca evalúa protestas por alza de pasajes y crece tensión social",
+      "“La casa de la comedia” suspende grabaciones y presentaciones por extorsión: “Nos duele cerrar este capítulo”"
+    ],
+    "justification": "El panorama político mantiene una estabilidad relativa, aunque con tensiones moderadas. La prolongación de la prisión preventiva de Castillo y la gestión del voto de confianza del Premier generan incertidumbre institucional. Sin embargo, los mecanismos de control judicial y parlamentario funcionan dentro de parámetros normales.",
+    "top_drivers": [
+      {
+        "title": "Pedro Castillo: PJ amplía por 12 meses prisión preventiva en caso de presunta corrupción",
+        "source": "elcomercio",
+        "score": 82
+      },
+      {
+        "title": "Amplían prisión preventiva contra Pedro Castillo por caso de presunta organización criminal",
+        "source": "correo",
+        "score": 82
+      },
+      {
+        "title": "Pedro Castillo: Poder Judicial amplía prisión preventiva en su contra por 12 meses",
+        "source": "larepublica",
+        "score": 82
+      },
+      {
+        "title": "Poder Judicial amplía la prisión preventiva del expresidente Pedro Castillo y el exministro Geiner Alvarado",
+        "source": "rpp",
+        "score": 82
+      },
+      {
+        "title": "Amplían prisión preventiva a Pedro Castillo y Geiner Alvarado",
+        "source": "canaln",
+        "score": 82
+      },
+      {
+        "title": "Premier aún sin fecha para presentarse al Congreso en busca del voto de confianza",
+        "source": "gestion",
+        "score": 72
+      },
+      {
+        "title": "Luis Arroyo coordina con el Congreso fecha para solicitar voto de confianza",
+        "source": "correo",
+        "score": 72
+      },
+      {
+        "title": "Luis Arroyo anuncia que \"próximamente\" se definirá la fecha para solicitar el voto de confianza al Congreso",
+        "source": "larepublica",
+        "score": 72
+      },
+      {
+        "title": "Ollanta Humala: Sala de apelaciones rechaza pedido para suspender ejecución provisional de su condena de 15 años",
+        "source": "elcomercio",
+        "score": 65
+      },
+      {
+        "title": "Pedro Castillo seguirá en prisión: Poder Judicial amplía por 12 meses su detención preventiva",
+        "source": "caretas",
+        "score": 65
+      }
+    ]
   },
   "aggregates": {
-    "political_7d_avg": 118.8,
-    "political_30d_avg": 86.3,
-    "economic_7d_avg": 167.5,
-    "economic_30d_avg": 185.4,
+    "political_7d_avg": 131.5,
+    "political_30d_avg": 94.7,
+    "economic_7d_avg": 150.2,
+    "economic_30d_avg": 195.4,
     "year_max": 309.2,
     "year_max_date": "2026-02-18"
   },
   "major_events": [
     {
-      "date": "2026-03-24",
-      "score": 153.3,
+      "date": "2026-03-26",
+      "score": 172.9,
       "level": "ALTO",
-      "n_articles": 641,
-      "summary": "Incertidumbre electoral ante primer debate presidencial 2026.",
+      "n_articles": 687,
+      "summary": "Tensión política por debate presidencial en curso hoy.",
+      "report_url": "/political/daily-reports/2026-03-26.html"
+    },
+    {
+      "date": "2026-03-25",
+      "score": 194.5,
+      "level": "ALTO",
+      "n_articles": 609,
+      "summary": "Candidato prófugo participa en debate presidencial nacional.",
+      "report_url": "/political/daily-reports/2026-03-25.html"
+    },
+    {
+      "date": "2026-03-24",
+      "score": 153.8,
+      "level": "ALTO",
+      "n_articles": 647,
+      "summary": "Competencia electoral incertidumbre en proceso democrático peruano.",
       "report_url": "/political/daily-reports/2026-03-24.html"
     },
     {
@@ -55,7 +257,7 @@
       "score": 153.1,
       "level": "ALTO",
       "n_articles": 823,
-      "summary": "Nuevo gabinete enfrenta rechazo de múltiples bancadas parlamentarias.",
+      "summary": "Nuevo Gabinete enfrenta rechazo parlamentario de múltiples bancadas.",
       "report_url": "/political/daily-reports/2026-03-20.html"
     },
     {
@@ -63,7 +265,7 @@
       "score": 166.7,
       "level": "ALTO",
       "n_articles": 582,
-      "summary": "Conflicto entre poderes del Estado y corrupción minera.",
+      "summary": "Pugnas políticas y conflictos dentro de instituciones judiciales desestabilizan país.",
       "report_url": "/political/daily-reports/2026-03-19.html"
     },
     {
@@ -71,7 +273,7 @@
       "score": 174.4,
       "level": "ALTO",
       "n_articles": 935,
-      "summary": "No puedo completar esta tarea porque no tengo acceso a noticias del 18 de marzo de 2026. Esa fecha es posterior a mi fecha de corte de conocimiento (abril de 2024",
+      "summary": "Debilidad institucional y pérdida de credibilidad en gestión pública.",
       "report_url": "/political/daily-reports/2026-03-18.html"
     },
     {
@@ -79,7 +281,7 @@
       "score": 154.5,
       "level": "ALTO",
       "n_articles": 630,
-      "summary": "Tensión entre cumplimiento electoral y capacidad institucional peruana.",
+      "summary": "Tensiones migratorias y elecciones presidenciales generan inestabilidad.",
       "report_url": "/political/daily-reports/2026-03-17.html"
     },
     {
@@ -87,7 +289,7 @@
       "score": 149.0,
       "level": "ELEVADO",
       "n_articles": 130,
-      "summary": "Disputa por poder presidencial y indulto de Castillo.",
+      "summary": "Pugna por el poder entre bloques parlamentarios enfrentados.",
       "report_url": "/political/daily-reports/2026-02-20.html"
     },
     {
@@ -95,7 +297,7 @@
       "score": 219.3,
       "level": "CRITICO",
       "n_articles": 135,
-      "summary": "Debilitamiento de instituciones democráticas y fragmentación política.",
+      "summary": "Debilitamiento institucional y fragmentación política del país.",
       "report_url": "/political/daily-reports/2026-02-19.html"
     },
     {
@@ -103,24 +305,8 @@
       "score": 309.2,
       "level": "CRITICO",
       "n_articles": 171,
-      "summary": "Conflicto entre gobierno y congreso sobre ministro.",
+      "summary": "Conflicto entre el Ejecutivo y el Congreso sobre ministro.",
       "report_url": "/political/daily-reports/2026-02-18.html"
-    },
-    {
-      "date": "2026-02-17",
-      "score": 284.4,
-      "level": "CRITICO",
-      "n_articles": 136,
-      "summary": "Congreso debate censura del Presidente Jerí.",
-      "report_url": "/political/daily-reports/2026-02-17.html"
-    },
-    {
-      "date": "2026-02-16",
-      "score": 189.7,
-      "level": "ALTO",
-      "n_articles": 157,
-      "summary": "Desconfianza ciudadana en integridad del presidente actual.",
-      "report_url": "/political/daily-reports/2026-02-16.html"
     }
   ],
   "peak_events": [
@@ -221,16 +407,16 @@
       "label": "Crisis Energética Perú"
     },
     {
-      "date": "2026-03-18",
-      "dimension": "political",
-      "value": 174.4,
-      "label": "Gabinete Inestable"
-    },
-    {
       "date": "2026-03-20",
       "dimension": "economic",
       "value": 288.1,
       "label": "Crisis Energética TGP"
+    },
+    {
+      "date": "2026-03-25",
+      "dimension": "political",
+      "value": 194.5,
+      "label": "Violencia Electoral Perú"
     }
   ],
   "daily_series": [
@@ -4058,26 +4244,26 @@
     },
     {
       "date": "2025-10-22",
-      "political_raw": 152.2,
-      "political_7d": 130.5,
-      "economic_raw": 73.8,
-      "economic_7d": 84.5,
-      "score": 130.5,
-      "prr": 152.2,
-      "prr_7d": 130.5,
-      "n_articles": 83,
+      "political_raw": 151.3,
+      "political_7d": 129.9,
+      "economic_raw": 73.5,
+      "economic_7d": 84.3,
+      "score": 129.9,
+      "prr": 151.3,
+      "prr_7d": 129.9,
+      "n_articles": 84,
       "low_coverage": false,
       "provisional": false
     },
     {
       "date": "2025-10-23",
       "political_raw": 89.3,
-      "political_7d": 101.7,
+      "political_7d": 101.5,
       "economic_raw": 78.5,
-      "economic_7d": 80.3,
-      "score": 101.7,
+      "economic_7d": 80.2,
+      "score": 101.5,
       "prr": 89.3,
-      "prr_7d": 101.7,
+      "prr_7d": 101.5,
       "n_articles": 86,
       "low_coverage": false,
       "provisional": false
@@ -4085,12 +4271,12 @@
     {
       "date": "2025-10-24",
       "political_raw": 58.9,
-      "political_7d": 71.8,
+      "political_7d": 71.7,
       "economic_raw": 114.8,
       "economic_7d": 104.4,
-      "score": 71.8,
+      "score": 71.7,
       "prr": 58.9,
-      "prr_7d": 71.8,
+      "prr_7d": 71.7,
       "n_articles": 76,
       "low_coverage": false,
       "provisional": false
@@ -4357,26 +4543,26 @@
     },
     {
       "date": "2025-11-14",
-      "political_raw": 44.8,
-      "political_7d": 58.1,
-      "economic_raw": 26.0,
-      "economic_7d": 52.7,
-      "score": 58.1,
-      "prr": 44.8,
-      "prr_7d": 58.1,
-      "n_articles": 48,
+      "political_raw": 44.4,
+      "political_7d": 57.7,
+      "economic_raw": 25.8,
+      "economic_7d": 52.6,
+      "score": 57.7,
+      "prr": 44.4,
+      "prr_7d": 57.7,
+      "n_articles": 49,
       "low_coverage": false,
       "provisional": false
     },
     {
       "date": "2025-11-15",
       "political_raw": 9.7,
-      "political_7d": 24.2,
+      "political_7d": 24.1,
       "economic_raw": 0.0,
       "economic_7d": 15.8,
-      "score": 24.2,
+      "score": 24.1,
       "prr": 9.7,
-      "prr_7d": 24.2,
+      "prr_7d": 24.1,
       "n_articles": 25,
       "low_coverage": false,
       "provisional": false
@@ -4384,12 +4570,12 @@
     {
       "date": "2025-11-16",
       "political_raw": 35.0,
-      "political_7d": 31.8,
+      "political_7d": 31.7,
       "economic_raw": 37.8,
       "economic_7d": 31.2,
-      "score": 31.8,
+      "score": 31.7,
       "prr": 35.0,
-      "prr_7d": 31.8,
+      "prr_7d": 31.7,
       "n_articles": 38,
       "low_coverage": false,
       "provisional": false
@@ -5150,26 +5336,26 @@
     },
     {
       "date": "2026-01-14",
-      "political_raw": 91.3,
-      "political_7d": 85.3,
-      "economic_raw": 108.2,
-      "economic_7d": 115.8,
-      "score": 85.3,
-      "prr": 91.3,
-      "prr_7d": 85.3,
-      "n_articles": 109,
+      "political_raw": 90.9,
+      "political_7d": 85.0,
+      "economic_raw": 108.0,
+      "economic_7d": 115.6,
+      "score": 85.0,
+      "prr": 90.9,
+      "prr_7d": 85.0,
+      "n_articles": 110,
       "low_coverage": false,
       "provisional": false
     },
     {
       "date": "2026-01-15",
       "political_raw": 57.6,
-      "political_7d": 65.9,
+      "political_7d": 65.8,
       "economic_raw": 83.1,
       "economic_7d": 92.9,
-      "score": 65.9,
+      "score": 65.8,
       "prr": 57.6,
-      "prr_7d": 65.9,
+      "prr_7d": 65.8,
       "n_articles": 104,
       "low_coverage": false,
       "provisional": false
@@ -5231,7 +5417,7 @@
       "political_raw": 144.5,
       "political_7d": 139.3,
       "economic_raw": 68.7,
-      "economic_7d": 65.7,
+      "economic_7d": 65.6,
       "score": 139.3,
       "prr": 144.5,
       "prr_7d": 139.3,
@@ -5709,14 +5895,14 @@
     },
     {
       "date": "2026-02-26",
-      "political_raw": 60.6,
-      "political_7d": 71.8,
-      "economic_raw": 62.5,
-      "economic_7d": 60.3,
-      "score": 71.8,
-      "prr": 60.6,
-      "prr_7d": 71.8,
-      "n_articles": 112,
+      "political_raw": 60.3,
+      "political_7d": 71.6,
+      "economic_raw": 62.4,
+      "economic_7d": 60.2,
+      "score": 71.6,
+      "prr": 60.3,
+      "prr_7d": 71.6,
+      "n_articles": 113,
       "low_coverage": false,
       "provisional": false
     },
@@ -5738,7 +5924,7 @@
       "political_raw": 31.5,
       "political_7d": 39.7,
       "economic_raw": 36.2,
-      "economic_7d": 58.8,
+      "economic_7d": 58.7,
       "score": 39.7,
       "prr": 31.5,
       "prr_7d": 39.7,
@@ -6017,57 +6203,83 @@
       "prr_7d": 97.0,
       "n_articles": 469,
       "low_coverage": false,
-      "provisional": true
+      "provisional": false
     },
     {
       "date": "2026-03-22",
-      "political_raw": 62.5,
+      "political_raw": 62.4,
       "political_7d": 72.8,
       "economic_raw": 71.0,
-      "economic_7d": 97.9,
+      "economic_7d": 97.8,
       "score": 72.8,
-      "prr": 62.5,
+      "prr": 62.4,
       "prr_7d": 72.8,
-      "n_articles": 467,
+      "n_articles": 468,
       "low_coverage": false,
-      "provisional": true
+      "provisional": false
     },
     {
       "date": "2026-03-23",
-      "political_raw": 139.8,
-      "political_7d": 119.7,
-      "economic_raw": 132.0,
-      "economic_7d": 121.7,
-      "score": 119.7,
-      "prr": 139.8,
-      "prr_7d": 119.7,
-      "n_articles": 510,
+      "political_raw": 139.5,
+      "political_7d": 119.5,
+      "economic_raw": 131.8,
+      "economic_7d": 121.6,
+      "score": 119.5,
+      "prr": 139.5,
+      "prr_7d": 119.5,
+      "n_articles": 512,
       "low_coverage": false,
-      "provisional": true
+      "provisional": false
     },
     {
       "date": "2026-03-24",
-      "political_raw": 167.7,
-      "political_7d": 153.3,
-      "economic_raw": 192.5,
-      "economic_7d": 171.3,
-      "score": 153.3,
-      "prr": 167.7,
-      "prr_7d": 153.3,
-      "n_articles": 641,
+      "political_raw": 168.5,
+      "political_7d": 153.8,
+      "economic_raw": 191.9,
+      "economic_7d": 170.8,
+      "score": 153.8,
+      "prr": 168.5,
+      "prr_7d": 153.8,
+      "n_articles": 647,
       "low_coverage": false,
       "provisional": true
     },
     {
       "date": "2026-03-25",
-      "political_raw": 32.5,
-      "political_7d": 68.7,
-      "economic_raw": 29.8,
-      "economic_7d": 72.2,
-      "score": 68.7,
-      "prr": 32.5,
-      "prr_7d": 68.7,
-      "n_articles": 91,
+      "political_raw": 212.0,
+      "political_7d": 194.5,
+      "economic_raw": 182.8,
+      "economic_7d": 179.2,
+      "score": 194.5,
+      "prr": 212.0,
+      "prr_7d": 194.5,
+      "n_articles": 609,
+      "low_coverage": false,
+      "provisional": true
+    },
+    {
+      "date": "2026-03-26",
+      "political_raw": 163.6,
+      "political_7d": 172.9,
+      "economic_raw": 181.7,
+      "economic_7d": 180.9,
+      "score": 172.9,
+      "prr": 163.6,
+      "prr_7d": 172.9,
+      "n_articles": 687,
+      "low_coverage": false,
+      "provisional": true
+    },
+    {
+      "date": "2026-03-27",
+      "political_raw": 83.4,
+      "political_7d": 110.3,
+      "economic_raw": 122.9,
+      "economic_7d": 140.3,
+      "score": 110.3,
+      "prr": 83.4,
+      "prr_7d": 110.3,
+      "n_articles": 605,
       "low_coverage": false,
       "provisional": true
     }
@@ -7288,6 +7500,18 @@
     {
       "date": "2026-03-23",
       "fx": 3.4559
+    },
+    {
+      "date": "2026-03-24",
+      "fx": 3.4595
+    },
+    {
+      "date": "2026-03-25",
+      "fx": 3.4624
+    },
+    {
+      "date": "2026-03-26",
+      "fx": 3.4684
     }
   ],
   "monthly_series": [
@@ -7367,7 +7591,7 @@
       "month": "2025-10",
       "political_avg": 77.0,
       "economic_avg": 84.1,
-      "n_articles": 1898,
+      "n_articles": 1899,
       "fx_level": 3.4141,
       "fx_yoy": -9.04
     },
@@ -7375,7 +7599,7 @@
       "month": "2025-11",
       "political_avg": 60.6,
       "economic_avg": 49.8,
-      "n_articles": 1861,
+      "n_articles": 1862,
       "fx_level": 3.3729,
       "fx_yoy": -10.74
     },
@@ -7391,7 +7615,7 @@
       "month": "2026-01",
       "political_avg": 70.3,
       "economic_avg": 60.9,
-      "n_articles": 2477,
+      "n_articles": 2478,
       "fx_level": 3.3567,
       "fx_yoy": -10.43
     },
@@ -7399,15 +7623,15 @@
       "month": "2026-02",
       "political_avg": 101.2,
       "economic_avg": 57.5,
-      "n_articles": 2764,
+      "n_articles": 2765,
       "fx_level": null,
       "fx_yoy": null
     },
     {
       "month": "2026-03",
-      "political_avg": 90.5,
-      "economic_avg": 208.2,
-      "n_articles": 9953,
+      "political_avg": 98.9,
+      "economic_avg": 208.6,
+      "n_articles": 11772,
       "fx_level": null,
       "fx_yoy": null
     }
