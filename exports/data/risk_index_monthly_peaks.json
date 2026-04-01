@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-31T05:26:24.284888Z",
+  "generated_at": "2026-04-01T05:36:05.818122Z",
   "months": [
     {
       "month": "2025-01",
@@ -266,6 +266,17 @@
         "Grifos de Lima: detienen venta de GNV a taxis y vehículos particulares por emergencia en Camisea",
         "Gremios de transporte rechazan la restricción de GNV para vehículos livianos, taxis y mototaxis"
       ]
+    },
+    {
+      "month": "2026-03",
+      "irp_7d_peak": 194.5,
+      "irp_peak_date": "2026-03-25",
+      "irp_event": "Violencia Electoral Perú",
+      "irp_top_articles": [],
+      "ire_7d_peak": 358.9,
+      "ire_peak_date": "2026-03-03",
+      "ire_event": "Crisis Energética Perú",
+      "ire_top_articles": []
     }
   ]
 }
