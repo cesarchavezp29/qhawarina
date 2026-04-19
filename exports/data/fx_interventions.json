@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-04-18T05:23:44.858866",
+    "generated_at": "2026-04-19T05:41:26.273796",
     "sources": {
       "spot": "PD04659MD — Compras netas spot BCRP (Mill. USD)",
       "swaps": "PD04660MD — Swaps cambiarios netos BCRP (Mill. USD)",
@@ -20,8 +20,8 @@
       "bvl": "Puntos del índice",
       "reference_rate": "Tasa de política monetaria anual (%)"
     },
-    "coverage": "2020-01-01 a 2026-04-18",
-    "n_days_daily": 497,
+    "coverage": "2020-01-01 a 2026-04-19",
+    "n_days_daily": 496,
     "n_months_monthly": 76
   },
   "latest": {
@@ -36,26 +36,15 @@
   },
   "daily_series": [
     {
-      "date": "2024-04-19",
-      "spot_net_purchases": 0.0,
-      "swaps_net": 0.0,
-      "total_intervention": 0.0,
-      "fx": 3.6997,
-      "reference_rate": 6.0,
-      "bond_sol_10y": 7.5,
-      "bond_usd_10y": 5.987,
-      "bvl": 27599.0
-    },
-    {
       "date": "2024-04-20",
       "spot_net_purchases": null,
       "swaps_net": null,
       "total_intervention": 0.0,
-      "fx": 3.6997,
+      "fx": null,
       "reference_rate": 6.0,
-      "bond_sol_10y": 7.5,
-      "bond_usd_10y": 5.987,
-      "bvl": 27599.0
+      "bond_sol_10y": null,
+      "bond_usd_10y": null,
+      "bvl": null
     },
     {
       "date": "2024-04-22",
