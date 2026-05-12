@@ -1,10 +1,10 @@
 {
-  "date": "2026-05-11",
+  "date": "2026-05-12",
   "supermarket": {
     "passed": false,
     "errors": [
-      "No snapshot for today (2026-05-11) — scraper may have failed or not yet run"
+      "No snapshot for today (2026-05-12) — scraper may have failed or not yet run"
     ]
   },
-  "run_time": "2026-05-11T06:54:49.939188"
+  "run_time": "2026-05-12T06:25:56.936392"
 }
