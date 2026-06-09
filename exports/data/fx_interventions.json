@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-06-08T08:29:12.097043",
+    "generated_at": "2026-06-09T07:03:31.385414",
     "sources": {
       "spot": "PD04659MD — Compras netas spot BCRP (Mill. USD)",
       "swaps": "PD04660MD — Swaps cambiarios netos BCRP (Mill. USD)",
@@ -20,19 +20,19 @@
       "bvl": "Puntos del índice",
       "reference_rate": "Tasa de política monetaria anual (%)"
     },
-    "coverage": "2020-01-01 a 2026-06-08",
-    "n_days_daily": 496,
+    "coverage": "2020-01-01 a 2026-06-09",
+    "n_days_daily": 497,
     "n_months_monthly": 78
   },
   "latest": {
-    "date": "2026-06-04",
-    "fx": 3.4147,
+    "date": "2026-06-05",
+    "fx": 3.4549,
     "spot_net_purchases": 0.0,
     "swaps_net": 0.0,
-    "reference_rate": 5.28,
-    "bond_sol_10y": 6.0,
+    "reference_rate": 5.39,
+    "bond_sol_10y": 6.25,
     "bond_usd_10y": 4.25,
-    "bvl": 53551.0
+    "bvl": 50929.0
   },
   "daily_series": [
     {
@@ -5482,14 +5482,25 @@
     },
     {
       "date": "2026-06-05",
+      "spot_net_purchases": 0.0,
+      "swaps_net": 0.0,
+      "total_intervention": 0.0,
+      "fx": 3.4549,
+      "reference_rate": 5.39,
+      "bond_sol_10y": 6.25,
+      "bond_usd_10y": 4.25,
+      "bvl": 50929.0
+    },
+    {
+      "date": "2026-06-08",
       "spot_net_purchases": null,
       "swaps_net": null,
       "total_intervention": 0.0,
-      "fx": 3.4147,
-      "reference_rate": 5.28,
-      "bond_sol_10y": 6.0,
+      "fx": 3.4549,
+      "reference_rate": 5.39,
+      "bond_sol_10y": 6.25,
       "bond_usd_10y": 4.25,
-      "bvl": 53551.0
+      "bvl": 50929.0
     }
   ],
   "monthly_series": [
@@ -6422,12 +6433,12 @@
       "spot_net_purchases": 0.0,
       "swaps_net": 0.0,
       "total_intervention": 0.0,
-      "fx_avg": 3.4158,
-      "bond_sol_avg": 6.05,
+      "fx_avg": 3.4236,
+      "bond_sol_avg": 6.09,
       "bond_usd_avg": 4.25,
-      "bvl_end": 53551.0,
-      "reference_rate": 5.28,
-      "n_days": 5
+      "bvl_end": 50929.0,
+      "reference_rate": 5.39,
+      "n_days": 6
     }
   ]
 }
