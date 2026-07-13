@@ -1,4 +1,4 @@
-﻿# Fuente: Qhawarina (qhawarina.pe) | CC BY 4.0 | Generado: 2026-07-12
+﻿# Fuente: Qhawarina (qhawarina.pe) | CC BY 4.0 | Generado: 2026-07-13
 date,fx,spot_net_purchases,swaps_net,total_intervention,reference_rate,bond_sol_10y,bond_usd_10y,bvl
 2024-07-15,3.7282,0.0,0.0,0.0,5.48,6.89,5.75,30064.0
 2024-07-16,3.7163,0.0,0.0,0.0,5.44,6.89,5.75,29864.0
@@ -520,3 +520,4 @@ date,fx,spot_net_purchases,swaps_net,total_intervention,reference_rate,bond_sol_
 2026-07-08,3.4105,0.0,0.0,0.0,5.42,6.15,4.25,54905.0
 2026-07-09,3.4024,0.0,0.0,0.0,5.39,6.12,4.25,56194.0
 2026-07-10,3.4024,,,0.0,5.39,6.12,4.25,56194.0
+2026-07-13,3.4024,,,0.0,5.39,6.12,4.25,56194.0
