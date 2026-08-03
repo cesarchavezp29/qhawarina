@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-08-02T06:18:54.412045",
+    "generated_at": "2026-08-03T06:45:55.958436",
     "sources": {
       "spot": "PD04659MD — Compras netas spot BCRP (Mill. USD)",
       "swaps": "PD04660MD — Swaps cambiarios netos BCRP (Mill. USD)",
@@ -20,9 +20,9 @@
       "bvl": "Puntos del índice",
       "reference_rate": "Tasa de política monetaria anual (%)"
     },
-    "coverage": "2020-01-01 a 2026-08-02",
-    "n_days_daily": 520,
-    "n_months_monthly": 79
+    "coverage": "2020-01-01 a 2026-08-03",
+    "n_days_daily": 521,
+    "n_months_monthly": 80
   },
   "latest": {
     "date": "2026-07-30",
@@ -5754,6 +5754,17 @@
       "bond_sol_10y": 6.05,
       "bond_usd_10y": 4.25,
       "bvl": 57891.0
+    },
+    {
+      "date": "2026-08-03",
+      "spot_net_purchases": null,
+      "swaps_net": null,
+      "total_intervention": 0.0,
+      "fx": 3.393,
+      "reference_rate": 5.58,
+      "bond_sol_10y": 6.05,
+      "bond_usd_10y": 4.25,
+      "bvl": 57891.0
     }
   ],
   "monthly_series": [
@@ -6704,6 +6715,18 @@
       "bvl_end": 57891.0,
       "reference_rate": 5.58,
       "n_days": 23
+    },
+    {
+      "month": "2026-08",
+      "spot_net_purchases": 0.0,
+      "swaps_net": 0.0,
+      "total_intervention": 0.0,
+      "fx_avg": null,
+      "bond_sol_avg": null,
+      "bond_usd_avg": null,
+      "bvl_end": null,
+      "reference_rate": 5.58,
+      "n_days": 1
     }
   ]
 }
