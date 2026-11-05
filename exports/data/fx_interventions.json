@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-11-04T11:25:54.234819",
+    "generated_at": "2026-11-05T11:23:23.367944",
     "sources": {
       "spot": "PD04659MD — Compras netas spot BCRP (Mill. USD)",
       "swaps": "PD04660MD — Swaps cambiarios netos BCRP (Mill. USD)",
@@ -20,7 +20,7 @@
       "bvl": "Puntos del índice",
       "reference_rate": "Tasa de política monetaria anual (%)"
     },
-    "coverage": "2020-01-01 a 2026-11-04",
+    "coverage": "2020-01-01 a 2026-11-05",
     "n_days_daily": 522,
     "n_months_monthly": 83
   },
@@ -35,17 +35,6 @@
     "bvl": 55486.0
   },
   "daily_series": [
-    {
-      "date": "2024-11-05",
-      "spot_net_purchases": 0.0,
-      "swaps_net": 0.0,
-      "total_intervention": 0.0,
-      "fx": 3.7748,
-      "reference_rate": 5.25,
-      "bond_sol_10y": 6.75,
-      "bond_usd_10y": 5.612,
-      "bvl": 30356.0
-    },
     {
       "date": "2024-11-06",
       "spot_net_purchases": 0.0,
@@ -5762,8 +5751,8 @@
       "total_intervention": 0.0,
       "fx": 3.4606,
       "reference_rate": 4.25,
-      "bond_sol_10y": 6.71,
-      "bond_usd_10y": 5.947,
+      "bond_sol_10y": 6.65,
+      "bond_usd_10y": 5.987,
       "bvl": 55486.0
     },
     {
@@ -5773,8 +5762,19 @@
       "total_intervention": 0.0,
       "fx": 3.4606,
       "reference_rate": 4.25,
-      "bond_sol_10y": 6.71,
-      "bond_usd_10y": 5.947,
+      "bond_sol_10y": 6.65,
+      "bond_usd_10y": 5.987,
+      "bvl": 55486.0
+    },
+    {
+      "date": "2026-11-05",
+      "spot_net_purchases": null,
+      "swaps_net": null,
+      "total_intervention": 0.0,
+      "fx": 3.4606,
+      "reference_rate": 4.25,
+      "bond_sol_10y": 6.65,
+      "bond_usd_10y": 5.987,
       "bvl": 55486.0
     }
   ],
@@ -6769,11 +6769,11 @@
       "swaps_net": 0.0,
       "total_intervention": 0.0,
       "fx_avg": 3.4606,
-      "bond_sol_avg": 6.71,
-      "bond_usd_avg": 5.947,
+      "bond_sol_avg": 6.68,
+      "bond_usd_avg": 5.967,
       "bvl_end": 55486.0,
       "reference_rate": 4.25,
-      "n_days": 3
+      "n_days": 4
     }
   ]
 }
